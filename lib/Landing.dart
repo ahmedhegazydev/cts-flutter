@@ -1,9 +1,7 @@
-// import 'dart:ffi';
-import 'package:intl/intl.dart';
-import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter/material.dart';
 import 'package:test_app/main.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'Inbox.dart';
 
 class LandingPage extends StatefulWidget {
   LandingPage({Key? key}) : super(key: key);
@@ -21,18 +19,6 @@ class _LandingState extends State<LandingPage> {
     );
   }
 
-  double calculateHeight(double nb) {
-    //the development was done on ipad 12 pro, the height in landscape is 1024
-    double height = MediaQuery.of(context).size.height;
-    return (height * nb) / 1024;
-  }
-
-  double calculateWidth(double nb) {
-    //the development was done on ipad 12 pro, the width in landscape is 1366
-    double width = MediaQuery.of(context).size.width;
-    return (width * nb) / 1366;
-  }
-
   _buildBody(BuildContext context) {
     return Container(
         width: double.infinity,
@@ -42,15 +28,20 @@ class _LandingState extends State<LandingPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.max,
           children: [
+            Container(
+              width: 120,
+              height: double.infinity,
+              color: Colors.grey.shade300,
+              child: _buildSideMenu(context),
+            ),
             Flexible(
                 child: Container(
               width: double.infinity,
               height: double.infinity,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(
-                    'lib/assets/landing_background.png',
-                  ),
+                  image: AssetImage(returnImageNameBasedOnDirection(
+                      "lib/assets/landing_background", context, "png")),
                   fit: BoxFit.fill,
                 ),
               ),
@@ -62,24 +53,18 @@ class _LandingState extends State<LandingPage> {
                     Flexible(
                         flex: 1,
                         child: Container(
+                            width: double.infinity,
+                            height: double.infinity,
+                            child: _buildDashboardContainer(context))),
+                    Flexible(
+                        flex: 1,
+                        child: Container(
                           width: double.infinity,
                           height: double.infinity,
                           child: _buildDataTable(context),
                         )),
-                    Flexible(
-                        flex: 1,
-                        child: Container(
-                            width: double.infinity,
-                            height: double.infinity,
-                            child: _buildDashboardContainer(context)))
                   ]),
             )),
-            Container(
-              width: 120,
-              height: double.infinity,
-              color: Colors.grey.shade300,
-              child: _buildSideMenu(context),
-            ),
           ],
         ));
   }
@@ -93,7 +78,7 @@ class _LandingState extends State<LandingPage> {
         Flexible(
             flex: 1,
             child: Container(
-              height: calculateWidth(120),
+              height: calculateWidth(120, context),
               color: Colors.transparent,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -117,7 +102,7 @@ class _LandingState extends State<LandingPage> {
                   Flexible(
                       flex: 1,
                       child: Text(
-                        "تواقيعي",
+                        AppLocalizations.of(context)!.mySignatures,
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
@@ -154,7 +139,7 @@ class _LandingState extends State<LandingPage> {
                   Flexible(
                       flex: 2,
                       child: Text(
-                        "المستخدمين المفضلين",
+                        AppLocalizations.of(context)!.favoritesUsers,
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
@@ -191,7 +176,7 @@ class _LandingState extends State<LandingPage> {
                   Flexible(
                       flex: 1,
                       child: Text(
-                        "تفويضاتي",
+                        AppLocalizations.of(context)!.myDelegations,
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
@@ -228,7 +213,7 @@ class _LandingState extends State<LandingPage> {
                   Flexible(
                       flex: 1,
                       child: Text(
-                        "سمات التطبيق",
+                        AppLocalizations.of(context)!.appTheme,
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
@@ -265,7 +250,7 @@ class _LandingState extends State<LandingPage> {
                   Flexible(
                       flex: 1,
                       child: Text(
-                        "تسجيل الخروج",
+                        AppLocalizations.of(context)!.logout,
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
@@ -303,9 +288,9 @@ class _LandingState extends State<LandingPage> {
                           width: double.infinity,
                           height: 60,
                           child: Text(
-                            "نظام تتبع المراسلات",
+                            AppLocalizations.of(context)!.appTitle,
                             style: Theme.of(context).textTheme.headline1,
-                            textAlign: TextAlign.end,
+                            textAlign: TextAlign.start,
                           ),
                         )),
                     Flexible(
@@ -315,12 +300,13 @@ class _LandingState extends State<LandingPage> {
                         width: double.infinity,
                         height: 30,
                         child: Text(
-                          "مرحبًا ربيع محمد المانع",
+                          AppLocalizations.of(context)!.hello +
+                              " ربيع محمد المانع",
                           style: Theme.of(context)
                               .textTheme
                               .headline2!
                               .copyWith(color: Colors.grey),
-                          textAlign: TextAlign.end,
+                          textAlign: TextAlign.start,
                         ),
                       ),
                     )
@@ -335,7 +321,7 @@ class _LandingState extends State<LandingPage> {
                   alignment: FractionalOffset.topCenter,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Container(
@@ -356,25 +342,26 @@ class _LandingState extends State<LandingPage> {
                               left: 20, right: 20, top: 0, bottom: 0),
                           height: 35,
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.max,
                             children: [
+                              Image(
+                                image: AssetImage(
+                                    returnImageNameBasedOnOppositeDirection(
+                                        "lib/assets/arrow", context, "png")),
+                                fit: BoxFit.contain,
+                                width: 50,
+                                height: double.infinity,
+                              ),
                               Text(
                                 "إدارة الخدمات المشتركة",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline2!
                                     .copyWith(color: Colors.grey),
+                                textAlign: TextAlign.start,
                               ),
-                              Image(
-                                image: AssetImage(
-                                  'lib/assets/arrow_left.png',
-                                ),
-                                fit: BoxFit.contain,
-                                width: 50,
-                                height: double.infinity,
-                              )
                             ],
                           )),
                       Spacer(),
@@ -425,6 +412,57 @@ class _LandingState extends State<LandingPage> {
                       Flexible(
                           flex: 1,
                           child: Container(
+                              color: Colors.transparent,
+                              width: double.infinity,
+                              height: double.infinity,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Flexible(
+                                    flex: 3,
+                                    child: Text(
+                                      calculateDate("dd", 'en'),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline3!
+                                          .copyWith(
+                                              fontSize: calculateFontSize(
+                                                  65, context)),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  Flexible(
+                                    flex: 2,
+                                    child: Text(
+                                      calculateDate(
+                                              "MMMM", getLocaleCode(context)) +
+                                          " " +
+                                          calculateDate("yyyy", 'en'),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline2!
+                                          .copyWith(
+                                              color: Colors.grey.shade400,
+                                              fontSize: 15),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  )
+                                ],
+                              ))),
+                      FractionallySizedBox(
+                          heightFactor: 0.7,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.grey.shade400,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(4))),
+                            width: 0.5,
+                          )),
+                      Flexible(
+                          flex: 1,
+                          child: Container(
                             color: Colors.transparent,
                             width: double.infinity,
                             height: double.infinity,
@@ -459,55 +497,7 @@ class _LandingState extends State<LandingPage> {
                                 )
                               ],
                             ),
-                          )),
-                      FractionallySizedBox(
-                          heightFactor: 0.7,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.grey.shade400,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(4))),
-                            width: 0.5,
-                          )),
-                      Flexible(
-                          flex: 1,
-                          child: Container(
-                              color: Colors.transparent,
-                              width: double.infinity,
-                              height: double.infinity,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Flexible(
-                                    flex: 3,
-                                    child: Text(
-                                      calculateDate("dd", 'en'),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline3!
-                                          .copyWith(fontSize: 65),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                  Flexible(
-                                    flex: 2,
-                                    child: Text(
-                                      calculateDate("MMMM", 'ar') +
-                                          " " +
-                                          calculateDate("yyyy", 'en'),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline2!
-                                          .copyWith(
-                                              color: Colors.grey.shade400,
-                                              fontSize: 15),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  )
-                                ],
-                              ))),
+                          ))
                     ],
                   ),
                 ),
@@ -561,18 +551,22 @@ class _LandingState extends State<LandingPage> {
                                         Flexible(
                                           flex: 1,
                                           child: Text(
-                                            "مراسلات تنتظر الإجراء",
+                                            AppLocalizations.of(context)!
+                                                .unreadCorrespondences,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headline2!
-                                                .copyWith(color: Colors.grey),
+                                                .copyWith(
+                                                    color: Colors.grey,
+                                                    fontSize: calculateFontSize(
+                                                        16, context)),
                                             textAlign: TextAlign.center,
                                           ),
                                         ),
                                         Flexible(
                                           flex: 1,
                                           child: Text(
-                                            "19",
+                                            "05",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headline3!
@@ -621,18 +615,22 @@ class _LandingState extends State<LandingPage> {
                                         Flexible(
                                           flex: 1,
                                           child: Text(
-                                            "مراسلات غير مقروءة",
+                                            AppLocalizations.of(context)!
+                                                .pendingCorrespondences,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headline2!
-                                                .copyWith(color: Colors.grey),
+                                                .copyWith(
+                                                    color: Colors.grey,
+                                                    fontSize: calculateFontSize(
+                                                        16, context)),
                                             textAlign: TextAlign.center,
                                           ),
                                         ),
                                         Flexible(
                                           flex: 1,
                                           child: Text(
-                                            "05",
+                                            "19",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headline3!
@@ -642,7 +640,7 @@ class _LandingState extends State<LandingPage> {
                                         )
                                       ],
                                     ))),
-                          ))
+                          )),
                     ],
                   ))),
           Flexible(
@@ -694,18 +692,25 @@ class _LandingState extends State<LandingPage> {
                                         Flexible(
                                           flex: 1,
                                           child: Text(
-                                            "أغلب إحالاتي ذهبت ل",
+                                            AppLocalizations.of(context)!
+                                                    .myTransfersInMonth +
+                                                " " +
+                                                calculateDate('MMMM',
+                                                    getLocaleCode(context)),
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headline2!
-                                                .copyWith(color: Colors.grey),
+                                                .copyWith(
+                                                    color: Colors.grey,
+                                                    fontSize: calculateFontSize(
+                                                        16, context)),
                                             textAlign: TextAlign.center,
                                           ),
                                         ),
                                         Flexible(
                                           flex: 1,
                                           child: Text(
-                                            "نورا الجيدا",
+                                            "20",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headline3!
@@ -754,18 +759,22 @@ class _LandingState extends State<LandingPage> {
                                         Flexible(
                                           flex: 1,
                                           child: Text(
-                                            "إحالاتي في شهر مارس",
+                                            AppLocalizations.of(context)!
+                                                .mostMyTransferWentTo,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headline2!
-                                                .copyWith(color: Colors.grey),
+                                                .copyWith(
+                                                    color: Colors.grey,
+                                                    fontSize: calculateFontSize(
+                                                        16, context)),
                                             textAlign: TextAlign.center,
                                           ),
                                         ),
                                         Flexible(
                                           flex: 1,
                                           child: Text(
-                                            "20",
+                                            "نورا الجيدا",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headline3!
@@ -820,11 +829,39 @@ class _LandingState extends State<LandingPage> {
                                 children: [
                                   Spacer(flex: 2),
                                   Flexible(
+                                      flex: 2,
+                                      child: Image(
+                                        image: AssetImage(
+                                          'lib/assets/flagged.png',
+                                        ),
+                                        fit: BoxFit.contain,
+                                        width: double.infinity,
+                                        height: double.infinity,
+                                        color: Colors.grey,
+                                      )),
+                                  Spacer(flex: 1),
+                                  Flexible(
+                                      flex: 10,
+                                      child: Container(
+                                          width: double.infinity,
+                                          child: Text(
+                                            AppLocalizations.of(context)!
+                                                .flagged,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline2!
+                                                .copyWith(
+                                                    color: Colors.grey,
+                                                    fontSize: calculateFontSize(
+                                                        16, context)),
+                                            textAlign: TextAlign.start,
+                                          ))),
+                                  Flexible(
                                       flex: 3,
                                       child: Container(
                                         width: double.infinity,
                                         child: Text(
-                                          "19",
+                                          "05",
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline3!
@@ -835,30 +872,6 @@ class _LandingState extends State<LandingPage> {
                                                           247, 148, 29, 1))),
                                           textAlign: TextAlign.center,
                                         ),
-                                      )),
-                                  Spacer(flex: 1),
-                                  Flexible(
-                                      flex: 10,
-                                      child: Container(
-                                          width: double.infinity,
-                                          child: Text(
-                                            "التنبيهات",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline2!
-                                                .copyWith(color: Colors.grey),
-                                            textAlign: TextAlign.right,
-                                          ))),
-                                  Flexible(
-                                      flex: 2,
-                                      child: Image(
-                                        image: AssetImage(
-                                          'lib/assets/notification.png',
-                                        ),
-                                        fit: BoxFit.contain,
-                                        width: double.infinity,
-                                        height: double.infinity,
-                                        color: Colors.grey,
                                       )),
                                   Spacer(flex: 2)
                                 ],
@@ -896,11 +909,39 @@ class _LandingState extends State<LandingPage> {
                                 children: [
                                   Spacer(flex: 2),
                                   Flexible(
+                                      flex: 2,
+                                      child: Image(
+                                        image: AssetImage(
+                                          'lib/assets/notification.png',
+                                        ),
+                                        fit: BoxFit.contain,
+                                        width: double.infinity,
+                                        height: double.infinity,
+                                        color: Colors.grey,
+                                      )),
+                                  Spacer(flex: 1),
+                                  Flexible(
+                                      flex: 10,
+                                      child: Container(
+                                          width: double.infinity,
+                                          child: Text(
+                                            AppLocalizations.of(context)!
+                                                .notifications,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline2!
+                                                .copyWith(
+                                                    color: Colors.grey,
+                                                    fontSize: calculateFontSize(
+                                                        16, context)),
+                                            textAlign: TextAlign.start,
+                                          ))),
+                                  Flexible(
                                       flex: 3,
                                       child: Container(
                                         width: double.infinity,
                                         child: Text(
-                                          "05",
+                                          "19",
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline3!
@@ -911,30 +952,6 @@ class _LandingState extends State<LandingPage> {
                                                           247, 148, 29, 1))),
                                           textAlign: TextAlign.center,
                                         ),
-                                      )),
-                                  Spacer(flex: 1),
-                                  Flexible(
-                                      flex: 10,
-                                      child: Container(
-                                          width: double.infinity,
-                                          child: Text(
-                                            "المحفوظات",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline2!
-                                                .copyWith(color: Colors.grey),
-                                            textAlign: TextAlign.right,
-                                          ))),
-                                  Flexible(
-                                      flex: 2,
-                                      child: Image(
-                                        image: AssetImage(
-                                          'lib/assets/flagged.png',
-                                        ),
-                                        fit: BoxFit.contain,
-                                        width: double.infinity,
-                                        height: double.infinity,
-                                        color: Colors.grey,
                                       )),
                                   Spacer(flex: 2)
                                 ],
@@ -953,8 +970,8 @@ class _LandingState extends State<LandingPage> {
       padding: EdgeInsets.only(
           left: 60,
           right: 60,
-          top: calculateHeight(100),
-          bottom: calculateHeight(80)),
+          top: calculateHeight(100, context),
+          bottom: calculateHeight(80, context)),
       child: Container(
         decoration: BoxDecoration(
           color: createMaterialColor(Color.fromRGBO(255, 255, 255, 0.8)),
@@ -974,7 +991,8 @@ class _LandingState extends State<LandingPage> {
         ),
         child: Column(
           children: [
-            _buildDataLabelTitleLabel(context, "البريد"),
+            _buildDataLabelTitleLabel(
+                context, AppLocalizations.of(context)!.mail),
             Table(
               border: TableBorder(
                   horizontalInside: BorderSide(
@@ -986,18 +1004,41 @@ class _LandingState extends State<LandingPage> {
                       color: Colors.grey.shade300,
                       style: BorderStyle.solid)),
               children: [
-                TableRow(
-                    children: [_buildInboxesRow(context, "لإجراء اللازم", 05)]),
-                TableRow(children: [_buildInboxesRow(context, "للتوقيع", 07)]),
-                TableRow(
-                    children: [_buildInboxesRow(context, "لأخذ العلم", 09)]),
-                TableRow(children: [_buildInboxesRow(context, "الكل", 21)])
+                TableRow(children: [
+                  _buildInboxesRow(
+                      context, AppLocalizations.of(context)!.forAction, 05)
+                ]),
+                TableRow(children: [
+                  TableRowInkWell(
+                      onTap: () {
+                        openInbox();
+                      },
+                      child: _buildInboxesRow(context,
+                          AppLocalizations.of(context)!.forSignature, 07))
+                ]),
+                TableRow(children: [
+                  TableRowInkWell(
+                      onTap: () {
+                        openInbox();
+                      },
+                      child: _buildInboxesRow(
+                          context, AppLocalizations.of(context)!.forInfo, 09))
+                ]),
+                TableRow(children: [
+                  TableRowInkWell(
+                      onTap: () {
+                        openInbox();
+                      },
+                      child: _buildInboxesRow(
+                          context, AppLocalizations.of(context)!.all, 21))
+                ])
               ],
             ),
             Container(
               height: 30,
             ),
-            _buildDataLabelTitleLabel(context, "المصنفات"),
+            _buildDataLabelTitleLabel(
+                context, AppLocalizations.of(context)!.folders),
             Table(
               border: TableBorder(
                   horizontalInside: BorderSide(
@@ -1010,19 +1051,36 @@ class _LandingState extends State<LandingPage> {
                       style: BorderStyle.solid)),
               children: [
                 TableRow(children: [
-                  _buildOtherFoldersRows(
-                      context, "المحفوظات", "lib/assets/flagged.png", true, 05)
+                  TableRowInkWell(
+                      onTap: () {
+                        openInbox();
+                      },
+                      child: _buildOtherFoldersRows(
+                          context,
+                          AppLocalizations.of(context)!.flagged,
+                          "lib/assets/flagged.png",
+                          true,
+                          05))
                 ]),
                 TableRow(children: [
-                  _buildOtherFoldersRows(context, "التنبيهات",
-                      "lib/assets/notification.png", true, 19)
+                  TableRowInkWell(
+                      onTap: () {
+                        openInbox();
+                      },
+                      child: _buildOtherFoldersRows(
+                          context,
+                          AppLocalizations.of(context)!.notifications,
+                          "lib/assets/notification.png",
+                          true,
+                          19))
                 ]),
               ],
             ),
             Container(
               height: 30,
             ),
-            _buildDataLabelTitleLabel(context, "البحث"),
+            _buildDataLabelTitleLabel(
+                context, AppLocalizations.of(context)!.search),
             Table(
               border: TableBorder(
                   horizontalInside: BorderSide(
@@ -1035,8 +1093,16 @@ class _LandingState extends State<LandingPage> {
                       style: BorderStyle.solid)),
               children: [
                 TableRow(children: [
-                  _buildOtherFoldersRows(
-                      context, "بحث متقدم", "lib/assets/search.png", false, 0)
+                  TableRowInkWell(
+                      onTap: () {
+                        openInbox();
+                      },
+                      child: _buildOtherFoldersRows(
+                          context,
+                          AppLocalizations.of(context)!.advancedSearch,
+                          "lib/assets/search.png",
+                          false,
+                          0))
                 ]),
               ],
             )
@@ -1051,14 +1117,14 @@ class _LandingState extends State<LandingPage> {
         padding: EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 0),
         color: Colors.transparent,
         width: double.infinity,
-        height: calculateHeight(50),
+        height: calculateHeight(50, context),
         child: Text(
           title,
           style: Theme.of(context)
               .textTheme
               .headline2!
               .copyWith(color: Colors.grey.shade400, fontSize: 12),
-          textAlign: TextAlign.right,
+          textAlign: TextAlign.start,
         ));
   }
 
@@ -1066,52 +1132,13 @@ class _LandingState extends State<LandingPage> {
     return Container(
       padding: EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 0),
       width: double.infinity,
-      height: calculateHeight(80),
+      height: calculateHeight(80, context),
       color: Colors.transparent,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Flexible(
-              flex: 2,
-              child: Image(
-                image: AssetImage(
-                  'lib/assets/arrow_left.png',
-                ),
-                fit: BoxFit.contain,
-                width: 50,
-                height: double.infinity,
-              )),
-          Flexible(
-            child: Container(
-                color: Colors.transparent,
-                width: 40,
-                child: Text(
-                  count.toString(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline2!
-                      .copyWith(fontSize: 17),
-                  textAlign: TextAlign.left,
-                )),
-          ),
-          Spacer(flex: 1),
-          Flexible(
-            flex: 15,
-            child: Container(
-                color: Colors.transparent,
-                width: double.infinity,
-                child: Text(
-                  title,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline1!
-                      .copyWith(color: Colors.grey, fontSize: 17),
-                  textAlign: TextAlign.right,
-                )),
-          ),
-          Spacer(flex: 1),
           Flexible(
               flex: 1,
               child: Container(
@@ -1124,49 +1151,7 @@ class _LandingState extends State<LandingPage> {
                         bottomRight: Radius.circular(6))),
                 width: 12,
                 height: 12,
-              ))
-        ],
-      ),
-    );
-  }
-
-  _buildOtherFoldersRows(BuildContext context, String title, String iconTitle,
-      bool showCount, int count) {
-    return Container(
-      padding: EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 0),
-      width: double.infinity,
-      height: calculateHeight(80),
-      color: Colors.transparent,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Flexible(
-              flex: 2,
-              child: Image(
-                image: AssetImage(
-                  'lib/assets/arrow_left.png',
-                ),
-                fit: BoxFit.contain,
-                width: 50,
-                height: double.infinity,
               )),
-          Flexible(
-              child: Visibility(
-            visible: showCount,
-            child: Container(
-                color: Colors.transparent,
-                width: 40,
-                child: Text(
-                  count.toString(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline2!
-                      .copyWith(fontSize: 17),
-                  textAlign: TextAlign.left,
-                )),
-          )),
           Spacer(flex: 1),
           Flexible(
             flex: 15,
@@ -1179,10 +1164,49 @@ class _LandingState extends State<LandingPage> {
                       .textTheme
                       .headline1!
                       .copyWith(color: Colors.grey, fontSize: 17),
-                  textAlign: TextAlign.right,
+                  textAlign: TextAlign.start,
                 )),
           ),
           Spacer(flex: 1),
+          Flexible(
+            child: Container(
+                color: Colors.transparent,
+                width: 40,
+                child: Text(
+                  count.toString(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline2!
+                      .copyWith(fontSize: 17),
+                  textAlign: TextAlign.end,
+                )),
+          ),
+          Flexible(
+              flex: 2,
+              child: Image(
+                image: AssetImage(returnImageNameBasedOnOppositeDirection(
+                    "lib/assets/arrow", context, "png")),
+                fit: BoxFit.contain,
+                width: 50,
+                height: double.infinity,
+              )),
+        ],
+      ),
+    );
+  }
+
+  _buildOtherFoldersRows(BuildContext context, String title, String iconTitle,
+      bool showCount, int count) {
+    return Container(
+      padding: EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 0),
+      width: double.infinity,
+      height: calculateHeight(80, context),
+      color: Colors.transparent,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
           Flexible(
               flex: 1,
               child: Container(
@@ -1195,17 +1219,59 @@ class _LandingState extends State<LandingPage> {
                   width: 50,
                   height: double.infinity,
                 ),
-              ))
+              )),
+          Spacer(flex: 1),
+          Flexible(
+            flex: 15,
+            child: Container(
+                color: Colors.transparent,
+                width: double.infinity,
+                child: Text(
+                  title,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline1!
+                      .copyWith(color: Colors.grey, fontSize: 17),
+                  textAlign: TextAlign.start,
+                )),
+          ),
+          Spacer(flex: 1),
+          Flexible(
+              child: Visibility(
+            visible: showCount,
+            child: Container(
+                color: Colors.transparent,
+                width: 40,
+                child: Text(
+                  count.toString(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline2!
+                      .copyWith(fontSize: 17),
+                  textAlign: TextAlign.end,
+                )),
+          )),
+          Flexible(
+              flex: 2,
+              child: Image(
+                image: AssetImage(returnImageNameBasedOnOppositeDirection(
+                    "lib/assets/arrow", context, "png")),
+                fit: BoxFit.contain,
+                width: 50,
+                height: double.infinity,
+              )),
         ],
       ),
     );
   }
-}
 
-String calculateDate(String dateFormat, String locale) {
-  initializeDateFormatting();
-  DateTime now = DateTime.now();
-  var formatter = DateFormat(dateFormat, locale);
-  String date = formatter.format(now);
-  return date;
+  openInbox() {
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        pageBuilder: (context, animation1, animation2) => InboxPage(),
+        transitionDuration: Duration(seconds: 0),
+      ),
+    );
+  }
 }

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:test_app/main.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'Landing.dart';
 
 class LoginPage extends StatefulWidget {
@@ -29,8 +33,7 @@ class _LoginState extends State<LoginPage> {
           height: 25,
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation
-          .startFloat, //by default should be endFlot but this is for arabic demo purposes
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 
@@ -40,9 +43,8 @@ class _LoginState extends State<LoginPage> {
       height: double.infinity,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage(
-            'lib/assets/background.png',
-          ),
+          image: AssetImage(returnImageNameBasedOnDirection(
+              "lib/assets/background", context, "png")),
           fit: BoxFit.fill,
         ),
       ),
@@ -53,15 +55,15 @@ class _LoginState extends State<LoginPage> {
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
-                color: Colors.transparent,
+                child: _buildLoginForm(context),
               )),
           Flexible(
               flex: 1,
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
-                child: _buildLoginForm(context),
-              ))
+                color: Colors.transparent,
+              )),
         ],
       ),
     );
@@ -97,16 +99,16 @@ class _LoginState extends State<LoginPage> {
                           ),
                         ),
                         Flexible(
-                          flex: 3,
+                          flex: 5,
                           child: Container(
                               child: Container(
                             color: Colors.transparent,
                             width: double.infinity,
                             height: double.infinity,
                             child: Text(
-                              "نظام تتبع المراسلات",
+                              AppLocalizations.of(context)!.appTitle,
                               style: Theme.of(context).textTheme.headline1,
-                              textAlign: TextAlign.end,
+                              textAlign: TextAlign.start,
                             ),
                           )),
                         ),
@@ -133,7 +135,7 @@ class _LoginState extends State<LoginPage> {
                       ),
                     ),
                     Flexible(
-                        flex: 3,
+                        flex: 5,
                         child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -148,8 +150,8 @@ class _LoginState extends State<LoginPage> {
                                   width: double.infinity,
                                   // height: double.infinity,
                                   child: Text(
-                                    "الاسم",
-                                    textAlign: TextAlign.right,
+                                    AppLocalizations.of(context)!.name,
+                                    textAlign: TextAlign.start,
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline3!
@@ -167,8 +169,7 @@ class _LoginState extends State<LoginPage> {
                                     width: double.infinity,
                                     height: 50,
                                     child: TextField(
-                                        textAlign: TextAlign
-                                            .end, //should be start by default, end is for arabic demo purpose
+                                        textAlign: TextAlign.start,
                                         decoration: new InputDecoration(
                                           border: InputBorder.none,
                                           focusedBorder: InputBorder.none,
@@ -196,8 +197,8 @@ class _LoginState extends State<LoginPage> {
                                   width: double.infinity,
                                   // height: double.infinity,
                                   child: Text(
-                                    "كلمة المرور",
-                                    textAlign: TextAlign.right,
+                                    AppLocalizations.of(context)!.password,
+                                    textAlign: TextAlign.start,
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline3!
@@ -215,8 +216,7 @@ class _LoginState extends State<LoginPage> {
                                     width: double.infinity,
                                     height: 50,
                                     child: TextField(
-                                        textAlign: TextAlign
-                                            .end, //should be start by default, end is for arabic demo purpose
+                                        textAlign: TextAlign.start,
                                         decoration: new InputDecoration(
                                           border: InputBorder.none,
                                           focusedBorder: InputBorder.none,
@@ -242,12 +242,39 @@ class _LoginState extends State<LoginPage> {
                                     height: 65,
                                     color: Colors.transparent,
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.end,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
+                                        Spacer(),
+                                        Flexible(
+                                            flex: 8,
+                                            child: GestureDetector(
+                                              onTap: () =>
+                                                  _authenticate(context),
+                                              child: Container(
+                                                padding: EdgeInsets.all(10),
+                                                decoration: BoxDecoration(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary,
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                6))),
+                                                child: Image(
+                                                  image: AssetImage(
+                                                      'lib/assets/faceid.png'),
+                                                  fit: BoxFit.fill,
+                                                ),
+                                              ),
+                                            )),
+                                        Flexible(
+                                          //space
+                                          flex: 1,
+                                          child: Container(),
+                                        ),
                                         Flexible(
                                           flex: 20,
                                           child: Container(
@@ -268,7 +295,8 @@ class _LoginState extends State<LoginPage> {
                                               child: ElevatedButton(
                                                 onPressed: loginButtonPressed,
                                                 child: Text(
-                                                  "تسجيل الدخول",
+                                                  AppLocalizations.of(context)!
+                                                      .login,
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .headline2!
@@ -278,33 +306,6 @@ class _LoginState extends State<LoginPage> {
                                                 ),
                                               )),
                                         ),
-                                        Flexible(
-                                          //space
-                                          flex: 1,
-                                          child: Container(),
-                                        ),
-                                        Flexible(
-                                            flex: 8,
-                                            child: ElevatedButton(
-                                              onPressed: authenticate(),
-                                              child: Container(
-                                                padding: EdgeInsets.all(10),
-                                                decoration: BoxDecoration(
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .primary,
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                6))),
-                                                child: Image(
-                                                  image: AssetImage(
-                                                      'lib/assets/faceid.png'),
-                                                  fit: BoxFit.fill,
-                                                ),
-                                              ),
-                                            )),
-                                        Spacer()
                                       ],
                                     ),
                                   )),
@@ -346,7 +347,8 @@ class _LoginState extends State<LoginPage> {
                           Container(
                               height: 35,
                               child: Text(
-                                "وزارة الخارجية © 2021",
+                                AppLocalizations.of(context)!.copyrights +
+                                    getCurrentYearString(),
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline2!
@@ -359,7 +361,7 @@ class _LoginState extends State<LoginPage> {
         ));
   }
 
-  authenticate() async {
+  _authenticate(BuildContext context) async {
     bool didAuthenticate = await LocalAuthentication().authenticate(
         localizedReason: 'Please authenticate to Login', biometricOnly: true);
     if (didAuthenticate) {
@@ -375,5 +377,13 @@ class _LoginState extends State<LoginPage> {
         transitionDuration: Duration(seconds: 0),
       ),
     );
+  }
+
+  String getCurrentYearString() {
+    initializeDateFormatting();
+    DateTime now = DateTime.now();
+    var formatter = DateFormat("yyyy", "en");
+    String date = formatter.format(now);
+    return date;
   }
 }

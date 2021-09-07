@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:test_app/presentation/widgets/app_routes.dart';
 import 'Inbox.dart';
 
 class LandingPage extends StatefulWidget {
@@ -11,6 +12,8 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingState extends State<LandingPage> {
+  late final AppRoutes appRoutes;
+  _logoutUser() => print('logout');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,52 +24,60 @@ class _LandingState extends State<LandingPage> {
 
   _buildBody(BuildContext context) {
     return Container(
-        width: double.infinity,
-        height: double.infinity,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Container(
-              width: 120,
-              height: double.infinity,
-              color: Colors.grey.shade300,
-              child: _buildSideMenu(context),
-            ),
-            Flexible(
-                child: Container(
+      width: double.infinity,
+      height: double.infinity,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Container(
+            width: 120,
+            height: double.infinity,
+            color: Colors.grey.shade300,
+            child: _buildSideMenu(context),
+          ),
+          Flexible(
+            child: Container(
               width: double.infinity,
               height: double.infinity,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(returnImageNameBasedOnDirection(
-                      "lib/assets/landing_background", context, "png")),
+                  image: AssetImage(
+                    returnImageNameBasedOnDirection(
+                        "lib/assets/landing_background", context, "png"),
+                  ),
                   fit: BoxFit.fill,
                 ),
               ),
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Flexible(
-                        flex: 1,
-                        child: Container(
-                            width: double.infinity,
-                            height: double.infinity,
-                            child: _buildDashboardContainer(context))),
-                    Flexible(
-                        flex: 1,
-                        child: Container(
-                          width: double.infinity,
-                          height: double.infinity,
-                          child: _buildDataTable(context),
-                        )),
-                  ]),
-            )),
-          ],
-        ));
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Flexible(
+                    flex: 1,
+                    child: Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      child: _buildDashboardContainer(context),
+                    ),
+                  ),
+                  Flexible(
+                    flex: 1,
+                    child: Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      child: _buildDataTable(context),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   _buildSideMenu(BuildContext context) {
@@ -76,155 +87,165 @@ class _LandingState extends State<LandingPage> {
       mainAxisSize: MainAxisSize.max,
       children: [
         Flexible(
-            flex: 1,
-            child: Container(
-              height: calculateWidth(120, context),
-              color: Colors.transparent,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Spacer(
-                    flex: 1,
-                  ),
-                  Flexible(
-                    flex: 3,
-                    child: Image(
-                      image: AssetImage(
-                        'lib/assets/signature.png',
-                      ),
-                      fit: BoxFit.contain,
-                      width: double.infinity,
-                      height: double.infinity,
+          flex: 1,
+          child: Container(
+            height: calculateWidth(120, context),
+            color: Colors.transparent,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Spacer(
+                  flex: 1,
+                ),
+                Flexible(
+                  flex: 3,
+                  child: Image(
+                    image: AssetImage(
+                      'lib/assets/signature.png',
                     ),
+                    fit: BoxFit.contain,
+                    width: double.infinity,
+                    height: double.infinity,
                   ),
-                  Flexible(
-                      flex: 1,
-                      child: Text(
-                        AppLocalizations.of(context)!.mySignatures,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline3!
-                            .copyWith(color: Colors.grey.shade600),
-                      ))
-                ],
-              ),
-            )),
+                ),
+                Flexible(
+                  flex: 1,
+                  child: Text(
+                    AppLocalizations.of(context)!.mySignatures,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: Colors.grey.shade600),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
         Flexible(
-            flex: 1,
-            child: Container(
-              height: 140,
-              color: Colors.transparent,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Spacer(
-                    flex: 1,
-                  ),
-                  Flexible(
-                    flex: 3,
-                    child: Image(
-                      image: AssetImage(
-                        'lib/assets/fav_users.png',
-                      ),
-                      fit: BoxFit.contain,
-                      width: double.infinity,
-                      height: double.infinity,
+          flex: 1,
+          child: Container(
+            height: 140,
+            color: Colors.transparent,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Spacer(
+                  flex: 1,
+                ),
+                Flexible(
+                  flex: 3,
+                  child: Image(
+                    image: AssetImage(
+                      'lib/assets/fav_users.png',
                     ),
+                    fit: BoxFit.contain,
+                    width: double.infinity,
+                    height: double.infinity,
                   ),
-                  Flexible(
-                      flex: 2,
-                      child: Text(
-                        AppLocalizations.of(context)!.favoritesUsers,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline3!
-                            .copyWith(color: Colors.grey.shade600),
-                      ))
-                ],
-              ),
-            )),
+                ),
+                Flexible(
+                  flex: 2,
+                  child: Text(
+                    AppLocalizations.of(context)!.favoritesUsers,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: Colors.grey.shade600),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
         Flexible(
-            flex: 1,
-            child: Container(
-              height: 120,
-              color: Colors.transparent,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Spacer(
-                    flex: 1,
-                  ),
-                  Flexible(
-                    flex: 3,
-                    child: Image(
-                      image: AssetImage(
-                        'lib/assets/delegation.png',
-                      ),
-                      fit: BoxFit.contain,
-                      width: double.infinity,
-                      height: double.infinity,
+          flex: 1,
+          child: Container(
+            height: 120,
+            color: Colors.transparent,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Spacer(
+                  flex: 1,
+                ),
+                Flexible(
+                  flex: 3,
+                  child: Image(
+                    image: AssetImage(
+                      'lib/assets/delegation.png',
                     ),
+                    fit: BoxFit.contain,
+                    width: double.infinity,
+                    height: double.infinity,
                   ),
-                  Flexible(
-                      flex: 1,
-                      child: Text(
-                        AppLocalizations.of(context)!.myDelegations,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline3!
-                            .copyWith(color: Colors.grey.shade600),
-                      ))
-                ],
-              ),
-            )),
+                ),
+                Flexible(
+                  flex: 1,
+                  child: Text(
+                    AppLocalizations.of(context)!.myDelegations,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: Colors.grey.shade600),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
         Flexible(
-            flex: 1,
-            child: Container(
-              height: 120,
-              color: Colors.transparent,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Spacer(
-                    flex: 1,
-                  ),
-                  Flexible(
-                    flex: 3,
-                    child: Image(
-                      image: AssetImage(
-                        'lib/assets/palette_dark.png',
-                      ),
-                      fit: BoxFit.contain,
-                      width: double.infinity,
-                      height: double.infinity,
+          flex: 1,
+          child: Container(
+            height: 120,
+            color: Colors.transparent,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Spacer(
+                  flex: 1,
+                ),
+                Flexible(
+                  flex: 3,
+                  child: Image(
+                    image: AssetImage(
+                      'lib/assets/palette_dark.png',
                     ),
+                    fit: BoxFit.contain,
+                    width: double.infinity,
+                    height: double.infinity,
                   ),
-                  Flexible(
-                      flex: 1,
-                      child: Text(
-                        AppLocalizations.of(context)!.appTheme,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline3!
-                            .copyWith(color: Colors.grey.shade600),
-                      )),
-                ],
-              ),
-            )),
+                ),
+                Flexible(
+                  flex: 1,
+                  child: Text(
+                    AppLocalizations.of(context)!.appTheme,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: Colors.grey.shade600),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
         Flexible(
-            flex: 1,
+          flex: 1,
+          child: InkWell(
+            onTap: _logoutUser,
             child: Container(
               height: 120,
               color: Colors.transparent,
@@ -248,18 +269,21 @@ class _LandingState extends State<LandingPage> {
                     ),
                   ),
                   Flexible(
-                      flex: 1,
-                      child: Text(
-                        AppLocalizations.of(context)!.logout,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline3!
-                            .copyWith(color: Colors.grey.shade600),
-                      ))
+                    flex: 1,
+                    child: Text(
+                      AppLocalizations.of(context)!.logout,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline3!
+                          .copyWith(color: Colors.grey.shade600),
+                    ),
+                  ),
                 ],
               ),
-            ))
+            ),
+          ),
+        )
       ],
     );
   }

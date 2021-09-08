@@ -30,5 +30,6 @@
   "unread": "غير مقروء",
   "sender": "المرسل",
   "secret": "سري",
-  "urgent": "عاجل"
+  "urgent": "عاجل",
+  "allInbox":"كل البريد"
 }

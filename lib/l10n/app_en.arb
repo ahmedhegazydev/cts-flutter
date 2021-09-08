@@ -30,5 +30,6 @@
   "unread": "Unread",
   "sender": "Sender",
   "secret": "Secret",
-  "urgent": "Urgent"
+  "urgent": "Urgent",
+  "allInbox":"All inbox"
 }

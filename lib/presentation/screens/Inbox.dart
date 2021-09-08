@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:test_app/main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
+import 'package:test_app/presentation/widgets/all_inbox_list.dart';
 
 class InboxPage extends StatefulWidget {
   InboxPage({Key? key}) : super(key: key);
@@ -11,8 +12,6 @@ class InboxPage extends StatefulWidget {
 }
 
 class _InboxState extends State<InboxPage> {
-  bool filterUnread = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,19 +56,13 @@ class _InboxState extends State<InboxPage> {
                     ),
                     child: _buildTopBar(context),
                   ),
-                  //filter bar
-                  Container(
-                    width: double.infinity,
-                    height: 85,
-                    color: Colors.grey.shade100,
-                    child: _buildFilterBar(context),
-                  ),
                   //inbox menu (filters with inbox type or with purpose -- depends on the configuration)
                   //and correspondences table view container
                   Container(
-                      width: double.infinity,
-                      height: 10,
-                      color: Colors.transparent),
+                    width: double.infinity,
+                    height: 10,
+                    color: Colors.transparent,
+                  ),
                   Expanded(
                     child: Column(
                       children: [
@@ -187,7 +180,10 @@ class _InboxState extends State<InboxPage> {
                           Image(
                             image: AssetImage(
                               returnImageNameBasedOnOppositeDirection(
-                                  "lib/assets/arrow", context, "png"),
+                                "lib/assets/arrow",
+                                context,
+                                "png",
+                              ),
                             ),
                             fit: BoxFit.contain,
                             width: 50,
@@ -271,354 +267,6 @@ class _InboxState extends State<InboxPage> {
     );
   }
 
-  _buildFilterBar(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      color: Colors.transparent,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          //read / unread container
-          Flexible(
-            flex: 2,
-            child: Container(
-              height: double.infinity,
-              color: Colors.transparent,
-              child: Row(
-                children: [
-                  Transform.scale(
-                    scale: 1.2,
-                    child: Checkbox(
-                      value: filterUnread,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(3)),
-                      checkColor: Theme.of(context).colorScheme.primary,
-                      activeColor: Colors.grey.shade300,
-                      fillColor:
-                          MaterialStateProperty.all(Colors.grey.shade300),
-                      onChanged: (bool? value) {
-                        setState(() {
-                          this.filterUnread = value ?? false;
-                        });
-                      },
-                    ),
-                  ),
-                  Text(
-                    AppLocalizations.of(context)!.unread,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline2!
-                        .copyWith(color: Colors.grey, fontSize: 16),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          //separator
-          FractionallySizedBox(
-            heightFactor: 0.7,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.grey.shade400,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(4),
-                ),
-              ),
-              width: 0.5,
-            ),
-          ),
-          //fav users container
-          Flexible(
-            flex: 7,
-            child: _buildFilterSenders(context),
-          ),
-          FractionallySizedBox(
-            heightFactor: 0.7,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.grey.shade400,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(4),
-                ),
-              ),
-              width: 0.5,
-            ),
-          ),
-          //urgnet / secret filter container
-          Flexible(
-            flex: 5,
-            child: Container(
-              color: Colors.transparent,
-              padding:
-                  EdgeInsets.only(left: 20, right: 20, top: 25, bottom: 25),
-              child: Row(
-                children: [
-                  Flexible(
-                    flex: 1,
-                    child: Container(
-                      color: Colors.transparent,
-                      padding: EdgeInsets.only(left: 5, right: 5),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(6),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Container(
-                              width: 40,
-                              height: double.infinity,
-                              color: Colors.transparent,
-                              child: Image(
-                                image: AssetImage(
-                                  'lib/assets/urgent.png',
-                                ),
-                                fit: BoxFit.contain,
-                                width: double.infinity,
-                                height: double.infinity,
-                                color: Colors.white,
-                              ),
-                            ),
-                            Expanded(
-                              child: Center(
-                                child: Text(
-                                  AppLocalizations.of(context)!.urgent,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline2!
-                                      .copyWith(
-                                          color: Colors.white, fontSize: 14),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: Container(
-                      color: Colors.transparent,
-                      padding: EdgeInsets.only(left: 5, right: 5),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade300,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(6),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Container(
-                              width: 40,
-                              height: double.infinity,
-                              color: Colors.transparent,
-                              child: Image(
-                                image: AssetImage(
-                                  'lib/assets/secret.png',
-                                ),
-                                fit: BoxFit.contain,
-                                width: double.infinity,
-                                height: double.infinity,
-                                color: createMaterialColor(
-                                  Color.fromRGBO(77, 77, 77, 1),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Center(
-                                child: Text(
-                                  AppLocalizations.of(context)!.secret,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline2!
-                                      .copyWith(
-                                          color: createMaterialColor(
-                                            Color.fromRGBO(77, 77, 77, 1),
-                                          ),
-                                          fontSize: 14),
-                                  textAlign: TextAlign.start,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          FractionallySizedBox(
-            heightFactor: 0.7,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.grey.shade400,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(4),
-                ),
-              ),
-              width: 0.5,
-            ),
-          ),
-          //clear button container
-          Container(
-            width: 90,
-            height: 40,
-            color: Colors.transparent,
-            child: Image(
-              image: AssetImage(
-                'lib/assets/clear_filter.png',
-              ),
-              fit: BoxFit.contain,
-              width: double.infinity,
-              height: double.infinity,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  _buildFilterSenders(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(left: 30, right: 30),
-      color: Colors.transparent,
-      child: Row(
-        children: [
-          Container(
-            padding: EdgeInsets.only(left: 20, right: 20),
-            child: Text(
-              AppLocalizations.of(context)!.sender,
-              style: Theme.of(context).textTheme.headline2!.copyWith(
-                    color: Colors.grey,
-                    fontSize: 16,
-                  ),
-            ),
-          ),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Flexible(
-                  flex: 1,
-                  child: FractionallySizedBox(
-                    heightFactor: 0.65,
-                    child: Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                            image: AssetImage(
-                              'lib/assets/unknown_user.png',
-                            ),
-                            fit: BoxFit.fitHeight),
-                        border: Border.all(
-                          width: 4,
-                          color: Colors.grey.shade300,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Flexible(
-                  flex: 1,
-                  child: FractionallySizedBox(
-                    heightFactor: 0.65,
-                    child: Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: AssetImage(
-                            'lib/assets/unknown_user.png',
-                          ),
-                          fit: BoxFit.fitHeight,
-                        ),
-                        border: Border.all(
-                          width: 4,
-                          color: Colors.grey.shade300,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Flexible(
-                  flex: 1,
-                  child: FractionallySizedBox(
-                    heightFactor: 0.65,
-                    child: Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: AssetImage(
-                            'lib/assets/unknown_user.png',
-                          ),
-                          fit: BoxFit.fitHeight,
-                        ),
-                        border: Border.all(
-                          width: 4,
-                          color: Colors.grey.shade300,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Flexible(
-                  flex: 1,
-                  child: FractionallySizedBox(
-                    heightFactor: 0.65,
-                    child: Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: AssetImage(
-                            'lib/assets/unknown_user.png',
-                          ),
-                          fit: BoxFit.fitHeight,
-                        ),
-                        border: Border.all(
-                          width: 4,
-                          color: Colors.grey.shade300,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   _buildTopInboxMenu(BuildContext context) {
     return Container(
       color: Colors.transparent,
@@ -630,10 +278,10 @@ class _InboxState extends State<InboxPage> {
           tabs: [
             Text(
               AppLocalizations.of(context)!.all,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline1!
-                  .copyWith(color: Colors.grey, fontSize: 21),
+              style: Theme.of(context).textTheme.headline1!.copyWith(
+                    color: Colors.grey,
+                    fontSize: 21,
+                  ),
             ),
             Text(
               AppLocalizations.of(context)!.incoming,
@@ -667,23 +315,7 @@ class _InboxState extends State<InboxPage> {
             alignment: TabBarAlignment.start,
           ),
           views: [
-            Container(
-              width: double.infinity,
-              height: double.infinity,
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade400,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(4),
-                      ),
-                    ),
-                    height: 0.5,
-                  ),
-                ],
-              ),
-            ),
+            AllInboxList(),
             Container(
               width: double.infinity,
               height: double.infinity,
@@ -767,7 +399,9 @@ class _InboxState extends State<InboxPage> {
             height: 20,
           ),
           _buildSideMenuTitleLabel(
-              context, AppLocalizations.of(context)!.folders),
+            context,
+            AppLocalizations.of(context)!.folders,
+          ),
           //line separator
           Container(
             decoration: BoxDecoration(
@@ -793,18 +427,19 @@ class _InboxState extends State<InboxPage> {
 
   _buildSideMenuTitleLabel(BuildContext context, String title) {
     return Container(
-        padding: EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 0),
-        color: Colors.transparent,
-        width: double.infinity,
-        height: calculateHeight(50, context),
-        child: Text(
-          title,
-          style: Theme.of(context)
-              .textTheme
-              .headline2!
-              .copyWith(color: Colors.grey.shade500, fontSize: 15),
-          textAlign: TextAlign.start,
-        ));
+      padding: EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 0),
+      color: Colors.transparent,
+      width: double.infinity,
+      height: calculateHeight(50, context),
+      child: Text(
+        title,
+        style: Theme.of(context)
+            .textTheme
+            .headline2!
+            .copyWith(color: Colors.grey.shade500, fontSize: 15),
+        textAlign: TextAlign.start,
+      ),
+    );
   }
 
   _buildSideMenuInboxes(BuildContext context) {
@@ -814,15 +449,17 @@ class _InboxState extends State<InboxPage> {
       color: Colors.transparent,
       child: Column(
         children: [
-          Container(
-            width: double.infinity,
-            height: calculateHeight(80, context),
-            child: Align(
+          GestureDetector(
+            // onTap:,
+            child: Container(
+              width: double.infinity,
+              height: calculateHeight(80, context),
+              child: Align(
                 alignment: isDirectionRTL(context)
                     ? FractionalOffset.centerRight
                     : FractionalOffset.centerLeft,
                 child: Text(
-                  AppLocalizations.of(context)!.all,
+                  AppLocalizations.of(context)!.allInbox,
                   style: Theme.of(context).textTheme.headline1!.copyWith(
                         color: createMaterialColor(
                           Color.fromRGBO(100, 100, 100, 1),
@@ -830,7 +467,9 @@ class _InboxState extends State<InboxPage> {
                         fontSize: 20,
                       ),
                   textAlign: TextAlign.start,
-                )),
+                ),
+              ),
+            ),
           ),
           Container(
             width: double.infinity,

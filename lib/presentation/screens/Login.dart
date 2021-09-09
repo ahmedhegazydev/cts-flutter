@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:test_app/main.dart';
+import 'package:cts/main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -29,7 +29,7 @@ class _LoginState extends State<LoginPage> {
         ),
         child: Image(
           image: AssetImage(
-            'lib/assets/palette.png',
+            'assets/images/palette.png',
           ),
           fit: BoxFit.contain,
           width: 25,
@@ -48,7 +48,7 @@ class _LoginState extends State<LoginPage> {
         image: DecorationImage(
           image: AssetImage(
             returnImageNameBasedOnDirection(
-                "lib/assets/background", context, "png"),
+                "assets/images/background", context, "png"),
           ),
           fit: BoxFit.fill,
         ),
@@ -274,8 +274,8 @@ class _LoginState extends State<LoginPage> {
                                         ),
                                       ),
                                       child: Image(
-                                        image:
-                                            AssetImage('lib/assets/faceid.png'),
+                                        image: AssetImage(
+                                            'assets/images/faceid.png'),
                                         fit: BoxFit.fill,
                                       ),
                                     ),

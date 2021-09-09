@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/main.dart';
+import 'package:cts/main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
-import 'package:test_app/presentation/widgets/all_inbox_list.dart';
+import 'package:cts/presentation/widgets/all_mails_list.dart';
 
 class InboxPage extends StatefulWidget {
   InboxPage({Key? key}) : super(key: key);
@@ -180,7 +180,7 @@ class _InboxState extends State<InboxPage> {
                           Image(
                             image: AssetImage(
                               returnImageNameBasedOnOppositeDirection(
-                                "lib/assets/arrow",
+                                "assets/images/arrow",
                                 context,
                                 "png",
                               ),
@@ -255,7 +255,7 @@ class _InboxState extends State<InboxPage> {
             color: Colors.transparent,
             child: Image(
               image: AssetImage(
-                'lib/assets/menu.png',
+                'assets/images/menu.png',
               ),
               fit: BoxFit.contain,
               width: double.infinity,
@@ -315,7 +315,7 @@ class _InboxState extends State<InboxPage> {
             alignment: TabBarAlignment.start,
           ),
           views: [
-            AllInboxList(),
+            AllMailsList(),
             Container(
               width: double.infinity,
               height: double.infinity,
@@ -413,11 +413,11 @@ class _InboxState extends State<InboxPage> {
             height: 1,
           ),
           _buildSideMenuFolders(context, AppLocalizations.of(context)!.flagged,
-              "lib/assets/flagged.png", true, 05),
+              "assets/images/flagged.png", true, 05),
           _buildSideMenuFolders(
               context,
               AppLocalizations.of(context)!.notifications,
-              "lib/assets/notification.png",
+              "assets/images/notification.png",
               true,
               19)
         ],

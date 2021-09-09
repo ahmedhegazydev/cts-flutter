@@ -1,16 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:test_app/main.dart';
+import 'package:cts/main.dart';
+import 'package:cts/presentation/screens/document_page.dart';
 
-class AllInboxList extends StatefulWidget {
-  const AllInboxList({Key? key}) : super(key: key);
+class AllMailsList extends StatefulWidget {
+  const AllMailsList({Key? key}) : super(key: key);
 
   @override
-  _AllInboxListtate createState() => _AllInboxListtate();
+  _AAllMailsListstate createState() => _AAllMailsListstate();
 }
 
-class _AllInboxListtate extends State<AllInboxList> {
+class _AAllMailsListstate extends State<AllMailsList> {
   bool filterUnread = false;
 
   @override
@@ -31,162 +32,229 @@ class _AllInboxListtate extends State<AllInboxList> {
             width: width,
             height: 600,
             color: Colors.transparent,
-            child: _buildInboxeList(),
+            child: _buildMailsList(),
           ),
         ],
       ),
     );
   }
 
-  ListView _buildInboxeList() {
+  openPDFPage() {
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        pageBuilder: (context, animation1, animation2) => DocumentPage(),
+        transitionDuration: Duration(seconds: 0),
+      ),
+    );
+  }
+
+  ListView _buildMailsList() {
     return new ListView.builder(
       itemCount: 7,
       itemBuilder: (BuildContext context, int index) {
-        return SizedBox(
-          height: 150,
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.grey[300] ?? Colors.transparent,
+        return InkWell(
+          onTap: openPDFPage,
+          child: SizedBox(
+            height: 150,
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.grey[300] ?? Colors.transparent,
+                ),
               ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Column(
-                children: [
-                  ListTile(
-                    title: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 15, left: 15),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.primary,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(6),
-                                topRight: Radius.circular(6),
-                                bottomLeft: Radius.circular(6),
-                                bottomRight: Radius.circular(6),
-                              ),
-                            ),
-                            width: 12,
-                            height: 12,
-                          ),
-                        ),
-                        Text(
-                          'اقتراح تعديل السقف السنوي',
-                          style:
-                              Theme.of(context).textTheme.headline1!.copyWith(
-                                    color: Colors.grey[700],
-                                    fontSize: 19,
-                                  ),
-                        ),
-                      ],
-                    ),
-                    subtitle: Padding(
-                      padding:
-                          const EdgeInsets.only(right: 40, left: 40, top: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: Row(
                         children: [
-                          Text(
-                            'المرسل: شفيق عبدالرحمن',
-                            style:
-                                Theme.of(context).textTheme.headline1!.copyWith(
-                                      color: Colors.grey[400],
-                                      fontSize: 13,
-                                    ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 15, left: 15),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.primary,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(6),
+                                  topRight: Radius.circular(6),
+                                  bottomLeft: Radius.circular(6),
+                                  bottomRight: Radius.circular(6),
+                                ),
+                              ),
+                              width: 12,
+                              height: 12,
+                            ),
                           ),
                           Text(
-                            '08/09/2021',
+                            'اقتراح تعديل السقف السنوي',
                             style:
                                 Theme.of(context).textTheme.headline1!.copyWith(
-                                      color: Colors.grey[400],
-                                      fontSize: 13,
+                                      color: Colors.grey[700],
+                                      fontSize: 19,
                                     ),
                           ),
                         ],
                       ),
+                      subtitle: Padding(
+                        padding:
+                            const EdgeInsets.only(right: 40, left: 40, top: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'المرسل: شفيق عبدالرحمن',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline1!
+                                  .copyWith(
+                                    color: Colors.grey[400],
+                                    fontSize: 13,
+                                  ),
+                            ),
+                            Text(
+                              '08/09/2021',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline1!
+                                  .copyWith(
+                                    color: Colors.grey[400],
+                                    fontSize: 13,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 8.0, left: 8.0),
-                    child: SizedBox(
-                      height: 50,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 35,
-                            width: 140,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.grey.shade300,
-                              ),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(5),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  color: Colors.white,
-                                  child: Image(
-                                    alignment: Alignment.center,
-                                    image: AssetImage(
-                                      'lib/assets/urgent.png',
-                                    ),
-                                    color: Colors.red,
-                                  ),
-                                ),
-                                Center(
-                                  child: Text(
-                                    AppLocalizations.of(context)!.urgent,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline2!
-                                        .copyWith(
-                                            color: Colors.red, fontSize: 14),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(right: 8.0, left: 8.0),
-                            child: Container(
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0, left: 8.0),
+                      child: SizedBox(
+                        height: 50,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
                               height: 35,
                               width: 140,
-                              color: Colors.transparent,
-                              padding: EdgeInsets.only(left: 5, right: 5),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.transparent,
-                                  border: Border.all(
-                                    color: Colors.grey.shade300,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.grey.shade300,
+                                ),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(5),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    color: Colors.white,
+                                    child: Image(
+                                      alignment: Alignment.center,
+                                      image: AssetImage(
+                                        'assets/images/urgent.png',
+                                      ),
+                                      color: Colors.red,
+                                    ),
                                   ),
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(3),
+                                  Center(
+                                    child: Text(
+                                      AppLocalizations.of(context)!.urgent,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline2!
+                                          .copyWith(
+                                              color: Colors.red, fontSize: 14),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(right: 8.0, left: 8.0),
+                              child: Container(
+                                height: 35,
+                                width: 140,
+                                color: Colors.transparent,
+                                padding: EdgeInsets.only(left: 5, right: 5),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.transparent,
+                                    border: Border.all(
+                                      color: Colors.grey.shade300,
+                                    ),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(3),
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        color: Colors.transparent,
+                                        child: Image(
+                                          image: AssetImage(
+                                            'assets/images/secret.png',
+                                          ),
+                                          alignment: Alignment.center,
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                      ),
+                                      Center(
+                                        child: Text(
+                                          AppLocalizations.of(context)!.secret,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline2!
+                                              .copyWith(
+                                                  color: Theme.of(context)
+                                                      .primaryColor,
+                                                  fontSize: 12),
+                                          textAlign: TextAlign.start,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      color: Colors.transparent,
-                                      child: Image(
-                                        image: AssetImage(
-                                          'lib/assets/secret.png',
-                                        ),
-                                        alignment: Alignment.center,
-                                        color: Theme.of(context).primaryColor,
-                                      ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(right: 8.0, left: 8.0),
+                              child: Container(
+                                height: 35,
+                                width: 150,
+                                margin: EdgeInsets.only(left: 10),
+                                color: Colors.transparent,
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 10),
+                                  decoration: BoxDecoration(
+                                    color: Colors.transparent,
+                                    border: Border.all(
+                                      color: Colors.grey.shade300,
                                     ),
-                                    Center(
-                                      child: Text(
-                                        AppLocalizations.of(context)!.secret,
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(3),
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        color: Colors.transparent,
+                                        child: Image(
+                                          image: AssetImage(
+                                            'assets/images/secret.png',
+                                          ),
+                                          alignment: Alignment.center,
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                      ),
+                                      Text(
+                                        AppLocalizations.of(context)!.closed +
+                                            " / " +
+                                            "محمد الجابر",
                                         style: Theme.of(context)
                                             .textTheme
                                             .headline2!
@@ -196,17 +264,17 @@ class _AllInboxListtate extends State<AllInboxList> {
                                                 fontSize: 12),
                                         textAlign: TextAlign.start,
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -327,7 +395,7 @@ class _AllInboxListtate extends State<AllInboxList> {
                               color: Colors.transparent,
                               child: Image(
                                 image: AssetImage(
-                                  'lib/assets/urgent.png',
+                                  'assets/images/urgent.png',
                                 ),
                                 fit: BoxFit.contain,
                                 width: double.infinity,
@@ -375,7 +443,7 @@ class _AllInboxListtate extends State<AllInboxList> {
                               color: Colors.transparent,
                               child: Image(
                                 image: AssetImage(
-                                  'lib/assets/secret.png',
+                                  'assets/images/secret.png',
                                 ),
                                 fit: BoxFit.contain,
                                 width: double.infinity,
@@ -429,7 +497,7 @@ class _AllInboxListtate extends State<AllInboxList> {
             color: Colors.transparent,
             child: Image(
               image: AssetImage(
-                'lib/assets/clear_filter.png',
+                'assets/images/clear_filter.png',
               ),
               fit: BoxFit.contain,
               width: double.infinity,
@@ -476,7 +544,7 @@ class _AllInboxListtate extends State<AllInboxList> {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                             image: AssetImage(
-                              'lib/assets/unknown_user.png',
+                              'assets/images/unknown_user.png',
                             ),
                             fit: BoxFit.fitHeight),
                         border: Border.all(
@@ -499,7 +567,7 @@ class _AllInboxListtate extends State<AllInboxList> {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           image: AssetImage(
-                            'lib/assets/unknown_user.png',
+                            'assets/images/unknown_user.png',
                           ),
                           fit: BoxFit.fitHeight,
                         ),
@@ -523,7 +591,7 @@ class _AllInboxListtate extends State<AllInboxList> {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           image: AssetImage(
-                            'lib/assets/unknown_user.png',
+                            'assets/images/unknown_user.png',
                           ),
                           fit: BoxFit.fitHeight,
                         ),
@@ -547,7 +615,7 @@ class _AllInboxListtate extends State<AllInboxList> {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           image: AssetImage(
-                            'lib/assets/unknown_user.png',
+                            'assets/images/unknown_user.png',
                           ),
                           fit: BoxFit.fitHeight,
                         ),

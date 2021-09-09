@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:test_app/presentation/widgets/app_routes.dart';
+import 'package:cts/presentation/widgets/app_routes.dart';
 import 'presentation/screens/Login.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';

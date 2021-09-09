@@ -31,5 +31,6 @@
   "sender": "Sender",
   "secret": "Secret",
   "urgent": "Urgent",
-  "allInbox":"All inbox"
+  "allInbox":"All inbox",
+  "closed":"Closed"
 }

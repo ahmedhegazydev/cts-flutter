@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:test_app/presentation/screens/Landing.dart';
-import 'package:test_app/constants/globals.dart';
+import 'package:cts/presentation/screens/Landing.dart';
+import 'package:cts/constants/globals.dart';
 import '../screens/Login.dart';
 
 class AppRoutes {

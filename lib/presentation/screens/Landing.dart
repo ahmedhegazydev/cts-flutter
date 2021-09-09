@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/main.dart';
+import 'package:cts/main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:test_app/presentation/widgets/app_routes.dart';
+import 'package:cts/presentation/widgets/app_routes.dart';
 import 'Inbox.dart';
 
 class LandingPage extends StatefulWidget {
@@ -45,7 +45,7 @@ class _LandingState extends State<LandingPage> {
                 image: DecorationImage(
                   image: AssetImage(
                     returnImageNameBasedOnDirection(
-                      "lib/assets/landing_background",
+                      "assets/images/landing_background",
                       context,
                       "png",
                     ),
@@ -106,7 +106,7 @@ class _LandingState extends State<LandingPage> {
                   flex: 3,
                   child: Image(
                     image: AssetImage(
-                      'lib/assets/signature.png',
+                      'assets/images/signature.png',
                     ),
                     fit: BoxFit.contain,
                     width: double.infinity,
@@ -145,7 +145,7 @@ class _LandingState extends State<LandingPage> {
                   flex: 3,
                   child: Image(
                     image: AssetImage(
-                      'lib/assets/fav_users.png',
+                      'assets/images/fav_users.png',
                     ),
                     fit: BoxFit.contain,
                     width: double.infinity,
@@ -184,7 +184,7 @@ class _LandingState extends State<LandingPage> {
                   flex: 3,
                   child: Image(
                     image: AssetImage(
-                      'lib/assets/delegation.png',
+                      'assets/images/delegation.png',
                     ),
                     fit: BoxFit.contain,
                     width: double.infinity,
@@ -223,7 +223,7 @@ class _LandingState extends State<LandingPage> {
                   flex: 3,
                   child: Image(
                     image: AssetImage(
-                      'lib/assets/palette_dark.png',
+                      'assets/images/palette_dark.png',
                     ),
                     fit: BoxFit.contain,
                     width: double.infinity,
@@ -264,7 +264,7 @@ class _LandingState extends State<LandingPage> {
                     flex: 3,
                     child: Image(
                       image: AssetImage(
-                        'lib/assets/logout.png',
+                        'assets/images/logout.png',
                       ),
                       fit: BoxFit.contain,
                       width: double.infinity,
@@ -382,7 +382,7 @@ class _LandingState extends State<LandingPage> {
                         Image(
                           image: AssetImage(
                             returnImageNameBasedOnOppositeDirection(
-                                "lib/assets/arrow", context, "png"),
+                                "assets/images/arrow", context, "png"),
                           ),
                           fit: BoxFit.contain,
                           width: 50,
@@ -882,7 +882,7 @@ class _LandingState extends State<LandingPage> {
                               flex: 2,
                               child: Image(
                                 image: AssetImage(
-                                  'lib/assets/flagged.png',
+                                  'assets/images/flagged.png',
                                 ),
                                 fit: BoxFit.contain,
                                 width: double.infinity,
@@ -968,7 +968,7 @@ class _LandingState extends State<LandingPage> {
                               flex: 2,
                               child: Image(
                                 image: AssetImage(
-                                  'lib/assets/notification.png',
+                                  'assets/images/notification.png',
                                 ),
                                 fit: BoxFit.contain,
                                 width: double.infinity,
@@ -1155,7 +1155,7 @@ class _LandingState extends State<LandingPage> {
                       child: _buildOtherFoldersRows(
                         context,
                         AppLocalizations.of(context)!.flagged,
-                        "lib/assets/flagged.png",
+                        "assets/images/flagged.png",
                         true,
                         05,
                       ),
@@ -1171,7 +1171,7 @@ class _LandingState extends State<LandingPage> {
                       child: _buildOtherFoldersRows(
                         context,
                         AppLocalizations.of(context)!.notifications,
-                        "lib/assets/notification.png",
+                        "assets/images/notification.png",
                         true,
                         19,
                       ),
@@ -1206,7 +1206,7 @@ class _LandingState extends State<LandingPage> {
                       child: _buildOtherFoldersRows(
                           context,
                           AppLocalizations.of(context)!.advancedSearch,
-                          "lib/assets/search.png",
+                          "assets/images/search.png",
                           false,
                           0),
                     ),
@@ -1300,7 +1300,7 @@ class _LandingState extends State<LandingPage> {
             child: Image(
               image: AssetImage(
                 returnImageNameBasedOnOppositeDirection(
-                    "lib/assets/arrow", context, "png"),
+                    "assets/images/arrow", context, "png"),
               ),
               fit: BoxFit.contain,
               width: 50,
@@ -1377,7 +1377,7 @@ class _LandingState extends State<LandingPage> {
             child: Image(
               image: AssetImage(
                 returnImageNameBasedOnOppositeDirection(
-                    "lib/assets/arrow", context, "png"),
+                    "assets/images/arrow", context, "png"),
               ),
               fit: BoxFit.contain,
               width: 50,

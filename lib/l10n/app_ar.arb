@@ -31,5 +31,6 @@
   "sender": "المرسل",
   "secret": "سري",
   "urgent": "عاجل",
-  "allInbox":"كل البريد"
+  "allInbox":"كل البريد",
+  "closed":"مقفلة"
 }

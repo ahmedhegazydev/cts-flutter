@@ -357,11 +357,17 @@ class _DocumentPageState extends State<DocumentPage> {
             ],
           ),
           openExportDialog == true
-              ? Positioned(
-                  top: 20,
-                  right: 200,
-                  child: _openExportDialog(),
-                )
+              ? AppLocalizations.of(context)!.localeName == "en"
+                  ? Positioned(
+                      top: 20,
+                      left: 180,
+                      child: _openExportDialog(),
+                    )
+                  : Positioned(
+                      top: 20,
+                      right: 180,
+                      child: _openExportDialog(),
+                    )
               : Container(),
         ],
       ),

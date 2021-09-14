@@ -9,6 +9,7 @@ class DocumentPage extends StatefulWidget {
 }
 
 class _DocumentPageState extends State<DocumentPage> {
+  bool openExportDialog = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,15 +50,310 @@ class _DocumentPageState extends State<DocumentPage> {
 
   Expanded _buildDoucmentArea() {
     return Expanded(
-      child: Row(
+      child: Stack(
         children: [
-          Container(
-            width: 60,
-            height: MediaQuery.of(context).size.height,
-            color: Colors.grey[200],
-            child: _buildSideMenu(context),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 60,
+                height: MediaQuery.of(context).size.height,
+                color: Colors.grey[200],
+                child: _buildSideMenu(context),
+              ),
+              PDFPage(),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'البيانات',
+                            style:
+                                Theme.of(context).textTheme.headline2!.copyWith(
+                                      color: Colors.grey[700],
+                                      fontSize: 18,
+                                    ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Container(
+                              color: Colors.transparent,
+                              child: Icon(
+                                Icons.send,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(top: 15, bottom: 10, left: 20),
+                      child: Divider(
+                        color: Colors.grey[400],
+                        height: 1,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 30,
+                            width: 120,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.grey.shade300,
+                              ),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(5),
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  color: Colors.white,
+                                  child: Image(
+                                    alignment: Alignment.center,
+                                    image: AssetImage(
+                                      'assets/images/urgent.png',
+                                    ),
+                                    color: Colors.red,
+                                  ),
+                                ),
+                                Center(
+                                  child: Text(
+                                    AppLocalizations.of(context)!.urgent,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline2!
+                                        .copyWith(
+                                            color: Colors.red, fontSize: 14),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(right: 8.0, left: 8.0),
+                            child: Container(
+                              height: 30,
+                              width: 120,
+                              color: Colors.transparent,
+                              padding: EdgeInsets.only(left: 5, right: 5),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.transparent,
+                                  border: Border.all(
+                                    color: Colors.grey.shade300,
+                                  ),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(3),
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      color: Colors.transparent,
+                                      child: Image(
+                                        image: AssetImage(
+                                          'assets/images/secret.png',
+                                        ),
+                                        alignment: Alignment.center,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                    ),
+                                    Center(
+                                      child: Text(
+                                        AppLocalizations.of(context)!.secret,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline2!
+                                            .copyWith(
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                                fontSize: 12),
+                                        textAlign: TextAlign.start,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 25),
+                      child: Text(
+                        "الجهة المرسلة",
+                        style: Theme.of(context).textTheme.headline2!.copyWith(
+                              color: Colors.grey,
+                              fontSize: 14,
+                            ),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Text(
+                        "اقتراح تعديل السقف السنوي لموازنات الاقسام التابعة لادارة الخدمات المشتركة",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline2!
+                            .copyWith(color: Colors.black, fontSize: 13),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Text(
+                        "الجهة المرسلة",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline2!
+                            .copyWith(color: Colors.grey, fontSize: 14),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Text(
+                        "اداره الخمات المشتركة",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline2!
+                            .copyWith(color: Colors.black, fontSize: 13),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Text(
+                        "احالة من",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline2!
+                            .copyWith(color: Colors.grey, fontSize: 14),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Text(
+                        "شفيق عبةالرحمن",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline2!
+                            .copyWith(color: Colors.black, fontSize: 13),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Text(
+                        "تاريخ الاحاله",
+                        style: Theme.of(context).textTheme.headline2!.copyWith(
+                              color: Colors.grey,
+                              fontSize: 14,
+                            ),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Text(
+                        "12/03/2021",
+                        style: Theme.of(context).textTheme.headline2!.copyWith(
+                              color: Colors.black,
+                              fontSize: 13,
+                            ),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Text(
+                        "ملاحظات الاحالة",
+                        style: Theme.of(context).textTheme.headline2!.copyWith(
+                              color: Colors.grey,
+                              fontSize: 14,
+                            ),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Text(
+                        "الرجاء قراءه الكتاب والتفضل بالتوقيع اذا آمكن",
+                        style: Theme.of(context).textTheme.headline2!.copyWith(
+                              color: Colors.black,
+                              fontSize: 13,
+                            ),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Container(
+                        height: 40,
+                        width: 100,
+                        margin: const EdgeInsets.only(right: 0, left: 20),
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(right: 10, left: 10),
+                                child: Divider(
+                                  color: Colors.grey[400],
+                                  thickness: 2,
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              child: Icon(
+                                Icons.play_arrow,
+                                color: Theme.of(context).primaryColor,
+                                size: 30,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-          PDFPage(),
+          openExportDialog == true
+              ? Positioned(
+                  top: 20,
+                  right: 200,
+                  child: _openExportDialog(),
+                )
+              : Container(),
         ],
       ),
     );
@@ -186,46 +482,96 @@ class _DocumentPageState extends State<DocumentPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Container(
-          color: Colors.grey[350],
-          height: 500,
-          width: 60,
-          child: Center(
-            child: Image(
-              image: AssetImage(
-                "assets/images/arrow_R.png",
-              ),
-              color: Colors.white,
-              width: 35,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(right: 10, left: 10),
-          child: Icon(
-            Icons.send_sharp,
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(right: 10, left: 10),
+        InkWell(
+          onTap: () {
+            Navigator.of(context).pop();
+          },
           child: Container(
-            height: double.infinity,
-            color: Colors.transparent,
-            child: Row(
-              children: [
-                Text(
-                  "احاله",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline2!
-                      .copyWith(color: Colors.grey, fontSize: 16),
+            color: Colors.grey[350],
+            height: 500,
+            width: 60,
+            child: Center(
+              child: Image(
+                image: AssetImage(
+                  "assets/images/arrow_R.png",
                 ),
-              ],
+                color: Colors.white,
+                width: 35,
+              ),
             ),
           ),
         ),
-        //separator
+        InkWell(
+          onTap: _openReferDialog,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 10, left: 10),
+            child: Container(
+              height: double.infinity,
+              color: Colors.transparent,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10, left: 10),
+                    child: Icon(
+                      Icons.send_sharp,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  Text(
+                    "احاله",
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline2!
+                        .copyWith(color: Colors.grey, fontSize: 16),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(right: 15),
+          child: FractionallySizedBox(
+            heightFactor: 0.6,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.grey.shade400,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(4),
+                ),
+              ),
+              width: 0.5,
+            ),
+          ),
+        ),
+        InkWell(
+          onTap: changeExportDialogState,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 10, left: 10),
+            child: Container(
+              height: double.infinity,
+              color: Colors.transparent,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10, left: 10),
+                    child: Icon(
+                      Icons.send_sharp,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  Text(
+                    "تصدير",
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline2!
+                        .copyWith(color: Colors.grey, fontSize: 16),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.only(right: 15),
           child: FractionallySizedBox(
@@ -243,59 +589,18 @@ class _DocumentPageState extends State<DocumentPage> {
         ),
         Padding(
           padding: const EdgeInsets.only(right: 10, left: 10),
-          child: Icon(
-            Icons.send_sharp,
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(right: 10, left: 10),
           child: Container(
             height: double.infinity,
             color: Colors.transparent,
             child: Row(
               children: [
-                Text(
-                  "تصدير",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline2!
-                      .copyWith(color: Colors.grey, fontSize: 16),
+                Padding(
+                  padding: const EdgeInsets.only(right: 10, left: 10),
+                  child: Icon(
+                    Icons.send_sharp,
+                    color: Theme.of(context).primaryColor,
+                  ),
                 ),
-              ],
-            ),
-          ),
-        ),
-        //separator
-        Padding(
-          padding: const EdgeInsets.only(right: 15),
-          child: FractionallySizedBox(
-            heightFactor: 0.6,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.grey.shade400,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(4),
-                ),
-              ),
-              width: 0.5,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(right: 10, left: 10),
-          child: Icon(
-            Icons.send_sharp,
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(right: 10, left: 10),
-          child: Container(
-            height: double.infinity,
-            color: Colors.transparent,
-            child: Row(
-              children: [
                 Text(
                   "انهاء",
                   style: Theme.of(context)
@@ -307,7 +612,6 @@ class _DocumentPageState extends State<DocumentPage> {
             ),
           ),
         ),
-        //separator
         Padding(
           padding: const EdgeInsets.only(right: 15),
           child: FractionallySizedBox(
@@ -325,18 +629,18 @@ class _DocumentPageState extends State<DocumentPage> {
         ),
         Padding(
           padding: const EdgeInsets.only(right: 10, left: 10),
-          child: Icon(
-            Icons.send_sharp,
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(right: 10, left: 10),
           child: Container(
             height: double.infinity,
             color: Colors.transparent,
             child: Row(
               children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 10, left: 10),
+                  child: Icon(
+                    Icons.send_sharp,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
                 Text(
                   "تتبع",
                   style: Theme.of(context)
@@ -348,7 +652,6 @@ class _DocumentPageState extends State<DocumentPage> {
             ),
           ),
         ),
-        //separator
         Padding(
           padding: const EdgeInsets.only(right: 15),
           child: FractionallySizedBox(
@@ -366,18 +669,18 @@ class _DocumentPageState extends State<DocumentPage> {
         ),
         Padding(
           padding: const EdgeInsets.only(right: 10, left: 10),
-          child: Icon(
-            Icons.send_sharp,
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(right: 10, left: 10),
           child: Container(
             height: double.infinity,
             color: Colors.transparent,
             child: Row(
               children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 10, left: 10),
+                  child: Icon(
+                    Icons.send_sharp,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
                 Text(
                   "الاحالات",
                   style: Theme.of(context)
@@ -390,6 +693,537 @@ class _DocumentPageState extends State<DocumentPage> {
           ),
         ),
       ],
+    );
+  }
+
+  _openReferDialog() {
+    return showDialog(
+      context: context,
+      builder: (_) => new AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(10.0),
+          ),
+        ),
+        content: Builder(
+          builder: (context) {
+            var height = MediaQuery.of(context).size.height;
+            var width = MediaQuery.of(context).size.width;
+            return Container(
+              height: height - 200,
+              width: width - 400,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10, left: 10),
+                            child: Icon(
+                              Icons.send_sharp,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          Text(
+                            "احاله",
+                            style:
+                                Theme.of(context).textTheme.headline2!.copyWith(
+                                      color: Colors.grey,
+                                      fontSize: 20,
+                                    ),
+                          ),
+                        ],
+                      ),
+                      RawMaterialButton(
+                        onPressed: () {},
+                        elevation: 0,
+                        fillColor: Colors.red,
+                        child: Icon(
+                          Icons.close,
+                          color: Colors.white,
+                          size: 15,
+                        ),
+                        shape: CircleBorder(),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 30),
+                    child: Text(
+                      "احاله الى",
+                      style: Theme.of(context).textTheme.headline2!.copyWith(
+                            color: Colors.grey,
+                            fontSize: 15,
+                          ),
+                    ),
+                  ),
+                  Container(
+                    height: 100,
+                    width: 350,
+                    child: Row(
+                      children: [
+                        Flexible(
+                          flex: 1,
+                          child: FractionallySizedBox(
+                            heightFactor: 0.5,
+                            child: Container(
+                              width: double.infinity,
+                              height: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                      'assets/images/unknown_user.png',
+                                    ),
+                                    fit: BoxFit.fitHeight),
+                                border: Border.all(
+                                  width: 4,
+                                  color: Colors.grey.shade300,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Flexible(
+                          flex: 1,
+                          child: FractionallySizedBox(
+                            heightFactor: 0.5,
+                            child: Container(
+                              width: double.infinity,
+                              height: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                    'assets/images/unknown_user.png',
+                                  ),
+                                  fit: BoxFit.fitHeight,
+                                ),
+                                border: Border.all(
+                                  width: 4,
+                                  color: Colors.grey.shade300,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Flexible(
+                          flex: 1,
+                          child: FractionallySizedBox(
+                            heightFactor: 0.5,
+                            child: Container(
+                              width: double.infinity,
+                              height: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                    'assets/images/unknown_user.png',
+                                  ),
+                                  fit: BoxFit.fitHeight,
+                                ),
+                                border: Border.all(
+                                  width: 4,
+                                  color: Colors.grey.shade300,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 10, left: 10),
+                          child: FractionallySizedBox(
+                            heightFactor: 0.6,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade400,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(4),
+                                ),
+                              ),
+                              width: 0.5,
+                            ),
+                          ),
+                        ),
+                        Flexible(
+                          flex: 1,
+                          child: FractionallySizedBox(
+                            heightFactor: 0.5,
+                            child: Container(
+                              width: double.infinity,
+                              height: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                    'assets/images/unknown_user.png',
+                                  ),
+                                  fit: BoxFit.fitHeight,
+                                ),
+                                border: Border.all(
+                                  width: 4,
+                                  color: Colors.grey.shade300,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        RawMaterialButton(
+                          onPressed: () {},
+                          elevation: 0,
+                          fillColor: Colors.grey[300],
+                          child: Icon(
+                            Icons.add,
+                            color: Colors.grey,
+                            size: 20,
+                          ),
+                          padding: EdgeInsets.all(14),
+                          shape: CircleBorder(),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Divider(
+                    color: Colors.grey[400],
+                  ),
+                  Container(
+                    width: width - 400,
+                    height: height - 450,
+                    child: ListView(
+                      children: [
+                        Container(
+                          width: 1000,
+                          height: 280,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(5),
+                            ),
+                          ),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 900,
+                                height: 40,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Flexible(
+                                              flex: 1,
+                                              child: FractionallySizedBox(
+                                                heightFactor: 1.45,
+                                                child: Container(
+                                                  width: 50,
+                                                  height: 50,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    shape: BoxShape.circle,
+                                                    image: DecorationImage(
+                                                      image: AssetImage(
+                                                        'assets/images/unknown_user.png',
+                                                      ),
+                                                      fit: BoxFit.fitHeight,
+                                                    ),
+                                                    border: Border.all(
+                                                      width: 4,
+                                                      color:
+                                                          Colors.grey.shade300,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 8.0),
+                                              child: Text(
+                                                "شفيق عبدالرحمن",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline2!
+                                                    .copyWith(
+                                                      color: Colors.grey[600],
+                                                      fontSize: 15,
+                                                    ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      RawMaterialButton(
+                                        onPressed: () {},
+                                        elevation: 0,
+                                        fillColor: Colors.red,
+                                        child: Icon(
+                                          Icons.close,
+                                          color: Colors.white,
+                                          size: 15,
+                                        ),
+                                        shape: CircleBorder(),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 20, left: 10, right: 10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "الاجراء",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline2!
+                                              .copyWith(
+                                                color: Colors.grey[600],
+                                                fontSize: 15,
+                                              ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 10),
+                                          child: Container(
+                                            height: 40,
+                                            width: 300,
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey[350],
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(5),
+                                              ),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                InkWell(
+                                                  child: Icon(
+                                                    Icons.arrow_drop_down,
+                                                    color: Colors.grey[400],
+                                                    size: 30,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "ملاحظات صوتية",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline2!
+                                              .copyWith(
+                                                color: Colors.grey[600],
+                                                fontSize: 15,
+                                              ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 10),
+                                          child: Container(
+                                            height: 40,
+                                            width: 300,
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey[350],
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(5),
+                                              ),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                InkWell(
+                                                  child: Icon(
+                                                    Icons.mic_rounded,
+                                                    color: Theme.of(context)
+                                                        .primaryColor,
+                                                    size: 20,
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                      right: 10,
+                                                      left: 10,
+                                                    ),
+                                                    child: Divider(
+                                                      color: Colors.grey[400],
+                                                      thickness: 2,
+                                                    ),
+                                                  ),
+                                                ),
+                                                InkWell(
+                                                  child: Icon(
+                                                    Icons.play_arrow,
+                                                    color: Colors.grey,
+                                                    size: 20,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: 20,
+                                    right: 10,
+                                    left: 10,
+                                  ),
+                                  child: Container(
+                                    height: 100,
+                                    width: 900,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[350],
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(5),
+                                      ),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                            top: 5,
+                                            right: 5,
+                                            left: 5,
+                                          ),
+                                          child: Text(
+                                            "ملاحظة مكتوبة",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline2!
+                                                .copyWith(
+                                                  color: Colors.grey[600],
+                                                  fontSize: 15,
+                                                ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  changeExportDialogState() {
+    setState(() {
+      openExportDialog = !openExportDialog;
+    });
+  }
+
+  Container _openExportDialog() {
+    List<String> titles = [
+      "تصدير ورقي",
+      "تصدير الكتروني",
+      "تصدير ورقي والكتروني"
+    ];
+
+    return Container(
+      height: 168,
+      width: 230,
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 5,
+            height: 170,
+            color: Colors.grey[400],
+          ),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: List.generate(
+                titles.length,
+                (index) {
+                  return GestureDetector(
+                    onTap: () {},
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 100,
+                          height: 40,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              titles[index],
+                            ),
+                          ),
+                        ),
+                        Divider(),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

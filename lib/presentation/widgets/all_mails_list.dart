@@ -134,8 +134,8 @@ class _AAllMailsListstate extends State<AllMailsList> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Container(
-                              height: 35,
-                              width: 140,
+                              height: 30,
+                              width: 120,
                               decoration: BoxDecoration(
                                 border: Border.all(
                                   color: Colors.grey.shade300,
@@ -174,8 +174,8 @@ class _AAllMailsListstate extends State<AllMailsList> {
                               padding:
                                   const EdgeInsets.only(right: 8.0, left: 8.0),
                               child: Container(
-                                height: 35,
-                                width: 140,
+                                height: 30,
+                                width: 120,
                                 color: Colors.transparent,
                                 padding: EdgeInsets.only(left: 5, right: 5),
                                 child: Container(
@@ -223,12 +223,11 @@ class _AAllMailsListstate extends State<AllMailsList> {
                               padding:
                                   const EdgeInsets.only(right: 8.0, left: 8.0),
                               child: Container(
-                                height: 35,
-                                width: 150,
-                                margin: EdgeInsets.only(left: 10),
+                                height: 30,
                                 color: Colors.transparent,
                                 child: Container(
-                                  margin: EdgeInsets.only(left: 10),
+                                  padding: const EdgeInsets.only(
+                                      right: 10, left: 10),
                                   decoration: BoxDecoration(
                                     color: Colors.transparent,
                                     border: Border.all(

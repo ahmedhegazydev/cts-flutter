@@ -57,7 +57,7 @@ class _DocumentPageState extends State<DocumentPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                width: 60,
+                width: 65,
                 height: MediaQuery.of(context).size.height,
                 color: Colors.grey[200],
                 child: _buildSideMenu(context),
@@ -74,7 +74,7 @@ class _DocumentPageState extends State<DocumentPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'البيانات',
+                            AppLocalizations.of(context)!.data,
                             style:
                                 Theme.of(context).textTheme.headline2!.copyWith(
                                       color: Colors.grey[700],
@@ -82,7 +82,7 @@ class _DocumentPageState extends State<DocumentPage> {
                                     ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 20),
+                            padding: const EdgeInsets.only(left: 20, right: 20),
                             child: Container(
                               color: Colors.transparent,
                               child: Icon(
@@ -95,8 +95,8 @@ class _DocumentPageState extends State<DocumentPage> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsets.only(top: 15, bottom: 10, left: 20),
+                      padding: const EdgeInsets.only(
+                          top: 15, bottom: 10, left: 5, right: 5),
                       child: Divider(
                         color: Colors.grey[400],
                         height: 1,
@@ -199,7 +199,7 @@ class _DocumentPageState extends State<DocumentPage> {
                     Padding(
                       padding: const EdgeInsets.only(top: 25),
                       child: Text(
-                        "الجهة المرسلة",
+                        AppLocalizations.of(context)!.sender1,
                         style: Theme.of(context).textTheme.headline2!.copyWith(
                               color: Colors.grey,
                               fontSize: 14,
@@ -221,7 +221,7 @@ class _DocumentPageState extends State<DocumentPage> {
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
                       child: Text(
-                        "الجهة المرسلة",
+                        AppLocalizations.of(context)!.sender1,
                         style: Theme.of(context)
                             .textTheme
                             .headline2!
@@ -232,7 +232,8 @@ class _DocumentPageState extends State<DocumentPage> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: Text(
-                        "اداره الخمات المشتركة",
+                        AppLocalizations.of(context)!
+                            .sharedServicesAdministration,
                         style: Theme.of(context)
                             .textTheme
                             .headline2!
@@ -243,7 +244,7 @@ class _DocumentPageState extends State<DocumentPage> {
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
                       child: Text(
-                        "احالة من",
+                        AppLocalizations.of(context)!.sender1,
                         style: Theme.of(context)
                             .textTheme
                             .headline2!
@@ -265,7 +266,7 @@ class _DocumentPageState extends State<DocumentPage> {
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
                       child: Text(
-                        "تاريخ الاحاله",
+                        AppLocalizations.of(context)!.assignedFrom,
                         style: Theme.of(context).textTheme.headline2!.copyWith(
                               color: Colors.grey,
                               fontSize: 14,
@@ -287,7 +288,7 @@ class _DocumentPageState extends State<DocumentPage> {
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
                       child: Text(
-                        "ملاحظات الاحالة",
+                        AppLocalizations.of(context)!.assignmentNotes,
                         style: Theme.of(context).textTheme.headline2!.copyWith(
                               color: Colors.grey,
                               fontSize: 14,
@@ -311,7 +312,15 @@ class _DocumentPageState extends State<DocumentPage> {
                       child: Container(
                         height: 40,
                         width: 100,
-                        margin: const EdgeInsets.only(right: 0, left: 20),
+                        margin: EdgeInsets.only(
+                          right:
+                              AppLocalizations.of(context)!.localeName == "en"
+                                  ? 20
+                                  : 0,
+                          left: AppLocalizations.of(context)!.localeName == "en"
+                              ? 0
+                              : 20,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.grey[300],
                           borderRadius: BorderRadius.all(
@@ -419,7 +428,7 @@ class _DocumentPageState extends State<DocumentPage> {
             width: 30,
           ),
           Text(
-            "تعليق",
+            AppLocalizations.of(context)!.comment,
             textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme
@@ -434,7 +443,7 @@ class _DocumentPageState extends State<DocumentPage> {
             width: 50,
           ),
           Text(
-            "توقيع",
+            AppLocalizations.of(context)!.signature,
             textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme
@@ -450,7 +459,7 @@ class _DocumentPageState extends State<DocumentPage> {
           ),
           Flexible(
             child: Text(
-              "وسم",
+              AppLocalizations.of(context)!.marking,
               textAlign: TextAlign.center,
               style: Theme.of(context)
                   .textTheme
@@ -466,7 +475,7 @@ class _DocumentPageState extends State<DocumentPage> {
             width: 30,
           ),
           Text(
-            "حفظ",
+            AppLocalizations.of(context)!.save,
             textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme
@@ -489,7 +498,7 @@ class _DocumentPageState extends State<DocumentPage> {
           child: Container(
             color: Colors.grey[350],
             height: 500,
-            width: 60,
+            width: 65,
             child: Center(
               child: Image(
                 image: AssetImage(
@@ -518,7 +527,7 @@ class _DocumentPageState extends State<DocumentPage> {
                     ),
                   ),
                   Text(
-                    "احاله",
+                    AppLocalizations.of(context)!.refer,
                     style: Theme.of(context)
                         .textTheme
                         .headline2!
@@ -529,19 +538,16 @@ class _DocumentPageState extends State<DocumentPage> {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(right: 15),
-          child: FractionallySizedBox(
-            heightFactor: 0.6,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.grey.shade400,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(4),
-                ),
+        FractionallySizedBox(
+          heightFactor: 0.6,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey.shade400,
+              borderRadius: BorderRadius.all(
+                Radius.circular(4),
               ),
-              width: 0.5,
             ),
+            width: 0.5,
           ),
         ),
         InkWell(
@@ -561,7 +567,7 @@ class _DocumentPageState extends State<DocumentPage> {
                     ),
                   ),
                   Text(
-                    "تصدير",
+                    AppLocalizations.of(context)!.export,
                     style: Theme.of(context)
                         .textTheme
                         .headline2!
@@ -572,19 +578,16 @@ class _DocumentPageState extends State<DocumentPage> {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(right: 15),
-          child: FractionallySizedBox(
-            heightFactor: 0.6,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.grey.shade400,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(4),
-                ),
+        FractionallySizedBox(
+          heightFactor: 0.6,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey.shade400,
+              borderRadius: BorderRadius.all(
+                Radius.circular(4),
               ),
-              width: 0.5,
             ),
+            width: 0.5,
           ),
         ),
         Padding(
@@ -602,7 +605,7 @@ class _DocumentPageState extends State<DocumentPage> {
                   ),
                 ),
                 Text(
-                  "انهاء",
+                  AppLocalizations.of(context)!.ending,
                   style: Theme.of(context)
                       .textTheme
                       .headline2!
@@ -612,19 +615,16 @@ class _DocumentPageState extends State<DocumentPage> {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(right: 15),
-          child: FractionallySizedBox(
-            heightFactor: 0.6,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.grey.shade400,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(4),
-                ),
+        FractionallySizedBox(
+          heightFactor: 0.6,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey.shade400,
+              borderRadius: BorderRadius.all(
+                Radius.circular(4),
               ),
-              width: 0.5,
             ),
+            width: 0.5,
           ),
         ),
         Padding(
@@ -642,7 +642,7 @@ class _DocumentPageState extends State<DocumentPage> {
                   ),
                 ),
                 Text(
-                  "تتبع",
+                  AppLocalizations.of(context)!.tracking,
                   style: Theme.of(context)
                       .textTheme
                       .headline2!
@@ -652,19 +652,16 @@ class _DocumentPageState extends State<DocumentPage> {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(right: 15),
-          child: FractionallySizedBox(
-            heightFactor: 0.6,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.grey.shade400,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(4),
-                ),
+        FractionallySizedBox(
+          heightFactor: 0.6,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey.shade400,
+              borderRadius: BorderRadius.all(
+                Radius.circular(4),
               ),
-              width: 0.5,
             ),
+            width: 0.5,
           ),
         ),
         Padding(
@@ -682,7 +679,7 @@ class _DocumentPageState extends State<DocumentPage> {
                   ),
                 ),
                 Text(
-                  "الاحالات",
+                  AppLocalizations.of(context)!.referrals,
                   style: Theme.of(context)
                       .textTheme
                       .headline2!
@@ -729,7 +726,7 @@ class _DocumentPageState extends State<DocumentPage> {
                             ),
                           ),
                           Text(
-                            "احاله",
+                            AppLocalizations.of(context)!.refer,
                             style:
                                 Theme.of(context).textTheme.headline2!.copyWith(
                                       color: Colors.grey,
@@ -754,7 +751,7 @@ class _DocumentPageState extends State<DocumentPage> {
                   Padding(
                     padding: const EdgeInsets.only(top: 30),
                     child: Text(
-                      "احاله الى",
+                      AppLocalizations.of(context)!.referTo,
                       style: Theme.of(context).textTheme.headline2!.copyWith(
                             color: Colors.grey,
                             fontSize: 15,
@@ -911,7 +908,6 @@ class _DocumentPageState extends State<DocumentPage> {
                           child: Column(
                             children: [
                               Container(
-                                width: 900,
                                 height: 40,
                                 child: Padding(
                                   padding: const EdgeInsets.only(top: 10),
@@ -924,46 +920,35 @@ class _DocumentPageState extends State<DocumentPage> {
                                       Expanded(
                                         child: Row(
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                              CrossAxisAlignment.center,
                                           children: [
-                                            Flexible(
-                                              flex: 1,
-                                              child: FractionallySizedBox(
-                                                heightFactor: 1.45,
-                                                child: Container(
-                                                  width: 50,
-                                                  height: 50,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    shape: BoxShape.circle,
-                                                    image: DecorationImage(
-                                                      image: AssetImage(
-                                                        'assets/images/unknown_user.png',
-                                                      ),
-                                                      fit: BoxFit.fitHeight,
-                                                    ),
-                                                    border: Border.all(
-                                                      width: 4,
-                                                      color:
-                                                          Colors.grey.shade300,
-                                                    ),
+                                            Container(
+                                              width: 50,
+                                              height: 50,
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                shape: BoxShape.circle,
+                                                image: DecorationImage(
+                                                  image: AssetImage(
+                                                    'assets/images/unknown_user.png',
                                                   ),
+                                                  fit: BoxFit.fitHeight,
+                                                ),
+                                                border: Border.all(
+                                                  width: 4,
+                                                  color: Colors.grey.shade300,
                                                 ),
                                               ),
                                             ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 8.0),
-                                              child: Text(
-                                                "شفيق عبدالرحمن",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline2!
-                                                    .copyWith(
-                                                      color: Colors.grey[600],
-                                                      fontSize: 15,
-                                                    ),
-                                              ),
+                                            Text(
+                                              "شفيق عبدالرحمن",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline2!
+                                                  .copyWith(
+                                                    color: Colors.grey[600],
+                                                    fontSize: 15,
+                                                  ),
                                             ),
                                           ],
                                         ),
@@ -998,7 +983,7 @@ class _DocumentPageState extends State<DocumentPage> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "الاجراء",
+                                          AppLocalizations.of(context)!.action,
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline2!
@@ -1043,7 +1028,8 @@ class _DocumentPageState extends State<DocumentPage> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "ملاحظات صوتية",
+                                          AppLocalizations.of(context)!
+                                              .audioNotes,
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline2!
@@ -1135,7 +1121,8 @@ class _DocumentPageState extends State<DocumentPage> {
                                             left: 5,
                                           ),
                                           child: Text(
-                                            "ملاحظة مكتوبة",
+                                            AppLocalizations.of(context)!
+                                                .writtenNote,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headline2!
@@ -1173,9 +1160,9 @@ class _DocumentPageState extends State<DocumentPage> {
 
   Container _openExportDialog() {
     List<String> titles = [
-      "تصدير ورقي",
-      "تصدير الكتروني",
-      "تصدير ورقي والكتروني"
+      AppLocalizations.of(context)!.paperExport,
+      AppLocalizations.of(context)!.electronicExport,
+      AppLocalizations.of(context)!.paperAndElectronicExport,
     ];
 
     return Container(

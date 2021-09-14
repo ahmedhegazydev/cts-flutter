@@ -308,17 +308,18 @@ class _LandingState extends State<LandingPage> {
               child: Column(
                 children: [
                   Flexible(
-                      flex: 1,
-                      child: Container(
-                        color: Colors.transparent,
-                        width: double.infinity,
-                        height: 60,
-                        child: Text(
-                          AppLocalizations.of(context)!.appTitle,
-                          style: Theme.of(context).textTheme.headline1,
-                          textAlign: TextAlign.start,
-                        ),
-                      )),
+                    flex: 1,
+                    child: Container(
+                      color: Colors.transparent,
+                      width: double.infinity,
+                      height: 60,
+                      child: Text(
+                        AppLocalizations.of(context)!.appTitle,
+                        style: Theme.of(context).textTheme.headline1,
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                  ),
                   Flexible(
                     flex: 1,
                     child: Container(
@@ -371,33 +372,35 @@ class _LandingState extends State<LandingPage> {
                 ),
                 Spacer(),
                 Container(
-                    padding:
-                        EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 0),
-                    height: 35,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Image(
-                          image: AssetImage(
-                            returnImageNameBasedOnOppositeDirection(
-                                "assets/images/arrow", context, "png"),
-                          ),
-                          fit: BoxFit.contain,
-                          width: 50,
-                          height: double.infinity,
+                  padding:
+                      EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 0),
+                  height: 35,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Image(
+                        image: AssetImage(
+                          returnImageNameBasedOnOppositeDirection(
+                              "assets/images/arrow", context, "png"),
                         ),
-                        Text(
-                          "إدارة الخدمات المشتركة",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline2!
-                              .copyWith(color: Colors.grey),
-                          textAlign: TextAlign.start,
-                        ),
-                      ],
-                    )),
+                        fit: BoxFit.contain,
+                        width: 50,
+                        height: double.infinity,
+                      ),
+                      Text(
+                        AppLocalizations.of(context)!
+                            .sharedServicesAdministration,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline2!
+                            .copyWith(color: Colors.grey),
+                        textAlign: TextAlign.start,
+                      ),
+                    ],
+                  ),
+                ),
                 Spacer(),
               ],
             ),

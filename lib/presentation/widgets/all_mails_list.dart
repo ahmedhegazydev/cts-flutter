@@ -103,7 +103,9 @@ class _AAllMailsListstate extends State<AllMailsList> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'المرسل: شفيق عبدالرحمن',
+                              AppLocalizations.of(context)!.sender +
+                                  ": " +
+                                  "شفيق عبدالرحمن",
                               style: Theme.of(context)
                                   .textTheme
                                   .headline1!

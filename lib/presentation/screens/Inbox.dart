@@ -175,7 +175,7 @@ class _InboxState extends State<InboxPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Image(
                             image: AssetImage(
@@ -186,21 +186,24 @@ class _InboxState extends State<InboxPage> {
                               ),
                             ),
                             fit: BoxFit.contain,
-                            width: 50,
+                            width: 35,
                           ),
                           Align(
                             alignment: isDirectionRTL(context)
                                 ? FractionalOffset.centerRight
                                 : FractionalOffset.centerLeft,
                             child: Text(
-                              "إدارة الخدمات المشتركة",
+                              AppLocalizations.of(context)!
+                                  .sharedServicesAdministration,
                               style: Theme.of(context)
                                   .textTheme
                                   .headline2!
                                   .copyWith(
-                                      color: createMaterialColor(
-                                          Color.fromRGBO(77, 77, 77, 1)),
-                                      fontSize: 18),
+                                    color: createMaterialColor(
+                                      Color.fromRGBO(77, 77, 77, 1),
+                                    ),
+                                    fontSize: 15,
+                                  ),
                               textAlign: TextAlign.start,
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,

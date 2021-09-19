@@ -1,3 +1,4 @@
+import 'package:cts/presentation/widgets/paint_traingle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -367,6 +368,29 @@ class _DocumentPageState extends State<DocumentPage> {
                       top: 20,
                       right: 180,
                       child: _openExportDialog(),
+                    )
+              : Container(),
+          openExportDialog == true
+              ? AppLocalizations.of(context)!.localeName == "ar"
+                  ? Positioned(
+                      top: -20,
+                      right: 200,
+                      child: CustomPaint(
+                        size: Size(40, 40),
+                        painter: PaintTriangle(
+                          backgroundColor: Colors.grey[200] ?? Colors.grey,
+                        ),
+                      ),
+                    )
+                  : Positioned(
+                      top: -20,
+                      left: 200,
+                      child: CustomPaint(
+                        size: Size(40, 40),
+                        painter: PaintTriangle(
+                          backgroundColor: Colors.grey[200] ?? Colors.grey,
+                        ),
+                      ),
                     )
               : Container(),
         ],

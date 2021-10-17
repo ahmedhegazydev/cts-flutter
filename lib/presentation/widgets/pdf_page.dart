@@ -1,6 +1,5 @@
 //import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
@@ -41,18 +40,14 @@ class _PDFPageState extends State<PDFPage> {
 
   @override
   Widget build(BuildContext context) {
-    return _isLoading
-        ? Center(
-            child: Container(
+    return Container(
+      width: MediaQuery.of(context).size.width / 1.5,
+      color: Colors.transparent,
+      child: _isLoading
+          ? Center(
               child: CircularProgressIndicator(),
-              width: MediaQuery.of(context).size.width / 2,
-            ),
-          )
-        : Container(
-            width: MediaQuery.of(context).size.width / 2,
-            //  height: double.infinity,
-            color: Colors.grey,
-            child: PdfView(
+            )
+          : PdfView(
               scrollDirection: Axis.vertical,
               controller: _pdfController,
               onDocumentLoaded: (document) {
@@ -73,14 +68,14 @@ class _PDFPageState extends State<PDFPage> {
                 print(error);
               },
             ),
-            //  PDFViewer(
-            //   document: document,
-            //   zoomSteps: 1,
-            //   showPicker: false,
-            //   showNavigation: false,
-            //   showIndicator: false,
-            //   scrollDirection: Axis.vertical,
-            // ),
-          );
+      //  PDFViewer(
+      //   document: document,
+      //   zoomSteps: 1,
+      //   showPicker: false,
+      //   showNavigation: false,
+      //   showIndicator: false,
+      //   scrollDirection: Axis.vertical,
+      // ),
+    );
   }
 }

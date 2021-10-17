@@ -301,45 +301,45 @@ class _LandingState extends State<LandingPage> {
           flex: 1,
         ),
         Flexible(
-            flex: 2,
-            child: Container(
-              padding: EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 0),
-              color: Colors.transparent,
-              child: Column(
-                children: [
-                  Flexible(
-                    flex: 1,
-                    child: Container(
-                      color: Colors.transparent,
-                      width: double.infinity,
-                      height: 60,
-                      child: Text(
-                        AppLocalizations.of(context)!.appTitle,
-                        style: Theme.of(context).textTheme.headline1,
-                        textAlign: TextAlign.start,
-                      ),
+          flex: 2,
+          child: Container(
+            padding: EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 0),
+            color: Colors.transparent,
+            child: Column(
+              children: [
+                Flexible(
+                  flex: 1,
+                  child: Container(
+                    color: Colors.transparent,
+                    width: double.infinity,
+                    height: 60,
+                    child: Text(
+                      AppLocalizations.of(context)!.appTitle,
+                      style: Theme.of(context).textTheme.headline1,
+                      textAlign: TextAlign.start,
                     ),
                   ),
-                  Flexible(
-                    flex: 1,
-                    child: Container(
-                      color: Colors.transparent,
-                      width: double.infinity,
-                      height: 30,
-                      child: Text(
-                        AppLocalizations.of(context)!.hello +
-                            " ربيع محمد المانع",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline2!
-                            .copyWith(color: Colors.grey),
-                        textAlign: TextAlign.start,
-                      ),
+                ),
+                Flexible(
+                  flex: 1,
+                  child: Container(
+                    color: Colors.transparent,
+                    width: double.infinity,
+                    height: 30,
+                    child: Text(
+                      AppLocalizations.of(context)!.hello + " ربيع محمد المانع",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline2!
+                          .copyWith(color: Colors.grey),
+                      textAlign: TextAlign.start,
                     ),
-                  )
-                ],
-              ),
-            )),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
         Flexible(
           flex: 10,
           child: _buildDashboard(context),
@@ -609,7 +609,7 @@ class _LandingState extends State<LandingPage> {
                               Flexible(
                                 flex: 1,
                                 child: Text(
-                                  "05",
+                                  "5",
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline3!
@@ -916,7 +916,7 @@ class _LandingState extends State<LandingPage> {
                               child: Container(
                                 width: double.infinity,
                                 child: Text(
-                                  "05",
+                                  "5",
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline3!
@@ -1002,7 +1002,7 @@ class _LandingState extends State<LandingPage> {
                               child: Container(
                                 width: double.infinity,
                                 child: Text(
-                                  "19",
+                                  "9",
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline3!
@@ -1083,7 +1083,7 @@ class _LandingState extends State<LandingPage> {
                       child: _buildInboxesRow(
                         context,
                         AppLocalizations.of(context)!.forAction,
-                        05,
+                        5,
                       ),
                     ),
                   ],
@@ -1125,7 +1125,7 @@ class _LandingState extends State<LandingPage> {
                       child: _buildInboxesRow(
                         context,
                         AppLocalizations.of(context)!.all,
-                        21,
+                        2,
                       ),
                     ),
                   ],
@@ -1160,7 +1160,7 @@ class _LandingState extends State<LandingPage> {
                         AppLocalizations.of(context)!.flagged,
                         "assets/images/flagged.png",
                         true,
-                        05,
+                        5,
                       ),
                     ),
                   ],
@@ -1176,7 +1176,7 @@ class _LandingState extends State<LandingPage> {
                         AppLocalizations.of(context)!.notifications,
                         "assets/images/notification.png",
                         true,
-                        19,
+                        9,
                       ),
                     ),
                   ],

@@ -246,11 +246,15 @@ class _AAllMailsListstate extends State<AllMailsList> {
                                         color: Colors.transparent,
                                         child: Image(
                                           image: AssetImage(
-                                            'assets/images/secret.png',
+                                            'assets/images/closed.png',
                                           ),
+                                          width: 15,
                                           alignment: Alignment.center,
                                           color: Theme.of(context).primaryColor,
                                         ),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
                                       ),
                                       Text(
                                         AppLocalizations.of(context)!.closed +
@@ -296,7 +300,7 @@ class _AAllMailsListstate extends State<AllMailsList> {
         children: [
           //read / unread container
           Flexible(
-            flex: 2,
+            flex: 3,
             child: Container(
               height: double.infinity,
               color: Colors.transparent,

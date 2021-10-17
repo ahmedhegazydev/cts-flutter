@@ -143,7 +143,7 @@ class _InboxState extends State<InboxPage> {
                 //empty space
                 Container(
                   width: double.infinity,
-                  height: 70,
+                  height: 30,
                   color: Colors.transparent,
                 ),
                 //side menu filter (filters with inbox type or with purpose -- depends on the configuration)
@@ -382,48 +382,56 @@ class _InboxState extends State<InboxPage> {
       width: double.infinity,
       height: double.infinity,
       color: Colors.transparent,
-      child: Column(
-        children: [
-          _buildSideMenuTitleLabel(context, AppLocalizations.of(context)!.mail),
-          //line separator
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.grey.shade400,
-              borderRadius: BorderRadius.all(
-                Radius.circular(4),
+      child: SingleChildScrollView(
+        physics: NeverScrollableScrollPhysics(),
+        child: Column(
+          children: [
+            _buildSideMenuTitleLabel(
+                context, AppLocalizations.of(context)!.mail),
+            //line separator
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.grey.shade400,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(4),
+                ),
               ),
+              height: 1,
             ),
-            height: 1,
-          ),
-          _buildSideMenuInboxes(context),
-          //space
-          Container(
-            width: double.infinity,
-            height: 20,
-          ),
-          _buildSideMenuTitleLabel(
-            context,
-            AppLocalizations.of(context)!.folders,
-          ),
-          //line separator
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.grey.shade400,
-              borderRadius: BorderRadius.all(
-                Radius.circular(4),
-              ),
+            _buildSideMenuInboxes(context),
+            //space
+            Container(
+              width: double.infinity,
+              height: 20,
             ),
-            height: 1,
-          ),
-          _buildSideMenuFolders(context, AppLocalizations.of(context)!.flagged,
-              "assets/images/flagged.png", true, 05),
-          _buildSideMenuFolders(
+            _buildSideMenuTitleLabel(
               context,
-              AppLocalizations.of(context)!.notifications,
-              "assets/images/notification.png",
-              true,
-              19)
-        ],
+              AppLocalizations.of(context)!.folders,
+            ),
+            //line separator
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.grey.shade400,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(4),
+                ),
+              ),
+              height: 1,
+            ),
+            _buildSideMenuFolders(
+                context,
+                AppLocalizations.of(context)!.flagged,
+                "assets/images/flagged.png",
+                true,
+                05),
+            _buildSideMenuFolders(
+                context,
+                AppLocalizations.of(context)!.notifications,
+                "assets/images/notification.png",
+                true,
+                19)
+          ],
+        ),
       ),
     );
   }

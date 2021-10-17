@@ -86,10 +86,10 @@ class _DocumentPageState extends State<DocumentPage> {
                             padding: const EdgeInsets.only(left: 20, right: 20),
                             child: Container(
                               color: Colors.transparent,
-                              child: Icon(
-                                Icons.send,
-                                color: Theme.of(context).primaryColor,
+                              child: Image.asset(
+                                'assets/images/metadata.png',
                               ),
+                              width: 18,
                             ),
                           ),
                         ],
@@ -551,9 +551,11 @@ class _DocumentPageState extends State<DocumentPage> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(right: 10, left: 10),
-                    child: Icon(
-                      Icons.send_sharp,
-                      color: Theme.of(context).primaryColor,
+                    child: Image(
+                      image: AssetImage(
+                        'assets/images/refer.png',
+                      ),
+                      width: 20,
                     ),
                   ),
                   Text(
@@ -591,9 +593,11 @@ class _DocumentPageState extends State<DocumentPage> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(right: 10, left: 10),
-                    child: Icon(
-                      Icons.send_sharp,
-                      color: Theme.of(context).primaryColor,
+                    child: Image(
+                      image: AssetImage(
+                        'assets/images/up_arrow.png',
+                      ),
+                      width: 15,
                     ),
                   ),
                   Text(
@@ -629,9 +633,11 @@ class _DocumentPageState extends State<DocumentPage> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(right: 10, left: 10),
-                  child: Icon(
-                    Icons.send_sharp,
-                    color: Theme.of(context).primaryColor,
+                  child: Image(
+                    image: AssetImage(
+                      'assets/images/ending.png',
+                    ),
+                    width: 18,
                   ),
                 ),
                 Text(
@@ -666,9 +672,11 @@ class _DocumentPageState extends State<DocumentPage> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(right: 10, left: 10),
-                  child: Icon(
-                    Icons.send_sharp,
-                    color: Theme.of(context).primaryColor,
+                  child: Image(
+                    image: AssetImage(
+                      'assets/images/track.png',
+                    ),
+                    width: 18,
                   ),
                 ),
                 Text(
@@ -703,9 +711,11 @@ class _DocumentPageState extends State<DocumentPage> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(right: 10, left: 10),
-                  child: Icon(
-                    Icons.send_sharp,
-                    color: Theme.of(context).primaryColor,
+                  child: Image(
+                    image: AssetImage(
+                      'assets/images/referrals.png',
+                    ),
+                    width: 18,
                   ),
                 ),
                 Text(
@@ -750,9 +760,9 @@ class _DocumentPageState extends State<DocumentPage> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(right: 10, left: 10),
-                            child: Icon(
-                              Icons.send_sharp,
-                              color: Theme.of(context).primaryColor,
+                            child: Image.asset(
+                              'assets/images/refer.png',
+                              width: 20,
                             ),
                           ),
                           Text(
@@ -766,15 +776,13 @@ class _DocumentPageState extends State<DocumentPage> {
                         ],
                       ),
                       RawMaterialButton(
-                        onPressed: () {},
-                        elevation: 0,
-                        fillColor: Colors.red,
-                        child: Icon(
-                          Icons.close,
-                          color: Colors.white,
-                          size: 15,
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Image.asset(
+                          'assets/images/close_button.png',
+                          width: 35,
                         ),
-                        shape: CircleBorder(),
                       ),
                     ],
                   ),
@@ -984,15 +992,13 @@ class _DocumentPageState extends State<DocumentPage> {
                                         ),
                                       ),
                                       RawMaterialButton(
-                                        onPressed: () {},
-                                        elevation: 0,
-                                        fillColor: Colors.red,
-                                        child: Icon(
-                                          Icons.close,
-                                          color: Colors.white,
-                                          size: 15,
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Image.asset(
+                                          'assets/images/close_button.png',
+                                          width: 25,
                                         ),
-                                        shape: CircleBorder(),
                                       ),
                                     ],
                                   ),

@@ -374,7 +374,7 @@ class _AAllMailsListstate extends State<AllMailsList> {
             child: Container(
               color: Colors.transparent,
               padding:
-                  EdgeInsets.only(left: 20, right: 20, top: 25, bottom: 25),
+                  EdgeInsets.only(left: 10, right: 10, top: 25, bottom: 25),
               child: Row(
                 children: [
                   Flexible(

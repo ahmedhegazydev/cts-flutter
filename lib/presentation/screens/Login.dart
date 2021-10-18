@@ -16,9 +16,13 @@ class LoginPage extends StatefulWidget {
 class _LoginState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
+    Orientation orientation = MediaQuery.of(context).orientation;
+
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: _buildBody(context),
+      resizeToAvoidBottomInset: true,
+      body: orientation == Orientation.landscape
+          ? landscapeBody(context)
+          : portraitBody(context),
       floatingActionButton: FloatingActionButton(
         onPressed: null,
         elevation: 0,
@@ -40,7 +44,13 @@ class _LoginState extends State<LoginPage> {
     );
   }
 
-  _buildBody(BuildContext context) {
+  portraitBody(BuildContext context) {
+    return Center(
+      child: loginForm(context),
+    );
+  }
+
+  landscapeBody(BuildContext context) {
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -60,7 +70,7 @@ class _LoginState extends State<LoginPage> {
             child: Container(
               width: double.infinity,
               height: double.infinity,
-              child: _buildLoginForm(context),
+              child: loginForm(context),
             ),
           ),
           Flexible(
@@ -76,62 +86,76 @@ class _LoginState extends State<LoginPage> {
     );
   }
 
-  _buildLoginForm(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: 0, right: 0, left: 0, bottom: 0),
-      child: Container(
-        color: Colors.transparent,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Flexible(
-              //space
-              flex: 2,
-              child: Container(),
-            ),
-            Flexible(
-              flex: 1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Flexible(
-                    //space
-                    flex: 1,
+  loginForm(BuildContext context) {
+    Orientation orientation = MediaQuery.of(context).orientation;
+    return Container(
+      color: Colors.transparent,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          orientation == Orientation.portrait
+              ? Padding(
+                  padding: const EdgeInsets.only(right: 250),
+                  child: Image.asset(
+                    "assets/images/arrow_left.png",
+                    width: 480,
+                  ),
+                )
+              : Container(),
+          orientation == Orientation.landscape
+              ? Flexible(
+                  //space
+                  flex: 2,
+                  child: Container(),
+                )
+              : SizedBox(
+                  height: 70,
+                ),
+          Flexible(
+            flex: 1,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Flexible(
+                  //space
+                  flex: 1,
+                  child: Container(
+                    color: Colors.transparent,
+                  ),
+                ),
+                Flexible(
+                  flex: orientation == Orientation.landscape ? 5 : 2,
+                  child: Container(
                     child: Container(
                       color: Colors.transparent,
-                    ),
-                  ),
-                  Flexible(
-                    flex: 5,
-                    child: Container(
-                      child: Container(
-                        color: Colors.transparent,
-                        width: double.infinity,
-                        height: double.infinity,
-                        child: Text(
-                          AppLocalizations.of(context)!.appTitle,
-                          style: Theme.of(context).textTheme.headline1,
-                          textAlign: TextAlign.start,
-                        ),
+                      width: double.infinity,
+                      height: double.infinity,
+                      child: Text(
+                        AppLocalizations.of(context)!.appTitle,
+                        style: Theme.of(context).textTheme.headline1,
+                        textAlign: TextAlign.start,
                       ),
                     ),
                   ),
-                  Flexible(
-                    //space
-                    flex: 1,
-                    child: Container(
-                      color: Colors.transparent,
-                    ),
+                ),
+                Flexible(
+                  //space
+                  flex: 1,
+                  child: Container(
+                    color: Colors.transparent,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            Flexible(
-              flex: 3,
+          ),
+          Flexible(
+            flex: 3,
+            child: Container(
+              width: 550,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -329,51 +353,96 @@ class _LoginState extends State<LoginPage> {
                 ],
               ),
             ),
-            Spacer(flex: 3),
-            Container(
-              color: Colors.transparent,
-              height: 60,
-              child: Align(
-                alignment: FractionalOffset.topCenter,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Container(
-                      child: FractionallySizedBox(
-                        widthFactor: 0.5,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(4),
+          ),
+          orientation == Orientation.landscape
+              ? Spacer(flex: 3)
+              : Spacer(flex: 1),
+          orientation == Orientation.portrait
+              ? Flexible(
+                  flex: 4,
+                  child: SingleChildScrollView(
+                    // physics: NeverScrollableScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: 300,
+                          child: Column(
+                            children: [
+                              Align(
+                                alignment: FractionalOffset.bottomRight,
+                                child: Image.asset(
+                                  "assets/images/login_background.png",
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 5),
+                                child: Image.asset(
+                                  "assets/images/loginShadow.png",
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: Align(
+                            alignment: FractionalOffset.bottomLeft,
+                            child: Image.asset(
+                              "assets/images/arrow_right.png",
                             ),
                           ),
-                          height: 2,
                         ),
+                      ],
+                    ),
+                  ),
+                )
+              : Container(),
+          Container(
+            color: Colors.transparent,
+            height: 60,
+            width: 200,
+            child: Align(
+              alignment: FractionalOffset.topCenter,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Container(
+                    child: FractionallySizedBox(
+                      widthFactor: 0.7,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(4),
+                          ),
+                        ),
+                        height: 2,
                       ),
                     ),
-                    Container(
-                      height: 23,
+                  ),
+                  Container(
+                    height: 23,
+                  ),
+                  Container(
+                    height: 35,
+                    child: Text(
+                      AppLocalizations.of(context)!.copyrights +
+                          getCurrentYearString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline2!
+                          .copyWith(color: Colors.grey),
                     ),
-                    Container(
-                      height: 35,
-                      child: Text(
-                        AppLocalizations.of(context)!.copyrights +
-                            getCurrentYearString(),
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline2!
-                            .copyWith(color: Colors.grey),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

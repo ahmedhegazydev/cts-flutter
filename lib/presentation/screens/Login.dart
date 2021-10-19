@@ -1,23 +1,20 @@
+import 'package:cts/constants/globals.dart';
+import 'package:cts/constants/routes.dart';
+import 'package:cts/data/controllers/login_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:cts/main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'Landing.dart';
 
-class LoginPage extends StatefulWidget {
-  LoginPage({Key? key}) : super(key: key);
-
+class LoginPage extends ConsumerWidget {
   @override
-  _LoginState createState() => _LoginState();
-}
-
-class _LoginState extends State<LoginPage> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, watch) {
     Orientation orientation = MediaQuery.of(context).orientation;
-
+    // getLoginData from login controller
+    // final loginModel = watch(getLoginData);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: orientation == Orientation.landscape
@@ -44,46 +41,24 @@ class _LoginState extends State<LoginPage> {
     );
   }
 
-  portraitBody(BuildContext context) {
-    return Center(
-      child: loginForm(context),
-    );
+  loginButtonPressed() {
+    Globals.navigatorKey.currentState?.pushNamed(LandingPageRoute);
   }
 
-  landscapeBody(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(
-            returnImageNameBasedOnDirection(
-                "assets/images/background", context, "png"),
-          ),
-          fit: BoxFit.fill,
-        ),
-      ),
-      child: Row(
-        children: [
-          Flexible(
-            flex: 1,
-            child: Container(
-              width: double.infinity,
-              height: double.infinity,
-              child: loginForm(context),
-            ),
-          ),
-          Flexible(
-            flex: 1,
-            child: Container(
-              width: double.infinity,
-              height: double.infinity,
-              color: Colors.transparent,
-            ),
-          ),
-        ],
-      ),
-    );
+  _authenticate() async {
+    bool didAuthenticate = await LocalAuthentication().authenticate(
+        localizedReason: 'Please authenticate to Login', biometricOnly: true);
+    if (didAuthenticate) {
+      loginButtonPressed();
+    }
+  }
+
+  String getCurrentYearString() {
+    initializeDateFormatting();
+    DateTime now = DateTime.now();
+    var formatter = DateFormat("yyyy", "en");
+    String date = formatter.format(now);
+    return date;
   }
 
   loginForm(BuildContext context) {
@@ -286,7 +261,7 @@ class _LoginState extends State<LoginPage> {
                                 Flexible(
                                   flex: 8,
                                   child: GestureDetector(
-                                    onTap: () => _authenticate(context),
+                                    onTap: () => _authenticate(),
                                     child: Container(
                                       padding: EdgeInsets.all(10),
                                       decoration: BoxDecoration(
@@ -447,29 +422,45 @@ class _LoginState extends State<LoginPage> {
     );
   }
 
-  _authenticate(BuildContext context) async {
-    bool didAuthenticate = await LocalAuthentication().authenticate(
-        localizedReason: 'Please authenticate to Login', biometricOnly: true);
-    if (didAuthenticate) {
-      loginButtonPressed();
-    }
-  }
-
-  loginButtonPressed() {
-    Navigator.push(
-      context,
-      PageRouteBuilder(
-        pageBuilder: (context, animation1, animation2) => LandingPage(),
-        transitionDuration: Duration(seconds: 0),
-      ),
+  portraitBody(BuildContext context) {
+    return Center(
+      child: loginForm(context),
     );
   }
 
-  String getCurrentYearString() {
-    initializeDateFormatting();
-    DateTime now = DateTime.now();
-    var formatter = DateFormat("yyyy", "en");
-    String date = formatter.format(now);
-    return date;
+  landscapeBody(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(
+            returnImageNameBasedOnDirection(
+                "assets/images/background", context, "png"),
+          ),
+          fit: BoxFit.fill,
+        ),
+      ),
+      child: Row(
+        children: [
+          Flexible(
+            flex: 1,
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              child: loginForm(context),
+            ),
+          ),
+          Flexible(
+            flex: 1,
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: Colors.transparent,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

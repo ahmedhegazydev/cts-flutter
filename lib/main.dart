@@ -1,6 +1,8 @@
 import 'dart:ui' as ui;
+import 'package:cts/constants/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:cts/presentation/widgets/app_routes.dart';
@@ -10,24 +12,28 @@ import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
   runApp(
-    MyApp(
-      appRoutes: AppRoutes(),
+    ProviderScope(
+      child: MyApp(
+        appRoutes: AppRoutes(),
+      ),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   final AppRoutes appRoutes;
 
   const MyApp({Key? key, required this.appRoutes}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, watch) {
     var defaultLocale = ui.window.locale.languageCode;
+
     return MaterialApp(
       title: 'CTS',
       debugShowCheckedModeBanner: false,
       onGenerateRoute: appRoutes.generateRoutes,
+      navigatorKey: Globals.navigatorKey,
       theme: ThemeData(
         textTheme: TextTheme(
           headline1: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),

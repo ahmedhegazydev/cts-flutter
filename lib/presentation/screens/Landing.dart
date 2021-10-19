@@ -26,44 +26,33 @@ class _LandingState extends State<LandingPage> {
   }
 
   portraitBody(BuildContext context) {
+    var appLocale = Localizations.localeOf(context).languageCode;
+
     return Stack(
       children: [
         Container(
-          width: double.infinity,
-          height: double.infinity,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
               Flexible(
+                flex: 1,
+                child: Container(
+                  width: double.infinity,
+                  height: 300,
+                  color: Colors.grey[200],
+                  child: portiraitDashboardContainer(context),
+                ),
+              ),
+              Flexible(
+                flex: 2,
                 child: Container(
                   width: double.infinity,
                   height: double.infinity,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Flexible(
-                        flex: 1,
-                        child: Container(
-                          width: double.infinity,
-                          height: 300,
-                          color: Colors.grey[200],
-                          child: portiraitDashboardContainer(context),
-                        ),
-                      ),
-                      Flexible(
-                        flex: 2,
-                        child: Container(
-                          width: double.infinity,
-                          height: double.infinity,
-                          child: portiraitDataTable(context),
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: portiraitDataTable(context),
                 ),
               ),
             ],
@@ -72,7 +61,9 @@ class _LandingState extends State<LandingPage> {
         Padding(
           padding: const EdgeInsets.only(left: 30, bottom: 5),
           child: Align(
-            alignment: Alignment.bottomLeft,
+            alignment: appLocale == "ar"
+                ? Alignment.bottomLeft
+                : Alignment.bottomRight,
             child: Image.asset(
               "assets/images/arrow_right.png",
               width: 200,
@@ -1642,6 +1633,8 @@ class _LandingState extends State<LandingPage> {
 
   portiraitDataTable(BuildContext context) {
     return Container(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
         color: createMaterialColor(Color.fromRGBO(255, 255, 255, 0.8)),
       ),
@@ -1800,49 +1793,46 @@ class _LandingState extends State<LandingPage> {
               ),
             ],
           ),
-          Flexible(
-            flex: 1,
-            child: Align(
-              alignment: FractionalOffset.topCenter,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  SizedBox(height: 40),
-                  Container(
-                    color: Colors.grey[200],
-                    padding: EdgeInsets.only(
-                        left: 20, right: 20, top: 20, bottom: 0),
-                    height: 65,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Image(
-                          image: AssetImage(
-                            returnImageNameBasedOnOppositeDirection(
-                                "assets/images/arrow", context, "png"),
-                          ),
-                          fit: BoxFit.contain,
-                          width: 50,
-                          height: double.infinity,
+          Align(
+            alignment: FractionalOffset.topCenter,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                SizedBox(height: 40),
+                Container(
+                  color: Colors.grey[200],
+                  padding:
+                      EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 0),
+                  height: 65,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Image(
+                        image: AssetImage(
+                          returnImageNameBasedOnOppositeDirection(
+                              "assets/images/arrow", context, "png"),
                         ),
-                        Text(
-                          AppLocalizations.of(context)!
-                              .sharedServicesAdministration,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline2!
-                              .copyWith(color: Colors.grey),
-                          textAlign: TextAlign.start,
-                        ),
-                      ],
-                    ),
+                        fit: BoxFit.contain,
+                        width: 50,
+                        height: double.infinity,
+                      ),
+                      Text(
+                        AppLocalizations.of(context)!
+                            .sharedServicesAdministration,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline2!
+                            .copyWith(color: Colors.grey),
+                        textAlign: TextAlign.start,
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],

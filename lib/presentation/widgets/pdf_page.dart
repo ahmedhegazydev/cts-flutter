@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 
 class PDFPage extends StatefulWidget {
+  final bool portraitStatus;
+  const PDFPage(this.portraitStatus);
   @override
   _PDFPageState createState() => _PDFPageState();
 }
@@ -41,7 +43,9 @@ class _PDFPageState extends State<PDFPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width / 1.5,
+      width: widget.portraitStatus == true
+          ? MediaQuery.of(context).size.width - 70
+          : MediaQuery.of(context).size.width / 1.5,
       color: Colors.transparent,
       child: _isLoading
           ? Center(

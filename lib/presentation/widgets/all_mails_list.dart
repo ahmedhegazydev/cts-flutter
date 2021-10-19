@@ -1,3 +1,4 @@
+import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -13,10 +14,12 @@ class AllMailsList extends StatefulWidget {
 
 class _AAllMailsListstate extends State<AllMailsList> {
   bool filterUnread = false;
+  bool bottomMenuFolderIsActive = false;
 
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
+    Orientation orientation = MediaQuery.of(context).orientation;
     return SingleChildScrollView(
       physics: NeverScrollableScrollPhysics(),
       child: Column(
@@ -30,11 +33,202 @@ class _AAllMailsListstate extends State<AllMailsList> {
           ),
           Container(
             width: width,
-            height: 600,
+            height: orientation == Orientation.portrait ? 650 : 500,
             color: Colors.transparent,
             child: _buildMailsList(),
           ),
+          orientation == Orientation.portrait
+              ? Padding(
+                  padding: const EdgeInsets.only(
+                      left: 20, right: 20, bottom: 20, top: 5),
+                  child: Material(
+                    elevation: 5,
+                    child: Container(
+                      width: double.infinity,
+                      height: 80,
+                      color: Colors.grey.shade200,
+                      child: portraitMenuInboxes(context),
+                    ),
+                  ),
+                )
+              : Container(),
         ],
+      ),
+    );
+  }
+
+  portraitMenuInboxes(BuildContext context) {
+    var appLocale = Localizations.localeOf(context).languageCode;
+    return Container(
+      padding: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
+      width: double.infinity,
+      color: Colors.transparent,
+      child: DefaultTabController(
+        length: 4,
+        child: ContainedTabBarView(
+          tabs: [
+            Row(
+              children: [
+                Container(
+                  width: 40,
+                  height: double.infinity,
+                ),
+                Text(
+                  AppLocalizations.of(context)!.allInbox,
+                  style: TextStyle(
+                    fontSize: 17,
+                  ),
+                  textAlign: TextAlign.start,
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: appLocale == "en" ? 0 : 50,
+                    right: appLocale == "en" ? 50 : 0,
+                  ),
+                  child: FractionallySizedBox(
+                    heightFactor: 0.7,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade400,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(4),
+                        ),
+                      ),
+                      width: 0.5,
+                    ),
+                  ),
+                ),
+                Text(
+                  AppLocalizations.of(context)!.forAction,
+                  style: TextStyle(
+                    fontSize: 17,
+                  ),
+                  textAlign: TextAlign.start,
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: appLocale == "en" ? 0 : 50,
+                    right: appLocale == "en" ? 50 : 0,
+                  ),
+                  child: FractionallySizedBox(
+                    heightFactor: 0.7,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade400,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(4),
+                        ),
+                      ),
+                      width: 0.5,
+                    ),
+                  ),
+                ),
+                Text(
+                  AppLocalizations.of(context)!.forSignature,
+                  style: TextStyle(
+                    fontSize: 17,
+                  ),
+                  textAlign: TextAlign.start,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    right: appLocale == "en" ? 0 : 75,
+                    left: appLocale == "en" ? 35 : 0,
+                  ),
+                  child: FractionallySizedBox(
+                    heightFactor: 0.7,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade400,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(4),
+                        ),
+                      ),
+                      width: 0.5,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    right: appLocale == "en" ? 0 : 15,
+                    left: appLocale == "en" ? 15 : 0,
+                  ),
+                  child: Text(
+                    AppLocalizations.of(context)!.forInfo,
+                    style: TextStyle(
+                      fontSize: 17,
+                    ),
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    right: appLocale == "en" ? 0 : 45,
+                    left: appLocale == "en" ? 45 : 0,
+                  ),
+                  child: FractionallySizedBox(
+                    heightFactor: 0.7,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade400,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(4),
+                        ),
+                      ),
+                      width: 0.5,
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 9,
+                  height: double.infinity,
+                ),
+                InkWell(
+                  //onTap:,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 13),
+                    child: Image(
+                      image: AssetImage(
+                        returnImageNameBasedOnOppositeDirection(
+                            "assets/images/arrow", context, "png"),
+                      ),
+                      fit: BoxFit.contain,
+                      width: 40,
+                      height: double.infinity,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+          tabBarProperties: TabBarProperties(
+            width: 800,
+            height: 70.0,
+            indicatorColor: Theme.of(context).colorScheme.primary,
+            indicatorWeight: 3,
+            labelColor: Theme.of(context).colorScheme.primary,
+            unselectedLabelColor: Colors.grey.shade600,
+            alignment: TabBarAlignment.start,
+          ),
+          views: [
+            Container(),
+            Container(),
+            Container(),
+            Container(),
+          ],
+        ),
       ),
     );
   }

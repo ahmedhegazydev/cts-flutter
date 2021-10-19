@@ -63,7 +63,7 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/rana
 		ADDED from /Users/ranaayman/Desktop/cts-flutter/android/app/src/main/AndroidManifest.xml:4:9-33
 	android:icon
 		ADDED from /Users/ranaayman/Desktop/cts-flutter/android/app/src/main/AndroidManifest.xml:5:9-43
-activity#com.example.test_app.MainActivity
+activity#com.example.cts.MainActivity
 ADDED from /Users/ranaayman/Desktop/cts-flutter/android/app/src/main/AndroidManifest.xml:6:9-34:20
 	android:launchMode
 		ADDED from /Users/ranaayman/Desktop/cts-flutter/android/app/src/main/AndroidManifest.xml:8:13-43

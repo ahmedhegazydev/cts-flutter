@@ -21,6 +21,7 @@ class _InboxState extends State<InboxPage> {
   }
 
   _buildBody(BuildContext context) {
+    Orientation orientation = MediaQuery.of(context).orientation;
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -31,12 +32,14 @@ class _InboxState extends State<InboxPage> {
         mainAxisSize: MainAxisSize.max,
         children: [
           //side bar
-          Container(
-            width: 260,
-            height: double.infinity,
-            color: Colors.grey.shade300,
-            child: _buildSideMenu(context),
-          ),
+          orientation == Orientation.landscape
+              ? Container(
+                  width: 260,
+                  height: double.infinity,
+                  color: Colors.grey.shade300,
+                  child: _buildSideMenu(context),
+                )
+              : Container(),
           Expanded(
             child: Container(
               width: double.infinity,
@@ -273,8 +276,8 @@ class _InboxState extends State<InboxPage> {
   _buildTopInboxMenu(BuildContext context) {
     return Container(
       color: Colors.transparent,
-      width: double.infinity,
-      height: double.infinity,
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
       child: DefaultTabController(
         length: 4,
         child: ContainedTabBarView(

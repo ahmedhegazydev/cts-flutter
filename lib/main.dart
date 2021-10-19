@@ -1,3 +1,4 @@
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var defaultLocale = ui.window.locale.languageCode;
     return MaterialApp(
       title: 'CTS',
       debugShowCheckedModeBanner: false,
@@ -58,8 +60,7 @@ class MyApp extends StatelessWidget {
         Locale("ar", "AE"),
         Locale("en", "US"),
       ],
-      locale: Locale("ar", "AR"),
-      // locale: Locale("en", "US"),
+      locale: defaultLocale == "en" ? Locale("en", "US") : Locale("ar", "AR"),
     );
   }
 }

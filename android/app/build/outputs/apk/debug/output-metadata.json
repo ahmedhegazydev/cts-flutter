@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.example.test_app",
+  "applicationId": "com.example.cts",
   "variantName": "processDebugResources",
   "elements": [
     {

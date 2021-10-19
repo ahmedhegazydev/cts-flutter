@@ -11,6 +11,7 @@ class DocumentPage extends StatefulWidget {
 
 class _DocumentPageState extends State<DocumentPage> {
   bool openExportDialog = false;
+  bool portraitIsActive = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,6 +21,7 @@ class _DocumentPageState extends State<DocumentPage> {
   }
 
   _buildBody(BuildContext context) {
+    Orientation orientation = MediaQuery.of(context).orientation;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -38,7 +40,30 @@ class _DocumentPageState extends State<DocumentPage> {
           decoration: BoxDecoration(
             color: Colors.transparent,
           ),
-          child: _buildFilterBar(context),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _buildFilterBar(context),
+              orientation == Orientation.landscape
+                  ? Container()
+                  : InkWell(
+                      // onTap:,
+                      child: Container(
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          image: DecorationImage(
+                            scale: 1.9,
+                            image: AssetImage(
+                              'assets/images/metadata.png',
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+            ],
+          ),
         ),
         Divider(
           color: Colors.grey[500],
@@ -50,6 +75,12 @@ class _DocumentPageState extends State<DocumentPage> {
   }
 
   Expanded _buildDoucmentArea() {
+    Orientation orientation = MediaQuery.of(context).orientation;
+    if (orientation == Orientation.landscape) {
+      portraitIsActive = false;
+    } else {
+      portraitIsActive = true;
+    }
     return Expanded(
       child: Stack(
         children: [
@@ -63,298 +94,326 @@ class _DocumentPageState extends State<DocumentPage> {
                 color: Colors.grey[200],
                 child: _buildSideMenu(context),
               ),
-              PDFPage(),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.data,
-                            style:
-                                Theme.of(context).textTheme.headline2!.copyWith(
-                                      color: Colors.grey[700],
-                                      fontSize: 18,
-                                    ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 20, right: 20),
-                            child: Container(
-                              color: Colors.transparent,
-                              child: Image.asset(
-                                'assets/images/metadata.png',
-                              ),
-                              width: 18,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          top: 15, bottom: 10, left: 5, right: 5),
-                      child: Divider(
-                        color: Colors.grey[400],
-                        height: 1,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15),
-                      child: Row(
+              PDFPage(portraitIsActive),
+              orientation == Orientation.landscape
+                  ? Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Container(
-                            height: 30,
-                            width: 120,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.grey.shade300,
-                              ),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(5),
-                              ),
-                            ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 15),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
-                                  color: Colors.white,
-                                  child: Image(
-                                    alignment: Alignment.center,
-                                    image: AssetImage(
-                                      'assets/images/urgent.png',
-                                    ),
-                                    color: Colors.red,
-                                  ),
+                                Text(
+                                  AppLocalizations.of(context)!.data,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline2!
+                                      .copyWith(
+                                        color: Colors.grey[700],
+                                        fontSize: 18,
+                                      ),
                                 ),
-                                Center(
-                                  child: Text(
-                                    AppLocalizations.of(context)!.urgent,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline2!
-                                        .copyWith(
-                                            color: Colors.red, fontSize: 14),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 20, right: 20),
+                                  child: Container(
+                                    color: Colors.transparent,
+                                    child: Image.asset(
+                                      'assets/images/metadata.png',
+                                    ),
+                                    width: 18,
                                   ),
                                 ),
                               ],
                             ),
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsets.only(right: 8.0, left: 8.0),
-                            child: Container(
-                              height: 30,
-                              width: 120,
-                              color: Colors.transparent,
-                              padding: EdgeInsets.only(left: 5, right: 5),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.transparent,
-                                  border: Border.all(
-                                    color: Colors.grey.shade300,
+                            padding: const EdgeInsets.only(
+                                top: 15, bottom: 10, left: 5, right: 5),
+                            child: Divider(
+                              color: Colors.grey[400],
+                              height: 1,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  height: 30,
+                                  width: 120,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.grey.shade300,
+                                    ),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(5),
+                                    ),
                                   ),
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(3),
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      color: Colors.transparent,
-                                      child: Image(
-                                        image: AssetImage(
-                                          'assets/images/secret.png',
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        color: Colors.white,
+                                        child: Image(
+                                          alignment: Alignment.center,
+                                          image: AssetImage(
+                                            'assets/images/urgent.png',
+                                          ),
+                                          color: Colors.red,
                                         ),
-                                        alignment: Alignment.center,
-                                        color: Theme.of(context).primaryColor,
                                       ),
-                                    ),
-                                    Center(
-                                      child: Text(
-                                        AppLocalizations.of(context)!.secret,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline2!
-                                            .copyWith(
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                                fontSize: 12),
-                                        textAlign: TextAlign.start,
+                                      Center(
+                                        child: Text(
+                                          AppLocalizations.of(context)!.urgent,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline2!
+                                              .copyWith(
+                                                  color: Colors.red,
+                                                  fontSize: 14),
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 8.0, left: 8.0),
+                                  child: Container(
+                                    height: 30,
+                                    width: 120,
+                                    color: Colors.transparent,
+                                    padding: EdgeInsets.only(left: 5, right: 5),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.transparent,
+                                        border: Border.all(
+                                          color: Colors.grey.shade300,
+                                        ),
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(3),
+                                        ),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            color: Colors.transparent,
+                                            child: Image(
+                                              image: AssetImage(
+                                                'assets/images/secret.png',
+                                              ),
+                                              alignment: Alignment.center,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            ),
+                                          ),
+                                          Center(
+                                            child: Text(
+                                              AppLocalizations.of(context)!
+                                                  .secret,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline2!
+                                                  .copyWith(
+                                                      color: Theme.of(context)
+                                                          .primaryColor,
+                                                      fontSize: 12),
+                                              textAlign: TextAlign.start,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 25),
+                            child: Text(
+                              AppLocalizations.of(context)!.sender1,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .copyWith(
+                                    color: Colors.grey,
+                                    fontSize: 14,
+                                  ),
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Text(
+                              "اقتراح تعديل السقف السنوي لموازنات الاقسام التابعة لادارة الخدمات المشتركة",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .copyWith(color: Colors.black, fontSize: 13),
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: Text(
+                              AppLocalizations.of(context)!.sender1,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .copyWith(color: Colors.grey, fontSize: 14),
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Text(
+                              AppLocalizations.of(context)!
+                                  .sharedServicesAdministration,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .copyWith(color: Colors.black, fontSize: 13),
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: Text(
+                              AppLocalizations.of(context)!.sender1,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .copyWith(color: Colors.grey, fontSize: 14),
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Text(
+                              "شفيق عبةالرحمن",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .copyWith(color: Colors.black, fontSize: 13),
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: Text(
+                              AppLocalizations.of(context)!.assignedFrom,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .copyWith(
+                                    color: Colors.grey,
+                                    fontSize: 14,
+                                  ),
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Text(
+                              "12/03/2021",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .copyWith(
+                                    color: Colors.black,
+                                    fontSize: 13,
+                                  ),
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: Text(
+                              AppLocalizations.of(context)!.assignmentNotes,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .copyWith(
+                                    color: Colors.grey,
+                                    fontSize: 14,
+                                  ),
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Text(
+                              "الرجاء قراءه الكتاب والتفضل بالتوقيع اذا آمكن",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .copyWith(
+                                    color: Colors.black,
+                                    fontSize: 13,
+                                  ),
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: Container(
+                              height: 40,
+                              width: 100,
+                              margin: EdgeInsets.only(
+                                right:
+                                    AppLocalizations.of(context)!.localeName ==
+                                            "en"
+                                        ? 20
+                                        : 0,
+                                left:
+                                    AppLocalizations.of(context)!.localeName ==
+                                            "en"
+                                        ? 0
+                                        : 20,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(5),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          right: 10, left: 10),
+                                      child: Divider(
+                                        color: Colors.grey[400],
+                                        thickness: 2,
+                                      ),
+                                    ),
+                                  ),
+                                  InkWell(
+                                    child: Icon(
+                                      Icons.play_arrow,
+                                      color: Theme.of(context).primaryColor,
+                                      size: 30,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
                         ],
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 25),
-                      child: Text(
-                        AppLocalizations.of(context)!.sender1,
-                        style: Theme.of(context).textTheme.headline2!.copyWith(
-                              color: Colors.grey,
-                              fontSize: 14,
-                            ),
-                        textAlign: TextAlign.start,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Text(
-                        "اقتراح تعديل السقف السنوي لموازنات الاقسام التابعة لادارة الخدمات المشتركة",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline2!
-                            .copyWith(color: Colors.black, fontSize: 13),
-                        textAlign: TextAlign.start,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: Text(
-                        AppLocalizations.of(context)!.sender1,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline2!
-                            .copyWith(color: Colors.grey, fontSize: 14),
-                        textAlign: TextAlign.start,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Text(
-                        AppLocalizations.of(context)!
-                            .sharedServicesAdministration,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline2!
-                            .copyWith(color: Colors.black, fontSize: 13),
-                        textAlign: TextAlign.start,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: Text(
-                        AppLocalizations.of(context)!.sender1,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline2!
-                            .copyWith(color: Colors.grey, fontSize: 14),
-                        textAlign: TextAlign.start,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Text(
-                        "شفيق عبةالرحمن",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline2!
-                            .copyWith(color: Colors.black, fontSize: 13),
-                        textAlign: TextAlign.start,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: Text(
-                        AppLocalizations.of(context)!.assignedFrom,
-                        style: Theme.of(context).textTheme.headline2!.copyWith(
-                              color: Colors.grey,
-                              fontSize: 14,
-                            ),
-                        textAlign: TextAlign.start,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Text(
-                        "12/03/2021",
-                        style: Theme.of(context).textTheme.headline2!.copyWith(
-                              color: Colors.black,
-                              fontSize: 13,
-                            ),
-                        textAlign: TextAlign.start,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: Text(
-                        AppLocalizations.of(context)!.assignmentNotes,
-                        style: Theme.of(context).textTheme.headline2!.copyWith(
-                              color: Colors.grey,
-                              fontSize: 14,
-                            ),
-                        textAlign: TextAlign.start,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Text(
-                        "الرجاء قراءه الكتاب والتفضل بالتوقيع اذا آمكن",
-                        style: Theme.of(context).textTheme.headline2!.copyWith(
-                              color: Colors.black,
-                              fontSize: 13,
-                            ),
-                        textAlign: TextAlign.start,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: Container(
-                        height: 40,
-                        width: 100,
-                        margin: EdgeInsets.only(
-                          right:
-                              AppLocalizations.of(context)!.localeName == "en"
-                                  ? 20
-                                  : 0,
-                          left: AppLocalizations.of(context)!.localeName == "en"
-                              ? 0
-                              : 20,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.grey[300],
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(5),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(right: 10, left: 10),
-                                child: Divider(
-                                  color: Colors.grey[400],
-                                  thickness: 2,
-                                ),
-                              ),
-                            ),
-                            InkWell(
-                              child: Icon(
-                                Icons.play_arrow,
-                                color: Theme.of(context).primaryColor,
-                                size: 30,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+                    )
+                  : Container(),
             ],
           ),
           openExportDialog == true
@@ -734,6 +793,8 @@ class _DocumentPageState extends State<DocumentPage> {
   }
 
   _openReferDialog() {
+    Orientation orientation = MediaQuery.of(context).orientation;
+    print(orientation);
     return showDialog(
       context: context,
       builder: (_) => new AlertDialog(
@@ -747,8 +808,9 @@ class _DocumentPageState extends State<DocumentPage> {
             var height = MediaQuery.of(context).size.height;
             var width = MediaQuery.of(context).size.width;
             return Container(
-              height: height - 200,
-              width: width - 400,
+              height:
+                  orientation == Orientation.landscape ? height - 200 : height,
+              width: orientation == Orientation.landscape ? width - 400 : width,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -930,7 +992,9 @@ class _DocumentPageState extends State<DocumentPage> {
                     color: Colors.grey[400],
                   ),
                   Container(
-                    width: width - 400,
+                    width: orientation == Orientation.landscape
+                        ? width - 400
+                        : width,
                     height: height - 450,
                     child: ListView(
                       children: [

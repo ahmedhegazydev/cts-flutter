@@ -53,5 +53,7 @@
 "paperExport":"تصدير ورقي",
 "electronicExport":"تصدير الكتروني",
 "paperAndElectronicExport":"تصدير ورقي والكتروني",
-"sharedServicesAdministration":"ادارة الخدمات المشتركة"
+"sharedServicesAdministration":"ادارة الخدمات المشتركة",
+"tryAgainLater":"حدث خطأ. الرجاء معاودة المحاولة في وقت لاحق",
+"loginInfo":"يجب ادخال اسم المستخدم وكلمة المرور."
 }

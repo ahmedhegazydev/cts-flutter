@@ -1,30 +1,30 @@
 class LoginModel {
-  late final String errorMessage;
-  late final int status;
-  late final List<CustomActions> customActions;
-  late final String departmentName;
-  late final String firstName;
-  late final Inbox inbox;
-  late final String lastName;
-  late final String logoOffline;
-  late final String logoOnline;
-  late final String pincode;
-  late final String reportUrl;
-  late final String serviceType;
-  late final String signature;
-  late final String signatureId;
-  late final String token;
-  late final TransferData transferData;
-  late final String userDetails;
-  late final String userGuideUrl;
-  late final int userId;
-  late final String viewerURL;
-  late final String visualTrackingUrl;
-  late final String watermark;
-  late final FeedbackText feedbackText;
-  late final String termsAndConditions;
-  late final bool usePinCode;
-  LoginModel(
+  late final String? errorMessage;
+  late final int? status;
+  late final List<CustomActions>? customActions;
+  late final String? departmentName;
+  late final String? firstName;
+  late final Inbox? inbox;
+  late final String? lastName;
+  late final String? logoOffline;
+  late final String? logoOnline;
+  late final String? pincode;
+  late final String? reportUrl;
+  late final String? serviceType;
+  late final String? signature;
+  late final String? signatureId;
+  late final String? token;
+  late final TransferData? transferData;
+  late final String? userDetails;
+  late final String? userGuideUrl;
+  late final int? userId;
+  late final String? viewerURL;
+  late final String? visualTrackingUrl;
+  late final String? watermark;
+  late final FeedbackText? feedbackText;
+  late final String? termsAndConditions;
+  late final bool? usePinCode;
+  LoginModel({
     this.errorMessage,
     this.status,
     this.customActions,
@@ -50,7 +50,7 @@ class LoginModel {
     this.feedbackText,
     this.termsAndConditions,
     this.usePinCode,
-  );
+  });
 
   LoginModel.fromJson(Map<dynamic, dynamic> json) {
     errorMessage = json['ErrorMessage'];
@@ -86,10 +86,10 @@ class LoginModel {
     final _data = <String, dynamic>{};
     _data['ErrorMessage'] = errorMessage;
     _data['Status'] = status;
-    _data['CustomActions'] = customActions.map((e) => e.toJson()).toList();
+    _data['CustomActions'] = customActions?.map((e) => e.toJson()).toList();
     _data['DepartmentName'] = departmentName;
     _data['FirstName'] = firstName;
-    _data['Inbox'] = inbox.toJson();
+    _data['Inbox'] = inbox?.toJson();
     _data['LastName'] = lastName;
     _data['LogoOffline'] = logoOffline;
     _data['LogoOnline'] = logoOnline;
@@ -99,14 +99,14 @@ class LoginModel {
     _data['Signature'] = signature;
     _data['SignatureId'] = signatureId;
     _data['Token'] = token;
-    _data['TransferData'] = transferData.toJson();
+    _data['TransferData'] = transferData?.toJson();
     _data['UserDetails'] = userDetails;
     _data['UserGuideUrl'] = userGuideUrl;
     _data['UserId'] = userId;
     _data['ViewerURL'] = viewerURL;
     _data['VisualTrackingUrl'] = visualTrackingUrl;
     _data['Watermark'] = watermark;
-    _data['feedbackText'] = feedbackText.toJson();
+    _data['feedbackText'] = feedbackText?.toJson();
     _data['termsAndConditions'] = termsAndConditions;
     _data['usePinCode'] = usePinCode;
     return _data;
@@ -114,8 +114,8 @@ class LoginModel {
 }
 
 class CustomActions {
-  late final String icon;
-  late final String name;
+  late final String? icon;
+  late final String? name;
   CustomActions(
     this.icon,
     this.name,
@@ -135,7 +135,7 @@ class CustomActions {
 }
 
 class Inbox {
-  late final List<InboxItems> inboxItems;
+  late final List<InboxItems?> inboxItems;
   Inbox(
     this.inboxItems,
   );
@@ -148,17 +148,17 @@ class Inbox {
 
   Map<dynamic, dynamic> toJson() {
     final _data = <dynamic, dynamic>{};
-    _data['InboxItems'] = inboxItems.map((e) => e.toJson()).toList();
+    _data['InboxItems'] = inboxItems.map((e) => e?.toJson()).toList();
     return _data;
   }
 }
 
 class InboxItems {
-  late final String clickedIcon;
-  late final String icon;
-  late final int inboxId;
-  late final String name;
-  late final int total;
+  late final String? clickedIcon;
+  late final String? icon;
+  late final int? inboxId;
+  late final String? name;
+  late final int? total;
   InboxItems(
     this.clickedIcon,
     this.icon,
@@ -187,11 +187,11 @@ class InboxItems {
 }
 
 class TransferData {
-  late final List<Priorities> priorities;
-  late final List<Privacies> privacies;
-  late final List<Purposes> purposes;
-  late final List<Sections> sections;
-  late final List<Statuses> statuses;
+  late final List<Priorities?> priorities;
+  late final List<Privacies?> privacies;
+  late final List<Purposes?> purposes;
+  late final List<Sections?> sections;
+  late final List<Statuses?> statuses;
   TransferData(
     this.priorities,
     this.privacies,
@@ -216,18 +216,18 @@ class TransferData {
 
   Map<dynamic, dynamic> toJson() {
     final _data = <dynamic, dynamic>{};
-    _data['Priorities'] = priorities.map((e) => e.toJson()).toList();
-    _data['Privacies'] = privacies.map((e) => e.toJson()).toList();
-    _data['Purposes'] = purposes.map((e) => e.toJson()).toList();
-    _data['Sections'] = sections.map((e) => e.toJson()).toList();
-    _data['Statuses'] = statuses.map((e) => e.toJson()).toList();
+    _data['Priorities'] = priorities.map((e) => e?.toJson()).toList();
+    _data['Privacies'] = privacies.map((e) => e?.toJson()).toList();
+    _data['Purposes'] = purposes.map((e) => e?.toJson()).toList();
+    _data['Sections'] = sections.map((e) => e?.toJson()).toList();
+    _data['Statuses'] = statuses.map((e) => e?.toJson()).toList();
     return _data;
   }
 }
 
 class Priorities {
-  late final String id;
-  late final String value;
+  late final String? id;
+  late final String? value;
   Priorities(
     this.id,
     this.value,
@@ -247,8 +247,8 @@ class Priorities {
 }
 
 class Privacies {
-  late final String id;
-  late final String value;
+  late final String? id;
+  late final String? value;
   Privacies(
     this.id,
     this.value,
@@ -268,8 +268,8 @@ class Privacies {
 }
 
 class Purposes {
-  late final String id;
-  late final String value;
+  late final String? id;
+  late final String? value;
   Purposes(
     this.id,
     this.value,
@@ -290,8 +290,8 @@ class Purposes {
 
 class Sections {
   late final List<dynamic> destination;
-  late final String id;
-  late final String value;
+  late final String? id;
+  late final String? value;
   Sections(
     this.destination,
     this.id,
@@ -314,8 +314,8 @@ class Sections {
 }
 
 class Statuses {
-  late final String id;
-  late final String value;
+  late final String? id;
+  late final String? value;
   Statuses(
     this.id,
     this.value,
@@ -336,19 +336,19 @@ class Statuses {
 
 class FeedbackText {
   FeedbackText({
-    required this.app,
-    required this.details,
-    required this.id,
-    required this.keyword,
-    required this.notes,
-    required this.title,
+    this.app,
+    this.details,
+    this.id,
+    this.keyword,
+    this.notes,
+    this.title,
   });
-  late final String app;
-  late final String details;
-  late final String id;
-  late final String keyword;
-  late final String notes;
-  late final String title;
+  late final String? app;
+  late final String? details;
+  late final String? id;
+  late final String? keyword;
+  late final String? notes;
+  late final String? title;
 
   FeedbackText.fromJson(Map<dynamic, dynamic> json) {
     app = json['app'];

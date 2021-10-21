@@ -41,16 +41,18 @@ class LoginPage extends ConsumerWidget {
       Orientation orientation = MediaQuery.of(context).orientation;
       return Stack(
         children: [
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: FractionallySizedBox(
-              heightFactor: 0.24,
-              child: Container(
-                width: double.infinity,
-                color: Colors.white,
-              ),
-            ),
-          ),
+          orientation == Orientation.portrait
+              ? Align(
+                  alignment: Alignment.bottomCenter,
+                  child: FractionallySizedBox(
+                    heightFactor: 0.24,
+                    child: Container(
+                      width: double.infinity,
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              : Container(),
           Container(
             color: Colors.transparent,
             child: Column(

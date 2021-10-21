@@ -33,7 +33,9 @@ class _AAllMailsListstate extends State<AllMailsList> {
           ),
           Container(
             width: width,
-            height: orientation == Orientation.portrait ? 650 : 500,
+            height: orientation == Orientation.portrait
+                ? MediaQuery.of(context).size.height - 380
+                : 500,
             color: Colors.transparent,
             child: _buildMailsList(),
           ),
@@ -44,8 +46,8 @@ class _AAllMailsListstate extends State<AllMailsList> {
                   child: Material(
                     elevation: 5,
                     child: Container(
-                      width: double.infinity,
                       height: 80,
+                      width: MediaQuery.of(context).size.width,
                       color: Colors.grey.shade200,
                       child: portraitMenuInboxes(context),
                     ),

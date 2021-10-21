@@ -24,15 +24,10 @@ class _ToastWidgetState extends State<_ToastAnimatedWidget>
 
   @override
   Widget build(BuildContext context) {
-    Orientation orientation = MediaQuery.of(context).orientation;
-    return Positioned(
-      bottom: 50,
-      right: orientation == Orientation.portrait ? 230 : 350,
-      child: AnimatedOpacity(
-        duration: Duration(seconds: 4),
-        opacity: _isVisible ? 1.0 : 0.0,
-        child: widget.child,
-      ),
+    return AnimatedOpacity(
+      duration: Duration(seconds: 4),
+      opacity: _isVisible ? 1.0 : 0.0,
+      child: widget.child,
     );
   }
 }
@@ -56,35 +51,40 @@ class Toast {
     var overlayState = Overlay.of(context);
 
     _overlayEntry = new OverlayEntry(
-      builder: (BuildContext context) => _ToastAnimatedWidget(
-        child: Center(
-          child: Material(
-            elevation: 10.0,
-            borderRadius: BorderRadius.circular(10),
-            child: Container(
-              padding:
-                  EdgeInsets.only(left: 10, right: 10, top: 13, bottom: 10),
-              decoration: BoxDecoration(
-                color: Colors.red[700],
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SizedBox(
-                    width: 270,
-                    child: Text(
-                      msg,
-                      textAlign: TextAlign.center,
-                      softWrap: true,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xFFFFFFFF),
+      builder: (BuildContext context) => Positioned(
+        top: 30,
+        width: MediaQuery.of(context).size.width - 100,
+        left: 50,
+        child: _ToastAnimatedWidget(
+          child: Center(
+            child: Material(
+              elevation: 10.0,
+              borderRadius: BorderRadius.circular(10),
+              child: Container(
+                padding:
+                    EdgeInsets.only(left: 10, right: 10, top: 13, bottom: 10),
+                decoration: BoxDecoration(
+                  color: Colors.red[700],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SizedBox(
+                      width: 270,
+                      child: Text(
+                        msg,
+                        textAlign: TextAlign.center,
+                        softWrap: true,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xFFFFFFFF),
+                        ),
+                        maxLines: 3,
                       ),
-                      maxLines: 3,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

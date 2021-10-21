@@ -40,11 +40,13 @@ class _LandingState extends State<LandingPage> {
             children: [
               Flexible(
                 flex: 1,
-                child: Container(
-                  width: double.infinity,
-                  height: 300,
-                  color: Colors.grey[200],
-                  child: portiraitDashboardContainer(context),
+                child: FractionallySizedBox(
+                  heightFactor: 0.88,
+                  child: Container(
+                    width: double.infinity,
+                    color: Colors.grey[200],
+                    child: portiraitDashboardContainer(context),
+                  ),
                 ),
               ),
               Flexible(
@@ -1794,15 +1796,15 @@ class _LandingState extends State<LandingPage> {
             ],
           ),
           Align(
-            alignment: FractionalOffset.topCenter,
+            alignment: Alignment.bottomCenter,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: [
-                SizedBox(height: 40),
                 Container(
                   color: Colors.grey[200],
+                  margin: EdgeInsets.only(top: 50),
                   padding:
                       EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 0),
                   height: 65,

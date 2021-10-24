@@ -1,4 +1,5 @@
 import 'package:cts/constants/routes.dart';
+import 'package:cts/presentation/screens/document_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cts/presentation/screens/Landing.dart';
@@ -11,6 +12,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => LoginPage());
       case LandingPageRoute:
         return MaterialPageRoute(builder: (_) => LandingPage());
+      case DocumentPageRoute:
+        return MaterialPageRoute(builder: (_) => DocumentPage());
     }
   }
 }

@@ -55,5 +55,12 @@
 "paperAndElectronicExport":"Paper and electronic export",
 "sharedServicesAdministration":"Shared Services Administration",
 "tryAgainLater":"An error has occurred. Please try again later",
-"loginInfo":"You must enter your username and password."
+"loginInfo":"You must enter your username and password.",
+"normal":"Normal",
+"confidential":"Confidential",
+"highConfidential":"High Confidential",
+"low":"Low",
+"medium":"Medium",
+"urgent":"Urgent",
+"topUrgent":"Top Urgent"
 }

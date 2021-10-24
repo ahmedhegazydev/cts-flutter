@@ -58,6 +58,28 @@ showLoadingIndicator(BuildContext context,
   }
 }
 
+Widget showLoadingIndicatorSync({bool isModal = true, Color? modalColor}) {
+  try {
+    debugPrint('Showing loading overlay');
+    final _child = Center(
+      child: SizedBox(
+        child: _loadingIndicator ?? CircularProgressIndicator(),
+        /*(Platform.isAndroid
+                ? CircularProgressIndicator()
+                : CupertinoActivityIndicator()),*/
+        width: 30,
+        height: 30,
+      ),
+    );
+    return Stack(
+      children: <Widget>[ModalBarrier(color: Colors.white), _child],
+    );
+  } catch (err) {
+    debugPrint('Exception showing loading overlay\n${err.toString()}');
+    throw err;
+  }
+}
+
 Future<void> hideLoadingIndicator() async {
   try {
     debugPrint('Hiding loading overlay');

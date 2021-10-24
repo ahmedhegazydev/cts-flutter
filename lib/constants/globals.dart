@@ -7,4 +7,23 @@ class Globals {
       new GlobalKey<NavigatorState>();
   static TextEditingController userNameController = new TextEditingController();
   static TextEditingController passwordController = new TextEditingController();
+  static int inboxIdForCorrespondencesList = 0;
+  static final GlobalKey<ScaffoldMessengerState> snackbarKey =
+      GlobalKey<ScaffoldMessengerState>();
+
+  static returnSnackBarText(String text) {
+    final SnackBar snackBar = SnackBar(
+      dismissDirection: DismissDirection.vertical,
+      content: Text(
+        text,
+        style: TextStyle(
+          fontSize: 19,
+          fontFamily: "Bahij",
+        ),
+        textAlign: TextAlign.center,
+      ),
+      backgroundColor: Colors.red[700],
+    );
+    return snackBar;
+  }
 }

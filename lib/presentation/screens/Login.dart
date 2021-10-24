@@ -1,7 +1,6 @@
 import 'package:cts/constants/globals.dart';
 import 'package:cts/data/models/LoginModel.dart';
 import 'package:cts/presentation/components/loading_indicator.dart';
-import 'package:cts/presentation/components/toast.dart';
 import 'package:cts/state/state_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -325,15 +324,15 @@ class LoginPage extends ConsumerWidget {
                                                 showLoadingIndicator(context);
                                                 loginButtonPressed();
                                               } else {
-                                                Toast.show(
-                                                  AppLocalizations.of(context)!
-                                                      .loginInfo,
-                                                  context,
+                                                Globals.snackbarKey.currentState
+                                                    ?.showSnackBar(
+                                                  Globals.returnSnackBarText(
+                                                    AppLocalizations.of(Globals
+                                                            .navigatorKey
+                                                            .currentContext!)!
+                                                        .loginInfo,
+                                                  ),
                                                 );
-                                                Future.delayed(
-                                                    Duration(seconds: 3), () {
-                                                  Toast.dismiss();
-                                                });
                                               }
                                             },
                                             child: Text(

@@ -55,5 +55,12 @@
 "paperAndElectronicExport":"تصدير ورقي والكتروني",
 "sharedServicesAdministration":"ادارة الخدمات المشتركة",
 "tryAgainLater":"حدث خطأ. الرجاء معاودة المحاولة في وقت لاحق",
-"loginInfo":"يجب ادخال اسم المستخدم وكلمة المرور."
+"loginInfo":"يجب ادخال اسم المستخدم وكلمة المرور.",
+"normal":"عادي",
+"confidential":"سري",
+"highConfidential":"سري للغاية",
+"low":"ضعيف",
+"medium":"متوسط",
+"urgent":"عاجل",
+"topUrgent":"عاجل للغاية"
 }

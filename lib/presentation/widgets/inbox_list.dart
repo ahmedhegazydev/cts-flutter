@@ -1,18 +1,21 @@
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
+import 'package:cts/data/controllers/inbox_controller.dart';
+import 'package:cts/data/models/CorrespondencesModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:cts/main.dart';
 import 'package:cts/presentation/screens/document_page.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AllMailsList extends StatefulWidget {
-  const AllMailsList({Key? key}) : super(key: key);
+class InboxList extends StatefulWidget {
+  const InboxList({Key? key}) : super(key: key);
 
   @override
-  _AAllMailsListstate createState() => _AAllMailsListstate();
+  _InboxListstate createState() => _InboxListstate();
 }
 
-class _AAllMailsListstate extends State<AllMailsList> {
+class _InboxListstate extends State<InboxList> {
   bool filterUnread = false;
   bool bottomMenuFolderIsActive = false;
 
@@ -20,43 +23,61 @@ class _AAllMailsListstate extends State<AllMailsList> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     Orientation orientation = MediaQuery.of(context).orientation;
-    return SingleChildScrollView(
-      physics: NeverScrollableScrollPhysics(),
-      child: Column(
-        children: [
-          //filter bar
-          Container(
-            width: width,
-            height: 85,
-            color: Colors.grey.shade100,
-            child: _buildFilterBar(context),
-          ),
-          Container(
-            width: width,
-            height: orientation == Orientation.portrait
-                ? MediaQuery.of(context).size.height - 380
-                : 500,
-            color: Colors.transparent,
-            child: _buildMailsList(),
-          ),
-          orientation == Orientation.portrait
-              ? Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20, right: 20, bottom: 20, top: 5),
-                  child: Material(
-                    elevation: 5,
-                    child: Container(
-                      height: 80,
-                      width: MediaQuery.of(context).size.width,
-                      color: Colors.grey.shade200,
-                      child: portraitMenuInboxes(context),
-                    ),
+    // get inbox based on inboxId
+    final inboxStateNotifier =
+        ChangeNotifierProvider<InboxController>((ref) => InboxController());
+
+    return Consumer(builder: (
+      BuildContext context,
+      T Function<T>(ProviderBase<Object?, T>) watch,
+      Widget? child,
+    ) {
+      final inboxDataList = watch(inboxStateNotifier);
+      return inboxDataList.correspondencesModel.inbox == null
+          ? FractionallySizedBox(
+              heightFactor: 0.07,
+              widthFactor: 0.05,
+              child: CircularProgressIndicator(),
+            )
+          : SingleChildScrollView(
+              physics: NeverScrollableScrollPhysics(),
+              child: Column(
+                children: [
+                  //filter bar
+                  Container(
+                    width: width,
+                    height: 85,
+                    color: Colors.grey.shade100,
+                    child: _buildFilterBar(context),
                   ),
-                )
-              : Container(),
-        ],
-      ),
-    );
+                  Container(
+                    width: width,
+                    height: orientation == Orientation.portrait
+                        ? (MediaQuery.of(context).size.height - 380)
+                        : (MediaQuery.of(context).size.height),
+                    color: Colors.transparent,
+                    child: _buildMailsList(inboxDataList
+                        .correspondencesModel.inbox!.correspondences!),
+                  ),
+                  orientation == Orientation.portrait
+                      ? Padding(
+                          padding: const EdgeInsets.only(
+                              left: 20, right: 20, bottom: 20, top: 5),
+                          child: Material(
+                            elevation: 5,
+                            child: Container(
+                              height: 80,
+                              width: MediaQuery.of(context).size.width,
+                              color: Colors.grey.shade200,
+                              child: portraitMenuInboxes(context),
+                            ),
+                          ),
+                        )
+                      : Container(),
+                ],
+              ),
+            );
+    });
   }
 
   portraitMenuInboxes(BuildContext context) {
@@ -245,9 +266,10 @@ class _AAllMailsListstate extends State<AllMailsList> {
     );
   }
 
-  ListView _buildMailsList() {
+  ListView _buildMailsList(List<Correspondences> correspondencesModel) {
     return new ListView.builder(
-      itemCount: 7,
+      itemCount: correspondencesModel.length,
+      shrinkWrap: true,
       itemBuilder: (BuildContext context, int index) {
         return InkWell(
           onTap: openPDFPage,
@@ -283,7 +305,8 @@ class _AAllMailsListstate extends State<AllMailsList> {
                             ),
                           ),
                           Text(
-                            'اقتراح تعديل السقف السنوي',
+                            correspondencesModel[index].metadata![2].value ??
+                                "",
                             style:
                                 Theme.of(context).textTheme.headline1!.copyWith(
                                       color: Colors.grey[700],
@@ -301,7 +324,7 @@ class _AAllMailsListstate extends State<AllMailsList> {
                             Text(
                               AppLocalizations.of(context)!.sender +
                                   ": " +
-                                  "شفيق عبدالرحمن",
+                                  (correspondencesModel[index].fromUser ?? ""),
                               style: Theme.of(context)
                                   .textTheme
                                   .headline1!
@@ -311,7 +334,8 @@ class _AAllMailsListstate extends State<AllMailsList> {
                                   ),
                             ),
                             Text(
-                              '08/09/2021',
+                              correspondencesModel[index].metadata![11].value ??
+                                  "",
                               style: Theme.of(context)
                                   .textTheme
                                   .headline1!
@@ -357,7 +381,10 @@ class _AAllMailsListstate extends State<AllMailsList> {
                                   ),
                                   Center(
                                     child: Text(
-                                      AppLocalizations.of(context)!.urgent,
+                                      InboxController().returnPiriorityType(
+                                          context,
+                                          correspondencesModel[index]
+                                              .priorityId!),
                                       style: Theme.of(context)
                                           .textTheme
                                           .headline2!
@@ -401,7 +428,10 @@ class _AAllMailsListstate extends State<AllMailsList> {
                                       ),
                                       Center(
                                         child: Text(
-                                          AppLocalizations.of(context)!.secret,
+                                          InboxController().returnPrivacyType(
+                                              context,
+                                              correspondencesModel[index]
+                                                  .privacyId!),
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline2!
@@ -417,59 +447,64 @@ class _AAllMailsListstate extends State<AllMailsList> {
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(right: 8.0, left: 8.0),
-                              child: Container(
-                                height: 30,
-                                color: Colors.transparent,
-                                child: Container(
-                                  padding: const EdgeInsets.only(
-                                      right: 10, left: 10),
-                                  decoration: BoxDecoration(
-                                    color: Colors.transparent,
-                                    border: Border.all(
-                                      color: Colors.grey.shade300,
-                                    ),
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(3),
-                                    ),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        color: Colors.transparent,
-                                        child: Image(
-                                          image: AssetImage(
-                                            'assets/images/closed.png',
+                            correspondencesModel[index].isLocked == true
+                                ? Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 8.0, left: 8.0),
+                                    child: Container(
+                                      height: 30,
+                                      color: Colors.transparent,
+                                      child: Container(
+                                        padding: const EdgeInsets.only(
+                                            right: 10, left: 10),
+                                        decoration: BoxDecoration(
+                                          color: Colors.transparent,
+                                          border: Border.all(
+                                            color: Colors.grey.shade300,
                                           ),
-                                          width: 15,
-                                          alignment: Alignment.center,
-                                          color: Theme.of(context).primaryColor,
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(3),
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        AppLocalizations.of(context)!.closed +
-                                            " / " +
-                                            "محمد الجابر",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline2!
-                                            .copyWith(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              color: Colors.transparent,
+                                              child: Image(
+                                                image: AssetImage(
+                                                  'assets/images/closed.png',
+                                                ),
+                                                width: 15,
+                                                alignment: Alignment.center,
                                                 color: Theme.of(context)
                                                     .primaryColor,
-                                                fontSize: 12),
-                                        textAlign: TextAlign.start,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Text(
+                                              AppLocalizations.of(context)!
+                                                      .closed +
+                                                  " / " +
+                                                  "محمد الجابر",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline2!
+                                                  .copyWith(
+                                                      color: Theme.of(context)
+                                                          .primaryColor,
+                                                      fontSize: 12),
+                                              textAlign: TextAlign.start,
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
+                                    ),
+                                  )
+                                : Container(),
                           ],
                         ),
                       ),

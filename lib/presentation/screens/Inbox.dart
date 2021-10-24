@@ -1,8 +1,9 @@
+import 'package:cts/constants/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:cts/main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
-import 'package:cts/presentation/widgets/all_mails_list.dart';
+import 'package:cts/presentation/widgets/inbox_list.dart';
 
 class InboxPage extends StatefulWidget {
   InboxPage({Key? key}) : super(key: key);
@@ -321,60 +322,29 @@ class _InboxState extends State<InboxPage> {
             alignment: TabBarAlignment.start,
           ),
           views: [
-            AllMailsList(),
-            Container(
-              width: double.infinity,
-              height: double.infinity,
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade400,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(4),
-                      ),
-                    ),
-                    height: 0.5,
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              height: double.infinity,
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade400,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(4),
-                      ),
-                    ),
-                    height: 0.5,
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              height: double.infinity,
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade400,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(4),
-                      ),
-                    ),
-                    height: 0.5,
-                  ),
-                ],
-              ),
-            )
+            InboxList(),
+            InboxList(),
+            InboxList(),
+            InboxList(),
           ],
-          // onChange: (index) => print(index),
+          onChange: (value) {
+            if (mounted) {
+              setState(() {
+                if (value == 0) {
+                  Globals.inboxIdForCorrespondencesList = 5;
+                } else if (value == 1) {
+                  Globals.inboxIdForCorrespondencesList = 1;
+                } else if (value == 2) {
+                  Globals.inboxIdForCorrespondencesList = 5;
+                } else if (value == 3) {
+                  Globals.inboxIdForCorrespondencesList = 3;
+                } else {
+                  Globals.inboxIdForCorrespondencesList = 5;
+                }
+                print(Globals.inboxIdForCorrespondencesList);
+              });
+            }
+          },
         ),
       ),
     );

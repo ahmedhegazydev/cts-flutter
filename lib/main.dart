@@ -30,6 +30,7 @@ class MyApp extends ConsumerWidget {
     var defaultLocale = ui.window.locale.languageCode;
 
     return MaterialApp(
+      scaffoldMessengerKey: Globals.snackbarKey,
       title: 'CTS',
       debugShowCheckedModeBanner: false,
       onGenerateRoute: appRoutes.generateRoutes,
@@ -66,7 +67,7 @@ class MyApp extends ConsumerWidget {
         Locale("ar", "AE"),
         Locale("en", "US"),
       ],
-      //  locale: Locale("ar", "AR"),
+      // locale: Locale("ar", "AR"),
       locale: defaultLocale == "en" ? Locale("en", "US") : Locale("ar", "AR"),
     );
   }

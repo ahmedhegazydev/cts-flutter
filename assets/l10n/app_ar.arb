@@ -62,5 +62,6 @@
 "low":"ضعيف",
 "medium":"متوسط",
 "urgent":"عاجل",
-"topUrgent":"عاجل للغاية"
+"topUrgent":"عاجل للغاية",
+"emptyInboxList":"قائمة البريد فارغة"
 }

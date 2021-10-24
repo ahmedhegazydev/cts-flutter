@@ -27,43 +27,53 @@ class _InboxListstate extends State<InboxList> {
     final inboxStateNotifier =
         ChangeNotifierProvider<InboxController>((ref) => InboxController());
 
-    return Consumer(builder: (
-      BuildContext context,
-      T Function<T>(ProviderBase<Object?, T>) watch,
-      Widget? child,
-    ) {
-      final inboxDataList = watch(inboxStateNotifier);
-      return inboxDataList.correspondencesModel.inbox == null
-          ? FractionallySizedBox(
-              heightFactor: 0.07,
-              widthFactor: 0.05,
-              child: CircularProgressIndicator(),
-            )
-          : SingleChildScrollView(
-              physics: NeverScrollableScrollPhysics(),
-              child: Column(
-                children: [
-                  //filter bar
-                  Container(
-                    width: width,
-                    height: 85,
-                    color: Colors.grey.shade100,
-                    child: _buildFilterBar(context),
-                  ),
-                  Container(
-                    width: width,
-                    height: orientation == Orientation.portrait
-                        ? (MediaQuery.of(context).size.height - 380)
-                        : (MediaQuery.of(context).size.height),
-                    color: Colors.transparent,
-                    child: _buildMailsList(inboxDataList
-                        .correspondencesModel.inbox!.correspondences!),
-                  ),
-                  orientation == Orientation.portrait
-                      ? Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20, right: 20, bottom: 20, top: 5),
-                          child: Material(
+    return Consumer(
+      builder: (
+        BuildContext context,
+        T Function<T>(ProviderBase<Object?, T>) watch,
+        Widget? child,
+      ) {
+        final inboxDataList = watch(inboxStateNotifier);
+        return inboxDataList.correspondencesModel.inbox == null
+            ? FractionallySizedBox(
+                heightFactor: orientation == Orientation.portrait ? 0.04 : 0.07,
+                widthFactor: 0.05,
+                child: CircularProgressIndicator(),
+              )
+            : SingleChildScrollView(
+                physics: NeverScrollableScrollPhysics(),
+                child: Column(
+                  children: [
+                    //filter bar
+                    Container(
+                      width: width,
+                      height: 85,
+                      color: Colors.grey.shade100,
+                      child: _buildFilterBar(context),
+                    ),
+                    inboxDataList.correspondencesModel.inbox!.correspondences!
+                                .length ==
+                            0
+                        ? Padding(
+                            padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.height / 4,
+                              bottom: MediaQuery.of(context).size.width / 1.7,
+                            ),
+                            child: Text(
+                              AppLocalizations.of(context)!.emptyInboxList,
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          )
+                        : Container(
+                            height: orientation == Orientation.portrait
+                                ? (MediaQuery.of(context).size.height - 380)
+                                : (MediaQuery.of(context).size.height - 300),
+                            color: Colors.transparent,
+                            child: _buildMailsList(inboxDataList
+                                .correspondencesModel.inbox!.correspondences!),
+                          ),
+                    orientation == Orientation.portrait
+                        ? Material(
                             elevation: 5,
                             child: Container(
                               height: 80,
@@ -71,19 +81,18 @@ class _InboxListstate extends State<InboxList> {
                               color: Colors.grey.shade200,
                               child: portraitMenuInboxes(context),
                             ),
-                          ),
-                        )
-                      : Container(),
-                ],
-              ),
-            );
-    });
+                          )
+                        : Container(),
+                  ],
+                ),
+              );
+      },
+    );
   }
 
   portraitMenuInboxes(BuildContext context) {
     var appLocale = Localizations.localeOf(context).languageCode;
     return Container(
-      padding: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
       width: double.infinity,
       color: Colors.transparent,
       child: DefaultTabController(
@@ -334,8 +343,7 @@ class _InboxListstate extends State<InboxList> {
                                   ),
                             ),
                             Text(
-                              correspondencesModel[index].metadata![11].value ??
-                                  "",
+                              correspondencesModel[index].tsfDueDate ?? "",
                               style: Theme.of(context)
                                   .textTheme
                                   .headline1!
@@ -381,7 +389,7 @@ class _InboxListstate extends State<InboxList> {
                                   ),
                                   Center(
                                     child: Text(
-                                      InboxController().returnPiriorityType(
+                                      InboxController().returnPriorityType(
                                           context,
                                           correspondencesModel[index]
                                               .priorityId!),

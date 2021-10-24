@@ -40,13 +40,13 @@ class InboxController extends ChangeNotifier {
       case "3":
         return AppLocalizations.of(context)!.highConfidential;
       default:
-        return "No privay";
+        return "No privacy";
     }
   }
 
-  String returnPiriorityType(BuildContext context, String piriorityNumber) {
+  String returnPriorityType(BuildContext context, String priorityNumber) {
     // urgent
-    switch (piriorityNumber) {
+    switch (priorityNumber) {
       case "1":
         return AppLocalizations.of(context)!.low;
       case "2":

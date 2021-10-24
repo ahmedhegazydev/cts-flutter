@@ -62,5 +62,6 @@
 "low":"Low",
 "medium":"Medium",
 "urgent":"Urgent",
-"topUrgent":"Top Urgent"
+"topUrgent":"Top Urgent",
+"emptyInboxList":"empty mail list"
 }

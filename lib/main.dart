@@ -67,8 +67,8 @@ class MyApp extends ConsumerWidget {
         Locale("ar", "AE"),
         Locale("en", "US"),
       ],
-      // locale: Locale("ar", "AR"),
-      locale: defaultLocale == "en" ? Locale("en", "US") : Locale("ar", "AR"),
+      locale: Locale("ar", "AR"),
+      //  locale: defaultLocale == "en" ? Locale("en", "US") : Locale("ar", "AR"),
     );
   }
 }

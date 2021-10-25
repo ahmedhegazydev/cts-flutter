@@ -234,6 +234,7 @@ class LoginPage extends ConsumerWidget {
                                   height: 50,
                                   child: TextFormField(
                                     textAlign: TextAlign.start,
+                                    obscureText: true,
                                     decoration: new InputDecoration(
                                       border: InputBorder.none,
                                       focusedBorder: InputBorder.none,

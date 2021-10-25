@@ -10,6 +10,8 @@ class Globals {
   static int inboxIdForCorrespondencesList = 0;
   static final GlobalKey<ScaffoldMessengerState> snackbarKey =
       GlobalKey<ScaffoldMessengerState>();
+  static String documentCorrespondenceId = "";
+  static String documentTansferId = "";
 
   static returnSnackBarText(String text) {
     final SnackBar snackBar = SnackBar(

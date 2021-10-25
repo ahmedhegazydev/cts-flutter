@@ -63,5 +63,6 @@
 "medium":"متوسط",
 "urgent":"عاجل",
 "topUrgent":"عاجل للغاية",
-"emptyInboxList":"قائمة البريد فارغة"
+"emptyInboxList":"قائمة البريد فارغة",
+"referDate":"تاريخ الاحاله"
 }

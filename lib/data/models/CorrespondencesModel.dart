@@ -202,12 +202,12 @@ class ControlList {
     this.customToolbarItems,
     this.toolbarItems,
   );
-  late final List<dynamic> customToolbarItems;
+  late final Null customToolbarItems;
   late final List<ToolbarItems?> toolbarItems;
 
   ControlList.fromJson(Map<String, dynamic> json) {
-    customToolbarItems =
-        List.castFrom<dynamic, dynamic>(json['CustomToolbarItems']);
+    customToolbarItems = null;
+    // List.castFrom<dynamic, dynamic>(json['CustomToolbarItems']);
     toolbarItems = List.from(json['ToolbarItems'])
         .map((e) => ToolbarItems.fromJson(e))
         .toList();

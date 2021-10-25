@@ -1,4 +1,5 @@
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
+import 'package:cts/constants/globals.dart';
 import 'package:cts/data/controllers/inbox_controller.dart';
 import 'package:cts/data/models/CorrespondencesModel.dart';
 import 'package:flutter/cupertino.dart';
@@ -257,11 +258,32 @@ class _InboxListstate extends State<InboxList> {
     );
   }
 
-  openPDFPage() {
+  openPDFPage(
+    String correspondenceId,
+    String transferId,
+    String fromStructure1,
+    String fromStructure2,
+    String fromUser,
+    String transferDate,
+    String instructionsNote,
+  ) {
+    // correspondence data to get the attachments
+    if (mounted) {
+      setState(() {
+        Globals.documentCorrespondenceId = correspondenceId;
+        Globals.documentTansferId = transferId;
+      });
+    }
     Navigator.push(
       context,
       PageRouteBuilder(
-        pageBuilder: (context, animation1, animation2) => DocumentPage(),
+        pageBuilder: (context, animation1, animation2) => DocumentPage(
+          fromStructure1: fromStructure1,
+          fromStructure2: fromStructure2,
+          fromUser: fromUser,
+          transferDate: transferDate,
+          instructionsNote: instructionsNote,
+        ),
         transitionDuration: Duration(seconds: 0),
       ),
     );
@@ -273,7 +295,17 @@ class _InboxListstate extends State<InboxList> {
       shrinkWrap: true,
       itemBuilder: (BuildContext context, int index) {
         return InkWell(
-          onTap: openPDFPage,
+          onTap: () {
+            openPDFPage(
+              correspondencesModel[index].correspondenceId!,
+              correspondencesModel[index].transferId!,
+              correspondencesModel[index].fromStructure!,
+              correspondencesModel[index].fromStructure!,
+              correspondencesModel[index].fromUser!,
+              correspondencesModel[index].tsfDueDate!,
+              correspondencesModel[index].metadata![6].value!,
+            );
+          },
           child: SizedBox(
             height: 150,
             child: Container(

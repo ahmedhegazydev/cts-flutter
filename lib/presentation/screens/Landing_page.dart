@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cts/main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:cts/presentation/widgets/app_routes.dart';
-import 'Inbox.dart';
+import 'Inbox_page.dart';
 
 class LandingPage extends StatefulWidget {
   LandingPage({Key? key}) : super(key: key);

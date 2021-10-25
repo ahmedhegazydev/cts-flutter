@@ -2,8 +2,8 @@ import 'package:cts/constants/routes.dart';
 import 'package:cts/presentation/screens/document_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cts/presentation/screens/Landing.dart';
-import '../screens/Login.dart';
+import 'package:cts/presentation/screens/Landing_page.dart';
+import '../screens/Login_page.dart';
 
 class AppRoutes {
   Route? generateRoutes(RouteSettings settings) {

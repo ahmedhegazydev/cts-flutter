@@ -1,13 +1,26 @@
 import 'package:cts/constants/globals.dart';
 import 'package:cts/constants/routes.dart';
+import 'package:cts/data/controllers/document_controller.dart';
 import 'package:cts/presentation/widgets/paint_triangle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:cts/presentation/widgets/pdf_page.dart';
+import 'package:cts/presentation/widgets/pdf_widget.dart';
 import 'dart:ui' as ui;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DocumentPage extends StatefulWidget {
+  final String? fromStructure1;
+  final String? fromStructure2;
+  final String? fromUser;
+  final String? transferDate;
+  final String? instructionsNote;
+  DocumentPage(
+      {this.fromStructure1,
+      this.fromStructure2,
+      this.fromUser,
+      this.transferDate,
+      this.instructionsNote});
   @override
   _DocumentPageState createState() => _DocumentPageState();
 }
@@ -17,13 +30,24 @@ class _DocumentPageState extends State<DocumentPage> {
   bool portraitIsActive = false;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: _buildBody(context),
+    final documentStateNotifier = ChangeNotifierProvider<DocumentController>(
+        (ref) => DocumentController());
+    return Consumer(
+      builder: (
+        BuildContext context,
+        T Function<T>(ProviderBase<Object?, T>) watch,
+        Widget? child,
+      ) {
+        final documentData = watch(documentStateNotifier);
+        return Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: _buildBody(context, documentData),
+        );
+      },
     );
   }
 
-  _buildBody(BuildContext context) {
+  _buildBody(BuildContext context, DocumentController documentControllerRes) {
     Orientation orientation = MediaQuery.of(context).orientation;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -72,12 +96,18 @@ class _DocumentPageState extends State<DocumentPage> {
           color: Colors.grey[500],
           height: 1,
         ),
-        _buildDoucmentArea(),
+        documentControllerRes.documentModel.attachments == null
+            ? Padding(
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height / 3),
+                child: CircularProgressIndicator(),
+              )
+            : _buildDoucmentArea(documentControllerRes),
       ],
     );
   }
 
-  Expanded _buildDoucmentArea() {
+  Expanded _buildDoucmentArea(DocumentController documentControllerRes) {
     Orientation orientation = MediaQuery.of(context).orientation;
     if (orientation == Orientation.landscape) {
       portraitIsActive = false;
@@ -97,7 +127,13 @@ class _DocumentPageState extends State<DocumentPage> {
                 color: Colors.grey[200],
                 child: _buildSideMenu(context),
               ),
-              PDFPage(portraitIsActive),
+              PDFWidget(
+                portraitIsActive,
+                documentControllerRes
+                    .documentModel.attachments!.attachments![0].annotations!,
+                documentControllerRes
+                    .documentModel.attachments!.attachments![0].uRL!,
+              ),
               orientation == Orientation.landscape
                   ? Expanded(
                       child: Column(
@@ -256,7 +292,7 @@ class _DocumentPageState extends State<DocumentPage> {
                           Padding(
                             padding: const EdgeInsets.only(top: 10),
                             child: Text(
-                              "اقتراح تعديل السقف السنوي لموازنات الاقسام التابعة لادارة الخدمات المشتركة",
+                              widget.fromStructure1 ?? "",
                               style: Theme.of(context)
                                   .textTheme
                                   .headline2!
@@ -278,30 +314,7 @@ class _DocumentPageState extends State<DocumentPage> {
                           Padding(
                             padding: const EdgeInsets.only(top: 10),
                             child: Text(
-                              AppLocalizations.of(context)!
-                                  .sharedServicesAdministration,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline2!
-                                  .copyWith(color: Colors.black, fontSize: 13),
-                              textAlign: TextAlign.start,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 20),
-                            child: Text(
-                              AppLocalizations.of(context)!.sender1,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline2!
-                                  .copyWith(color: Colors.grey, fontSize: 14),
-                              textAlign: TextAlign.start,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10),
-                            child: Text(
-                              "شفيق عبةالرحمن",
+                              widget.fromStructure2 ?? "",
                               style: Theme.of(context)
                                   .textTheme
                                   .headline2!
@@ -316,6 +329,28 @@ class _DocumentPageState extends State<DocumentPage> {
                               style: Theme.of(context)
                                   .textTheme
                                   .headline2!
+                                  .copyWith(color: Colors.grey, fontSize: 14),
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Text(
+                              widget.fromUser ?? "",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .copyWith(color: Colors.black, fontSize: 13),
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: Text(
+                              AppLocalizations.of(context)!.referDate,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
                                   .copyWith(
                                     color: Colors.grey,
                                     fontSize: 14,
@@ -326,7 +361,7 @@ class _DocumentPageState extends State<DocumentPage> {
                           Padding(
                             padding: const EdgeInsets.only(top: 10),
                             child: Text(
-                              "12/03/2021",
+                              widget.transferDate ?? "",
                               style: Theme.of(context)
                                   .textTheme
                                   .headline2!
@@ -354,7 +389,7 @@ class _DocumentPageState extends State<DocumentPage> {
                           Padding(
                             padding: const EdgeInsets.only(top: 10),
                             child: Text(
-                              "الرجاء قراءه الكتاب والتفضل بالتوقيع اذا آمكن",
+                              widget.instructionsNote ?? "",
                               style: Theme.of(context)
                                   .textTheme
                                   .headline2!

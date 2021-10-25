@@ -63,5 +63,6 @@
 "medium":"Medium",
 "urgent":"Urgent",
 "topUrgent":"Top Urgent",
-"emptyInboxList":"empty mail list"
+"emptyInboxList":"empty mail list",
+"referDate":"Refer Date"
 }

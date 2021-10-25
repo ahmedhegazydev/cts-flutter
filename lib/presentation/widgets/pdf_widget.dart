@@ -4,14 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 
-class PDFPage extends StatefulWidget {
+class PDFWidget extends StatefulWidget {
   final bool portraitStatus;
-  const PDFPage(this.portraitStatus);
+  final String documentString;
+  final String documentUrl;
+  const PDFWidget(this.portraitStatus, this.documentString, this.documentUrl);
   @override
-  _PDFPageState createState() => _PDFPageState();
+  _PDFWidgetState createState() => _PDFWidgetState();
 }
 
-class _PDFPageState extends State<PDFPage> {
+class _PDFWidgetState extends State<PDFWidget> {
   bool _isLoading = true;
   //late PDFDocument document;
 
@@ -28,8 +30,8 @@ class _PDFPageState extends State<PDFPage> {
 
   loadDocument() async {
     setState(() => _isLoading = true);
-    var url = "http://conorlastowka.com/book/CitationNeededBook-Sample.pdf";
-    Uint8List bytes = (await NetworkAssetBundle(Uri.parse(url)).load(url))
+    Uint8List bytes = (await NetworkAssetBundle(Uri.parse(widget.documentUrl))
+            .load(widget.documentUrl))
         .buffer
         .asUint8List();
     _pdfController = PdfController(

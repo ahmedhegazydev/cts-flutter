@@ -76,8 +76,8 @@ class _InboxListstate extends State<InboxList> {
                         ? Material(
                             elevation: 5,
                             child: Container(
-                              height: 80,
-                              width: MediaQuery.of(context).size.width,
+                              height: 75,
+                              width: MediaQuery.of(context).size.width - 30,
                               color: Colors.grey.shade200,
                               child: portraitMenuInboxes(context),
                             ),
@@ -168,13 +168,13 @@ class _InboxListstate extends State<InboxList> {
                   style: TextStyle(
                     fontSize: 17,
                   ),
-                  textAlign: TextAlign.start,
                 ),
+              ],
+            ),
+            Row(
+              children: [
                 Padding(
-                  padding: EdgeInsets.only(
-                    right: appLocale == "en" ? 0 : 75,
-                    left: appLocale == "en" ? 35 : 0,
-                  ),
+                  padding: EdgeInsets.all(0),
                   child: FractionallySizedBox(
                     heightFactor: 0.7,
                     child: Container(
@@ -188,14 +188,10 @@ class _InboxListstate extends State<InboxList> {
                     ),
                   ),
                 ),
-              ],
-            ),
-            Row(
-              children: [
                 Padding(
                   padding: EdgeInsets.only(
-                    right: appLocale == "en" ? 0 : 15,
-                    left: appLocale == "en" ? 15 : 0,
+                    right: appLocale == "en" ? 0 : 30,
+                    left: appLocale == "en" ? 40 : 0,
                   ),
                   child: Text(
                     AppLocalizations.of(context)!.forInfo,
@@ -207,8 +203,8 @@ class _InboxListstate extends State<InboxList> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                    right: appLocale == "en" ? 0 : 45,
-                    left: appLocale == "en" ? 45 : 0,
+                    right: appLocale == "en" ? 0 : 30,
+                    left: appLocale == "en" ? 40 : 0,
                   ),
                   child: FractionallySizedBox(
                     heightFactor: 0.7,
@@ -222,10 +218,6 @@ class _InboxListstate extends State<InboxList> {
                       width: 0.5,
                     ),
                   ),
-                ),
-                Container(
-                  width: 9,
-                  height: double.infinity,
                 ),
                 InkWell(
                   //onTap:,

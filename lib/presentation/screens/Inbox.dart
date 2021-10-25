@@ -1,4 +1,5 @@
 import 'package:cts/constants/globals.dart';
+import 'package:cts/constants/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:cts/main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -256,17 +257,22 @@ class _InboxState extends State<InboxPage> {
               ],
             ),
           ),
-          Container(
-            width: 120,
-            height: double.infinity,
-            color: Colors.transparent,
-            child: Image(
-              image: AssetImage(
-                'assets/images/menu.png',
-              ),
-              fit: BoxFit.contain,
-              width: double.infinity,
+          InkWell(
+            onTap: () {
+              Globals.navigatorKey.currentState?.pushNamed(LandingPageRoute);
+            },
+            child: Container(
+              width: 120,
               height: double.infinity,
+              color: Colors.transparent,
+              child: Image(
+                image: AssetImage(
+                  'assets/images/menu.png',
+                ),
+                fit: BoxFit.contain,
+                width: double.infinity,
+                height: double.infinity,
+              ),
             ),
           ),
         ],

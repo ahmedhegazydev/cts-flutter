@@ -1,8 +1,11 @@
+import 'package:cts/constants/globals.dart';
+import 'package:cts/constants/routes.dart';
 import 'package:cts/presentation/widgets/paint_triangle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:cts/presentation/widgets/pdf_page.dart';
+import 'dart:ui' as ui;
 
 class DocumentPage extends StatefulWidget {
   @override
@@ -485,17 +488,22 @@ class _DocumentPageState extends State<DocumentPage> {
               ],
             ),
           ),
-          Container(
-            width: 120,
-            height: double.infinity,
-            color: Colors.transparent,
-            child: Image(
-              image: AssetImage(
-                'assets/images/menu.png',
-              ),
-              fit: BoxFit.contain,
-              width: double.infinity,
+          InkWell(
+            onTap: () {
+              Globals.navigatorKey.currentState?.pushNamed(LandingPageRoute);
+            },
+            child: Container(
+              width: 120,
               height: double.infinity,
+              color: Colors.transparent,
+              child: Image(
+                image: AssetImage(
+                  'assets/images/menu.png',
+                ),
+                fit: BoxFit.contain,
+                width: double.infinity,
+                height: double.infinity,
+              ),
             ),
           ),
         ],
@@ -577,6 +585,7 @@ class _DocumentPageState extends State<DocumentPage> {
   }
 
   _buildFilterBar(BuildContext context) {
+    var defaultLocale = ui.window.locale.languageCode;
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -591,7 +600,9 @@ class _DocumentPageState extends State<DocumentPage> {
             child: Center(
               child: Image(
                 image: AssetImage(
-                  "assets/images/arrow_R.png",
+                  defaultLocale == "ar"
+                      ? "assets/images/arrow_R.png"
+                      : "assets/images/arrow_L.png",
                 ),
                 color: Colors.white,
                 width: 35,
@@ -1097,7 +1108,13 @@ class _DocumentPageState extends State<DocumentPage> {
                                               const EdgeInsets.only(top: 10),
                                           child: Container(
                                             height: 40,
-                                            width: 300,
+                                            width: orientation ==
+                                                    Orientation.portrait
+                                                ? (MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    2.6)
+                                                : 300,
                                             decoration: BoxDecoration(
                                               color: Colors.grey[350],
                                               borderRadius: BorderRadius.all(

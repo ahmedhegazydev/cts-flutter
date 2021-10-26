@@ -266,6 +266,8 @@ class _InboxListstate extends State<InboxList> {
     String fromUser,
     String transferDate,
     String instructionsNote,
+    String privacy,
+    String priority,
   ) {
     // correspondence data to get the attachments
     if (mounted) {
@@ -283,6 +285,8 @@ class _InboxListstate extends State<InboxList> {
           fromUser: fromUser,
           transferDate: transferDate,
           instructionsNote: instructionsNote,
+          privacy: privacy,
+          priority: priority,
         ),
         transitionDuration: Duration(seconds: 0),
       ),
@@ -304,6 +308,10 @@ class _InboxListstate extends State<InboxList> {
               correspondencesModel[index].fromUser!,
               correspondencesModel[index].tsfDueDate!,
               correspondencesModel[index].metadata![6].value!,
+              InboxController().returnPrivacyType(
+                  context, correspondencesModel[index].privacyId!),
+              InboxController().returnPriorityType(
+                  context, correspondencesModel[index].priorityId!),
             );
           },
           child: SizedBox(

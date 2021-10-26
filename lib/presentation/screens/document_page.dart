@@ -15,18 +15,21 @@ class DocumentPage extends StatefulWidget {
   final String? fromUser;
   final String? transferDate;
   final String? instructionsNote;
+  final String? privacy;
+  final String? priority;
   DocumentPage(
       {this.fromStructure1,
       this.fromStructure2,
       this.fromUser,
       this.transferDate,
-      this.instructionsNote});
+      this.instructionsNote,
+      this.privacy,
+      this.priority});
   @override
   _DocumentPageState createState() => _DocumentPageState();
 }
 
 class _DocumentPageState extends State<DocumentPage> {
-  bool openExportDialog = false;
   bool portraitIsActive = false;
   @override
   Widget build(BuildContext context) {
@@ -70,7 +73,7 @@ class _DocumentPageState extends State<DocumentPage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildFilterBar(context),
+              _buildFilterBar(context, documentControllerRes),
               orientation == Orientation.landscape
                   ? Container()
                   : InkWell(
@@ -208,7 +211,7 @@ class _DocumentPageState extends State<DocumentPage> {
                                       ),
                                       Center(
                                         child: Text(
-                                          AppLocalizations.of(context)!.urgent,
+                                          widget.priority ?? "",
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline2!
@@ -255,8 +258,7 @@ class _DocumentPageState extends State<DocumentPage> {
                                           ),
                                           Center(
                                             child: Text(
-                                              AppLocalizations.of(context)!
-                                                  .secret,
+                                              widget.privacy ?? "",
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .headline2!
@@ -454,7 +456,7 @@ class _DocumentPageState extends State<DocumentPage> {
                   : Container(),
             ],
           ),
-          openExportDialog == true
+          documentControllerRes.openExportDialog == true
               ? AppLocalizations.of(context)!.localeName == "en"
                   ? Positioned(
                       top: 20,
@@ -467,7 +469,7 @@ class _DocumentPageState extends State<DocumentPage> {
                       child: _openExportDialog(),
                     )
               : Container(),
-          openExportDialog == true
+          documentControllerRes.openExportDialog == true
               ? AppLocalizations.of(context)!.localeName == "ar"
                   ? Positioned(
                       top: -20,
@@ -619,7 +621,8 @@ class _DocumentPageState extends State<DocumentPage> {
     );
   }
 
-  _buildFilterBar(BuildContext context) {
+  _buildFilterBar(
+      BuildContext context, DocumentController documentControllerRes) {
     var defaultLocale = ui.window.locale.languageCode;
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -688,7 +691,7 @@ class _DocumentPageState extends State<DocumentPage> {
           ),
         ),
         InkWell(
-          onTap: changeExportDialogState,
+          onTap: documentControllerRes.changeExportDialogState,
           child: Padding(
             padding: const EdgeInsets.only(right: 10, left: 10),
             child: Container(
@@ -1302,12 +1305,6 @@ class _DocumentPageState extends State<DocumentPage> {
         ),
       ),
     );
-  }
-
-  changeExportDialogState() {
-    setState(() {
-      openExportDialog = !openExportDialog;
-    });
   }
 
   Container _openExportDialog() {

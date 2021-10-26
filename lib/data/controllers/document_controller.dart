@@ -9,9 +9,15 @@ import 'dart:ui' as ui;
 class DocumentController extends ChangeNotifier {
   Http http = new Http();
   DocumentModel documentModel = new DocumentModel();
+  bool openExportDialog = false;
 
   DocumentController() {
     getDocument(Globals.documentCorrespondenceId, Globals.documentTansferId);
+  }
+
+  changeExportDialogState() {
+    openExportDialog = !openExportDialog;
+    notifyListeners();
   }
 
   Future getDocument(String correspondenceId, String transferId) async {

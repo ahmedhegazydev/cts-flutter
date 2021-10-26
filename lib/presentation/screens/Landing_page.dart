@@ -1,7 +1,8 @@
+import 'package:cts/constants/globals.dart';
+import 'package:cts/constants/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:cts/main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:cts/presentation/widgets/app_routes.dart';
 import 'Inbox_page.dart';
 
 class LandingPage extends StatefulWidget {
@@ -12,8 +13,6 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingState extends State<LandingPage> {
-  late final AppRoutes appRoutes;
-  _logoutUser() => print('logout');
   @override
   Widget build(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
@@ -359,7 +358,9 @@ class _LandingState extends State<LandingPage> {
         Flexible(
           flex: 1,
           child: InkWell(
-            onTap: _logoutUser,
+            onTap: () {
+              Globals.navigatorKey.currentState?.pushNamed(LoginPageRoute);
+            },
             child: Container(
               height: 120,
               color: Colors.transparent,

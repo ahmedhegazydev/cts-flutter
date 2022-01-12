@@ -173,7 +173,7 @@ class _LandingState extends State<LandingPage> {
                     width: double.infinity,
                     height: 30,
                     child: Text(
-                      AppLocalizations.of(context)!.hello + " ربيع محمد المانع",
+                    "hello".tr + " ربيع محمد المانع",
                       style: Theme.of(context)
                           .textTheme
                           .headline2!

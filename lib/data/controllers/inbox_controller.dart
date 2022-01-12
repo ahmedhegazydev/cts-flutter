@@ -5,7 +5,8 @@ import 'package:cts/constants/globals.dart';
 import 'package:cts/data/models/CorrespondencesModel.dart';
 import 'package:cts/services/http.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
+
 
 class InboxController extends ChangeNotifier {
   Http http = new Http();
@@ -34,11 +35,11 @@ class InboxController extends ChangeNotifier {
     // secret
     switch (privacyNumber) {
       case "1":
-        return AppLocalizations.of(context)!.normal;
+        return "normal".tr;//AppLocalizations.of(context)!.normal;
       case "2":
-        return AppLocalizations.of(context)!.confidential;
+        return "confidential".tr;//AppLocalizations.of(context)!.confidential;
       case "3":
-        return AppLocalizations.of(context)!.highConfidential;
+        return "highConfidential".tr;//AppLocalizations.of(context)!.highConfidential;
       default:
         return "No privacy";
     }
@@ -48,13 +49,13 @@ class InboxController extends ChangeNotifier {
     // urgent
     switch (priorityNumber) {
       case "1":
-        return AppLocalizations.of(context)!.low;
+        return "low".tr;//AppLocalizations.of(context)!.low;
       case "2":
-        return AppLocalizations.of(context)!.medium;
+        return "medium".tr;// AppLocalizations.of(context)!.medium;
       case "3":
-        return AppLocalizations.of(context)!.urgent;
+        return "urgent".tr;//AppLocalizations.of(context)!.urgent;
       case "4":
-        return AppLocalizations.of(context)!.topUrgent;
+        return "topUrgent".tr;//AppLocalizations.of(context)!.topUrgent;
       default:
         return "empty priority";
     }

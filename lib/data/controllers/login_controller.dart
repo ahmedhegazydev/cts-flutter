@@ -63,10 +63,10 @@ class LoginController extends GetxController {
       AppCache.saveUserSignature(loginModel.signature!);
       return loginModel;
     } catch (error) {
-      Globals.snackbarKey.currentState?.showSnackBar(Globals.returnSnackBarText(
-        AppLocalizations.of(Globals.navigatorKey.currentContext!)!
-            .tryAgainLater,
-      ));
+      // Globals.snackbarKey.currentState?.showSnackBar(Globals.returnSnackBarText(
+      //   AppLocalizations.of(Globals.navigatorKey.currentContext!)!
+      //       .tryAgainLater,
+      // ));
       hideLoadingIndicator();
     }
     //notifyListeners();

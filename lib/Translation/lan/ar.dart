@@ -6,5 +6,14 @@ const Map<String, String> ar = {
   "login": "login",
   "loginInfo": "loginInfo",
   "copyrights": "copyrights",
-  "tryAgainLater": "tryAgainLater"
+  "tryAgainLater": "tryAgainLater",
+  "normal": "normal",
+  "confidential": "confidential",
+  "highConfidential": "highConfidential",
+  "low": "low",
+  "medium": "medium",
+  "urgent": "urgent",
+  "topUrgent": "topUrgent",
+  "hello": "مرحبا"
+
 };

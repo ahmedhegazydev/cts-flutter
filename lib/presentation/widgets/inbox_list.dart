@@ -4,10 +4,10 @@ import 'package:cts/data/controllers/inbox_controller.dart';
 import 'package:cts/data/models/CorrespondencesModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:cts/main.dart';
 import 'package:cts/presentation/screens/document_page.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 
 class InboxList extends StatefulWidget {
   const InboxList({Key? key}) : super(key: key);
@@ -24,239 +24,239 @@ class _InboxListstate extends State<InboxList> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     Orientation orientation = MediaQuery.of(context).orientation;
-    // get inbox based on inboxId
-    final inboxStateNotifier =
-        ChangeNotifierProvider<InboxController>((ref) => InboxController());
+    // // get inbox based on inboxId
+    // final inboxStateNotifier =
+    //     ChangeNotifierProvider<InboxController>((ref) => InboxController());
+    //
+    // return Consumer(
+    //   builder: (
+    //     BuildContext context,
+    //     T Function<T>(ProviderBase<Object?, T>) watch,
+    //     Widget? child,
+    //   ) {
+    //     final inboxDataList = watch(inboxStateNotifier);
+    //     return inboxDataList.correspondencesModel.inbox == null
+    //         ? FractionallySizedBox(
+    //             heightFactor: orientation == Orientation.portrait ? 0.04 : 0.07,
+    //             widthFactor: 0.05,
+    //             child: CircularProgressIndicator(),
+    //           )
+    //         : SingleChildScrollView(
+    //             physics: NeverScrollableScrollPhysics(),
+    //             child: Column(
+    //               children: [
+    //                 //filter bar
+    //                 Container(
+    //                   width: width,
+    //                   height: 85,
+    //                   color: Colors.grey.shade100,
+    //                   child: _buildFilterBar(context),
+    //                 ),
+    //                 inboxDataList.correspondencesModel.inbox!.correspondences!
+    //                             .length ==
+    //                         0
+    //                     ? Padding(
+    //                         padding: EdgeInsets.only(
+    //                           top: MediaQuery.of(context).size.height / 4,
+    //                           bottom: MediaQuery.of(context).size.width / 1.7,
+    //                         ),
+    //                         child: Text(
+    //                           AppLocalizations.of(context)!.emptyInboxList,
+    //                           style: TextStyle(color: Colors.black),
+    //                         ),
+    //                       )
+    //                     : Container(
+    //                         height: orientation == Orientation.portrait
+    //                             ? (MediaQuery.of(context).size.height - 380)
+    //                             : (MediaQuery.of(context).size.height - 300),
+    //                         color: Colors.transparent,
+    //                         child: _buildMailsList(inboxDataList
+    //                             .correspondencesModel.inbox!.correspondences!),
+    //                       ),
+    //                 orientation == Orientation.portrait
+    //                     ? Material(
+    //                         elevation: 5,
+    //                         child: Container(
+    //                           height: 75,
+    //                           width: MediaQuery.of(context).size.width - 30,
+    //                           color: Colors.grey.shade200,
+    //                           child: portraitMenuInboxes(context),
+    //                         ),
+    //                       )
+    //                     : Container(),
+    //               ],
+    //             ),
+    //           );
+    //   },
+    // );
+return Container();  }
 
-    return Consumer(
-      builder: (
-        BuildContext context,
-        T Function<T>(ProviderBase<Object?, T>) watch,
-        Widget? child,
-      ) {
-        final inboxDataList = watch(inboxStateNotifier);
-        return inboxDataList.correspondencesModel.inbox == null
-            ? FractionallySizedBox(
-                heightFactor: orientation == Orientation.portrait ? 0.04 : 0.07,
-                widthFactor: 0.05,
-                child: CircularProgressIndicator(),
-              )
-            : SingleChildScrollView(
-                physics: NeverScrollableScrollPhysics(),
-                child: Column(
-                  children: [
-                    //filter bar
-                    Container(
-                      width: width,
-                      height: 85,
-                      color: Colors.grey.shade100,
-                      child: _buildFilterBar(context),
-                    ),
-                    inboxDataList.correspondencesModel.inbox!.correspondences!
-                                .length ==
-                            0
-                        ? Padding(
-                            padding: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height / 4,
-                              bottom: MediaQuery.of(context).size.width / 1.7,
-                            ),
-                            child: Text(
-                              AppLocalizations.of(context)!.emptyInboxList,
-                              style: TextStyle(color: Colors.black),
-                            ),
-                          )
-                        : Container(
-                            height: orientation == Orientation.portrait
-                                ? (MediaQuery.of(context).size.height - 380)
-                                : (MediaQuery.of(context).size.height - 300),
-                            color: Colors.transparent,
-                            child: _buildMailsList(inboxDataList
-                                .correspondencesModel.inbox!.correspondences!),
-                          ),
-                    orientation == Orientation.portrait
-                        ? Material(
-                            elevation: 5,
-                            child: Container(
-                              height: 75,
-                              width: MediaQuery.of(context).size.width - 30,
-                              color: Colors.grey.shade200,
-                              child: portraitMenuInboxes(context),
-                            ),
-                          )
-                        : Container(),
-                  ],
-                ),
-              );
-      },
-    );
-  }
-
-  portraitMenuInboxes(BuildContext context) {
-    var appLocale = Localizations.localeOf(context).languageCode;
-    return Container(
-      width: double.infinity,
-      color: Colors.transparent,
-      child: DefaultTabController(
-        length: 4,
-        child: ContainedTabBarView(
-          tabs: [
-            Row(
-              children: [
-                Container(
-                  width: 40,
-                  height: double.infinity,
-                ),
-                Text(
-                  AppLocalizations.of(context)!.allInbox,
-                  style: TextStyle(
-                    fontSize: 17,
-                  ),
-                  textAlign: TextAlign.start,
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: appLocale == "en" ? 0 : 50,
-                    right: appLocale == "en" ? 50 : 0,
-                  ),
-                  child: FractionallySizedBox(
-                    heightFactor: 0.7,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade400,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(4),
-                        ),
-                      ),
-                      width: 0.5,
-                    ),
-                  ),
-                ),
-                Text(
-                  AppLocalizations.of(context)!.forAction,
-                  style: TextStyle(
-                    fontSize: 17,
-                  ),
-                  textAlign: TextAlign.start,
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: appLocale == "en" ? 0 : 50,
-                    right: appLocale == "en" ? 50 : 0,
-                  ),
-                  child: FractionallySizedBox(
-                    heightFactor: 0.7,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade400,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(4),
-                        ),
-                      ),
-                      width: 0.5,
-                    ),
-                  ),
-                ),
-                Text(
-                  AppLocalizations.of(context)!.forSignature,
-                  style: TextStyle(
-                    fontSize: 17,
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(0),
-                  child: FractionallySizedBox(
-                    heightFactor: 0.7,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade400,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(4),
-                        ),
-                      ),
-                      width: 0.5,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    right: appLocale == "en" ? 0 : 30,
-                    left: appLocale == "en" ? 40 : 0,
-                  ),
-                  child: Text(
-                    AppLocalizations.of(context)!.forInfo,
-                    style: TextStyle(
-                      fontSize: 17,
-                    ),
-                    textAlign: TextAlign.start,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    right: appLocale == "en" ? 0 : 30,
-                    left: appLocale == "en" ? 40 : 0,
-                  ),
-                  child: FractionallySizedBox(
-                    heightFactor: 0.7,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade400,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(4),
-                        ),
-                      ),
-                      width: 0.5,
-                    ),
-                  ),
-                ),
-                InkWell(
-                  //onTap:,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 13),
-                    child: Image(
-                      image: AssetImage(
-                        returnImageNameBasedOnOppositeDirection(
-                            "assets/images/arrow", context, "png"),
-                      ),
-                      fit: BoxFit.contain,
-                      width: 40,
-                      height: double.infinity,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-          tabBarProperties: TabBarProperties(
-            width: 800,
-            height: 70.0,
-            indicatorColor: Theme.of(context).colorScheme.primary,
-            indicatorWeight: 3,
-            labelColor: Theme.of(context).colorScheme.primary,
-            unselectedLabelColor: Colors.grey.shade600,
-            alignment: TabBarAlignment.start,
-          ),
-          views: [
-            Container(),
-            Container(),
-            Container(),
-            Container(),
-          ],
-        ),
-      ),
-    );
-  }
+  // portraitMenuInboxes(BuildContext context) {
+  //   var appLocale = Localizations.localeOf(context).languageCode;
+  //   return Container(
+  //     width: double.infinity,
+  //     color: Colors.transparent,
+  //     child: DefaultTabController(
+  //       length: 4,
+  //       child: ContainedTabBarView(
+  //         tabs: [
+  //           Row(
+  //             children: [
+  //               Container(
+  //                 width: 40,
+  //                 height: double.infinity,
+  //               ),
+  //               Text(
+  //                 AppLocalizations.of(context)!.allInbox,
+  //                 style: TextStyle(
+  //                   fontSize: 17,
+  //                 ),
+  //                 textAlign: TextAlign.start,
+  //               ),
+  //             ],
+  //           ),
+  //           Row(
+  //             children: [
+  //               Padding(
+  //                 padding: EdgeInsets.only(
+  //                   left: appLocale == "en" ? 0 : 50,
+  //                   right: appLocale == "en" ? 50 : 0,
+  //                 ),
+  //                 child: FractionallySizedBox(
+  //                   heightFactor: 0.7,
+  //                   child: Container(
+  //                     decoration: BoxDecoration(
+  //                       color: Colors.grey.shade400,
+  //                       borderRadius: BorderRadius.all(
+  //                         Radius.circular(4),
+  //                       ),
+  //                     ),
+  //                     width: 0.5,
+  //                   ),
+  //                 ),
+  //               ),
+  //               Text(
+  //                 AppLocalizations.of(context)!.forAction,
+  //                 style: TextStyle(
+  //                   fontSize: 17,
+  //                 ),
+  //                 textAlign: TextAlign.start,
+  //               ),
+  //             ],
+  //           ),
+  //           Row(
+  //             children: [
+  //               Padding(
+  //                 padding: EdgeInsets.only(
+  //                   left: appLocale == "en" ? 0 : 50,
+  //                   right: appLocale == "en" ? 50 : 0,
+  //                 ),
+  //                 child: FractionallySizedBox(
+  //                   heightFactor: 0.7,
+  //                   child: Container(
+  //                     decoration: BoxDecoration(
+  //                       color: Colors.grey.shade400,
+  //                       borderRadius: BorderRadius.all(
+  //                         Radius.circular(4),
+  //                       ),
+  //                     ),
+  //                     width: 0.5,
+  //                   ),
+  //                 ),
+  //               ),
+  //               Text(
+  //                 AppLocalizations.of(context)!.forSignature,
+  //                 style: TextStyle(
+  //                   fontSize: 17,
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //           Row(
+  //             children: [
+  //               Padding(
+  //                 padding: EdgeInsets.all(0),
+  //                 child: FractionallySizedBox(
+  //                   heightFactor: 0.7,
+  //                   child: Container(
+  //                     decoration: BoxDecoration(
+  //                       color: Colors.grey.shade400,
+  //                       borderRadius: BorderRadius.all(
+  //                         Radius.circular(4),
+  //                       ),
+  //                     ),
+  //                     width: 0.5,
+  //                   ),
+  //                 ),
+  //               ),
+  //               Padding(
+  //                 padding: EdgeInsets.only(
+  //                   right: appLocale == "en" ? 0 : 30,
+  //                   left: appLocale == "en" ? 40 : 0,
+  //                 ),
+  //                 child: Text(
+  //                   AppLocalizations.of(context)!.forInfo,
+  //                   style: TextStyle(
+  //                     fontSize: 17,
+  //                   ),
+  //                   textAlign: TextAlign.start,
+  //                 ),
+  //               ),
+  //               Padding(
+  //                 padding: EdgeInsets.only(
+  //                   right: appLocale == "en" ? 0 : 30,
+  //                   left: appLocale == "en" ? 40 : 0,
+  //                 ),
+  //                 child: FractionallySizedBox(
+  //                   heightFactor: 0.7,
+  //                   child: Container(
+  //                     decoration: BoxDecoration(
+  //                       color: Colors.grey.shade400,
+  //                       borderRadius: BorderRadius.all(
+  //                         Radius.circular(4),
+  //                       ),
+  //                     ),
+  //                     width: 0.5,
+  //                   ),
+  //                 ),
+  //               ),
+  //               InkWell(
+  //                 //onTap:,
+  //                 child: Padding(
+  //                   padding: const EdgeInsets.only(top: 13),
+  //                   child: Image(
+  //                     image: AssetImage(
+  //                       returnImageNameBasedOnOppositeDirection(
+  //                           "assets/images/arrow", context, "png"),
+  //                     ),
+  //                     fit: BoxFit.contain,
+  //                     width: 40,
+  //                     height: double.infinity,
+  //                   ),
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         ],
+  //         tabBarProperties: TabBarProperties(
+  //           width: 800,
+  //           height: 70.0,
+  //           indicatorColor: Theme.of(context).colorScheme.primary,
+  //           indicatorWeight: 3,
+  //           labelColor: Theme.of(context).colorScheme.primary,
+  //           unselectedLabelColor: Colors.grey.shade600,
+  //           alignment: TabBarAlignment.start,
+  //         ),
+  //         views: [
+  //           Container(),
+  //           Container(),
+  //           Container(),
+  //           Container(),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   openPDFPage(
     String correspondenceId,
@@ -363,7 +363,7 @@ class _InboxListstate extends State<InboxList> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              AppLocalizations.of(context)!.sender +
+                              //AppLocalizations.of(context)!.sender +
                                   ": " +
                                   (correspondencesModel[index].fromUser ?? ""),
                               style: Theme.of(context)
@@ -526,8 +526,8 @@ class _InboxListstate extends State<InboxList> {
                                               width: 10,
                                             ),
                                             Text(
-                                              AppLocalizations.of(context)!
-                                                      .closed +
+                                              // AppLocalizations.of(context)!
+                                              //         .closed +
                                                   " / " +
                                                   "محمد الجابر",
                                               style: Theme.of(context)
@@ -595,13 +595,13 @@ class _InboxListstate extends State<InboxList> {
                       },
                     ),
                   ),
-                  Text(
-                    AppLocalizations.of(context)!.unread,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline2!
-                        .copyWith(color: Colors.grey, fontSize: 16),
-                  ),
+                  // Text(
+                  //   AppLocalizations.of(context)!.unread,
+                  //   style: Theme.of(context)
+                  //       .textTheme
+                  //       .headline2!
+                  //       .copyWith(color: Colors.grey, fontSize: 16),
+                  // ),
                 ],
               ),
             ),
@@ -679,18 +679,18 @@ class _InboxListstate extends State<InboxList> {
                                 color: Colors.white,
                               ),
                             ),
-                            Expanded(
-                              child: Center(
-                                child: Text(
-                                  AppLocalizations.of(context)!.urgent,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline2!
-                                      .copyWith(
-                                          color: Colors.white, fontSize: 14),
-                                ),
-                              ),
-                            ),
+                            // Expanded(
+                            //   child: Center(
+                            //     child: Text(
+                            //       AppLocalizations.of(context)!.urgent,
+                            //       style: Theme.of(context)
+                            //           .textTheme
+                            //           .headline2!
+                            //           .copyWith(
+                            //               color: Colors.white, fontSize: 14),
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
@@ -729,22 +729,22 @@ class _InboxListstate extends State<InboxList> {
                                 ),
                               ),
                             ),
-                            Expanded(
-                              child: Center(
-                                child: Text(
-                                  AppLocalizations.of(context)!.secret,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline2!
-                                      .copyWith(
-                                          color: createMaterialColor(
-                                            Color.fromRGBO(77, 77, 77, 1),
-                                          ),
-                                          fontSize: 14),
-                                  textAlign: TextAlign.start,
-                                ),
-                              ),
-                            ),
+                            // Expanded(
+                            //   child: Center(
+                            //     child: Text(
+                            //       AppLocalizations.of(context)!.secret,
+                            //       style: Theme.of(context)
+                            //           .textTheme
+                            //           .headline2!
+                            //           .copyWith(
+                            //               color: createMaterialColor(
+                            //                 Color.fromRGBO(77, 77, 77, 1),
+                            //               ),
+                            //               fontSize: 14),
+                            //       textAlign: TextAlign.start,
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
@@ -792,16 +792,16 @@ class _InboxListstate extends State<InboxList> {
       color: Colors.transparent,
       child: Row(
         children: [
-          Container(
-            padding: EdgeInsets.only(left: 20, right: 20),
-            child: Text(
-              AppLocalizations.of(context)!.sender,
-              style: Theme.of(context).textTheme.headline2!.copyWith(
-                    color: Colors.grey,
-                    fontSize: 16,
-                  ),
-            ),
-          ),
+          // Container(
+          //   padding: EdgeInsets.only(left: 20, right: 20),
+          //   child: Text(
+          //     AppLocalizations.of(context)!.sender,
+          //     style: Theme.of(context).textTheme.headline2!.copyWith(
+          //           color: Colors.grey,
+          //           fontSize: 16,
+          //         ),
+          //   ),
+          // ),
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

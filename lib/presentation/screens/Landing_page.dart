@@ -2,7 +2,8 @@ import 'package:cts/constants/globals.dart';
 import 'package:cts/constants/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:cts/main.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'package:get/get.dart';
 import 'Inbox_page.dart';
 
 class LandingPage extends StatefulWidget {
@@ -359,7 +360,8 @@ class _LandingState extends State<LandingPage> {
           flex: 1,
           child: InkWell(
             onTap: () {
-              Globals.navigatorKey.currentState?.pushNamed(LoginPageRoute);
+            //  Globals.navigatorKey.currentState?.pushNamed(LoginPageRoute);
+              Get.toNamed(Routes.LoginPageRoute);
             },
             child: Container(
               height: 120,

@@ -5,6 +5,7 @@ import 'package:cts/main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:cts/presentation/widgets/inbox_list.dart';
+import 'package:get/get.dart';
 
 class InboxPage extends StatefulWidget {
   InboxPage({Key? key}) : super(key: key);
@@ -259,7 +260,8 @@ class _InboxState extends State<InboxPage> {
           ),
           InkWell(
             onTap: () {
-              Globals.navigatorKey.currentState?.pushNamed(LandingPageRoute);
+             // Globals.navigatorKey.currentState?.pushNamed(LandingPageRoute);
+              Get.toNamed(Routes.LandingPageRoute);
             },
             child: Container(
               width: 120,

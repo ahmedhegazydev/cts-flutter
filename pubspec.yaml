@@ -21,10 +21,13 @@ dependencies:
   # advance_pdf_viewer: any
   native_pdf_view: ^4.2.0
   http: ^0.13.4
-  flutter_riverpod: 0.13.0
+  #  flutter_riverpod: 0.13.0
   encrypt: ^5.0.1
   simple_animations: ^4.0.1
   shared_preferences: ^2.0.8
+  get_storage: ^2.0.3
+  get: ^4.6.1
+  dio: ^4.0.4
 
 
 dev_dependencies:

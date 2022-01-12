@@ -8,6 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:cts/presentation/widgets/pdf_widget.dart';
 import 'dart:ui' as ui;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
 
 class DocumentPage extends StatefulWidget {
   final String? fromStructure1;
@@ -527,7 +528,8 @@ class _DocumentPageState extends State<DocumentPage> {
           ),
           InkWell(
             onTap: () {
-              Globals.navigatorKey.currentState?.pushNamed(LandingPageRoute);
+            //  Globals.navigatorKey.currentState?.pushNamed(LandingPageRoute);
+              Get.toNamed(Routes.LoginPageRoute);
             },
             child: Container(
               width: 120,

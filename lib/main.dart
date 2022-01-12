@@ -2,39 +2,40 @@ import 'dart:ui' as ui;
 import 'package:cts/constants/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart' as intl;
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:cts/presentation/widgets/app_routes.dart';
+import 'Translation/Trans.dart';
+import 'bindings/bindings.dart';
+import 'constants/routes.dart';
 import 'presentation/screens/Login_page.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-void main() {
-  runApp(
-    ProviderScope(
-      child: MyApp(
-        appRoutes: AppRoutes(),
-      ),
-    ),
-  );
+void main()async {
+  await GetStorage.init();
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(  MyApp ());
 }
 
-class MyApp extends ConsumerWidget {
-  final AppRoutes appRoutes;
+class MyApp extends StatelessWidget {
+ // final AppRoutes appRoutes;
 
-  const MyApp({Key? key, required this.appRoutes}) : super(key: key);
+  //const MyApp({Key? key, required this.appRoutes}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, watch) {
+  Widget build(BuildContext context) {
     var defaultLocale = ui.window.locale.languageCode;
 
-    return MaterialApp(
-      scaffoldMessengerKey: Globals.snackbarKey,
+    return GetMaterialApp(
+   //   scaffoldMessengerKey: Globals.snackbarKey,
       title: 'CTS',
-      debugShowCheckedModeBanner: false,
-      onGenerateRoute: appRoutes.generateRoutes,
-      navigatorKey: Globals.navigatorKey,
+      debugShowCheckedModeBanner: false,initialBinding: AllBindings(),
+      onGenerateRoute: MyRouter.myGenerateRoute ,
+    //  navigatorKey: Globals.navigatorKey,
       theme: ThemeData(
         textTheme: TextTheme(
           headline1: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
@@ -57,17 +58,8 @@ class MyApp extends ConsumerWidget {
         ),
       ),
       home: LoginPage(),
-      localizationsDelegates: [
-        AppLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: [
-        Locale("ar", "AE"),
-        Locale("en", "US"),
-      ],
-      locale: Locale("ar", "AR"),
+      locale: LocalizationService.locale,
+      translations: LocalizationService(),
       //  locale: defaultLocale == "en" ? Locale("en", "US") : Locale("ar", "AR"),
     );
   }

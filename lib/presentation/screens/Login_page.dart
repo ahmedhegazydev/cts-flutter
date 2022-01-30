@@ -551,55 +551,60 @@ class LoginPage extends GetWidget<LoginController> {
       body: Stack(
         children: [
           // orientation == Orientation.portrait
-          Column(
-            children: [
-              SizedBox(
-                height: _size.height * .1,
-              ),
-              Text("نظام تتبع المراسلات",
-                  style: Theme.of(context).textTheme.headline1,
-                  textAlign: TextAlign.start),
-              LogIn_InputFiled(
-                validator: (v) {},
-                textEditingController: controller.name,
-                title: "الاسم",
-              ),
-              LogIn_InputFiled(
-                title: "كلمة السر",
-                textEditingController: controller.password,
-                validator: (v) {},
-                obscureText: true,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CustomButton(
-                      width: _size.width * .6,
-                      backGroundColor: AppColor,
-                      title: 'تسجيل الدخول',
-                      titleColor: White,
-                      height: 50,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    CustomImageButton(
-                      width: _size.width * .2,
-                      pic: 'assets/images/faceid.png',
-                      backGroundColor: AppColor,
-                    ),
-                  ],
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: _size.height * .1,
                 ),
-              ),
-              Align(
-                alignment: FractionalOffset.bottomRight,
-                child: Image.asset(
-                  "assets/images/login_background.png",
-                  height: _size.height * .5,
-                  width: _size.width * .5,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("appTitle".tr,
+                      style: Theme.of(context).textTheme.headline1,
+                      textAlign: TextAlign.start),
                 ),
-              ),
-            ],
+                LogIn_InputFiled(
+                  validator: (v) {},
+                  textEditingController: controller.name,
+                  title: "الاسم",
+                ),
+                LogIn_InputFiled(
+                  title: "كلمة السر",
+                  textEditingController: controller.password,
+                  validator: (v) {},
+                  obscureText: true,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomButton(
+                        width: _size.width * .6,
+                        backGroundColor: AppColor,
+                        title: 'تسجيل الدخول',
+                        titleColor: White,
+                        height: 50,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      CustomImageButton(
+                        width: _size.width * .2,
+                        pic: 'assets/images/faceid.png',
+                        backGroundColor: AppColor,
+                      ),
+                    ],
+                  ),
+                ),
+                Align(
+                  alignment: FractionalOffset.bottomRight,
+                  child: Image.asset(
+                    "assets/images/login_background.png",
+                    height: _size.height * .5,
+                    width: _size.width * .5,
+                  ),
+                ),
+              ],
+            ),
           ),
           Align(
             alignment: FractionalOffset.bottomLeft,
@@ -612,7 +617,47 @@ class LoginPage extends GetWidget<LoginController> {
               ),
             ),
           ),
-        ],
+          Container(
+            color: Colors.transparent,
+            height: 60,
+            width: 200,
+            child: Align(
+              alignment: FractionalOffset.topCenter,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Container(
+                    child: FractionallySizedBox(
+                      widthFactor: 0.7,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(4),
+                          ),
+                        ),
+                        height: 2,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 23,
+                  ),
+
+                ],
+              ),
+            ),
+          )  ,      Align(alignment: Alignment.bottomCenter,
+            child: Container(
+              height: 35,
+              child: Text(
+                "copyrights".tr,style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
+
+              ),
+            ),
+          ), ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: null,

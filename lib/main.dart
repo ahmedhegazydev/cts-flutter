@@ -58,7 +58,8 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: LoginPage(),
-
+      locale: LocalizationService.locale,
+      translations: LocalizationService(),
       //  locale: defaultLocale == "en" ? Locale("en", "US") : Locale("ar", "AR"),
     );
   }

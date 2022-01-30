@@ -16,4 +16,38 @@ const Map<String, String> en = {
   "urgent": "urgent",
   "topUrgent": "topUrgent",
   "hello": "hello"
+  ,
+  "mySignatures": "mySignatures"
+  ,
+  "favoritesUsers": "favoritesUsers"
+  ,
+  "myDelegations": "myDelegations"
+  ,
+  "appTheme": "appTheme"
+  ,
+  "logout": "logout"
+  ,
+  "sharedServicesAdministration": "sharedServicesAdministration"
+  ,
+  "unreadCorrespondences": "unreadCorrespondences"
+  ,
+  "pendingCorrespondences": "pendingCorrespondences"
+  ,
+  "myTransfersInMonth": "myTransfersInMonth"
+
+  ,
+  "mostMyTransferWentTo": "myTransfersInMonth"
+  ,
+  "flagged": "flagged" ,
+  "notifications": "notifications" ,
+
+  "mail": "mail",
+  "forAction": "forAction",
+  "forSignature": "forSignature",
+  "forInfo": "forInfo",
+  "all": "all",
+  "folders": "folders",
+  "search": "search",
+  "advancedSearch": "advancedSearch",
+
 };

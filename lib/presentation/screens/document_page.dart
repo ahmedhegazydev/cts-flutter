@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:cts/presentation/widgets/pdf_widget.dart';
 import 'dart:ui' as ui;
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:get/get.dart';
 
 class DocumentPage extends StatefulWidget {
@@ -34,21 +34,22 @@ class _DocumentPageState extends State<DocumentPage> {
   bool portraitIsActive = false;
   @override
   Widget build(BuildContext context) {
-    final documentStateNotifier = ChangeNotifierProvider<DocumentController>(
-        (ref) => DocumentController());
-    return Consumer(
-      builder: (
-        BuildContext context,
-        T Function<T>(ProviderBase<Object?, T>) watch,
-        Widget? child,
-      ) {
-        final documentData = watch(documentStateNotifier);
-        return Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: _buildBody(context, documentData),
-        );
-      },
-    );
+    // final documentStateNotifier = ChangeNotifierProvider<DocumentController>(
+    //     (ref) => DocumentController());
+    // return Consumer(
+    //   builder: (
+    //     BuildContext context,
+    //     T Function<T>(ProviderBase<Object?, T>) watch,
+    //     Widget? child,
+    //   ) {
+    //     final documentData = watch(documentStateNotifier);
+    //     return Scaffold(
+    //       resizeToAvoidBottomInset: false,
+    //       body: _buildBody(context, documentData),
+    //     );
+    //   },
+    // );
+   return Container();
   }
 
   _buildBody(BuildContext context, DocumentController documentControllerRes) {

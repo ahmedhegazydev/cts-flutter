@@ -160,7 +160,7 @@ class _LandingState extends State<LandingPage> {
                     width: double.infinity,
                     height: 60,
                     child: Text(
-                      AppLocalizations.of(context)!.appTitle,
+                      "appTitle".tr,
                       style: Theme.of(context).textTheme.headline1,
                       textAlign: TextAlign.start,
                     ),
@@ -227,7 +227,7 @@ class _LandingState extends State<LandingPage> {
                 Flexible(
                   flex: 1,
                   child: Text(
-                    AppLocalizations.of(context)!.mySignatures,
+                    "mySignatures".tr,
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
                         .textTheme
@@ -266,7 +266,7 @@ class _LandingState extends State<LandingPage> {
                 Flexible(
                   flex: 2,
                   child: Text(
-                    AppLocalizations.of(context)!.favoritesUsers,
+                    "favoritesUsers",
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
                         .textTheme
@@ -305,7 +305,7 @@ class _LandingState extends State<LandingPage> {
                 Flexible(
                   flex: 1,
                   child: Text(
-                    AppLocalizations.of(context)!.myDelegations,
+                   "myDelegations".tr,
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
                         .textTheme
@@ -344,7 +344,7 @@ class _LandingState extends State<LandingPage> {
                 Flexible(
                   flex: 1,
                   child: Text(
-                    AppLocalizations.of(context)!.appTheme,
+                 "appTheme".tr,
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
                         .textTheme
@@ -388,7 +388,7 @@ class _LandingState extends State<LandingPage> {
                   Flexible(
                     flex: 1,
                     child: Text(
-                      AppLocalizations.of(context)!.logout,
+                     "logout".tr,
                       textAlign: TextAlign.center,
                       style: Theme.of(context)
                           .textTheme
@@ -428,7 +428,7 @@ class _LandingState extends State<LandingPage> {
                     width: double.infinity,
                     height: 60,
                     child: Text(
-                      AppLocalizations.of(context)!.appTitle,
+                     "appTitle".tr,
                       style: Theme.of(context).textTheme.headline1,
                       textAlign: TextAlign.start,
                     ),
@@ -441,7 +441,7 @@ class _LandingState extends State<LandingPage> {
                     width: double.infinity,
                     height: 30,
                     child: Text(
-                      AppLocalizations.of(context)!.hello + " ربيع محمد المانع",
+                      "hello".tr +" ربيع محمد المانع",
                       style: Theme.of(context)
                           .textTheme
                           .headline2!
@@ -504,8 +504,12 @@ class _LandingState extends State<LandingPage> {
                         height: double.infinity,
                       ),
                       Text(
-                        AppLocalizations.of(context)!
-                            .sharedServicesAdministration,
+
+
+
+
+
+                             "sharedServicesAdministration".tr,
                         style: Theme.of(context)
                             .textTheme
                             .headline2!
@@ -708,8 +712,7 @@ class _LandingState extends State<LandingPage> {
                               Flexible(
                                 flex: 1,
                                 child: Text(
-                                  AppLocalizations.of(context)!
-                                      .unreadCorrespondences,
+                                  "unreadCorrespondences".tr,
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline2!
@@ -774,8 +777,7 @@ class _LandingState extends State<LandingPage> {
                               Flexible(
                                 flex: 1,
                                 child: Text(
-                                  AppLocalizations.of(context)!
-                                      .pendingCorrespondences,
+                                 "pendingCorrespondences".tr,
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline2!
@@ -854,8 +856,7 @@ class _LandingState extends State<LandingPage> {
                               Flexible(
                                 flex: 1,
                                 child: Text(
-                                  AppLocalizations.of(context)!
-                                          .myTransfersInMonth +
+                                "myTransfersInMonth".tr +
                                       " " +
                                       calculateDate(
                                           'MMMM', getLocaleCode(context)),
@@ -923,8 +924,7 @@ class _LandingState extends State<LandingPage> {
                               Flexible(
                                 flex: 1,
                                 child: Text(
-                                  AppLocalizations.of(context)!
-                                      .mostMyTransferWentTo,
+                                "mostMyTransferWentTo".tr,
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline2!
@@ -1015,7 +1015,7 @@ class _LandingState extends State<LandingPage> {
                               child: Container(
                                 width: double.infinity,
                                 child: Text(
-                                  AppLocalizations.of(context)!.flagged,
+                                 "flagged".tr,
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline2!
@@ -1102,7 +1102,7 @@ class _LandingState extends State<LandingPage> {
                               child: Container(
                                 width: double.infinity,
                                 child: Text(
-                                  AppLocalizations.of(context)!.notifications,
+                                "notifications".tr,
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline2!
@@ -1203,8 +1203,7 @@ class _LandingState extends State<LandingPage> {
                               Flexible(
                                 flex: 1,
                                 child: Text(
-                                  AppLocalizations.of(context)!
-                                      .unreadCorrespondences,
+                                 "unreadCorrespondences".tr,
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline2!
@@ -1270,8 +1269,7 @@ class _LandingState extends State<LandingPage> {
                               Flexible(
                                 flex: 1,
                                 child: Text(
-                                  AppLocalizations.of(context)!
-                                      .pendingCorrespondences,
+                                 "pendingCorrespondences".tr,
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline2!
@@ -1349,8 +1347,7 @@ class _LandingState extends State<LandingPage> {
                               Flexible(
                                 flex: 1,
                                 child: Text(
-                                  AppLocalizations.of(context)!
-                                          .myTransfersInMonth +
+                               "myTransfersInMonth".tr +
                                       " " +
                                       calculateDate(
                                           'MMMM', getLocaleCode(context)),
@@ -1419,8 +1416,7 @@ class _LandingState extends State<LandingPage> {
                               Flexible(
                                 flex: 1,
                                 child: Text(
-                                  AppLocalizations.of(context)!
-                                      .mostMyTransferWentTo,
+                                "mostMyTransferWentTo",
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline2!
@@ -1507,7 +1503,7 @@ class _LandingState extends State<LandingPage> {
                             child: Container(
                               width: double.infinity,
                               child: Text(
-                                AppLocalizations.of(context)!.flagged,
+                              "flagged".tr,
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline2!
@@ -1591,7 +1587,7 @@ class _LandingState extends State<LandingPage> {
                             child: Container(
                               width: double.infinity,
                               child: Text(
-                                AppLocalizations.of(context)!.notifications,
+                               "notifications".tr,
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline2!
@@ -1647,7 +1643,7 @@ class _LandingState extends State<LandingPage> {
         children: [
           _buildDataLabelTitleLabel(
             context,
-            AppLocalizations.of(context)!.mail,
+            "mail".tr,
           ),
           Table(
             border: TableBorder(
@@ -1669,7 +1665,7 @@ class _LandingState extends State<LandingPage> {
                     },
                     child: _buildInboxesRow(
                       context,
-                      AppLocalizations.of(context)!.forAction,
+                    "forAction".tr,
                       5,
                     ),
                   ),
@@ -1683,7 +1679,7 @@ class _LandingState extends State<LandingPage> {
                     },
                     child: _buildInboxesRow(
                       context,
-                      AppLocalizations.of(context)!.forSignature,
+                "forSignature".tr,
                       07,
                     ),
                   ),
@@ -1697,7 +1693,7 @@ class _LandingState extends State<LandingPage> {
                     },
                     child: _buildInboxesRow(
                       context,
-                      AppLocalizations.of(context)!.forInfo,
+                  "forInfo".tr,
                       09,
                     ),
                   ),
@@ -1711,7 +1707,7 @@ class _LandingState extends State<LandingPage> {
                     },
                     child: _buildInboxesRow(
                       context,
-                      AppLocalizations.of(context)!.all,
+                     "all".tr,
                       2,
                     ),
                   ),
@@ -1720,7 +1716,7 @@ class _LandingState extends State<LandingPage> {
             ],
           ),
           _buildDataLabelTitleLabel(
-              context, AppLocalizations.of(context)!.folders),
+              context,"folders".tr),
           Table(
             border: TableBorder(
               horizontalInside: BorderSide(
@@ -1741,7 +1737,7 @@ class _LandingState extends State<LandingPage> {
                     },
                     child: _buildOtherFoldersRows(
                       context,
-                      AppLocalizations.of(context)!.flagged,
+                     "flagged".tr,
                       "assets/images/flagged.png",
                       true,
                       5,
@@ -1757,7 +1753,7 @@ class _LandingState extends State<LandingPage> {
                     },
                     child: _buildOtherFoldersRows(
                       context,
-                      AppLocalizations.of(context)!.notifications,
+                     "notifications".tr,
                       "assets/images/notification.png",
                       true,
                       9,
@@ -1768,7 +1764,7 @@ class _LandingState extends State<LandingPage> {
             ],
           ),
           _buildDataLabelTitleLabel(
-              context, AppLocalizations.of(context)!.search),
+              context,  "search".tr),
           Table(
             border: TableBorder(
               horizontalInside: BorderSide(
@@ -1789,7 +1785,7 @@ class _LandingState extends State<LandingPage> {
                     },
                     child: _buildOtherFoldersRows(
                         context,
-                        AppLocalizations.of(context)!.advancedSearch,
+                      "advancedSearch".tr,
                         "assets/images/search.png",
                         false,
                         0),
@@ -1826,8 +1822,7 @@ class _LandingState extends State<LandingPage> {
                         height: double.infinity,
                       ),
                       Text(
-                        AppLocalizations.of(context)!
-                            .sharedServicesAdministration,
+                         "sharedServicesAdministration".tr,
                         style: Theme.of(context)
                             .textTheme
                             .headline2!
@@ -1874,7 +1869,7 @@ class _LandingState extends State<LandingPage> {
           children: [
             _buildDataLabelTitleLabel(
               context,
-              AppLocalizations.of(context)!.mail,
+              "mail".tr,
             ),
             Table(
               border: TableBorder(
@@ -1896,7 +1891,7 @@ class _LandingState extends State<LandingPage> {
                       },
                       child: _buildInboxesRow(
                         context,
-                        AppLocalizations.of(context)!.forAction,
+                      "forAction".tr,
                         5,
                       ),
                     ),
@@ -1910,7 +1905,7 @@ class _LandingState extends State<LandingPage> {
                       },
                       child: _buildInboxesRow(
                         context,
-                        AppLocalizations.of(context)!.forSignature,
+                 "forSignature".tr,
                         07,
                       ),
                     ),
@@ -1924,7 +1919,7 @@ class _LandingState extends State<LandingPage> {
                       },
                       child: _buildInboxesRow(
                         context,
-                        AppLocalizations.of(context)!.forInfo,
+                   "forInfo".tr,
                         09,
                       ),
                     ),
@@ -1938,7 +1933,7 @@ class _LandingState extends State<LandingPage> {
                       },
                       child: _buildInboxesRow(
                         context,
-                        AppLocalizations.of(context)!.all,
+                      "all".tr,
                         2,
                       ),
                     ),
@@ -1950,7 +1945,7 @@ class _LandingState extends State<LandingPage> {
               height: 30,
             ),
             _buildDataLabelTitleLabel(
-                context, AppLocalizations.of(context)!.folders),
+                context, "folders".tr),
             Table(
               border: TableBorder(
                 horizontalInside: BorderSide(
@@ -1971,7 +1966,7 @@ class _LandingState extends State<LandingPage> {
                       },
                       child: _buildOtherFoldersRows(
                         context,
-                        AppLocalizations.of(context)!.flagged,
+                       "flagged".tr,
                         "assets/images/flagged.png",
                         true,
                         5,
@@ -1987,7 +1982,7 @@ class _LandingState extends State<LandingPage> {
                       },
                       child: _buildOtherFoldersRows(
                         context,
-                        AppLocalizations.of(context)!.notifications,
+                       "notifications".tr,
                         "assets/images/notification.png",
                         true,
                         9,
@@ -2001,7 +1996,7 @@ class _LandingState extends State<LandingPage> {
               height: 30,
             ),
             _buildDataLabelTitleLabel(
-                context, AppLocalizations.of(context)!.search),
+                context,  "search".tr),
             Table(
               border: TableBorder(
                 horizontalInside: BorderSide(
@@ -2022,7 +2017,7 @@ class _LandingState extends State<LandingPage> {
                       },
                       child: _buildOtherFoldersRows(
                           context,
-                          AppLocalizations.of(context)!.advancedSearch,
+                          "advancedSearch".tr,
                           "assets/images/search.png",
                           false,
                           0),

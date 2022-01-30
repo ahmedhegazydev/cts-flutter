@@ -16,8 +16,8 @@ import 'package:intl/date_symbol_data_file.dart';
 import 'package:intl/intl.dart';
 
 class LoginController extends GetxController {
-
-
+TextEditingController name=TextEditingController();
+TextEditingController password=TextEditingController();
 
      authenticate() async {
       // bool didAuthenticate = await LocalAuthentication().authenticate(

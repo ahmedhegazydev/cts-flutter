@@ -351,55 +351,55 @@ controller.setPrioritieVal(newValue);
                     )),
 
 
-                // Expanded(
-                //   flex: 4,
-                //   child: TypeAheadField<DocCountries>(
-                //     textFieldConfiguration: TextFieldConfiguration(
-                //       controller: controller
-                //           .textEditingControllerdocCountrieVal,
-                //       // autofocus: true,
-                //       // style: DefaultTextStyle.of(context)
-                //       //     .style
-                //       //     .copyWith(fontStyle: FontStyle.italic),
-                //       decoration:
-                //       const InputDecoration(
-                //           border: OutlineInputBorder(), labelText: 'Countries'),
-                //     ),
-                //     suggestionsCallback: (pattern) async {
-                //       return controller.countries!.where((element) =>
-                //           element.nameDISPLAY!
-                //               .toLowerCase()
-                //               .contains(pattern.toLowerCase()));
-                //
-                //       //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
-                //     },
-                //     itemBuilder: (context, suggestion) {
-                //       DocCountries v = suggestion as DocCountries;
-                //
-                //       return
-                //
-                //
-                //         ListTile(
-                //           title: FilterText(v.originalName!),
-                //         );
-                //     },
-                //     onSuggestionSelected: (suggestion) {
-                //       DocCountries v = suggestion as DocCountries;
-                //       controller.textEditingControllerdocCountrieVal.text = v
-                //           .originalName ?? "";
-                //
-                //       controller.  serachData["Country"]=   v.originalName ;
-                //
-                //
-                //       // Navigator.of(context).push(MaterialPageRoute(
-                //       //     builder: (context) => ProductPage(product: suggestion)
-                //       // ));
-                //     },
-                //   ),
-                // ),
+                Expanded(
+                  flex: 4,
+                  child: TypeAheadField<DocCountries>(
+                    textFieldConfiguration: TextFieldConfiguration(
+                      controller: controller
+                          .textEditingControllerdocCountrieVal,
+                      // autofocus: true,
+                      // style: DefaultTextStyle.of(context)
+                      //     .style
+                      //     .copyWith(fontStyle: FontStyle.italic),
+                      decoration:
+                      const InputDecoration(
+                          border: OutlineInputBorder(), labelText: 'Countries'),
+                    ),
+                    suggestionsCallback: (pattern) async {
+                      return controller.countries!.where((element) =>
+                          element.nameDISPLAY!
+                              .toLowerCase()
+                              .contains(pattern.toLowerCase()));
+
+                      //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
+                    },
+                    itemBuilder: (context, suggestion) {
+                      DocCountries v = suggestion as DocCountries;
+
+                      return
 
 
-                //
+                        ListTile(
+                          title: FilterText(v.originalName!),
+                        );
+                    },
+                    onSuggestionSelected: (suggestion) {
+                      DocCountries v = suggestion as DocCountries;
+                      controller.textEditingControllerdocCountrieVal.text = v
+                          .originalName ?? "";
+
+                      controller.  serachData["Country"]=   v.originalName ;
+
+
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (context) => ProductPage(product: suggestion)
+                      // ));
+                    },
+                  ),
+                ),
+
+
+
                 // Expanded(
                 //   flex: 4,
                 //   child: Container(
@@ -463,51 +463,51 @@ controller.setPrioritieVal(newValue);
             Row(
               children: [
 
-                // Expanded(
-                //   flex: 4,
-                //   child: TypeAheadField<Classifications>(
-                //     textFieldConfiguration: TextFieldConfiguration(
-                //       controller: controller
-                //           .textEditingControllerclassificationsVal,
-                //       // autofocus: true,
-                //       // style: DefaultTextStyle.of(context)
-                //       //     .style
-                //       //     .copyWith(fontStyle: FontStyle.italic),
-                //       decoration:
-                //       const InputDecoration(border: OutlineInputBorder(),
-                //           labelText: 'Classifications'),
-                //     ),
-                //     suggestionsCallback: (pattern) async {
-                //       return controller.classifications.where((element) =>
-                //           element.cLASNAMEDISPLAY!
-                //               .toLowerCase()
-                //               .contains(pattern.toLowerCase()));
-                //
-                //       //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
-                //     },
-                //     itemBuilder: (context, suggestion) {
-                //       Classifications v = suggestion as Classifications;
-                //
-                //       return // Te(v.originalName!);
-                //
-                //
-                //         ListTile(
-                //           title: FilterText(v.cLASNAMEDISPLAY!),
-                //         );
-                //     },
-                //     onSuggestionSelected: (suggestion) {
-                //       Classifications v = suggestion as Classifications;
-                //       controller.textEditingControllerclassificationsVal.text =
-                //           v.cLASNAMEDISPLAY ?? "";
-                //
-                //
-                //       controller.  serachData["Classification"]=   v.cLASNAMEDISPLAY ;
-                //       // Navigator.of(context).push(MaterialPageRoute(
-                //       //     builder: (context) => ProductPage(product: suggestion)
-                //       // ));
-                //     },
-                //   ),
-                // ),
+                Expanded(
+                  flex: 4,
+                  child: TypeAheadField<Classifications>(
+                    textFieldConfiguration: TextFieldConfiguration(
+                      controller: controller
+                          .textEditingControllerclassificationsVal,
+                      // autofocus: true,
+                      // style: DefaultTextStyle.of(context)
+                      //     .style
+                      //     .copyWith(fontStyle: FontStyle.italic),
+                      decoration:
+                      const InputDecoration(border: OutlineInputBorder(),
+                          labelText: 'Classifications'),
+                    ),
+                    suggestionsCallback: (pattern) async {
+                      return controller.classifications.where((element) =>
+                          element.cLASNAMEDISPLAY!
+                              .toLowerCase()
+                              .contains(pattern.toLowerCase()));
+
+                      //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
+                    },
+                    itemBuilder: (context, suggestion) {
+                      Classifications v = suggestion as Classifications;
+
+                      return // Te(v.originalName!);
+
+
+                        ListTile(
+                          title: FilterText(v.cLASNAMEDISPLAY!),
+                        );
+                    },
+                    onSuggestionSelected: (suggestion) {
+                      Classifications v = suggestion as Classifications;
+                      controller.textEditingControllerclassificationsVal.text =
+                          v.cLASNAMEDISPLAY ?? "";
+
+
+                      controller.  serachData["Classification"]=   v.cLASNAMEDISPLAY ;
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (context) => ProductPage(product: suggestion)
+                      // ));
+                    },
+                  ),
+                ),
 
 
                 Flexible(
@@ -563,56 +563,7 @@ controller.setPrioritieVal(newValue);
                   ),
                 ),
 
-                Expanded(
-                  flex: 4,
-                  child: Container(
-                    //  height: 60,
-                      padding: EdgeInsets.only(right: 8, left: 8),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              color: Theme.of(context).colorScheme.primary),
-                          borderRadius:
-                          const BorderRadius.all(Radius.circular(6))),
-                      child://Te("99999999")
 
-                      TypeAheadField(
-                        textFieldConfiguration: TextFieldConfiguration(
-                          controller: controller.textEditingControllerprimaryClassificationsVal,
-                          // autofocus: true,
-                          style: DefaultTextStyle.of(context)
-                              .style
-                              .copyWith(fontStyle: FontStyle.italic),
-                          decoration:
-                          const InputDecoration(border: OutlineInputBorder()),
-                        ),
-                        suggestionsCallback: (pattern) async {
-                          return controller.primaryClassifications!.where((element) =>
-                              element.pCLASNAME!
-                                  .toLowerCase()
-                                  .contains(pattern.toLowerCase()));
-
-                          //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
-                        },
-                        itemBuilder: (context, suggestion) {
-                          PrimaryClassifications v = suggestion as PrimaryClassifications;
-
-                          return ListTile(
-                            title: FilterText(v.pCLASNAME!),
-                          );
-                        },
-                        onSuggestionSelected: (suggestion) {
-                          Classifications v = suggestion as Classifications;
-                          controller.textEditingControllerprimaryClassificationsVal.text = v.cLASNAMEDISPLAY ?? "";
-                          // Navigator.of(context).push(MaterialPageRoute(
-                          //     builder: (context) => ProductPage(product: suggestion)
-                          // ));
-                        },
-                      )
-
-
-
-                  ),
-                ),
 
 
               ],

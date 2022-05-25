@@ -12,6 +12,7 @@ import 'screens/Inbox_page.dart';
 import 'screens/Landing_page.dart';
 import 'screens/document_page.dart';
 import 'screens/open_file.dart';
+import 'screens/search_page.dart';
 import 'screens/signature_page.dart';
 import 'utility/all_const.dart';
 import 'utility/storage.dart';
@@ -83,7 +84,7 @@ class MyApp extends StatelessWidget {
           ])
           ,       //SearchPage
           GetPage(name: "/Landing",//SearchPage(),// LandingPage()
-              page: () => LandingPage(),
+              page: () => SearchPage(),
               transition: Transition.rightToLeft)
           ,
           GetPage(name: "/InboxPage",

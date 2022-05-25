@@ -66,4 +66,10 @@ const Map<String, String> en = {
 
  "topUrgent":"Top Urgent",
  "emptyInboxList":"empty mail list",
- "referDate":"Refer Date"};
+ "referDate":"Refer Date"
+
+
+ ,
+ "emptylist":"There is no search result"
+
+};

@@ -14,7 +14,7 @@ class SearchPage extends GetWidget<SearchController> {
 
   @override
   Widget build(BuildContext context) {
-    String year=DateTime.now().toString().substring(0, 4);
+    String year = DateTime.now().toString().substring(0, 4);
     controller.context = context;
     return Scaffold(
       appBar: AppBar(title: Text("appTitle".tr), centerTitle: true),
@@ -37,10 +37,11 @@ class SearchPage extends GetWidget<SearchController> {
                                   .primary),
                           borderRadius:
                           const BorderRadius.all(Radius.circular(6))),
-                      child: TextField(
-                        decoration:   InputDecoration(
+                      child: TextField(controller: controller
+                          .textEditingControllerReferenceNumber1,
+                        decoration: InputDecoration(
                           border: UnderlineInputBorder(),
-                          labelText:  year,
+                          labelText: "",
                         ),
                       ))),
               SizedBox(
@@ -58,7 +59,8 @@ class SearchPage extends GetWidget<SearchController> {
                                   .primary),
                           borderRadius:
                           const BorderRadius.all(Radius.circular(6))),
-                      child: TextField(controller: controller.textEditingControllerReferenceNumber,
+                      child: TextField(controller: controller
+                          .textEditingControllerReferenceNumber2,
                         decoration: const InputDecoration(
                           border: UnderlineInputBorder(),
                           labelText: 'Reference Number',
@@ -79,7 +81,8 @@ class SearchPage extends GetWidget<SearchController> {
                                   .primary),
                           borderRadius:
                           const BorderRadius.all(Radius.circular(6))),
-                      child: TextField(
+                      child: TextField(controller: controller
+                          .textEditingControllerReferenceNumber3,
                         decoration: const InputDecoration(
                           border: UnderlineInputBorder(),
                           labelText: ' ',
@@ -119,7 +122,8 @@ class SearchPage extends GetWidget<SearchController> {
               children: [
                 Expanded(
                   flex: 4,
-                  child: CustomRowSearch(hint: "From",
+                  child: CustomRowSearch(
+                    hint: "From",
                     textEditingController: controller.textEditingControllerFrom,
                     icon1: Icons.person,
                     icon2: Icons.account_balance,
@@ -138,7 +142,8 @@ class SearchPage extends GetWidget<SearchController> {
                 Expanded(flex: 1, child: SizedBox()),
                 Expanded(
                   flex: 4,
-                  child: CustomRowSearch(hint: "To",
+                  child: CustomRowSearch(
+                    hint: "To",
                     textEditingController: controller.textEditingControllerTo,
                     icon1: Icons.add,
                     icon2: Icons.add,
@@ -232,22 +237,22 @@ class SearchPage extends GetWidget<SearchController> {
                     child: DropdownButton<Privacies>(
                       isExpanded: true,
                       hint: Text("Privacy Level"),
-                       value: controller.privacieVal,
+                      value: controller.privacieVal,
                       // icon: const Icon(Icons.arrow_downward),
                       elevation: 16,
-                      style:   TextStyle(  color: Theme
-              .of(context)
-              .colorScheme
-              .primary),
+                      style: TextStyle(color: Theme
+                          .of(context)
+                          .colorScheme
+                          .primary),
                       underline: const SizedBox(),
                       onChanged: (Privacies? newValue) {
-
                         controller.setPrivacieVal(newValue);
                       },
-                      items: controller.privacies?.map<DropdownMenuItem<Privacies>>((Privacies? value) {
+                      items: controller.privacies?.map<
+                          DropdownMenuItem<Privacies>>((Privacies? value) {
                         return DropdownMenuItem<Privacies>(
                           value: value,
-                          child: Text(value?.value??""),
+                          child: Text(value?.value ?? ""),
                         );
                       }).toList(),
                     ),
@@ -275,22 +280,23 @@ class SearchPage extends GetWidget<SearchController> {
                     child: DropdownButton<Priorities>(
                       isExpanded: true,
                       hint: Text("Priority"),
-                    value: controller.prioritieVal,
+                      value: controller.prioritieVal,
                       // icon: const Icon(Icons.arrow_downward),
                       elevation: 16,
-                      style:   TextStyle(color:  Theme
+                      style: TextStyle(color: Theme
                           .of(context)
                           .colorScheme
                           .primary),
                       underline: const SizedBox(),
                       onChanged: (Priorities? newValue) {
                         //controller.prioritieVal=newValue;
-controller.setPrioritieVal(newValue);
+                        controller.setPrioritieVal(newValue);
                       },
-                      items: controller.priorities?.map<DropdownMenuItem<Priorities>>((Priorities? value) {
+                      items: controller.priorities?.map<
+                          DropdownMenuItem<Priorities>>((Priorities? value) {
                         return DropdownMenuItem<Priorities>(
                           value: value,
-                          child: Text(value?.value??""),
+                          child: Text(value?.value ?? ""),
                         );
                       }).toList(),
                     ),
@@ -324,19 +330,19 @@ controller.setPrioritieVal(newValue);
                       value: controller.statuseVal,
                       // icon: const Icon(Icons.arrow_downward),
                       elevation: 16,
-                      style:   TextStyle( color: Theme
-              .of(context)
-              .colorScheme
-              .primary),
+                      style: TextStyle(color: Theme
+                          .of(context)
+                          .colorScheme
+                          .primary),
                       underline: const SizedBox(),
                       onChanged: (Statuses? newValue) {
                         controller.setStatuseVal(newValue);
-
                       },
-                      items: controller.statuses?.map<DropdownMenuItem<Statuses>>((Statuses? value) {
+                      items: controller.statuses?.map<
+                          DropdownMenuItem<Statuses>>((Statuses? value) {
                         return DropdownMenuItem<Statuses>(
                           value: value,
-                          child: Text(value?.value??""),
+                          child: Text(value?.value ?? ""),
                         );
                       }).toList(),
                     ),
@@ -388,7 +394,7 @@ controller.setPrioritieVal(newValue);
                       controller.textEditingControllerdocCountrieVal.text = v
                           .originalName ?? "";
 
-                      controller.  serachData["Country"]=   v.originalName ;
+                      controller.serachData["Country"] =suggestion.id; //v.originalName;
 
 
                       // Navigator.of(context).push(MaterialPageRoute(
@@ -397,7 +403,6 @@ controller.setPrioritieVal(newValue);
                     },
                   ),
                 ),
-
 
 
                 // Expanded(
@@ -501,7 +506,9 @@ controller.setPrioritieVal(newValue);
                           v.cLASNAMEDISPLAY ?? "";
 
 
-                      controller.  serachData["Classification"]=   v.cLASNAMEDISPLAY ;
+                      controller.serachData["Classification"] = suggestion.id;
+                          // v
+                          // .cLASNAMEDISPLAY;
                       // Navigator.of(context).push(MaterialPageRoute(
                       //     builder: (context) => ProductPage(product: suggestion)
                       // ));
@@ -554,7 +561,11 @@ controller.setPrioritieVal(newValue);
                       PrimaryClassifications v = suggestion as PrimaryClassifications;
                       controller.textEditingControllerprimaryClassificationsVal
                           .text = v.pCLASNAME ?? "";
-                      controller.  serachData["PrimaryClassification"]= v.pCLASID;
+                      controller.serachData["PrimaryClassification"] = suggestion.iD;
+
+
+                          // v
+                          // .pCLASID;
 
                       // Navigator.of(context).push(MaterialPageRoute(
                       //     builder: (context) => ProductPage(product: suggestion)
@@ -562,8 +573,6 @@ controller.setPrioritieVal(newValue);
                     },
                   ),
                 ),
-
-
 
 
               ],
@@ -649,17 +658,18 @@ controller.setPrioritieVal(newValue);
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Container(
-                  height: 50,
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width * .3,
-                  child: CustomButton(name: 'Search', onPressed: () {
-controller.searchCorrespondences();
-
-                  }),
-                ),
+                GetBuilder<SearchController>(builder: (logic) {
+                  return logic.getSerchData?CircularProgressIndicator(): Container(
+                    height: 50,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * .3,
+                    child: CustomButton(name: 'Search', onPressed: () {
+                      controller.searchCorrespondences();
+                    }),
+                  );
+                }),
                 Container(
                     height: 50,
                     width: MediaQuery

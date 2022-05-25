@@ -47,17 +47,15 @@ abstract class ApiManager {
     var data;
     print("99"*10);
     print(jsonEncode(dataToPost));
-    Options options = Options(headers: { "Accept": "application/json",
-
+    Options options = Options(headers: {
+      "Accept": "application/json",
       'Content-Type': 'application/json',
-
     },);
     await dioSingleton.dio
         .post(
       apiUrl(),
       data: jsonEncode(dataToPost),
       options: options
-
       // Options(
       //     followRedirects: false,
       //     validateStatus: (status) {
@@ -72,7 +70,7 @@ abstract class ApiManager {
         jsonList = fromJson(data);
       }
     });
-  }
+  return jsonList;}
   //
 
 }

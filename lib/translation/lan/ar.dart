@@ -64,5 +64,6 @@ const Map<String, String> ar = {
 
   "topUrgent":"عاجل للغاية",
   "emptyInboxList":"قائمة البريد فارغة",
-  "referDate":"تاريخ الاحاله"
+  "referDate":"تاريخ الاحاله",
+"emptylist":" لا يوجد نتيجه للبحث"
 };

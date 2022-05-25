@@ -1,136 +1,109 @@
-import 'dart:ui' as ui;
-import 'package:cts/constants/globals.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'package:cts/screens/Login_page.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:intl/intl.dart' as intl;
 
-import 'package:cts/presentation/widgets/app_routes.dart';
 import 'Translation/Trans.dart';
 import 'bindings/bindings.dart';
-import 'constants/routes.dart';
-import 'presentation/screens/Login_page.dart';
-import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
+import 'controllers/main_controller.dart';
+import 'middleware/auth_middleware.dart';
+import 'screens/Inbox_page.dart';
+import 'screens/Landing_page.dart';
+import 'screens/document_page.dart';
+import 'screens/open_file.dart';
+import 'screens/signature_page.dart';
+import 'utility/all_const.dart';
+import 'utility/storage.dart';
+import 'utility/utilitie.dart';
 
-void main()async {
-  await GetStorage.init();
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(  MyApp ());
+  await GetStorage.init();
+  SecureStorage secureStorage = SecureStorage();
+  // Map <dynamic,dynamic>?a=secureStorage.readSecureJsonData("p") ;
+  // LoginModel data=LoginModel.fromJson(a!);
+  // print("000000");
+  // print(data.customActions );
+  // print("000000");
+  //var bb=json.decode(a.toString());
+  // secureStorage.deleteSecureData(AllStringConst.Token);
+
+  Get.put(SecureStorage());
+  Get.put(MController());
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
- // final AppRoutes appRoutes;
+  const MyApp({Key? key}) : super(key: key);
 
-  //const MyApp({Key? key, required this.appRoutes}) : super(key: key);
-
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    var defaultLocale = ui.window.locale.languageCode;
+    return GetBuilder<MController>(builder: (logic) {
+      return GetMaterialApp(
+        title: 'CTS',
+        locale: LocalizationService.locale,
+        initialBinding: AllBindings(),
+        translations: LocalizationService(),
+        fallbackLocale: LocalizationService.fallbackLocale,
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          textTheme: const TextTheme(
+            headline1: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+            headline2: TextStyle(
+                fontSize: 16,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.bold),
+            headline3: TextStyle(fontSize: 14, fontStyle: FontStyle.normal),
+          ).apply(
 
-    return GetMaterialApp(
-   //   scaffoldMessengerKey: Globals.snackbarKey,
-      title: 'CTS',
-      debugShowCheckedModeBanner: false,initialBinding: AllBindings(),
-      onGenerateRoute: MyRouter.myGenerateRoute ,
-    //  navigatorKey: Globals.navigatorKey,
-      theme: ThemeData(
-        textTheme: TextTheme(
-          headline1: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-          headline2: TextStyle(
-              fontSize: 16,
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.bold),
-          headline3: TextStyle(fontSize: 14, fontStyle: FontStyle.normal),
-        ).apply(
-          bodyColor: createMaterialColor(
-            Color.fromRGBO(96, 175, 189, 1),
+            bodyColor: createMaterialColor(Get
+                .find<MController>()
+                .appcolor // AppColor
+              //Color.fromRGBO(96, 175, 189, 1),
+            ),
+            displayColor: createMaterialColor(
+                Get
+                    .find<MController>()
+                    .appcolor //      AppColor
+            ),
           ),
-          displayColor: createMaterialColor(
-            Color.fromRGBO(96, 175, 189, 1),
+          fontFamily: "Bahij",
+          primarySwatch: createMaterialColor(
+              Get
+                  .find<MController>()
+                  .appcolor //  AppColor
           ),
         ),
-        fontFamily: "Bahij",
-        primarySwatch: createMaterialColor(
-          Color.fromRGBO(96, 175, 189, 1),
-        ),
-      ),
-      home: LoginPage(),
-      locale: LocalizationService.locale,
-      translations: LocalizationService(),
-      //  locale: defaultLocale == "en" ? Locale("en", "US") : Locale("ar", "AR"),
-    );
+        getPages: [
+          GetPage(name: "/", page: () => LoginPage(), middlewares: [
+            AuthMiddleWare()
+          ])
+          ,       //SearchPage
+          GetPage(name: "/Landing",//SearchPage(),// LandingPage()
+              page: () => LandingPage(),
+              transition: Transition.rightToLeft)
+          ,
+          GetPage(name: "/InboxPage",
+              page: () => InboxPage(),
+              transition: Transition.rightToLeft)
+          ,
+          GetPage(name: "/DocumentPage",
+              page: () => DocumentPage(),
+              transition: Transition.rightToLeft)
+          ,
+          GetPage(name: "/OpenPDFFile",
+              page: () => OpenPDFFile(),
+              transition: Transition.rightToLeft)
+          ,
+          GetPage(name: "/SignaturePage",
+              page: () => SignaturePage(),
+              transition: Transition.rightToLeft)
+        ], //initialRoute:"/" ,
+        // home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      );
+    });
   }
-}
-
-MaterialColor createMaterialColor(Color color) {
-  List strengths = <double>[.05];
-  final swatch = <int, Color>{};
-  final int r = color.red, g = color.green, b = color.blue;
-
-  for (int i = 1; i < 10; i++) {
-    strengths.add(0.1 * i);
-  }
-  strengths.forEach((strength) {
-    final double ds = 0.5 - strength;
-    swatch[(strength * 1000).round()] = Color.fromRGBO(
-      r + ((ds < 0 ? r : (255 - r)) * ds).round(),
-      g + ((ds < 0 ? g : (255 - g)) * ds).round(),
-      b + ((ds < 0 ? b : (255 - b)) * ds).round(),
-      1,
-    );
-  });
-  return MaterialColor(color.value, swatch);
-}
-
-String getLocaleCode(BuildContext context) {
-  return Localizations.localeOf(context).languageCode;
-}
-
-bool isDirectionRTL(BuildContext context) {
-  return intl.Bidi.isRtlLanguage(Localizations.localeOf(context).languageCode);
-}
-
-String returnImageNameBasedOnDirection(
-    String imageName, BuildContext context, String extension) {
-  if (isDirectionRTL(context)) {
-    return imageName + "_R." + extension;
-  }
-  return imageName + "_L." + extension;
-}
-
-String returnImageNameBasedOnOppositeDirection(
-    String imageName, BuildContext context, String extension) {
-  if (isDirectionRTL(context)) {
-    return imageName + "_L." + extension;
-  }
-  return imageName + "_R." + extension;
-}
-
-double calculateHeight(double nb, BuildContext context) {
-  //the development was done on ipad 12 pro, the height in landscape is 1024
-  double height = MediaQuery.of(context).size.height;
-  return (height * nb) / 1024;
-}
-
-double calculateWidth(double nb, BuildContext context) {
-  //the development was done on ipad 12 pro, the width in landscape is 1366
-  double width = MediaQuery.of(context).size.width;
-  return (width * nb) / 1366;
-}
-
-double calculateFontSize(double nb, BuildContext context) {
-  //the development was done on ipad 12 pro, the width in landscape is 1366
-  double width = MediaQuery.of(context).size.width;
-  return (width * nb) / 1366;
-}
-
-String calculateDate(String dateFormat, String locale) {
-  initializeDateFormatting();
-  DateTime now = DateTime.now();
-  var formatter = DateFormat(dateFormat, locale);
-  String date = formatter.format(now);
-  return date;
 }

@@ -6,6 +6,7 @@ import 'dart:ui' as ui;
 
 import 'package:get/get.dart';
 //import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+//import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../controllers/document_controller.dart';
 import '../controllers/main_controller.dart';
@@ -195,28 +196,28 @@ class DocumentPage extends GetWidget<DocumentController> {
                   width: 1,
                   color: Colors.grey,
                 ),
-                // Expanded(
-                //     flex: 4,
-                //     child: Container(
-                //         //  color: Colors.red,
-                //         child: SfPdfViewer.network(
-                //       'http://africau.edu/images/default/sample.pdf',
-                //     )
-                //
-                //         // GetBuilder<DocumentController>(builder: (logic) {
-                //         //     return //Container();
-                //         //
-                //         //       SfPdfViewer.network(
-                //         //           'http://africau.edu/images/default/sample.pdf',
-                //         //           password: 'syncfusion');
-                //         //
-                //         //   // Center(
-                //         //       //   child: controller.doc == null
-                //         //       //       ? const Center(child: CircularProgressIndicator())
-                //         //       //       : PDFViewer(document: controller.doc!));
-                //         //   }
-                //         // ),
-                //         )),
+                Expanded(
+                    flex: 4,
+                    child: Container(
+                        //  color: Colors.red,
+                    //     child: SfPdfViewer.network(
+                    //   'http://africau.edu/images/default/sample.pdf',
+                    // )
+
+                        // GetBuilder<DocumentController>(builder: (logic) {
+                        //     return //Container();
+                        //
+                        //       SfPdfViewer.network(
+                        //           'http://africau.edu/images/default/sample.pdf',
+                        //           password: 'syncfusion');
+                        //
+                        //   // Center(
+                        //       //   child: controller.doc == null
+                        //       //       ? const Center(child: CircularProgressIndicator())
+                        //       //       : PDFViewer(document: controller.doc!));
+                        //   }
+                        // ),
+                        )),
                 Expanded(
                     flex: 1,
                     child: Padding(

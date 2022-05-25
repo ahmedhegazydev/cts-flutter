@@ -57,6 +57,7 @@ class CustomListView extends StatelessWidget {
                     controller: scrollController,
                     itemBuilder: (context, pos) {
                       if (pos < correspondences.length) {
+                        // print("correspondences[pos].privacyId    ${correspondences[pos].privacyId}");
                         return InkWell(
                           onTap: () {
                             Get.find<InboxController>().canOpenDoc(
@@ -74,75 +75,122 @@ class CustomListView extends StatelessWidget {
                             //height: MediaQuery.of(context).size.height*.3,
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: ListView.builder(
-                                    shrinkWrap: true,
-                                    itemCount:
-                                        correspondences[pos].gridInfo?.length,
-                                    itemBuilder: (context, index) {
-                                      return Row(
-                                        children: [
-                                          Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  .1,
-                                              child: Text(correspondences[pos]
-                                                      .gridInfo?[index]
-                                                      .label ??
-                                                  "")),
-                                          SizedBox(
-                                            width: 8,
-                                          ),
-                                          Text(correspondences[pos]
-                                                  .gridInfo?[index]
-                                                  .value ??
-                                              ""),
-                                        ],
-                                      );
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: ListView.builder(
+                                          shrinkWrap: true,
+                                          itemCount: correspondences[pos]
+                                              .gridInfo
+                                              ?.length,
+                                          itemBuilder: (context, index) {
+                                            return Row(
+                                              children: [
+                                                Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            .1,
+                                                    child: Text(correspondences[
+                                                                pos]
+                                                            .gridInfo?[index]
+                                                            .label ??
+                                                        "")),
+                                                SizedBox(
+                                                  width: 8,
+                                                ),
+                                                Text(correspondences[pos]
+                                                        .gridInfo?[index]
+                                                        .value ??
+                                                    ""),
+                                              ],
+                                            );
 
-                                      // Column(
-                                      //     crossAxisAlignment: CrossAxisAlignment.start,
-                                      //     children: [
-                                      //       // Text(correspondences[pos].fromStructure ??
-                                      //       //     ""),
-                                      //       Row(
-                                      //         mainAxisAlignment:
-                                      //         MainAxisAlignment.spaceBetween,
-                                      //         children: [
-                                      //           Text(correspondences[pos]. ??
-                                      //               ""),
-                                      //           Text(correspondences[pos].docDueDate ??
-                                      //               " "),
-                                      //         ],
-                                      //       ),
-                                      //       Row(
-                                      //         mainAxisAlignment:
-                                      //         MainAxisAlignment.spaceBetween,
-                                      //         children: [
-                                      //           Text(correspondences[pos].docDueDate ??
-                                      //               ""),
-                                      //         ],
-                                      //       ),
-                                      //       Row(
-                                      //         children: [
-                                      //           if (correspondences[pos]
-                                      //               .isHighPriority ??
-                                      //               false)
-                                      //             iconAndText(
-                                      //                 iconColor: AppColor,
-                                      //                 iconData: Icons.lock,
-                                      //                 title: 'secret'.tr),
-                                      //           if (correspondences[pos].isLocked ??
-                                      //               false)
-                                      //             iconAndText(
-                                      //                 iconColor: AppColor,
-                                      //                 iconData:
-                                      //                 Icons.person_add_disabled,
-                                      //                 title: 'closed'.tr),
-                                      //         ],
-                                      //       )
-                                      //     ]);
-                                    })),
+                                            // Column(
+                                            //     crossAxisAlignment: CrossAxisAlignment.start,
+                                            //     children: [
+                                            //       // Text(correspondences[pos].fromStructure ??
+                                            //       //     ""),
+                                            //       Row(
+                                            //         mainAxisAlignment:
+                                            //         MainAxisAlignment.spaceBetween,
+                                            //         children: [
+                                            //           Text(correspondences[pos]. ??
+                                            //               ""),
+                                            //           Text(correspondences[pos].docDueDate ??
+                                            //               " "),
+                                            //         ],
+                                            //       ),
+                                            //       Row(
+                                            //         mainAxisAlignment:
+                                            //         MainAxisAlignment.spaceBetween,
+                                            //         children: [
+                                            //           Text(correspondences[pos].docDueDate ??
+                                            //               ""),
+                                            //         ],
+                                            //       ),
+                                            //       Row(
+                                            //         children: [
+                                            //           if (correspondences[pos]
+                                            //               .isHighPriority ??
+                                            //               false)
+                                            //             iconAndText(
+                                            //                 iconColor: AppColor,
+                                            //                 iconData: Icons.lock,
+                                            //                 title: 'secret'.tr),
+                                            //           if (correspondences[pos].isLocked ??
+                                            //               false)
+                                            //             iconAndText(
+                                            //                 iconColor: AppColor,
+                                            //                 iconData:
+                                            //                 Icons.person_add_disabled,
+                                            //                 title: 'closed'.tr),
+                                            //         ],
+                                            //       )
+                                            //     ]);
+                                          }),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Icon(correspondences[pos].isLocked!
+                                              ? Icons.lock
+                                              : Icons.lock_open),
+                                          Container(
+                                            height: 20,
+                                            width: 20,
+                                            decoration: BoxDecoration(
+                                                color: correspondences[pos]
+                                                            .priorityId ==
+                                                        "1"
+                                                    ? Colors.green
+                                                    : Colors.red,
+                                                shape: BoxShape.circle),
+                                          )
+
+                                          //   correspondences[pos].priorityId
+                                          //  correspondences[pos].purposeId
+
+                                          ,
+                                          SizedBox(
+                                            width: 4,
+                                          ),
+                                          Text(correspondences[pos].fromUser ??
+                                              ""),
+                                          if (correspondences[pos]
+                                                  .hasAttachments ??
+                                              false)
+                                            Icon(Icons.attachment),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                )),
                           ),
                         );
                       } else {
@@ -162,6 +210,7 @@ class CustomListView extends StatelessWidget {
                     controller: scrollController,
                     itemBuilder: (context, pos) {
                       if (pos < correspondences.length) {
+                        //  print("correspondences[pos].privacyId    ${correspondences[pos].privacyId}");
                         return InkWell(
                           onTap: () {
                             Get.find<InboxController>().canOpenDoc(
@@ -251,19 +300,36 @@ class CustomListView extends StatelessWidget {
                                           //       )
                                           //     ]);
                                         })),
-                                Row(
-                                  children: [
-                                    Icon(correspondences[pos].isLocked!
-                                        ? Icons.lock
-                                        : Icons.lock_open),
-                                    //correspondences[pos].privacyId
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Icon(correspondences[pos].isLocked!
+                                          ? Icons.lock
+                                          : Icons.lock_open),
 
-                                 //   correspondences[pos].priorityId
-                                 //  correspondences[pos].purposeId
-                                   if( correspondences[pos].hasAttachments??false)  Icon(Icons.attachment),
-                                    SizedBox(width: 4,) , Text(correspondences[pos].fromUser??"")
-                                    
-                                  ],
+                                      Container(
+                                        height: 20,
+                                        width: 20,
+                                        decoration: BoxDecoration(
+                                            color: correspondences[pos]
+                                                        .priorityId ==
+                                                    "1"
+                                                ? Colors.green
+                                                : Colors.red,
+                                            shape: BoxShape.circle),
+                                      ),
+                                      SizedBox(
+                                        width: 4,
+                                      ),
+                                      Text(correspondences[pos].fromUser ?? ""),
+                                      if (correspondences[pos].hasAttachments ??
+                                          false)
+                                        Icon(Icons.attachment),
+                                    ],
+                                  ),
                                 )
                               ],
                             ),

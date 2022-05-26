@@ -84,7 +84,7 @@ class MyApp extends StatelessWidget {
           ])
           ,       //SearchPage
           GetPage(name: "/Landing",//SearchPage(),// LandingPage()
-              page: () => SearchPage(),
+              page: () => LandingPage(),
               transition: Transition.rightToLeft)
           ,
           GetPage(name: "/InboxPage",

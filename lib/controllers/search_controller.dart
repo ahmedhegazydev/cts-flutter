@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../services/apis/find_recipient_api.dart';
 import '../services/apis/get_lookups_api.dart';
 import '../services/apis/search_correspondences_api.dart';
+import '../services/json_model/find_recipient_json.dart';
 import '../services/json_model/get_lookups_model.dart';
 //import '../services/json_model/login_model.dart'as userdata;
 import '../services/json_model/search_correspondences_model.dart';
@@ -13,6 +15,15 @@ import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
 
 class SearchController extends GetxController {
+  FindRecipientModel? findRecipientModel;
+  final FindRecipient _findRecipient=FindRecipient();
+
+  List<Destination>users =[];
+  List<Destination>usersWillSendTo=[] ;
+
+
+
+
 
 
 
@@ -76,6 +87,23 @@ String fromDocDate="From";
     serachData["Status"]=statuse?.id;
     update();
   }
+// لسته الافراد الي اختار منهم في البحث
+  listOfUser(int pos){
+    users=findRecipientModel?.sections?[pos].destination??[];
+    update();
+  }
+//الحصور علي جميع الافراد
+  getFindRecipientData(){
+
+    _findRecipient.data="Token=${_secureStorage.token()}&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
+    _findRecipient.getData().then((value) {
+      findRecipientModel=value as FindRecipientModel;
+      listOfUser(0);
+      //print(findRecipientModel?.toJson() );
+    });
+  }
+
+
 
 
 
@@ -159,6 +187,7 @@ serachData["ToDocumentDate"]=outputDate;
     statuses=data.transferData?.statuses ;
     privacies=data.transferData?.privacies ;
     priorities=data.transferData?.priorities ;
+   getFindRecipientData();
     getData();
   }
 

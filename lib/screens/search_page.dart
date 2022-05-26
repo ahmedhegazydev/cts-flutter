@@ -3,14 +3,16 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 //import 'package:flutter_typeahead/flutter_typeahead.dart';
 import '../controllers/search_controller.dart';
+import '../services/json_model/find_recipient_json.dart';
 import '../services/json_model/get_lookups_model.dart';
 import '../services/models/LoginModel.dart';
 import '../widgets/custom_button.dart';
+import '../widgets/custom_button_with_icon.dart';
 import '../widgets/custom_row_search.dart';
 import 'package:get/get.dart';
 
 class SearchPage extends GetWidget<SearchController> {
-  TextEditingController a = TextEditingController();
+//  TextEditingController a = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -120,48 +122,183 @@ class SearchPage extends GetWidget<SearchController> {
             ),
             Row(
               children: [
-                Expanded(
-                  flex: 4,
-                  child: CustomRowSearch(
-                    hint: "From",
-                    textEditingController: controller.textEditingControllerFrom,
-                    icon1: Icons.person,
-                    icon2: Icons.account_balance,
-                    icon3: Icons.clear,
-                    onClick1: () {
+                // Expanded(
+                //   flex: 4,
+                //   child: CustomRowSearch(
+                //     hint: "From",
+                //     textEditingController: controller.textEditingControllerFrom,
+                //     icon1: Icons.person,
+                //     icon2: Icons.account_balance,
+                //     icon3: Icons.clear,
+                //     onClick1: () {
+                //
+                //     },
+                //     onClick2: () {
+                //
+                //     },
+                //     onClick3: () {
+                //
+                //     },
+                //   ),
+                // ),
 
-                    },
-                    onClick2: () {
 
-                    },
-                    onClick3: () {
+                Expanded(flex: 4,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TypeAheadField<Destination>(
+                          textFieldConfiguration: TextFieldConfiguration(
+                            // controller: controller
+                            //     .textEditingControllerclassificationsVal,
+                            // autofocus: true,
+                            // style: DefaultTextStyle.of(context)
+                            //     .style
+                            //     .copyWith(fontStyle: FontStyle.italic),
+                            decoration:
+                            const InputDecoration(border: OutlineInputBorder(),
+                                labelText: 'From'),
+                          ),
+                          suggestionsCallback: (pattern) async {
+                            return controller.users.where((element) =>
+                                element.value!
+                                    .toLowerCase()
+                                    .contains(pattern.toLowerCase()));
 
-                    },
+                            //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
+                          },
+                          itemBuilder: (context, suggestion) {
+                            Destination v = suggestion as Destination;
+
+                            return // Te(v.originalName!);
+
+
+                              ListTile(
+                                title: FilterText(v.value!),
+                              );
+                          },
+                          onSuggestionSelected: (suggestion) {
+                            Destination v = suggestion as Destination;
+                            controller.textEditingControllerclassificationsVal.text =
+                                v.value ?? "";
+
+
+
+                            // v
+                            // .cLASNAMEDISPLAY;
+                            // Navigator.of(context).push(MaterialPageRoute(
+                            //     builder: (context) => ProductPage(product: suggestion)
+                            // ));
+                          },
+                        ),
+                      ),
+                      SizedBox(width: 2,),
+                      CustomButtonWithIcon(icon: Icons.person,onClick: (){
+                        controller.listOfUser(0);
+                      },)
+                      ,
+                      SizedBox(width: 2,),
+                      CustomButtonWithIcon(icon:Icons.account_balance,onClick: (){
+                        controller.listOfUser(2);
+                      },)
+                      ,
+                      SizedBox(width: 2,),
+                      CustomButtonWithIcon(icon: Icons.clear,onClick: (){
+                        controller.listOfUser(0);
+                      },)],
                   ),
                 ),
+
+
                 Expanded(flex: 1, child: SizedBox()),
-                Expanded(
-                  flex: 4,
-                  child: CustomRowSearch(
-                    hint: "To",
-                    textEditingController: controller.textEditingControllerTo,
-                    icon1: Icons.add,
-                    icon2: Icons.add,
-                    icon3: Icons.clear,
-                    onClick1: () {
+
+                Expanded(flex: 4,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TypeAheadField<Destination>(
+                          textFieldConfiguration: TextFieldConfiguration(
+                            // controller: controller
+                            //     .textEditingControllerclassificationsVal,
+                            // autofocus: true,
+                            // style: DefaultTextStyle.of(context)
+                            //     .style
+                            //     .copyWith(fontStyle: FontStyle.italic),
+                            decoration:
+                            const InputDecoration(border: OutlineInputBorder(),
+                                labelText: 'To'),
+                          ),
+                          suggestionsCallback: (pattern) async {
+                            return controller.users.where((element) =>
+                                element.value!
+                                    .toLowerCase()
+                                    .contains(pattern.toLowerCase()));
+
+                            //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
+                          },
+                          itemBuilder: (context, suggestion) {
+                            Destination v = suggestion as Destination;
+
+                            return // Te(v.originalName!);
 
 
-                    },
-                    onClick2: () {
+                              ListTile(
+                                title: FilterText(v.value!),
+                              );
+                          },
+                          onSuggestionSelected: (suggestion) {
+                            Destination v = suggestion as Destination;
+                            controller.textEditingControllerclassificationsVal.text =
+                                v.value ?? "";
 
 
-                    },
-                    onClick3: () {
 
-
-                    },
+                            // v
+                            // .cLASNAMEDISPLAY;
+                            // Navigator.of(context).push(MaterialPageRoute(
+                            //     builder: (context) => ProductPage(product: suggestion)
+                            // ));
+                          },
+                        ),
+                      ),
+                      SizedBox(width: 2,),
+                      CustomButtonWithIcon(icon: Icons.person,onClick: (){
+                        controller.listOfUser(0);
+                      },)
+                      ,
+                      SizedBox(width: 2,),
+                      CustomButtonWithIcon(icon:Icons.account_balance,onClick: (){
+                        controller.listOfUser(2);
+                      },)
+                      ,
+                      SizedBox(width: 2,),
+                      CustomButtonWithIcon(icon: Icons.clear,onClick: (){
+                        controller.listOfUser(0);
+                      },)],
                   ),
                 ),
+                // Expanded(
+                //   flex: 4,
+                //   child: CustomRowSearch(
+                //     hint: "To",
+                //     textEditingController: controller.textEditingControllerTo,
+                //     icon1: Icons.add,
+                //     icon2: Icons.add,
+                //     icon3: Icons.clear,
+                //     onClick1: () {
+                //
+                //
+                //     },
+                //     onClick2: () {
+                //
+                //
+                //     },
+                //     onClick3: () {
+                //
+                //
+                //     },
+                //   ),
+                // ),
               ],
             ),
             const SizedBox(
@@ -169,51 +306,181 @@ class SearchPage extends GetWidget<SearchController> {
             ),
             Row(
               children: [
-                Expanded(
-                  flex: 4,
-                  child: CustomRowSearch(
-                    textEditingController:
-                    controller.textEditingControllerTransferFrom,
-                    icon1: Icons.add,
-                    icon2: Icons.add,
-                    hint: "Transfer From",
-                    icon3: Icons.clear,
-                    onClick1: () {
+                Expanded(flex: 4,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TypeAheadField<Destination>(
+                          textFieldConfiguration: TextFieldConfiguration(
+                            // controller: controller
+                            //     .textEditingControllerclassificationsVal,
+                            // autofocus: true,
+                            // style: DefaultTextStyle.of(context)
+                            //     .style
+                            //     .copyWith(fontStyle: FontStyle.italic),
+                            decoration:
+                            const InputDecoration(border: OutlineInputBorder(),
+                                labelText: 'From'),
+                          ),
+                          suggestionsCallback: (pattern) async {
+                            return controller.users.where((element) =>
+                                element.value!
+                                    .toLowerCase()
+                                    .contains(pattern.toLowerCase()));
+
+                            //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
+                          },
+                          itemBuilder: (context, suggestion) {
+                            Destination v = suggestion as Destination;
+
+                            return // Te(v.originalName!);
 
 
-                    },
-                    onClick2: () {
+                              ListTile(
+                                title: FilterText(v.value!),
+                              );
+                          },
+                          onSuggestionSelected: (suggestion) {
+                            Destination v = suggestion as Destination;
+                            controller.textEditingControllerclassificationsVal.text =
+                                v.value ?? "";
 
 
-                    },
-                    onClick3: () {
 
-
-                    },
+                            // v
+                            // .cLASNAMEDISPLAY;
+                            // Navigator.of(context).push(MaterialPageRoute(
+                            //     builder: (context) => ProductPage(product: suggestion)
+                            // ));
+                          },
+                        ),
+                      ),
+                      SizedBox(width: 2,),
+                      CustomButtonWithIcon(icon: Icons.person,onClick: (){
+                        controller.listOfUser(0);
+                      },)
+                      ,
+                      SizedBox(width: 2,),
+                      CustomButtonWithIcon(icon:Icons.account_balance,onClick: (){
+                        controller.listOfUser(2);
+                      },)
+                      ,
+                      SizedBox(width: 2,),
+                      CustomButtonWithIcon(icon: Icons.clear,onClick: (){
+                        controller.listOfUser(0);
+                      },)],
                   ),
                 ),
+                // Expanded(
+                //   flex: 4,
+                //   child: CustomRowSearch(
+                //     textEditingController:
+                //     controller.textEditingControllerTransferFrom,
+                //     icon1: Icons.add,
+                //     icon2: Icons.add,
+                //     hint: "Transfer From",
+                //     icon3: Icons.clear,
+                //     onClick1: () {
+                //
+                //
+                //     },
+                //     onClick2: () {
+                //
+                //
+                //     },
+                //     onClick3: () {
+                //
+                //
+                //     },
+                //   ),
+                // ),
                 Expanded(flex: 1, child: SizedBox()),
-                Expanded(
-                  flex: 4,
-                  child: CustomRowSearch(
-                    textEditingController:
-                    controller.textEditingControllerTransferTo,
-                    icon1: Icons.add,
-                    hint: "Transfer To",
-                    icon2: Icons.add,
-                    icon3: Icons.clear,
-                    onClick1: () {
+                Expanded(flex: 4,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TypeAheadField<Destination>(
+                          textFieldConfiguration: TextFieldConfiguration(
+                            // controller: controller
+                            //     .textEditingControllerclassificationsVal,
+                            // autofocus: true,
+                            // style: DefaultTextStyle.of(context)
+                            //     .style
+                            //     .copyWith(fontStyle: FontStyle.italic),
+                            decoration:
+                            const InputDecoration(border: OutlineInputBorder(),
+                                labelText: 'From'),
+                          ),
+                          suggestionsCallback: (pattern) async {
+                            return controller.users.where((element) =>
+                                element.value!
+                                    .toLowerCase()
+                                    .contains(pattern.toLowerCase()));
+
+                            //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
+                          },
+                          itemBuilder: (context, suggestion) {
+                            Destination v = suggestion as Destination;
+
+                            return // Te(v.originalName!);
 
 
-                    },
-                    onClick2: () {
+                              ListTile(
+                                title: FilterText(v.value!),
+                              );
+                          },
+                          onSuggestionSelected: (suggestion) {
+                            Destination v = suggestion as Destination;
+                            controller.textEditingControllerclassificationsVal.text =
+                                v.value ?? "";
 
-                    },
-                    onClick3: () {
 
-                    },
+
+                            // v
+                            // .cLASNAMEDISPLAY;
+                            // Navigator.of(context).push(MaterialPageRoute(
+                            //     builder: (context) => ProductPage(product: suggestion)
+                            // ));
+                          },
+                        ),
+                      ),
+                      SizedBox(width: 2,),
+                      CustomButtonWithIcon(icon: Icons.person,onClick: (){
+                        controller.listOfUser(0);
+                      },)
+                      ,
+                      SizedBox(width: 2,),
+                      CustomButtonWithIcon(icon:Icons.account_balance,onClick: (){
+                        controller.listOfUser(2);
+                      },)
+                      ,
+                      SizedBox(width: 2,),
+                      CustomButtonWithIcon(icon: Icons.clear,onClick: (){
+                        controller.listOfUser(0);
+                      },)],
                   ),
                 ),
+                // Expanded(
+                //   flex: 4,
+                //   child: CustomRowSearch(
+                //     textEditingController:
+                //     controller.textEditingControllerTransferTo,
+                //     icon1: Icons.add,
+                //     hint: "Transfer To",
+                //     icon2: Icons.add,
+                //     icon3: Icons.clear,
+                //     onClick1: () {
+                //
+                //
+                //     },
+                //     onClick2: () {
+                //
+                //     },
+                //     onClick3: () {
+                //
+                //     },
+                //   ),
+                // ),
               ],
             ),
             const SizedBox(

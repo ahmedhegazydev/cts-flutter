@@ -13,6 +13,7 @@ import 'screens/Landing_page.dart';
 import 'screens/document_page.dart';
 import 'screens/open_file.dart';
 import 'screens/search_page.dart';
+import 'screens/search_page_result.dart';
 import 'screens/signature_page.dart';
 import 'utility/all_const.dart';
 import 'utility/storage.dart';
@@ -84,7 +85,7 @@ class MyApp extends StatelessWidget {
           ])
           ,       //SearchPage
           GetPage(name: "/Landing",//SearchPage(),// LandingPage()
-              page: () => LandingPage(),
+              page: () => SearchPage(),
               transition: Transition.rightToLeft)
           ,
           GetPage(name: "/InboxPage",
@@ -101,6 +102,10 @@ class MyApp extends StatelessWidget {
           ,
           GetPage(name: "/SignaturePage",
               page: () => SignaturePage(),
+              transition: Transition.rightToLeft)
+          ,
+          GetPage(name: "/SearchPageResult",
+              page: () => SearchPageResult(),
               transition: Transition.rightToLeft)
         ], //initialRoute:"/" ,
         // home: const MyHomePage(title: 'Flutter Demo Home Page'),

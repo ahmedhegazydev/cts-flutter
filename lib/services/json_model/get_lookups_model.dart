@@ -98,13 +98,13 @@ class Classifications {
 }
 
 class DocCountries {
-  Null? capitalName;
+  String? capitalName;
   String? code;
   int? id;
   String? name;
   String? nameDISPLAY;
   String? originalName;
-  Null? parentId;
+  int? parentId;
 
   DocCountries(
       {this.capitalName,

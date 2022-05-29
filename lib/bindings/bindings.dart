@@ -8,6 +8,7 @@ import '../controllers/inbox_controller.dart';
 import '../controllers/landing_page_controller.dart';
 import '../controllers/login_controller.dart';
 import '../controllers/search_controller.dart';
+import '../controllers/search_page_result_controller.dart';
 import '../utility/storage.dart';
 
 class AllBindings extends Bindings{
@@ -21,6 +22,7 @@ class AllBindings extends Bindings{
     Get.lazyPut(()=>  SearchController()  );
     Get.put(  DocumentController()  ,permanent: true );
 
+    Get.lazyPut(()=>  SearchPageResultController()  );
     // Get.putAsync<SecureStorage>(()async => await SecureStorage());
 
   }

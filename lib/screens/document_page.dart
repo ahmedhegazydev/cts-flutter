@@ -32,7 +32,7 @@ class DocumentPage extends GetWidget<DocumentController> {
     Size size = MediaQuery.of(context).size;
     // print(controller.correspondences?.toJson())
     // ;
-    var v = controller.correspondences?.toJson();
+    var v = controller.correspondences.toJson();
     log(v.toString());
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -248,23 +248,23 @@ class DocumentPage extends GetWidget<DocumentController> {
                                 context: context,
                                 title: "sender1".tr,
                                 data:
-                                    controller.correspondences?.fromUser ?? ""),
+                                    controller.correspondences.fromUser ?? ""),
                             _itemSideMenu(
                                 context: context,
                                 title: "assignedFrom".tr,
                                 data:
-                                    controller.correspondences?.fromStructure ??
+                                    controller.correspondences.fromStructure ??
                                         ""),
                             _itemSideMenu(
                                 context: context,
                                 title: "referDate".tr,
-                                data: controller.correspondences?.tsfDueDate ??
+                                data: controller.correspondences.tsfDueDate ??
                                     ""),
                             _itemSideMenu(
                                 context: context,
                                 title: "assignmentNotes".tr,
                                 data:
-                                    controller.correspondences?.comments ?? ""),
+                                    controller.correspondences.comments ?? ""),
                           ],
                         ),
                       ),

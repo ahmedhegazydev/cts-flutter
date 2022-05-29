@@ -28,17 +28,17 @@ class GetCorrespondencesModel extends AbstractJsonResource{
 }
 
 class Inbox {
-  List<Correspondences>? correspondences;
+ late List<Correspondences> correspondences;
   String? id;
   int? total;
 
-  Inbox({this.correspondences, this.id, this.total});
+  Inbox({required this.correspondences, this.id, this.total});
 
   Inbox.fromJson(Map<String, dynamic> json) {
     if (json['Correspondences'] != null) {
       correspondences = <Correspondences>[];
       json['Correspondences'].forEach((v) {
-        correspondences!.add(new Correspondences.fromJson(v));
+        correspondences.add(new Correspondences.fromJson(v));
       });
     }
     id = json['Id'];
@@ -49,7 +49,7 @@ class Inbox {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.correspondences != null) {
       data['Correspondences'] =
-          this.correspondences!.map((v) => v.toJson()).toList();
+          this.correspondences.map((v) => v.toJson()).toList();
     }
     data['Id'] = this.id;
     data['Total'] = this.total;
@@ -57,172 +57,172 @@ class Inbox {
   }
 }
 
-class Correspondences {
-  bool? canRequestDueDate;
-  String? categoryId;
-  bool? clickableLock;
-  String? comments;
-  ControlList? controlList;
-  String? correspondenceId;
-  String? docDueDate;
-  int? docDueDays;
-  String? fromStructure;
-  String? fromUser;
-  int? fromUserId;
-  List<GridInfo>? gridInfo;
-  bool? hasAttachments;
-  bool? hasAttachmentsToBeDelivered;
-  bool? hasSummaries;
-  String? inboxId;
-  bool? isCC;
-  bool? isForGuideline;
-  bool? isHighPriority;
-  bool? isLocked;
-  bool? isNew;
-  bool? isShareable;
-  List<Metadata>? metadata;
-  String? priorityId;
-  String? privacyId;
-  String? purposeId;
-  bool? showLock;
-  int? status;
-  String? thumbnailUrl;
-  String? transferId;
-  Null? tsfDueDate;
-  String? type;
-  String? visualTrackingUrl;
-  bool? isTransferedToContact;
-
-  Correspondences(
-      {this.canRequestDueDate,
-        this.categoryId,
-        this.clickableLock,
-        this.comments,
-        this.controlList,
-        this.correspondenceId,
-        this.docDueDate,
-        this.docDueDays,
-        this.fromStructure,
-        this.fromUser,
-        this.fromUserId,
-        this.gridInfo,
-        this.hasAttachments,
-        this.hasAttachmentsToBeDelivered,
-        this.hasSummaries,
-        this.inboxId,
-        this.isCC,
-        this.isForGuideline,
-        this.isHighPriority,
-        this.isLocked,
-        this.isNew,
-        this.isShareable,
-        this.metadata,
-        this.priorityId,
-        this.privacyId,
-        this.purposeId,
-        this.showLock,
-        this.status,
-        this.thumbnailUrl,
-        this.transferId,
-        this.tsfDueDate,
-        this.type,
-        this.visualTrackingUrl,
-        this.isTransferedToContact});
-
-  Correspondences.fromJson(Map<String, dynamic> json) {
-    canRequestDueDate = json['CanRequestDueDate'];
-    categoryId = json['CategoryId'];
-    clickableLock = json['ClickableLock'];
-    comments = json['Comments'];
-    controlList = json['ControlList'] != null
-        ? new ControlList.fromJson(json['ControlList'])
-        : null;
-    correspondenceId = json['CorrespondenceId'];
-    docDueDate = json['DocDueDate'];
-    docDueDays = json['DocDueDays'];
-    fromStructure = json['FromStructure'];
-    fromUser = json['FromUser'];
-    fromUserId = json['FromUserId'];
-    if (json['GridInfo'] != null) {
-      gridInfo = <GridInfo>[];
-      json['GridInfo'].forEach((v) {
-        gridInfo!.add(new GridInfo.fromJson(v));
-      });
-    }
-    hasAttachments = json['HasAttachments'];
-    hasAttachmentsToBeDelivered = json['HasAttachmentsToBeDelivered'];
-    hasSummaries = json['HasSummaries'];
-    inboxId = json['InboxId'];
-    isCC = json['IsCC'];
-    isForGuideline = json['IsForGuideline'];
-    isHighPriority = json['IsHighPriority'];
-    isLocked = json['IsLocked'];
-    isNew = json['IsNew'];
-    isShareable = json['IsShareable'];
-    if (json['Metadata'] != null) {
-      metadata = <Metadata>[];
-      json['Metadata'].forEach((v) {
-        metadata!.add(new Metadata.fromJson(v));
-      });
-    }
-    priorityId = json['PriorityId'];
-    privacyId = json['PrivacyId'];
-    purposeId = json['PurposeId'];
-    showLock = json['ShowLock'];
-    status = json['Status'];
-    thumbnailUrl = json['ThumbnailUrl'];
-    transferId = json['TransferId'];
-    tsfDueDate = json['TsfDueDate'];
-    type = json['Type'];
-    visualTrackingUrl = json['VisualTrackingUrl'];
-    isTransferedToContact = json['isTransferedToContact'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['CanRequestDueDate'] = this.canRequestDueDate;
-    data['CategoryId'] = this.categoryId;
-    data['ClickableLock'] = this.clickableLock;
-    data['Comments'] = this.comments;
-    if (this.controlList != null) {
-      data['ControlList'] = this.controlList!.toJson();
-    }
-    data['CorrespondenceId'] = this.correspondenceId;
-    data['DocDueDate'] = this.docDueDate;
-    data['DocDueDays'] = this.docDueDays;
-    data['FromStructure'] = this.fromStructure;
-    data['FromUser'] = this.fromUser;
-    data['FromUserId'] = this.fromUserId;
-    if (this.gridInfo != null) {
-      data['GridInfo'] = gridInfo!.map((v) => v.toJson()).toList();
-    }
-    data['HasAttachments'] = hasAttachments;
-    data['HasAttachmentsToBeDelivered'] = hasAttachmentsToBeDelivered;
-    data['HasSummaries'] = hasSummaries;
-    data['InboxId'] = inboxId;
-    data['IsCC'] = isCC;
-    data['IsForGuideline'] = isForGuideline;
-    data['IsHighPriority'] = isHighPriority;
-    data['IsLocked'] = isLocked;
-    data['IsNew'] = isNew;
-    data['IsShareable'] = isShareable;
-    if (metadata != null) {
-      data['Metadata'] = metadata!.map((v) => v.toJson()).toList();
-    }
-    data['PriorityId'] = priorityId;
-    data['PrivacyId'] = privacyId;
-    data['PurposeId'] = purposeId;
-    data['ShowLock'] = showLock;
-    data['Status'] = status;
-    data['ThumbnailUrl'] = thumbnailUrl;
-    data['TransferId'] = transferId;
-    data['TsfDueDate'] = tsfDueDate;
-    data['Type'] = type;
-    data['VisualTrackingUrl'] = visualTrackingUrl;
-    data['isTransferedToContact'] = isTransferedToContact;
-    return data;
-  }
-}
+// class Correspondences {
+//   bool? canRequestDueDate;
+//   String? categoryId;
+//   bool? clickableLock;
+//   String? comments;
+//   ControlList? controlList;
+//   String? correspondenceId;
+//   String? docDueDate;
+//   int? docDueDays;
+//   String? fromStructure;
+//   String? fromUser;
+//   int? fromUserId;
+//   List<GridInfo>? gridInfo;
+//   bool? hasAttachments;
+//   bool? hasAttachmentsToBeDelivered;
+//   bool? hasSummaries;
+//   String? inboxId;
+//   bool? isCC;
+//   bool? isForGuideline;
+//   bool? isHighPriority;
+//   bool? isLocked;
+//   bool? isNew;
+//   bool? isShareable;
+//   List<Metadata>? metadata;
+//   String? priorityId;
+//   String? privacyId;
+//   String? purposeId;
+//   bool? showLock;
+//   int? status;
+//   String? thumbnailUrl;
+//   String? transferId;
+//   Null? tsfDueDate;
+//   String? type;
+//   String? visualTrackingUrl;
+//   bool? isTransferedToContact;
+//
+//   Correspondences(
+//       {this.canRequestDueDate,
+//         this.categoryId,
+//         this.clickableLock,
+//         this.comments,
+//         this.controlList,
+//         this.correspondenceId,
+//         this.docDueDate,
+//         this.docDueDays,
+//         this.fromStructure,
+//         this.fromUser,
+//         this.fromUserId,
+//         this.gridInfo,
+//         this.hasAttachments,
+//         this.hasAttachmentsToBeDelivered,
+//         this.hasSummaries,
+//         this.inboxId,
+//         this.isCC,
+//         this.isForGuideline,
+//         this.isHighPriority,
+//         this.isLocked,
+//         this.isNew,
+//         this.isShareable,
+//         this.metadata,
+//         this.priorityId,
+//         this.privacyId,
+//         this.purposeId,
+//         this.showLock,
+//         this.status,
+//         this.thumbnailUrl,
+//         this.transferId,
+//         this.tsfDueDate,
+//         this.type,
+//         this.visualTrackingUrl,
+//         this.isTransferedToContact});
+//
+//   Correspondences.fromJson(Map<String, dynamic> json) {
+//     canRequestDueDate = json['CanRequestDueDate'];
+//     categoryId = json['CategoryId'];
+//     clickableLock = json['ClickableLock'];
+//     comments = json['Comments'];
+//     controlList = json['ControlList'] != null
+//         ? new ControlList.fromJson(json['ControlList'])
+//         : null;
+//     correspondenceId = json['CorrespondenceId'];
+//     docDueDate = json['DocDueDate'];
+//     docDueDays = json['DocDueDays'];
+//     fromStructure = json['FromStructure'];
+//     fromUser = json['FromUser'];
+//     fromUserId = json['FromUserId'];
+//     if (json['GridInfo'] != null) {
+//       gridInfo = <GridInfo>[];
+//       json['GridInfo'].forEach((v) {
+//         gridInfo!.add(new GridInfo.fromJson(v));
+//       });
+//     }
+//     hasAttachments = json['HasAttachments'];
+//     hasAttachmentsToBeDelivered = json['HasAttachmentsToBeDelivered'];
+//     hasSummaries = json['HasSummaries'];
+//     inboxId = json['InboxId'];
+//     isCC = json['IsCC'];
+//     isForGuideline = json['IsForGuideline'];
+//     isHighPriority = json['IsHighPriority'];
+//     isLocked = json['IsLocked'];
+//     isNew = json['IsNew'];
+//     isShareable = json['IsShareable'];
+//     if (json['Metadata'] != null) {
+//       metadata = <Metadata>[];
+//       json['Metadata'].forEach((v) {
+//         metadata!.add(new Metadata.fromJson(v));
+//       });
+//     }
+//     priorityId = json['PriorityId'];
+//     privacyId = json['PrivacyId'];
+//     purposeId = json['PurposeId'];
+//     showLock = json['ShowLock'];
+//     status = json['Status'];
+//     thumbnailUrl = json['ThumbnailUrl'];
+//     transferId = json['TransferId'];
+//     tsfDueDate = json['TsfDueDate'];
+//     type = json['Type'];
+//     visualTrackingUrl = json['VisualTrackingUrl'];
+//     isTransferedToContact = json['isTransferedToContact'];
+//   }
+//
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     data['CanRequestDueDate'] = this.canRequestDueDate;
+//     data['CategoryId'] = this.categoryId;
+//     data['ClickableLock'] = this.clickableLock;
+//     data['Comments'] = this.comments;
+//     if (this.controlList != null) {
+//       data['ControlList'] = this.controlList!.toJson();
+//     }
+//     data['CorrespondenceId'] = this.correspondenceId;
+//     data['DocDueDate'] = this.docDueDate;
+//     data['DocDueDays'] = this.docDueDays;
+//     data['FromStructure'] = this.fromStructure;
+//     data['FromUser'] = this.fromUser;
+//     data['FromUserId'] = this.fromUserId;
+//     if (this.gridInfo != null) {
+//       data['GridInfo'] = gridInfo!.map((v) => v.toJson()).toList();
+//     }
+//     data['HasAttachments'] = hasAttachments;
+//     data['HasAttachmentsToBeDelivered'] = hasAttachmentsToBeDelivered;
+//     data['HasSummaries'] = hasSummaries;
+//     data['InboxId'] = inboxId;
+//     data['IsCC'] = isCC;
+//     data['IsForGuideline'] = isForGuideline;
+//     data['IsHighPriority'] = isHighPriority;
+//     data['IsLocked'] = isLocked;
+//     data['IsNew'] = isNew;
+//     data['IsShareable'] = isShareable;
+//     if (metadata != null) {
+//       data['Metadata'] = metadata!.map((v) => v.toJson()).toList();
+//     }
+//     data['PriorityId'] = priorityId;
+//     data['PrivacyId'] = privacyId;
+//     data['PurposeId'] = purposeId;
+//     data['ShowLock'] = showLock;
+//     data['Status'] = status;
+//     data['ThumbnailUrl'] = thumbnailUrl;
+//     data['TransferId'] = transferId;
+//     data['TsfDueDate'] = tsfDueDate;
+//     data['Type'] = type;
+//     data['VisualTrackingUrl'] = visualTrackingUrl;
+//     data['isTransferedToContact'] = isTransferedToContact;
+//     return data;
+//   }
+// }
 
 class ControlList {
   List<CustomToolbarItems>? customToolbarItems;

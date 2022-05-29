@@ -179,7 +179,7 @@ class SearchPage extends GetWidget<SearchController> {
                           },
                           onSuggestionSelected: (suggestion) {
                             Destination v = suggestion as Destination;
-                            controller.textEditingControllerclassificationsVal.text =
+                            controller.textEditingControllerClassificationsVal.text =
                                 v.value ?? "";
 
 
@@ -248,7 +248,7 @@ class SearchPage extends GetWidget<SearchController> {
                           },
                           onSuggestionSelected: (suggestion) {
                             Destination v = suggestion as Destination;
-                            controller.textEditingControllerclassificationsVal.text =
+                            controller.textEditingControllerClassificationsVal.text =
                                 v.value ?? "";
 
 
@@ -342,7 +342,7 @@ class SearchPage extends GetWidget<SearchController> {
                           },
                           onSuggestionSelected: (suggestion) {
                             Destination v = suggestion as Destination;
-                            controller.textEditingControllerclassificationsVal.text =
+                            controller.textEditingControllerClassificationsVal.text =
                                 v.value ?? "";
 
 
@@ -431,7 +431,7 @@ class SearchPage extends GetWidget<SearchController> {
                           },
                           onSuggestionSelected: (suggestion) {
                             Destination v = suggestion as Destination;
-                            controller.textEditingControllerclassificationsVal.text =
+                            controller.textEditingControllerClassificationsVal.text =
                                 v.value ?? "";
 
 
@@ -660,7 +660,7 @@ class SearchPage extends GetWidget<SearchController> {
                       DocCountries v = suggestion as DocCountries;
                       controller.textEditingControllerdocCountrieVal.text = v
                           .originalName ?? "";
-
+ controller.countrieVal=v;
                       controller.serachData["Country"] =suggestion.id; //v.originalName;
 
 
@@ -740,7 +740,7 @@ class SearchPage extends GetWidget<SearchController> {
                   child: TypeAheadField<Classifications>(
                     textFieldConfiguration: TextFieldConfiguration(
                       controller: controller
-                          .textEditingControllerclassificationsVal,
+                          .textEditingControllerClassificationsVal,
                       // autofocus: true,
                       // style: DefaultTextStyle.of(context)
                       //     .style
@@ -769,7 +769,7 @@ class SearchPage extends GetWidget<SearchController> {
                     },
                     onSuggestionSelected: (suggestion) {
                       Classifications v = suggestion as Classifications;
-                      controller.textEditingControllerclassificationsVal.text =
+                      controller.textEditingControllerClassificationsVal.text =
                           v.cLASNAMEDISPLAY ?? "";
 
 
@@ -828,6 +828,7 @@ class SearchPage extends GetWidget<SearchController> {
                       PrimaryClassifications v = suggestion as PrimaryClassifications;
                       controller.textEditingControllerprimaryClassificationsVal
                           .text = v.pCLASNAME ?? "";
+                      controller.primaryClassificationval=v;
                       controller.serachData["PrimaryClassification"] = suggestion.iD;
 
 
@@ -866,8 +867,13 @@ class SearchPage extends GetWidget<SearchController> {
                             borderRadius: const BorderRadius.all(
                                 Radius.circular(6))),
                         child:
-
-                        Center(child: Text(controller.fromDocDate))
+                        TextField(enabled: false,
+                          controller: controller.textEditingControllerFromDocDate,
+                          decoration: const InputDecoration(
+                            border: UnderlineInputBorder(),
+                            labelText: 'From',
+                          ),
+                        )
                     ),
                   ),
                 ),
@@ -893,8 +899,14 @@ class SearchPage extends GetWidget<SearchController> {
                             borderRadius: const BorderRadius.all(
                                 Radius.circular(6))),
                         child:
-
-                        Center(child: Text(controller.toDocDate))
+          TextField(enabled: false,
+       controller: controller.textEditingControllerToDocDate,
+          decoration: const InputDecoration(
+          border: UnderlineInputBorder(),
+          labelText: 'To',
+          ),
+          )
+                     //   Center(child: Text(controller.toDocDate))
                     ),
                   ),
                 ),

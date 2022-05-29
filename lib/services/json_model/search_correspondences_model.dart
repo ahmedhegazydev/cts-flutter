@@ -1,7 +1,10 @@
 
 
+import 'package:cts/services/json_model/get_correspondences_model.dart';
+
+import '../../models/CorrespondencesModel.dart';
 import '../abstract_json_resource.dart';
-import 'get_correspondences_model.dart';
+
 
 class SearchCorrespondencesModel extends AbstractJsonResource{
   String? errorMessage;

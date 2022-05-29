@@ -12,6 +12,7 @@ import '../services/apis/get_correspondences_api.dart';
 //import '../services/json_model/get_correspondences_model.dart';
 import '../services/json_model/find_recipient_json.dart';
 import '../services/json_model/get_correspondences_all_model.dart';
+import '../services/json_model/get_correspondences_model.dart';
 import '../utility/storage.dart';
 import 'dart:developer';
 
@@ -27,7 +28,7 @@ class InboxController extends GetxController {
 
   GetCorrespondencesAllModel? getCorrespondencesAllModel;
   CorrespondencesModel? correspondencesModel;
-  List<Correspondences>? correspondences = [];
+  List<Correspondences>correspondences = [];
   final SecureStorage _secureStorage = SecureStorage();
 
   CanOpenDocumentApi canOpenDocumentApi = CanOpenDocumentApi();
@@ -92,7 +93,7 @@ class InboxController extends GetxController {
     _correspondencesApi.getData().then((value) {
       correspondencesModel = value as CorrespondencesModel;
       if (addToList) {
-        correspondences!
+        correspondences
             .addAll(correspondencesModel?.inbox?.correspondences ?? []);
       } else {
         correspondences = correspondencesModel?.inbox?.correspondences ?? [];
@@ -115,7 +116,7 @@ class InboxController extends GetxController {
 
   getAllCorrespondencesData(
       {required int inboxId, int pageSize = 20, bool showThumbnails = false}) {
-    correspondences?.clear();
+    correspondences.clear();
     getData = true;
     haveMoreData = true;
     update();
@@ -124,7 +125,7 @@ class InboxController extends GetxController {
     _getCorrespondencesAllAPI.getData().then((value) {
       getCorrespondencesAllModel = value as GetCorrespondencesAllModel;
 
-      correspondences!
+      correspondences
           .addAll(correspondencesModel?.inbox?.correspondences ?? []);
 
       int listLength =

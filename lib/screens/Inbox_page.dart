@@ -490,7 +490,7 @@ class InboxPage extends GetWidget<InboxController> {
                         Expanded(
                           child: CustomListView(
                               function: controller.onRefresh(),
-                              correspondences: controller.correspondences ?? [],
+                              correspondences: controller.correspondences ,
                               scrollController: controller.scrollController,
                               haveMoreData: controller.haveMoreData,
                               onClickItem: () {
@@ -514,7 +514,7 @@ class InboxPage extends GetWidget<InboxController> {
                         Expanded(
                           child: CustomListView(
                               function: controller.onRefresh(),
-                              correspondences: controller.correspondences ?? [],
+                              correspondences: controller.correspondences ,
                               scrollController: controller.scrollController,
                               haveMoreData: controller.haveMoreData,
                               onClickItem: () {
@@ -541,7 +541,7 @@ class InboxPage extends GetWidget<InboxController> {
                         Expanded(
                           child: CustomListView(
                               function: controller.onRefresh(),
-                              correspondences: controller.correspondences ?? [],
+                              correspondences: controller.correspondences ,
                               scrollController: controller.scrollController,
                               haveMoreData: controller.haveMoreData,
                               onClickItem: () {

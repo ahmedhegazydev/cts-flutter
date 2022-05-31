@@ -1,5 +1,6 @@
 
 import 'package:cts/screens/Login_page.dart';
+import 'package:cts/screens/filter/FilterSideScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -85,6 +86,9 @@ class MyApp extends StatelessWidget {
           ,       //SearchPage
           GetPage(name: "/Landing",//SearchPage(),// LandingPage()
               page: () => LandingPage(),
+              transition: Transition.rightToLeft),
+          GetPage(name: "/Filter",//
+              page: () => FilterSlidePage(),
               transition: Transition.rightToLeft)
           ,
           GetPage(name: "/InboxPage",

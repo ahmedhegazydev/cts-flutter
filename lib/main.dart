@@ -1,5 +1,6 @@
 
 import 'package:cts/screens/Login_page.dart';
+import 'package:cts/screens/web_view_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -85,7 +86,7 @@ class MyApp extends StatelessWidget {
           ])
           ,       //SearchPage
           GetPage(name: "/Landing",//SearchPage(),// LandingPage()
-              page: () => SearchPage(),
+              page: () => LandingPage(),
               transition: Transition.rightToLeft)
           ,
           GetPage(name: "/InboxPage",
@@ -106,6 +107,10 @@ class MyApp extends StatelessWidget {
           ,
           GetPage(name: "/SearchPageResult",
               page: () => SearchPageResult(),
+              transition: Transition.rightToLeft)
+          ,
+          GetPage(name: "/WebViewPage",
+              page: () => WebViewPage( ),
               transition: Transition.rightToLeft)
         ], //initialRoute:"/" ,
         // home: const MyHomePage(title: 'Flutter Demo Home Page'),

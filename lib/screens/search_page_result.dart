@@ -14,7 +14,7 @@ class SearchPageResult extends GetWidget<SearchPageResultController> {
         body:
 
 
-        CustomListView(
+        CustomListView(customActions: controller.customActions,functionComplet: (){},functionReply: (){},functionSummary: (){},functionTrunsfer: (){},
             function: controller.onRefresh(),
             correspondences: controller.correspondences,
             haveMoreData: false,

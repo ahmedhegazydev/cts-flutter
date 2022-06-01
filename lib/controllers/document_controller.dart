@@ -63,48 +63,57 @@ addTousersWillSendTo({required Destination user}){
   List<CustomActions>? customActions=[];
 late  Correspondences correspondences;
  //PDFDocument? doc;
-  FlutterSoundRecorder? audioRecord;
-  final FlutterSoundPlayer mPlayer = FlutterSoundPlayer();
+
 Map<String,String>actions={};
 
   //Map<String,String>actions={};
  // FlutterSoundPlayer? mPlayer ;
-final pathToSave="audio.aac";
-bool recording=false;
- String _directoryPath = '/storage/emulated/0/SoundRecorder';
-  Directory? appDocDir;
-setRecording(){
-  recording=! recording;
-  update();
-}
-Future record()async{
-  appDocDir = await getApplicationDocumentsDirectory();
-  _directoryPath=appDocDir!.path+ '/' + DateTime.now().millisecondsSinceEpoch.toString() +
-      '.aac';
-  await audioRecord!.startRecorder(toFile:_directoryPath);
-File aaa=File(_directoryPath);
-print(aaa);
-}
-  Future stop()async{
-    await audioRecord!.stopRecorder();
 
-
-    print(_directoryPath);
-  //  play();
- //   _writeFileToStorage();
-   // print();
-
-  }
-
-  //   void _writeFileToStorage() async {
-  //   _createDirectory();
-  //   _createFile();
-  // }
-  Future play()async{
-   // await mPlayer.nowPlaying(track);
-    Track a=Track(trackPath: _directoryPath );
-    await mPlayer.nowPlaying(a );
-  }
+// Future record()async{
+//   appDocDir = await getApplicationDocumentsDirectory();
+//   _directoryPath=appDocDir!.path+ '/' + DateTime.now().millisecondsSinceEpoch.toString() +
+//       '.aac';
+//
+//   await audioRecord!.startRecorder(toFile:_directoryPath);
+// File aaa=File(_directoryPath);
+// print(aaa);
+// }
+//   Future stop()async{
+//     await audioRecord!.stopRecorder();
+//
+//
+//     print(_directoryPath);
+//
+//   //  print(audioRecorder.stopRecorderCompleted(state, success, url));
+//   //  play();
+//  //   _writeFileToStorage();
+//    // print();
+//
+//   }
+//
+//   //   void _writeFileToStorage() async {
+//   //   _createDirectory();
+//   //   _createFile();
+//   // }
+//   // Future play()async{
+//   //   await mPlayer.openAudioSession();
+//   //  // await mPlayer.nowPlaying(track);
+//   //   Track a=Track(trackPath: _directoryPath );
+//   //
+//   //   await mPlayer.nowPlaying(a );
+//   // }
+//
+//
+//
+//   void play() async {
+//     await mPlayer.startPlayer(
+//         fromURI: _directoryPath,
+//         codec: Codec.mp3,
+//         whenFinished: () {
+//
+//         });
+//
+//   }
   loadPdf()async{                             //correspondences.visualTrackingUrl
  //  doc = await PDFDocument.fromURL('http://www.africau.edu/images/default/sample.pdf');
     print("get the pdf");
@@ -123,26 +132,28 @@ print(aaa);
 
 
   }
-
-  Future initRecord()async{
-  audioRecord=FlutterSoundRecorder();
-
-  final stats=await Permission.microphone.request();
-  if(stats !=PermissionStatus.granted){
-    throw RecordingPermissionException("Microphone Permission");
-
-  }
-  //mPlayer = FlutterSoundPlayer();
- await audioRecord!.openAudioSession();
-
-
-}
-void closeRecord(){
-  audioRecord!.closeAudioSession();
-
-  audioRecord=null;
-
-}
+//
+//   Future initRecord()async{
+//   audioRecord=FlutterSoundRecorder();
+//
+//   final stats=await Permission.microphone.request();
+//   await Permission.storage.request();
+//   await Permission.manageExternalStorage.request();
+//   if(stats !=PermissionStatus.granted){
+//     throw RecordingPermissionException("Microphone Permission");
+//
+//   }
+//   //mPlayer = FlutterSoundPlayer();
+//  await audioRecord!.openAudioSession();
+//
+//
+// }
+// void closeRecord(){
+//   audioRecord!.closeAudioSession();
+//
+//   audioRecord=null;
+//
+// }
 
 /// get all Transfer about doc
 
@@ -151,11 +162,12 @@ void closeRecord(){
   @override
   void onInit() {
     super.onInit();
+
   }
 
   @override
   void onClose() {
-    closeRecord();
+
 
 
   super.onClose();
@@ -213,6 +225,74 @@ void closeRecord(){
   //     Exception(error);
   //   }
   // }
+
+
+
+
+
+
+
+
+
+
+  FlutterSoundRecorder? audioRecorder;
+  FlutterSoundPlayer? audioPlayer;
+  final pathToSave="audio.aac";
+  bool recording=false;
+  String _directoryPath = '/storage/emulated/0/SoundRecorder';
+  Directory? appDocDir;
+  Future record2()async{
+
+
+    await Permission.storage.request();
+    await Permission.manageExternalStorage.request();
+    final stats=await Permission.microphone.request();
+
+    if(stats !=PermissionStatus.granted){
+      throw RecordingPermissionException("Microphone Permission");
+
+    }
+    audioRecorder=FlutterSoundRecorder();
+    audioPlayer=FlutterSoundPlayer();
+    audioRecorder!.openAudioSession();
+    appDocDir = await getApplicationDocumentsDirectory();
+    _directoryPath=appDocDir!.path+ '/' + DateTime.now().millisecondsSinceEpoch.toString() +
+        '.aac';
+
+
+
+    await audioRecorder?.startRecorder(toFile: _directoryPath);
+  }
+  Future stop2()async{
+
+    await audioRecorder?.stopRecorder();
+
+
+
+
+
+
+
+  }
+  playRec()async{
+    await   audioPlayer!.openAudioSession();
+    await    audioPlayer!.startPlayer(fromURI: _directoryPath);
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -313,3 +393,16 @@ void closeRecord(){
 //     _createFile();
 //   }
 // }
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -2,8 +2,11 @@ import 'package:cts/controllers/search_page_result_controller.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sound_lite/flutter_sound.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../models/CorrespondencesModel.dart';
 import '../services/apis/find_recipient_api.dart';
 import '../services/apis/get_lookups_api.dart';
@@ -16,13 +19,16 @@ import '../services/json_model/search_correspondences_model.dart';
 import '../services/models/LoginModel.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
-
+import 'dart:io';
 class SearchController extends GetxController {
   FindRecipientModel? findRecipientModel;
   final FindRecipient _findRecipient = FindRecipient();
 
   List<Destination> users = [];
   List<Destination> usersWillSendTo = [];
+  Destination? from;
+  Destination? to;
+
 
   bool getSerchData = false;
 
@@ -113,22 +119,7 @@ class SearchController extends GetxController {
     update();
   }
 
-// لسته الافراد الي اختار منهم في البحث
-  listOfUser(int pos) {
-    users = findRecipientModel?.sections?[pos].destination ?? [];
-    update();
-  }
 
-//الحصور علي جميع الافراد
-  getFindRecipientData() {
-    _findRecipient.data =
-        "Token=${_secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
-    _findRecipient.getData().then((value) {
-      findRecipientModel = value as FindRecipientModel;
-      listOfUser(0);
-      //print(findRecipientModel?.toJson() );
-    });
-  }
 
   formReset() {
     // setDocCountrieVal(null);
@@ -137,6 +128,17 @@ class SearchController extends GetxController {
 
     // fromDocDate = "";
     // toDocDate = "";
+      from=null;
+      to=null;
+
+
+
+    prioritieVal=null;
+
+    privacieVal=null;
+
+    statuseVal=null;
+
 
     textEditingControllerReferenceNumber1.clear();
     textEditingControllerReferenceNumber2.clear();
@@ -203,14 +205,30 @@ class SearchController extends GetxController {
     statuses = data.transferData?.statuses;
     privacies = data.transferData?.privacies;
     priorities = data.transferData?.priorities;
-    getFindRecipientData();
-    //getData();
+  //   getFindRecipientData();
+  //  getData();
+  }
+// لسته الافراد الي اختار منهم في البحث
+  listOfUser(int pos) {
+    users = findRecipientModel?.sections?[pos].destination ?? [];
+    update();
   }
 
-  getData() {
+//الحصور علي جميع الافراد
+  getFindRecipientData() async{
+    _findRecipient.data =
+    "Token=${_secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+    _findRecipient.getData().then((value) {
+      findRecipientModel = value as FindRecipientModel;
+      listOfUser(0);
+      //print(findRecipientModel?.toJson() );
+    });
+  }
+  getData() async{
+    print("i get ");
     _getLookupsApi.data =
         "Token=${_secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
-    _getLookupsApi.getData().then((value) {
+   await _getLookupsApi.getData().then((value) {
       print("this is data $value");
       getLookupsModel = value as GetLookupsModel;
 
@@ -218,9 +236,9 @@ class SearchController extends GetxController {
       classifications = getLookupsModel.classifications ?? [];
       primaryClassifications = getLookupsModel.primaryClassifications ?? [];
 
-      update();
+
     });
-  }
+    update(); }
 
   searchCorrespondences() {
     getSerchData = true;
@@ -263,7 +281,7 @@ class SearchController extends GetxController {
 
 
     String cr =
-        "ReferenceNumber:${textEditingControllerReferenceNumber1.text}/${textEditingControllerReferenceNumber2.text}/${textEditingControllerReferenceNumber2.text};%23Subject:${textEditingControllerSubject.text};%23From:${textEditingControllerFrom.text};%23To:${textEditingControllerTo.text};%23TransferFrom:;%23TransferTo:;%23Privacy:${privacieVal?.id??""};%23Priority:${prioritieVal?.id??""};%23Status:${statuseVal?.id??""};%23Country:${countrieVal?.id??""};%23Classification:${classificationsVal?.id??""};%23PrimaryClassification:${primaryClassificationval?.iD??""};%23FromDocumentDate:${textEditingControllerFromDocDate.text};%23ToDocumentDate:${textEditingControllerToDocDate.text};%23RegisterDate:;%23";
+        "ReferenceNumber:${textEditingControllerReferenceNumber1.text}/${textEditingControllerReferenceNumber2.text}/${textEditingControllerReferenceNumber2.text};%23Subject:${textEditingControllerSubject.text};%23From:${from?.id??""};%23To:${to?.id??""};%23TransferFrom:;%23TransferTo:;%23Privacy:${privacieVal?.id??""};%23Priority:${prioritieVal?.id??""};%23Status:${statuseVal?.id??""};%23Country:${countrieVal?.id??""};%23Classification:${classificationsVal?.id??""};%23PrimaryClassification:${primaryClassificationval?.iD??""};%23FromDocumentDate:${textEditingControllerFromDocDate.text};%23ToDocumentDate:${textEditingControllerToDocDate.text};%23RegisterDate:;%23";
 
     print(cr);
     _searchCorrespondencesApi.post({
@@ -296,5 +314,44 @@ class SearchController extends GetxController {
   }
 
 // {"Token":"oeXQq9ZIRfAahZs9UpXg","Criteria":"ReferenceNumber:2020//;%23Subject:;%23From:;%23To:;%23TransferFrom:;%23TransferTo:;%23Privacy:;%23Priority:;%23Status:;%23Country:;%23Classification:;%23PrimaryClassification:;%23FromDocumentDate:;%23ToDocumentDate:;%23RegisterDate:;%23","IsAdvanced":1,"Language":"ar"}
+  FlutterSoundRecorder? audioRecorder;
+  FlutterSoundPlayer? audioPlayer;
+  final pathToSave="audio.aac";
+  bool recording=false;
+  String _directoryPath = '/storage/emulated/0/SoundRecorder';
+  Directory? appDocDir;
+  Future record2()async{
 
+
+    await Permission.storage.request();
+    await Permission.manageExternalStorage.request();
+    final stats=await Permission.microphone.request();
+
+    if(stats !=PermissionStatus.granted){
+     throw RecordingPermissionException("Microphone Permission");
+
+    }
+    audioRecorder=FlutterSoundRecorder();
+    audioPlayer=FlutterSoundPlayer();
+    audioRecorder!.openAudioSession();
+    appDocDir = await getApplicationDocumentsDirectory();
+    _directoryPath=appDocDir!.path+ '/' + DateTime.now().millisecondsSinceEpoch.toString() +
+        '.aac';
+
+
+
+    await audioRecorder?.startRecorder(toFile: _directoryPath);
+  }
+  Future stop2()async{
+
+    await audioRecorder?.stopRecorder();
+ await   audioPlayer!.openAudioSession();
+await    audioPlayer!.startPlayer(fromURI: _directoryPath);
+
+
+
+
+
+
+  }
 }

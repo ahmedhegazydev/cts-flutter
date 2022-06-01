@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../controllers/landing_page_controller.dart';
 import '../controllers/login_controller.dart';
+import '../controllers/web_view_controller.dart';
 import '../utility/all_const.dart';
 import '../utility/all_string_const.dart';
 import '../utility/device_size.dart';
@@ -382,6 +383,10 @@ class LandingPage extends GetWidget<LandingPageController> {
        InkWell(onTap: (){
          ///ToDo
          ///open url and go to userGuideUrl
+       //  controller.data.userGuideUrl
+
+Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
+         Get.toNamed( "WebViewPage",);
        },
          child: Container(
            height: 120,

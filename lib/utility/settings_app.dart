@@ -1,5 +1,5 @@
 class SettingsApp {
-  static const String baseUrl = 'http://192.168.0.100:9091/Mobility/CMS.svc/';
+  static const String baseUrl = 'http://192.168.1.4:9091/Mobility/CMS.svc/';
   static const String loginUrl =baseUrl;
   static const String FindRecipientUrl =baseUrl+"FindRecipient?typeId=&criteria=*&";//Token=oeXQq9ZIRfxAu8ixipXg&language=en";
 
@@ -12,7 +12,8 @@ class SettingsApp {
   static const String GetLookupsUrl =baseUrl+"GetLookups?";//http://192.168.20.237:89/Eversuite.CTS.Mobile/CMS.svc/GetLookups?Token=vDVPA43sENTpfmLujnJO&language=ar
   static const String SearchCorrespondencesUrl =baseUrl+"SearchCorrespondences";//http://192.168.20.237:89/Eversuite.CTS.Mobile/CMS.svc/SearchCorrespondences
   static const String GetCorrespondencesAllUrl =baseUrl+"GetCorrespondencesAll?";// /GetCorrespondencesAll?Token=vDVPA43sENTpfmLujnJO&inboxId=5&pageNumber=0&pageSize=100&language=ar&showThumbnails=false
-
+  static const String GetSummariesUrl =baseUrl+"GetSummaries";//
+  static const String ExecuteCustomActionsUrl =baseUrl+"ExecuteCustomActions";//
 
 
 }

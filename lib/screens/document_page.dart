@@ -697,18 +697,14 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                         children: [
                                                           GestureDetector(
                                                             onTap: () async {
-                                                              //    await controller.setRecording();
-                                                              await controller
-                                                                  .initRecord();
-                                                              //
+
                                                               controller
                                                                       .recording
                                                                   ? controller
-                                                                      .stop()
+                                                                      .stop2()
                                                                   : controller
-                                                                      .record();
-                                                              controller
-                                                                  .setRecording();
+                                                                      .record2();
+
                                                             },
                                                             child: Padding(
                                                               padding:
@@ -733,7 +729,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                             child: InkWell(
                                                               onTap: () {
                                                                 controller
-                                                                    .play();
+                                                                    .playRec();
                                                               },
                                                               child: Icon(Icons
                                                                   .play_arrow),

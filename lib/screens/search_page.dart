@@ -47,7 +47,7 @@ class SearchPage extends GetWidget<SearchController> {
                         ),
                       ))),
               SizedBox(
-                height: 8,
+                width: 2,
               ),
               Expanded(
                   flex: 2,
@@ -69,7 +69,7 @@ class SearchPage extends GetWidget<SearchController> {
                         ),
                       ))),
               SizedBox(
-                height: 8,
+                width: 2,
               ),
               Expanded(
                   flex: 1,
@@ -312,8 +312,8 @@ class SearchPage extends GetWidget<SearchController> {
                       Expanded(
                         child: TypeAheadField<Destination>(
                           textFieldConfiguration: TextFieldConfiguration(
-                            // controller: controller
-                            //     .textEditingControllerclassificationsVal,
+                            controller: controller
+                                .textEditingControllerFrom,
                             // autofocus: true,
                             // style: DefaultTextStyle.of(context)
                             //     .style
@@ -342,9 +342,9 @@ class SearchPage extends GetWidget<SearchController> {
                           },
                           onSuggestionSelected: (suggestion) {
                             Destination v = suggestion as Destination;
-                            controller.textEditingControllerClassificationsVal.text =
+                            controller.textEditingControllerFrom.text =
                                 v.value ?? "";
-
+controller.from=v;
 
 
                             // v
@@ -371,29 +371,7 @@ class SearchPage extends GetWidget<SearchController> {
                       },)],
                   ),
                 ),
-                // Expanded(
-                //   flex: 4,
-                //   child: CustomRowSearch(
-                //     textEditingController:
-                //     controller.textEditingControllerTransferFrom,
-                //     icon1: Icons.add,
-                //     icon2: Icons.add,
-                //     hint: "Transfer From",
-                //     icon3: Icons.clear,
-                //     onClick1: () {
-                //
-                //
-                //     },
-                //     onClick2: () {
-                //
-                //
-                //     },
-                //     onClick3: () {
-                //
-                //
-                //     },
-                //   ),
-                // ),
+
                 Expanded(flex: 1, child: SizedBox()),
                 Expanded(flex: 4,
                   child: Row(
@@ -401,15 +379,15 @@ class SearchPage extends GetWidget<SearchController> {
                       Expanded(
                         child: TypeAheadField<Destination>(
                           textFieldConfiguration: TextFieldConfiguration(
-                            // controller: controller
-                            //     .textEditingControllerclassificationsVal,
+                            controller: controller
+                                .textEditingControllerTo,
                             // autofocus: true,
                             // style: DefaultTextStyle.of(context)
                             //     .style
                             //     .copyWith(fontStyle: FontStyle.italic),
                             decoration:
                             const InputDecoration(border: OutlineInputBorder(),
-                                labelText: 'From'),
+                                labelText: 'To'),
                           ),
                           suggestionsCallback: (pattern) async {
                             return controller.users.where((element) =>
@@ -431,9 +409,9 @@ class SearchPage extends GetWidget<SearchController> {
                           },
                           onSuggestionSelected: (suggestion) {
                             Destination v = suggestion as Destination;
-                            controller.textEditingControllerClassificationsVal.text =
+                            controller.textEditingControllerTo.text =
                                 v.value ?? "";
-
+                            controller.to=v;
 
 
                             // v
@@ -957,7 +935,7 @@ class SearchPage extends GetWidget<SearchController> {
                         .width * .3,
                     child: CustomButton(
                         name: 'Reset', onPressed: controller.formReset)),
-              ],
+               ],
             )
           ]);
         }),

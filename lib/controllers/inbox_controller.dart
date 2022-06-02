@@ -34,10 +34,14 @@ class InboxController extends GetxController {
 
 
 
+String  completeNote ="";
 
+  CustomActions? completeCustomActions;
+updatecompleteCustomActions(CustomActions actions){
+  completeCustomActions =actions;
 
-
-
+  update();
+}
 
   Map <String,dynamic>?logindata;
   String filterWord="";
@@ -52,7 +56,15 @@ class InboxController extends GetxController {
 
   GetCorrespondencesAllModel? getCorrespondencesAllModel;
   CorrespondencesModel? correspondencesModel;
+
+
+
   List<Correspondences>correspondences = [];
+  List<Correspondences>allCorrespondences = [];
+
+
+
+
   final SecureStorage secureStorage = SecureStorage();
 
   CanOpenDocumentApi canOpenDocumentApi = CanOpenDocumentApi();
@@ -110,10 +122,10 @@ class InboxController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    getAllCorrespondencesData(
-        inboxId: inboxId, pageSize: 20, showThumbnails: false);
-    //  getCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false );
-
+    // getAllCorrespondencesData(
+    //     inboxId: inboxId, pageSize: 20, showThumbnails: false);
+      getCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false );
+    getAllCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false );
 
 
 
@@ -127,7 +139,9 @@ class InboxController extends GetxController {
   }
 
   Future<void> onRefresh() async {
-    // getCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false );
+   //  getCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false );
+
+   //  getAllCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false );
     print("9999999999999999999999999999999999");
   }
 
@@ -143,7 +157,7 @@ class InboxController extends GetxController {
       index++;
       addToList = true;
       if (haveMoreData) {
-        getCorrespondencesData(inboxId: inboxId);
+      //  getAllCorrespondencesData(inboxId: inboxId);
         print("reach the bottom");
       }
     }
@@ -200,9 +214,12 @@ class InboxController extends GetxController {
         "Token=${secureStorage.token()}&inboxId=$inboxId&index=$index&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&showThumbnails=$showThumbnails";
     _getCorrespondencesAllAPI.getData().then((value) {
       getCorrespondencesAllModel = value as GetCorrespondencesAllModel;
-
-      correspondences
-          .addAll(correspondencesModel?.inbox?.correspondences ?? []);
+      if (addToList) {
+        allCorrespondences
+            .addAll(correspondencesModel?.inbox?.correspondences ?? []);
+      } else {
+        allCorrespondences = correspondencesModel?.inbox?.correspondences ?? [];
+      }
 
       int listLength =
           correspondencesModel?.inbox?.correspondences?.length ?? 0;
@@ -281,8 +298,10 @@ class InboxController extends GetxController {
     await    audioPlayer!.startPlayer(fromURI: _directoryPath);
   }
 
-  completeInCorrespondence(data){
-    _completeInCorrespondenceAPI.getData(data: data).then((value) {
+  completeInCorrespondence({data}){
+
+    _completeInCorrespondenceAPI.data=data;
+    _completeInCorrespondenceAPI.getData( ).then((value) {
       print("000000000000000000000");
     });
   }

@@ -12,6 +12,9 @@
 
 
 
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -91,4 +94,20 @@ String calculateDate(String dateFormat, String locale) {
   var formatter = DateFormat(dateFormat, locale);
   String date = formatter.format(now);
   return date;
+}
+
+
+
+
+
+Image imageFromBase64String(String base64String) {
+  return Image.memory(base64Decode(base64String));
+}
+
+Uint8List dataFromBase64String(String base64String) {
+  return base64Decode(base64String);
+}
+
+String base64String(Uint8List data) {
+  return base64Encode(data);
 }

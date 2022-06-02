@@ -5,9 +5,10 @@ import '../../utility/settings_app.dart';
 import '../json_model/complete_in_correspondence_model.dart';
 
 class CompleteInCorrespondenceAPI extends ApiManager{
+  String data="";
   @override
   String apiUrl() {
-   return  SettingsApp.ExecuteCustomActionsUrl;
+   return  SettingsApp.ExecuteCustomActionsUrl+data;
   }
 
   @override

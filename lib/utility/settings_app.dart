@@ -13,7 +13,7 @@ class SettingsApp {
   static const String SearchCorrespondencesUrl =baseUrl+"SearchCorrespondences";//http://192.168.20.237:89/Eversuite.CTS.Mobile/CMS.svc/SearchCorrespondences
   static const String GetCorrespondencesAllUrl =baseUrl+"GetCorrespondencesAll?";// /GetCorrespondencesAll?Token=vDVPA43sENTpfmLujnJO&inboxId=5&pageNumber=0&pageSize=100&language=ar&showThumbnails=false
   static const String GetSummariesUrl =baseUrl+"GetSummaries";//
-  static const String ExecuteCustomActionsUrl =baseUrl+"ExecuteCustomActions";//
+  static const String ExecuteCustomActionsUrl =baseUrl+"ExecuteCustomActions?";//
 
 
 }

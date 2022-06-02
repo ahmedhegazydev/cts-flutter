@@ -18,7 +18,7 @@ class AllBindings extends Bindings{
 
     Get. lazyPut(() => SecureStorage()  );
     Get.put( LoginController()  );
-    Get.put( InboxController()  );
+    Get.put( InboxController() ,permanent: true );
     Get.lazyPut(()=>  LandingPageController()  );
     Get.lazyPut(()=>  SearchController()  );
     Get.put(  DocumentController()  ,permanent: true );

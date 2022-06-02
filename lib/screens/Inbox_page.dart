@@ -440,13 +440,13 @@ class InboxPage extends GetWidget<InboxController> {
                   .headline1!
                   .copyWith(color: Colors.grey, fontSize: 21),
             ),
-            Text(
-              "internal".tr,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline1!
-                  .copyWith(color: Colors.grey, fontSize: 21),
-            ),
+            // Text(
+            //   "internal".tr,
+            //   style: Theme.of(context)
+            //       .textTheme
+            //       .headline1!
+            //       .copyWith(color: Colors.grey, fontSize: 21),
+            // ),
           ],
           tabBarProperties: TabBarProperties(
             width: MediaQuery.of(context).size.width,
@@ -488,7 +488,7 @@ class InboxPage extends GetWidget<InboxController> {
                           Visibility(
                               visible: false, child: _filterMail(context)),
                           Expanded(
-                            child: CustomListView(
+                            child: CustomListView(allCorrespondences:  controller.correspondences,
                               customActions: controller.customActions,
                               functionTrunsfer: () {
                                 print("functionTrunsfer");
@@ -739,7 +739,7 @@ class InboxPage extends GetWidget<InboxController> {
                           Visibility(
                               visible: false, child: _filterMail(context)),
                           Expanded(
-                            child: CustomListView(
+                            child: CustomListView(allCorrespondences: controller.correspondences,
                               customActions: controller.customActions,
                               functionTrunsfer: () {
                                 print("functionTrunsfer");
@@ -983,44 +983,44 @@ class InboxPage extends GetWidget<InboxController> {
                           ),
                         ],
                       )),
-            Center(
-                child: controller.getData
-                    ? const Center(child: CircularProgressIndicator())
-                    : Column(
-                        children: [
-                          Visibility(
-                              visible: false, child: _filterMail(context)),
-                          Expanded(
-                            child: CustomListView(
-                              customActions: controller.customActions,
-                              functionTrunsfer: () {},
-                              functionSummary: () {},
-                              functionReply: () async {
-                                // Get.dialog(
-                                //   AlertDialog(
-                                //     title: const Text('Dialog'),
-                                //     content: const Text('This is a dialog'),
-                                //     actions: [
-                                //       TextButton(
-                                //         child: const Text("Close"),
-                                //         onPressed: () => Get.back(),
-                                //       ),
-                                //     ],
-                                //   ),
-                                // );
-                              },
-                              functionComplet: () {},
-                              function: controller.onRefresh(),
-                              correspondences: controller.correspondences,
-                              scrollController: controller.scrollController,
-                              haveMoreData: controller.haveMoreData,
-                              onClickItem: () {
-                                Get.toNamed("/DocumentPage");
-                              },
-                            ),
-                          ),
-                        ],
-                      )),
+            // Center(
+            //     child: controller.getData
+            //         ? const Center(child: CircularProgressIndicator())
+            //         : Column(
+            //             children: [
+            //               Visibility(
+            //                   visible: false, child: _filterMail(context)),
+            //               Expanded(
+            //                 child: CustomListView(
+            //                   customActions: controller.customActions,
+            //                   functionTrunsfer: () {},
+            //                   functionSummary: () {},
+            //                   functionReply: () async {
+            //                     // Get.dialog(
+            //                     //   AlertDialog(
+            //                     //     title: const Text('Dialog'),
+            //                     //     content: const Text('This is a dialog'),
+            //                     //     actions: [
+            //                     //       TextButton(
+            //                     //         child: const Text("Close"),
+            //                     //         onPressed: () => Get.back(),
+            //                     //       ),
+            //                     //     ],
+            //                     //   ),
+            //                     // );
+            //                   },
+            //                   functionComplet: () {},
+            //                   function: controller.onRefresh(),
+            //                   correspondences: controller.correspondences,
+            //                   scrollController: controller.scrollController,
+            //                   haveMoreData: controller.haveMoreData,
+            //                   onClickItem: () {
+            //                     Get.toNamed("/DocumentPage");
+            //                   },
+            //                 ),
+            //               ),
+            //             ],
+            //           )),
           ],
           onChange: (value) {
             controller.getData = true;

@@ -9,12 +9,13 @@ class SearchPageResult extends GetWidget<SearchPageResultController> {
 
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(
       child: Scaffold(
         body:
 
 
-        CustomListView(customActions: controller.customActions,functionComplet: (){},functionReply: (){},functionSummary: (){},functionTrunsfer: (){},
+        CustomListView(allCorrespondences: controller.correspondences,customActions: controller.customActions,functionComplet: (){},functionReply: (){},functionSummary: (){},functionTrunsfer: (){},
             function: controller.onRefresh(),
             correspondences: controller.correspondences,
             haveMoreData: false,

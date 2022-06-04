@@ -29,6 +29,7 @@ dependencies:
   flutter_colorpicker: ^1.0.3
   flutter_typeahead: ^3.2.4
   webview_flutter: ^3.0.4
+  signature: ^5.0.1
 
 
 dev_dependencies:

@@ -1319,7 +1319,7 @@ class CustomListView extends StatelessWidget {
 
                                                   String data =
                                                       'Token=${Get.find<InboxController>().secureStorage.token()}&correspondenceId=${  allCorrespondences[pos]
-                                                      .correspondenceId}&transferId=${    allCorrespondences[pos]
+                                                      .correspondenceId}&transferId=${allCorrespondences[pos]
                                                       .transferId}&actionType=${Get.find<InboxController>().completeCustomActions?.name??""}&note=${Get.find<InboxController>().completeNote}&language=${Get.locale
                                                       ?.languageCode == "en"
                                                       ? "en"

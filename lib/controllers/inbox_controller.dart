@@ -16,7 +16,7 @@ import '../services/apis/get_correspondences_all_api.dart';
 import '../services/apis/get_correspondences_api.dart';
 
 //import '../services/json_model/get_correspondences_model.dart';
-import '../services/json_model/find_recipient_json.dart';
+import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_correspondences_all_model.dart';
 import '../services/json_model/get_correspondences_model.dart';
 import '../services/json_model/login_model.dart';
@@ -35,7 +35,7 @@ class InboxController extends GetxController {
 
 
 String  completeNote ="";
-
+  String  replyNote ="";
   CustomActions? completeCustomActions;
 updatecompleteCustomActions(CustomActions actions){
   completeCustomActions =actions;

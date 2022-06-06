@@ -3,7 +3,7 @@
 import '../../utility/settings_app.dart';
 import '../abstract_json_resource.dart';
 import '../api_manager.dart';
-import '../json_model/find_recipient_json.dart';
+import '../json_model/find_recipient_model.dart';
 
 class FindRecipient extends ApiManager{
   String data="";

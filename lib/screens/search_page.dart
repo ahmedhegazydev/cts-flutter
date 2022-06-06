@@ -3,7 +3,7 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 //import 'package:flutter_typeahead/flutter_typeahead.dart';
 import '../controllers/search_controller.dart';
-import '../services/json_model/find_recipient_json.dart';
+import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_lookups_model.dart';
 import '../services/models/LoginModel.dart';
 import '../widgets/custom_button.dart';

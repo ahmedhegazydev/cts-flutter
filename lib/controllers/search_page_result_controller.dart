@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import '../models/CorrespondencesModel.dart';
 import '../services/apis/can_open_document.dart';
-import '../services/json_model/find_recipient_json.dart';
+import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_correspondences_model.dart';
 import '../services/json_model/login_model.dart';
 import '../utility/all_string_const.dart';

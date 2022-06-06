@@ -45,8 +45,7 @@ abstract class ApiManager {
   Future<AbstractJsonResource?> post(dataToPost) async {
     AbstractJsonResource? jsonList;
     var data;
-    print("99"*10);
-    print(jsonEncode(dataToPost));
+
     Options options = Options(headers: {
       "Accept": "application/json",
       'Content-Type': 'application/json',

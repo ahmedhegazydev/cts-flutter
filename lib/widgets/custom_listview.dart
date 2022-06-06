@@ -6,12 +6,16 @@ import '../controllers/document_controller.dart';
 import '../controllers/inbox_controller.dart';
 
 import '../models/CorrespondencesModel.dart';
+import '../services/apis/reply_with_voice_note_api.dart';
 import '../services/json_model/login_model.dart';
+import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
 import '../utility/utilitie.dart';
+import 'custom_button_with_icon.dart';
 
 class CustomListView extends StatelessWidget {
   CustomListView(
-      {required this.function,    required this.allCorrespondences,
+      {required this.function,
+      required this.allCorrespondences,
       required this.correspondences,
       required this.scrollController,
       required this.haveMoreData,
@@ -112,22 +116,22 @@ class CustomListView extends StatelessWidget {
                                                 itemBuilder: (context, index) {
                                                   return Row(
                                                     crossAxisAlignment:
-                                                    CrossAxisAlignment
-                                                        .start,
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     mainAxisAlignment:
-                                                    MainAxisAlignment.start,
+                                                        MainAxisAlignment.start,
                                                     children: [
                                                       Container(
                                                           width: MediaQuery.of(
-                                                              context)
-                                                              .size
-                                                              .width *
+                                                                      context)
+                                                                  .size
+                                                                  .width *
                                                               .1,
                                                           child: Text(
                                                             correspondences[pos]
-                                                                .gridInfo?[
-                                                            index]
-                                                                .label ??
+                                                                    .gridInfo?[
+                                                                        index]
+                                                                    .label ??
                                                                 "",
                                                             softWrap: true,
                                                             maxLines: 3,
@@ -144,9 +148,9 @@ class CustomListView extends StatelessWidget {
                                                           //     .3,
                                                           child: Text(
                                                             correspondences[pos]
-                                                                .gridInfo?[
-                                                            index]
-                                                                .value ??
+                                                                    .gridInfo?[
+                                                                        index]
+                                                                    .value ??
                                                                 "",
                                                             softWrap: true,
                                                             maxLines: 3,
@@ -268,7 +272,7 @@ class CustomListView extends StatelessWidget {
                                                     SizedBox(
                                                       width: 4,
                                                     ),
-                                                    Text("Transfar"),
+                                                    Text("Transfer"),
                                                   ],
                                                 ),
                                                 value: 2,
@@ -365,7 +369,7 @@ class CustomListView extends StatelessWidget {
                                                                 width: 8,
                                                               ),
                                                               Text(
-                                                                "الاسم",
+                                                                "name".tr,
                                                                 style: Theme.of(
                                                                         context)
                                                                     .textTheme
@@ -389,29 +393,12 @@ class CustomListView extends StatelessWidget {
                                                                     TextOverflow
                                                                         .ellipsis,
                                                               ),
-                                                              Spacer(),
-                                                              GestureDetector(
-                                                                onTap: () {},
-                                                                child:
-                                                                    Image.asset(
-                                                                  'assets/images/close_button.png',
-                                                                  width: 20,
-                                                                  height: 20,
-                                                                ),
-                                                              ),
                                                             ]),
                                                         SizedBox(
                                                           height: 4,
                                                         ),
                                                         Row(
                                                           children: [
-                                                            Expanded(
-                                                              child: Text(
-                                                                  "action".tr),
-                                                            ),
-                                                            SizedBox(
-                                                              width: 10,
-                                                            ),
                                                             Expanded(
                                                               child: Text(
                                                                   "audioNotes"
@@ -421,56 +408,6 @@ class CustomListView extends StatelessWidget {
                                                         ),
                                                         Row(
                                                           children: [
-                                                            Expanded(
-                                                              child: Container(
-                                                                height: 40,
-                                                                color: Colors
-                                                                    .grey[300],
-                                                                child: DropdownButton<
-                                                                    CustomActions>(
-                                                                  alignment:
-                                                                      Alignment
-                                                                          .topRight,
-                                                                  //   value: CustomActions,
-                                                                  icon: const Icon(
-                                                                      Icons
-                                                                          .arrow_downward),
-                                                                  elevation: 16,
-                                                                  style: const TextStyle(
-                                                                      color: Colors
-                                                                          .deepPurple),
-                                                                  underline:
-                                                                      Container(
-                                                                    height: 2,
-                                                                    color: Colors
-                                                                        .deepPurpleAccent,
-                                                                  ),
-                                                                  hint: Text(
-                                                                      "اختار"),
-                                                                  onChanged:
-                                                                      (CustomActions?
-                                                                          newValue) {
-                                                                    //  dropdownValue = newValue!;
-                                                                  },
-                                                                  items: customActions?.map<
-                                                                      DropdownMenuItem<
-                                                                          CustomActions>>((CustomActions
-                                                                      value) {
-                                                                    return DropdownMenuItem<
-                                                                        CustomActions>(
-                                                                      value:
-                                                                          value,
-                                                                      child: Text(
-                                                                          value
-                                                                              .name!),
-                                                                    );
-                                                                  }).toList(),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                              width: 10,
-                                                            ),
                                                             Expanded(
                                                               child: Container(
                                                                   height: 40,
@@ -528,7 +465,9 @@ class CustomListView extends StatelessWidget {
                                                           height: 8,
                                                         ),
                                                         Container(
-                                                          child: TextFormField(
+                                                          child: TextFormField(onChanged: (v){
+                                                            Get.find<InboxController>().replyNote=v;
+                                                          },
                                                             maxLines: 4,
                                                           ),
                                                           color:
@@ -544,6 +483,44 @@ class CustomListView extends StatelessWidget {
                                                 actions: <Widget>[
                                                   FlatButton(
                                                     onPressed: () {
+
+                                                      ReplyWithVoiceNoteRequestModel
+                                                      replayModel =
+                                                      ReplyWithVoiceNoteRequestModel();
+                                                      ReplyWithVoiceNoteApi replay =
+                                                      ReplyWithVoiceNoteApi();
+
+                                                      replayModel.transferId =
+                                                          allCorrespondences[pos]
+                                                              .transferId;
+                                                      replayModel.token = Get.find<
+                                                          InboxController>()
+                                                          .secureStorage
+                                                          .token();
+
+                                                      replayModel.correspondencesId =     allCorrespondences[pos]
+                                                          .correspondenceId;
+                                                      replayModel.notes =     allCorrespondences[pos]
+                                                          .correspondenceId;
+                                                      replayModel.notes=       Get.find<InboxController>().replyNote;
+                                                      replayModel.userId=allCorrespondences[pos].fromUserId.toString();
+
+
+                                                      replay.post(replayModel.toMap()).then((value) {
+                                                        print("1"*50);
+                                                        ReplyWithVoiceNoteRequestModel
+                                                        v =value as  ReplyWithVoiceNoteRequestModel;
+                                                        print(v.toMap());
+
+
+
+                                                        print("1"*50);
+                                                      });
+                                                      /// ToDo send Replay
+
+
+
+
                                                       Navigator.of(ctx).pop();
                                                     },
                                                     child: Text("Ok"),
@@ -552,8 +529,479 @@ class CustomListView extends StatelessWidget {
                                               ),
                                             );
                                           } else if (v == 2) {
-                                          }
-                                          else if (v == 3) {
+                                            showDialog(
+                                                context: context,
+                                                builder: (BuildContext context) {
+                                                  return AlertDialog(
+                                                    title: Row(//mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Image.asset(
+                                                            'assets/images/refer.png'
+                                                            //
+                                                            ,
+                                                            height: 20,
+                                                            width: 20,
+                                                          ),
+                                                          const SizedBox(
+                                                            width: 8,
+                                                          ),
+                                                          Text(
+                                                            "refer".tr,
+                                                            style: Theme.of(context).textTheme.headline3!.copyWith(
+                                                              color: createMaterialColor(
+                                                                const Color.fromRGBO(77, 77, 77, 1),
+                                                              ),
+                                                              fontSize: 15,
+                                                            ),
+                                                            textAlign: TextAlign.center,
+                                                            overflow: TextOverflow.ellipsis,
+                                                          ),
+                                                          const Spacer(),
+                                                          InkWell(
+                                                            onTap: () {
+                                                              Get.find<InboxController>().filterWord = "";
+                                                              Navigator.pop(context);
+                                                            },
+                                                            child: Image.asset(
+                                                              'assets/images/close_button.png',
+                                                              width: 20,
+                                                              height: 20,
+                                                            ),
+                                                          ),
+                                                        ]),
+                                                    content: SingleChildScrollView(
+                                                      child: Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: [
+                                                            const SizedBox(
+                                                              height: 10,
+                                                            ),
+                                                            Row(
+                                                              children: [
+                                                                Expanded(
+                                                                    child: Container(
+                                                                        decoration: BoxDecoration(
+                                                                            border: Border.all(
+                                                                                color: Theme.of(context)
+                                                                                    .colorScheme
+                                                                                    .primary),
+                                                                            borderRadius: const BorderRadius.all(
+                                                                                Radius.circular(6))),
+                                                                        child: TextField(
+                                                                          decoration: const InputDecoration(
+                                                                            border: UnderlineInputBorder(),
+                                                                            labelText: 'To',
+                                                                          ),
+                                                                          onChanged:   Get.find<InboxController>().filterUser,
+                                                                        ))),
+                                                                const SizedBox(
+                                                                  width: 2,
+                                                                ),
+                                                                CustomButtonWithIcon(
+                                                                    icon: Icons.person,
+                                                                    onClick: () {
+                                                                      Get.find<InboxController>().listOfUser(0);
+                                                                    }),
+                                                                const SizedBox(
+                                                                  width: 2,
+                                                                ),
+                                                                CustomButtonWithIcon(
+                                                                    icon: Icons.account_balance,
+                                                                    onClick: () {
+                                                                      Get.find<InboxController>().listOfUser(1);
+                                                                    }),
+                                                                const SizedBox(
+                                                                  width: 2,
+                                                                ),
+                                                                CustomButtonWithIcon(
+                                                                    icon: Icons.person,
+                                                                    onClick: () {
+                                                                      Get.find<InboxController>().listOfUser(2);
+                                                                    }),
+                                                              ],
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 10,
+                                                            ),
+                                                            Text("referTo".tr),
+                                                            SizedBox(
+                                                                width: MediaQuery.of(context).size.width * .8,
+                                                                height: 100,
+                                                                child: Row(
+                                                                  children: [
+                                                                    Expanded(
+                                                                        child: GetBuilder<DocumentController>(
+                                                                          assignId: true, //tag: "alluser",
+                                                                          builder: (logic) {
+                                                                            return ListView.builder(
+                                                                                scrollDirection: Axis.horizontal,
+                                                                                itemCount:   Get.find<InboxController>().users.length,
+                                                                                itemBuilder: (context, pos) {
+                                                                                  print("*" * 100);
+                                                                                  print(logic.users[pos].value
+                                                                                      ?.split(" ")
+                                                                                      .length);
+                                                                                  List<String>? a =
+                                                                                  logic.users[pos].value?.split(" ");
+
+                                                                                  // bool a=logic.user?[pos].value?.contains(logic.filterWord)??false;
+                                                                                  if (logic.users[pos].value
+                                                                                      ?.contains(logic.filterWord) ??
+                                                                                      false) {
+                                                                                    return Padding(
+                                                                                      padding: const EdgeInsets.all(8.0),
+                                                                                      child: InkWell(
+                                                                                        onTap: () {
+                                                                                          Get.find<InboxController>().addTousersWillSendTo(
+                                                                                              user: logic.users[pos]);
+                                                                                        },
+                                                                                        child: Container(
+                                                                                          decoration: BoxDecoration(
+                                                                                            border: Border.all(
+                                                                                                color: Theme.of(
+                                                                                                    context)
+                                                                                                    .colorScheme
+                                                                                                    .primary,
+                                                                                                width: 1),
+                                                                                          ),
+                                                                                          padding:
+                                                                                          EdgeInsets.all(2.0),
+                                                                                          child: Row(
+                                                                                            children: [
+                                                                                              Container(
+                                                                                                height: 50,
+                                                                                                width: 50,
+                                                                                                decoration: BoxDecoration(
+                                                                                                  shape: BoxShape.circle,
+                                                                                                  color: Theme.of(context)
+                                                                                                      .colorScheme
+                                                                                                      .primary,
+                                                                                                ),
+                                                                                                child: Center(
+                                                                                                    child: FittedBox(
+                                                                                                        child: Text(
+                                                                                                            "${a?[0][0]} ${a?[0][0] ?? ""}"))),
+                                                                                              ),
+                                                                                              Padding(
+                                                                                                  padding:
+                                                                                                  const EdgeInsets.only(top: 2.0,bottom: 2,right: 8,left: 8),
+                                                                                                  child: Text(
+                                                                                                    logic.users[pos]
+                                                                                                        .value ??
+                                                                                                        "",
+                                                                                                    maxLines: 3,
+                                                                                                    softWrap: true,
+                                                                                                  )
+
+                                                                                                //
+                                                                                                // Container(
+                                                                                                //   height: 50,
+                                                                                                //   width: 50,
+                                                                                                //   decoration: const BoxDecoration(
+                                                                                                //       shape: BoxShape.circle,
+                                                                                                //       color: Colors.green),
+                                                                                                // ),
+                                                                                              ),
+                                                                                            ],
+                                                                                          ),
+                                                                                        ),
+                                                                                      ),
+                                                                                    );
+                                                                                  } else {
+                                                                                    return SizedBox();
+                                                                                  }
+                                                                                });
+                                                                          },
+                                                                        )),
+                                                                    Padding(
+                                                                      padding: const EdgeInsets.all(8.0),
+                                                                      child: Container(
+                                                                        child: const Icon(Icons.clear),
+                                                                        height: 50,
+                                                                        width: 50,
+                                                                        decoration: const BoxDecoration(
+                                                                          shape: BoxShape.circle,
+                                                                          color: Colors.grey,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                )),
+                                                            const Divider(
+                                                              color: Colors.grey,
+                                                            ),
+                                                            SizedBox(
+                                                                width: MediaQuery.of(context).size.width * .8,
+                                                                height: 300, // MediaQuery.of(context).size.height * .5,
+                                                                child: GetBuilder<DocumentController>(
+                                                                  //   assignId: true,//tag: "user",
+                                                                  builder: (logic) {
+                                                                    return //Text(logic.filterWord);
+
+                                                                      ListView.builder(
+                                                                          scrollDirection: Axis.vertical,
+                                                                          itemCount:
+                                                                          Get.find<InboxController>().usersWillSendTo.length,
+                                                                          itemBuilder: (context, pos) {
+                                                                            return //Text(controller.filterWord);
+
+                                                                              Padding(
+                                                                                padding: const EdgeInsets.all(8.0),
+                                                                                child: Container(
+                                                                                  color: Colors.grey[200],
+                                                                                  child: Column(children: [
+                                                                                    Row(
+                                                                                        crossAxisAlignment:
+                                                                                        CrossAxisAlignment.center,
+                                                                                        children: [
+                                                                                          Padding(
+                                                                                            padding:
+                                                                                            const EdgeInsets.all(
+                                                                                                8.0),
+                                                                                            child: Text(logic
+                                                                                                .usersWillSendTo[
+                                                                                            pos]
+                                                                                                .value ??
+                                                                                                ""),
+                                                                                            // child: Container(
+                                                                                            //   height: 50,
+                                                                                            //   width: 50,
+                                                                                            //   // decoration: const BoxDecoration(
+                                                                                            //   //   shape: BoxShape.circle,
+                                                                                            //   //   color: Colors.grey,
+                                                                                            //   // ),
+                                                                                            // ),
+                                                                                          ),
+                                                                                          SizedBox(
+                                                                                            width: 8,
+                                                                                          ),
+                                                                                          Text(
+                                                                                            "الاسم",
+                                                                                            style: Theme.of(context)
+                                                                                                .textTheme
+                                                                                                .headline3!
+                                                                                                .copyWith(
+                                                                                              color:
+                                                                                              createMaterialColor(
+                                                                                                const Color
+                                                                                                    .fromRGBO(
+                                                                                                    77, 77, 77, 1),
+                                                                                              ),
+                                                                                              fontSize: 15,
+                                                                                            ),
+                                                                                            textAlign: TextAlign.center,
+                                                                                            overflow:
+                                                                                            TextOverflow.ellipsis,
+                                                                                          ),
+                                                                                          Spacer(),
+                                                                                          GestureDetector(
+                                                                                            onTap: () {
+                                                                                              Get.find<InboxController>()
+                                                                                                  .delTousersWillSendTo(
+                                                                                                  user: logic
+                                                                                                      .usersWillSendTo[
+                                                                                                  pos]);
+                                                                                            },
+                                                                                            child: Image.asset(
+                                                                                              'assets/images/close_button.png',
+                                                                                              width: 20,
+                                                                                              height: 20,
+                                                                                            ),
+                                                                                          ),
+                                                                                        ]),
+                                                                                    SizedBox(
+                                                                                      height: 4,
+                                                                                    ),
+                                                                                    Row(
+                                                                                      children: [
+                                                                                        Expanded(
+                                                                                          child: Text("action".tr),
+                                                                                        ),
+                                                                                        SizedBox(
+                                                                                          width: 10,
+                                                                                        ),
+                                                                                        Expanded(
+                                                                                          child: Text("audioNotes".tr),
+                                                                                        )
+                                                                                      ],
+                                                                                    ),
+                                                                                    Row(
+                                                                                      children: [
+                                                                                        Expanded(
+                                                                                          child: Container(
+                                                                                            height: 40,
+                                                                                            color: Colors.grey[300],
+                                                                                            child:
+                                                                                            DropdownButton<CustomActions>(
+                                                                                              alignment:
+                                                                                              Alignment.topRight,
+                                                                                              //   value: CustomActions,
+                                                                                              icon: const Icon(
+                                                                                                  Icons.arrow_downward),
+                                                                                              elevation: 16,
+                                                                                              style: const TextStyle(
+                                                                                                  color: Colors
+                                                                                                      .deepPurple),
+                                                                                              underline: Container(
+                                                                                                height: 2,
+                                                                                                color: Colors
+                                                                                                    .deepPurpleAccent,
+                                                                                              ),
+                                                                                              hint: Text("اختار"),
+                                                                                              onChanged: (CustomActions?
+                                                                                              newValue) {
+                                                                                                //  dropdownValue = newValue!;
+                                                                                              },
+                                                                                              items:   Get.find<InboxController>()
+                                                                                                  .customActions
+                                                                                                  ?.map<
+                                                                                                  DropdownMenuItem<
+                                                                                                      CustomActions>>(
+                                                                                                      (CustomActions
+                                                                                                  value) {
+                                                                                                    return DropdownMenuItem<
+                                                                                                        CustomActions>(
+                                                                                                      value: value,
+                                                                                                      child:
+                                                                                                      Text(value.name!),
+                                                                                                    );
+                                                                                                  }).toList(),
+                                                                                            ),
+                                                                                          ),
+                                                                                        ),
+                                                                                        const SizedBox(
+                                                                                          width: 10,
+                                                                                        ),
+                                                                                        Expanded(
+                                                                                          child: Container(
+                                                                                              height: 40,
+                                                                                              color: Colors.grey[300],
+                                                                                              child: Row(
+                                                                                                mainAxisAlignment:
+                                                                                                MainAxisAlignment
+                                                                                                    .spaceBetween,
+                                                                                                children: [
+                                                                                                  GestureDetector(
+                                                                                                    onTap: () async {
+
+                                                                                                      Get.find<InboxController>()
+                                                                                                          .recording
+                                                                                                          ?   Get.find<InboxController>()
+                                                                                                          .stop2()
+                                                                                                          :   Get.find<InboxController>()
+                                                                                                          .record2();
+
+                                                                                                    },
+                                                                                                    child: Padding(
+                                                                                                      padding:
+                                                                                                      const EdgeInsets
+                                                                                                          .all(8.0),
+                                                                                                      child: GetBuilder<
+                                                                                                          DocumentController>(
+                                                                                                          builder:
+                                                                                                              (logic) {
+                                                                                                            return Icon(  Get.find<InboxController>()
+                                                                                                                .recording
+                                                                                                                ? Icons.stop
+                                                                                                                : Icons
+                                                                                                                .mic);
+                                                                                                          }),
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                  Padding(
+                                                                                                    padding:
+                                                                                                    const EdgeInsets
+                                                                                                        .all(8.0),
+                                                                                                    child: InkWell(
+                                                                                                      onTap: () {
+                                                                                                        Get.find<InboxController>()
+                                                                                                            .playRec();
+                                                                                                      },
+                                                                                                      child: Icon(Icons
+                                                                                                          .play_arrow),
+                                                                                                    ),
+                                                                                                  )
+                                                                                                ],
+                                                                                              )),
+                                                                                        )
+                                                                                      ],
+                                                                                    ),
+                                                                                    SizedBox(
+                                                                                      height: 8,
+                                                                                    ),
+                                                                                    Container(
+                                                                                      child: TextFormField(
+                                                                                        maxLines: 4,
+                                                                                      ),
+                                                                                      color: Colors.grey[300],
+                                                                                    ),
+                                                                                    SizedBox(
+                                                                                      height: 8,
+                                                                                    ),
+                                                                                  ]),
+                                                                                ),
+                                                                              );
+                                                                          });
+                                                                  },
+                                                                ))
+
+                                                            // Container(height: 300,child: ListView.builder( itemCount: 100,itemBuilder: (context,pos){
+                                                            //   return  Padding(
+                                                            //     padding: const EdgeInsets.all(8.0),
+                                                            //     child: Container(color: Colors.grey,child: Column(children: [
+                                                            //       Row(//mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            //           children: [
+                                                            //             Image.asset(
+                                                            //               'assets/images/refer.png'
+                                                            //               //
+                                                            //               ,
+                                                            //               height: 20,
+                                                            //               width: 20,
+                                                            //             ),
+                                                            //             const SizedBox(
+                                                            //               width: 8,
+                                                            //             ),
+                                                            //             Text(
+                                                            //               "refer".tr,
+                                                            //               style: Theme.of(context).textTheme.headline3!.copyWith(
+                                                            //                 color: createMaterialColor(
+                                                            //                   const Color.fromRGBO(77, 77, 77, 1),
+                                                            //                 ),
+                                                            //                 fontSize: 15,
+                                                            //               ),
+                                                            //               textAlign: TextAlign.center,
+                                                            //               overflow: TextOverflow.ellipsis,
+                                                            //             ),
+                                                            //
+                                                            //             Image.asset(
+                                                            //               'assets/images/close_button.png',
+                                                            //               width: 20,
+                                                            //               height: 20,
+                                                            //             ),
+                                                            //             Row(children: [],)
+                                                            //           ]),]),),
+                                                            //   );
+                                                            //
+                                                            // }))
+                                                          ]),
+                                                    ),
+                                                  );
+                                                });
+
+
+
+
+
+
+
+
+                                          } else if (v == 3) {
+
+
+
+
+
+
                                             showDialog(
                                               context: context,
                                               builder: (ctx) => AlertDialog(
@@ -570,105 +1018,30 @@ class CustomListView extends StatelessWidget {
                                                     color: Colors.grey[200],
                                                     child:
                                                         SingleChildScrollView(
-                                                      child: Column(children: [
-                                                        Row(
+                                                      child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
                                                           children: [
-                                                            Expanded(
-                                                              child: Text(
-                                                                  "action".tr),
-                                                            ),
+                                                            Text("note"),
                                                             SizedBox(
-                                                              width: 10,
+                                                              height: 8,
                                                             ),
-                                                          ],
-                                                        ),
-                                                        Row(
-                                                          children: [
                                                             Container(
-                                                              height: 40,
+                                                              child:
+                                                                  TextFormField(
+                                                                maxLines: 4,
+                                                              ),
                                                               color: Colors
                                                                   .grey[300],
-                                                              child: GetBuilder<
-                                                                  InboxController>(
-                                                                assignId: true,
-                                                                builder:
-                                                                    (logic) {
-                                                                  return DropdownButton<
-                                                                      CustomActions>(
-                                                                    value: Get.find<
-                                                                            InboxController>()
-                                                                        .completeCustomActions,
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .topRight,
-                                                                    //   value: CustomActions,
-                                                                    icon: const Icon(
-                                                                        Icons
-                                                                            .arrow_downward),
-                                                                    elevation:
-                                                                        16,
-                                                                    style: const TextStyle(
-                                                                        color: Colors
-                                                                            .deepPurple),
-                                                                    underline:
-                                                                        Container(
-                                                                      height: 2,
-                                                                      color: Colors
-                                                                          .deepPurpleAccent,
-                                                                    ),
-                                                                    hint: Text(
-                                                                        "اختار"),
-                                                                    onChanged:
-                                                                        (CustomActions?
-                                                                            newValue) {
-                                                                      logic.updatecompleteCustomActions(
-                                                                          newValue!);
-                                                                    },
-                                                                    items: logic
-                                                                        .customActions
-                                                                        ?.map<
-                                                                            DropdownMenuItem<
-                                                                                CustomActions>>((CustomActions
-                                                                            value) {
-                                                                      return DropdownMenuItem<
-                                                                          CustomActions>(
-                                                                        value:
-                                                                            value,
-                                                                        child:
-                                                                            Row(
-                                                                          children: [
-                                                                            //  Image.memory(dataFromBase64String(value.icon!)),
-                                                                            SizedBox(
-                                                                              width: 4,
-                                                                            ),
-                                                                            Text(value.name!),
-                                                                          ],
-                                                                        ),
-                                                                      );
-                                                                    }).toList(),
-                                                                  );
-                                                                },
-                                                              ),
                                                             ),
-                                                            const SizedBox(
-                                                              width: 10,
+                                                            SizedBox(
+                                                              height: 8,
                                                             ),
-                                                          ],
-                                                        ),
-                                                        SizedBox(
-                                                          height: 8,
-                                                        ),
-                                                        Container(
-                                                          child: TextFormField(
-                                                            maxLines: 4,
-                                                          ),
-                                                          color:
-                                                              Colors.grey[300],
-                                                        ),
-                                                        SizedBox(
-                                                          height: 8,
-                                                        ),
-                                                      ]),
+                                                          ]),
                                                     ),
                                                   ),
                                                 ),
@@ -685,17 +1058,12 @@ class CustomListView extends StatelessWidget {
                                                           ?.icon);
 
                                                       String data =
-                                                          'Token=${Get.find<InboxController>().secureStorage.token()}&correspondenceId=${  correspondences[pos]
-                                                          .correspondenceId}&transferId=${    correspondences[pos]
-                                                          .transferId}&actionType=${Get.find<InboxController>().completeCustomActions?.name??""}&note=${Get.find<InboxController>().completeNote}&language=${Get.locale
-                                                          ?.languageCode == "en"
-                                                          ? "en"
-                                                          : "ar"}';
+                                                          'Token=${Get.find<InboxController>().secureStorage.token()}&correspondenceId=${correspondences[pos].correspondenceId}&transferId=${correspondences[pos].transferId}&actionType=${Get.find<InboxController>().completeCustomActions?.name ?? ""}&note=${Get.find<InboxController>().completeNote}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}';
 
                                                       Get.find<
                                                               InboxController>()
-                                                          .completeInCorrespondence(data: data);
-
+                                                          .completeInCorrespondence(
+                                                              data: data);
 
                                                       Navigator.of(ctx).pop();
                                                     },
@@ -705,6 +1073,15 @@ class CustomListView extends StatelessWidget {
                                               ),
                                             );
 
+                                            print(Get.find<InboxController>()
+                                                .customAction
+                                                ?.name);
+
+                                            print("  allCorrespondences[pos].purposeId =>   ${  allCorrespondences[pos].purposeId}");
+                                            print(" allCorrespondences[pos].correspondenceId =>   ${  allCorrespondences[pos].correspondenceId}");
+                                            print("  allCorrespondences[pos].transferId =>   ${  allCorrespondences[pos].transferId}");
+
+                                            print("ppp"*10);
                                             print(Get.find<InboxController>()
                                                 .customAction
                                                 ?.name);
@@ -743,10 +1120,10 @@ class CustomListView extends StatelessWidget {
                           onTap: () {
                             Get.find<InboxController>().canOpenDoc(
                                 correspondenceId:
-                                allCorrespondences[pos].correspondenceId,
+                                    allCorrespondences[pos].correspondenceId,
                                 transferId: allCorrespondences[pos].transferId);
                             Get.find<DocumentController>().correspondences =
-                            allCorrespondences[pos];
+                                allCorrespondences[pos];
 
                             Get.find<DocumentController>().loadPdf();
                             Get.toNamed("/DocumentPage");
@@ -777,7 +1154,8 @@ class CustomListView extends StatelessWidget {
                                                                 .width *
                                                             .1,
                                                         child: Text(
-                                                            allCorrespondences[pos]
+                                                            allCorrespondences[
+                                                                        pos]
                                                                     .gridInfo?[
                                                                         index]
                                                                     .label ??
@@ -792,10 +1170,13 @@ class CustomListView extends StatelessWidget {
                                                         //   .size
                                                         //   .width *
                                                         //   .5,
-                                                        child: Text(allCorrespondences[pos]
-                                                                .gridInfo?[index]
-                                                                .value ??
-                                                            ""),
+                                                        child: Text(
+                                                            allCorrespondences[
+                                                                        pos]
+                                                                    .gridInfo?[
+                                                                        index]
+                                                                    .value ??
+                                                                ""),
                                                       ),
                                                     ),
                                                   ],
@@ -850,7 +1231,8 @@ class CustomListView extends StatelessWidget {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Icon(allCorrespondences[pos].isLocked!
+                                            Icon(allCorrespondences[pos]
+                                                    .isLocked!
                                                 ? Icons.lock
                                                 : Icons.lock_open),
                                             Container(
@@ -867,9 +1249,9 @@ class CustomListView extends StatelessWidget {
                                             SizedBox(
                                               width: 4,
                                             ),
-                                            Text(
-                                                allCorrespondences[pos].fromUser ??
-                                                    ""),
+                                            Text(allCorrespondences[pos]
+                                                    .fromUser ??
+                                                ""),
                                             if (allCorrespondences[pos]
                                                     .hasAttachments ??
                                                 false)
@@ -904,7 +1286,7 @@ class CustomListView extends StatelessWidget {
                                                 SizedBox(
                                                   width: 4,
                                                 ),
-                                                Text("Transfar"),
+                                                Text("Transfer"),
                                               ],
                                             ),
                                             value: 2,
@@ -924,32 +1306,33 @@ class CustomListView extends StatelessWidget {
                                             onTap: functionComplet,
                                             value: 3,
                                           ),
-                                      if (allCorrespondences[pos]
-                                          .hasSummaries ??
-                                          false)          PopupMenuItem(
-                                            child: Row(
-                                              children: [
-                                                Icon(Icons.menu,
-                                                    color: Colors.blueAccent),
-                                                SizedBox(
-                                                  width: 4,
-                                                ),
-                                                Text("Summary"),
-                                              ],
+                                          if (allCorrespondences[pos]
+                                                  .hasSummaries ??
+                                              false)
+                                            PopupMenuItem(
+                                              child: Row(
+                                                children: [
+                                                  Icon(Icons.menu,
+                                                      color: Colors.blueAccent),
+                                                  SizedBox(
+                                                    width: 4,
+                                                  ),
+                                                  Text("Summary"),
+                                                ],
+                                              ),
+                                              onTap: functionSummary,
+                                              value: 4,
                                             ),
-                                            onTap: functionSummary,
-                                            value: 4,
-                                          ),
-                                        ], enableFeedback: true,
+                                        ],
+                                    enableFeedback: true,
                                     onSelected: (v) {
                                       print("*" * 50);
-                                      print(allCorrespondences[pos]
-                                          .hasSummaries);
+                                      print(
+                                          allCorrespondences[pos].hasSummaries);
                                       print(allCorrespondences[pos]
                                           .correspondenceId);
 
-                                      print(
-                                          allCorrespondences[pos].transferId);
+                                      print(allCorrespondences[pos].transferId);
 
                                       print("*" * 50);
 
@@ -960,30 +1343,28 @@ class CustomListView extends StatelessWidget {
                                             title: Text(" "),
                                             content: Padding(
                                               padding:
-                                              const EdgeInsets.all(8.0),
+                                                  const EdgeInsets.all(8.0),
                                               child: Container(
-                                                width:
-                                                MediaQuery.of(context)
-                                                    .size
-                                                    .width *
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
                                                     .8,
                                                 color: Colors.grey[200],
-                                                child:
-                                                SingleChildScrollView(
+                                                child: SingleChildScrollView(
                                                   child: Column(children: [
                                                     Row(
                                                         crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
+                                                            CrossAxisAlignment
+                                                                .center,
                                                         children: [
                                                           Padding(
                                                             padding:
-                                                            const EdgeInsets
-                                                                .all(
-                                                                8.0),
+                                                                const EdgeInsets
+                                                                    .all(8.0),
                                                             child: Text(
-                                                                allCorrespondences[pos]
-                                                                    .fromUser ??
+                                                                allCorrespondences[
+                                                                            pos]
+                                                                        .fromUser ??
                                                                     ""),
                                                             // child: Container(
                                                             //   height: 50,
@@ -998,39 +1379,29 @@ class CustomListView extends StatelessWidget {
                                                             width: 8,
                                                           ),
                                                           Text(
-                                                            "الاسم",
-                                                            style: Theme.of(
-                                                                context)
-                                                                .textTheme
-                                                                .headline3!
-                                                                .copyWith(
-                                                              color:
-                                                              createMaterialColor(
-                                                                const Color.fromRGBO(
-                                                                    77,
-                                                                    77,
-                                                                    77,
-                                                                    1),
-                                                              ),
-                                                              fontSize:
-                                                              15,
-                                                            ),
-                                                            textAlign:
-                                                            TextAlign
+                                                            "name".tr,
+                                                            style:
+                                                                Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .headline3!
+                                                                    .copyWith(
+                                                                      color:
+                                                                          createMaterialColor(
+                                                                        const Color.fromRGBO(
+                                                                            77,
+                                                                            77,
+                                                                            77,
+                                                                            1),
+                                                                      ),
+                                                                      fontSize:
+                                                                          15,
+                                                                    ),
+                                                            textAlign: TextAlign
                                                                 .center,
                                                             overflow:
-                                                            TextOverflow
-                                                                .ellipsis,
-                                                          ),
-                                                          Spacer(),
-                                                          GestureDetector(
-                                                            onTap: () {},
-                                                            child:
-                                                            Image.asset(
-                                                              'assets/images/close_button.png',
-                                                              width: 20,
-                                                              height: 20,
-                                                            ),
+                                                                TextOverflow
+                                                                    .ellipsis,
                                                           ),
                                                         ]),
                                                     SizedBox(
@@ -1040,15 +1411,7 @@ class CustomListView extends StatelessWidget {
                                                       children: [
                                                         Expanded(
                                                           child: Text(
-                                                              "action".tr),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 10,
-                                                        ),
-                                                        Expanded(
-                                                          child: Text(
-                                                              "audioNotes"
-                                                                  .tr),
+                                                              "audioNotes".tr),
                                                         )
                                                       ],
                                                     ),
@@ -1056,100 +1419,60 @@ class CustomListView extends StatelessWidget {
                                                       children: [
                                                         Expanded(
                                                           child: Container(
-                                                            height: 40,
-                                                            color: Colors
-                                                                .grey[300],
-                                                            child: DropdownButton<
-                                                                CustomActions>(
-                                                              alignment:
-                                                              Alignment
-                                                                  .topRight,
-                                                              //   value: CustomActions,
-                                                              icon: const Icon(
-                                                                  Icons
-                                                                      .arrow_downward),
-                                                              elevation: 16,
-                                                              style: const TextStyle(
-                                                                  color: Colors
-                                                                      .deepPurple),
-                                                              underline:
-                                                              Container(
-                                                                height: 2,
-                                                                color: Colors
-                                                                    .deepPurpleAccent,
-                                                              ),
-                                                              hint: Text(
-                                                                  "اختار"),
-                                                              onChanged:
-                                                                  (CustomActions?
-                                                              newValue) {
-                                                                //  dropdownValue = newValue!;
-                                                              },
-                                                              items: customActions?.map<
-                                                                  DropdownMenuItem<
-                                                                      CustomActions>>((CustomActions
-                                                              value) {
-                                                                return DropdownMenuItem<
-                                                                    CustomActions>(
-                                                                  value:
-                                                                  value,
-                                                                  child: Text(
-                                                                      value
-                                                                          .name!),
-                                                                );
-                                                              }).toList(),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                          width: 10,
-                                                        ),
-                                                        Expanded(
-                                                          child: Container(
                                                               height: 40,
                                                               color: Colors
-                                                                  .grey[
-                                                              300],
+                                                                  .grey[300],
                                                               child: Row(
                                                                 mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
                                                                 children: [
                                                                   GestureDetector(
                                                                     onTap:
                                                                         () async {
                                                                       Get.find<InboxController>().recording
-                                                                          ? Get.find<InboxController>().stop2()
-                                                                          : Get.find<InboxController>().record2();
-                                                                      Get.find<InboxController>()
+                                                                          ? Get.find<InboxController>()
+                                                                              .stop2()
+                                                                          : Get.find<InboxController>()
+                                                                              .record2();
+                                                                      Get.find<
+                                                                              InboxController>()
                                                                           .update([
                                                                         "id"
                                                                       ]);
                                                                     },
                                                                     child:
-                                                                    Padding(
+                                                                        Padding(
                                                                       padding:
-                                                                      const EdgeInsets.all(8.0),
-                                                                      child: GetBuilder<InboxController>(
-                                                                          id: "id",
-                                                                          builder: (logic) {
+                                                                          const EdgeInsets.all(
+                                                                              8.0),
+                                                                      child: GetBuilder<
+                                                                              InboxController>(
+                                                                          id:
+                                                                              "id",
+                                                                          builder:
+                                                                              (logic) {
                                                                             print("5555");
-                                                                            return Icon(Get.find<InboxController>().recording ? Icons.stop : Icons.mic);
+                                                                            return Icon(Get.find<InboxController>().recording
+                                                                                ? Icons.stop
+                                                                                : Icons.mic);
                                                                           }),
                                                                     ),
                                                                   ),
                                                                   Padding(
                                                                     padding:
-                                                                    const EdgeInsets.all(8.0),
+                                                                        const EdgeInsets.all(
+                                                                            8.0),
                                                                     child:
-                                                                    InkWell(
+                                                                        InkWell(
                                                                       onTap:
                                                                           () {
                                                                         // controller
                                                                         //     .playRec();
                                                                       },
-                                                                      child:
-                                                                      Icon(Icons.play_arrow),
+                                                                      child: Icon(
+                                                                          Icons
+                                                                              .play_arrow),
                                                                     ),
                                                                   )
                                                                 ],
@@ -1164,8 +1487,7 @@ class CustomListView extends StatelessWidget {
                                                       child: TextFormField(
                                                         maxLines: 4,
                                                       ),
-                                                      color:
-                                                      Colors.grey[300],
+                                                      color: Colors.grey[300],
                                                     ),
                                                     SizedBox(
                                                       height: 8,
@@ -1177,7 +1499,39 @@ class CustomListView extends StatelessWidget {
                                             actions: <Widget>[
                                               FlatButton(
                                                 onPressed: () {
-                                                  Navigator.of(ctx).pop();
+                                                  ReplyWithVoiceNoteRequestModel
+                                                      replayModel =
+                                                      ReplyWithVoiceNoteRequestModel();
+                                                  ReplyWithVoiceNoteApi replay =
+                                                      ReplyWithVoiceNoteApi();
+
+                                                  replayModel.transferId =
+                                                      allCorrespondences[pos]
+                                                          .transferId;
+                                                  replayModel.token = Get.find<
+                                                          InboxController>()
+                                                      .secureStorage
+                                                      .token();
+
+                                                  replayModel.correspondencesId =     allCorrespondences[pos]
+                                                      .correspondenceId;
+                                                  replayModel.notes =     allCorrespondences[pos]
+                                                      .correspondenceId;
+                                                  replayModel.notes=       Get.find<InboxController>().replyNote;
+                                                  replayModel.userId=allCorrespondences[pos].fromUserId.toString();
+
+
+replay.post(replayModel.toMap()).then((value) {
+  print("1"*50);
+
+   print(value);
+
+
+
+  print("1"*50);
+});
+
+                                                  //   Navigator.of(ctx).pop();
                                                 },
                                                 child: Text("Ok"),
                                               ),
@@ -1185,123 +1539,44 @@ class CustomListView extends StatelessWidget {
                                           ),
                                         );
                                       } else if (v == 2) {
-                                      }
-                                      else if (v == 3) {
+                                      } else if (v == 3) {
                                         showDialog(
                                           context: context,
                                           builder: (ctx) => AlertDialog(
                                             title: Text(" "),
                                             content: Padding(
                                               padding:
-                                              const EdgeInsets.all(8.0),
+                                                  const EdgeInsets.all(8.0),
                                               child: Container(
-                                                width:
-                                                MediaQuery.of(context)
-                                                    .size
-                                                    .width *
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
                                                     .8,
                                                 color: Colors.grey[200],
-                                                child:
-                                                SingleChildScrollView(
-                                                  child: Column(children: [
-                                                    Row(
+                                                child: SingleChildScrollView(
+                                                  child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       children: [
-                                                        Expanded(
-                                                          child: Text(
-                                                              "action".tr),
+                                                        Text("note"),
+                                                        SizedBox(
+                                                          height: 8,
+                                                        ),
+                                                        Container(
+                                                          child: TextFormField(
+                                                            maxLines: 4,
+                                                          ),
+                                                          color:
+                                                              Colors.grey[300],
                                                         ),
                                                         SizedBox(
-                                                          width: 10,
+                                                          height: 8,
                                                         ),
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        Container(
-                                                          height: 40,
-                                                          color: Colors
-                                                              .grey[300],
-                                                          child: GetBuilder<
-                                                              InboxController>(
-                                                            assignId: true,
-                                                            builder:
-                                                                (logic) {
-                                                              return DropdownButton<
-                                                                  CustomActions>(
-                                                                value: Get.find<
-                                                                    InboxController>()
-                                                                    .completeCustomActions,
-                                                                alignment:
-                                                                Alignment
-                                                                    .topRight,
-                                                                //   value: CustomActions,
-                                                                icon: const Icon(
-                                                                    Icons
-                                                                        .arrow_downward),
-                                                                elevation:
-                                                                16,
-                                                                style: const TextStyle(
-                                                                    color: Colors
-                                                                        .deepPurple),
-                                                                underline:
-                                                                Container(
-                                                                  height: 2,
-                                                                  color: Colors
-                                                                      .deepPurpleAccent,
-                                                                ),
-                                                                hint: Text(
-                                                                    "اختار"),
-                                                                onChanged:
-                                                                    (CustomActions?
-                                                                newValue) {
-                                                                  logic.updatecompleteCustomActions(
-                                                                      newValue!);
-                                                                },
-                                                                items: logic
-                                                                    .customActions
-                                                                    ?.map<
-                                                                    DropdownMenuItem<
-                                                                        CustomActions>>((CustomActions
-                                                                value) {
-                                                                  return DropdownMenuItem<
-                                                                      CustomActions>(
-                                                                    value:
-                                                                    value,
-                                                                    child:
-                                                                    Row(
-                                                                      children: [
-                                                                        //  Image.memory(dataFromBase64String(value.icon!)),
-                                                                        SizedBox(
-                                                                          width: 4,
-                                                                        ),
-                                                                        Text(value.name!),
-                                                                      ],
-                                                                    ),
-                                                                  );
-                                                                }).toList(),
-                                                              );
-                                                            },
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                          width: 10,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    SizedBox(
-                                                      height: 8,
-                                                    ),
-                                                    Container(
-                                                      child: TextFormField(
-                                                        maxLines: 4,
-                                                      ),
-                                                      color:
-                                                      Colors.grey[300],
-                                                    ),
-                                                    SizedBox(
-                                                      height: 8,
-                                                    ),
-                                                  ]),
+                                                      ]),
                                                 ),
                                               ),
                                             ),
@@ -1309,26 +1584,20 @@ class CustomListView extends StatelessWidget {
                                               FlatButton(
                                                 onPressed: () {
                                                   print(Get.find<
-                                                      InboxController>()
+                                                          InboxController>()
                                                       .completeCustomActions
                                                       ?.name);
                                                   print(Get.find<
-                                                      InboxController>()
+                                                          InboxController>()
                                                       .completeCustomActions
                                                       ?.icon);
 
                                                   String data =
-                                                      'Token=${Get.find<InboxController>().secureStorage.token()}&correspondenceId=${  allCorrespondences[pos]
-                                                      .correspondenceId}&transferId=${allCorrespondences[pos]
-                                                      .transferId}&actionType=${Get.find<InboxController>().completeCustomActions?.name??""}&note=${Get.find<InboxController>().completeNote}&language=${Get.locale
-                                                      ?.languageCode == "en"
-                                                      ? "en"
-                                                      : "ar"}';
+                                                      'Token=${Get.find<InboxController>().secureStorage.token()}&correspondenceId=${allCorrespondences[pos].correspondenceId}&transferId=${allCorrespondences[pos].transferId}&actionType=Complete&note=${Get.find<InboxController>().completeNote}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}';
 
-                                                  Get.find<
-                                                      InboxController>()
-                                                      .completeInCorrespondence(data: data);
-
+                                                  Get.find<InboxController>()
+                                                      .completeInCorrespondence(
+                                                          data: data);
 
                                                   Navigator.of(ctx).pop();
                                                 },

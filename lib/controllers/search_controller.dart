@@ -12,7 +12,7 @@ import '../services/apis/find_recipient_api.dart';
 import '../services/apis/get_lookups_api.dart';
 import '../services/apis/search_correspondences_api.dart';
 
-import '../services/json_model/find_recipient_json.dart';
+import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_lookups_model.dart';
 
 import '../services/json_model/search_correspondences_model.dart';

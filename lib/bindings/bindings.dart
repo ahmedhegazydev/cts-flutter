@@ -24,7 +24,7 @@ class AllBindings extends Bindings{
     Get.lazyPut(()=>  SearchController()  );
     Get.put(  DocumentController()  ,permanent: true );
 
-    Get.lazyPut(()=>  SignaturePageController()  );
+    Get.lazyPut(()=>  SignaturePageController(),fenix: true  );
     Get.lazyPut(()=>  WebViewPageController()  );
     Get.lazyPut(()=>  SearchPageResultController()  );
     // Get.putAsync<SecureStorage>(()async => await SecureStorage());

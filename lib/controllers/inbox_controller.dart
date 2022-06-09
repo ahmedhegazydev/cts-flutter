@@ -122,9 +122,15 @@ updatecompleteCustomActions(CustomActions actions){
   @override
   void onReady() {
     super.onReady();
-    // getAllCorrespondencesData(
-    //     inboxId: inboxId, pageSize: 20, showThumbnails: false);
-      getCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false );
+
+
+
+  }
+
+
+
+  getAllData(){
+    getCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false );
     getAllCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false );
 
 
@@ -136,7 +142,10 @@ updatecompleteCustomActions(CustomActions actions){
     }
     getFindRecipientData();
 
+
   }
+
+
 
   Future<void> onRefresh() async {
    //  getCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false );
@@ -251,13 +260,14 @@ updatecompleteCustomActions(CustomActions actions){
 
 
 
-
+  Codec _codec = Codec.aacMP4;
   FlutterSoundRecorder? audioRecorder;
   FlutterSoundPlayer? audioPlayer;
   final pathToSave="audio.aac";
   bool recording=false;
   String _directoryPath = '/storage/emulated/0/SoundRecorder';
   Directory? appDocDir;
+  File? recordFile;
   Future record2()async{
 
 
@@ -274,16 +284,17 @@ updatecompleteCustomActions(CustomActions actions){
     audioRecorder!.openAudioSession();
     appDocDir = await getApplicationDocumentsDirectory();
     _directoryPath=appDocDir!.path+ '/' + DateTime.now().millisecondsSinceEpoch.toString() +
-        '.aac';
+        '.mp4';
     recording=true;
     update(["id"]);
 
 
-    await audioRecorder?.startRecorder(toFile: _directoryPath);
+    await audioRecorder?.startRecorder(codec: _codec,toFile: _directoryPath);
   }
   Future stop2()async{
 
     await audioRecorder?.stopRecorder();
+    recordFile=File(_directoryPath);
     recording=false;
     update(["id"]);
 
@@ -305,4 +316,11 @@ updatecompleteCustomActions(CustomActions actions){
       print("000000000000000000000");
     });
   }
+
+
+
+
+
+
+
 }

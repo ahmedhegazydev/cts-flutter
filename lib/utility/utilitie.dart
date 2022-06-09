@@ -13,6 +13,7 @@
 
 
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -111,3 +112,29 @@ Uint8List dataFromBase64String(String? base64String) {
 String base64String(Uint8List data) {
   return base64Encode(data);
 }
+
+
+Future<String?> audiobase64String({  File? file})async{
+String? fileString;
+  List<int>? fileBytes =   file?.readAsBytesSync();
+  if(fileBytes!=null){
+    //String base64String = base64Encode(fileBytes);
+    String base64String =base64.encode(fileBytes)  ;
+   // fileString = 'data:audio/mp4;base64,$base64String';
+  fileString = base64String;
+  }
+
+  return fileString;
+}
+
+//
+// Future<String?>  audiobase64String({  File? file})async{
+//   String? fileString;
+// Uint8List audio=await file!.readAsBytes();
+// String b64=base64.encode(audio);
+// fileString=b64;
+//
+//
+//   return fileString;
+// }
+

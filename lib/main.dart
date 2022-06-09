@@ -1,6 +1,7 @@
 
 import 'package:cts/screens/Login_page.dart';
 import 'package:cts/screens/web_view_page.dart';
+import 'package:cts/utility/all_string_const.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -30,7 +31,7 @@ void main() async {
   // print(data.customActions );
   // print("000000");
   //var bb=json.decode(a.toString());
-  // secureStorage.deleteSecureData(AllStringConst.Token);
+   secureStorage.deleteSecureData(AllStringConst.Token);
 
   Get.put(SecureStorage());
   Get.put(MController());

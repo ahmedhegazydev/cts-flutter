@@ -13,8 +13,16 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../models/CorrespondencesModel.dart';
 import '../services/apis/find_recipient_api.dart';
+import '../services/apis/inOpenDocument/get_document_audit_logs_api.dart';
+import '../services/apis/inOpenDocument/get_document_links_api.dart';
+import '../services/apis/inOpenDocument/get_document_receivers_api.dart';
+import '../services/apis/inOpenDocument/get_document_transfers_api.dart';
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_correspondences_model.dart';
+import '../services/json_model/get_document_links_model.dart';
+import '../services/json_model/get_document_logs_model.dart';
+import '../services/json_model/get_document_receivers_model.dart';
+import '../services/json_model/get_document_transfers_model.dart';
 import '../services/json_model/login_model.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
@@ -23,7 +31,61 @@ class DocumentController extends GetxController {
   SecureStorage secureStorage = SecureStorage();
   FindRecipientModel? findRecipientModel;
   final FindRecipient _findRecipient=FindRecipient();
+//===============================================
+  final   GetDocumentAuditLogsApi _getDocumentAuditLogsApi=GetDocumentAuditLogsApi();
+  GetDocumentLogsModel? getDocumentLogsModel;
+final GetDocumentLinksApi _getDocumentLinksApi=GetDocumentLinksApi();
+  GetDocumentLinksModel? getDocumentLinksModel;
+final GetDocumentReceiversApi _getDocumentReceiversApi=GetDocumentReceiversApi();
+  GetDocumentReceiversModel? getDocumentReceiversModel;
+final GetDocumentTransfersApi _getDocumentTransfersApi=GetDocumentTransfersApi();
 
+  GetDocumentTransfersModel? getDocumentTransfersModel;
+
+  getDocumentAuditLogsdata(int id){
+    _getDocumentAuditLogsApi.data="Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
+
+
+
+     _getDocumentAuditLogsApi.getData().then((value) {
+      getDocumentLogsModel=value as GetDocumentLogsModel;
+     });
+  }
+
+
+  getDocumentLinksdata({correspondenceId,transferId}){
+    _getDocumentLinksApi.data="Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode=="en"?"en":"ar"}";//"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
+
+
+
+    _getDocumentLinksApi.getData().then((value) {
+      getDocumentLinksModel=value as GetDocumentLinksModel;
+    });
+  }
+
+  getDocumentReceiversdata({correspondenceId,transferId}){
+    _getDocumentReceiversApi.data="Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode=="en"?"en":"ar"}";//"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
+
+
+
+    _getDocumentReceiversApi.getData().then((value) {
+      getDocumentReceiversModel=value as GetDocumentReceiversModel;
+    });
+  }
+
+
+
+
+  getDocumentTransfersdata({correspondenceId,transferId}){
+    _getDocumentTransfersApi.data="Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode=="en"?"en":"ar"}";//"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
+
+
+
+    _getDocumentTransfersApi.getData().then((value) {
+      getDocumentTransfersModel=value as GetDocumentTransfersModel;
+    });
+  }
+//===============================================
   List<Destination>users =[];
   List<Destination>usersWillSendTo=[] ;
   Map <String,dynamic>?logindata;

@@ -45,7 +45,7 @@ final GetDocumentTransfersApi _getDocumentTransfersApi=GetDocumentTransfersApi()
 
   GetDocumentTransfersModel? getDocumentTransfersModel;
 
-  getDocumentAuditLogsdata({required int docId}){
+  getDocumentAuditLogsdata({required String docId}){
     _getDocumentAuditLogsApi.data="Token=${secureStorage.token()}&docId=$docId&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
 
 

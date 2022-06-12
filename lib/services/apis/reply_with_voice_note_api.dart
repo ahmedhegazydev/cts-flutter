@@ -15,7 +15,7 @@ class ReplyWithVoiceNoteApi extends ApiManager{
   @override
   AbstractJsonResource fromJson(data) {
     print("tjis data from postttt    ${data}");
-   return ReplyWithVoiceNoteRequestModel.fromMap(data);
+   return ReplyWithVoiceNoteModel.fromJson(data);
   }
   
 }

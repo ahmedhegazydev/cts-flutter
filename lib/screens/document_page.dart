@@ -333,16 +333,7 @@ class DocumentPage extends GetWidget<DocumentController> {
   }
 
   _popUpMenu(context) {
-    // for (int i = 0; i < 2; i++) {
-    //   list.add(Padding(
-    //     padding: const EdgeInsets.all(8.0),
-    //     child: Container(
-    //       height: 100,
-    //       //   width: 100,
-    //       color: Colors.red,
-    //     ),
-    //   ));
-    // }
+
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -451,10 +442,8 @@ class DocumentPage extends GetWidget<DocumentController> {
                                     scrollDirection: Axis.horizontal,
                                     itemCount: controller.users.length,
                                     itemBuilder: (context, pos) {
-                                      print("*" * 100);
-                                      print(logic.users[pos].value
-                                          ?.split(" ")
-                                          .length);
+
+
                                       List<String>? a =
                                           logic.users[pos].value?.split(" ");
 
@@ -466,8 +455,15 @@ class DocumentPage extends GetWidget<DocumentController> {
                                           padding: const EdgeInsets.all(8.0),
                                           child: InkWell(
                                             onTap: () {
-                                              controller.addTousersWillSendTo(
-                                                  user: logic.users[pos]);
+                                              if(!controller.usersWillSendTo.contains(logic.users[pos])){
+
+                                                controller.addTousersWillSendTo(
+                                                    user: logic.users[pos]);
+                                                controller.SetMultipleReplyWithVoiceNoteRequestModel(correspondencesId:controller. correspondences
+                                                    .correspondenceId!,transferId:controller. correspondences
+                                                    .transferId! ,id: logic.users[pos].id!);
+                                              }
+
                                             },
                                             child: Container(
                                               decoration: BoxDecoration(
@@ -590,7 +586,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                     width: 8,
                                                   ),
                                                   Text(
-                                                    "الاسم",
+                                                    "name",
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .headline3!
@@ -610,11 +606,19 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                   Spacer(),
                                                   GestureDetector(
                                                     onTap: () {
-                                                      controller
+                                                      print("i deeeeeeeeeeeeeeeeeeeeeeee");
+                                                      controller.transfarForMany.remove(logic
+                                                          .usersWillSendTo[
+                                                      pos].id);
+                                                      logic
                                                           .delTousersWillSendTo(
                                                               user: logic
                                                                       .usersWillSendTo[
                                                                   pos]);
+
+
+
+
                                                     },
                                                     child: Image.asset(
                                                       'assets/images/close_button.png',
@@ -649,7 +653,9 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                     DropdownButton<CustomActions>(
                                                       alignment:
                                                           Alignment.topRight,
-                                                      //   value: CustomActions,
+                                                     value: logic.getactions(logic
+                                                         .usersWillSendTo[
+                                                     pos].id),
                                                       icon: const Icon(
                                                           Icons.arrow_downward),
                                                       elevation: 16,
@@ -664,6 +670,14 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                       hint: Text("اختار"),
                                                       onChanged: (CustomActions?
                                                           newValue) {
+
+
+
+
+
+                                                        controller.setactions(logic
+                                                            .usersWillSendTo[
+                                                        pos].id, newValue!);
                                                         //  dropdownValue = newValue!;
                                                       },
                                                       items: controller
@@ -697,13 +711,15 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                         children: [
                                                           GestureDetector(
                                                             onTap: () async {
-
+///To Do Start and stop rec
                                                               controller
                                                                       .recording
                                                                   ? controller
-                                                                      .stop2()
+                                                                      .stopForMany(id: logic
+                                                                  .usersWillSendTo[
+                                                              pos].id!)
                                                                   : controller
-                                                                      .record2();
+                                                                      .recordForMany();
 
                                                             },
                                                             child: Padding(
@@ -744,7 +760,11 @@ class DocumentPage extends GetWidget<DocumentController> {
                                               height: 8,
                                             ),
                                             Container(
-                                              child: TextFormField(
+                                              child: TextFormField(onChanged: (v){
+                                             controller.   setNots(id:logic
+                                                 .usersWillSendTo[
+                                             pos].id! ,not: v);
+                                              },
                                                 maxLines: 4,
                                               ),
                                               color: Colors.grey[300],
@@ -759,47 +779,24 @@ class DocumentPage extends GetWidget<DocumentController> {
                           },
                         ))
 
-                    // Container(height: 300,child: ListView.builder( itemCount: 100,itemBuilder: (context,pos){
-                    //   return  Padding(
-                    //     padding: const EdgeInsets.all(8.0),
-                    //     child: Container(color: Colors.grey,child: Column(children: [
-                    //       Row(//mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //           children: [
-                    //             Image.asset(
-                    //               'assets/images/refer.png'
-                    //               //
-                    //               ,
-                    //               height: 20,
-                    //               width: 20,
-                    //             ),
-                    //             const SizedBox(
-                    //               width: 8,
-                    //             ),
-                    //             Text(
-                    //               "refer".tr,
-                    //               style: Theme.of(context).textTheme.headline3!.copyWith(
-                    //                 color: createMaterialColor(
-                    //                   const Color.fromRGBO(77, 77, 77, 1),
-                    //                 ),
-                    //                 fontSize: 15,
-                    //               ),
-                    //               textAlign: TextAlign.center,
-                    //               overflow: TextOverflow.ellipsis,
-                    //             ),
-                    //
-                    //             Image.asset(
-                    //               'assets/images/close_button.png',
-                    //               width: 20,
-                    //               height: 20,
-                    //             ),
-                    //             Row(children: [],)
-                    //           ]),]),),
-                    //   );
-                    //
-                    // }))
+
                   ]),
             ),
-          );
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  print("i click ok");
+                  print("Get.find<InboxController>().   =>   ${controller.transfarForMany.length}");
+
+                 controller.transfarForMany.forEach((key, value) {
+
+                    print("$key      ${value.toMap()}");
+                  });
+                  //  Navigator.of(context).pop();
+                },
+                child: Text("Ok"),
+              ),
+            ],  );
         });
 
     // showCupertinoDialog(

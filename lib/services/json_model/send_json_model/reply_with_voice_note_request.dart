@@ -1,6 +1,6 @@
 import 'package:cts/services/abstract_json_resource.dart';
 
-class ReplyWithVoiceNoteRequestModel extends AbstractJsonResource{
+class ReplyWithVoiceNoteRequestModel  {
   String?  token ;
  String? userId ;
  String? language;
@@ -10,30 +10,31 @@ class ReplyWithVoiceNoteRequestModel extends AbstractJsonResource{
  String? voiceNote ;
  String? voiceNoteExt ;
  bool? voiceNotePrivate;
-
+  String? actionType;
   ReplyWithVoiceNoteRequestModel(
-      {required this.token,
-      required this.userId,
-        required this.language,
-        required  this.correspondencesId,
-        required   this.transferId,
+      {  this.token,
+        this.userId,
+          this.language,
+           this.correspondencesId,
+            this.transferId,this.actionType,
       this.notes,
       this.voiceNote,
-      this.voiceNoteExt,
+      this.voiceNoteExt="m4a",
       this.voiceNotePrivate});
 
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
 
-    data['token'] = this.token;
-    data[ 'userId'] = this.userId;
-    data['language']= this.language;
-    data['correspondencesId']   = this.correspondencesId;
-    data['transferId']   = this.transferId;
-    data['notes']   = this.notes;
-    data['voiceNote']   = this.voiceNote;
-    data['voiceNoteExt']   = this.voiceNoteExt;
-    data[ 'voiceNotePrivate']  = this.voiceNotePrivate;
+    data['Token'] = this.token;
+    data[ 'UserId'] = this.userId;
+    data['Language']= this.language;
+    data['CorrespondencesId']   = this.correspondencesId;
+    data['TransferId']   = this.transferId;
+    data['Notes']   = this.notes;
+    data['VoiceNote']   = this.voiceNote;
+    data['VoiceNoteExt']   = this.voiceNoteExt;
+    data[ 'VoiceNotePrivate']  = this.voiceNotePrivate;
+    data[ 'actionType']  = this.actionType;
      return data;
   }
 

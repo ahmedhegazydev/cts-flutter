@@ -24,8 +24,11 @@ import '../services/json_model/get_document_logs_model.dart';
 import '../services/json_model/get_document_receivers_model.dart';
 import '../services/json_model/get_document_transfers_model.dart';
 import '../services/json_model/login_model.dart';
+import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
+import '../utility/utilitie.dart';
+import 'inbox_controller.dart';
 
 class DocumentController extends GetxController {
   SecureStorage secureStorage = SecureStorage();
@@ -117,8 +120,11 @@ addTousersWillSendTo({required Destination user}){
     _findRecipient.data="Token=${secureStorage.token()}&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
     _findRecipient.getData().then((value) {
       findRecipientModel=value as FindRecipientModel;
+
+
+      Get.find<InboxController>().setFindRecipientData(findRecipientModel!);
       listOfUser(0);
-      //print(findRecipientModel?.toJson() );
+      print("tis is  findRecipientModel?.toJson()              =>  ${findRecipientModel?.toJson()}" );
     });
   }
 
@@ -236,58 +242,6 @@ Map<String,String>actions={};
   }
 
 
-  // void _createFile() async {
-  //   var _completeFileName = "oo";//await generateFileName();
-  //     appDocDir = await getApplicationDocumentsDirectory();
-  //   print("this is path of ${appDocDir!.path}");
-  //   File(appDocDir!.path + '/' + _completeFileName)
-  //       .create(recursive: true)
-  //       .then((File file) async {
-  //     //write to file
-  //     Uint8List bytes = await file.readAsBytes();
-  //     file.writeAsBytes(bytes);
-  //     print(file.path);
-  //   });
-  // }
-  // void _createDirectory() async {
-  //   bool isDirectoryCreated = await Directory(    appDocDir!.path).exists();
-  //   if (!isDirectoryCreated) {
-  //     Directory( appDocDir!.path).create()
-  //     // The created directory is returned as a Future.
-  //         .then((Directory directory) {
-  //       print(directory.path);
-  //     });
-  //   }
-  // }
-//
-// Http http = new Http();
-  // DocumentModel documentModel = new DocumentModel();
-  // bool openExportDialog = false;
-  //
-  // DocumentController() {
-  //   getDocument(Globals.documentCorrespondenceId, Globals.documentTansferId);
-  // }
-  //
-  // changeExportDialogState() {
-  //   openExportDialog = !openExportDialog;
-  //   notifyListeners();
-  // }
-  //
-  // Future getDocument(String correspondenceId, String transferId) async {
-  //   var defaultLocale = ui.window.locale.languageCode;
-  //   String token = await AppCache.getSavedUserToken();
-  //   try {
-  //     var response = await http.getRequest(Globals.url +
-  //         'CanOpenDocument?Token=$token&correspondenceId=$correspondenceId&transferId=$transferId&language=${defaultLocale == "en" ? "en" : "ar"}');
-  //     var data = jsonDecode(response.body);
-  //     documentModel = DocumentModel.fromJson(data);
-  //     notifyListeners();
-  //     return documentModel;
-  //   } catch (error) {
-  //     Exception(error);
-  //   }
-  // }
-
 
 
 
@@ -303,6 +257,9 @@ Map<String,String>actions={};
   bool recording=false;
   String _directoryPath = '/storage/emulated/0/SoundRecorder';
   Directory? appDocDir;
+  File? recordFile;
+
+  Codec _codec = Codec.aacMP4;
   Future record2()async{
 
 
@@ -345,14 +302,80 @@ Map<String,String>actions={};
 
 
 
+  Map<int, ReplyWithVoiceNoteRequestModel> transfarForMany = {};
+  Map<int, CustomActions> transfarForManyCustomActions = {};
+  // Map<int, String> transfarForManyNots = {};
+
+  CustomActions? getactions(id) {
+    return transfarForManyCustomActions[id];
+    update();
+  }
+
+  setactions(id, CustomActions customActions) {
+    transfarForManyCustomActions[id] = customActions;
+    transfarForMany[id] ?.actionType=customActions.name;
+    update();
+  }
+
+  setNots({required int id,  String? not}) {
+    transfarForMany[id] ?.notes= not;
+    update();
+  }
 
 
+  deltransfarForMany({required int id}) {
+    transfarForMany.remove(id);
+  }
 
 
+  Future recordForMany() async {
+    await Permission.storage.request();
+    await Permission.manageExternalStorage.request();
+    final stats = await Permission.microphone.request();
+
+    if (stats != PermissionStatus.granted) {
+      throw RecordingPermissionException("Microphone Permission");
+    }
+    audioRecorder = FlutterSoundRecorder();
+    audioPlayer = FlutterSoundPlayer();
+    audioRecorder!.openAudioSession();
+    appDocDir = await getApplicationDocumentsDirectory();
+    _directoryPath = appDocDir!.path +
+        '/' +
+        DateTime.now().millisecondsSinceEpoch.toString() +
+        '.mp4';
+    recording = true;
+    update( );
+
+    await audioRecorder?.startRecorder(codec: _codec, toFile: _directoryPath);
+  }
+
+  Future stopForMany({required int id}) async {
+    await audioRecorder?.stopRecorder();
+    recordFile = File(_directoryPath);
+    recording = false;
+    String? audioFileBes64 =
+    await audiobase64String(
+        file:  recordFile);
+    update( );
+    transfarForMany[id]?.voiceNote=audioFileBes64;
+
+  }
 
 
-
-
+  SetMultipleReplyWithVoiceNoteRequestModel(
+      {required int id,
+        required String transferId,
+        required String correspondencesId}) {
+    ReplyWithVoiceNoteRequestModel model = ReplyWithVoiceNoteRequestModel(
+        userId: id.toString(),
+        transferId: transferId,
+        correspondencesId: correspondencesId,
+        notes: "",
+        voiceNoteExt: "m4a",
+        language: Get.locale?.languageCode == "en" ? "en" : "ar",token:secureStorage.token() );
+    transfarForMany[id] = model;
+  }
 
 
 

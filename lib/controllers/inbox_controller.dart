@@ -20,6 +20,7 @@ import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_correspondences_all_model.dart';
 import '../services/json_model/get_correspondences_model.dart';
 import '../services/json_model/login_model.dart';
+import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
 import 'dart:developer';
@@ -28,23 +29,21 @@ import '../utility/utilitie.dart';
 import '../widgets/custom_button_with_icon.dart';
 
 class InboxController extends GetxController {
+  CompleteInCorrespondenceAPI _completeInCorrespondenceAPI =
+      CompleteInCorrespondenceAPI();
 
-
-  CompleteInCorrespondenceAPI _completeInCorrespondenceAPI =CompleteInCorrespondenceAPI();
-
-
-
-String  completeNote ="";
-  String  replyNote ="";
+  String completeNote = "";
+  String replyNote = "";
   CustomActions? completeCustomActions;
-updatecompleteCustomActions(CustomActions actions){
-  completeCustomActions =actions;
 
-  update();
-}
+// updatecompleteCustomActions({CustomActions actions,int id}){
+//   completeCustomActions =actions;
+//
+//   update();
+// }
 
-  Map <String,dynamic>?logindata;
-  String filterWord="";
+  Map<String, dynamic>? logindata;
+  String filterWord = "";
   ScrollController scrollController = ScrollController();
   int index = 0;
   int inboxId = 5;
@@ -57,13 +56,8 @@ updatecompleteCustomActions(CustomActions actions){
   GetCorrespondencesAllModel? getCorrespondencesAllModel;
   CorrespondencesModel? correspondencesModel;
 
-
-
-  List<Correspondences>correspondences = [];
-  List<Correspondences>allCorrespondences = [];
-
-
-
+  List<Correspondences> correspondences = [];
+  List<Correspondences> allCorrespondences = [];
 
   final SecureStorage secureStorage = SecureStorage();
 
@@ -73,45 +67,47 @@ updatecompleteCustomActions(CustomActions actions){
 
   bool unread = false;
 
-
-
   FindRecipientModel? findRecipientModel;
-  final FindRecipient _findRecipient=FindRecipient();
+  final FindRecipient _findRecipient = FindRecipient();
 
-
-  List<CustomActions>? customActions=[];
+  List<CustomActions>? customActions = [];
   CustomActions? customAction;
-  List<Destination>users =[];
-  List<Destination>usersWillSendTo=[] ;
-  addTousersWillSendTo({required Destination user}){
+  List<Destination> users = [];
+  List<Destination> usersWillSendTo = [];
+
+  addTousersWillSendTo({required Destination user}) {
     usersWillSendTo.add(user);
-    update();// update(["user"]);
+
+    update(); // update(["user"]);
   }
-  delTousersWillSendTo({required Destination user}){
+
+  delTousersWillSendTo({required Destination user}) {
     usersWillSendTo.remove(user);
-    update();// update(["alluser"]);
+    update(); // update(["alluser"]);
   }
 
-  listOfUser(int pos){
-    users=findRecipientModel?.sections?[pos].destination??[];
+  listOfUser(int pos) {
+    users = findRecipientModel?.sections?[pos].destination ?? [];
     update();
   }
 
-
-  filterUser(String name){
-
-    filterWord=name;
+  filterUser(String name) {
+    filterWord = name;
     update();
-
   }
-  getFindRecipientData(){
 
-    _findRecipient.data="Token=${secureStorage.token()}&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
-    _findRecipient.getData().then((value) {
-      findRecipientModel=value as FindRecipientModel;
-      listOfUser(0);
-      //print(findRecipientModel?.toJson() );
-    });
+  // getFindRecipientData(){
+  //   print("this is unbox getAllDatagetAllData ");
+  //   _findRecipient.data="Token=${secureStorage.token()}&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
+  //   _findRecipient.getData().then((value) {
+  //     findRecipientModel=value as FindRecipientModel;
+  //     listOfUser(0);
+  //      print("findRecipientModel?.toJson()             =>    ${findRecipientModel?.toJson()}" );
+  //   });
+  // }
+  setFindRecipientData(FindRecipientModel findRecipientModel) {
+    this.findRecipientModel = findRecipientModel;
+    listOfUser(0);
   }
 
   updateUnread(v) {
@@ -122,35 +118,26 @@ updatecompleteCustomActions(CustomActions actions){
   @override
   void onReady() {
     super.onReady();
-
-
-
   }
 
+  getAllData() {
+    getCorrespondencesData(
+        inboxId: inboxId, pageSize: 20, showThumbnails: false);
+    getAllCorrespondencesData(
+        inboxId: inboxId, pageSize: 20, showThumbnails: false);
 
-
-  getAllData(){
-    getCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false );
-    getAllCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false );
-
-
-
-    logindata=secureStorage.readSecureJsonData(AllStringConst.LogInData) ;
-    if(logindata!=null){
-      LoginModel data=LoginModel.fromJson(logindata!);
-      customActions=data.customActions;
+    logindata = secureStorage.readSecureJsonData(AllStringConst.LogInData);
+    if (logindata != null) {
+      LoginModel data = LoginModel.fromJson(logindata!);
+      customActions = data.customActions;
     }
-    getFindRecipientData();
-
-
+    //getFindRecipientData();
   }
-
-
 
   Future<void> onRefresh() async {
-   //  getCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false );
+    //  getCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false );
 
-   //  getAllCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false );
+    //  getAllCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false );
     print("9999999999999999999999999999999999");
   }
 
@@ -166,7 +153,7 @@ updatecompleteCustomActions(CustomActions actions){
       index++;
       addToList = true;
       if (haveMoreData) {
-      //  getAllCorrespondencesData(inboxId: inboxId);
+        //  getAllCorrespondencesData(inboxId: inboxId);
         print("reach the bottom");
       }
     }
@@ -250,77 +237,134 @@ updatecompleteCustomActions(CustomActions actions){
     canOpenDocumentApi.data =
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     canOpenDocumentApi.getData().then((value) {
-
-
-
       FindRecipientModel findRecipientModel = value as FindRecipientModel;
-
     });
   }
 
+  int userId = 0;
 
+  Map<int, ReplyWithVoiceNoteRequestModel> transfarForMany = {};
+  Map<int, CustomActions> transfarForManyCustomActions = {};
+ // Map<int, String> transfarForManyNots = {};
+
+  CustomActions? getactions(id) {
+    return transfarForManyCustomActions[id];
+    update();
+  }
+
+  setactions(id, CustomActions customActions) {
+    transfarForManyCustomActions[id] = customActions;
+    transfarForMany[id] ?.actionType=customActions.name;
+    update();
+  }
+
+  setNots({required int id,  String? not}) {
+    transfarForMany[id] ?.notes= not;
+    update();
+  }
+
+  SetMultipleReplyWithVoiceNoteRequestModel(
+      {required int id,
+      required String transferId,
+      required String correspondencesId}) {
+    ReplyWithVoiceNoteRequestModel model = ReplyWithVoiceNoteRequestModel(
+        userId: id.toString(),
+        transferId: transferId,
+        correspondencesId: correspondencesId,
+        notes: "",
+        voiceNoteExt: "m4a",
+        language: Get.locale?.languageCode == "en" ? "en" : "ar",token:secureStorage.token() );
+    transfarForMany[id] = model;
+  }
+
+  deltransfarForMany({required int id}) {
+    transfarForMany.remove(id);
+  }
 
   Codec _codec = Codec.aacMP4;
   FlutterSoundRecorder? audioRecorder;
   FlutterSoundPlayer? audioPlayer;
-  final pathToSave="audio.aac";
-  bool recording=false;
+  final pathToSave = "audio.aac";
+  bool recording = false;
   String _directoryPath = '/storage/emulated/0/SoundRecorder';
   Directory? appDocDir;
   File? recordFile;
-  Future record2()async{
 
-
+  Future record2() async {
     await Permission.storage.request();
     await Permission.manageExternalStorage.request();
-    final stats=await Permission.microphone.request();
+    final stats = await Permission.microphone.request();
 
-    if(stats !=PermissionStatus.granted){
+    if (stats != PermissionStatus.granted) {
       throw RecordingPermissionException("Microphone Permission");
-
     }
-    audioRecorder=FlutterSoundRecorder();
-    audioPlayer=FlutterSoundPlayer();
+    audioRecorder = FlutterSoundRecorder();
+    audioPlayer = FlutterSoundPlayer();
     audioRecorder!.openAudioSession();
     appDocDir = await getApplicationDocumentsDirectory();
-    _directoryPath=appDocDir!.path+ '/' + DateTime.now().millisecondsSinceEpoch.toString() +
+    _directoryPath = appDocDir!.path +
+        '/' +
+        DateTime.now().millisecondsSinceEpoch.toString() +
         '.mp4';
-    recording=true;
+    recording = true;
     update(["id"]);
 
-
-    await audioRecorder?.startRecorder(codec: _codec,toFile: _directoryPath);
+    await audioRecorder?.startRecorder(codec: _codec, toFile: _directoryPath);
   }
-  Future stop2()async{
 
+  Future stop2() async {
     await audioRecorder?.stopRecorder();
-    recordFile=File(_directoryPath);
-    recording=false;
+    recordFile = File(_directoryPath);
+    recording = false;
     update(["id"]);
-
-
-
-
-
-
-  }
-  playRec()async{
-    await   audioPlayer!.openAudioSession();
-    await    audioPlayer!.startPlayer(fromURI: _directoryPath);
   }
 
-  completeInCorrespondence({data}){
+  playRec() async {
+    await audioPlayer!.openAudioSession();
+    await audioPlayer!.startPlayer(fromURI: _directoryPath);
+  }
 
-    _completeInCorrespondenceAPI.data=data;
-    _completeInCorrespondenceAPI.getData( ).then((value) {
+  completeInCorrespondence({data}) {
+    _completeInCorrespondenceAPI.data = data;
+    _completeInCorrespondenceAPI.getData().then((value) {
       print("000000000000000000000");
     });
   }
 
 
 
+  //================================================================================================
+  Future recordForMany() async {
+    await Permission.storage.request();
+    await Permission.manageExternalStorage.request();
+    final stats = await Permission.microphone.request();
 
+    if (stats != PermissionStatus.granted) {
+      throw RecordingPermissionException("Microphone Permission");
+    }
+    audioRecorder = FlutterSoundRecorder();
+    audioPlayer = FlutterSoundPlayer();
+    audioRecorder!.openAudioSession();
+    appDocDir = await getApplicationDocumentsDirectory();
+    _directoryPath = appDocDir!.path +
+        '/' +
+        DateTime.now().millisecondsSinceEpoch.toString() +
+        '.mp4';
+    recording = true;
+    update( );
 
+    await audioRecorder?.startRecorder(codec: _codec, toFile: _directoryPath);
+  }
 
+  Future stopForMany({required int id}) async {
+    await audioRecorder?.stopRecorder();
+    recordFile = File(_directoryPath);
+    recording = false;
+    String? audioFileBes64 =
+    await audiobase64String(
+        file:  recordFile);
+    update( );
+    transfarForMany[id]?.voiceNote=audioFileBes64;
 
+  }
 }

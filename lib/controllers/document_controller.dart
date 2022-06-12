@@ -45,8 +45,8 @@ final GetDocumentTransfersApi _getDocumentTransfersApi=GetDocumentTransfersApi()
 
   GetDocumentTransfersModel? getDocumentTransfersModel;
 
-  getDocumentAuditLogsdata(int id){
-    _getDocumentAuditLogsApi.data="Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
+  getDocumentAuditLogsdata({required int docId}){
+    _getDocumentAuditLogsApi.data="Token=${secureStorage.token()}&docId=$docId&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
 
 
 
@@ -87,6 +87,14 @@ final GetDocumentTransfersApi _getDocumentTransfersApi=GetDocumentTransfersApi()
     _getDocumentTransfersApi.getData().then((value) {
       getDocumentTransfersModel=value as GetDocumentTransfersModel;
     });
+  }
+
+
+  gatAllDataAboutDOC({required String docId,required String transferId,required String correspondenceId}){
+    getDocumentAuditLogsdata(docId: docId);
+    getDocumentTransfersdata(transferId:transferId ,correspondenceId: correspondenceId);
+    getDocumentReceiversdata(correspondenceId:correspondenceId,transferId: transferId );
+    getDocumentLinksdata(transferId: transferId,correspondenceId:correspondenceId );
   }
 //===============================================
   List<Destination>users =[];

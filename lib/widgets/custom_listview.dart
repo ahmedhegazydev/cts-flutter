@@ -95,6 +95,7 @@ class CustomListView extends StatelessWidget {
                                 correspondences[pos];
 
                             Get.find<DocumentController>().loadPdf();
+                            Get.find<DocumentController>().  gatAllDataAboutDOC(docId:   correspondences[pos].purposeId!,correspondenceId:   correspondences[pos].correspondenceId!,transferId:correspondences[pos].transferId! );
                             //  Get.find<DocumentController>().loadPdf();
                             Get.toNamed("/DocumentPage");
                           },

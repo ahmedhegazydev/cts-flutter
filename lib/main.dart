@@ -87,6 +87,7 @@ class MyApp extends StatelessWidget {
           GetPage(name: "/Landing",//SearchPage(),// LandingPage()
               page: () => LandingPage(),
               transition: Transition.rightToLeft),
+
           GetPage(name: "/Filter",//
               page: () => FilterSlidePage(),
               transition: Transition.rightToLeft)

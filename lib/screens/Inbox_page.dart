@@ -402,6 +402,32 @@ class InboxPage extends GetWidget<InboxController> {
               ),
             ),
           ),
+
+          InkWell(
+            onTap: () {
+              //  Get.back();
+              Navigator.pop(context);
+            },
+            child: Container(
+              width: 40,
+              padding: const EdgeInsets.only(right: 10),
+              // height: double.infinity,
+              height: 40,
+              color: Colors.transparent,
+              // color: Colors.white,
+              child: const Image(
+                image: AssetImage(
+                  'assets/images/filter.png',
+                ),
+                fit: BoxFit.contain,
+                width: double.infinity,
+                height: double.infinity,
+                color: Colors.white,
+
+              ),
+            ),
+          ),
+
         ],
       ),
     );

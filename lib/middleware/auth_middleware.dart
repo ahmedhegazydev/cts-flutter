@@ -11,8 +11,8 @@ class AuthMiddleWare extends GetMiddleware {
   RouteSettings? redirect(String? route) {
     print(_secureStorage.readSecureData(AllStringConst.Token));
     if (_secureStorage.readSecureData(AllStringConst.Token) != null) {
-      // return const RouteSettings(name: "/Landing");
-      return const RouteSettings(name: "/Filter");
+      return const RouteSettings(name: "/Landing");
+      // return const RouteSettings(name: "/Filter");
     }
   }
 }

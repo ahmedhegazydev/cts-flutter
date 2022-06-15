@@ -1,4 +1,5 @@
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
+import 'package:cts/screens/filter/FilterSideScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -74,8 +75,19 @@ class InboxPage extends GetWidget<InboxController> {
                   Expanded(
                     child: Column(
                       children: [
+                        Visibility(
+                            visible: !controller.showHideFilterScreen,
+                            child: Expanded(
+    child: _buildTopInboxMenu(context),
+    ),
+                        ),
                         Expanded(
-                          child: _buildTopInboxMenu(context),
+                          // child: _buildTopInboxMenu(context),
+                          // child: Text("data"),
+                          child: Visibility(
+                            visible: controller.showHideFilterScreen,
+                            child: FilterSlidePage(),
+                          ),
                         ),
                         //line separator
                         Container(
@@ -406,25 +418,32 @@ class InboxPage extends GetWidget<InboxController> {
           InkWell(
             onTap: () {
               //  Get.back();
-              Navigator.pop(context);
-            },
-            child: Container(
-              width: 40,
-              padding: const EdgeInsets.only(right: 10),
-              // height: double.infinity,
-              height: 40,
-              color: Colors.transparent,
-              // color: Colors.white,
-              child: const Image(
-                image: AssetImage(
-                  'assets/images/filter.png',
-                ),
-                fit: BoxFit.contain,
-                width: double.infinity,
-                height: double.infinity,
-                color: Colors.white,
+              // Navigator.pop(context);
+              controller.showFilterScreen(!controller.showHideFilterScreen);
 
+            },
+
+            child:  Visibility(
+              child:  Container(
+                width: 40,
+                padding: const EdgeInsets.only(right: 10),
+                // height: double.infinity,
+                height: 40,
+                color: Colors.transparent,
+                // color: Colors.white,
+                child: const Image(
+                  image: AssetImage(
+                    'assets/images/filter.png',
+                  ),
+                  fit: BoxFit.contain,
+                  width: double.infinity,
+                  height: double.infinity,
+                  color: Colors.white,
+
+                ),
               ),
+              // visible: controller.showHideFilterScreen,
+              visible: true,
             ),
           ),
 
@@ -503,6 +522,8 @@ class InboxPage extends GetWidget<InboxController> {
             //               ),
             //             ],
             //           )),
+
+
             Center(
                 child: controller.getData
                     ? const Center(child: CircularProgressIndicator())
@@ -557,13 +578,7 @@ class InboxPage extends GetWidget<InboxController> {
                       children: [  
                         
                         Visibility(visible: false,child: _filterMail(context)),
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+
                         Expanded(
                           child: CustomListView(
                               function: controller.onRefresh(),

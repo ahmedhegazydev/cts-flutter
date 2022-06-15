@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -21,6 +22,8 @@ class InboxController extends GetxController {
   int inboxId = 5;
   bool haveMoreData = true;
   bool addToList = true;
+  bool showHideFilterScreen = false;
+
   final GetCorrespondencesApi _correspondencesApi = GetCorrespondencesApi();
   final GetCorrespondencesAllAPI _getCorrespondencesAllAPI =
       GetCorrespondencesAllAPI();
@@ -76,10 +79,20 @@ class InboxController extends GetxController {
     }
   }
 
+  applyFilter(){
+
+    update();
+  }
+
   @override
   void onClose() {
     super.onClose();
     scrollController.dispose();
+  }
+
+   showFilterScreen(bool show){
+    showHideFilterScreen = show;
+    update();
   }
 
   void getCorrespondencesData(

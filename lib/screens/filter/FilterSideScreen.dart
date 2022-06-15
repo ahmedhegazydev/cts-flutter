@@ -1,3 +1,4 @@
+import 'package:cts/controllers/inbox_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
@@ -37,6 +38,7 @@ class _FilterSlidePageState extends State<FilterSlidePage> {
 
 
   // final filterController = Get.put(FilterController());
+  final inboxController = Get.put(InboxController());
   String? selectedValue;
   bool? isSelected;
 
@@ -220,7 +222,7 @@ class _FilterSlidePageState extends State<FilterSlidePage> {
                     ],
                   ),
                 ),
-                listView2(),
+                ListView2(),
                 new Divider(
                   // color: Colors.red,
                   color: Colors.grey,
@@ -233,7 +235,7 @@ class _FilterSlidePageState extends State<FilterSlidePage> {
                     ],
                   ),
                 ),
-                listView3(),
+                ListView3(),
                 new Divider(
                   // color: Colors.red,
                   color: Colors.grey,
@@ -277,13 +279,20 @@ class _ListView1State extends State<ListView1> {
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
-            tileColor: _selected[index] ? Colors.blue : null,
+            // tileColor: _selected[index] ? Colors.blue : null,
             // tileColor: Colors.blue,
-            leading: Icon(Icons.check, color: Colors.white,),
+            leading: _selected[index] ? Icon(Icons.check, color: Colors.black,):
+            Icon(Icons.check, color: Colors.transparent,),
             title: Text(texts1[index]),
             onTap: () => { setState(() => {
-              _selected[index] = !_selected[index],
-                // isSelected = !isSelected
+            for( var i = 0 ; i < _selected.length; i++ ) {
+              _selected[i] = false,
+            },
+            // _selected.forEach((element) {
+            //     element = !element;
+            //     print("object");
+            //   }),
+                _selected[index] = !_selected[index],
             }),
               // Scaffold.of(context).showSnackBar(SnackBar(content: Text(index.toString())))
             }
@@ -293,40 +302,99 @@ class _ListView1State extends State<ListView1> {
   }
 }
 
-  Widget listView2() {
+
+
+class ListView2 extends StatefulWidget {
+  const ListView2({Key? key}) : super(key: key);
+
+  @override
+  State<ListView2> createState() => _ListView2State();
+}
+
+class _ListView2State extends State<ListView2> {
+
+  List<bool> _selected = List.generate(
+      texts2.length, (i) => false); // Fill it with false initially
+
+  @override
+  Widget build(BuildContext context) {
+
+
     return ListView.builder(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
-            leading: Icon(Icons.check),
-            title: Text(texts2[index]),
-            onTap: () =>
-                Scaffold.of(context)
-                    .showSnackBar(SnackBar(content: Text(index.toString()))),
+            // tileColor: _selected[index] ? Colors.blue : null,
+            // tileColor: Colors.blue,
+              leading: _selected[index] ? Icon(Icons.check, color: Colors.black,):
+              Icon(Icons.check, color: Colors.transparent,),
+              title: Text(texts2[index]),
+              onTap: () => { setState(() => {
+                for( var i = 0 ; i < _selected.length; i++ ) {
+                  _selected[i] = false,
+                },
+                // _selected.forEach((element) {
+                //     element = !element;
+                //     print("object");
+                //   }),
+                _selected[index] = !_selected[index],
+              }),
+                // Scaffold.of(context).showSnackBar(SnackBar(content: Text(index.toString())))
+              }
           );
         },
         itemCount: texts2.length);
   }
+  }
 
-  Widget listView3() {
+class ListView3 extends StatefulWidget {
+  const ListView3({Key? key}) : super(key: key);
+
+  @override
+  State<ListView3> createState() => _ListView3State();
+}
+
+class _ListView3State extends State<ListView3> {
+
+  List<bool> _selected = List.generate(
+      texts3.length, (i) => false); // Fill it with false initially
+
+  @override
+  Widget build(BuildContext context) {
     return ListView.builder(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
-            leading: Icon(Icons.check),
-            title: Text(texts3[index]),
-            onTap: () =>
-                Scaffold.of(context)
-                    .showSnackBar(SnackBar(content: Text(index.toString()))),
+            // tileColor: _selected[index] ? Colors.blue : null,
+            // tileColor: Colors.blue,
+              leading: _selected[index] ? Icon(Icons.check, color: Colors.black,):
+              Icon(Icons.check, color: Colors.transparent,),
+              title: Text(texts3[index]),
+              onTap: () => { setState(() => {
+                for( var i = 0 ; i < _selected.length; i++ ) {
+                  _selected[i] = false,
+                },
+                // _selected.forEach((element) {
+                //     element = !element;
+                //     print("object");
+                //   }),
+                _selected[index] = !_selected[index],
+              }),
+                // Scaffold.of(context).showSnackBar(SnackBar(content: Text(index.toString())))
+              }
           );
         },
         itemCount: texts3.length);
   }
+  }
 
 
   Widget myLayoutWidget() {
+
+    final inboxController = Get.put(InboxController());
+
     return Container(
       child: Row(
         children: <Widget>[
@@ -334,7 +402,9 @@ class _ListView1State extends State<ListView1> {
             child: Container(
               padding: const EdgeInsets.all(10),
               child: RaisedButton(
-                onPressed: () {},
+                onPressed: () {
+                  inboxController.applyFilter();
+                },
                 child: Text(
                   "تطبيق",
                 ),
@@ -347,7 +417,9 @@ class _ListView1State extends State<ListView1> {
               child: RaisedButton(
                 child: Text("الغاء"),
                 color: Colors.red,
-                onPressed: () {},
+                onPressed: () {
+                  inboxController.showFilterScreen(!inboxController.showHideFilterScreen);
+                },
                 padding: const EdgeInsets.all(10),
               ),
             ),

@@ -56,6 +56,7 @@ class InboxController extends GetxController {
   GetCorrespondencesAllModel? getCorrespondencesAllModel;
   CorrespondencesModel? correspondencesModel;
 
+
   List<Correspondences> correspondences = [];
   List<Correspondences> allCorrespondences = [];
 

@@ -423,6 +423,11 @@ class _InboxPageState extends State<InboxPage> {
           InkWell(onTap: (){
             Get.toNamed("SearchPage");
           },child: Icon(Icons.search,size: 50,color: Colors.white,))
+
+
+        ,  InkWell(onTap: (){
+            _popUpMenu(context);
+          },child: Icon(Icons.map,size: 50,color: Colors.white,))
    ,  SizedBox(width: 8,)   ],
       ),
     );
@@ -1374,5 +1379,179 @@ class _InboxPageState extends State<InboxPage> {
         ],
       ),
     );
+  }
+
+  _popUpMenu(context) {
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Container(color: Colors.grey,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(//mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [    const Spacer(),
+
+                      Text(
+                        "تفريغ",
+                        style: Theme.of(context).textTheme.headline3!.copyWith(
+                          color: Colors.white
+
+                          // createMaterialColor(
+                          //   const Color.fromRGBO(77, 77, 77, 1),
+                          // )
+                          ,
+                          fontSize: 15,
+                        ),
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+
+                      InkWell(onTap: (){
+
+                      },child: Icon(Icons.adjust_rounded,color:  Colors.white,)),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Text(
+                        "حذف",
+                        style: Theme.of(context).textTheme.headline3!.copyWith(
+                          color: Colors.white,
+                          fontSize: 15,
+                        ),
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+
+                      InkWell(onTap: (){
+
+                      },child: Icon(Icons.clear,color:  Colors.white,)),
+
+                      const SizedBox(
+                        width: 20,
+                      ),
+
+
+
+                      Text(
+                        "اعتماد",
+                        style: Theme.of(context).textTheme.headline3!.copyWith(
+                          color:  Colors.white,
+                          fontSize: 15,
+                        ),
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+
+                      InkWell(onTap: (){
+
+                      },child: Icon(Icons.save,color:  Colors.white,)),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                    ]),
+              ),
+            ),
+            content: SingleChildScrollView(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                            child: Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(6))),
+                                child: TextField(
+                                  decoration: const InputDecoration(
+                                    border: UnderlineInputBorder(),
+                                    labelText: 'To',
+                                  ),
+                                  onChanged: controller.filterUser,
+                                ))),
+                        const SizedBox(
+                          width: 2,
+                        ),
+                        CustomButtonWithIcon(
+                            icon: Icons.person,
+                            onClick: () {
+                              controller.listOfUser(0);
+                            }),
+                        const SizedBox(
+                          width: 2,
+                        ),
+                        CustomButtonWithIcon(
+                            icon: Icons.account_balance,
+                            onClick: () {
+                              controller.listOfUser(1);
+                            }),
+                        const SizedBox(
+                          width: 2,
+                        ),
+                        CustomButtonWithIcon(
+                            icon: Icons.person,
+                            onClick: () {
+                              controller.listOfUser(2);
+                            }),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text("referTo".tr),
+                    SizedBox(
+                        width: MediaQuery.of(context).size.width * .8,
+                        height: 100,
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                child: const Icon(Icons.clear),
+                                height: 50,
+                                width: 50,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            )],
+                        )),
+                    const Divider(
+                      color: Colors.grey,
+                    ),
+
+
+
+                  ]),
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+
+                },
+                child: Text("Ok"),
+              ),
+            ],  );
+        });
+
   }
 }

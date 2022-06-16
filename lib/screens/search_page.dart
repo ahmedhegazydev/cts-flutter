@@ -16,6 +16,7 @@ class SearchPage extends GetWidget<SearchController> {
 
   @override
   Widget build(BuildContext context) {
+
     String year = DateTime.now().toString().substring(0, 4);
     controller.context = context;
     return Scaffold(

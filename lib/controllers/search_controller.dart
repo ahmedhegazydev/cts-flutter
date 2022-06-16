@@ -205,8 +205,11 @@ class SearchController extends GetxController {
     statuses = data.transferData?.statuses;
     privacies = data.transferData?.privacies;
     priorities = data.transferData?.priorities;
-  //   getFindRecipientData();
-  //  getData();
+    getAllData();
+  }
+  getAllData(){
+    getFindRecipientData();
+    getData();
   }
 // لسته الافراد الي اختار منهم في البحث
   listOfUser(int pos) {
@@ -218,12 +221,12 @@ class SearchController extends GetxController {
   getFindRecipientData() async{
     _findRecipient.data =
     "Token=${_secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
-    _findRecipient.getData().then((value) {
+  await  _findRecipient.getData().then((value) {
       findRecipientModel = value as FindRecipientModel;
       listOfUser(0);
       //print(findRecipientModel?.toJson() );
     });
-  }
+ update(); }
   getData() async{
     print("i get ");
     _getLookupsApi.data =

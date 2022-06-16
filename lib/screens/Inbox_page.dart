@@ -420,7 +420,10 @@ class _InboxPageState extends State<InboxPage> {
               ),
             ),
           ),
-        ],
+          InkWell(onTap: (){
+            Get.toNamed("SearchPage");
+          },child: Icon(Icons.search,size: 50,color: Colors.white,))
+   ,  SizedBox(width: 8,)   ],
       ),
     );
   }

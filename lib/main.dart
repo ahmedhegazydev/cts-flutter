@@ -117,6 +117,10 @@ class MyApp extends StatelessWidget {
           GetPage(name: "/WebViewPage",
               page: () => WebViewPage( ),
               transition: Transition.rightToLeft)
+          ,
+          GetPage(name: "/SearchPage",
+              page: () => SearchPage( ),
+              transition: Transition.rightToLeft)
         ], //initialRoute:"/" ,
         // home: const MyHomePage(title: 'Flutter Demo Home Page'),
       );

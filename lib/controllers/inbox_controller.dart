@@ -23,6 +23,7 @@ class InboxController extends GetxController {
   bool haveMoreData = true;
   bool addToList = true;
   bool showHideFilterScreen = false;
+  bool showHideMyFavListScreen = false;
 
   final GetCorrespondencesApi _correspondencesApi = GetCorrespondencesApi();
   final GetCorrespondencesAllAPI _getCorrespondencesAllAPI =
@@ -92,6 +93,11 @@ class InboxController extends GetxController {
 
    showFilterScreen(bool show){
     showHideFilterScreen = show;
+    update();
+  }
+
+  showMyFavListScreen(bool show){
+    showHideMyFavListScreen = show;
     update();
   }
 

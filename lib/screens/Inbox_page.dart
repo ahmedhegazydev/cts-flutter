@@ -9,6 +9,7 @@ import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
 import '../utility/utilitie.dart';
  import '../widgets/custom_listview.dart';
+import 'my_cart/MyFavListView.dart';
 
 class InboxPage extends GetWidget<InboxController> {
   SecureStorage secureStorage = Get.find<SecureStorage>();
@@ -76,16 +77,24 @@ class InboxPage extends GetWidget<InboxController> {
                     child: Column(
                       children: [
                         Visibility(
-                            visible: !controller.showHideFilterScreen,
+                            visible: !controller.showHideFilterScreen && !controller.showHideMyFavListScreen,
                             child: Expanded(
-    child: _buildTopInboxMenu(context),
-    ),
+                              child: _buildTopInboxMenu(context),
+                            ),
                         ),
+
+                        Visibility(
+                          visible: controller.showHideMyFavListScreen,
+                          child: Expanded(
+                            child: ReorderableListViewWidget(),
+                          ),
+                        ),
+
                         Expanded(
                           // child: _buildTopInboxMenu(context),
                           // child: Text("data"),
                           child: Visibility(
-                            visible: controller.showHideFilterScreen,
+                            visible: controller.showHideFilterScreen && !controller.showHideMyFavListScreen,
                             child: FilterSlidePage(),
                           ),
                         ),
@@ -412,6 +421,39 @@ class InboxPage extends GetWidget<InboxController> {
                 width: double.infinity,
                 height: double.infinity,
               ),
+            ),
+          ),
+
+          InkWell(
+            onTap: () {
+              //  Get.back();
+              // Navigator.pop(context);
+              controller.showMyFavListScreen(!controller.showHideMyFavListScreen);
+              // controller.showFilterScreen(!controller.showHideFilterScreen);
+
+            },
+
+            child:  Visibility(
+              child:  Container(
+                width: 40,
+                padding: const EdgeInsets.only(right: 10),
+                // height: double.infinity,
+                height: 40,
+                color: Colors.transparent,
+                // color: Colors.white,
+                child: const Image(
+                  image: AssetImage(
+                    'assets/images/favorites.png',
+                  ),
+                  fit: BoxFit.contain,
+                  width: double.infinity,
+                  height: double.infinity,
+                  color: Colors.white,
+
+                ),
+              ),
+              // visible: controller.showHideFilterScreen,
+              visible: true,
             ),
           ),
 

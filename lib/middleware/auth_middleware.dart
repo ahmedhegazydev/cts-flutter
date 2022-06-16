@@ -12,6 +12,7 @@ class AuthMiddleWare extends GetMiddleware {
     print(_secureStorage.readSecureData(AllStringConst.Token));
     if (_secureStorage.readSecureData(AllStringConst.Token) != null) {
       return const RouteSettings(name: "/Landing");
+      // return const RouteSettings(name: "/InboxPage");
       // return const RouteSettings(name: "/Filter");
     }
   }

@@ -11,7 +11,7 @@ import '../utility/utilitie.dart';
 import '../widgets/custom_button_with_icon.dart';
 import '../widgets/custom_listview.dart';
 
-class InboxPage extends StatefulWidget{
+class InboxPage extends StatefulWidget {
   @override
   State<InboxPage> createState() => _InboxPageState();
 }
@@ -19,7 +19,7 @@ class InboxPage extends StatefulWidget{
 class _InboxPageState extends State<InboxPage> {
   SecureStorage secureStorage = Get.find<SecureStorage>();
 
-  InboxController controller=Get.find<InboxController>();
+  InboxController controller = Get.find<InboxController>();
 
   @override
   void initState() {
@@ -29,7 +29,6 @@ class _InboxPageState extends State<InboxPage> {
 
   @override
   Widget build(BuildContext context) {
-
     print("i get pileed");
     return SafeArea(
       child: GetBuilder<InboxController>(builder: (logic) {
@@ -41,8 +40,12 @@ class _InboxPageState extends State<InboxPage> {
   }
 
   _buildBody(BuildContext context) {
-    Orientation orientation = MediaQuery.of(context).orientation;
-    Size size = MediaQuery.of(context).size;
+    Orientation orientation = MediaQuery
+        .of(context)
+        .orientation;
+    Size size = MediaQuery
+        .of(context)
+        .size;
 
     return Container(
       width: size.width,
@@ -55,11 +58,11 @@ class _InboxPageState extends State<InboxPage> {
           //side bar
           orientation == Orientation.landscape
               ? Container(
-                  width: 260,
-                  height: size.height,
-                  color: Colors.grey.shade300,
-                  child: _buildSideMenu(context),
-                )
+            width: 260,
+            height: size.height,
+            color: Colors.grey.shade300,
+            child: _buildSideMenu(context),
+          )
               : Container(),
           Expanded(
             child: Container(
@@ -76,7 +79,10 @@ class _InboxPageState extends State<InboxPage> {
                     width: double.infinity,
                     height: 110,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme
+                          .of(context)
+                          .colorScheme
+                          .primary,
                     ),
                     child: _buildTopBar(context),
                   ),
@@ -121,7 +127,9 @@ class _InboxPageState extends State<InboxPage> {
   }
 
   Widget _filterMail(context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     return Row(
       children: [
         Container(
@@ -192,7 +200,8 @@ class _InboxPageState extends State<InboxPage> {
                       ),
                       Text(
                         "urgent".tr,
-                        style: Theme.of(context)
+                        style: Theme
+                            .of(context)
                             .textTheme
                             .headline1!
                             .copyWith(color: Colors.white, fontSize: 21),
@@ -216,7 +225,8 @@ class _InboxPageState extends State<InboxPage> {
                       ),
                       Text(
                         "secret".tr,
-                        style: Theme.of(context)
+                        style: Theme
+                            .of(context)
                             .textTheme
                             .headline1!
                             .copyWith(color: Colors.black, fontSize: 21),
@@ -272,7 +282,8 @@ class _InboxPageState extends State<InboxPage> {
                   children: [
                     Text(
                       "hello".tr,
-                      style: Theme.of(context)
+                      style: Theme
+                          .of(context)
                           .textTheme
                           .headline2!
                           .copyWith(color: Colors.grey, fontSize: 14),
@@ -281,8 +292,14 @@ class _InboxPageState extends State<InboxPage> {
                     FittedBox(
                       child: Text(
                         //  "hello".tr +
-                        "${secureStorage.readSecureData(AllStringConst.FirstName)} ${secureStorage.readSecureData(AllStringConst.LastName)}",
-                        style: Theme.of(context).textTheme.headline2!.copyWith(
+                        "${secureStorage.readSecureData(
+                            AllStringConst.FirstName)} ${secureStorage
+                            .readSecureData(AllStringConst.LastName)}",
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headline2!
+                            .copyWith(
                             color: createMaterialColor(
                               const Color.fromRGBO(77, 77, 77, 1),
                             ),
@@ -348,12 +365,16 @@ class _InboxPageState extends State<InboxPage> {
                           child: Text(
                             "sharedServicesAdministration".tr,
                             style:
-                                Theme.of(context).textTheme.headline2!.copyWith(
-                                      color: createMaterialColor(
-                                        const Color.fromRGBO(77, 77, 77, 1),
-                                      ),
-                                      fontSize: 15,
-                                    ),
+                            Theme
+                                .of(context)
+                                .textTheme
+                                .headline2!
+                                .copyWith(
+                              color: createMaterialColor(
+                                const Color.fromRGBO(77, 77, 77, 1),
+                              ),
+                              fontSize: 15,
+                            ),
                             textAlign: TextAlign.start,
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
@@ -391,7 +412,8 @@ class _InboxPageState extends State<InboxPage> {
                       left: 30, right: 30, top: 0, bottom: 0),
                   child: Text(
                     "appTitle".tr,
-                    style: Theme.of(context)
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .headline1!
                         .copyWith(color: Colors.white, fontSize: 25),
@@ -420,15 +442,28 @@ class _InboxPageState extends State<InboxPage> {
               ),
             ),
           ),
-          InkWell(onTap: (){
-            Get.toNamed("SearchPage");
-          },child: Icon(Icons.search,size: 50,color: Colors.white,))
-
-
-        ,  InkWell(onTap: (){
-            _popUpMenu(context);
-          },child: Icon(Icons.map,size: 50,color: Colors.white,))
-   ,  SizedBox(width: 8,)   ],
+          InkWell(
+              onTap: () {
+                Get.toNamed("SearchPage");
+              },
+              child: Icon(
+                Icons.search,
+                size: 50,
+                color: Colors.white,
+              )),
+          InkWell(
+              onTap: () {
+                _popUpMenu(context);
+              },
+              child: Icon(
+                Icons.map,
+                size: 50,
+                color: Colors.white,
+              )),
+          SizedBox(
+            width: 8,
+          )
+        ],
       ),
     );
   }
@@ -436,8 +471,14 @@ class _InboxPageState extends State<InboxPage> {
   _buildTopInboxMenu(BuildContext context) {
     return Container(
       color: Colors.transparent,
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
+      width: MediaQuery
+          .of(context)
+          .size
+          .width,
+      height: MediaQuery
+          .of(context)
+          .size
+          .height,
       child: DefaultTabController(
         length: 4,
         child: ContainedTabBarView(
@@ -451,14 +492,16 @@ class _InboxPageState extends State<InboxPage> {
             // ),
             Text(
               "incoming".tr,
-              style: Theme.of(context)
+              style: Theme
+                  .of(context)
                   .textTheme
                   .headline1!
                   .copyWith(color: Colors.grey, fontSize: 21),
             ),
             Text(
               "outgoing".tr,
-              style: Theme.of(context)
+              style: Theme
+                  .of(context)
                   .textTheme
                   .headline1!
                   .copyWith(color: Colors.grey, fontSize: 21),
@@ -472,9 +515,15 @@ class _InboxPageState extends State<InboxPage> {
             // ),
           ],
           tabBarProperties: TabBarProperties(
-            width: MediaQuery.of(context).size.width,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
             height: 70.0,
-            indicatorColor: Theme.of(context).colorScheme.primary,
+            indicatorColor: Theme
+                .of(context)
+                .colorScheme
+                .primary,
             indicatorWeight: 5.0,
             labelColor: Colors.black,
             unselectedLabelColor: Colors.black87,
@@ -507,505 +556,507 @@ class _InboxPageState extends State<InboxPage> {
                 child: controller.getData
                     ? const Center(child: CircularProgressIndicator())
                     : Column(
-                        children: [
-                          Visibility(
-                              visible: false, child: _filterMail(context)),
-                          Expanded(
-                            child: CustomListView(allCorrespondences:  controller.correspondences,
-                              customActions: controller.customActions,
-                              functionTrunsfer: () {
-                                print("functionTrunsfer");
-                              },
-                              functionSummary: () {
-                                print("functionSummary");
-                              },
-                              functionReply: () async {
-                                print("functionReply");
+                  children: [
+                    Visibility(
+                        visible: false, child: _filterMail(context)),
+                    Expanded(
+                      child: CustomListView(
+                        allCorrespondences: controller.correspondences,
+                        customActions: controller.customActions,
+                        functionTrunsfer: () {
+                          print("functionTrunsfer");
+                        },
+                        functionSummary: () {
+                          print("functionSummary");
+                        },
+                        functionReply: () async {
+                          print("functionReply");
 
-                                // Get.dialog(
-                                //   AlertDialog(
-                                //     title: const Text('Dialog'),
-                                //     content: const Text('This is a dialog'),
-                                //     actions: [
-                                //       TextButton(
-                                //         child: const Text("Close"),
-                                //         onPressed: () => Get.back(),
-                                //       ),
-                                //     ],
-                                //   ),
-                                // );
-                                //
-                                //   showDialog(
-                                //   context: context,
-                                //   builder: (ctx) => AlertDialog(
-                                //     title: Text("Show Alert Dialog Box"),
-                                //     content:   Padding(
-                                //       padding: const EdgeInsets.all(8.0),
-                                //       child: Container(
-                                //         color: Colors.grey[200],
-                                //         child: Column(children: [
-                                //           Row(
-                                //               crossAxisAlignment:
-                                //               CrossAxisAlignment.center,
-                                //               children: [
-                                //                 Padding(
-                                //                   padding:
-                                //                   const EdgeInsets.all(
-                                //                       8.0),
-                                //                   child: Text(
-                                //                       "name"),
-                                //                   // child: Container(
-                                //                   //   height: 50,
-                                //                   //   width: 50,
-                                //                   //   // decoration: const BoxDecoration(
-                                //                   //   //   shape: BoxShape.circle,
-                                //                   //   //   color: Colors.grey,
-                                //                   //   // ),
-                                //                   // ),
-                                //                 ),
-                                //                 SizedBox(
-                                //                   width: 8,
-                                //                 ),
-                                //                 Text(
-                                //                   "الاسم",
-                                //                   style: Theme.of(context)
-                                //                       .textTheme
-                                //                       .headline3!
-                                //                       .copyWith(
-                                //                     color:
-                                //                     createMaterialColor(
-                                //                       const Color
-                                //                           .fromRGBO(
-                                //                           77, 77, 77, 1),
-                                //                     ),
-                                //                     fontSize: 15,
-                                //                   ),
-                                //                   textAlign: TextAlign.center,
-                                //                   overflow:
-                                //                   TextOverflow.ellipsis,
-                                //                 ),
-                                //                 Spacer(),
-                                //                 GestureDetector(
-                                //                   onTap: () {
-                                //
-                                //
-                                //                   },
-                                //                   child: Image.asset(
-                                //                     'assets/images/close_button.png',
-                                //                     width: 20,
-                                //                     height: 20,
-                                //                   ),
-                                //                 ),
-                                //               ]),
-                                //           SizedBox(
-                                //             height: 4,
-                                //           ),
-                                //           Row(
-                                //             children: [
-                                //               Expanded(
-                                //                 child: Text("action".tr),
-                                //               ),
-                                //               SizedBox(
-                                //                 width: 10,
-                                //               ),
-                                //               Expanded(
-                                //                 child: Text("audioNotes".tr),
-                                //               )
-                                //             ],
-                                //           ),
-                                //           Row(
-                                //             children: [
-                                //               Expanded(
-                                //                 child: Container(
-                                //                   height: 40,
-                                //                   color: Colors.grey[300],
-                                //                   child:
-                                //                   DropdownButton<CustomActions>(
-                                //                     alignment:
-                                //                     Alignment.topRight,
-                                //                     //   value: CustomActions,
-                                //                     icon: const Icon(
-                                //                         Icons.arrow_downward),
-                                //                     elevation: 16,
-                                //                     style: const TextStyle(
-                                //                         color: Colors
-                                //                             .deepPurple),
-                                //                     underline: Container(
-                                //                       height: 2,
-                                //                       color: Colors
-                                //                           .deepPurpleAccent,
-                                //                     ),
-                                //                     hint: Text("اختار"),
-                                //                     onChanged: (CustomActions?
-                                //                     newValue) {
-                                //                       //  dropdownValue = newValue!;
-                                //                     },
-                                //                     items: controller
-                                //                         .customActions
-                                //                         ?.map<
-                                //                         DropdownMenuItem<
-                                //                             CustomActions>>(
-                                //                             (CustomActions
-                                //                         value) {
-                                //                           return DropdownMenuItem<
-                                //                               CustomActions>(
-                                //                             value: value,
-                                //                             child:
-                                //                             Text(value.name!),
-                                //                           );
-                                //                         }).toList(),
-                                //                   ),
-                                //                 ),
-                                //               ),
-                                //               const SizedBox(
-                                //                 width: 10,
-                                //               ),
-                                //               Expanded(
-                                //                 child: Container(
-                                //                     height: 40,
-                                //                     color: Colors.grey[300],
-                                //                     child: Row(
-                                //                       mainAxisAlignment:
-                                //                       MainAxisAlignment
-                                //                           .spaceBetween,
-                                //                       children: [
-                                //                         GestureDetector(
-                                //                           onTap: () async {
-                                //
-                                //                             controller
-                                //                                 .recording
-                                //                                 ? controller
-                                //                                 .stop2()
-                                //                                 : controller
-                                //                                 .record2();
-                                //
-                                //                           },
-                                //                           child: Padding(
-                                //                             padding:
-                                //                             const EdgeInsets
-                                //                                 .all(8.0),
-                                //                             child: GetBuilder<
-                                //                                 InboxController>(
-                                //                                 builder:
-                                //                                     (logic) {
-                                //                                   return Icon(controller
-                                //                                       .recording
-                                //                                       ? Icons.stop
-                                //                                       : Icons
-                                //                                       .mic);
-                                //                                 }),
-                                //                           ),
-                                //                         ),
-                                //                         Padding(
-                                //                           padding:
-                                //                           const EdgeInsets
-                                //                               .all(8.0),
-                                //                           child: InkWell(
-                                //                             onTap: () {
-                                //                               controller
-                                //                                   .playRec();
-                                //                             },
-                                //                             child: Icon(Icons
-                                //                                 .play_arrow),
-                                //                           ),
-                                //                         )
-                                //                       ],
-                                //                     )),
-                                //               )
-                                //             ],
-                                //           ),
-                                //           SizedBox(
-                                //             height: 8,
-                                //           ),
-                                //           Container(
-                                //             child: TextFormField(
-                                //               maxLines: 4,
-                                //             ),
-                                //             color: Colors.grey[300],
-                                //           ),
-                                //           SizedBox(
-                                //             height: 8,
-                                //           ),
-                                //         ]),
-                                //       ),
-                                //     ),
-                                //     actions: <Widget>[
-                                //       FlatButton(
-                                //         onPressed: () {
-                                //           Navigator.of(ctx).pop();
-                                //         },
-                                //         child: Text("Ok"),
-                                //       ),
-                                //     ],
-                                //   ),
-                                // );
-                              },
-                              functionComplet: () {
-                                print("functionComplet");
-                              },
-                              function: controller.onRefresh(),
-                              correspondences: controller.correspondences,
-                              scrollController: controller.scrollController,
-                              haveMoreData: controller.haveMoreData,
-                              onClickItem: () {
-                                //     Get.toNamed("/DocumentPage");
-                              },
-                            ),
-                          ),
-                        ],
-                      )),
+                          // Get.dialog(
+                          //   AlertDialog(
+                          //     title: const Text('Dialog'),
+                          //     content: const Text('This is a dialog'),
+                          //     actions: [
+                          //       TextButton(
+                          //         child: const Text("Close"),
+                          //         onPressed: () => Get.back(),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // );
+                          //
+                          //   showDialog(
+                          //   context: context,
+                          //   builder: (ctx) => AlertDialog(
+                          //     title: Text("Show Alert Dialog Box"),
+                          //     content:   Padding(
+                          //       padding: const EdgeInsets.all(8.0),
+                          //       child: Container(
+                          //         color: Colors.grey[200],
+                          //         child: Column(children: [
+                          //           Row(
+                          //               crossAxisAlignment:
+                          //               CrossAxisAlignment.center,
+                          //               children: [
+                          //                 Padding(
+                          //                   padding:
+                          //                   const EdgeInsets.all(
+                          //                       8.0),
+                          //                   child: Text(
+                          //                       "name"),
+                          //                   // child: Container(
+                          //                   //   height: 50,
+                          //                   //   width: 50,
+                          //                   //   // decoration: const BoxDecoration(
+                          //                   //   //   shape: BoxShape.circle,
+                          //                   //   //   color: Colors.grey,
+                          //                   //   // ),
+                          //                   // ),
+                          //                 ),
+                          //                 SizedBox(
+                          //                   width: 8,
+                          //                 ),
+                          //                 Text(
+                          //                   "الاسم",
+                          //                   style: Theme.of(context)
+                          //                       .textTheme
+                          //                       .headline3!
+                          //                       .copyWith(
+                          //                     color:
+                          //                     createMaterialColor(
+                          //                       const Color
+                          //                           .fromRGBO(
+                          //                           77, 77, 77, 1),
+                          //                     ),
+                          //                     fontSize: 15,
+                          //                   ),
+                          //                   textAlign: TextAlign.center,
+                          //                   overflow:
+                          //                   TextOverflow.ellipsis,
+                          //                 ),
+                          //                 Spacer(),
+                          //                 GestureDetector(
+                          //                   onTap: () {
+                          //
+                          //
+                          //                   },
+                          //                   child: Image.asset(
+                          //                     'assets/images/close_button.png',
+                          //                     width: 20,
+                          //                     height: 20,
+                          //                   ),
+                          //                 ),
+                          //               ]),
+                          //           SizedBox(
+                          //             height: 4,
+                          //           ),
+                          //           Row(
+                          //             children: [
+                          //               Expanded(
+                          //                 child: Text("action".tr),
+                          //               ),
+                          //               SizedBox(
+                          //                 width: 10,
+                          //               ),
+                          //               Expanded(
+                          //                 child: Text("audioNotes".tr),
+                          //               )
+                          //             ],
+                          //           ),
+                          //           Row(
+                          //             children: [
+                          //               Expanded(
+                          //                 child: Container(
+                          //                   height: 40,
+                          //                   color: Colors.grey[300],
+                          //                   child:
+                          //                   DropdownButton<CustomActions>(
+                          //                     alignment:
+                          //                     Alignment.topRight,
+                          //                     //   value: CustomActions,
+                          //                     icon: const Icon(
+                          //                         Icons.arrow_downward),
+                          //                     elevation: 16,
+                          //                     style: const TextStyle(
+                          //                         color: Colors
+                          //                             .deepPurple),
+                          //                     underline: Container(
+                          //                       height: 2,
+                          //                       color: Colors
+                          //                           .deepPurpleAccent,
+                          //                     ),
+                          //                     hint: Text("اختار"),
+                          //                     onChanged: (CustomActions?
+                          //                     newValue) {
+                          //                       //  dropdownValue = newValue!;
+                          //                     },
+                          //                     items: controller
+                          //                         .customActions
+                          //                         ?.map<
+                          //                         DropdownMenuItem<
+                          //                             CustomActions>>(
+                          //                             (CustomActions
+                          //                         value) {
+                          //                           return DropdownMenuItem<
+                          //                               CustomActions>(
+                          //                             value: value,
+                          //                             child:
+                          //                             Text(value.name!),
+                          //                           );
+                          //                         }).toList(),
+                          //                   ),
+                          //                 ),
+                          //               ),
+                          //               const SizedBox(
+                          //                 width: 10,
+                          //               ),
+                          //               Expanded(
+                          //                 child: Container(
+                          //                     height: 40,
+                          //                     color: Colors.grey[300],
+                          //                     child: Row(
+                          //                       mainAxisAlignment:
+                          //                       MainAxisAlignment
+                          //                           .spaceBetween,
+                          //                       children: [
+                          //                         GestureDetector(
+                          //                           onTap: () async {
+                          //
+                          //                             controller
+                          //                                 .recording
+                          //                                 ? controller
+                          //                                 .stop2()
+                          //                                 : controller
+                          //                                 .record2();
+                          //
+                          //                           },
+                          //                           child: Padding(
+                          //                             padding:
+                          //                             const EdgeInsets
+                          //                                 .all(8.0),
+                          //                             child: GetBuilder<
+                          //                                 InboxController>(
+                          //                                 builder:
+                          //                                     (logic) {
+                          //                                   return Icon(controller
+                          //                                       .recording
+                          //                                       ? Icons.stop
+                          //                                       : Icons
+                          //                                       .mic);
+                          //                                 }),
+                          //                           ),
+                          //                         ),
+                          //                         Padding(
+                          //                           padding:
+                          //                           const EdgeInsets
+                          //                               .all(8.0),
+                          //                           child: InkWell(
+                          //                             onTap: () {
+                          //                               controller
+                          //                                   .playRec();
+                          //                             },
+                          //                             child: Icon(Icons
+                          //                                 .play_arrow),
+                          //                           ),
+                          //                         )
+                          //                       ],
+                          //                     )),
+                          //               )
+                          //             ],
+                          //           ),
+                          //           SizedBox(
+                          //             height: 8,
+                          //           ),
+                          //           Container(
+                          //             child: TextFormField(
+                          //               maxLines: 4,
+                          //             ),
+                          //             color: Colors.grey[300],
+                          //           ),
+                          //           SizedBox(
+                          //             height: 8,
+                          //           ),
+                          //         ]),
+                          //       ),
+                          //     ),
+                          //     actions: <Widget>[
+                          //       FlatButton(
+                          //         onPressed: () {
+                          //           Navigator.of(ctx).pop();
+                          //         },
+                          //         child: Text("Ok"),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // );
+                        },
+                        functionComplet: () {
+                          print("functionComplet");
+                        },
+                        function: controller.onRefresh(),
+                        correspondences: controller.correspondences,
+                        scrollController: controller.scrollController,
+                        haveMoreData: controller.haveMoreData,
+                        onClickItem: () {
+                          //     Get.toNamed("/DocumentPage");
+                        },
+                      ),
+                    ),
+                  ],
+                )),
             Center(
                 child: controller.getData
                     ? const Center(child: CircularProgressIndicator())
                     : Column(
-                        children: [
-                          Visibility(
-                              visible: false, child: _filterMail(context)),
-                          Expanded(
-                            child: CustomListView(allCorrespondences: controller.correspondences,
-                              customActions: controller.customActions,
-                              functionTrunsfer: () {
-                                print("functionTrunsfer");
-                              },
-                              functionSummary: () {
-                                print("functionSummary");
-                              },
-                              functionReply: () {
-                                print("functionReply");
+                  children: [
+                    Visibility(
+                        visible: false, child: _filterMail(context)),
+                    Expanded(
+                      child: CustomListView(
+                        allCorrespondences: controller.correspondences,
+                        customActions: controller.customActions,
+                        functionTrunsfer: () {
+                          print("functionTrunsfer");
+                        },
+                        functionSummary: () {
+                          print("functionSummary");
+                        },
+                        functionReply: () {
+                          print("functionReply");
 
-                                //
-                                // Get.dialog(
-                                //   AlertDialog(
-                                //     title: const Text('Dialog'),
-                                //     content: const Text('This is a dialog'),
-                                //     actions: [
-                                //       TextButton(
-                                //         child: const Text("Close"),
-                                //         onPressed: () => Get.back(),
-                                //       ),
-                                //     ],
-                                //   ),
-                                // );
+                          //
+                          // Get.dialog(
+                          //   AlertDialog(
+                          //     title: const Text('Dialog'),
+                          //     content: const Text('This is a dialog'),
+                          //     actions: [
+                          //       TextButton(
+                          //         child: const Text("Close"),
+                          //         onPressed: () => Get.back(),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // );
 
-                                //   showDialog(
-                                //   context: context,
-                                //   builder: (ctx) => AlertDialog(
-                                //     title: Text("Show Alert Dialog Box"),
-                                //     content:   Padding(
-                                //       padding: const EdgeInsets.all(8.0),
-                                //       child: Container(
-                                //         color: Colors.grey[200],
-                                //         child: Column(children: [
-                                //           Row(
-                                //               crossAxisAlignment:
-                                //               CrossAxisAlignment.center,
-                                //               children: [
-                                //                 Padding(
-                                //                   padding:
-                                //                   const EdgeInsets.all(
-                                //                       8.0),
-                                //                   child: Text(
-                                //                       "name"),
-                                //                   // child: Container(
-                                //                   //   height: 50,
-                                //                   //   width: 50,
-                                //                   //   // decoration: const BoxDecoration(
-                                //                   //   //   shape: BoxShape.circle,
-                                //                   //   //   color: Colors.grey,
-                                //                   //   // ),
-                                //                   // ),
-                                //                 ),
-                                //                 SizedBox(
-                                //                   width: 8,
-                                //                 ),
-                                //                 Text(
-                                //                   "الاسم",
-                                //                   style: Theme.of(context)
-                                //                       .textTheme
-                                //                       .headline3!
-                                //                       .copyWith(
-                                //                     color:
-                                //                     createMaterialColor(
-                                //                       const Color
-                                //                           .fromRGBO(
-                                //                           77, 77, 77, 1),
-                                //                     ),
-                                //                     fontSize: 15,
-                                //                   ),
-                                //                   textAlign: TextAlign.center,
-                                //                   overflow:
-                                //                   TextOverflow.ellipsis,
-                                //                 ),
-                                //                 Spacer(),
-                                //                 GestureDetector(
-                                //                   onTap: () {
-                                //
-                                //
-                                //                   },
-                                //                   child: Image.asset(
-                                //                     'assets/images/close_button.png',
-                                //                     width: 20,
-                                //                     height: 20,
-                                //                   ),
-                                //                 ),
-                                //               ]),
-                                //           SizedBox(
-                                //             height: 4,
-                                //           ),
-                                //           Row(
-                                //             children: [
-                                //               Expanded(
-                                //                 child: Text("action".tr),
-                                //               ),
-                                //               SizedBox(
-                                //                 width: 10,
-                                //               ),
-                                //               Expanded(
-                                //                 child: Text("audioNotes".tr),
-                                //               )
-                                //             ],
-                                //           ),
-                                //           Row(
-                                //             children: [
-                                //               Expanded(
-                                //                 child: Container(
-                                //                   height: 40,
-                                //                   color: Colors.grey[300],
-                                //                   child:
-                                //                   DropdownButton<CustomActions>(
-                                //                     alignment:
-                                //                     Alignment.topRight,
-                                //                     //   value: CustomActions,
-                                //                     icon: const Icon(
-                                //                         Icons.arrow_downward),
-                                //                     elevation: 16,
-                                //                     style: const TextStyle(
-                                //                         color: Colors
-                                //                             .deepPurple),
-                                //                     underline: Container(
-                                //                       height: 2,
-                                //                       color: Colors
-                                //                           .deepPurpleAccent,
-                                //                     ),
-                                //                     hint: Text("اختار"),
-                                //                     onChanged: (CustomActions?
-                                //                     newValue) {
-                                //                       //  dropdownValue = newValue!;
-                                //                     },
-                                //                     items: controller
-                                //                         .customActions
-                                //                         ?.map<
-                                //                         DropdownMenuItem<
-                                //                             CustomActions>>(
-                                //                             (CustomActions
-                                //                         value) {
-                                //                           return DropdownMenuItem<
-                                //                               CustomActions>(
-                                //                             value: value,
-                                //                             child:
-                                //                             Text(value.name!),
-                                //                           );
-                                //                         }).toList(),
-                                //                   ),
-                                //                 ),
-                                //               ),
-                                //               const SizedBox(
-                                //                 width: 10,
-                                //               ),
-                                //               Expanded(
-                                //                 child: Container(
-                                //                     height: 40,
-                                //                     color: Colors.grey[300],
-                                //                     child: Row(
-                                //                       mainAxisAlignment:
-                                //                       MainAxisAlignment
-                                //                           .spaceBetween,
-                                //                       children: [
-                                //                         GestureDetector(
-                                //                           onTap: () async {
-                                //
-                                //                             controller
-                                //                                 .recording
-                                //                                 ? controller
-                                //                                 .stop2()
-                                //                                 : controller
-                                //                                 .record2();
-                                //
-                                //                           },
-                                //                           child: Padding(
-                                //                             padding:
-                                //                             const EdgeInsets
-                                //                                 .all(8.0),
-                                //                             child: GetBuilder<
-                                //                                 InboxController>(
-                                //                                 builder:
-                                //                                     (logic) {
-                                //                                   return Icon(controller
-                                //                                       .recording
-                                //                                       ? Icons.stop
-                                //                                       : Icons
-                                //                                       .mic);
-                                //                                 }),
-                                //                           ),
-                                //                         ),
-                                //                         Padding(
-                                //                           padding:
-                                //                           const EdgeInsets
-                                //                               .all(8.0),
-                                //                           child: InkWell(
-                                //                             onTap: () {
-                                //                               controller
-                                //                                   .playRec();
-                                //                             },
-                                //                             child: Icon(Icons
-                                //                                 .play_arrow),
-                                //                           ),
-                                //                         )
-                                //                       ],
-                                //                     )),
-                                //               )
-                                //             ],
-                                //           ),
-                                //           SizedBox(
-                                //             height: 8,
-                                //           ),
-                                //           Container(
-                                //             child: TextFormField(
-                                //               maxLines: 4,
-                                //             ),
-                                //             color: Colors.grey[300],
-                                //           ),
-                                //           SizedBox(
-                                //             height: 8,
-                                //           ),
-                                //         ]),
-                                //       ),
-                                //     ),
-                                //     actions: <Widget>[
-                                //       FlatButton(
-                                //         onPressed: () {
-                                //           Navigator.of(ctx).pop();
-                                //         },
-                                //         child: Text("Ok"),
-                                //       ),
-                                //     ],
-                                //   ),
-                                // );
-                              },
-                              functionComplet: () {
-                                print("functionComplet");
-                              },
-                              function: controller.onRefresh(),
-                              correspondences: controller.correspondences,
-                              scrollController: controller.scrollController,
-                              haveMoreData: controller.haveMoreData,
-                              onClickItem: () {
-                                Get.toNamed("/DocumentPage");
-                              },
-                            ),
-                          ),
-                        ],
-                      )),
+                          //   showDialog(
+                          //   context: context,
+                          //   builder: (ctx) => AlertDialog(
+                          //     title: Text("Show Alert Dialog Box"),
+                          //     content:   Padding(
+                          //       padding: const EdgeInsets.all(8.0),
+                          //       child: Container(
+                          //         color: Colors.grey[200],
+                          //         child: Column(children: [
+                          //           Row(
+                          //               crossAxisAlignment:
+                          //               CrossAxisAlignment.center,
+                          //               children: [
+                          //                 Padding(
+                          //                   padding:
+                          //                   const EdgeInsets.all(
+                          //                       8.0),
+                          //                   child: Text(
+                          //                       "name"),
+                          //                   // child: Container(
+                          //                   //   height: 50,
+                          //                   //   width: 50,
+                          //                   //   // decoration: const BoxDecoration(
+                          //                   //   //   shape: BoxShape.circle,
+                          //                   //   //   color: Colors.grey,
+                          //                   //   // ),
+                          //                   // ),
+                          //                 ),
+                          //                 SizedBox(
+                          //                   width: 8,
+                          //                 ),
+                          //                 Text(
+                          //                   "الاسم",
+                          //                   style: Theme.of(context)
+                          //                       .textTheme
+                          //                       .headline3!
+                          //                       .copyWith(
+                          //                     color:
+                          //                     createMaterialColor(
+                          //                       const Color
+                          //                           .fromRGBO(
+                          //                           77, 77, 77, 1),
+                          //                     ),
+                          //                     fontSize: 15,
+                          //                   ),
+                          //                   textAlign: TextAlign.center,
+                          //                   overflow:
+                          //                   TextOverflow.ellipsis,
+                          //                 ),
+                          //                 Spacer(),
+                          //                 GestureDetector(
+                          //                   onTap: () {
+                          //
+                          //
+                          //                   },
+                          //                   child: Image.asset(
+                          //                     'assets/images/close_button.png',
+                          //                     width: 20,
+                          //                     height: 20,
+                          //                   ),
+                          //                 ),
+                          //               ]),
+                          //           SizedBox(
+                          //             height: 4,
+                          //           ),
+                          //           Row(
+                          //             children: [
+                          //               Expanded(
+                          //                 child: Text("action".tr),
+                          //               ),
+                          //               SizedBox(
+                          //                 width: 10,
+                          //               ),
+                          //               Expanded(
+                          //                 child: Text("audioNotes".tr),
+                          //               )
+                          //             ],
+                          //           ),
+                          //           Row(
+                          //             children: [
+                          //               Expanded(
+                          //                 child: Container(
+                          //                   height: 40,
+                          //                   color: Colors.grey[300],
+                          //                   child:
+                          //                   DropdownButton<CustomActions>(
+                          //                     alignment:
+                          //                     Alignment.topRight,
+                          //                     //   value: CustomActions,
+                          //                     icon: const Icon(
+                          //                         Icons.arrow_downward),
+                          //                     elevation: 16,
+                          //                     style: const TextStyle(
+                          //                         color: Colors
+                          //                             .deepPurple),
+                          //                     underline: Container(
+                          //                       height: 2,
+                          //                       color: Colors
+                          //                           .deepPurpleAccent,
+                          //                     ),
+                          //                     hint: Text("اختار"),
+                          //                     onChanged: (CustomActions?
+                          //                     newValue) {
+                          //                       //  dropdownValue = newValue!;
+                          //                     },
+                          //                     items: controller
+                          //                         .customActions
+                          //                         ?.map<
+                          //                         DropdownMenuItem<
+                          //                             CustomActions>>(
+                          //                             (CustomActions
+                          //                         value) {
+                          //                           return DropdownMenuItem<
+                          //                               CustomActions>(
+                          //                             value: value,
+                          //                             child:
+                          //                             Text(value.name!),
+                          //                           );
+                          //                         }).toList(),
+                          //                   ),
+                          //                 ),
+                          //               ),
+                          //               const SizedBox(
+                          //                 width: 10,
+                          //               ),
+                          //               Expanded(
+                          //                 child: Container(
+                          //                     height: 40,
+                          //                     color: Colors.grey[300],
+                          //                     child: Row(
+                          //                       mainAxisAlignment:
+                          //                       MainAxisAlignment
+                          //                           .spaceBetween,
+                          //                       children: [
+                          //                         GestureDetector(
+                          //                           onTap: () async {
+                          //
+                          //                             controller
+                          //                                 .recording
+                          //                                 ? controller
+                          //                                 .stop2()
+                          //                                 : controller
+                          //                                 .record2();
+                          //
+                          //                           },
+                          //                           child: Padding(
+                          //                             padding:
+                          //                             const EdgeInsets
+                          //                                 .all(8.0),
+                          //                             child: GetBuilder<
+                          //                                 InboxController>(
+                          //                                 builder:
+                          //                                     (logic) {
+                          //                                   return Icon(controller
+                          //                                       .recording
+                          //                                       ? Icons.stop
+                          //                                       : Icons
+                          //                                       .mic);
+                          //                                 }),
+                          //                           ),
+                          //                         ),
+                          //                         Padding(
+                          //                           padding:
+                          //                           const EdgeInsets
+                          //                               .all(8.0),
+                          //                           child: InkWell(
+                          //                             onTap: () {
+                          //                               controller
+                          //                                   .playRec();
+                          //                             },
+                          //                             child: Icon(Icons
+                          //                                 .play_arrow),
+                          //                           ),
+                          //                         )
+                          //                       ],
+                          //                     )),
+                          //               )
+                          //             ],
+                          //           ),
+                          //           SizedBox(
+                          //             height: 8,
+                          //           ),
+                          //           Container(
+                          //             child: TextFormField(
+                          //               maxLines: 4,
+                          //             ),
+                          //             color: Colors.grey[300],
+                          //           ),
+                          //           SizedBox(
+                          //             height: 8,
+                          //           ),
+                          //         ]),
+                          //       ),
+                          //     ),
+                          //     actions: <Widget>[
+                          //       FlatButton(
+                          //         onPressed: () {
+                          //           Navigator.of(ctx).pop();
+                          //         },
+                          //         child: Text("Ok"),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // );
+                        },
+                        functionComplet: () {
+                          print("functionComplet");
+                        },
+                        function: controller.onRefresh(),
+                        correspondences: controller.correspondences,
+                        scrollController: controller.scrollController,
+                        haveMoreData: controller.haveMoreData,
+                        onClickItem: () {
+                          Get.toNamed("/DocumentPage");
+                        },
+                      ),
+                    ),
+                  ],
+                )),
             // Center(
             //     child: controller.getData
             //         ? const Center(child: CircularProgressIndicator())
@@ -1137,7 +1188,8 @@ class _InboxPageState extends State<InboxPage> {
       height: calculateHeight(50, context),
       child: Text(
         title,
-        style: Theme.of(context)
+        style: Theme
+            .of(context)
             .textTheme
             .headline2!
             .copyWith(color: Colors.grey.shade500, fontSize: 15),
@@ -1166,12 +1218,16 @@ class _InboxPageState extends State<InboxPage> {
                     : FractionalOffset.centerRight,
                 child: Text(
                   "allInbox".tr,
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
-                        color: createMaterialColor(
-                          Color.fromRGBO(100, 100, 100, 1),
-                        ),
-                        fontSize: 20,
-                      ),
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .headline1!
+                      .copyWith(
+                    color: createMaterialColor(
+                      Color.fromRGBO(100, 100, 100, 1),
+                    ),
+                    fontSize: 20,
+                  ),
                   textAlign: TextAlign.start,
                 ),
               ),
@@ -1186,7 +1242,11 @@ class _InboxPageState extends State<InboxPage> {
                   : FractionalOffset.centerRight,
               child: Text(
                 "forAction".tr,
-                style: Theme.of(context).textTheme.headline1!.copyWith(
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .headline1!
+                    .copyWith(
                     color: createMaterialColor(
                       const Color.fromRGBO(100, 100, 100, 1),
                     ),
@@ -1203,12 +1263,16 @@ class _InboxPageState extends State<InboxPage> {
                   : FractionalOffset.centerRight,
               child: Text(
                 "forSignature".tr,
-                style: Theme.of(context).textTheme.headline1!.copyWith(
-                      color: createMaterialColor(
-                        const Color.fromRGBO(100, 100, 100, 1),
-                      ),
-                      fontSize: 20,
-                    ),
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .headline1!
+                    .copyWith(
+                  color: createMaterialColor(
+                    const Color.fromRGBO(100, 100, 100, 1),
+                  ),
+                  fontSize: 20,
+                ),
                 textAlign: TextAlign.start,
               ),
             ),
@@ -1222,12 +1286,16 @@ class _InboxPageState extends State<InboxPage> {
                   : FractionalOffset.centerRight,
               child: Text(
                 "forInfo".tr,
-                style: Theme.of(context).textTheme.headline1!.copyWith(
-                      color: createMaterialColor(
-                        Color.fromRGBO(100, 100, 100, 1),
-                      ),
-                      fontSize: 20,
-                    ),
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .headline1!
+                    .copyWith(
+                  color: createMaterialColor(
+                    Color.fromRGBO(100, 100, 100, 1),
+                  ),
+                  fontSize: 20,
+                ),
                 textAlign: TextAlign.start,
               ),
             ),
@@ -1238,7 +1306,9 @@ class _InboxPageState extends State<InboxPage> {
   }
 
   _buildBotomMenuInboxes(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     return Container(
       padding: const EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 0),
       // width: double.infinity,
@@ -1257,12 +1327,16 @@ class _InboxPageState extends State<InboxPage> {
                       : FractionalOffset.centerLeft,
                   child: Text(
                     "allInbox".tr,
-                    style: Theme.of(context).textTheme.headline1!.copyWith(
-                          color: createMaterialColor(
-                            Color.fromRGBO(100, 100, 100, 1),
-                          ),
-                          fontSize: 20,
-                        ),
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .headline1!
+                        .copyWith(
+                      color: createMaterialColor(
+                        Color.fromRGBO(100, 100, 100, 1),
+                      ),
+                      fontSize: 20,
+                    ),
                     textAlign: TextAlign.start,
                   ),
                 ),
@@ -1279,7 +1353,11 @@ class _InboxPageState extends State<InboxPage> {
                     : FractionalOffset.centerLeft,
                 child: Text(
                   "forAction".tr,
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .headline1!
+                      .copyWith(
                       color: createMaterialColor(
                         const Color.fromRGBO(100, 100, 100, 1),
                       ),
@@ -1298,12 +1376,16 @@ class _InboxPageState extends State<InboxPage> {
                     : FractionalOffset.centerLeft,
                 child: Text(
                   "forSignature".tr,
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
-                        color: createMaterialColor(
-                          const Color.fromRGBO(100, 100, 100, 1),
-                        ),
-                        fontSize: 20,
-                      ),
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .headline1!
+                      .copyWith(
+                    color: createMaterialColor(
+                      const Color.fromRGBO(100, 100, 100, 1),
+                    ),
+                    fontSize: 20,
+                  ),
                   textAlign: TextAlign.start,
                 ),
               ),
@@ -1319,12 +1401,16 @@ class _InboxPageState extends State<InboxPage> {
                     : FractionalOffset.centerLeft,
                 child: Text(
                   "forInfo".tr,
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
-                        color: createMaterialColor(
-                          Color.fromRGBO(100, 100, 100, 1),
-                        ),
-                        fontSize: 20,
-                      ),
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .headline1!
+                      .copyWith(
+                    color: createMaterialColor(
+                      Color.fromRGBO(100, 100, 100, 1),
+                    ),
+                    fontSize: 20,
+                  ),
                   textAlign: TextAlign.start,
                 ),
               ),
@@ -1368,7 +1454,8 @@ class _InboxPageState extends State<InboxPage> {
               width: double.infinity,
               child: Text(
                 title,
-                style: Theme.of(context)
+                style: Theme
+                    .of(context)
                     .textTheme
                     .headline1!
                     .copyWith(color: Colors.grey, fontSize: 20),
@@ -1382,20 +1469,28 @@ class _InboxPageState extends State<InboxPage> {
   }
 
   _popUpMenu(context) {
-
     showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Container(color: Colors.grey,
+            title: Container(
+              color: Colors.grey,
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width * .8,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Row(//mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [    const Spacer(),
-
+                child: Row( //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Spacer(),
                       Text(
                         "تفريغ",
-                        style: Theme.of(context).textTheme.headline3!.copyWith(
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headline3!
+                            .copyWith(
                           color: Colors.white
 
                           // createMaterialColor(
@@ -1410,16 +1505,22 @@ class _InboxPageState extends State<InboxPage> {
                       const SizedBox(
                         width: 8,
                       ),
-
-                      InkWell(onTap: (){
-
-                      },child: Icon(Icons.adjust_rounded,color:  Colors.white,)),
+                      InkWell(
+                          onTap: () {},
+                          child: Icon(
+                            Icons.adjust_rounded,
+                            color: Colors.white,
+                          )),
                       const SizedBox(
                         width: 20,
                       ),
                       Text(
                         "حذف",
-                        style: Theme.of(context).textTheme.headline3!.copyWith(
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headline3!
+                            .copyWith(
                           color: Colors.white,
                           fontSize: 15,
                         ),
@@ -1429,21 +1530,23 @@ class _InboxPageState extends State<InboxPage> {
                       const SizedBox(
                         width: 8,
                       ),
-
-                      InkWell(onTap: (){
-
-                      },child: Icon(Icons.clear,color:  Colors.white,)),
-
+                      InkWell(
+                          onTap: () {},
+                          child: Icon(
+                            Icons.clear,
+                            color: Colors.white,
+                          )),
                       const SizedBox(
                         width: 20,
                       ),
-
-
-
                       Text(
                         "اعتماد",
-                        style: Theme.of(context).textTheme.headline3!.copyWith(
-                          color:  Colors.white,
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headline3!
+                            .copyWith(
+                          color: Colors.white,
                           fontSize: 15,
                         ),
                         textAlign: TextAlign.center,
@@ -1452,106 +1555,296 @@ class _InboxPageState extends State<InboxPage> {
                       const SizedBox(
                         width: 8,
                       ),
-
-                      InkWell(onTap: (){
-
-                      },child: Icon(Icons.save,color:  Colors.white,)),
+                      InkWell(
+                          onTap: () {},
+                          child: Icon(
+                            Icons.save,
+                            color: Colors.white,
+                          )),
                       const SizedBox(
                         width: 20,
                       ),
                     ]),
               ),
             ),
-            content: SingleChildScrollView(
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            content:
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              GetBuilder<InboxController>(builder: (logic) {
+                return Row(
                   children: [
-                    const SizedBox(
-                      height: 10,
+                    Expanded(
+                      flex: 4,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: ListTile(
+                              title: const Text('اطلاع'),
+                              leading: Radio(
+                                value: 0,
+                                groupValue: logic.valueOfRadio,
+                                onChanged: logic.setValueOfRadio,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: ListTile(
+                              title: const Text('اطلاع و تعديل'),
+                              leading: Radio(
+                                value: 1,
+                                groupValue: logic.valueOfRadio,
+                                onChanged: logic.setValueOfRadio,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    Row(
+                    Expanded(
+                      flex: 1,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            "*",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                          Text("Opertion Type"),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              }),
+              Row(
+                children: [
+                  Expanded(
+                      flex: 4,
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                        ),
+                      )),
+                  Expanded(
+                      flex: 1,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [Text(
+                          "*",
+                          style: TextStyle(color: Colors.red),
+                        ),
+                          Text('محفظتي'),
+                        ],
+                      )),
+                ],
+              ),
+              SizedBox(height: 8,),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 4,
+                    child: Container(decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey, width: 1)),
+                      height: 40,
+
+                      child: DropdownButton<CustomActions>(
+                        alignment: Alignment.topRight,
+                        value: null,
+                        icon: const Icon(Icons.arrow_downward),
+                        elevation: 16,
+                        style: const TextStyle(color: Colors.deepPurple),
+                        underline: Container(
+                          height: 2,
+                          color: Colors.deepPurpleAccent,
+                        ),
+                        hint: Text("اختار"),
+                        onChanged: (CustomActions? newValue) {},
+                        items: controller.customActions
+                            ?.map<DropdownMenuItem<CustomActions>>(
+                                (CustomActions value) {
+                              return DropdownMenuItem<CustomActions>(
+                                value: value,
+                                child: Text(value.name!),
+                              );
+                            }).toList(),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                      flex: 1,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [Text(
+                          "*",
+                          style: TextStyle(color: Colors.red),
+                        ),
+                          Text('الاسم'),
+                        ],
+                      )),
+                ],
+              ),
+          SizedBox(height: 8,),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 4,
+                    child: Row(mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Expanded(
-                            child: Container(
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(6))),
-                                child: TextField(
-                                  decoration: const InputDecoration(
-                                    border: UnderlineInputBorder(),
-                                    labelText: 'To',
-                                  ),
-                                  onChanged: controller.filterUser,
-                                ))),
-                        const SizedBox(
-                          width: 2,
+                        GetBuilder<InboxController>(
+                          assignId: true,
+                          builder: (logic) {
+                            return Checkbox(onChanged:logic.setalwes, value: logic.alwes,);
+                          },
                         ),
-                        CustomButtonWithIcon(
-                            icon: Icons.person,
-                            onClick: () {
-                              controller.listOfUser(0);
-                            }),
-                        const SizedBox(
-                          width: 2,
-                        ),
-                        CustomButtonWithIcon(
-                            icon: Icons.account_balance,
-                            onClick: () {
-                              controller.listOfUser(1);
-                            }),
-                        const SizedBox(
-                          width: 2,
-                        ),
-                        CustomButtonWithIcon(
-                            icon: Icons.person,
-                            onClick: () {
-                              controller.listOfUser(2);
-                            }),
                       ],
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text("referTo".tr),
-                    SizedBox(
-                        width: MediaQuery.of(context).size.width * .8,
-                        height: 100,
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                child: const Icon(Icons.clear),
-                                height: 50,
-                                width: 50,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.grey,
-                                ),
+                  ),
+                  Expanded(
+                      flex: 1,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text('دائم'),
+                        ],
+                      )),
+                ],
+              ),
+
+              Row(
+                children: [
+                  Expanded(
+                    flex: 4,
+                    child: InkWell(onTap: () {
+                      controller.selectFromDocDate(context: context);
+                    },
+                      child: Container(
+                          height: 60,
+                          padding: EdgeInsets.only(right: 8, left: 8),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color:Colors.grey
+                                  //
+                                  // Theme
+                                  //     .of(context)
+                                  //     .colorScheme
+                                  //     .primary
+
+
                               ),
-                            )],
-                        )),
-                    const Divider(
-                      color: Colors.grey,
+                              borderRadius: const BorderRadius.all(
+                                  Radius.circular(6))),
+                          child:
+                          TextField(enabled: false,textAlign: TextAlign.center,
+                            controller: controller.textEditingControllerFromDocDate,
+                            decoration: const InputDecoration(
+                              border: UnderlineInputBorder(),
+                              labelText: '',
+                            ),
+                          )
+                      ),
                     ),
+                  ),
+                  Expanded(
+                      flex: 1,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [Text(
+                          "*",
+                          style: TextStyle(color: Colors.red),
+                        ),
+                          Text('من تاريخ'),
+                        ],
+                      )),
+                ],
+              ),
+              SizedBox(height: 8,),
+
+              Row(
+                children: [
+                  Expanded(
+                    flex: 4,
+                    child: InkWell(onTap: () {
+                      controller.selectToDocDate(context: context);
+                    },
+                      child: Container(
+                          height: 60,
+                          padding: EdgeInsets.only(right: 8, left: 8),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color:Colors.grey
+                                //
+                                // Theme
+                                //     .of(context)
+                                //     .colorScheme
+                                //     .primary
+
+
+                              ),
+                              borderRadius: const BorderRadius.all(
+                                  Radius.circular(6))),
+                          child:
+                          TextField(enabled: false,textAlign: TextAlign.center,
+                            controller: controller.textEditingControllerToDocDate,
+                            decoration: const InputDecoration(
+                              border: UnderlineInputBorder(),
+                              labelText: '',
+                            ),
+                          )
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                      flex: 1,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [Text(
+                          "*",
+                          style: TextStyle(color: Colors.red),
+                        ),
+                          Text('الي تاريخ'),
+                        ],
+                      )),
+                ],
+              ),
+              SizedBox(height: 8,),
+              TextField( textAlign: TextAlign.center,
+                controller: controller.textEditingControllerSearch,
+                decoration: const InputDecoration( border: OutlineInputBorder(),
+
+                  labelText: 'البحث',
+                ),
+              ),
+              SizedBox(height: 8,),
+
+Container(height: 80,color: Colors.grey[200],child: Row(children: [
+  Expanded(
+  child:   GetBuilder<InboxController>(
+
+    assignId: true,
+
+    builder: (logic) {
+
+      return ListTile(title: Text("الي"),leading: Checkbox(onChanged:logic.setalwes, value: logic.alwes,),);
+
+    },
+
+  ),
+),
+  Container(color: Colors.black,width: 2, height: 60),
+
+Expanded(child: Text("محفظتي"))
 
 
 
-                  ]),
-            ),
+]),)
+
+            ]),
             actions: <Widget>[
               TextButton(
-                onPressed: () {
-
-                },
+                onPressed: () {},
                 child: Text("Ok"),
               ),
-            ],  );
+            ],
+          );
         });
-
   }
 }

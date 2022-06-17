@@ -5,6 +5,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -35,7 +36,17 @@ class InboxController extends GetxController {
   String completeNote = "";
   String replyNote = "";
   CustomActions? completeCustomActions;
-
+  static const String title = 'Radio Button Example';
+  int? valueOfRadio = 1;
+bool? alwes=false;
+  setValueOfRadio(int? v){
+    valueOfRadio=v;
+    update();
+  }
+  setalwes( bool? v){
+    alwes=v;
+    update();
+  }
 // updatecompleteCustomActions({CustomActions actions,int id}){
 //   completeCustomActions =actions;
 //
@@ -75,6 +86,16 @@ class InboxController extends GetxController {
   CustomActions? customAction;
   List<Destination> users = [];
   List<Destination> usersWillSendTo = [];
+
+
+
+
+
+
+  TextEditingController textEditingControllerFromDocDate = TextEditingController();
+  TextEditingController textEditingControllerToDocDate = TextEditingController();
+  TextEditingController textEditingControllerSearch= TextEditingController();
+
 
   addTousersWillSendTo({required Destination user}) {
     usersWillSendTo.add(user);
@@ -367,5 +388,41 @@ class InboxController extends GetxController {
     update( );
     transfarForMany[id]?.voiceNote=audioFileBes64;
 
+  }
+
+
+
+
+
+
+  Future<void> selectFromDocDate({required BuildContext context}) async {
+    final DateTime? pickedDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2050));
+    if (pickedDate != null) {
+      textEditingControllerFromDocDate.text = pickedDate.toString().substring(0, 10);
+
+      var outputFormat = DateFormat('dd/MM/yyyy');
+      var outputDate = outputFormat.format(pickedDate);
+     //fromDocDate.toString();
+      update();
+    }
+  }
+
+  Future<void> selectToDocDate({required BuildContext context}) async {
+    final DateTime? pickedDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2050));
+    if (pickedDate != null) {
+      textEditingControllerToDocDate.text = pickedDate.toString().substring(0, 10);
+      var outputFormat = DateFormat('dd/MM/yyyy');
+      var outputDate = outputFormat.format(pickedDate);
+
+      update();
+    }
   }
 }

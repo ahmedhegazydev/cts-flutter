@@ -1568,160 +1568,210 @@ class _InboxPageState extends State<InboxPage> {
               ),
             ),
             content:
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              GetBuilder<InboxController>(builder: (logic) {
-                return Row(
+            Container(height: MediaQuery.of(context).size.height*.8,
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                GetBuilder<InboxController>(builder: (logic) {
+                  return Row(
+                    children: [
+                      Expanded(
+                        flex: 4,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: ListTile(
+                                title: const Text('اطلاع'),
+                                leading: Radio(
+                                  value: 0,
+                                  groupValue: logic.valueOfRadio,
+                                  onChanged: logic.setValueOfRadio,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: ListTile(
+                                title: const Text('اطلاع و تعديل'),
+                                leading: Radio(
+                                  value: 1,
+                                  groupValue: logic.valueOfRadio,
+                                  onChanged: logic.setValueOfRadio,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              "*",
+                              style: TextStyle(color: Colors.red),
+                            ),
+                            Text("Opertion Type"),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                }),
+                Row(
                   children: [
                     Expanded(
-                      flex: 4,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: ListTile(
-                              title: const Text('اطلاع'),
-                              leading: Radio(
-                                value: 0,
-                                groupValue: logic.valueOfRadio,
-                                onChanged: logic.setValueOfRadio,
-                              ),
-                            ),
+                        flex: 4,
+                        child: TextField(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
                           ),
-                          Expanded(
-                            child: ListTile(
-                              title: const Text('اطلاع و تعديل'),
-                              leading: Radio(
-                                value: 1,
-                                groupValue: logic.valueOfRadio,
-                                onChanged: logic.setValueOfRadio,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                        )),
                     Expanded(
-                      flex: 1,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
+                        flex: 1,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [Text(
                             "*",
                             style: TextStyle(color: Colors.red),
                           ),
-                          Text("Opertion Type"),
-                        ],
-                      ),
-                    ),
+                            Text('محفظتي'),
+                          ],
+                        )),
                   ],
-                );
-              }),
-              Row(
-                children: [
-                  Expanded(
+                ),
+                SizedBox(height: 8,),
+                Row(
+                  children: [
+                    Expanded(
                       flex: 4,
-                      child: TextField(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                        ),
-                      )),
-                  Expanded(
-                      flex: 1,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [Text(
-                          "*",
-                          style: TextStyle(color: Colors.red),
-                        ),
-                          Text('محفظتي'),
-                        ],
-                      )),
-                ],
-              ),
-              SizedBox(height: 8,),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 4,
-                    child: Container(decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey, width: 1)),
-                      height: 40,
+                      child: Container(decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey, width: 1)),
+                        height: 40,
 
-                      child: DropdownButton<CustomActions>(
-                        alignment: Alignment.topRight,
-                        value: null,
-                        icon: const Icon(Icons.arrow_downward),
-                        elevation: 16,
-                        style: const TextStyle(color: Colors.deepPurple),
-                        underline: Container(
-                          height: 2,
-                          color: Colors.deepPurpleAccent,
+                        child: DropdownButton<CustomActions>(
+                          alignment: Alignment.topRight,
+                          value: null,
+                          icon: const Icon(Icons.arrow_downward),
+                          elevation: 16,
+                          style: const TextStyle(color: Colors.deepPurple),
+                          underline: Container(
+                            height: 2,
+                            color: Colors.deepPurpleAccent,
+                          ),
+                          hint: Text("اختار"),
+                          onChanged: (CustomActions? newValue) {},
+                          items: controller.customActions
+                              ?.map<DropdownMenuItem<CustomActions>>(
+                                  (CustomActions value) {
+                                return DropdownMenuItem<CustomActions>(
+                                  value: value,
+                                  child: Text(value.name!),
+                                );
+                              }).toList(),
                         ),
-                        hint: Text("اختار"),
-                        onChanged: (CustomActions? newValue) {},
-                        items: controller.customActions
-                            ?.map<DropdownMenuItem<CustomActions>>(
-                                (CustomActions value) {
-                              return DropdownMenuItem<CustomActions>(
-                                value: value,
-                                child: Text(value.name!),
-                              );
-                            }).toList(),
                       ),
                     ),
-                  ),
-                  Expanded(
-                      flex: 1,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [Text(
-                          "*",
-                          style: TextStyle(color: Colors.red),
-                        ),
-                          Text('الاسم'),
-                        ],
-                      )),
-                ],
-              ),
+                    Expanded(
+                        flex: 1,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [Text(
+                            "*",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                            Text('الاسم'),
+                          ],
+                        )),
+                  ],
+                ),
           SizedBox(height: 8,),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 4,
-                    child: Row(mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        GetBuilder<InboxController>(
-                          assignId: true,
-                          builder: (logic) {
-                            return Checkbox(onChanged:logic.setalwes, value: logic.alwes,);
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                      flex: 1,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 4,
+                      child: Row(mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text('دائم'),
+                          GetBuilder<InboxController>(
+                            assignId: true,
+                            builder: (logic) {
+                              return Checkbox(onChanged:logic.setalwes, value: logic.alwes,);
+                            },
+                          ),
                         ],
-                      )),
-                ],
-              ),
+                      ),
+                    ),
+                    Expanded(
+                        flex: 1,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text('دائم'),
+                          ],
+                        )),
+                  ],
+                ),
 
-              Row(
-                children: [
-                  Expanded(
-                    flex: 4,
-                    child: InkWell(onTap: () {
-                      controller.selectFromDocDate(context: context);
-                    },
-                      child: Container(
-                          height: 60,
-                          padding: EdgeInsets.only(right: 8, left: 8),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color:Colors.grey
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 4,
+                      child: InkWell(onTap: () {
+                        controller.selectFromDocDate(context: context);
+                      },
+                        child: Container(
+                            height: 60,
+                            padding: EdgeInsets.only(right: 8, left: 8),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color:Colors.grey
+                                    //
+                                    // Theme
+                                    //     .of(context)
+                                    //     .colorScheme
+                                    //     .primary
+
+
+                                ),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(6))),
+                            child:
+                            TextField(enabled: false,textAlign: TextAlign.center,
+                              controller: controller.textEditingControllerFromDocDate,
+                              decoration: const InputDecoration(
+                                border: UnderlineInputBorder(),
+                                labelText: '',
+                              ),
+                            )
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                        flex: 1,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [Text(
+                            "*",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                            Text('من تاريخ'),
+                          ],
+                        )),
+                  ],
+                ),
+                SizedBox(height: 8,),
+
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 4,
+                      child: InkWell(onTap: () {
+                        controller.selectToDocDate(context: context);
+                      },
+                        child: Container(
+                            height: 60,
+                            padding: EdgeInsets.only(right: 8, left: 8),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color:Colors.grey
                                   //
                                   // Theme
                                   //     .of(context)
@@ -1729,115 +1779,168 @@ class _InboxPageState extends State<InboxPage> {
                                   //     .primary
 
 
+                                ),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(6))),
+                            child:
+                            TextField(enabled: false,textAlign: TextAlign.center,
+                              controller: controller.textEditingControllerToDocDate,
+                              decoration: const InputDecoration(
+                                border: UnderlineInputBorder(),
+                                labelText: '',
                               ),
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(6))),
-                          child:
-                          TextField(enabled: false,textAlign: TextAlign.center,
-                            controller: controller.textEditingControllerFromDocDate,
-                            decoration: const InputDecoration(
-                              border: UnderlineInputBorder(),
-                              labelText: '',
-                            ),
-                          )
+                            )
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                      flex: 1,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [Text(
-                          "*",
-                          style: TextStyle(color: Colors.red),
-                        ),
-                          Text('من تاريخ'),
-                        ],
-                      )),
-                ],
-              ),
-              SizedBox(height: 8,),
-
-              Row(
-                children: [
-                  Expanded(
-                    flex: 4,
-                    child: InkWell(onTap: () {
-                      controller.selectToDocDate(context: context);
-                    },
-                      child: Container(
-                          height: 60,
-                          padding: EdgeInsets.only(right: 8, left: 8),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color:Colors.grey
-                                //
-                                // Theme
-                                //     .of(context)
-                                //     .colorScheme
-                                //     .primary
-
-
-                              ),
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(6))),
-                          child:
-                          TextField(enabled: false,textAlign: TextAlign.center,
-                            controller: controller.textEditingControllerToDocDate,
-                            decoration: const InputDecoration(
-                              border: UnderlineInputBorder(),
-                              labelText: '',
-                            ),
-                          )
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                      flex: 1,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [Text(
-                          "*",
-                          style: TextStyle(color: Colors.red),
-                        ),
-                          Text('الي تاريخ'),
-                        ],
-                      )),
-                ],
-              ),
-              SizedBox(height: 8,),
-              TextField( textAlign: TextAlign.center,
-                controller: controller.textEditingControllerSearch,
-                decoration: const InputDecoration( border: OutlineInputBorder(),
-
-                  labelText: 'البحث',
+                    Expanded(
+                        flex: 1,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [Text(
+                            "*",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                            Text('الي تاريخ'),
+                          ],
+                        )),
+                  ],
                 ),
-              ),
-              SizedBox(height: 8,),
+                SizedBox(height: 8,),
+                TextField( textAlign: TextAlign.center,
+                  controller: controller.textEditingControllerSearch,
+                  decoration: const InputDecoration( border: OutlineInputBorder(),
 
-Container(height: 80,color: Colors.grey[200],child: Row(children: [
-  Expanded(
-  child:   GetBuilder<InboxController>(
+                    labelText: 'البحث',
+                  ),
+                ),
+                SizedBox(height: 8,),
 
-    assignId: true,
+Container(height: 60,color: Colors.grey[200],child:
+Row(children: [
 
-    builder: (logic) {
 
-      return ListTile(title: Text("الي"),leading: Checkbox(onChanged:logic.setalwes, value: logic.alwes,),);
-
-    },
-
+  Expanded(flex: 3,
+    child: Row(mainAxisAlignment: MainAxisAlignment.end,
+      children: [  Text("الصلاحيات"),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(color: Colors.black,width: 2, height: 60),),
+      ],
+    ),
   ),
-),
-  Container(color: Colors.black,width: 2, height: 60),
+  Expanded(flex: 3,
+    child: Row(mainAxisAlignment: MainAxisAlignment.end,
+      children: [  Text("الي تاريخ"),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(color: Colors.black,width: 2, height: 60),),
+      ],
+    ),
+  ),
+  Expanded(flex: 3,
+    child: Row(mainAxisAlignment: MainAxisAlignment.end,
+      children: [  Text("من تاريخ"),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(color: Colors.black,width: 2, height: 60),),
+      ],
+    ),
+  ),
+  Expanded(flex: 3,
+    child: Row(mainAxisAlignment: MainAxisAlignment.end,
+      children: [  Text("محفظتي"),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(color: Colors.black,width: 2, height: 60),),
+       ],
+    ),
+  ),
 
-Expanded(child: Text("محفظتي"))
 
+  Expanded(flex: 2,
+    child:   GetBuilder<InboxController>(
 
+      assignId: true,
+
+      builder: (logic) {
+
+        return ListTile(title: Checkbox(onChanged:logic.setalwes, value: logic.alwes,),leading: Text("الي"),);
+
+      },
+
+    ),
+  ),
 
 ]),)
+,Expanded(
+  child:   Container(width: MediaQuery.of(context).size.width,
+                      child:
+                  ListView.builder(shrinkWrap: true, itemCount: 100,itemBuilder: (context,pos){
+    return
 
-            ]),
+      Row(children: [
+
+
+        Expanded(flex: 3,
+          child: Row(mainAxisAlignment: MainAxisAlignment.end,
+            children: [  Text("الصلاحيات"),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container( width: 2, height: 60),),
+            ],
+          ),
+        ),
+        Expanded(flex: 3,
+          child: Row(mainAxisAlignment: MainAxisAlignment.end,
+            children: [  Text("الي تاريخ"),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container( width: 2, height: 60),),
+            ],
+          ),
+        ),
+        Expanded(flex: 3,
+          child: Row(mainAxisAlignment: MainAxisAlignment.end,
+            children: [  Text("من تاريخ"),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container( width: 2, height: 60),),
+            ],
+          ),
+        ),
+        Expanded(flex: 3,
+          child: Row(mainAxisAlignment: MainAxisAlignment.end,
+            children: [  Text("محفظتي"),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container( width: 2, height: 60),),
+            ],
+          ),
+        ),
+
+
+        Expanded(flex: 2,
+          child:   GetBuilder<InboxController>(
+
+            assignId: true,
+
+            builder: (logic) {
+
+              return ListTile(title: Checkbox(onChanged:logic.setalwes, value: logic.alwes,),leading: Text(" "),);
+
+            },
+
+          ),
+        ),
+
+      ]);
+                  })
+  
+                  ),
+)
+              ]),
+            ),
             actions: <Widget>[
               TextButton(
                 onPressed: () {},

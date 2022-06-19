@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 import '../utility/all_const.dart';
 import '../utility/storage.dart';
 
-class  MController extends GetxController{
-
+class MController extends GetxController {
   Color pickerColor = Color(0xff443a49);
   Color currentColor = Color(0xff443a49);
-  Color appcolor=AppColor;
-  setAppColor(Color color){
-    appcolor=color;
+  Color appcolor = AppColor;
+
+  setAppColor(Color color) {
+    appcolor = color;
 
     update();
   }
@@ -19,11 +18,11 @@ class  MController extends GetxController{
   @override
   void onInit() {
     super.onInit();
-  int? a=  Get.find<SecureStorage>().readAppColor();
-     if(a!=null){
-       setAppColor(Color(a));
-     }else{
-       setAppColor(AppColor);
-     }
+    int? a = Get.find<SecureStorage>().readAppColor();
+    if (a != null) {
+      setAppColor(Color(a));
+    } else {
+      setAppColor(AppColor);
+    }
   }
 }

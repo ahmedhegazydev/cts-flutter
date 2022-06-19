@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class ReorderableListViewWidget extends StatefulWidget {
-  const ReorderableListViewWidget({Key? key}) : super(key: key);
+class MyFavListViewWidget extends StatefulWidget {
+  const MyFavListViewWidget({Key? key}) : super(key: key);
 
   @override
-  State<ReorderableListViewWidget> createState() => _ReorderableListViewState();
+  State<MyFavListViewWidget> createState() => _ReorderableListViewState();
 }
 
-class _ReorderableListViewState extends State<ReorderableListViewWidget> {
-  final List<int> _items = List<int>.generate(3, (int index) => index);
+class _ReorderableListViewState extends State<MyFavListViewWidget> {
+  // final List<int> _items = List<int>.generate(3, (int index) => index);
   final List<String> texts3 = [
     "الكتب الاسلاميه",
     "الكتب الاجنبيه",
@@ -16,6 +16,7 @@ class _ReorderableListViewState extends State<ReorderableListViewWidget> {
     "الكتب المرعبه",
     "الكتب الجديده كليا",
   ];
+
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
@@ -25,7 +26,7 @@ class _ReorderableListViewState extends State<ReorderableListViewWidget> {
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.all(20),
-        color: Colors.transparent,
+        // color: Colors.transparent,
         child: ReorderableListView(
           padding: const EdgeInsets.symmetric(horizontal: 40),
           children: <Widget>[
@@ -44,8 +45,10 @@ class _ReorderableListViewState extends State<ReorderableListViewWidget> {
               if (oldIndex < newIndex) {
                 newIndex -= 1;
               }
-              final int item = _items.removeAt(oldIndex);
-              _items.insert(newIndex, item);
+              // final int item = _items.removeAt(oldIndex);
+              // _items.insert(newIndex, item);
+              final String item = texts3.removeAt(oldIndex);
+              texts3.insert(newIndex, item);
             });
           },
         ),

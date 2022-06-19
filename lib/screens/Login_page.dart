@@ -382,7 +382,6 @@ class LoginPage extends GetWidget<LoginController> {
       pickerColor: pickerColor,
       onColorChanged: (Color color) {
         Get.find<MController>().setAppColor(color);
-
         print(color);
         pickerColor = color;
       },

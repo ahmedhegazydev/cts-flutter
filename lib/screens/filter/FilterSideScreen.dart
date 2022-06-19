@@ -240,7 +240,7 @@ class _FilterSlidePageState extends State<FilterSlidePage> {
                   // color: Colors.red,
                   color: Colors.grey,
                 ),
-                myLayoutWidget(),
+                myLayoutWidget(context),
               ],
             ),
           ),
@@ -391,7 +391,7 @@ class _ListView3State extends State<ListView3> {
   }
 
 
-  Widget myLayoutWidget() {
+  Widget myLayoutWidget(BuildContext context) {
 
     final inboxController = Get.put(InboxController());
 
@@ -404,6 +404,8 @@ class _ListView3State extends State<ListView3> {
               child: RaisedButton(
                 onPressed: () {
                   inboxController.applyFilter();
+                      Navigator.of(context).pop();
+
                 },
                 child: Text(
                   "تطبيق",
@@ -418,7 +420,9 @@ class _ListView3State extends State<ListView3> {
                 child: Text("الغاء"),
                 color: Colors.red,
                 onPressed: () {
-                  inboxController.showFilterScreen(!inboxController.showHideFilterScreen);
+                  // inboxController.showFilterScreen(!inboxController.showHideFilterScreen);
+                      Navigator.of(context).pop();
+
                 },
                 padding: const EdgeInsets.all(10),
               ),

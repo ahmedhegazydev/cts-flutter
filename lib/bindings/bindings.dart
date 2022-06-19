@@ -1,6 +1,4 @@
-
-
-
+import 'package:cts/controllers/my_cart/create_basket_controller.dart';
 import 'package:get/get.dart';
 
 import '../controllers/document_controller.dart';
@@ -10,19 +8,17 @@ import '../controllers/login_controller.dart';
 import '../controllers/search_controller.dart';
 import '../utility/storage.dart';
 
-class AllBindings extends Bindings{
+class AllBindings extends Bindings {
   @override
-  void dependencies()async {
-
-    Get. lazyPut(() => SecureStorage()  );
-    Get.put( LoginController()  );
-    Get.put( InboxController()  );
-    Get.lazyPut(()=>  LandingPageController()  );
-    Get.lazyPut(()=>  SearchController()  );
-    Get.put(  DocumentController()  ,permanent: true );
+  void dependencies() async {
+    Get.lazyPut(() => SecureStorage());
+    Get.put(LoginController());
+    Get.put(InboxController());
+    Get.put(CreateBasketController());
+    Get.lazyPut(() => LandingPageController());
+    Get.lazyPut(() => SearchController());
+    Get.put(DocumentController(), permanent: true);
 
     // Get.putAsync<SecureStorage>(()async => await SecureStorage());
-
   }
-
 }

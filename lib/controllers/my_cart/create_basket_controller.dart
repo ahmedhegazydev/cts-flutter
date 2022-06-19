@@ -16,6 +16,7 @@ class CreateBasketController extends GetxController {
   Color pickerColor = Colors.transparent;
 
   setPickerColor(Color newColor){
+    print(newColor);
     pickerColor =  newColor;
     update();
   }

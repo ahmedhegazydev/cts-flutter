@@ -172,7 +172,7 @@ class _CreateNewBasketState extends State<CreateNewBasket> {
                             "pick your Color",
                             style: TextStyle(
                                 backgroundColor:  _.pickerColor ,
-                                // color:  controller.pickerColor
+                                color:  _.pickerColor
                             )
                         );
                       },
@@ -231,12 +231,12 @@ class _CreateNewBasketState extends State<CreateNewBasket> {
 
   Widget buildColorPicker() {
     return ColorPicker(
-      pickerColor: controller.pickerColor,
+      pickerColor: Get.find<CreateBasketController>().pickerColor,
       onColorChanged: (Color color) {
         // Get.find<MController>().setAppColor(color);
-        print(color);
-
-        controller.setPickerColor(color);
+        // print(color);
+        // controller.setPickerColor(color);
+        Get.find<CreateBasketController>().setPickerColor(color);
         // setState(() {
         //   controller.setPickerColor(color);
         // });

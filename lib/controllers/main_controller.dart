@@ -19,7 +19,7 @@ class  MController extends GetxController{
   @override
   void onInit() {
     super.onInit();
-  int? a=  Get.find<SecureStorage>().readAppColor();
+  int? a= SecureStorage().readAppColor();
      if(a!=null){
        setAppColor(Color(a));
      }else{

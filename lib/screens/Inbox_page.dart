@@ -1568,7 +1568,7 @@ class _InboxPageState extends State<InboxPage> {
               ),
             ),
             content:
-            Container(height: MediaQuery.of(context).size.height*.8,
+            Container(height: MediaQuery.of(context).size.height*.6,width:  MediaQuery.of(context).size.width*.6,
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 GetBuilder<InboxController>(builder: (logic) {
                   return Row(

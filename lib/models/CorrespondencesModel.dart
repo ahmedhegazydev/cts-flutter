@@ -53,6 +53,8 @@ class Inbox {
 }
 
 class Correspondences {
+
+      bool isSelect=false;
   late final bool? canRequestDueDate;
   late final String? categoryId;
   late final bool? clickableLock;
@@ -87,6 +89,7 @@ class Correspondences {
   late final String? visualTrackingUrl;
   late final bool? isTransferedToContact;
   Correspondences({
+    this.isSelect=false,
     this.canRequestDueDate,
     this.categoryId,
     this.clickableLock,
@@ -123,6 +126,7 @@ class Correspondences {
   });
 
   Correspondences.fromJson(Map<String, dynamic> json) {
+    isSelect=false;
     canRequestDueDate = json['CanRequestDueDate'];
     categoryId = json['CategoryId'];
     clickableLock = json['ClickableLock'];

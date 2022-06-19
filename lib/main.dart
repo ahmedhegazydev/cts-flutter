@@ -1,5 +1,6 @@
 
 import 'package:cts/screens/Login_page.dart';
+import 'package:cts/screens/basket_page.dart';
 import 'package:cts/screens/web_view_page.dart';
 import 'package:cts/services/json_model/send_json_model/reply_with_voice_note_request.dart';
 import 'package:cts/utility/all_string_const.dart';
@@ -34,7 +35,7 @@ void main() async {
   //var bb=json.decode(a.toString());
  //  secureStorage.deleteSecureData(AllStringConst.Token);
 
-  Get.put(SecureStorage());
+  //Get.put(SecureStorage());
   Get.put(MController());
 
 
@@ -121,7 +122,10 @@ class MyApp extends StatelessWidget {
           GetPage(name: "/SearchPage",
               page: () => SearchPage( ),
               transition: Transition.rightToLeft)
-        ], //initialRoute:"/" ,
+          ,
+          GetPage(name: "/BasketPage",
+              page: () => BasketPage( ),
+              transition: Transition.rightToLeft) ], //initialRoute:"/" ,
         // home: const MyHomePage(title: 'Flutter Demo Home Page'),
       );
     });

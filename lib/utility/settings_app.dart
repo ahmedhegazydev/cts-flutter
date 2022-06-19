@@ -1,5 +1,5 @@
 class SettingsApp {
-  static const String baseUrl = 'http://192.168.1.2:9091/Mobility/CMS.svc/';
+  static const String baseUrl = 'http://192.168.1.129:9091/Mobility/CMS.svc/';
   static const String loginUrl =baseUrl;
   static const String FindRecipientUrl =baseUrl+"FindRecipient?typeId=&criteria=*&";//Token=oeXQq9ZIRfxAu8ixipXg&language=en";
 
@@ -18,4 +18,9 @@ class SettingsApp {
   static const String GetDocumentLogsUrl =baseUrl+"GetDocumentLogs?";//
   static const String GetDocumentLinksUrl =baseUrl+"GetDocumentLinks?";//
   static const String GetDocumentReceiversUrl =baseUrl+"GetDocumentReceivers?";//
+  static const String GetFetchBasketListUrl =baseUrl+"FetchBasketList?";//
+  static const String PostAddEditBasketFlagUrl =baseUrl+"AddEditBasketFlag";//
+  static const String PostAddDocumentsToBasketUrl =baseUrl+"AddDocumentsToBasket";//
+  static const String PostRemoveItemsFromBasketUrl =baseUrl+"RemoveItemsFromBasket";//
+
 }

@@ -3,6 +3,7 @@
 
 import 'package:get/get.dart';
 
+import '../controllers/basket_controller.dart';
 import '../controllers/document_controller.dart';
 import '../controllers/inbox_controller.dart';
 import '../controllers/landing_page_controller.dart';
@@ -27,6 +28,8 @@ class AllBindings extends Bindings{
     Get.lazyPut(()=>  SignaturePageController(),fenix: true  );
     Get.lazyPut(()=>  WebViewPageController()  );
     Get.lazyPut(()=>  SearchPageResultController()  );
+
+    Get.lazyPut(()=>  BasketController()  );
     // Get.putAsync<SecureStorage>(()async => await SecureStorage());
 
   }

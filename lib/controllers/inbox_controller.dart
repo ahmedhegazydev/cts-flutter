@@ -10,6 +10,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../models/CorrespondencesModel.dart';
+import '../services/apis/basket/add_documents_to_basket_api.dart';
 import '../services/apis/can_open_document.dart';
 import '../services/apis/complete_in_correspondence_api.dart';
 import '../services/apis/find_recipient_api.dart';
@@ -17,6 +18,7 @@ import '../services/apis/get_correspondences_all_api.dart';
 import '../services/apis/get_correspondences_api.dart';
 
 //import '../services/json_model/get_correspondences_model.dart';
+import '../services/json_model/basket/add_documents_to_basket_request.dart';
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_correspondences_all_model.dart';
 import '../services/json_model/get_correspondences_model.dart';
@@ -33,10 +35,27 @@ class InboxController extends GetxController {
   CompleteInCorrespondenceAPI _completeInCorrespondenceAPI =
       CompleteInCorrespondenceAPI();
 
+
+  List<int>listSelectCorrespondences=[];
+addDocumentsToBasket(){
+  AddDocumentsToBasketRequest addDocumentsToBasketRequest=AddDocumentsToBasketRequest(basketId: 1, language: "ar",token:"8888" ,documentIds:[] );
+  AddEDocumentsToBasketApi addEDocumentsToBasketApi=AddEDocumentsToBasketApi();
+
+  addEDocumentsToBasketApi.post(addDocumentsToBasketRequest.toMap()).then((value) {});
+}
+
+
+
+
+
+updateSelect(v){
+
+}
+
   String completeNote = "";
   String replyNote = "";
   CustomActions? completeCustomActions;
-  static const String title = 'Radio Button Example';
+
   int? valueOfRadio = 1;
 bool? alwes=false;
   setValueOfRadio(int? v){
@@ -52,6 +71,16 @@ bool? alwes=false;
 //
 //   update();
 // }
+
+bool edit=false;
+  setEdit(){
+    if(edit){
+      edit=false;
+    }else{
+      edit=true;
+    }
+  update();}
+
 
   Map<String, dynamic>? logindata;
   String filterWord = "";

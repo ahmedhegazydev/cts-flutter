@@ -380,6 +380,47 @@ class LandingPage extends GetWidget<LandingPageController> {
            ),
          ),
        ),
+
+    InkWell(onTap: (){
+      Get.toNamed( "BasketPage",);
+    },
+      child: Container(
+        height: 120,
+        color: Colors.transparent,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Spacer(
+              flex: 1,
+            ),
+            Flexible(
+              flex: 3,
+              child: Image(
+                image: AssetImage(
+                  'assets/images/delegation.png',
+                ),
+                fit: BoxFit.contain,
+                width: double.infinity,
+                height: double.infinity,
+              ),
+            ),
+            Flexible(
+              flex: 1,
+              child: Text(
+                "Basket".tr,
+                textAlign: TextAlign.center,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline3!
+                    .copyWith(color: Colors.grey.shade600),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
        InkWell(onTap: (){
          ///ToDo
          ///open url and go to userGuideUrl

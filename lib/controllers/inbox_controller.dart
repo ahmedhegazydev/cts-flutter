@@ -11,6 +11,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../models/CorrespondencesModel.dart';
 import '../services/apis/basket/add_documents_to_basket_api.dart';
+import '../services/apis/basket/getFetchBasketList_api.dart';
 import '../services/apis/can_open_document.dart';
 import '../services/apis/complete_in_correspondence_api.dart';
 import '../services/apis/find_recipient_api.dart';
@@ -19,6 +20,7 @@ import '../services/apis/get_correspondences_api.dart';
 
 //import '../services/json_model/get_correspondences_model.dart';
 import '../services/json_model/basket/add_documents_to_basket_request.dart';
+import '../services/json_model/basket/fetch_basket_list_model.dart';
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_correspondences_all_model.dart';
 import '../services/json_model/get_correspondences_model.dart';
@@ -35,14 +37,41 @@ class InboxController extends GetxController {
   CompleteInCorrespondenceAPI _completeInCorrespondenceAPI =
       CompleteInCorrespondenceAPI();
 
-
+  FetchBasketListModel? fetchBasketListModel;
   List<int>listSelectCorrespondences=[];
-addDocumentsToBasket(){
-  AddDocumentsToBasketRequest addDocumentsToBasketRequest=AddDocumentsToBasketRequest(basketId: 1, language: "ar",token:"8888" ,documentIds:[] );
+addDocumentsToBasket({basketId }){
+  AddDocumentsToBasketRequest addDocumentsToBasketRequest=AddDocumentsToBasketRequest(basketId: basketId, language:Get.locale?.languageCode == "en" ? "en" : "ar",token:secureStorage.token()!,documentIds:listSelectCorrespondences );
   AddEDocumentsToBasketApi addEDocumentsToBasketApi=AddEDocumentsToBasketApi();
 
-  addEDocumentsToBasketApi.post(addDocumentsToBasketRequest.toMap()).then((value) {});
+  addEDocumentsToBasketApi.post( {
+    "token":secureStorage.token(),
+    "basketId":basketId,
+    "language":"ar",
+
+
+
+  }).then((value) {
+
+
+
+
+    print(value);
+    print("object");
+  });
 }
+
+  Future getFetchBasketList()async{
+
+    GetFetchBasketListApi getFetchBasketListApi=GetFetchBasketListApi();
+    getFetchBasketListApi.data="Token=${secureStorage.token()}&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
+ await getFetchBasketListApi.getData().then((value) {
+    fetchBasketListModel =value  as FetchBasketListModel;
+    print(fetchBasketListModel?.toJson());
+print("getFetchBasketList i getit");
+
+  });
+
+  }
 
 
 

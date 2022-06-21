@@ -39,21 +39,28 @@ class InboxController extends GetxController {
 
   FetchBasketListModel? fetchBasketListModel;
   List<int>listSelectCorrespondences=[];
-addDocumentsToBasket({basketId }){
+Future addDocumentsToBasket({basketId })async{
   AddDocumentsToBasketRequest addDocumentsToBasketRequest=AddDocumentsToBasketRequest(basketId: basketId, language:Get.locale?.languageCode == "en" ? "en" : "ar",token:secureStorage.token()!,documentIds:listSelectCorrespondences );
   AddEDocumentsToBasketApi addEDocumentsToBasketApi=AddEDocumentsToBasketApi();
 
-  addEDocumentsToBasketApi.post( {
+  Map<String,dynamic> a=   {
     "token":secureStorage.token(),
     "basketId":basketId,
     "language":"ar",
+    "documentIds":listSelectCorrespondences
+
+
+  };
+
+await  addEDocumentsToBasketApi.post(
+      addDocumentsToBasketRequest.toMap()
 
 
 
-  }).then((value) {
+  ).then((value) {
 
 
-
+listSelectCorrespondences.clear();
 
     print(value);
     print("object");

@@ -10,11 +10,12 @@ class AddEDocumentsToBasketApi  extends ApiManager{
   String data="";
   @override
   String apiUrl() {
-    return SettingsApp.PostAddEditBasketFlagUrl+data;
+    return SettingsApp.PostAddDocumentsToBasketUrl+data;
   }
 
   @override
   AbstractJsonResource fromJson(data) {
+    print(data);
     return Baskets.fromJson(data);
   }
 

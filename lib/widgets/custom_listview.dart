@@ -1240,7 +1240,7 @@ class CustomListView extends StatelessWidget {
                                                     } else if (v == 4) {
                                                       //correspondences[pos].
 
-                                                    } else if (v == 5) {
+                                                    } else if (v == 5)  {
                                                       await Get.find<
                                                               InboxController>()
                                                           .getFetchBasketList();
@@ -1272,16 +1272,18 @@ class CustomListView extends StatelessWidget {
                                                                     itemBuilder:
                                                                         (context,
                                                                             pos) {
-                                                                      return InkWell(onTap: (){
-
-                                                                        print(Get.find<InboxController>()
-                                                                            .fetchBasketListModel
-                                                                            ?.baskets?[pos].iD);
+                                                                      return InkWell(onTap: () async {
                                                                         Get.find<InboxController>()
+                                                                            .listSelectCorrespondences
+                                                                            .add(int.parse(
+                                                                            correspondences[pos]
+                                                                                .correspondenceId!));
+
+                                                                        await         Get.find<InboxController>()
                                                                             .addDocumentsToBasket(basketId: Get.find<InboxController>()
                                                                             .fetchBasketListModel
                                                                             ?.baskets?[pos].iD);
-
+Get.back();
                                                                       },
 
                                                                         child: Card(elevation: 10,child: Column(children: [
@@ -2504,10 +2506,20 @@ class CustomListView extends StatelessWidget {
                                                                         print(Get.find<InboxController>()
                                                                             .fetchBasketListModel
                                                                             ?.baskets?[pos].iD);
+
+
+                                                                        Get.find<InboxController>()
+                                                                            .listSelectCorrespondences
+                                                                            .add(int.parse(
+                                                                            correspondences[pos]
+                                                                                .correspondenceId!));
                                                                         Get.find<InboxController>()
                                                                             .addDocumentsToBasket(basketId: Get.find<InboxController>()
                                                                             .fetchBasketListModel
                                                                             ?.baskets?[pos].iD);
+
+                                                                        Get.back();
+
                                                                       },
                                                                         child: Card(elevation: 10,child: Column(children: [
                                                                           Text( Get.find<InboxController>()

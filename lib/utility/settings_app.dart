@@ -1,5 +1,10 @@
 class SettingsApp {
-  static const String baseUrl = 'http://192.168.1.2:9091/Mobility/CMS.svc/';
+
+  // static const String baseUrl = 'http://192.168.1.2:9091/Mobility/CMS.svc/';
+  // static const String baseUrl = 'http://win-7pnh2kgornc:9091/Mobility/CMS.svc/';
+  static const String baseUrl = 'http://192.168.1.11:9091/Mobility/CMS.svc/';
+
+
   static const String loginUrl =baseUrl;
   static const String FindRecipientUrl =baseUrl+"FindRecipient?typeId=&criteria=*&";//Token=oeXQq9ZIRfxAu8ixipXg&language=en";
 

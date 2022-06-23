@@ -4,6 +4,7 @@ import 'package:cts/screens/basket_page.dart';
 import 'package:cts/screens/web_view_page.dart';
 import 'package:cts/services/json_model/send_json_model/reply_with_voice_note_request.dart';
 import 'package:cts/utility/all_string_const.dart';
+import 'package:cts/screens/filter/FilterSideScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -87,12 +88,20 @@ class MyApp extends StatelessWidget {
           ),
         ),
         getPages: [
-          GetPage(name: "/", page: () => LoginPage(), middlewares: [
+          GetPage(name: "/", page: () =>
+              // LoginPage(),
+              // LandingPage(),
+              InboxPage(),
+              middlewares: [
             AuthMiddleWare()
           ])
           ,       //SearchPage
           GetPage(name: "/Landing",//SearchPage(),// LandingPage()
               page: () => LandingPage(),
+              transition: Transition.rightToLeft),
+
+          GetPage(name: "/Filter",//
+              page: () => FilterSlidePage(),
               transition: Transition.rightToLeft)
           ,
           GetPage(name: "/InboxPage",

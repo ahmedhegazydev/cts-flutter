@@ -1,3 +1,4 @@
+import 'package:cts/controllers/filter/filter_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
@@ -381,7 +382,6 @@ class LoginPage extends GetWidget<LoginController> {
       pickerColor: pickerColor,
       onColorChanged: (Color color) {
         Get.find<MController>().setAppColor(color);
-
         print(color);
         pickerColor = color;
       },

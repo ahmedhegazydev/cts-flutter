@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -125,6 +124,11 @@ bool edit=false;
   int inboxId = 5;
   bool haveMoreData = true;
   bool addToList = true;
+
+  bool showHideFilterScreen = false;
+  bool showHideMyFavListScreen = false;
+  bool showHideCreateNewBasketScreen = false;
+
   final GetCorrespondencesApi _correspondencesApi = GetCorrespondencesApi();
   final GetCorrespondencesAllAPI _getCorrespondencesAllAPI =
       GetCorrespondencesAllAPI();
@@ -240,7 +244,7 @@ bool edit=false;
       index++;
       addToList = true;
       if (haveMoreData) {
-        //  getAllCorrespondencesData(inboxId: inboxId);
+        getCorrespondencesData(inboxId: inboxId);
         print("reach the bottom");
       }
     }
@@ -250,10 +254,30 @@ bool edit=false;
     }
   }
 
+  applyFilter(){
+
+    update();
+  }
+
   @override
   void onClose() {
     super.onClose();
     scrollController.dispose();
+  }
+
+   showFilterScreen(bool show){
+    showHideFilterScreen = show;
+    update();
+  }
+
+  showMyFavListScreen(bool show){
+    showHideMyFavListScreen = show;
+    update();
+  }
+
+  showCreateNewBasketScreen(bool show){
+    showHideCreateNewBasketScreen = show;
+    update();
   }
 
   void getCorrespondencesData(
@@ -324,6 +348,9 @@ bool edit=false;
     canOpenDocumentApi.data =
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     canOpenDocumentApi.getData().then((value) {
+
+
+
       FindRecipientModel findRecipientModel = value as FindRecipientModel;
     });
   }

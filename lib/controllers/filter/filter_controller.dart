@@ -4,27 +4,43 @@ import 'package:encrypt/encrypt.dart' as enc;
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
-import '../services/apis/log_api.dart';
-import '../services/json_model/login_model.dart';
-import '../utility/all_string_const.dart';
-import '../utility/storage.dart';
-import '../utility/validator.dart';
+import '../../services/apis/log_api.dart';
+import '../../services/json_model/login_model.dart';
+import '../../utility/all_string_const.dart';
+import '../../utility/storage.dart';
+import '../../utility/validator.dart';
 
-class LoginController extends GetxController {
+class FilterController extends GetxController {
   TextEditingController userName = TextEditingController();
   TextEditingController passWord = TextEditingController();
   Validators validators = Validators();
   final loginFormKey = GlobalKey<FormState>();
   bool islogin = false;
 
+  String? selectedValue = "";
+  // var selectedValue = "".obs;
+  // var selectedValue = "";
+
   logIngRequst() {
     if (loginFormKey.currentState!.validate()) {
       islogin = true;
       update();
-
       userLogin();
     }
+  }
+
+  void setSelectedValue(String value){
+    // selectedValue.value = value;
+    selectedValue = value;
+
+    // selectedValue.update((val) {
+    //   val = value;
+    // });
+
+    update();
+
   }
 
   faceIdButtonOnClick() {}

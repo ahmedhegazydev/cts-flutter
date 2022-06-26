@@ -1413,6 +1413,8 @@ class _ListView1State extends State<ListView1> {
       ListView.separated(
           controller:controller. scrollController,
           itemBuilder: (context, pos) {
+
+
             if (pos < logic.getBasketInboxModel!.correspondences!.length) {
 // print("correspondences[pos].privacyId    ${correspondences[pos].privacyId}");
               return

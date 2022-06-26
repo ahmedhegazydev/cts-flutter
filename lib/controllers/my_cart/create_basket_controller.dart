@@ -13,7 +13,12 @@ class CreateBasketController extends GetxController {
   Validators validators = Validators();
   final createBasketFormKey = GlobalKey<FormState>();
   bool islogin = false;
-  Color pickerColor = Colors.transparent;
+
+  // Color pickerColor = Colors.transparent;
+  Color pickerColor = Colors.black;
+
+  TextEditingController textEditingControllerEnglishName=TextEditingController();
+  TextEditingController textEditingControllerArabicName=TextEditingController();
 
   setPickerColor(Color newColor){
     print(newColor);
@@ -21,5 +26,12 @@ class CreateBasketController extends GetxController {
     update();
   }
 
+  createNewBasket() {
+    // getSerchData = true;
+    // update();
+    // String rf = "";
+  }
+
 
 }
+

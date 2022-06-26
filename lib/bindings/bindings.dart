@@ -17,7 +17,7 @@ class AllBindings extends Bindings {
   void dependencies() async {
     Get.lazyPut(() => SecureStorage());
     Get.put(LoginController());
-    Get.put(InboxController());
+    Get.put(InboxController(), permanent: true);
     Get.put(CreateBasketController());
     Get.lazyPut(() => LandingPageController());
     Get.lazyPut(() => SearchController());
@@ -28,9 +28,9 @@ class AllBindings extends Bindings {
     Get.lazyPut(()=>  SearchPageResultController()  );
 
     Get.lazyPut(()=>  BasketController()  );
+    //MyPocketsController
     // Get.putAsync<SecureStorage>(()async => await SecureStorage());
 
   }
 }
 
-}

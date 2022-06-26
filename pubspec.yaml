@@ -30,7 +30,7 @@ dependencies:
   path_provider: ^2.0.9
   flutter_colorpicker: ^1.0.3
   flutter_typeahead: ^3.2.4
-  dropdown_button2: ^1.5.2
+  dropdown_button2:
 
 #  drag_and_drop_lists: ^0.2.1
   drag_and_drop_lists: ^0.3.1

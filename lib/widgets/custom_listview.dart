@@ -28,7 +28,9 @@ class CustomListView extends StatelessWidget {
       required this.functionSummary,
       required this.functionTrunsfer //,required this.openMenu
       ,
-      required this.customActions});
+      required this.customActions
+
+      });
 
   VoidCallback functionComplet;
   VoidCallback functionTrunsfer;
@@ -56,7 +58,15 @@ class CustomListView extends StatelessWidget {
           children: [
             Container(
               height: 80,
-              child: TabBar(onTap: (index) {}, tabs: [
+              child: TabBar(onTap: (index) {
+
+
+
+
+
+
+                print("the index of oo=> $index");
+              }, tabs: [
                 Tab(
                   icon: Icon(
                     Icons.mark_email_unread,
@@ -70,7 +80,7 @@ class CustomListView extends StatelessWidget {
                     Icons.email_outlined,
                     color: Colors.black,
                   ),
-                  child: Text("all", style: TextStyle(color: Colors.black)),
+                  child: Text("All", style: TextStyle(color: Colors.black)),
                   // text: "all",
                 ),
               ]),
@@ -111,7 +121,8 @@ class CustomListView extends StatelessWidget {
                           ],
                         )),
                     Expanded(
-                      child: ListView.separated(
+                      child:
+                      ListView.separated(
                           controller: scrollController,
                           itemBuilder: (context, pos) {
                             if (pos < correspondences.length) {
@@ -629,18 +640,18 @@ class CustomListView extends StatelessWidget {
                                                                     ReplyWithVoiceNoteApi();
 
                                                                 ReplyWithVoiceNoteRequestModel v = ReplyWithVoiceNoteRequestModel(
-                                                                    userId: allCorrespondences[
+                                                                    userId: correspondences[
                                                                             pos]
                                                                         .fromUserId
                                                                         .toString(),
                                                                     transferId:
-                                                                        allCorrespondences[pos]
+                                                                        correspondences[pos]
                                                                             .transferId,
                                                                     token: Get.find<InboxController>()
                                                                         .secureStorage
                                                                         .token(),
                                                                     correspondencesId:
-                                                                        allCorrespondences[pos]
+                                                                       correspondences[pos]
                                                                             .correspondenceId,
                                                                     language: Get.locale?.languageCode ==
                                                                             "en"
@@ -832,7 +843,7 @@ class CustomListView extends StatelessWidget {
                                                                                             child: InkWell(
                                                                                               onTap: () {
                                                                                                 Get.find<InboxController>().addTousersWillSendTo(user: logic.users[pos]);
-                                                                                                Get.find<InboxController>().SetMultipleReplyWithVoiceNoteRequestModel(correspondencesId: allCorrespondences[pos].correspondenceId!, transferId: allCorrespondences[pos].transferId!, id: logic.users[pos].id!);
+                                                                                                Get.find<InboxController>().SetMultipleReplyWithVoiceNoteRequestModel(correspondencesId:correspondences[pos].correspondenceId!, transferId: correspondences[pos].transferId!, id: logic.users[pos].id!);
                                                                                               },
                                                                                               child: Container(
                                                                                                 decoration: BoxDecoration(
@@ -1129,6 +1140,11 @@ class CustomListView extends StatelessWidget {
                                                                             value) {
                                                                       print(
                                                                           "$key      ${value.toMap()}");
+
+
+
+
+
                                                                     });
                                                                     //Navigator.of(context).pop();
                                                                   },
@@ -1226,11 +1242,11 @@ class CustomListView extends StatelessWidget {
                                                           ?.name);
 
                                                       print(
-                                                          "  allCorrespondences[pos].purposeId =>   ${allCorrespondences[pos].purposeId}");
+                                                          "  Correspondences[pos].purposeId =>   ${correspondences[pos].purposeId}");
                                                       print(
-                                                          " allCorrespondences[pos].correspondenceId =>   ${allCorrespondences[pos].correspondenceId}");
+                                                          " Correspondences[pos].correspondenceId =>   ${correspondences[pos].correspondenceId}");
                                                       print(
-                                                          "  allCorrespondences[pos].transferId =>   ${allCorrespondences[pos].transferId}");
+                                                          "   Correspondences[pos].transferId =>   ${correspondences[pos].transferId}");
 
                                                       print("ppp" * 10);
                                                       print(Get.find<
@@ -1240,11 +1256,11 @@ class CustomListView extends StatelessWidget {
                                                     } else if (v == 4) {
                                                       //correspondences[pos].
 
-                                                    } else if (v == 5)  {
+                                                    } else if (v == 5) {
                                                       await Get.find<
                                                               InboxController>()
                                                           .getFetchBasketList();
-                                                  //    print("Get.find<InboxController>().getFetchBasketList()");
+                                                      //    print("Get.find<InboxController>().getFetchBasketList()");
 
                                                       showDialog(
                                                         context: context,
@@ -1263,50 +1279,39 @@ class CustomListView extends StatelessWidget {
                                                                     .3,
                                                                 color: Colors
                                                                     .grey[200],
-                                                                child: ListView.builder(
-                                                                    itemCount: Get.find<
-                                                                            InboxController>()
-                                                                        .fetchBasketListModel
-                                                                        ?.baskets
-                                                                        ?.length,
-                                                                    itemBuilder:
-                                                                        (context,
-                                                                            pos) {
-                                                                      return InkWell(onTap: () async {
-                                                                        Get.find<InboxController>()
-                                                                            .listSelectCorrespondences
-                                                                            .add(int.parse(
-                                                                            correspondences[pos]
-                                                                                .correspondenceId!));
-
-                                                                        await         Get.find<InboxController>()
-                                                                            .addDocumentsToBasket(basketId: Get.find<InboxController>()
+                                                                child: ListView
+                                                                    .builder(
+                                                                        itemCount: Get.find<InboxController>()
                                                                             .fetchBasketListModel
-                                                                            ?.baskets?[pos].iD);
-Get.back();
-                                                                      },
+                                                                            ?.baskets
+                                                                            ?.length,
+                                                                        itemBuilder:
+                                                                            (context,
+                                                                                pos) {
+                                                                          return InkWell(
+                                                                            onTap:
+                                                                                () async {
+                                                                              Get.find<InboxController>().listSelectCorrespondences.add(int.parse(correspondences[pos].correspondenceId!));
 
-                                                                        child: Card(elevation: 10,child: Column(children: [
-                                                                          Text( Get.find<InboxController>()
-                                                                            .fetchBasketListModel
-                                                                            ?.baskets?[pos].name??""),
-                                                                          Text( Get.find<InboxController>()
-                                                                              .fetchBasketListModel
-                                                                              ?.baskets?[pos].nameAr??""),
-                                                                          Text( "color :${Get.find<InboxController>()
-                                                                              .fetchBasketListModel
-                                                                              ?.baskets?[pos].color}")
-
-
-                                                                        ]),),
-                                                                      );
+                                                                              await Get.find<InboxController>().addDocumentsToBasket(basketId: Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].iD);
+                                                                              Get.back();
+                                                                            },
+                                                                            child:
+                                                                                Card(
+                                                                              elevation: 10,
+                                                                              child: Column(children: [
+                                                                                Text(Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].name ?? ""),
+                                                                                Text(Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].nameAr ?? ""),
+                                                                                Text("color :${Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].color}")
+                                                                              ]),
+                                                                            ),
+                                                                          );
                                                                         })),
                                                           ),
                                                           actions: <Widget>[
                                                             FlatButton(
                                                               onPressed:
                                                                   () async {
-
                                                                 /// ToDo send Replay
 
                                                                 Navigator.of(
@@ -1906,8 +1911,7 @@ Get.back();
                                                       ],
                                                     ),
                                                   );
-                                                }
-                                                else if (v == 2) {
+                                                } else if (v == 2) {
                                                   showDialog(
                                                       context: context,
                                                       builder: (BuildContext
@@ -2051,8 +2055,7 @@ Get.back();
                                                                                   scrollDirection: Axis.horizontal,
                                                                                   itemCount: Get.find<InboxController>().users.length,
                                                                                   itemBuilder: (context, pos) {
-                                                                                    print("*" * 100);
-                                                                                    print(logic.users[pos].value?.split(" ").length);
+
                                                                                     List<String>? a = logic.users[pos].value?.split(" ");
 
                                                                                     // bool a=logic.user?[pos].value?.contains(logic.filterWord)??false;
@@ -2062,6 +2065,9 @@ Get.back();
                                                                                         child: InkWell(
                                                                                           onTap: () {
                                                                                             Get.find<InboxController>().addTousersWillSendTo(user: logic.users[pos]);
+
+
+
                                                                                             Get.find<InboxController>().SetMultipleReplyWithVoiceNoteRequestModel(correspondencesId: allCorrespondences[pos].correspondenceId!, transferId: allCorrespondences[pos].transferId!, id: logic.users[pos].id!);
                                                                                           },
                                                                                           child: Container(
@@ -2349,6 +2355,13 @@ Get.back();
                                                           actions: <Widget>[
                                                             TextButton(
                                                               onPressed: () {
+
+
+                                                                ReplyWithVoiceNoteApi
+                                                                replayAPI =
+                                                                ReplyWithVoiceNoteApi();
+
+
                                                                 print(
                                                                     "i click ok");
                                                                 print(
@@ -2357,7 +2370,49 @@ Get.back();
                                                                         InboxController>()
                                                                     .transfarForMany
                                                                     .forEach((key,
-                                                                        value) {
+                                                                        value)async {
+                                                                  // ReplyWithVoiceNoteRequestModel v = ReplyWithVoiceNoteRequestModel(
+                                                                  //     userId: value.userId
+                                                                  //
+                                                                  //         .toString(),
+                                                                  //     transferId:
+                                                                  //     allCorrespondences[pos]
+                                                                  //         .transferId,
+                                                                  //     token: Get.find<
+                                                                  //         InboxController>()
+                                                                  //         .secureStorage
+                                                                  //         .token(),
+                                                                  //     correspondencesId:
+                                                                  //     allCorrespondences[pos]
+                                                                  //         .correspondenceId,
+                                                                  //     language: Get
+                                                                  //         .locale
+                                                                  //         ?.languageCode ==
+                                                                  //         "en"
+                                                                  //         ? "en"
+                                                                  //         : "ar",
+                                                                  //     voiceNote:
+                                                                  //     audioFileBes64,
+                                                                  //     notes: Get.find<
+                                                                  //         InboxController>()
+                                                                  //         .replyNote,
+                                                                  //     voiceNoteExt:
+                                                                  //     "m4a",
+                                                                  //     voiceNotePrivate:
+                                                                  //     false);
+                                                                  //
+                                                                  // replayAPI
+                                                                  //     .post(v.toMap())
+                                                                  //     .then((value) {
+                                                                  //   print("1" * 50);
+                                                                  //   ReplyWithVoiceNoteModel
+                                                                  //   v = value
+                                                                  //   as ReplyWithVoiceNoteModel;
+                                                                  //   print(v
+                                                                  //       .errorMessage);
+                                                                  //   print(v.status);
+                                                                  //   print("1" * 50);
+                                                                  // });
                                                                   print(
                                                                       "$key      ${value.toMap()}");
                                                                 });
@@ -2368,8 +2423,7 @@ Get.back();
                                                           ],
                                                         );
                                                       });
-                                                }
-                                                else if (v == 3) {
+                                                } else if (v == 3) {
                                                   showDialog(
                                                     context: context,
                                                     builder: (ctx) =>
@@ -2464,8 +2518,7 @@ Get.back();
                                                           InboxController>()
                                                       .customAction
                                                       ?.name);
-                                                }
-                                                else if (v == 4) {
+                                                } else if (v == 4) {
                                                   //correspondences[pos].
 
                                                 } else if (v == 5) {
@@ -2479,83 +2532,76 @@ Get.back();
                                                     context: context,
                                                     builder: (ctx) =>
                                                         AlertDialog(
-                                                          title: Text(" "),
-                                                          content: Padding(
-                                                            padding:
+                                                      title: Text(" "),
+                                                      content: Padding(
+                                                        padding:
                                                             const EdgeInsets
                                                                 .all(8.0),
-                                                            child: Container(
-                                                                width: MediaQuery.of(
-                                                                    context)
+                                                        child: Container(
+                                                            width: MediaQuery.of(
+                                                                        context)
                                                                     .size
                                                                     .width *
-                                                                    .3,
-                                                                color: Colors
-                                                                    .grey[200],
-                                                                child: ListView.builder(
+                                                                .3,
+                                                            color: Colors
+                                                                .grey[200],
+                                                            child: ListView
+                                                                .builder(
                                                                     itemCount: Get.find<
-                                                                        InboxController>()
+                                                                            InboxController>()
                                                                         .fetchBasketListModel
                                                                         ?.baskets
                                                                         ?.length,
                                                                     itemBuilder:
                                                                         (context,
-                                                                        pos) {
-                                                                      return InkWell(onTap: (){
-
-                                                                        print(Get.find<InboxController>()
-                                                                            .fetchBasketListModel
-                                                                            ?.baskets?[pos].iD);
-
-
-                                                                        Get.find<InboxController>()
-                                                                            .listSelectCorrespondences
-                                                                            .add(int.parse(
-                                                                            correspondences[pos]
-                                                                                .correspondenceId!));
-                                                                        Get.find<InboxController>()
-                                                                            .addDocumentsToBasket(basketId: Get.find<InboxController>()
-                                                                            .fetchBasketListModel
-                                                                            ?.baskets?[pos].iD);
-
-                                                                        Get.back();
-
-                                                                      },
-                                                                        child: Card(elevation: 10,child: Column(children: [
-                                                                          Text( Get.find<InboxController>()
+                                                                            pos) {
+                                                                      return InkWell(
+                                                                        onTap:
+                                                                            () {
+                                                                          print(Get.find<InboxController>()
                                                                               .fetchBasketListModel
-                                                                              ?.baskets?[pos].name??""),
-                                                                          Text( Get.find<InboxController>()
-                                                                              .fetchBasketListModel
-                                                                              ?.baskets?[pos].nameAr??""),
-                                                                          Text( "color :${Get.find<InboxController>()
-                                                                              .fetchBasketListModel
-                                                                              ?.baskets?[pos].color}",style: TextStyle( color: HexColor(Get.find<InboxController>()
-                                                                              .fetchBasketListModel
-                                                                              ?.baskets?[pos].color??"#000000"))),
+                                                                              ?.baskets?[pos]
+                                                                              .iD);
 
+                                                                          Get.find<InboxController>()
+                                                                              .listSelectCorrespondences
+                                                                              .add(int.parse(correspondences[pos].correspondenceId!));
+                                                                          Get.find<InboxController>()
+                                                                              .addDocumentsToBasket(basketId: Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].iD);
 
-
-                                                                        ]),),
+                                                                          Get.back();
+                                                                        },
+                                                                        child:
+                                                                            Card(
+                                                                          elevation:
+                                                                              10,
+                                                                          child:
+                                                                              Column(children: [
+                                                                            Text(Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].name ??
+                                                                                ""),
+                                                                            Text(Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].nameAr ??
+                                                                                ""),
+                                                                            Text("color :${Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].color}",
+                                                                                style: TextStyle(color: HexColor(Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].color ?? "#000000"))),
+                                                                          ]),
+                                                                        ),
                                                                       );
                                                                     })),
-                                                          ),
-                                                          actions: <Widget>[
-                                                            FlatButton(
-                                                              onPressed:
-                                                                  () async {
+                                                      ),
+                                                      actions: <Widget>[
+                                                        FlatButton(
+                                                          onPressed: () async {
+                                                            /// ToDo send Replay
 
-                                                                /// ToDo send Replay
-
-                                                                Navigator.of(
-                                                                    ctx)
-                                                                    .pop();
-                                                              },
-                                                              child: Text("Ok"),
-                                                            ),
-                                                          ],
+                                                            Navigator.of(ctx)
+                                                                .pop();
+                                                          },
+                                                          child: Text("Ok"),
                                                         ),
-                                                  );}
+                                                      ],
+                                                    ),
+                                                  );
+                                                }
                                               }),
                                     ],
                                   ),

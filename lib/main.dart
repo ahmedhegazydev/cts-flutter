@@ -1,6 +1,7 @@
 
 import 'package:cts/screens/Login_page.dart';
 import 'package:cts/screens/basket_page.dart';
+import 'package:cts/screens/my_cart/MyPocketsScreen.dart';
 import 'package:cts/screens/web_view_page.dart';
 import 'package:cts/services/json_model/send_json_model/reply_with_voice_note_request.dart';
 import 'package:cts/utility/all_string_const.dart';
@@ -132,8 +133,8 @@ class MyApp extends StatelessWidget {
               page: () => SearchPage( ),
               transition: Transition.rightToLeft)
           ,
-          GetPage(name: "/BasketPage",
-              page: () => BasketPage( ),
+          GetPage(name: "/MyPocketsScreen",
+              page: () => MyPocketsScreen( ),
               transition: Transition.rightToLeft) ], //initialRoute:"/" ,
         // home: const MyHomePage(title: 'Flutter Demo Home Page'),
       );

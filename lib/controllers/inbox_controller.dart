@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:permission_handler/permission_handler.dart';
 import '../models/CorrespondencesModel.dart';
 import '../services/apis/basket/add_documents_to_basket_api.dart';
 import '../services/apis/basket/getFetchBasketList_api.dart';
+import '../services/apis/basket/get_gasket_inbox_api.dart';
 import '../services/apis/can_open_document.dart';
 import '../services/apis/complete_in_correspondence_api.dart';
 import '../services/apis/find_recipient_api.dart';
@@ -67,11 +69,12 @@ listSelectCorrespondences.clear();
 }
 
   Future getFetchBasketList()async{
-
+print("getFetchBasketListgetFetchBasketListgetFetchBasketListgetFetchBasketList");
     GetFetchBasketListApi getFetchBasketListApi=GetFetchBasketListApi();
     getFetchBasketListApi.data="Token=${secureStorage.token()}&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
  await getFetchBasketListApi.getData().then((value) {
     fetchBasketListModel =value  as FetchBasketListModel;
+    update();
     print(fetchBasketListModel?.toJson());
 print("getFetchBasketList i getit");
 
@@ -167,7 +170,10 @@ bool edit=false;
 
 
   addTousersWillSendTo({required Destination user}) {
-    usersWillSendTo.add(user);
+    if(!usersWillSendTo.contains(user)){
+      usersWillSendTo.add(user);
+    }
+
 
     update(); // update(["user"]);
   }
@@ -209,6 +215,12 @@ bool edit=false;
   @override
   void onReady() {
     super.onReady();
+
+    logindata = secureStorage.readSecureJsonData(AllStringConst.LogInData);
+    if (logindata != null) {
+      LoginModel data = LoginModel.fromJson(logindata!);
+      customActions = data.customActions;
+    }
   }
 
   getAllData() {
@@ -217,12 +229,8 @@ bool edit=false;
     getAllCorrespondencesData(
         inboxId: inboxId, pageSize: 20, showThumbnails: false);
 
-    logindata = secureStorage.readSecureJsonData(AllStringConst.LogInData);
-    if (logindata != null) {
-      LoginModel data = LoginModel.fromJson(logindata!);
-      customActions = data.customActions;
-    }
     //getFindRecipientData();
+    getFetchBasketList();
   }
 
   Future<void> onRefresh() async {
@@ -381,6 +389,7 @@ bool edit=false;
       {required int id,
       required String transferId,
       required String correspondencesId}) {
+    print("user add to list ");
     ReplyWithVoiceNoteRequestModel model = ReplyWithVoiceNoteRequestModel(
         userId: id.toString(),
         transferId: transferId,
@@ -516,5 +525,14 @@ bool edit=false;
 
       update();
     }
-  }
+
+
+
+
+
+
+
+    }
+
+
 }

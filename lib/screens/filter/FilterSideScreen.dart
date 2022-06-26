@@ -116,7 +116,7 @@ class _FilterSlidePageState extends State<FilterSlidePage> {
                     child: DropdownButton2(
                       isExpanded: true,
                       hint: Row(
-                        children: const [
+                        children:   [
                           Icon(
                             Icons.list,
                             size: 16,

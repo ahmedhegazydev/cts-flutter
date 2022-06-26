@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart'  as a ;
@@ -30,7 +31,6 @@ abstract class ApiManager {
         }else{
 
 
-          print(value.data);
           data = value.data;
           json = fromJson(data);
         }

@@ -2,7 +2,7 @@ class SettingsApp {
 
   // static const String baseUrl = 'http://192.168.1.2:9091/Mobility/CMS.svc/';
   // static const String baseUrl = 'http://win-7pnh2kgornc:9091/Mobility/CMS.svc/';
-  static const String baseUrl = 'http://192.168.1.11:9091/Mobility/CMS.svc/';
+  static const String baseUrl = 'http://192.168.1.129:9091/Mobility/CMS.svc/';
 
 
   static const String loginUrl =baseUrl;
@@ -28,5 +28,5 @@ class SettingsApp {
   static const String PostAddDocumentsToBasketUrl =baseUrl+"AddDocumentsToBasket";//
   static const String PostRemoveItemsFromBasketUrl =baseUrl+"RemoveItemsFromBasket";//
   static const String PostRemoveBasketUrl =baseUrl+"RemoveBasket";//
-  static const String GetBasketInboxUrl =baseUrl+"GetBasketInbox?";
+  static const String GetBasketInboxUrl =baseUrl+"GetBasketInbox?";//?token={token}&basketId={basketId}&pageNumber={pageNumber}&pageSize={pageSize}&language={language}"
 }

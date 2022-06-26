@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
+import '../controllers/basket_controller.dart';
+import '../controllers/inbox_controller.dart';
 import '../controllers/landing_page_controller.dart';
 import '../controllers/login_controller.dart';
 import '../controllers/web_view_controller.dart';
@@ -381,8 +383,86 @@ class LandingPage extends GetWidget<LandingPageController> {
          ),
        ),
 
-    InkWell(onTap: (){
-      Get.toNamed( "BasketPage",);
+    InkWell(onTap: ()async{
+      await    Get.find<InboxController>().getFetchBasketList();
+      showDialog(
+        context: context,
+        builder: (ctx) =>
+            AlertDialog(
+              title: Text(" "),
+              content: Padding(
+                padding:
+                const EdgeInsets
+                    .all(8.0),
+                child: Container(
+                    width: MediaQuery.of(
+                        context)
+                        .size
+                        .width *
+                        .3,
+                    color: Colors
+                        .grey[200],
+                    child: ListView.builder(
+                        itemCount: Get.find<
+                            InboxController>()
+                            .fetchBasketListModel
+                            ?.baskets
+                            ?.length,
+                        itemBuilder:
+                            (context,
+                            pos) {
+                          return InkWell(onTap: ()async{
+
+print("${Get.find<InboxController>()
+    .fetchBasketListModel
+    ?.baskets?[pos].iD}");
+
+Get.find<BasketController>().getBasketInbox(id:Get.find<InboxController>()
+    .fetchBasketListModel
+   !.baskets![pos]!.iD! ,pageSize:20 ,pageNumber: 0);
+
+Get.back();
+
+
+                             Get.toNamed("MyPocketsScreen");
+
+                          },
+                            child: Card(elevation: 10,child: Column(children: [
+                              Text( Get.find<InboxController>()
+                                  .fetchBasketListModel
+                                  ?.baskets?[pos].name??""),
+                              Text( Get.find<InboxController>()
+                                  .fetchBasketListModel
+                                  ?.baskets?[pos].nameAr??""),
+                              // Text( "color :${Get.find<InboxController>()
+                              //     .fetchBasketListModel
+                              //     ?.baskets?[pos].color}",style: TextStyle( color: HexColor(Get.find<InboxController>()
+                              //     .fetchBasketListModel
+                              //     ?.baskets?[pos].color??"#000000"))),
+
+
+
+                            ]),),
+                          );
+                        })),
+              ),
+              actions: <Widget>[
+                FlatButton(
+                  onPressed:
+                      () async {
+
+                    /// ToDo send Replay
+
+                    Navigator.of(
+                        ctx)
+                        .pop();
+                  },
+                  child: Text("Ok"),
+                ),
+              ],
+            ),
+      );
+     // Get.toNamed( "MyPocketsScreen",);//MyPocketsScreen
     },
       child: Container(
         height: 120,

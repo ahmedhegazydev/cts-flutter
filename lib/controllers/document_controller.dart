@@ -4,12 +4,15 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
 import 'dart:ui' as ui;
 
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:signature/signature.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../models/CorrespondencesModel.dart';
 import '../services/apis/find_recipient_api.dart';
@@ -17,6 +20,7 @@ import '../services/apis/inOpenDocument/get_document_audit_logs_api.dart';
 import '../services/apis/inOpenDocument/get_document_links_api.dart';
 import '../services/apis/inOpenDocument/get_document_receivers_api.dart';
 import '../services/apis/inOpenDocument/get_document_transfers_api.dart';
+import '../services/json_model/can_open_document_model.dart';
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_correspondences_model.dart';
 import '../services/json_model/get_document_links_model.dart';
@@ -25,6 +29,7 @@ import '../services/json_model/get_document_receivers_model.dart';
 import '../services/json_model/get_document_transfers_model.dart';
 import '../services/json_model/login_model.dart';
 import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
+import '../services/models/signature_info.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
 import '../utility/utilitie.dart';
@@ -32,6 +37,29 @@ import 'inbox_controller.dart';
 
 class DocumentController extends GetxController {
   SecureStorage secureStorage = SecureStorage();
+  CanOpenDocumentModel? canOpenDocumentModel;
+  Map <String,dynamic>?logindata;
+Map<GlobalKey,String>singpic={};
+  List<Widget>pdfAndSing=[
+    SfPdfViewer.network(
+        'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf')];
+
+
+addWidgetToPdfAndSing(Widget pic){
+  pdfAndSing.add(pic);
+  update();
+}
+  List<MultiSignatures> multiSignatures=[];
+  final SignatureController controller = SignatureController(
+    penStrokeWidth: 5,
+    penColor: Colors.black,
+  exportBackgroundColor: Colors.transparent ,
+  );
+
+
+
+
+
   FindRecipientModel? findRecipientModel;
   final FindRecipient _findRecipient=FindRecipient();
 //===============================================
@@ -99,7 +127,7 @@ final GetDocumentTransfersApi _getDocumentTransfersApi=GetDocumentTransfersApi()
 //===============================================
   List<Destination>users =[];
   List<Destination>usersWillSendTo=[] ;
-  Map <String,dynamic>?logindata;
+
 
 
   String filterWord="";
@@ -204,6 +232,8 @@ Map<String,String>actions={};
     if(logindata!=null){
       LoginModel data=LoginModel.fromJson(logindata!);
       customActions=data.customActions;
+
+      multiSignatures=  data.multiSignatures??[];
     }
 
 
@@ -384,6 +414,41 @@ Map<String,String>actions={};
         language: Get.locale?.languageCode == "en" ? "en" : "ar",token:secureStorage.token() );
     transfarForMany[id] = model;
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

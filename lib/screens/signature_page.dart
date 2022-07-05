@@ -26,15 +26,32 @@ class SignaturePage extends GetView<SignaturePageController> {
           child: GetBuilder<SignaturePageController>(
             assignId: true,
             builder: (logic) {
-              return ListView.builder(
-                  itemCount: controller.multiSignatures.length,
-                  itemBuilder: (context, pos) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Image.memory(dataFromBase64String(controller
-                          .multiSignatures[pos].signature)),
-                    );
-                  });
+              return
+                GridView.builder(
+                  itemCount: controller
+                      .multiSignatures.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 4.0,
+                      mainAxisSpacing: 4.0
+                  ),
+                  itemBuilder: (BuildContext context, int index){
+                    return Image.memory(dataFromBase64String(controller
+                                  .multiSignatures[index].signature));
+                  },
+                );
+
+
+
+              // ListView.builder(
+              //     itemCount: controller.multiSignatures.length,
+              //     itemBuilder: (context, pos) {
+              //       return Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: Image.memory(dataFromBase64String(controller
+              //             .multiSignatures[pos].signature)),
+              //       );
+              //     });
             },
           ),
         )

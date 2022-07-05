@@ -132,7 +132,7 @@ class CustomListView extends StatelessWidget {
 
                                   InkWell(
                                 onTap: () {
-                                  Get.find<InboxController>().canOpenDoc(
+                                  Get.find<InboxController>().canOpenDoc(docId: correspondences[pos].purposeId,
                                       correspondenceId:
                                           correspondences[pos].correspondenceId,
                                       transferId:
@@ -140,7 +140,7 @@ class CustomListView extends StatelessWidget {
                                   Get.find<DocumentController>()
                                       .correspondences = correspondences[pos];
 
-                                  Get.find<DocumentController>().loadPdf();
+                                //  Get.find<DocumentController>().loadPdf();
                                   Get.find<DocumentController>()
                                       .gatAllDataAboutDOC(
                                           docId:
@@ -150,7 +150,7 @@ class CustomListView extends StatelessWidget {
                                           transferId:
                                               correspondences[pos].transferId!);
                                   //  Get.find<DocumentController>().loadPdf();
-                                  Get.toNamed("/DocumentPage");
+                                  //Get.toNamed("/DocumentPage");
                                 },
                                 child: SizedBox(
                                   //height: MediaQuery.of(context).size.height*.3,
@@ -1388,7 +1388,8 @@ class CustomListView extends StatelessWidget {
                               //  print("correspondences[pos].privacyId    ${correspondences[pos].privacyId}");
                               return InkWell(
                                 onTap: () {
-                                  Get.find<InboxController>().canOpenDoc(
+
+                                  Get.find<InboxController>().canOpenDoc(docId: allCorrespondences[pos].purposeId,
                                       correspondenceId: allCorrespondences[pos]
                                           .correspondenceId,
                                       transferId:
@@ -1397,8 +1398,8 @@ class CustomListView extends StatelessWidget {
                                           .correspondences =
                                       allCorrespondences[pos];
 
-                                  Get.find<DocumentController>().loadPdf();
-                                  Get.toNamed("/DocumentPage");
+                                  // Get.find<DocumentController>().loadPdf();
+                                  // Get.toNamed("/DocumentPage");
                                 },
                                 child: SizedBox(
                                   //height: MediaQuery.of(context).size.height*.3,

@@ -30,7 +30,7 @@ abstract class ApiManager {
           a.Get.snackbar("Error".tr, "${value.data["ErrorMessage"]}");
         }else{
 
-
+print(value);
           data = value.data;
           json = fromJson(data);
         }

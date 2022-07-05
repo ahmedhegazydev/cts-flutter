@@ -22,6 +22,7 @@ import '../services/apis/get_correspondences_api.dart';
 //import '../services/json_model/get_correspondences_model.dart';
 import '../services/json_model/basket/add_documents_to_basket_request.dart';
 import '../services/json_model/basket/fetch_basket_list_model.dart';
+import '../services/json_model/can_open_document_model.dart';
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_correspondences_all_model.dart';
 import '../services/json_model/get_correspondences_model.dart';
@@ -33,6 +34,7 @@ import 'dart:developer';
 
 import '../utility/utilitie.dart';
 import '../widgets/custom_button_with_icon.dart';
+import 'document_controller.dart';
 
 class InboxController extends GetxController {
   CompleteInCorrespondenceAPI _completeInCorrespondenceAPI =
@@ -146,6 +148,7 @@ bool edit=false;
   final SecureStorage secureStorage = SecureStorage();
 
   CanOpenDocumentApi canOpenDocumentApi = CanOpenDocumentApi();
+  CanOpenDocumentModel? canOpenDocumentModel;
 
   bool getData = false;
 
@@ -352,15 +355,35 @@ bool edit=false;
     });
   }
 
-  canOpenDoc({required correspondenceId, required transferId}) {
+Future  canOpenDoc({required docId,required correspondenceId, required transferId})async {
+    print("canOpenDoc canOpenDoc canOpenDoc canOpenDoc");
     canOpenDocumentApi.data =
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
-    canOpenDocumentApi.getData().then((value) {
+
+  print( canOpenDocumentApi.data);
+  await  canOpenDocumentApi.getData().then((value) {
+
+print(value);
+canOpenDocumentModel=value as CanOpenDocumentModel;
 
 
 
-      FindRecipientModel findRecipientModel = value as FindRecipientModel;
-    });
+
+   //   FindRecipientModel findRecipientModel = value as FindRecipientModel;
+if(canOpenDocumentModel!.allow!){
+Get.find<DocumentController>().canOpenDocumentModel=canOpenDocumentModel;
+
+Get.find<DocumentController>().gatAllDataAboutDOC(docId:  docId, transferId: transferId, correspondenceId: correspondenceId);
+  Get.find<DocumentController>().loadPdf();
+  Get.toNamed("/DocumentPage");
+}
+
+    }).catchError((e){
+      print ("eeeeeeeeeeeeeeee=>  $e");
+
+
+
+  });
   }
 
   int userId = 0;

@@ -1,0 +1,177 @@
+{
+  "ErrorMessage": null,
+  "Status": 1,
+  "Allow": true,
+  "attachments": {
+    "ErrorMessage": null,
+    "Status": 1,
+    "Attachments": [],
+    "IsLocked": false,
+    "LockedBy": null,
+    "hasVoice": false,
+    "isDocSigned": false,
+    "voiceNote": null
+  },
+  "correspondence": {
+    "CanRequestDueDate": false,
+    "CategoryId": "7",
+    "ClickableLock": true,
+    "Comments": "kjiuhuiu",
+    "ControlList": {
+      "CustomToolbarItems": null,
+      "ToolbarItems": [
+        {
+          "Children": null,
+          "Display": true,
+          "Label": null,
+          "Name": "MetaData",
+          "QuickAction": false
+        },
+        {
+          "Children": {
+            "CustomToolbarItems": null,
+            "ToolbarItems": [
+              {
+                "Children": null,
+                "Display": true,
+                "Label": null,
+                "Name": "ShowAttachments",
+                "QuickAction": false
+              }
+            ]
+          },
+          "Display": true,
+          "Label": null,
+          "Name": "Attachments",
+          "QuickAction": false
+        },
+        {
+          "Children": null,
+          "Display": true,
+          "Label": null,
+          "Name": "Transfer",
+          "QuickAction": true
+        },
+        {
+          "Children": {
+            "CustomToolbarItems": null,
+            "ToolbarItems": [
+              {
+                "Children": null,
+                "Display": true,
+                "Label": "View Action Logs",
+                "Name": "ViewActionLogs",
+                "QuickAction": false
+              },
+              {
+                "Children": null,
+                "Display": true,
+                "Label": "View Receivers",
+                "Name": "ViewReceivers",
+                "QuickAction": false
+              },
+              {
+                "Children": null,
+                "Display": true,
+                "Label": "View Transfers",
+                "Name": "ViewTransfers",
+                "QuickAction": false
+              }
+            ]
+          },
+          "Display": true,
+          "Label": null,
+          "Name": "More",
+          "QuickAction": false
+        }
+      ]
+    },
+    "CorrespondenceId": "2020",
+    "DocDueDate": null,
+    "DocDueDays": 0,
+    "FromStructure": "وحدة تجربة الارشيف",
+    "FromUser": "مستخدم 115 مستخدم 115",
+    "FromUserId": 8875,
+    "GridInfo": [
+      {
+        "Label": "Subject",
+        "Value": "تجربة كتاب 2 تجربة كتاب 2 تجربة كتاب 2 تجربةكتاب 2 تجربة كتاب 2 تجربةكتاب 2 تجربة كتاب 2 تجربةكتاب 2 تجربة كتاب 2 تجربةكتاب 2 تجربة كتاب 2 تجربةكتاب 2 تجربة كتاب 2 تجربةكتاب 2 تجربة كتاب 2 تجربة كتاب 2 تجربة كتاب 2 "
+      },
+      {
+        "Label": "From User",
+        "Value": "وحدة تجربة الارشيف"
+      },
+      {
+        "Label": "Ref#",
+        "Value": "2019/0000013/9"
+      },
+      {
+        "Label": "Date",
+        "Value": "10/9/2019"
+      }
+    ],
+    "HasAttachments": false,
+    "HasAttachmentsToBeDelivered": false,
+    "HasSummaries": false,
+    "InboxId": "0",
+    "IsCC": false,
+    "IsForGuideline": false,
+    "IsHighPriority": false,
+    "IsLocked": true,
+    "IsNew": false,
+    "IsShareable": false,
+    "Metadata": [
+      {
+        "Label": "Date",
+        "Value": "10/9/2019"
+      },
+      {
+        "Label": "Ref#",
+        "Value": "2019/0000013/9"
+      },
+      {
+        "Label": "Subject",
+        "Value": "تجربة كتاب 2 تجربة كتاب 2 تجربة كتاب 2 تجربةكتاب 2 تجربة كتاب 2 تجربةكتاب 2 تجربة كتاب 2 تجربةكتاب 2 تجربة كتاب 2 تجربةكتاب 2 تجربة كتاب 2 تجربةكتاب 2 تجربة كتاب 2 تجربةكتاب 2 تجربة كتاب 2 تجربة كتاب 2 تجربة كتاب 2 "
+      },
+      {
+        "Label": "From User",
+        "Value": "وحدة تجربة الارشيف"
+      },
+      {
+        "Label": "Purpose",
+        "Value": "To Operate"
+      },
+      {
+        "Label": "Instructions From Sender",
+        "Value": "kjiuhuiu"
+      },
+      {
+        "Label": "Transferred From",
+        "Value": "مستخدم 115 مستخدم 115"
+      },
+      {
+        "Label": "PrivacyLevel",
+        "Value": ""
+      },
+      {
+        "Label": "PriorityLevel",
+        "Value": "Low"
+      },
+      {
+        "Label": "Registered By",
+        "Value": ""
+      }
+    ],
+    "PriorityId": "1",
+    "PrivacyId": "0",
+    "PurposeId": "19",
+    "ShowLock": false,
+    "Status": 0,
+    "ThumbnailUrl": "",
+    "TransferId": "14515",
+    "TsfDueDate": null,
+    "Type": "New",
+    "VisualTrackingUrl": "http://LAPTOP-CJBBNTQP:9091/EverSuite.CTS.Mobile/VisualTracking/TransferVisualTracking/NewTsfVisualTracking.aspx?Token=MYp2KZsZfjrUZEIahOVK&language=en&DocumentId=2020",
+    "isTransferedToContact": true
+  }
+}

@@ -103,7 +103,7 @@ class Correspondence {
   String? comments;
   ControlList? controlList;
   String? correspondenceId;
-  Null? docDueDate;
+  String? docDueDate;
   int? docDueDays;
   String? fromStructure;
   String? fromUser;
@@ -292,7 +292,7 @@ class ControlList {
 class ToolbarItems {
   ControlList? children;
   bool? display;
-  Null? label;
+  String? label;
   String? name;
   bool? quickAction;
 

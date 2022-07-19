@@ -1422,11 +1422,19 @@ class _ListView1State extends State<ListView1> {
 
                 InkWell(
                   onTap: () {
-                    Get.find<InboxController>().canOpenDoc(docId:   logic.  getBasketInboxModel!.correspondences?[pos].purposeId ,
-                        correspondenceId:
-                      logic.  getBasketInboxModel!.correspondences?[pos].correspondenceId,
-                        transferId:
-                    logic.  getBasketInboxModel!.  correspondences?[pos].transferId);
+
+                    /// TO Do
+                    // Get.find<InboxController>().canOpenDoc(docId:   logic.  getBasketInboxModel!.correspondences?[pos].purposeId ,
+                    //     correspondenceId:
+                    //   logic.  getBasketInboxModel!.correspondences?[pos].correspondenceId,
+                    //     transferId:
+                    // logic.  getBasketInboxModel!.  correspondences?[pos].transferId);
+
+
+
+
+
+
                     Get.find<DocumentController>()
                         .correspondences = logic.getBasketInboxModel!.correspondences![pos];
 

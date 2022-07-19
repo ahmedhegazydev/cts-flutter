@@ -8,13 +8,17 @@ import '../json_model/find_recipient_model.dart';
 
 class CanOpenDocumentApi  extends ApiManager{
   String data="";
+
   @override
   String apiUrl() {
+
     return SettingsApp.CanOpenDocumentUrl+data;
+
   }
 
   @override
   AbstractJsonResource fromJson(data) {
+    //print("i get AbstractJsonResource");
     return CanOpenDocumentModel.fromJson(data);
   }
   

@@ -35,7 +35,7 @@ import 'dart:developer';
 import '../utility/utilitie.dart';
 import '../widgets/custom_button_with_icon.dart';
 import 'document_controller.dart';
-
+import 'package:flutter/services.dart' as rootBundel;
 class InboxController extends GetxController {
   CompleteInCorrespondenceAPI _completeInCorrespondenceAPI =
       CompleteInCorrespondenceAPI();
@@ -240,7 +240,7 @@ bool edit=false;
     //  getCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false );
 
     //  getAllCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false );
-    print("9999999999999999999999999999999999");
+    print("onRefresh");
   }
 
   @override
@@ -355,36 +355,69 @@ bool edit=false;
     });
   }
 
-Future  canOpenDoc({required docId,required correspondenceId, required transferId})async {
-    print("canOpenDoc canOpenDoc canOpenDoc canOpenDoc");
+
+  openfilee({required docId,required correspondenceId, required transferId})async{
+    print("openfilee87y7878");
     canOpenDocumentApi.data =
-        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+    "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
 
-  print( canOpenDocumentApi.data);
-  await  canOpenDocumentApi.getData().then((value) {
+ final  jsondata=await rootBundel.rootBundle.loadString("assets/json/canopen.json");
+    canOpenDocumentModel=   CanOpenDocumentModel.fromJson(json.decode(jsondata));
 
-print(value);
-canOpenDocumentModel=value as CanOpenDocumentModel;
-
-
-
-
-   //   FindRecipientModel findRecipientModel = value as FindRecipientModel;
-if(canOpenDocumentModel!.allow!){
-Get.find<DocumentController>().canOpenDocumentModel=canOpenDocumentModel;
-
-Get.find<DocumentController>().gatAllDataAboutDOC(docId:  docId, transferId: transferId, correspondenceId: correspondenceId);
-  Get.find<DocumentController>().loadPdf();
-  Get.toNamed("/DocumentPage");
-}
-
-    }).catchError((e){
-      print ("eeeeeeeeeeeeeeee=>  $e");
-
-
-
-  });
+    // canOpenDocumentApi.getData().then((value) {
+    //
+    //   canOpenDocumentModel=value as CanOpenDocumentModel;
+    //   print("i get dayta");
+    // });
+    print(canOpenDocumentModel?.toJson());
+    if(canOpenDocumentModel!.allow!){
+      Get.toNamed("/DocumentPage");
+    }
+   //
   }
+
+//
+// Future  canOpenDoc({required docId,required correspondenceId, required transferId})async {
+//     print("canOpenDoc canOpenDoc canOpenDoc canOpenDoc");
+//     canOpenDocumentApi.data =
+//         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+//
+//   print( canOpenDocumentApi.data);
+//     print( "canOpenDocumentApi.data");
+//      canOpenDocumentApi.getData().then((value) {
+//
+// canOpenDocumentModel=value as CanOpenDocumentModel;
+//
+//
+//
+// print("the valll ogfffcanOpenDocumentModel!.allow!cumentModel!.allow! =>${canOpenDocumentModel!.allow!}");
+//
+//    //   FindRecipientModel findRecipientModel = value as FindRecipientModel;
+// if(canOpenDocumentModel!.allow!){
+// Get.find<DocumentController>().canOpenDocumentModel=canOpenDocumentModel;
+//
+// Get.find<DocumentController>().gatAllDataAboutDOC(docId:  docId, transferId: transferId, correspondenceId: correspondenceId);
+//   Get.find<DocumentController>().loadPdf();
+//   Get.toNamed("/DocumentPage");
+// }
+//
+//     }).catchError((e){
+//       print ("eeeeeeeeeeeeeeee=>  $e");
+//
+//
+//
+//   });
+//
+//  // // عشان ندخل الملف وبعدين هنشوف مشكله الجسون
+//  //
+//  //    Get.find<DocumentController>().gatAllDataAboutDOC(docId:  docId, transferId: transferId, correspondenceId: correspondenceId);
+//  //   Get.find<DocumentController>().loadPdf();
+//    Get.toNamed("/DocumentPage");
+//
+//
+//
+//
+//   }
 
   int userId = 0;
 

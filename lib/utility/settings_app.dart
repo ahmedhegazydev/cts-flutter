@@ -2,7 +2,7 @@ class SettingsApp {
 
   // static const String baseUrl = 'http://192.168.1.2:9091/Mobility/CMS.svc/';
   // static const String baseUrl = 'http://win-7pnh2kgornc:9091/Mobility/CMS.svc/';
-  static const String baseUrl = 'http://192.168.1.2:9091/Mobility/CMS.svc/';
+  static const String baseUrl = 'http://192.168.32.217:9091/Mobility/CMS.svc/';
 
 
   static const String loginUrl =baseUrl;
@@ -29,4 +29,29 @@ class SettingsApp {
   static const String PostRemoveItemsFromBasketUrl =baseUrl+"RemoveItemsFromBasket";//
   static const String PostRemoveBasketUrl =baseUrl+"RemoveBasket";//
   static const String GetBasketInboxUrl =baseUrl+"GetBasketInbox?";//?token={token}&basketId={basketId}&pageNumber={pageNumber}&pageSize={pageSize}&language={language}"
+
+//new
+  static const String GetIsAlreadyExportedAsPaperworkUrl =baseUrl+"IsAlreadyExportedAsPaperwork?";//?Token={Token}&exportAction={exportAction}&correspondenceId={correspondenceId}&transferId={transferId}&language={language}&&exportAction=
+
+  static const String GetCanExportAsPaperworkUrl =baseUrl+"CanExportAsPaperwork?";//?Token={Token}&exportAction={exportAction}&correspondenceId={correspondenceId}&transferId={transferId}&language={language}
+  static const String GetIsAlreadyExportedAsTransferUrl =baseUrl+"IsAlreadyExportedAsTransfer?";//?Token={Token}&exportAction={exportAction}&correspondenceId={correspondenceId}&transferId={transferId}&language={language}
+
+  static const String GetCheckForEmptyStructureRecipientsUrl =baseUrl+"CheckForEmptyStructureRecipients?";//?Token={Token}&exportAction={exportAction}&correspondenceId={correspondenceId}&transferId={transferId}&language={language}
+
+  static const String GetAutoSendToRecepientsAndCCUrl =baseUrl+"AutoSendToRecepientsAndCC?";//? Token={Token}&exportAction={exportAction}&correspondenceId={correspondenceId}&transferId={transferId}&language={language}
+
+  static const String GetGetUserRoutingUrl =baseUrl+"GetUserRouting?";//Token={Token}&GctId={GctId}")
+
+
+
+ //////// #region G2G
+
+
+
+  static const String GetG2GInfoForExportUrl =baseUrl+"G2GInfoForExport?";//token={token}&documentId={documentId}&language={language}"
+
+  static const String PostExportUsingG2GUrl =baseUrl+"G2GInfoForExport?";//token={token}&documentId={documentId}&language={language}"
+
+  //Before can open document.
+
 }

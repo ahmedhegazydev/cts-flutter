@@ -119,10 +119,12 @@ final GetDocumentTransfersApi _getDocumentTransfersApi=GetDocumentTransfersApi()
 
 
   gatAllDataAboutDOC({required String docId,required String transferId,required String correspondenceId}){
-    getDocumentAuditLogsdata(docId: docId);
-    getDocumentTransfersdata(transferId:transferId ,correspondenceId: correspondenceId);
-    getDocumentReceiversdata(correspondenceId:correspondenceId,transferId: transferId );
-    getDocumentLinksdata(transferId: transferId,correspondenceId:correspondenceId );
+    print("gatAllDataAboutDOC");
+   getDocumentAuditLogsdata(docId: docId);
+   getDocumentTransfersdata(transferId:transferId ,correspondenceId: correspondenceId);
+   getDocumentReceiversdata(correspondenceId:correspondenceId,transferId: transferId );
+   getDocumentLinksdata(transferId: transferId,correspondenceId:correspondenceId );
+    print("*"*10);
   }
 //===============================================
   List<Destination>users =[];
@@ -268,7 +270,7 @@ Map<String,String>actions={};
   @override
   void onInit() {
     super.onInit();
-
+print(" i get startonInitonInitonInitonInit ");
   }
 
   @override

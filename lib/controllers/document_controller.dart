@@ -19,7 +19,9 @@ import '../services/apis/inOpenDocument/get_document_audit_logs_api.dart';
 import '../services/apis/inOpenDocument/get_document_links_api.dart';
 import '../services/apis/inOpenDocument/get_document_receivers_api.dart';
 import '../services/apis/inOpenDocument/get_document_transfers_api.dart';
-import '../services/apis/inside_doc/IsAlreadyExportedAsPaperworkAPI.dart';
+import '../services/apis/inside_doc/auto_send_to_recepients_and-cc_api.dart';
+import '../services/apis/inside_doc/can_export_as_paperwork_api.dart';
+import '../services/apis/inside_doc/is_already_exported_as_paperwork_api.dart';
 import '../services/json_model/can_open_document_model.dart';
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_correspondences_model.dart';
@@ -27,6 +29,8 @@ import '../services/json_model/get_document_links_model.dart';
 import '../services/json_model/get_document_logs_model.dart';
 import '../services/json_model/get_document_receivers_model.dart';
 import '../services/json_model/get_document_transfers_model.dart';
+import '../services/json_model/inopendocModel/auto_send_to_recepients_and_cc_model.dart';
+import '../services/json_model/inopendocModel/can_export_as_paperwork_model.dart';
 import '../services/json_model/inopendocModel/is_already_exported_as_paperwork_model.dart';
 import '../services/json_model/login_model.dart';
 import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
@@ -41,9 +45,10 @@ class DocumentController extends GetxController {
   CanOpenDocumentModel? canOpenDocumentModel;
   IsAlreadyExportedAsPaperworkModel? isAlreadyExportedAsPaperworkModel;
   IsAlreadyExportedAsPaperworkAPI _alreadyExportedAsPaperworkAPI = IsAlreadyExportedAsPaperworkAPI();
-
-
-
+  CanExportAsPaperworkAPI _canExportAsPaperworkAPI=CanExportAsPaperworkAPI();
+  CanExportAsPaperworkModel? canExportAsPaperworkModel;
+  AutoSendToRecepientsAndCCAPI _autoSendToRecepientsAndCCAPI=AutoSendToRecepientsAndCCAPI();
+  AutoSendToRecepientsAndCCModel? autoSendToRecepientsAndCCModel;
 
 
   Map <String, dynamic>?logindata;
@@ -452,6 +457,29 @@ class DocumentController extends GetxController {
     });
   }
 
+
+  getCanExportAsPaperwork({required correspondenceId,required transferId,required exportAction}){
+    _canExportAsPaperworkAPI.data =
+
+    "Token=${secureStorage
+        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
+        .locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
+    _canExportAsPaperworkAPI.getData().then((value) {
+      canExportAsPaperworkModel=value as CanExportAsPaperworkModel;
+    });
+  }
+
+
+  autoSendToRecepientsAndCC({required correspondenceId,required transferId,required exportAction}){
+    _autoSendToRecepientsAndCCAPI.data =
+
+    "Token=${secureStorage
+        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
+        .locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
+    _autoSendToRecepientsAndCCAPI.getData().then((value) {
+      canExportAsPaperworkModel=value as CanExportAsPaperworkModel;
+    });
+  }
 
 
 

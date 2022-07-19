@@ -82,6 +82,16 @@ class DocumentPage extends GetWidget<DocumentController> {
                     label: "hasAttachments".tr,
                   ),
                 ),
+              InkWell(
+                onTap: () {
+              controller.filePickerR();
+                },
+                child: CustomButtonWithImage(
+                  //onClick: () {},
+                  image: 'assets/images/refer.png',
+                  label: "Add Attachments".tr,
+                ),
+              ),
               if (controller
                       .canOpenDocumentModel?.correspondence?.hasSummaries ??
                   true)
@@ -1206,7 +1216,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                             padding: const EdgeInsets.all(8.0),
                             child: Text("Attachment number $pos"),
                           ))
-                        ],
+                         ],
                       )),
                     );
                   }),

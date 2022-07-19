@@ -22,6 +22,8 @@ class LandingPage extends GetWidget<LandingPageController> {
   @override
   Widget build(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
+
+    print("the Token Is => ${secureStorage.readSecureData(AllStringConst.Token)}");
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,

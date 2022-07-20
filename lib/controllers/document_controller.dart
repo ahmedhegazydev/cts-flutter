@@ -21,7 +21,9 @@ import '../services/apis/inOpenDocument/get_document_receivers_api.dart';
 import '../services/apis/inOpenDocument/get_document_transfers_api.dart';
 import '../services/apis/inside_doc/auto_send_to_recepients_and-cc_api.dart';
 import '../services/apis/inside_doc/can_export_as_paperwork_api.dart';
+import '../services/apis/inside_doc/check_for_empty_structure_recipients_api.dart';
 import '../services/apis/inside_doc/is_already_exported_as_paperwork_api.dart';
+import '../services/apis/inside_doc/is_already_exported_as_transfer_api.dart';
 import '../services/json_model/can_open_document_model.dart';
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_correspondences_model.dart';
@@ -31,7 +33,9 @@ import '../services/json_model/get_document_receivers_model.dart';
 import '../services/json_model/get_document_transfers_model.dart';
 import '../services/json_model/inopendocModel/auto_send_to_recepients_and_cc_model.dart';
 import '../services/json_model/inopendocModel/can_export_as_paperwork_model.dart';
+import '../services/json_model/inopendocModel/check_for_empty_structure_recipients_model.dart';
 import '../services/json_model/inopendocModel/is_already_exported_as_paperwork_model.dart';
+import '../services/json_model/inopendocModel/is_already_exported_as_transfer_model.dart';
 import '../services/json_model/login_model.dart';
 import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
 import '../services/models/signature_info.dart';
@@ -49,6 +53,15 @@ class DocumentController extends GetxController {
   CanExportAsPaperworkModel? canExportAsPaperworkModel;
   AutoSendToRecepientsAndCCAPI _autoSendToRecepientsAndCCAPI=AutoSendToRecepientsAndCCAPI();
   AutoSendToRecepientsAndCCModel? autoSendToRecepientsAndCCModel;
+
+  CheckForEmptyStructureRecipientsAPI _checkForEmptyStructureRecipientsAPI=CheckForEmptyStructureRecipientsAPI();
+  CheckForEmptyStructureRecipientsModel? checkForEmptyStructureRecipientsModel;
+
+  IsAlreadyExportedAsTransferAPI _isAlreadyExportedAsTransferAPI =IsAlreadyExportedAsTransferAPI();
+  IsAlreadyExportedAsTransferModel? isAlreadyExportedAsTransferModel;
+
+
+
 
 
   Map <String, dynamic>?logindata;
@@ -481,6 +494,36 @@ class DocumentController extends GetxController {
     });
   }
 
+
+
+
+
+
+
+  checkForEmptyStructureRecipients({required correspondenceId,required transferId,required exportAction}){
+    _checkForEmptyStructureRecipientsAPI.data =
+
+    "Token=${secureStorage
+        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
+        .locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
+    _checkForEmptyStructureRecipientsAPI.getData().then((value) {
+      canExportAsPaperworkModel=value as CanExportAsPaperworkModel;
+    });
+  }
+
+
+
+
+  isAlreadyExportedAsTransfer({required correspondenceId,required transferId,required exportAction}){
+    _isAlreadyExportedAsTransferAPI.data =
+
+    "Token=${secureStorage
+        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
+        .locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
+    _isAlreadyExportedAsTransferAPI.getData().then((value) {
+      canExportAsPaperworkModel=value as CanExportAsPaperworkModel;
+    });
+  }
 
 
 }

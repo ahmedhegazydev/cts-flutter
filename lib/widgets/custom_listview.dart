@@ -1405,6 +1405,8 @@ class CustomListView extends StatelessWidget {
                                   //         .correspondenceId,
                                   //     transferId:
                                   //         allCorrespondences[pos].transferId);
+print(allCorrespondences[pos].purposeId);
+print(allCorrespondences[pos].correspondenceId);
 
 
                                   Get.find<InboxController>().openfilee(docId: allCorrespondences[pos].purposeId, correspondenceId: allCorrespondences[pos]

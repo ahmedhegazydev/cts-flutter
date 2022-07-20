@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -22,6 +23,8 @@ import '../services/apis/inOpenDocument/get_document_transfers_api.dart';
 import '../services/apis/inside_doc/auto_send_to_recepients_and-cc_api.dart';
 import '../services/apis/inside_doc/can_export_as_paperwork_api.dart';
 import '../services/apis/inside_doc/check_for_empty_structure_recipients_api.dart';
+import '../services/apis/inside_doc/g2g/g2g_info_for_export_api.dart';
+import '../services/apis/inside_doc/get_user_routing_api.dart';
 import '../services/apis/inside_doc/is_already_exported_as_paperwork_api.dart';
 import '../services/apis/inside_doc/is_already_exported_as_transfer_api.dart';
 import '../services/json_model/can_open_document_model.dart';
@@ -34,6 +37,9 @@ import '../services/json_model/get_document_transfers_model.dart';
 import '../services/json_model/inopendocModel/auto_send_to_recepients_and_cc_model.dart';
 import '../services/json_model/inopendocModel/can_export_as_paperwork_model.dart';
 import '../services/json_model/inopendocModel/check_for_empty_structure_recipients_model.dart';
+import '../services/json_model/inopendocModel/g2g/g2g_Info_for_export_model.dart';
+import '../services/json_model/inopendocModel/g2g/g2g_export_dto.dart';
+import '../services/json_model/inopendocModel/get_user_routing_model.dart';
 import '../services/json_model/inopendocModel/is_already_exported_as_paperwork_model.dart';
 import '../services/json_model/inopendocModel/is_already_exported_as_transfer_model.dart';
 import '../services/json_model/login_model.dart';
@@ -48,29 +54,34 @@ class DocumentController extends GetxController {
   SecureStorage secureStorage = SecureStorage();
   CanOpenDocumentModel? canOpenDocumentModel;
   IsAlreadyExportedAsPaperworkModel? isAlreadyExportedAsPaperworkModel;
-  IsAlreadyExportedAsPaperworkAPI _alreadyExportedAsPaperworkAPI = IsAlreadyExportedAsPaperworkAPI();
-  CanExportAsPaperworkAPI _canExportAsPaperworkAPI=CanExportAsPaperworkAPI();
+  IsAlreadyExportedAsPaperworkAPI _alreadyExportedAsPaperworkAPI =
+      IsAlreadyExportedAsPaperworkAPI();
+  CanExportAsPaperworkAPI _canExportAsPaperworkAPI = CanExportAsPaperworkAPI();
   CanExportAsPaperworkModel? canExportAsPaperworkModel;
-  AutoSendToRecepientsAndCCAPI _autoSendToRecepientsAndCCAPI=AutoSendToRecepientsAndCCAPI();
+  AutoSendToRecepientsAndCCAPI _autoSendToRecepientsAndCCAPI =
+      AutoSendToRecepientsAndCCAPI();
   AutoSendToRecepientsAndCCModel? autoSendToRecepientsAndCCModel;
 
-  CheckForEmptyStructureRecipientsAPI _checkForEmptyStructureRecipientsAPI=CheckForEmptyStructureRecipientsAPI();
+  CheckForEmptyStructureRecipientsAPI _checkForEmptyStructureRecipientsAPI =
+      CheckForEmptyStructureRecipientsAPI();
   CheckForEmptyStructureRecipientsModel? checkForEmptyStructureRecipientsModel;
 
-  IsAlreadyExportedAsTransferAPI _isAlreadyExportedAsTransferAPI =IsAlreadyExportedAsTransferAPI();
+  IsAlreadyExportedAsTransferAPI _isAlreadyExportedAsTransferAPI =
+      IsAlreadyExportedAsTransferAPI();
   IsAlreadyExportedAsTransferModel? isAlreadyExportedAsTransferModel;
 
+  GetUserRoutingAPI _getUserRoutingAPI = GetUserRoutingAPI();
+  GetUserRoutingModel? getUserRoutingModel;
 
+  G2GInfoForExportAPI _g2gInfoForExportAPI = G2GInfoForExportAPI();
+  G2GInfoForExportModel? g2gInfoForExportModel;
 
-
-
-  Map <String, dynamic>?logindata;
-  Map<GlobalKey, String>singpic = {};
-  List<Widget>pdfAndSing = [
+  Map<String, dynamic>? logindata;
+  Map<GlobalKey, String> singpic = {};
+  List<Widget> pdfAndSing = [
     SfPdfViewer.network(
         'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf')
   ];
-
 
   addWidgetToPdfAndSing(Widget pic) {
     pdfAndSing.add(pic);
@@ -84,40 +95,35 @@ class DocumentController extends GetxController {
     exportBackgroundColor: Colors.transparent,
   );
 
-
   FindRecipientModel? findRecipientModel;
   final FindRecipient _findRecipient = FindRecipient();
 
 //===============================================
-  final GetDocumentAuditLogsApi _getDocumentAuditLogsApi = GetDocumentAuditLogsApi();
+  final GetDocumentAuditLogsApi _getDocumentAuditLogsApi =
+      GetDocumentAuditLogsApi();
   GetDocumentLogsModel? getDocumentLogsModel;
   final GetDocumentLinksApi _getDocumentLinksApi = GetDocumentLinksApi();
   GetDocumentLinksModel? getDocumentLinksModel;
-  final GetDocumentReceiversApi _getDocumentReceiversApi = GetDocumentReceiversApi();
+  final GetDocumentReceiversApi _getDocumentReceiversApi =
+      GetDocumentReceiversApi();
   GetDocumentReceiversModel? getDocumentReceiversModel;
-  final GetDocumentTransfersApi _getDocumentTransfersApi = GetDocumentTransfersApi();
+  final GetDocumentTransfersApi _getDocumentTransfersApi =
+      GetDocumentTransfersApi();
 
   GetDocumentTransfersModel? getDocumentTransfersModel;
 
   getDocumentAuditLogsdata({required String docId}) {
     _getDocumentAuditLogsApi.data =
-    "Token=${secureStorage.token()}&docId=$docId&language=${Get.locale
-        ?.languageCode == "en" ? "en" : "ar"}";
-
+        "Token=${secureStorage.token()}&docId=$docId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
 
     _getDocumentAuditLogsApi.getData().then((value) {
       getDocumentLogsModel = value as GetDocumentLogsModel;
     });
   }
 
-
   getDocumentLinksdata({correspondenceId, transferId}) {
-    _getDocumentLinksApi.data = "Token=${secureStorage
-        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
-        .locale?.languageCode == "en"
-        ? "en"
-        : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
-
+    _getDocumentLinksApi.data =
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
 
     _getDocumentLinksApi.getData().then((value) {
       getDocumentLinksModel = value as GetDocumentLinksModel;
@@ -125,35 +131,27 @@ class DocumentController extends GetxController {
   }
 
   getDocumentReceiversdata({correspondenceId, transferId}) {
-    _getDocumentReceiversApi.data = "Token=${secureStorage
-        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
-        .locale?.languageCode == "en"
-        ? "en"
-        : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
-
+    _getDocumentReceiversApi.data =
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
 
     _getDocumentReceiversApi.getData().then((value) {
       getDocumentReceiversModel = value as GetDocumentReceiversModel;
     });
   }
 
-
   getDocumentTransfersdata({correspondenceId, transferId}) {
-    _getDocumentTransfersApi.data = "Token=${secureStorage
-        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
-        .locale?.languageCode == "en"
-        ? "en"
-        : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
-
+    _getDocumentTransfersApi.data =
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
 
     _getDocumentTransfersApi.getData().then((value) {
       getDocumentTransfersModel = value as GetDocumentTransfersModel;
     });
   }
 
-
   gatAllDataAboutDOC(
-      {required String docId, required String transferId, required String correspondenceId}) {
+      {required String docId,
+      required String transferId,
+      required String correspondenceId}) {
     print("gatAllDataAboutDOC");
     getDocumentAuditLogsdata(docId: docId);
     getDocumentTransfersdata(
@@ -166,9 +164,8 @@ class DocumentController extends GetxController {
   }
 
 //===============================================
-  List<Destination>users = [];
-  List<Destination>usersWillSendTo = [];
-
+  List<Destination> users = [];
+  List<Destination> usersWillSendTo = [];
 
   String filterWord = "";
 
@@ -194,18 +191,14 @@ class DocumentController extends GetxController {
 
   getFindRecipientData() {
     _findRecipient.data =
-    "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en"
-        ? "en"
-        : "ar"}";
+        "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     _findRecipient.getData().then((value) {
       findRecipientModel = value as FindRecipientModel;
-
 
       Get.find<InboxController>().setFindRecipientData(findRecipientModel!);
       listOfUser(0);
       print(
-          "tis is  findRecipientModel?.toJson()              =>  ${findRecipientModel
-              ?.toJson()}");
+          "tis is  findRecipientModel?.toJson()              =>  ${findRecipientModel?.toJson()}");
     });
   }
 
@@ -214,7 +207,7 @@ class DocumentController extends GetxController {
 
   //PDFDocument? doc;
 
-  Map<String, String>actions = {};
+  Map<String, String> actions = {};
 
   //Map<String,String>actions={};
   // FlutterSoundPlayer? mPlayer ;
@@ -309,18 +302,17 @@ class DocumentController extends GetxController {
 
   /// get all Transfer about doc
 
-
   @override
   void onInit() {
     super.onInit();
     print(" i get startonInitonInitonInitonInit ");
+    genratG2GExportDto();
   }
 
   @override
   void onClose() {
     super.onClose();
   }
-
 
   FlutterSoundRecorder? audioRecorder;
   FlutterSoundPlayer? audioPlayer;
@@ -344,12 +336,10 @@ class DocumentController extends GetxController {
     audioPlayer = FlutterSoundPlayer();
     audioRecorder!.openAudioSession();
     appDocDir = await getApplicationDocumentsDirectory();
-    _directoryPath = appDocDir!.path + '/' + DateTime
-        .now()
-        .millisecondsSinceEpoch
-        .toString() +
+    _directoryPath = appDocDir!.path +
+        '/' +
+        DateTime.now().millisecondsSinceEpoch.toString() +
         '.aac';
-
 
     await audioRecorder?.startRecorder(toFile: _directoryPath);
   }
@@ -362,7 +352,6 @@ class DocumentController extends GetxController {
     await audioPlayer!.openAudioSession();
     await audioPlayer!.startPlayer(fromURI: _directoryPath);
   }
-
 
   Map<int, ReplyWithVoiceNoteRequestModel> transfarForMany = {};
   Map<int, CustomActions> transfarForManyCustomActions = {};
@@ -385,11 +374,9 @@ class DocumentController extends GetxController {
     update();
   }
 
-
   deltransfarForMany({required int id}) {
     transfarForMany.remove(id);
   }
-
 
   Future recordForMany() async {
     await Permission.storage.request();
@@ -405,10 +392,7 @@ class DocumentController extends GetxController {
     appDocDir = await getApplicationDocumentsDirectory();
     _directoryPath = appDocDir!.path +
         '/' +
-        DateTime
-            .now()
-            .millisecondsSinceEpoch
-            .toString() +
+        DateTime.now().millisecondsSinceEpoch.toString() +
         '.mp4';
     recording = true;
     update();
@@ -420,17 +404,15 @@ class DocumentController extends GetxController {
     await audioRecorder?.stopRecorder();
     recordFile = File(_directoryPath);
     recording = false;
-    String? audioFileBes64 =
-    await audiobase64String(
-        file: recordFile);
+    String? audioFileBes64 = await audiobase64String(file: recordFile);
     update();
     transfarForMany[id]?.voiceNote = audioFileBes64;
   }
 
-
-  SetMultipleReplyWithVoiceNoteRequestModel({required int id,
-    required String transferId,
-    required String correspondencesId}) {
+  SetMultipleReplyWithVoiceNoteRequestModel(
+      {required int id,
+      required String transferId,
+      required String correspondencesId}) {
     ReplyWithVoiceNoteRequestModel model = ReplyWithVoiceNoteRequestModel(
         userId: id.toString(),
         transferId: transferId,
@@ -442,90 +424,97 @@ class DocumentController extends GetxController {
     transfarForMany[id] = model;
   }
 
-
   filePickerR() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
 
     if (result != null) {
       File file = File(result.files.single.path!);
-    } else {
-
-    }
+    } else {}
   }
 
-
-
-
-
-
-
-  getIsAlreadyExportedAsPaperwork({required correspondenceId,required transferId,required exportAction}) async {
+  getIsAlreadyExportedAsPaperwork(
+      {required correspondenceId,
+      required transferId,
+      required exportAction}) async {
     _alreadyExportedAsPaperworkAPI.data =
-
-    "Token=${secureStorage
-        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
-        .locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
     _alreadyExportedAsPaperworkAPI.getData().then((value) {
-      isAlreadyExportedAsPaperworkModel=value as IsAlreadyExportedAsPaperworkModel;
+      isAlreadyExportedAsPaperworkModel =
+          value as IsAlreadyExportedAsPaperworkModel;
     });
   }
 
-
-  getCanExportAsPaperwork({required correspondenceId,required transferId,required exportAction}){
+  getCanExportAsPaperwork(
+      {required correspondenceId, required transferId, required exportAction}) {
     _canExportAsPaperworkAPI.data =
-
-    "Token=${secureStorage
-        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
-        .locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
     _canExportAsPaperworkAPI.getData().then((value) {
-      canExportAsPaperworkModel=value as CanExportAsPaperworkModel;
+      canExportAsPaperworkModel = value as CanExportAsPaperworkModel;
     });
   }
 
-
-  autoSendToRecepientsAndCC({required correspondenceId,required transferId,required exportAction}){
+  autoSendToRecepientsAndCC(
+      {required correspondenceId, required transferId, required exportAction}) {
     _autoSendToRecepientsAndCCAPI.data =
-
-    "Token=${secureStorage
-        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
-        .locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
     _autoSendToRecepientsAndCCAPI.getData().then((value) {
-      canExportAsPaperworkModel=value as CanExportAsPaperworkModel;
+      canExportAsPaperworkModel = value as CanExportAsPaperworkModel;
     });
   }
 
-
-
-
-
-
-
-  checkForEmptyStructureRecipients({required correspondenceId,required transferId,required exportAction}){
+  checkForEmptyStructureRecipients(
+      {required correspondenceId, required transferId, required exportAction}) {
     _checkForEmptyStructureRecipientsAPI.data =
-
-    "Token=${secureStorage
-        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
-        .locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
     _checkForEmptyStructureRecipientsAPI.getData().then((value) {
-      canExportAsPaperworkModel=value as CanExportAsPaperworkModel;
+      checkForEmptyStructureRecipientsModel =
+          value as CheckForEmptyStructureRecipientsModel;
     });
   }
 
-
-
-
-  isAlreadyExportedAsTransfer({required correspondenceId,required transferId,required exportAction}){
+  isAlreadyExportedAsTransfer(
+      {required correspondenceId, required transferId, required exportAction}) {
     _isAlreadyExportedAsTransferAPI.data =
-
-    "Token=${secureStorage
-        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
-        .locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
     _isAlreadyExportedAsTransferAPI.getData().then((value) {
-      canExportAsPaperworkModel=value as CanExportAsPaperworkModel;
+      isAlreadyExportedAsTransferModel =
+          value as IsAlreadyExportedAsTransferModel;
     });
   }
 
+  getUserRouting({required gctId}) {
+    _getUserRoutingAPI.data = "Token=${secureStorage.token()}&GctId=$gctId";
+    _getUserRoutingAPI.getData().then((value) {
+      canExportAsPaperworkModel = value as CanExportAsPaperworkModel;
+    });
+  }
 
+  g2gInfoForExport({
+    required documentId,
+  }) {
+    _g2gInfoForExportAPI.data =
+        "token=${secureStorage.token()}&documentId=$documentId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+    _g2gInfoForExportAPI.getData().then((value) {
+      g2gInfoForExportModel = value as G2GInfoForExportModel;
+    });
+  }
+
+  genratG2GExportDto() {
+    G2GRecipient g2gRecipient=G2GRecipient(childId: 5,isCC: false,parentId: 10);
+    G2GExportDto g = G2GExportDto(
+        token: secureStorage.token(),
+        language: Get.locale?.languageCode == "en" ? "en" : "ar",
+        notes: "i9jjoj",
+        attachments: [ ],
+        documentId: 2020,
+        recipients: [ g2gRecipient]);
+
+
+
+
+    print("this the map=> ${jsonEncode(g2gRecipient.toMap())}");
+    print("this the map=> ${jsonEncode(g.toMap())}");
+  }
 }
 
 //
@@ -622,16 +611,3 @@ class DocumentController extends GetxController {
 //     _createFile();
 //   }
 // }
-
-
-
-
-
-
-
-
-
-
-
-
-

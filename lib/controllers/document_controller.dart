@@ -56,11 +56,19 @@ import 'inbox_controller.dart';
 class DocumentController extends GetxController {
   SecureStorage secureStorage = SecureStorage();
   CanOpenDocumentModel? canOpenDocumentModel;
+
+
   IsAlreadyExportedAsPaperworkModel? isAlreadyExportedAsPaperworkModel;
   IsAlreadyExportedAsPaperworkAPI _alreadyExportedAsPaperworkAPI =
+
   IsAlreadyExportedAsPaperworkAPI();
+
+
+
   CanExportAsPaperworkAPI _canExportAsPaperworkAPI = CanExportAsPaperworkAPI();
   CanExportAsPaperworkModel? canExportAsPaperworkModel;
+
+
   AutoSendToRecepientsAndCCAPI _autoSendToRecepientsAndCCAPI =
   AutoSendToRecepientsAndCCAPI();
   AutoSendToRecepientsAndCCModel? autoSendToRecepientsAndCCModel;
@@ -462,6 +470,7 @@ class DocumentController extends GetxController {
   getIsAlreadyExportedAsPaperwork({required correspondenceId,
     required transferId,
     required exportAction}) async {
+    print("in  getIsAlreadyExportedAsPaperwork");
     _alreadyExportedAsPaperworkAPI.data =
     "Token=${secureStorage
         .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
@@ -469,8 +478,10 @@ class DocumentController extends GetxController {
         ? "en"
         : "ar"}&exportAction=$exportAction";
     _alreadyExportedAsPaperworkAPI.getData().then((value) {
+
       isAlreadyExportedAsPaperworkModel =
       value as IsAlreadyExportedAsPaperworkModel;
+      print("_alreadyExportedAsPaperworkAPI =>  ${isAlreadyExportedAsPaperworkModel!.toJson()}");
     });
   }
 

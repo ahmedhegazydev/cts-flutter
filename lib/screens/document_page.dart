@@ -133,7 +133,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                     PopupMenuItem(
                         child: Text("paperExport".tr),
                         onTap: () {
-                          controller.getIsAlreadyExportedAsPaperwork(
+                          controller.getIsAlreadyExportedAsPaperwork(context: context,
                               correspondenceId: controller
                                   .correspondences.correspondenceId!,
                               transferId: controller
@@ -146,7 +146,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                     PopupMenuItem(
                         child: Text("electronicExport".tr),
                         onTap: () {
-                          controller.getIsAlreadyExportedAsPaperwork(
+                          controller.getIsAlreadyExportedAsPaperwork(context: context,
                               correspondenceId: controller
                                   .correspondences.correspondenceId!,
                               transferId: controller
@@ -157,7 +157,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                     PopupMenuItem(
                         child: Text("paperAndElectronicExport".tr),
                         onTap: () {
-                          controller.getIsAlreadyExportedAsPaperwork(
+                          controller.getIsAlreadyExportedAsPaperwork(context: context,
                               correspondenceId: controller
                                   .correspondences.correspondenceId!,
                               transferId: controller

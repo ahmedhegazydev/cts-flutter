@@ -51,6 +51,7 @@ import '../services/models/signature_info.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
 import '../utility/utilitie.dart';
+import '../widgets/custom_button_with_icon.dart';
 import 'inbox_controller.dart';
 
 class DocumentController extends GetxController {
@@ -469,7 +470,7 @@ class DocumentController extends GetxController {
 
   getIsAlreadyExportedAsPaperwork({required correspondenceId,
     required transferId,
-    required exportAction}) async {
+    required exportAction,required context}) async {
     print("in  getIsAlreadyExportedAsPaperwork");
     _alreadyExportedAsPaperworkAPI.data =
     "Token=${secureStorage
@@ -481,15 +482,28 @@ class DocumentController extends GetxController {
 
       isAlreadyExportedAsPaperworkModel =
       value as IsAlreadyExportedAsPaperworkModel;
+      print("canExportAsPaperworkModel =>  ${isAlreadyExportedAsPaperworkModel?.isConfirm}");
+
+
       if(isAlreadyExportedAsPaperworkModel?.isConfirm??false){
-        Get.snackbar("", isAlreadyExportedAsPaperworkModel!.message!);
+
+        showDilog( context: context,massge: isAlreadyExportedAsPaperworkModel!.message!,no: (){
+
+          Navigator.of(context).pop();
+
+        },yes: (){
+          getCanExportAsPaperwork(exportAction:  exportAction, transferId: transferId,correspondenceId:correspondenceId );
+
+
+
+        });
       }
-      print("_alreadyExportedAsPaperworkAPI =>  ${isAlreadyExportedAsPaperworkModel!.toJson()}");
+      // print("_alreadyExportedAsPaperworkAPI =>  ${isAlreadyExportedAsPaperworkModel!.toJson()}");
     });
   }
 
   getCanExportAsPaperwork(
-      {required correspondenceId, required transferId, required exportAction}) {
+      {required correspondenceId, required transferId, required exportAction,required context}) {
     _canExportAsPaperworkAPI.data =
     "Token=${secureStorage
         .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
@@ -498,10 +512,31 @@ class DocumentController extends GetxController {
         : "ar"}&exportAction=$exportAction";
     _canExportAsPaperworkAPI.getData().then((value) {
       canExportAsPaperworkModel = value as CanExportAsPaperworkModel;
+      print("canExportAsPaperworkModel =>  ${canExportAsPaperworkModel?.isConfirm}");
+      // if(canExportAsPaperworkModel?.isConfirm??false){
+      //   Get.snackbar("", canExportAsPaperworkModel!.message!);
+      // }
+      // print("_alreadyExportedAsPaperworkAPI =>  ${canExportAsPaperworkModel!.toJson()}");
+
       if(canExportAsPaperworkModel?.isConfirm??false){
-        Get.snackbar("", canExportAsPaperworkModel!.message!);
+
+        showDilog( context: context,massge: canExportAsPaperworkModel!.message!,no: (){
+
+          Navigator.of(context).pop();
+
+        },yes: (){
+
+
+
+          //getCanExportAsPaperwork(exportAction:  exportAction, transferId: transferId,correspondenceId:correspondenceId );
+
+
+
+        });
       }
-      print("_alreadyExportedAsPaperworkAPI =>  ${canExportAsPaperworkModel!.toJson()}");
+
+
+
     });
   }
 
@@ -617,6 +652,74 @@ class DocumentController extends GetxController {
   }
 }
 
+showDilog({required context,required String massge,required VoidCallback yes,required VoidCallback no}){
+  return showDialog(
+      context: context,
+      builder: (BuildContext
+      context) {
+        return AlertDialog(
+          title: Row(
+            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+
+                const Spacer(),
+                InkWell(
+                  onTap:
+                      () {
+
+                    Navigator.pop(
+                        context);
+                  },
+                  child: Image
+                      .asset(
+                    'assets/images/close_button.png',
+                    width:
+                    20,
+                    height:
+                    20,
+                  ),
+                ),
+              ]),
+          content:
+          SingleChildScrollView(
+            child: Column(
+                crossAxisAlignment:
+                CrossAxisAlignment
+                    .start,
+                children: [
+Text(massge),
+                ]),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed:yes
+              //     () {
+              //
+              // }
+
+              ,
+              child: Text(
+                  "Yes"),
+            ),
+
+
+
+
+            TextButton(
+              onPressed:no
+              //     () {
+              //
+              //
+              //   //Navigator.of(context).pop();
+              // }
+              ,
+              child: Text(
+                  "No"),
+            ),  ],
+        );
+      });
+
+}
 //
 // String _fileName = 'Recording_';
 // String _fileExtension = '.aac';

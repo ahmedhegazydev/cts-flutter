@@ -2,7 +2,7 @@ class SettingsApp {
 
   // static const String baseUrl = 'http://192.168.1.2:9091/Mobility/CMS.svc/';
   // static const String baseUrl = 'http://win-7pnh2kgornc:9091/Mobility/CMS.svc/';
-  static const String baseUrl = 'http://192.168.1.4:9091/Mobility/CMS.svc/';
+  static const String baseUrl = 'http://192.168.1.189:9091/Mobility/CMS.svc/';
 
 
   static const String loginUrl =baseUrl;
@@ -49,9 +49,11 @@ class SettingsApp {
 
 
   static const String GetG2GInfoForExportUrl =baseUrl+"G2GInfoForExport?";//token={token}&documentId={documentId}&language={language}"
+  static const String PostExportUsingG2GUrl =baseUrl+"ExportUsingG2G";
+  static const String PostCanReceiveG2GDocumentUrl =baseUrl+"CanReceiveG2GDocument";
+  static const String PostReceiveDocumentUsingG2GUrl =baseUrl+"ReceiveDocumentUsingG2G";
+  static const String PostReturnDocumentUsingG2GUrl =baseUrl+"ReturnDocumentUsingG2G";
 
-  static const String PostExportUsingG2GUrl =baseUrl+"G2GInfoForExport?";//token={token}&documentId={documentId}&language={language}"
-
-  //Before can open document.
+//Before can open document.
 
 }

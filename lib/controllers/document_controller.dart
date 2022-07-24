@@ -58,28 +58,23 @@ class DocumentController extends GetxController {
   SecureStorage secureStorage = SecureStorage();
   CanOpenDocumentModel? canOpenDocumentModel;
 
-
   IsAlreadyExportedAsPaperworkModel? isAlreadyExportedAsPaperworkModel;
   IsAlreadyExportedAsPaperworkAPI _alreadyExportedAsPaperworkAPI =
-
-  IsAlreadyExportedAsPaperworkAPI();
-
-
+      IsAlreadyExportedAsPaperworkAPI();
 
   CanExportAsPaperworkAPI _canExportAsPaperworkAPI = CanExportAsPaperworkAPI();
   CanExportAsPaperworkModel? canExportAsPaperworkModel;
 
-
   AutoSendToRecepientsAndCCAPI _autoSendToRecepientsAndCCAPI =
-  AutoSendToRecepientsAndCCAPI();
+      AutoSendToRecepientsAndCCAPI();
   AutoSendToRecepientsAndCCModel? autoSendToRecepientsAndCCModel;
 
   CheckForEmptyStructureRecipientsAPI _checkForEmptyStructureRecipientsAPI =
-  CheckForEmptyStructureRecipientsAPI();
+      CheckForEmptyStructureRecipientsAPI();
   CheckForEmptyStructureRecipientsModel? checkForEmptyStructureRecipientsModel;
 
   IsAlreadyExportedAsTransferAPI _isAlreadyExportedAsTransferAPI =
-  IsAlreadyExportedAsTransferAPI();
+      IsAlreadyExportedAsTransferAPI();
   IsAlreadyExportedAsTransferModel? isAlreadyExportedAsTransferModel;
 
   GetUserRoutingAPI _getUserRoutingAPI = GetUserRoutingAPI();
@@ -88,9 +83,10 @@ class DocumentController extends GetxController {
   G2GInfoForExportAPI _g2gInfoForExportAPI = G2GInfoForExportAPI();
   G2GInfoForExportModel? g2gInfoForExportModel;
 
-
-  CanReceiveG2GDocumentAPI _canReceiveG2GDocumentAPI = CanReceiveG2GDocumentAPI();
-  ReceiveDocumentUsingG2GApi _receiveDocumentUsingG2GApi=ReceiveDocumentUsingG2GApi();
+  CanReceiveG2GDocumentAPI _canReceiveG2GDocumentAPI =
+      CanReceiveG2GDocumentAPI();
+  ReceiveDocumentUsingG2GApi _receiveDocumentUsingG2GApi =
+      ReceiveDocumentUsingG2GApi();
 
   Map<String, dynamic>? logindata;
   Map<GlobalKey, String> singpic = {};
@@ -116,22 +112,21 @@ class DocumentController extends GetxController {
 
 //===============================================
   final GetDocumentAuditLogsApi _getDocumentAuditLogsApi =
-  GetDocumentAuditLogsApi();
+      GetDocumentAuditLogsApi();
   GetDocumentLogsModel? getDocumentLogsModel;
   final GetDocumentLinksApi _getDocumentLinksApi = GetDocumentLinksApi();
   GetDocumentLinksModel? getDocumentLinksModel;
   final GetDocumentReceiversApi _getDocumentReceiversApi =
-  GetDocumentReceiversApi();
+      GetDocumentReceiversApi();
   GetDocumentReceiversModel? getDocumentReceiversModel;
   final GetDocumentTransfersApi _getDocumentTransfersApi =
-  GetDocumentTransfersApi();
+      GetDocumentTransfersApi();
 
   GetDocumentTransfersModel? getDocumentTransfersModel;
 
   getDocumentAuditLogsdata({required String docId}) {
     _getDocumentAuditLogsApi.data =
-    "Token=${secureStorage.token()}&docId=$docId&language=${Get.locale
-        ?.languageCode == "en" ? "en" : "ar"}";
+        "Token=${secureStorage.token()}&docId=$docId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
 
     _getDocumentAuditLogsApi.getData().then((value) {
       getDocumentLogsModel = value as GetDocumentLogsModel;
@@ -140,11 +135,7 @@ class DocumentController extends GetxController {
 
   getDocumentLinksdata({correspondenceId, transferId}) {
     _getDocumentLinksApi.data =
-    "Token=${secureStorage
-        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
-        .locale?.languageCode == "en"
-        ? "en"
-        : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
 
     _getDocumentLinksApi.getData().then((value) {
       getDocumentLinksModel = value as GetDocumentLinksModel;
@@ -153,11 +144,7 @@ class DocumentController extends GetxController {
 
   getDocumentReceiversdata({correspondenceId, transferId}) {
     _getDocumentReceiversApi.data =
-    "Token=${secureStorage
-        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
-        .locale?.languageCode == "en"
-        ? "en"
-        : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
 
     _getDocumentReceiversApi.getData().then((value) {
       getDocumentReceiversModel = value as GetDocumentReceiversModel;
@@ -166,20 +153,17 @@ class DocumentController extends GetxController {
 
   getDocumentTransfersdata({correspondenceId, transferId}) {
     _getDocumentTransfersApi.data =
-    "Token=${secureStorage
-        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
-        .locale?.languageCode == "en"
-        ? "en"
-        : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
 
     _getDocumentTransfersApi.getData().then((value) {
       getDocumentTransfersModel = value as GetDocumentTransfersModel;
     });
   }
 
-  gatAllDataAboutDOC({required String docId,
-    required String transferId,
-    required String correspondenceId}) {
+  gatAllDataAboutDOC(
+      {required String docId,
+      required String transferId,
+      required String correspondenceId}) {
     print("gatAllDataAboutDOC");
     getDocumentAuditLogsdata(docId: docId);
     getDocumentTransfersdata(
@@ -219,17 +203,14 @@ class DocumentController extends GetxController {
 
   getFindRecipientData() {
     _findRecipient.data =
-    "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en"
-        ? "en"
-        : "ar"}";
+        "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     _findRecipient.getData().then((value) {
       findRecipientModel = value as FindRecipientModel;
 
       Get.find<InboxController>().setFindRecipientData(findRecipientModel!);
       listOfUser(0);
       print(
-          "tis is  findRecipientModel?.toJson()              =>  ${findRecipientModel
-              ?.toJson()}");
+          "tis is  findRecipientModel?.toJson()              =>  ${findRecipientModel?.toJson()}");
     });
   }
 
@@ -369,10 +350,7 @@ class DocumentController extends GetxController {
     appDocDir = await getApplicationDocumentsDirectory();
     _directoryPath = appDocDir!.path +
         '/' +
-        DateTime
-            .now()
-            .millisecondsSinceEpoch
-            .toString() +
+        DateTime.now().millisecondsSinceEpoch.toString() +
         '.aac';
 
     await audioRecorder?.startRecorder(toFile: _directoryPath);
@@ -426,10 +404,7 @@ class DocumentController extends GetxController {
     appDocDir = await getApplicationDocumentsDirectory();
     _directoryPath = appDocDir!.path +
         '/' +
-        DateTime
-            .now()
-            .millisecondsSinceEpoch
-            .toString() +
+        DateTime.now().millisecondsSinceEpoch.toString() +
         '.mp4';
     recording = true;
     update();
@@ -446,9 +421,10 @@ class DocumentController extends GetxController {
     transfarForMany[id]?.voiceNote = audioFileBes64;
   }
 
-  SetMultipleReplyWithVoiceNoteRequestModel({required int id,
-    required String transferId,
-    required String correspondencesId}) {
+  SetMultipleReplyWithVoiceNoteRequestModel(
+      {required int id,
+      required String transferId,
+      required String correspondencesId}) {
     ReplyWithVoiceNoteRequestModel model = ReplyWithVoiceNoteRequestModel(
         userId: id.toString(),
         transferId: transferId,
@@ -468,133 +444,125 @@ class DocumentController extends GetxController {
     } else {}
   }
 
-  getIsAlreadyExportedAsPaperwork({required correspondenceId,
-    required transferId,
-    required exportAction,required context}) async {
+  getIsAlreadyExportedAsPaperwork(
+      {required correspondenceId,
+      required transferId,
+      required exportAction,
+      required context}) async {
     print("in  getIsAlreadyExportedAsPaperwork");
     _alreadyExportedAsPaperworkAPI.data =
-    "Token=${secureStorage
-        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
-        .locale?.languageCode == "en"
-        ? "en"
-        : "ar"}&exportAction=$exportAction";
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
     _alreadyExportedAsPaperworkAPI.getData().then((value) {
-
       isAlreadyExportedAsPaperworkModel =
-      value as IsAlreadyExportedAsPaperworkModel;
-      print("canExportAsPaperworkModel =>  ${isAlreadyExportedAsPaperworkModel?.isConfirm}");
+          value as IsAlreadyExportedAsPaperworkModel;
+      print(
+          "canExportAsPaperworkModel =>  ${isAlreadyExportedAsPaperworkModel?.isConfirm}");
 
-
-      if(isAlreadyExportedAsPaperworkModel?.isConfirm??false){
-
-        showDilog( context: context,massge: isAlreadyExportedAsPaperworkModel!.message!,no: (){
-
-          Navigator.of(context).pop();
-
-        },yes: (){
-          getCanExportAsPaperwork(exportAction:  exportAction, transferId: transferId,correspondenceId:correspondenceId );
-
-
-
-        });
+      if (isAlreadyExportedAsPaperworkModel?.isConfirm ?? false) {
+        showDilog(
+            context: context,
+            massge: isAlreadyExportedAsPaperworkModel!.message!,
+            no: () {
+              Navigator.of(context).pop();
+            },
+            yes: () {
+              // getCanExportAsPaperwork(
+              //     exportAction: exportAction,
+              //     transferId: transferId,
+              //     correspondenceId: correspondenceId,
+              //     context: context);
+              getSwitchMethod(exportAction: exportAction,
+                  transferId: transferId,
+                  correspondenceId: correspondenceId,
+                  context: context,name: isAlreadyExportedAsPaperworkModel!.yesMethod! );  });
+      } else {
+        getSwitchMethod(exportAction: exportAction,
+            transferId: transferId,
+            correspondenceId: correspondenceId,
+            context: context,name: isAlreadyExportedAsPaperworkModel!.request! );
       }
       // print("_alreadyExportedAsPaperworkAPI =>  ${isAlreadyExportedAsPaperworkModel!.toJson()}");
     });
   }
 
   getCanExportAsPaperwork(
-      {required correspondenceId, required transferId, required exportAction,required context}) {
+      {required correspondenceId,
+      required transferId,
+      required exportAction,
+      required context}) {
     _canExportAsPaperworkAPI.data =
-    "Token=${secureStorage
-        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
-        .locale?.languageCode == "en"
-        ? "en"
-        : "ar"}&exportAction=$exportAction";
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
     _canExportAsPaperworkAPI.getData().then((value) {
       canExportAsPaperworkModel = value as CanExportAsPaperworkModel;
-      print("canExportAsPaperworkModel =>  ${canExportAsPaperworkModel?.isConfirm}");
+      print(
+          "canExportAsPaperworkModel =>  ${canExportAsPaperworkModel?.isConfirm}");
       // if(canExportAsPaperworkModel?.isConfirm??false){
       //   Get.snackbar("", canExportAsPaperworkModel!.message!);
       // }
       // print("_alreadyExportedAsPaperworkAPI =>  ${canExportAsPaperworkModel!.toJson()}");
 
-      if(canExportAsPaperworkModel?.isConfirm??false){
-
-        showDilog( context: context,massge: canExportAsPaperworkModel!.message!,no: (){
-
-          Navigator.of(context).pop();
-
-        },yes: (){
-
-
-
-          //getCanExportAsPaperwork(exportAction:  exportAction, transferId: transferId,correspondenceId:correspondenceId );
-
-
-
-        });
+      if (canExportAsPaperworkModel?.isConfirm ?? false) {
+        showDilog(
+            context: context,
+            massge: canExportAsPaperworkModel!.message!,
+            no: () {
+              Navigator.of(context).pop();
+            },
+            yes: () {
+              getCanExportAsPaperwork(
+                  exportAction: exportAction,
+                  transferId: transferId,
+                  correspondenceId: correspondenceId,
+                  context: context);
+            });
       }
-
-
-
     });
   }
 
   autoSendToRecepientsAndCC(
       {required correspondenceId, required transferId, required exportAction}) {
     _autoSendToRecepientsAndCCAPI.data =
-    "Token=${secureStorage
-        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
-        .locale?.languageCode == "en"
-        ? "en"
-        : "ar"}&exportAction=$exportAction";
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
     _autoSendToRecepientsAndCCAPI.getData().then((value) {
       autoSendToRecepientsAndCCModel = value as AutoSendToRecepientsAndCCModel;
 
-      if(autoSendToRecepientsAndCCModel?.isConfirm??false){
+      if (autoSendToRecepientsAndCCModel?.isConfirm ?? false) {
         Get.snackbar("", autoSendToRecepientsAndCCModel!.message!);
       }
-      print("_alreadyExportedAsPaperworkAPI =>  ${autoSendToRecepientsAndCCModel!.toJson()}");
+      print(
+          "_alreadyExportedAsPaperworkAPI =>  ${autoSendToRecepientsAndCCModel!.toJson()}");
     });
   }
 
   checkForEmptyStructureRecipients(
       {required correspondenceId, required transferId, required exportAction}) {
     _checkForEmptyStructureRecipientsAPI.data =
-    "Token=${secureStorage
-        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
-        .locale?.languageCode == "en"
-        ? "en"
-        : "ar"}&exportAction=$exportAction";
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
     _checkForEmptyStructureRecipientsAPI.getData().then((value) {
       checkForEmptyStructureRecipientsModel =
-      value as CheckForEmptyStructureRecipientsModel;
+          value as CheckForEmptyStructureRecipientsModel;
 
-
-      if(checkForEmptyStructureRecipientsModel?.isConfirm??false){
+      if (checkForEmptyStructureRecipientsModel?.isConfirm ?? false) {
         Get.snackbar("", checkForEmptyStructureRecipientsModel!.message!);
       }
-      print("_alreadyExportedAsPaperworkAPI =>  ${checkForEmptyStructureRecipientsModel!.toJson()}");
+      print(
+          "_alreadyExportedAsPaperworkAPI =>  ${checkForEmptyStructureRecipientsModel!.toJson()}");
     });
   }
 
   isAlreadyExportedAsTransfer(
       {required correspondenceId, required transferId, required exportAction}) {
     _isAlreadyExportedAsTransferAPI.data =
-    "Token=${secureStorage
-        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
-        .locale?.languageCode == "en"
-        ? "en"
-        : "ar"}&exportAction=$exportAction";
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
     _isAlreadyExportedAsTransferAPI.getData().then((value) {
       isAlreadyExportedAsTransferModel =
-      value as IsAlreadyExportedAsTransferModel;
+          value as IsAlreadyExportedAsTransferModel;
 
-
-      if(isAlreadyExportedAsTransferModel?.isConfirm??false){
+      if (isAlreadyExportedAsTransferModel?.isConfirm ?? false) {
         Get.snackbar("", isAlreadyExportedAsTransferModel!.message!);
       }
-      print("_alreadyExportedAsPaperworkAPI =>  ${isAlreadyExportedAsTransferModel!.toJson()}");
+      print(
+          "_alreadyExportedAsPaperworkAPI =>  ${isAlreadyExportedAsTransferModel!.toJson()}");
     });
   }
 
@@ -609,117 +577,152 @@ class DocumentController extends GetxController {
     required documentId,
   }) {
     _g2gInfoForExportAPI.data =
-    "token=${secureStorage.token()}&documentId=$documentId&language=${Get.locale
-        ?.languageCode == "en" ? "en" : "ar"}";
+        "token=${secureStorage.token()}&documentId=$documentId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     _g2gInfoForExportAPI.getData().then((value) {
       g2gInfoForExportModel = value as G2GInfoForExportModel;
     });
   }
 
   genratG2GExportDto() {
-    G2GRecipient g2gRecipient = G2GRecipient(
-        childId: 5, isCC: false, parentId: 10);
+    G2GRecipient g2gRecipient =
+        G2GRecipient(childId: 5, isCC: false, parentId: 10);
     G2GExportDto g = G2GExportDto(
         token: secureStorage.token(),
         language: Get.locale?.languageCode == "en" ? "en" : "ar",
         notes: "i9jjoj",
         attachments: [],
         documentId: 2020,
-        recipients: [ g2gRecipient]);
-
+        recipients: [g2gRecipient]);
 
     print("this the map=> ${jsonEncode(g2gRecipient.toMap())}");
     print("this the map=> ${jsonEncode(g.toMap())}");
   }
 
-
   canReceiveG2GDocument({required correspondenceId}) {
     G2GReceiveOrRejectDto g2gReceiveOrRejectDto = G2GReceiveOrRejectDto(
-        documentId:correspondenceId, language:Get
-        .locale?.languageCode == "en"
-        ? "en"
-        : "ar", token:secureStorage.token()!, notes:"");
-    _canReceiveG2GDocumentAPI.post( g2gReceiveOrRejectDto.toMap()).then((value) {});
+        documentId: correspondenceId,
+        language: Get.locale?.languageCode == "en" ? "en" : "ar",
+        token: secureStorage.token()!,
+        notes: "");
+    _canReceiveG2GDocumentAPI
+        .post(g2gReceiveOrRejectDto.toMap())
+        .then((value) {});
   }
 
   receiveDocumentUsingG2G({required correspondenceId}) {
     G2GReceiveOrRejectDto g2gReceiveOrRejectDto = G2GReceiveOrRejectDto(
-        documentId:correspondenceId, language:Get
-        .locale?.languageCode == "en"
-        ? "en"
-        : "ar", token:secureStorage.token()!, notes:"");
-    _receiveDocumentUsingG2GApi.post( g2gReceiveOrRejectDto.toMap()).then((value) {});
+        documentId: correspondenceId,
+        language: Get.locale?.languageCode == "en" ? "en" : "ar",
+        token: secureStorage.token()!,
+        notes: "");
+    _receiveDocumentUsingG2GApi
+        .post(g2gReceiveOrRejectDto.toMap())
+        .then((value) {});
+  }
+
+  getSwitchMethod(
+      {required String name,
+      required correspondenceId,
+      required exportAction,
+      required transferId,required context}) {
+    switch (name) {
+      case "CanExportAsPaperwork":
+        // do something
+        getCanExportAsPaperwork(
+            exportAction: exportAction,
+            transferId: transferId,
+            correspondenceId: correspondenceId,
+            context: context);
+        break;
+      case "OpenTransferWindow":
+        // do something else
+        break;
+      case "IsAlreadyExportedAsTransfer":
+        isAlreadyExportedAsTransfer(correspondenceId:correspondenceId ,transferId:transferId ,exportAction:exportAction );
+        // do something else
+        break;
+      case "CheckForEmptyStructureRecipients":
+        // do something else
+        checkForEmptyStructureRecipients(exportAction: exportAction,transferId: transferId,correspondenceId: correspondenceId);
+        break;
+      case "ConfirmAgain":
+        // do something else
+        break;
+      case "AutoSendToRecepientsAndCC":
+        autoSendToRecepientsAndCC(
+            correspondenceId: correspondenceId,
+            exportAction: exportAction,
+            transferId: transferId);
+        break;
+      case "IsAlreadyExportedAsPaperwork":
+        isAlreadyExportedAsTransfer(
+            exportAction: exportAction,
+            transferId: transferId,
+            correspondenceId: correspondenceId);
+        // do something else
+        break;
+      case "NOTHING":
+        // do something else
+        break;
+    }
   }
 }
 
-showDilog({required context,required String massge,required VoidCallback yes,required VoidCallback no}){
+showDilog(
+    {required context,
+    required String massge,
+    required VoidCallback yes,
+    required VoidCallback no}) {
   return showDialog(
       context: context,
-      builder: (BuildContext
-      context) {
+      builder: (BuildContext context) {
         return AlertDialog(
           title: Row(
-            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-
                 const Spacer(),
                 InkWell(
-                  onTap:
-                      () {
-
-                    Navigator.pop(
-                        context);
+                  onTap: () {
+                    Navigator.pop(context);
                   },
-                  child: Image
-                      .asset(
+                  child: Image.asset(
                     'assets/images/close_button.png',
-                    width:
-                    20,
-                    height:
-                    20,
+                    width: 20,
+                    height: 20,
                   ),
                 ),
               ]),
-          content:
-          SingleChildScrollView(
-            child: Column(
-                crossAxisAlignment:
-                CrossAxisAlignment
-                    .start,
-                children: [
-Text(massge),
-                ]),
+          content: SingleChildScrollView(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(massge),
+            ]),
           ),
           actions: <Widget>[
             TextButton(
-              onPressed:yes
+              onPressed: yes
               //     () {
               //
               // }
 
               ,
-              child: Text(
-                  "Yes"),
+              child: Text("Yes"),
             ),
-
-
-
-
             TextButton(
-              onPressed:no
+              onPressed: no
               //     () {
               //
               //
               //   //Navigator.of(context).pop();
               // }
               ,
-              child: Text(
-                  "No"),
-            ),  ],
+              child: Text("No"),
+            ),
+          ],
         );
       });
-
 }
+
 //
 // String _fileName = 'Recording_';
 // String _fileExtension = '.aac';

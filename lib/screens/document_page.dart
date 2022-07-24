@@ -141,16 +141,28 @@ class DocumentPage extends GetWidget<DocumentController> {
                               exportAction: "paper");
 
 
-                          print("paperExportiiii");
+
                         }),
                     PopupMenuItem(
                         child: Text("electronicExport".tr),
                         onTap: () {
+                          controller.getIsAlreadyExportedAsPaperwork(
+                              correspondenceId: controller
+                                  .correspondences.correspondenceId!,
+                              transferId: controller
+                                  .correspondences.transferId!,
+                              exportAction: "electronic");
                           print("electronicExport");
                         }),
                     PopupMenuItem(
                         child: Text("paperAndElectronicExport".tr),
                         onTap: () {
+                          controller.getIsAlreadyExportedAsPaperwork(
+                              correspondenceId: controller
+                                  .correspondences.correspondenceId!,
+                              transferId: controller
+                                  .correspondences.transferId!,
+                              exportAction: "paperAndelectronic");
                           print("paperAndElectronicExport");
                         }),
                   ];

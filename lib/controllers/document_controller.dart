@@ -481,6 +481,9 @@ class DocumentController extends GetxController {
 
       isAlreadyExportedAsPaperworkModel =
       value as IsAlreadyExportedAsPaperworkModel;
+      if(isAlreadyExportedAsPaperworkModel?.isConfirm??false){
+        Get.snackbar("", isAlreadyExportedAsPaperworkModel!.message!);
+      }
       print("_alreadyExportedAsPaperworkAPI =>  ${isAlreadyExportedAsPaperworkModel!.toJson()}");
     });
   }
@@ -495,6 +498,10 @@ class DocumentController extends GetxController {
         : "ar"}&exportAction=$exportAction";
     _canExportAsPaperworkAPI.getData().then((value) {
       canExportAsPaperworkModel = value as CanExportAsPaperworkModel;
+      if(canExportAsPaperworkModel?.isConfirm??false){
+        Get.snackbar("", canExportAsPaperworkModel!.message!);
+      }
+      print("_alreadyExportedAsPaperworkAPI =>  ${canExportAsPaperworkModel!.toJson()}");
     });
   }
 
@@ -507,7 +514,12 @@ class DocumentController extends GetxController {
         ? "en"
         : "ar"}&exportAction=$exportAction";
     _autoSendToRecepientsAndCCAPI.getData().then((value) {
-      canExportAsPaperworkModel = value as CanExportAsPaperworkModel;
+      autoSendToRecepientsAndCCModel = value as AutoSendToRecepientsAndCCModel;
+
+      if(autoSendToRecepientsAndCCModel?.isConfirm??false){
+        Get.snackbar("", autoSendToRecepientsAndCCModel!.message!);
+      }
+      print("_alreadyExportedAsPaperworkAPI =>  ${autoSendToRecepientsAndCCModel!.toJson()}");
     });
   }
 
@@ -522,6 +534,12 @@ class DocumentController extends GetxController {
     _checkForEmptyStructureRecipientsAPI.getData().then((value) {
       checkForEmptyStructureRecipientsModel =
       value as CheckForEmptyStructureRecipientsModel;
+
+
+      if(checkForEmptyStructureRecipientsModel?.isConfirm??false){
+        Get.snackbar("", checkForEmptyStructureRecipientsModel!.message!);
+      }
+      print("_alreadyExportedAsPaperworkAPI =>  ${checkForEmptyStructureRecipientsModel!.toJson()}");
     });
   }
 
@@ -536,13 +554,19 @@ class DocumentController extends GetxController {
     _isAlreadyExportedAsTransferAPI.getData().then((value) {
       isAlreadyExportedAsTransferModel =
       value as IsAlreadyExportedAsTransferModel;
+
+
+      if(isAlreadyExportedAsTransferModel?.isConfirm??false){
+        Get.snackbar("", isAlreadyExportedAsTransferModel!.message!);
+      }
+      print("_alreadyExportedAsPaperworkAPI =>  ${isAlreadyExportedAsTransferModel!.toJson()}");
     });
   }
 
   getUserRouting({required gctId}) {
     _getUserRoutingAPI.data = "Token=${secureStorage.token()}&GctId=$gctId";
     _getUserRoutingAPI.getData().then((value) {
-      canExportAsPaperworkModel = value as CanExportAsPaperworkModel;
+      getUserRoutingModel = value as GetUserRoutingModel;
     });
   }
 

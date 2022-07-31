@@ -3,6 +3,9 @@ import 'package:cts/services/abstract_json_resource.dart';
 import '../../../../models/DocumentModel.dart';
 
 class G2GInfoForExportModel extends AbstractJsonResource{
+
+
+
   String? errorMessage;
   int? status;
   List<Attachments>? attachments;
@@ -63,7 +66,7 @@ class DepartmentList {
   int? childG2GParent;
   int? childGCTID;
   int? childGeid;
-  int? childMapTo;
+  String? childMapTo;
   String? childName;
   int? childRedirectTo;
   int? childRedirectToGCTIDonReceive;
@@ -152,17 +155,17 @@ class Parents {
   int? childGeid;
   String? childMapTo;
   String? childName;
-  Null? childRedirectTo;
-  Null? childRedirectToGCTIDonReceive;
+  String? childRedirectTo;
+  String? childRedirectToGCTIDonReceive;
   bool? isCC;
   int? parentG2GID;
-  Null? parentGCTID;
+  int? parentGCTID;
   int? parentGeid;
   String? parentMapTo;
   String? parentName;
   int? parentParent;
-  Null? parentRedirectTo;
-  Null? parentRedirectToGCTIDonReceive;
+  String? parentRedirectTo;
+  String? parentRedirectToGCTIDonReceive;
 
   Parents(
       {this.iD,

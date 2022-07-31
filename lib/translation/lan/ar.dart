@@ -69,4 +69,6 @@ const Map<String, String> ar = {
 
   "english_name": "الاسم بالانجليزي",
   "arabic_name": "الاسم بالعربي",
+  "to":"الي",
+  "copyto":"نسخة الي"
 };

@@ -160,6 +160,8 @@ class CustomListView extends StatelessWidget {
                                               .correspondenceId!,
                                           transferId:
                                               correspondences[pos].transferId!);
+                                  Get.find<DocumentController>().g2gInfoForExport(documentId: correspondences[pos]
+                                      .correspondenceId!);
                                   //  Get.find<DocumentController>().loadPdf();
                                   //Get.toNamed("/DocumentPage");
                                 },
@@ -1417,7 +1419,7 @@ print(allCorrespondences[pos].correspondenceId);
                                   Get.find<DocumentController>()
                                           .correspondences =
                                       allCorrespondences[pos];
-
+Get.find<DocumentController>().g2gInfoForExport(documentId: allCorrespondences[pos].correspondenceId);
                                   // Get.find<DocumentController>().loadPdf();
                                   // Get.toNamed("/DocumentPage");
                                 },

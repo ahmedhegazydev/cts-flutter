@@ -70,4 +70,6 @@ const Map<String, String> en = {
 
   "english_name": "English name",
   "arabic_name": "Arabic name",
+  "to":"To",
+  "copyto":"copyto"
 };

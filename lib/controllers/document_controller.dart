@@ -53,8 +53,62 @@ import '../utility/storage.dart';
 import '../utility/utilitie.dart';
 import '../widgets/custom_button_with_icon.dart';
 import 'inbox_controller.dart';
-
+import 'package:flutter/services.dart' as rootBundel;
 class DocumentController extends GetxController {
+
+  Parents? toParent;
+  TextEditingController textEditingControllerToParent =
+  TextEditingController();
+
+  TextEditingController textEditingControllerTodepartment =
+  TextEditingController();
+
+
+  Parents? ccToParent;
+  TextEditingController textEditingControllerToccParent =
+  TextEditingController();
+
+  TextEditingController textEditingControllerToccdepartment =
+  TextEditingController();
+
+
+  List<DepartmentList>toDepartmentList=[];
+
+  List<DepartmentList>cctoDepartmentList=[];
+
+  addtoDepartmentList({required DepartmentList department}){
+    toDepartmentList.add(department);
+    update();
+  }
+  addcctoDepartmentList({required DepartmentList department}){
+    cctoDepartmentList.add(department);
+    update();
+  }
+  deltoDepartmentList({required DepartmentList department}){
+    toDepartmentList.remove(department);
+    update();
+  }
+  delcctoDepartmentList({required DepartmentList department}){
+    cctoDepartmentList.remove(department);
+    update();
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   SecureStorage secureStorage = SecureStorage();
   CanOpenDocumentModel? canOpenDocumentModel;
 
@@ -319,6 +373,8 @@ class DocumentController extends GetxController {
     super.onInit();
     print(" i get startonInitonInitonInitonInit ");
     genratG2GExportDto();
+    g2GInfoForExport();
+
   }
 
   @override
@@ -566,6 +622,7 @@ class DocumentController extends GetxController {
     });
   }
 
+  //-----------------------------------------------------------------------
   getUserRouting({required gctId}) {
     _getUserRoutingAPI.data = "Token=${secureStorage.token()}&GctId=$gctId";
     _getUserRoutingAPI.getData().then((value) {
@@ -576,13 +633,27 @@ class DocumentController extends GetxController {
   g2gInfoForExport({
     required documentId,
   }) {
+    print("going to get");
     _g2gInfoForExportAPI.data =
         "token=${secureStorage.token()}&documentId=$documentId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     _g2gInfoForExportAPI.getData().then((value) {
       g2gInfoForExportModel = value as G2GInfoForExportModel;
-    });
+      print( "g2gInfoForExportModelg2gInfoForExportModel =>  ${g2gInfoForExportModel?.toJson()}");
+    }).catchError((e){print("err =>  $e");});
+  }
+  g2GInfoForExport( )async{
+
+
+    final  jsondata=await rootBundel.rootBundle.loadString("assets/json/g2gInfoforexport.json");
+    g2gInfoForExportModel=   G2GInfoForExportModel.fromJson(json.decode(jsondata));
+
+    print("g2gInfoForExportModel?.toJson()=>  ${g2gInfoForExportModel?.toJson()}");
+
   }
 
+
+
+  //-----------------------------------------------------------------------
   genratG2GExportDto() {
     G2GRecipient g2gRecipient =
         G2GRecipient(childId: 5, isCC: false, parentId: 10);

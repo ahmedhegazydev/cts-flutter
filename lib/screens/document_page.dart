@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:cts/screens/resize_sing.dart';
+import 'package:cts/screens/search_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 //import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
 
 import 'dart:ui' as ui;
@@ -16,6 +18,7 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../controllers/document_controller.dart';
 import '../controllers/main_controller.dart';
+import '../services/json_model/inopendocModel/g2g/g2g_Info_for_export_model.dart';
 import '../services/json_model/login_model.dart';
 import '../services/models/signature_info.dart';
 import '../utility/all_const.dart';
@@ -81,7 +84,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                     _popUpMenuhasAttachments(context);
                   },
                   child: CustomButtonWithImage(
-                    //onClick: () {},
+                    // onClick: () {},
                     image: 'assets/images/refer.png',
                     label: "hasAttachments".tr,
                   ),
@@ -100,7 +103,9 @@ class DocumentPage extends GetWidget<DocumentController> {
                   .canOpenDocumentModel?.correspondence?.hasSummaries ??
                   true)
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    _popUpExportG2GDocument(context);
+                  },
                   child: CustomButtonWithImage(
                     //onClick: () {},
                     image: 'assets/images/refer.png',
@@ -133,35 +138,35 @@ class DocumentPage extends GetWidget<DocumentController> {
                     PopupMenuItem(
                         child: Text("paperExport".tr),
                         onTap: () {
-                          controller.getIsAlreadyExportedAsPaperwork(context: context,
-                              correspondenceId: controller
-                                  .correspondences.correspondenceId!,
-                              transferId: controller
-                                  .correspondences.transferId!,
+                          controller.getIsAlreadyExportedAsPaperwork(
+                              context: context,
+                              correspondenceId:
+                              controller.correspondences.correspondenceId!,
+                              transferId:
+                              controller.correspondences.transferId!,
                               exportAction: "paper");
-
-
-
                         }),
                     PopupMenuItem(
                         child: Text("electronicExport".tr),
                         onTap: () {
-                          controller.getIsAlreadyExportedAsPaperwork(context: context,
-                              correspondenceId: controller
-                                  .correspondences.correspondenceId!,
-                              transferId: controller
-                                  .correspondences.transferId!,
+                          controller.getIsAlreadyExportedAsPaperwork(
+                              context: context,
+                              correspondenceId:
+                              controller.correspondences.correspondenceId!,
+                              transferId:
+                              controller.correspondences.transferId!,
                               exportAction: "electronic");
                           print("electronicExport");
                         }),
                     PopupMenuItem(
                         child: Text("paperAndElectronicExport".tr),
                         onTap: () {
-                          controller.getIsAlreadyExportedAsPaperwork(context: context,
-                              correspondenceId: controller
-                                  .correspondences.correspondenceId!,
-                              transferId: controller
-                                  .correspondences.transferId!,
+                          controller.getIsAlreadyExportedAsPaperwork(
+                              context: context,
+                              correspondenceId:
+                              controller.correspondences.correspondenceId!,
+                              transferId:
+                              controller.correspondences.transferId!,
                               exportAction: "paperAndelectronic");
                           print("paperAndElectronicExport");
                         }),
@@ -1276,21 +1281,569 @@ class DocumentPage extends GetWidget<DocumentController> {
                   itemBuilder: (context, pos) {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Card(elevation: 8,
+                      child: Card(
+                          elevation: 8,
                           child: Column(
                             children: [
-                              Expanded(child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Icon(Icons.note, size: 80),
-                              )),
-                              Expanded(child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text("Attachment number $pos"),
-                              ))
+                              Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Icon(Icons.note, size: 80),
+                                  )),
+                              Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("Attachment number $pos"),
+                                  ))
                             ],
                           )),
                     );
                   }),
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("Ok"),
+              ),
+            ],
+          );
+        });
+
+    // showCupertinoDialog(
+    //     context: context,
+    //     builder: (context) => CupertinoAlertDialog(
+    //           title: Row(//mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //               children: [
+    //             Image.asset(
+    //               'assets/images/refer.png'
+    //               //
+    //               ,
+    //               height: 20,
+    //               width: 20,
+    //             ),
+    //             const SizedBox(
+    //               width: 8,
+    //             ),
+    //             Text(
+    //               "refer".tr,
+    //               style: Theme.of(context).textTheme.headline3!.copyWith(
+    //                     color: createMaterialColor(
+    //                       const Color.fromRGBO(77, 77, 77, 1),
+    //                     ),
+    //                     fontSize: 15,
+    //                   ),
+    //               textAlign: TextAlign.center,
+    //               overflow: TextOverflow.ellipsis,
+    //             ),
+    //             const Spacer(),
+    //             Image.asset(
+    //               'assets/images/close_button.png',
+    //               width: 20,
+    //               height: 20,
+    //             ),
+    //           ]),
+    //           content: Container(width: MediaQuery.of(context).size.width*.8,
+    //             child: Column(
+    //                 crossAxisAlignment: CrossAxisAlignment.start,
+    //                 children: [
+    //                   const SizedBox(
+    //                     height: 20,
+    //                   ),
+    //                   Text("referTo".tr),
+    //                   Container(
+    //                       height: 100,
+    //                       child: Row(
+    //                         children: [
+    //
+    //                      Expanded(child: ListView.builder(scrollDirection: Axis.horizontal,itemCount: 10,itemBuilder: (context,pos){
+    //                        return Container(
+    //                          height: 30,
+    //                          width: 30,
+    //                          decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.green),
+    //                        );
+    //                      }))  , Padding(
+    //                             padding: const EdgeInsets.all(8.0),
+    //                             child: Container(
+    //                               height: 30,
+    //                               width: 30,
+    //                               decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.red),
+    //                             ),
+    //                           ), ],
+    //                       ))
+    //                 ]),
+    //           ),
+    //           actions: [],
+    //         ));
+  }
+
+  _popUpExportG2GDocument(context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(""),
+            content: SizedBox(
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .height * .8,
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width * .8,
+              child: GetBuilder<DocumentController>(builder: (logic) {
+                return SingleChildScrollView(
+                  child: Column(children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(flex: 1, child: Text("to".tr)),
+                        Expanded(
+                            flex: 8,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                        width: 150, child: Text("جهة رئيسية")),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Expanded(
+                                      child: TypeAheadField<Parents>(
+                                        textFieldConfiguration:
+                                        TextFieldConfiguration(
+                                          controller: controller
+                                              .textEditingControllerToParent,
+                                          // autofocus: true,
+                                          // style: DefaultTextStyle.of(context)
+                                          //     .style
+                                          //     .copyWith(fontStyle: FontStyle.italic),
+                                          decoration: const InputDecoration(
+                                              border: OutlineInputBorder(),
+                                              labelText: 'To'),
+                                        ),
+                                        suggestionsCallback: (pattern) async {
+                                          return controller
+                                              .g2gInfoForExportModel!.parents!
+                                              .where((element) =>
+                                              element
+                                                  .parentName!
+                                                  .toLowerCase()
+                                                  .contains(
+                                                  pattern.toLowerCase()));
+
+                                          //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
+                                        },
+                                        itemBuilder: (context, suggestion) {
+                                          Parents v = suggestion as Parents;
+
+                                          return // Te(v.originalName!);
+
+                                            ListTile(
+                                              title: FilterText(v!.parentName!),
+                                            );
+                                        },
+                                        onSuggestionSelected: (suggestion) {
+                                          Parents v = suggestion as Parents;
+                                          controller.toParent = v;
+                                          controller
+                                              .textEditingControllerToParent
+                                              .text = v.parentName!;
+                                          // v
+                                          // .cLASNAMEDISPLAY;
+                                          // Navigator.of(context).push(MaterialPageRoute(
+                                          //     builder: (context) => ProductPage(product: suggestion)
+                                          // ));
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                        width: 150, child: Text("جهة فرعية")),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Expanded(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              border: Border.all(width: 1)),
+                                          child: DropdownButton<DepartmentList>(
+                                            // value: dropdownValue,
+                                            icon: const Icon(
+                                                Icons.arrow_downward),
+                                            elevation: 16,
+
+                                            underline: Container(
+                                              height: 2,
+                                            ),
+                                            onChanged: (
+                                                DepartmentList? newValue) {
+                                              controller.addtoDepartmentList(
+                                                  department: newValue!);
+                                            },
+                                            items: controller
+                                                .g2gInfoForExportModel
+                                                ?.departmentList!
+                                                .map<
+                                                DropdownMenuItem<
+                                                    DepartmentList>>(
+                                                    (DepartmentList value) {
+                                                  return DropdownMenuItem<
+                                                      DepartmentList>(
+                                                    value: value,
+                                                    child: Text(
+                                                        value.childName!),
+                                                  );
+                                                })
+                                                .toList()
+                                                .where((element) =>
+                                            element.value?.parentGeid ==
+                                                controller.toParent?.parentGeid)
+                                                .toList(),
+                                          ),
+                                        ))
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                      width: 150,
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Container(
+                                      height: 100,
+                                      width: 400,
+                                      decoration: BoxDecoration(
+                                          border: Border.all(width: 1)),
+                                      child: ListView.builder(
+                                          itemCount:
+                                          controller.toDepartmentList.length,
+                                          itemBuilder: (context, pos) {
+                                            return Text(
+                                                controller.toDepartmentList[pos]
+                                                    .childName!);
+                                          }),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            )),
+                      ],
+                    ),
+                    // Container(height: 150,
+                    //   decoration: BoxDecoration(
+                    //       border: Border.all(width: 1)),
+                    //   child:
+                    //
+                    //   ListView.builder(
+                    //       scrollDirection: Axis.horizontal,
+                    //       itemCount: controller.toDepartmentList.length,
+                    //       itemBuilder: (context, pos) {
+                    //         return Padding(
+                    //           padding: const EdgeInsets.all(8.0),
+                    //           child: Card(
+                    //               elevation: 8,
+                    //               child: Column(
+                    //                 children: [
+                    //                 Text(controller.toDepartmentList[pos].parentName!)
+                    //                 ],
+                    //               )),
+                    //         );
+                    //       }),
+                    //
+                    //
+                    //
+                    //
+                    // ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(flex: 1, child: Text("نسخة الي")),
+                        Expanded(
+                            flex: 8,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                        width: 150, child: Text("جهة رئيسية")),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Expanded(
+                                      child: TypeAheadField<Parents>(
+                                        textFieldConfiguration:
+                                        TextFieldConfiguration(
+                                          controller: controller
+                                              .textEditingControllerToccParent,
+                                          // autofocus: true,
+                                          // style: DefaultTextStyle.of(context)
+                                          //     .style
+                                          //     .copyWith(fontStyle: FontStyle.italic),
+                                          decoration: const InputDecoration(
+                                              border: OutlineInputBorder(),
+                                              labelText: 'To'),
+                                        ),
+                                        suggestionsCallback: (pattern) async {
+                                          return controller
+                                              .g2gInfoForExportModel!.parents!
+                                              .where((element) =>
+                                              element
+                                                  .parentName!
+                                                  .toLowerCase()
+                                                  .contains(
+                                                  pattern.toLowerCase()));
+
+                                          //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
+                                        },
+                                        itemBuilder: (context, suggestion) {
+                                          Parents v = suggestion as Parents;
+
+                                          return // Te(v.originalName!);
+
+                                            ListTile(
+                                              title: FilterText(v!.parentName!),
+                                            );
+                                        },
+                                        onSuggestionSelected: (suggestion) {
+                                          Parents v = suggestion as Parents;
+                                          controller.ccToParent = v;
+                                          controller
+                                              .textEditingControllerToccParent
+                                              .text = v.parentName!;
+                                          // v
+                                          // .cLASNAMEDISPLAY;
+                                          // Navigator.of(context).push(MaterialPageRoute(
+                                          //     builder: (context) => ProductPage(product: suggestion)
+                                          // ));
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                        width: 150, child: Text("جهة فرعية")),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Expanded(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              border: Border.all(width: 1)),
+                                          child: DropdownButton<DepartmentList>(
+                                            // value: dropdownValue,
+                                            icon: const Icon(
+                                                Icons.arrow_downward),
+                                            elevation: 16,
+
+                                            underline: Container(
+                                              height: 2,
+                                            ),
+                                            onChanged: (
+                                                DepartmentList? newValue) {
+                                              controller.addcctoDepartmentList(
+                                                  department: newValue!);
+                                            },
+                                            items: controller
+                                                .g2gInfoForExportModel
+                                                ?.departmentList!
+                                                .map<
+                                                DropdownMenuItem<
+                                                    DepartmentList>>(
+                                                    (DepartmentList value) {
+                                                  return DropdownMenuItem<
+                                                      DepartmentList>(
+                                                    value: value,
+                                                    child: Text(
+                                                        value.childName!),
+                                                  );
+                                                })
+                                                .toList()
+                                                .where((element) =>
+                                            element.value?.parentGeid ==
+                                                controller.toParent?.parentGeid)
+                                                .toList(),
+                                          ),
+                                        ))
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                      width: 150,
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Container(
+                                      height: 100,
+                                      width: 400,
+                                      decoration: BoxDecoration(
+                                          border: Border.all(width: 1)),
+                                      child: ListView.builder(
+                                          itemCount:
+                                          controller.cctoDepartmentList.length,
+                                          itemBuilder: (context, pos) {
+                                            return Text(controller
+                                                .cctoDepartmentList[pos]
+                                                .childName!);
+                                          }),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            )),
+                      ],
+                    ),
+                    // Container(height: 150,
+                    //   child: ListView.builder(
+                    //       scrollDirection: Axis.horizontal,
+                    //       itemCount: controller.cctoDepartmentList.length,
+                    //       itemBuilder: (context, pos) {
+                    //         return Padding(
+                    //           padding: const EdgeInsets.all(8.0),
+                    //           child: Card(
+                    //               elevation: 8,
+                    //               child: Column(
+                    //                 children: [
+                    //                   Text(controller.cctoDepartmentList[pos].parentName!)
+                    //                 ],
+                    //               )),
+                    //         );
+                    //       }),
+                    // ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(flex: 1, child: Text("الملاحظات")),
+                        Expanded(
+                            flex: 8,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(width: 150, child: Text(" ")),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Expanded(
+                                        child: Container(
+                                            decoration: BoxDecoration(
+                                                border: Border.all(width: 1)),
+                                            child: TextField(
+                                              maxLines: 6,
+                                            ))),
+                                  ],
+                                ),
+                              ],
+                            )),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(flex: 1, child: Text("المرفقات")),
+                        Expanded(
+                            flex: 8,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(width: 150, child: Text(" ")),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    // Container(height: 150,width: double.infinity,
+                                    //     decoration: BoxDecoration(
+                                    //         border: Border.all(width: 1)),
+                                    //     child:
+                                    //
+                                    //     ListView.builder(
+                                    //         scrollDirection: Axis.horizontal,
+                                    //         itemCount: 10,
+                                    //         itemBuilder: (context, pos) {
+                                    //           return Padding(
+                                    //             padding: const EdgeInsets.all(8.0),
+                                    //             child: Card(
+                                    //                 elevation: 8,
+                                    //                 child: Column(
+                                    //                   children: [
+                                    //                     Expanded(
+                                    //                         child: Padding(
+                                    //                           padding: const EdgeInsets.all(8.0),
+                                    //                           child: Icon(Icons.note, size: 80),
+                                    //                         )),
+                                    //                     Expanded(
+                                    //                         child: Padding(
+                                    //                           padding: const EdgeInsets.all(8.0),
+                                    //                           child: Text("Attachment number $pos"),
+                                    //                         ))
+                                    //                   ],
+                                    //                 )),
+                                    //           );
+                                    //         }),
+                                    //
+                                    //
+                                    //
+                                    //
+                                    // ),
+                                  ],
+                                ),
+                              ],
+                            )),
+                      ],
+                    )
+                  ]),
+                );
+              }),
             ),
             actions: <Widget>[
               TextButton(

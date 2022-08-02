@@ -669,6 +669,7 @@ class DocumentController extends GetxController {
     print("this the map=> ${jsonEncode(g.toMap())}");
   }
 
+  //Not used
   canReceiveG2GDocument({required correspondenceId}) {
     G2GReceiveOrRejectDto g2gReceiveOrRejectDto = G2GReceiveOrRejectDto(
         documentId: correspondenceId,
@@ -680,6 +681,7 @@ class DocumentController extends GetxController {
         .then((value) {});
   }
 
+  //Not used
   receiveDocumentUsingG2G({required correspondenceId}) {
     G2GReceiveOrRejectDto g2gReceiveOrRejectDto = G2GReceiveOrRejectDto(
         documentId: correspondenceId,

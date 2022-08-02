@@ -1232,7 +1232,7 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline3!
-                                    .copyWith(color: Colors.grey, fontSize: 28),
+                                    .copyWith(color: Colors.grey, fontSize: 24),
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -1245,7 +1245,7 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
                                     .headline3!
                                     .copyWith(
                                         color: Colors.grey.shade400,
-                                        fontSize: 26),
+                                        fontSize: 24),
                               ),
                             )
                           ],
@@ -1298,7 +1298,7 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Expanded(
+                            Flexible(
                               flex: 1,
                               child: Text(
                                 "unreadCorrespondences".tr,
@@ -1319,7 +1319,7 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline3!
-                                    .copyWith(fontSize: 28),
+                                    .copyWith(fontSize: 24),
                                 textAlign: TextAlign.center,
                               ),
                             )
@@ -1386,7 +1386,7 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline3!
-                                    .copyWith(fontSize: 28),
+                                    .copyWith(fontSize: 24),
                                 textAlign: TextAlign.center,
                               ),
                             )
@@ -1464,7 +1464,7 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline3!
-                                    .copyWith(fontSize: 28),
+                                    .copyWith(fontSize: 24),
                                 textAlign: TextAlign.center,
                               ),
                             )
@@ -1525,7 +1525,7 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline3!
-                                    .copyWith(fontSize: 28),
+                                    .copyWith(fontSize: 24),
                                 textAlign: TextAlign.center,
                               ),
                             )

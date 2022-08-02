@@ -15,7 +15,9 @@ import 'package:signature/signature.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../models/CorrespondencesModel.dart';
+import '../models/DocumentModel.dart';
 import '../services/apis/find_recipient_api.dart';
+import '../services/apis/inOpenDocument/GetAttachmentItem_api.dart';
 import '../services/apis/inOpenDocument/get_document_audit_logs_api.dart';
 import '../services/apis/inOpenDocument/get_document_links_api.dart';
 import '../services/apis/inOpenDocument/get_document_receivers_api.dart';
@@ -42,6 +44,7 @@ import '../services/json_model/inopendocModel/check_for_empty_structure_recipien
 import '../services/json_model/inopendocModel/g2g/g2g_Info_for_export_model.dart';
 import '../services/json_model/inopendocModel/g2g/g2g_export_dto.dart';
 import '../services/json_model/inopendocModel/g2g/g2g_receive_or_reject_dto.dart';
+import '../services/json_model/inopendocModel/get_attachment_item_model.dart';
 import '../services/json_model/inopendocModel/get_user_routing_model.dart';
 import '../services/json_model/inopendocModel/is_already_exported_as_paperwork_model.dart';
 import '../services/json_model/inopendocModel/is_already_exported_as_transfer_model.dart';
@@ -55,6 +58,7 @@ import '../widgets/custom_button_with_icon.dart';
 import 'inbox_controller.dart';
 import 'package:flutter/services.dart' as rootBundel;
 class DocumentController extends GetxController {
+Map<int,String>folder={};
 
   Parents? toParent;
   TextEditingController textEditingControllerToParent =
@@ -93,14 +97,39 @@ class DocumentController extends GetxController {
     update();
   }
 
+  GetAttachmentItemAPI getAttachmentItemAPI=GetAttachmentItemAPI();
+
+  GetAttAchmentItem? getAttAchmentItem;
+
+  getAttachmentItem( {documentId,transferId,attachmentId}){
+    getAttachmentItemAPI.data="Token=${secureStorage.token()}&documentId=$documentId&transferId=$transferId&attachmentId=$attachmentId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+    getAttachmentItemAPI.getData().then((value) {
+
+      getAttAchmentItem=value as GetAttAchmentItem;
 
 
 
+    });
 
 
 
+  }
+  getAttachmentItemlocal( {documentId,transferId,attachmentId})async{
+
+    final  jsondata=await rootBundel.rootBundle.loadString("assets/json/getattachmentitem.json");
+
+    getAttAchmentItem=  GetAttAchmentItem.fromJson(json.decode(jsondata));
+    print("g2gInfoForExportModel?.toJson()=>  ${g2gInfoForExportModel?.toJson()}");
 
 
+
+  }
+
+  // [OperationContract]
+  // [WebGet(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
+  // UriTemplate = "GetAttachmentItem?)]
+  // GetAttachmentItemResult GetAttachmentItem(string Token, string documentId, string transferId, string attachmentId, string language);
+  //
 
 
 
@@ -111,7 +140,16 @@ class DocumentController extends GetxController {
 
   SecureStorage secureStorage = SecureStorage();
   CanOpenDocumentModel? canOpenDocumentModel;
+updatecanOpenDocumentModel(CanOpenDocumentModel data){
+  canOpenDocumentModel=data;
 
+
+  for(int i=0;i< ( canOpenDocumentModel?.attachments?.attachments?.length??0);i++){
+    folder[i]=canOpenDocumentModel!.attachments!.attachments![i]!.folderName!;
+
+
+  }
+}
   IsAlreadyExportedAsPaperworkModel? isAlreadyExportedAsPaperworkModel;
   IsAlreadyExportedAsPaperworkAPI _alreadyExportedAsPaperworkAPI =
       IsAlreadyExportedAsPaperworkAPI();
@@ -328,13 +366,14 @@ class DocumentController extends GetxController {
     //correspondences.visualTrackingUrl
     //  doc = await PDFDocument.fromURL('http://www.africau.edu/images/default/sample.pdf');
     print("get the pdf");
+
     update();
   }
 
   @override
   void onReady() {
     super.onReady();
-
+    getAttachmentItemlocal( );
     logindata = secureStorage.readSecureJsonData(AllStringConst.LogInData);
     if (logindata != null) {
       LoginModel data = LoginModel.fromJson(logindata!);
@@ -801,7 +840,26 @@ showDilog(
         );
       });
 }
+extension UtilListExtension on List{
+  groupBy(String key) {
+    try {
+      List<Map<String, dynamic>> result = [];
+      List<String> keys = [];
 
+      this.forEach((f) => keys.add(f[key]));
+
+      [...keys.toSet()].forEach((k) {
+        List data = [...this.where((e) => e[key] == k)];
+        result.add({k: data});
+      });
+
+      return result;
+    } catch (e, s) {
+
+      return this;
+    }
+  }
+}
 //
 // String _fileName = 'Recording_';
 // String _fileExtension = '.aac';

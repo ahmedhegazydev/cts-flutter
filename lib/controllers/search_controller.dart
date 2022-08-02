@@ -2,7 +2,7 @@ import 'package:cts/controllers/search_page_result_controller.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sound_lite/flutter_sound.dart';
+import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -336,7 +336,8 @@ class SearchController extends GetxController {
     }
     audioRecorder=FlutterSoundRecorder();
     audioPlayer=FlutterSoundPlayer();
-    audioRecorder!.openAudioSession();
+    // audioRecorder!.openAudioSession();
+    audioRecorder!.stopRecorder();
     appDocDir = await getApplicationDocumentsDirectory();
     _directoryPath=appDocDir!.path+ '/' + DateTime.now().millisecondsSinceEpoch.toString() +
         '.aac';
@@ -348,8 +349,9 @@ class SearchController extends GetxController {
   Future stop2()async{
 
     await audioRecorder?.stopRecorder();
- await   audioPlayer!.openAudioSession();
-await    audioPlayer!.startPlayer(fromURI: _directoryPath);
+ // await   audioPlayer!.openAudioSession();
+    await audioPlayer!.stopPlayer();
+    await    audioPlayer!.startPlayer(fromURI: _directoryPath);
 
 
 

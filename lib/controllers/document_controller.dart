@@ -5,7 +5,7 @@ import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sound_lite/flutter_sound.dart';
+import 'package:flutter_sound/flutter_sound.dart';
 import 'dart:ui' as ui;
 
 import 'package:get/get.dart';
@@ -306,6 +306,7 @@ class DocumentController extends GetxController {
 //   // }
 //   // Future play()async{
 //   //   await mPlayer.openAudioSession();
+//   await mPlayer!.stopPlayer();
 //   //  // await mPlayer.nowPlaying(track);
 //   //   Track a=Track(trackPath: _directoryPath );
 //   //
@@ -356,6 +357,8 @@ class DocumentController extends GetxController {
 //   }
 //   //mPlayer = FlutterSoundPlayer();
 //  await audioRecord!.openAudioSession();
+//   await audioRecord!.stopPlayer();
+
 //
 //
 // }
@@ -402,7 +405,8 @@ class DocumentController extends GetxController {
     }
     audioRecorder = FlutterSoundRecorder();
     audioPlayer = FlutterSoundPlayer();
-    audioRecorder!.openAudioSession();
+    // audioRecorder!.openAudioSession();
+    audioRecorder!.stopRecorder();
     appDocDir = await getApplicationDocumentsDirectory();
     _directoryPath = appDocDir!.path +
         '/' +
@@ -417,7 +421,8 @@ class DocumentController extends GetxController {
   }
 
   playRec() async {
-    await audioPlayer!.openAudioSession();
+    // await audioPlayer!.openAudioSession();
+    await audioPlayer!.stopPlayer();
     await audioPlayer!.startPlayer(fromURI: _directoryPath);
   }
 
@@ -456,7 +461,8 @@ class DocumentController extends GetxController {
     }
     audioRecorder = FlutterSoundRecorder();
     audioPlayer = FlutterSoundPlayer();
-    audioRecorder!.openAudioSession();
+    // audioRecorder!.openAudioSession();
+    audioRecorder!.stopRecorder();
     appDocDir = await getApplicationDocumentsDirectory();
     _directoryPath = appDocDir!.path +
         '/' +
@@ -817,6 +823,8 @@ showDilog(
 //     }
 //
 //     await _recorder!.openAudioSession();
+// await _recorder!.stopPlayer();
+
 //     _isRecorderInitialized = true;
 //   }
 //

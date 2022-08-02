@@ -22,6 +22,13 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+    <key>NSMicrophoneUsageDescription</key>
+        <string>This example wants to access your microphone</string>
+        <key>UIBackgroundModes</key>
+            <array>
+                <string>audio</string>
+                <string>processing</string>
+            </array>
 	<key>NSFaceIDUsageDescription</key>
 	<string>The app uses your face ID to login</string>
 	<key>UILaunchStoryboardName</key>

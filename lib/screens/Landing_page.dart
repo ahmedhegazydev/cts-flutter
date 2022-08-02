@@ -102,6 +102,7 @@ class LandingPage extends GetWidget<LandingPageController> {
             height: double.infinity,
             color: Colors.grey.shade300,
             child: _buildSideMenu(context),
+            // child: Container(),
           ),
           Flexible(
             child: Container(
@@ -1796,7 +1797,7 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
                                       .headline3!
                                       .copyWith(
                                         fontSize:
-                                            calculateFontSize(100, context),
+                                            calculateFontSize(80, context),
                                       ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -1866,7 +1867,7 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
                                       .headline3!
                                       .copyWith(
                                         fontSize:
-                                            calculateFontSize(100, context),
+                                            calculateFontSize(80, context),
                                       ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -1951,7 +1952,7 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
                                       .headline3!
                                       .copyWith(
                                         fontSize:
-                                            calculateFontSize(100, context),
+                                            calculateFontSize(80, context),
                                       ),
                                   textAlign: TextAlign.center,
                                 ),

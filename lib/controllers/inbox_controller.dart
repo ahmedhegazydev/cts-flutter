@@ -3,7 +3,7 @@ import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_sound_lite/flutter_sound.dart';
+import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -479,7 +479,8 @@ bool edit=false;
     }
     audioRecorder = FlutterSoundRecorder();
     audioPlayer = FlutterSoundPlayer();
-    audioRecorder!.openAudioSession();
+    // audioRecorder!.openAudioSession();
+    audioRecorder!.stopRecorder();
     appDocDir = await getApplicationDocumentsDirectory();
     _directoryPath = appDocDir!.path +
         '/' +
@@ -499,7 +500,8 @@ bool edit=false;
   }
 
   playRec() async {
-    await audioPlayer!.openAudioSession();
+    // await audioPlayer!.openAudioSession();
+    await audioPlayer!.stopPlayer();
     await audioPlayer!.startPlayer(fromURI: _directoryPath);
   }
 
@@ -523,7 +525,8 @@ bool edit=false;
     }
     audioRecorder = FlutterSoundRecorder();
     audioPlayer = FlutterSoundPlayer();
-    audioRecorder!.openAudioSession();
+    // audioRecorder!.openAudioSession();
+    audioRecorder!.stopRecorder();
     appDocDir = await getApplicationDocumentsDirectory();
     _directoryPath = appDocDir!.path +
         '/' +

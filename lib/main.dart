@@ -90,9 +90,9 @@ class MyApp extends StatelessWidget {
         ),
         getPages: [
           GetPage(name: "/", page: () =>
-              // LoginPage(),
+              LoginPage(),
               // LandingPage(),
-              InboxPage(),
+              // InboxPage(),
               middlewares: [
             AuthMiddleWare()
           ])

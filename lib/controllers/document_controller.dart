@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:cts/services/json_model/save_document_annotation_model.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,7 @@ import '../services/apis/inside_doc/g2g/receive_document_using_g2g_api.dart';
 import '../services/apis/inside_doc/get_user_routing_api.dart';
 import '../services/apis/inside_doc/is_already_exported_as_paperwork_api.dart';
 import '../services/apis/inside_doc/is_already_exported_as_transfer_api.dart';
+import '../services/apis/save_document_annotations_api.dart';
 import '../services/json_model/can_open_document_model.dart';
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_correspondences_model.dart';
@@ -216,6 +218,10 @@ updatecanOpenDocumentModel(CanOpenDocumentModel data){
 
   GetDocumentTransfersModel? getDocumentTransfersModel;
 
+  final SaveDocumentAnnotationsAPI _saveDocumentAnnotationsApi =
+  SaveDocumentAnnotationsAPI();
+  SaveDocumentAnnotationModel? postSaveDocumentAnnotationsModel;
+
   getDocumentAuditLogsdata({required String docId}) {
     _getDocumentAuditLogsApi.data =
         "Token=${secureStorage.token()}&docId=$docId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
@@ -249,6 +255,34 @@ updatecanOpenDocumentModel(CanOpenDocumentModel data){
 
     _getDocumentTransfersApi.getData().then((value) {
       getDocumentTransfersModel = value as GetDocumentTransfersModel;
+    });
+  }
+
+
+  getSaveDocAnnotationsData({
+    userId,
+    correspondenceId,
+    transferId,
+    attachmentId,
+    isOriginalMail, //(string) input should “true” or “false”
+    documentAnnotationsString,//string converted from array contains the details of annotations)
+    delegateGctId//string) input “0”
+
+  }) {
+    _saveDocumentAnnotationsApi.data =
+    "Token=${secureStorage.token()}"
+        "&userId=$userId"
+        "&correspondenceId=$correspondenceId"
+        "&transferId=$transferId"
+        "&attachmentId=$attachmentId"
+        "&isOriginalMail=$isOriginalMail"
+        "&documentAnnotationsString=$documentAnnotationsString"
+        "&delegateGctId=$delegateGctId"
+        "&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
+    _saveDocumentAnnotationsApi
+        .post(postSaveDocumentAnnotationsModel?.toMap())
+        .then((value) {
+      postSaveDocumentAnnotationsModel = value as SaveDocumentAnnotationModel;
     });
   }
 

@@ -41,7 +41,7 @@ class SettingsApp {
   static const String GetAutoSendToRecepientsAndCCUrl =baseUrl+"AutoSendToRecepientsAndCC?";//? Token={Token}&exportAction={exportAction}&correspondenceId={correspondenceId}&transferId={transferId}&language={language}
 
   static const String GetGetUserRoutingUrl =baseUrl+"GetUserRouting?";//Token={Token}&GctId={GctId}")
-
+  static const String GetAttachmentItemUrl =baseUrl+"GetAttachmentItem?";//Token={Token}&GctId={GctId}")
 
 
  //////// #region G2G

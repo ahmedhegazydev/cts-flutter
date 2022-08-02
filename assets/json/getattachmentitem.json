@@ -1,0 +1,30 @@
+{
+  "ErrorMessage": "",
+  "Status": 1,
+  "attachment": {
+    "Annotations": "{}",
+    "AttachmentId": 3342685,
+    "CanEditPDF": true,
+    "DocId": 8238,
+    "FileName": "8238_test2222 (1).pdf",
+    "FolderId": 0,
+    "FolderName": null,
+    "IsOriginalMail": false,
+    "IsPrivate": false,
+    "ServerFileInfo": null,
+    "Status": 0,
+    "TransferId": 13535,
+    "URL": "http:\/\/mofa2013:9091\/Ipad\/Files\/temp\/9a1a74b5-2ac4-47ae-bdc3-c23a5036bedd\/1113_DISPLAY.pdf",
+    "editOfficeDetails": {
+      "fileId": null,
+      "isEditable": false,
+      "localUrl": null,
+      "name": null,
+      "siteId": null,
+      "spFrameUrl": null,
+      "spLocation": null,
+      "spUrl": null,
+      "webId": null
+    }
+  }
+}

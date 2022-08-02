@@ -1270,36 +1270,166 @@ class DocumentPage extends GetWidget<DocumentController> {
     showDialog(
         context: context,
         builder: (BuildContext context) {
+          print(
+              " Get.find<DocumentController>() .canOpenDocumentModel?.attachments?.attachments?.length=>${ Get
+                  .find<DocumentController>()
+                  .canOpenDocumentModel
+                  ?.attachments
+                  ?.attachments
+                  ?.length}");
           return AlertDialog(
             title: Text("Attachments"),
             content: SizedBox(
-              height: 300,
-              width: 500,
+              height: 150,
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width * .7,
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 10,
+                  itemCount: Get
+                      .find<DocumentController>()
+                      .folder
+                      .length,
                   itemBuilder: (context, pos) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Card(
-                          elevation: 8,
-                          child: Column(
-                            children: [
-                              Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Icon(Icons.note, size: 80),
-                                  )),
-                              Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text("Attachment number $pos"),
-                                  ))
-                            ],
-                          )),
-                    );
+                    return Container(height: 100,
+                      width: 100,
+                      child: ListView.builder(itemCount: Get
+                          .find<DocumentController>()
+                          .folder.length, itemBuilder: (context, pos) {
+
+                        print(Get
+                            .find<DocumentController>()
+                            .canOpenDocumentModel!.attachments!.attachments!.groupBy(Get
+                            .find<DocumentController>()
+                            .folder[pos]!));
+                        return Container(
+                          height: 100, width: 200, child: ListView.builder(
+                            itemCount:Get
+                                .find<DocumentController>()
+                              .canOpenDocumentModel!.attachments!.attachments!.groupBy(Get
+                                .find<DocumentController>()
+                                .folder[pos]!), itemBuilder: (context, indx) {
+                              return Column(children: [],);
+                        }),);
+                      }),);
+                    // return GestureDetector(onTap: (){
+                    //   _popShowAttachments(context);
+                    // },
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.all(8.0),
+                    //     child: Card(
+                    //         elevation: 8,
+                    //         child: Column(
+                    //           children: [
+                    //             Container(child: Text(),)
+                    //             Expanded(
+                    //                 child: Padding(
+                    //                   padding: const EdgeInsets.all(8.0),
+                    //                   child: Text(Get.find<DocumentController>() .canOpenDocumentModel?.attachments?.attachments?[pos].fileName??""),
+                    //                 ))
+                    //           ],
+                    //         )),
+                    //   ),
+                    // );
                   }),
             ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("Ok"),
+              ),
+            ],
+          );
+        });
+
+    // showCupertinoDialog(
+    //     context: context,
+    //     builder: (context) => CupertinoAlertDialog(
+    //           title: Row(//mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //               children: [
+    //             Image.asset(
+    //               'assets/images/refer.png'
+    //               //
+    //               ,
+    //               height: 20,
+    //               width: 20,
+    //             ),
+    //             const SizedBox(
+    //               width: 8,
+    //             ),
+    //             Text(
+    //               "refer".tr,
+    //               style: Theme.of(context).textTheme.headline3!.copyWith(
+    //                     color: createMaterialColor(
+    //                       const Color.fromRGBO(77, 77, 77, 1),
+    //                     ),
+    //                     fontSize: 15,
+    //                   ),
+    //               textAlign: TextAlign.center,
+    //               overflow: TextOverflow.ellipsis,
+    //             ),
+    //             const Spacer(),
+    //             Image.asset(
+    //               'assets/images/close_button.png',
+    //               width: 20,
+    //               height: 20,
+    //             ),
+    //           ]),
+    //           content: Container(width: MediaQuery.of(context).size.width*.8,
+    //             child: Column(
+    //                 crossAxisAlignment: CrossAxisAlignment.start,
+    //                 children: [
+    //                   const SizedBox(
+    //                     height: 20,
+    //                   ),
+    //                   Text("referTo".tr),
+    //                   Container(
+    //                       height: 100,
+    //                       child: Row(
+    //                         children: [
+    //
+    //                      Expanded(child: ListView.builder(scrollDirection: Axis.horizontal,itemCount: 10,itemBuilder: (context,pos){
+    //                        return Container(
+    //                          height: 30,
+    //                          width: 30,
+    //                          decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.green),
+    //                        );
+    //                      }))  , Padding(
+    //                             padding: const EdgeInsets.all(8.0),
+    //                             child: Container(
+    //                               height: 30,
+    //                               width: 30,
+    //                               decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.red),
+    //                             ),
+    //                           ), ],
+    //                       ))
+    //                 ]),
+    //           ),
+    //           actions: [],
+    //         ));
+  }
+
+  _popShowAttachments(context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Attachments"),
+            content: SizedBox(
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .height * .7,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width * .7,
+                child:
+                SfPdfViewer.network(
+                    'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf')),
             actions: <Widget>[
               TextButton(
                 onPressed: () {

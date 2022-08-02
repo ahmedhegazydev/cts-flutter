@@ -1,0 +1,360 @@
+{
+  "ErrorMessage": null,
+  "Status": 1,
+  "Allow": true,
+  "attachments": {
+    "ErrorMessage": null,
+    "Status": 1,
+    "Attachments": [
+      {
+        "Annotations": "{\"\\u00271\\u0027\":[{\"Id\":\"0\",\"Page\":\"1\",\"X\":\"530\",\"Y\":\"110\",\"Type\":\"11\",\"Width\":\"210\",\"Height\":\"70\",\"ImageByte\":\"data:image\/png;base64,iVBORw0KGgoAAAANSUhEUgAAAY0AAACqCAYAAABReRPrAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAHsIAABibAQEk75EAABwbSURBVHhe7dzRrmM3D6TRvP9L\/2NN8M0UCixvSqc7sru5gLoQi\/Lu2PDxXf753xhjjNE0PxpjjDHa5kdjjDFG2\/xojDHGaPvoH41\/\/vnn\/2WMMcZ986Mxxhij7WP\/GuuPxfxwjDHGZ5gfjTHGGG0f+ZeYHwn\/0eCc6F7a17nuMXvH95\/u\/HR\/jDE+zUf+Zar+aD79IaWvoqreU6n2SKXaI67a0Ywxxqf4yL9I1R\/Ld39AdzrO1f7T3LuneWVnP83HGOOWj\/uL9O4PZere3XFPu95zTneq\/t2+e9rdea0xxvjdPu6v0bs\/kqljnnr1tOP90\/6S7vi84rspY4zxCT7qr1H1xzLFVTsrLs3h\/dP+Uu0w87hqp8oYY3yCj\/prVP2xTEmq3RX42e3uL+926Dzw8xhjfLKP+mvV+QO680eWXd1\/ur+7v3R2FvZ0t3t3jDE+wcf8tdr54\/mT3ae7aT\/deeqd7z7df9eNMcZ\/7WP+Gu38cfTddJd5taszPM29e5q7p\/00H2OMT\/ERf5FO\/jj6Hc5VVNVrkmqXVKo9Uqn2yBhjfIqP+It08sexusNM43Sue8ze8f2nOz\/dH2OMT\/PX\/WWaP8hjjHFufjTGGGO0zY\/GGGOMtvnRGGOM0TZ\/PccYY7TNj8YYY4y2+dEYY4zRNj8aY4wx2uZHY4wxRtv8aIwxxmibH40xxhht86MxxhijbX40xhhjtM2PxhhjjLbrPxr8bz38f+\/hZ+iuxnV7p3c0SHN4T+BnpL0UVN0K0tnjuj10V4Oq02B3jtM+zXHapzm6PXS3CqpuBVW3gu6cIJ09brcnzue6q3OkOfSu7vmcIM2d7xGks89vuPv0l\/Rm+Bm6q3Hd3ukdDdIc3hP4GWkvBVW3gnT2uG4P3dWg6jTYneO0T3Oc9mmObg\/drYKqW0HVraA7J0hnj9vtifO57uocaQ69q3s+J0hz53sE6ezzG+4+\/SW9GX6G7mpct3d6R4M0h\/cEfkbaS0HVrSCdPa7bQ3c1qDoNduc47dMcp32ao9tDd6ug6lZQdSvozgnS2eN2e+J8rrs6R5pD7+qezwnS3PkeQTr7\/Ia7T39Jb4afobsa1+2d3tEgzeE9gZ+R9lJQdStIZ4\/r9tBdDapOg905Tvs0x2mf5uj20N0qqLoVVN0KunOCdPa43Z44n+uuzpHm0Lu653OCNHe+R5DOPr\/h7tNf0pvhZ+iuxnV7p3c0SHN4T+BnpL0UVN0K0tnjuj10V4Oq02B3jtM+zXHapzm6PXS3CqpuBVW3gu6cIJ09brcnzue6q3OkOfSu7vmcIM2d7xGks89vuPv0l\/Rm+Bm6q3Hd3ukdDdIc3hP4GWkvBVW3gnT2uG4P3dWg6jTYneO0T3Oc9mmObg\/drYKqW0HVraA7J0hnj9vtifO57uocaQ69q3s+J0hz53sE6ezzG+4+\/SW9GX6G7mpct3d6R4M0h\/cEfkbaS0HVrSCdPa7bQ3c1qDoNduc47dMcp32ao9tDd6ug6lZQdSvozgnS2eN2e+J8rrs6R5pD7+qezwnS3PkeQTr7\/Ia7T39Jb4afobsa1+2d3tEgzeE9gZ+R9lJQdStIZ4\/r9tBdDapOg905Tvs0x2mf5uj20N0qqLoVVN0KunOCdPa43Z44n+uuzpHm0Lu653OCNHe+R5DOPr\/h7tNf0pvhZ+iuxnV7p3c0SHN4T+BnpL0UVN0K0tnjuj10V4Oq02B3jtM+zXHapzm6PXS3CqpuBVW3gu6cIJ09brcnzue6q3OkOfSu7vmcIM2d7xGks89vuPv0l\/Rm+Bm6q3Hd3ukdDdIc3hP4GWkvBVW3gnT2uG4P3dWg6jTYneO0T3Oc9mmObg\/drYKqW0HVraA7J0hnj9vtifO57uocaQ69q3s+J0hz53sE6ezzG+4+\/SW9GX6G7mpct3d6R4M0h\/cEfkbaS0HVrSCdPa7bQ3c1qDoNduc47dMcp32ao9tDd6ug6lZQdSvozgnS2eN2e+J8rrs6R5pD7+qezwnS3PkeQTr7\/Ia7T39Jb4afobsa1+2d3tEgzeE9gZ+R9lJQdStIZ4\/r9tBdDapOg905Tvs0x2mf5uj20N0qqLoVVN0KunOCdPa43Z44n+uuzpHm0Lu653OCNHe+R5DOPr\/h7tNf0pvhZ+iuxnV7p3c0SHN4T+BnpL0UVN0K0tnjuj10V4Oq02B3jtM+zXHapzm6PXS3CqpuBVW3gu6cIJ09brcnzue6q3OkOfSu7vmcIM2d7xGks89vuPv0l\/Rm+Bm6q3Hd3ukdDdIc3hP4GWkvBVW3gnT2uG4P3dWg6jTYneO0T3Oc9mmObg\/drYKqW0HVraA7J0hnj9vtifO57uocaQ69q3s+J0hz53sE6ezzG+4+\/SW9GX6G7mpct3d6R4M0h\/cEfkbaS0HVrSCdPa7bQ3c1qDoNduc47dMcp32ao9tDd6ug6lZQdSvozgnS2eN2e+J8rrs6R5pD7+qezwnS3PkeQTr7\/Ia7T39Jb4afobsa1+2d3tEgzeE9gZ+R9lJQdStIZ4\/r9tBdDapOg905Tvs0x2mf5uj20N0qqLoVVN0KunOCdPa43Z44n+uuzpHm0Lu653OCNHe+R5DOPr\/h7tNf0pvhZ+iuxnV7p3c0SHN4T+BnpL0UVN0K0tnjuj10V4Oq02B3jtM+zXHapzm6PXS3CqpuBVW3gu6cIJ09brcnzue6q3OkOfSu7vmcIM2d7xGks89vuPv0l\/Rm+Bm6q3Hd3ukdDdIc3hP4GWkvBVW3gnT2uG4P3dWg6jTYneO0T3Oc9mmObg\/drYKqW0HVraA7J0hnj9vtifO57uocaQ69q3s+J0hz53sE6ezzG+4+\/SW9GX6G7mpct3d6R4M0h\/cEfkbaS0HVrSCdPa7bQ3c1qDoNduc47dMcp32ao9tDd6ug6lZQdSvozgnS2eN2e+J8rrs6R5pD7+qezwnS3PkeQTr7\/Ia7T39Jb4afobsa1+2d3tEgzeE9gZ+R9lJQdStIZ4\/r9tBdDapOg905Tvs0x2mf5uj20N0qqLoVVN0KunOCdPa43Z44n+uuzpHm0Lu653OCNHe+R5DOPr\/h7tNf0pvhZ+iuxnV7p3c0SHN4T+BnpL0UVN0K0tnjuj10V4Oq02B3jtM+zXHapzm6PXS3CqpuBVW3gu6cIJ09brcnzue6q3OkOfSu7vmcIM2d7xGks89vuPv0l\/Rm+Bm6q3Hd3ukdDdIc3hP4GWkvBVW3gnT2uG4P3dWg6jTYneO0T3Oc9mmObg\/drYKqW0HVraA7J0hnj9vtifO57uocaQ69q3s+J0hz53sE6ezzG+4+\/SW9GX6G7mpct3d6R4M0h\/cEfkbaS0HVrSCdPa7bQ3c1qDoNduc47dMcp32ao9tDd6ug6lZQdSvozgnS2eN2e+J8rrs6R5pD7+qezwnS3PkeQTr7\/Ia7T39Jb4afobsa1+2d3tEgzeE9gZ+R9lJQdStIZ4\/r9tBdDapOg905Tvs0x2mf5uj20N0qqLoVVN0KunOCdPa43Z44n+uuzpHm0Lu653OCNHe+R5DOPr\/h7tNf0pvhZ+iuxnV7p3c0SHN4T+BnpL0UVN0K0tnjuj10V4Oq02B3jtM+zXHapzm6PXS3CqpuBVW3gu6cIJ09brcnzue6q3OkOfSu7vmcIM2d7xGks89vuPv0l\/Rm+Bm6q3Hd3ukdDdIc3hP4GWkvBVW3gnT2uG4P3dWg6jTYneO0T3Oc9mmObg\/drYKqW0HVraA7J0hnj9vtifO57uocaQ69q3s+J0hz53sE6ezzG+4+\/SW9GX6G7mpct3d6R4M0h\/cEfkbaS0HVrSCdPa7bQ3c1qDoNduc47dMcp32ao9tDd6ug6lZQdSvozgnS2eN2e+J8rrs6R5pD7+qezwnS3PkeQTr7\/Ia7T39Jb4afobsa1+2d3tEgzeE9gZ+R9lJQdStIZ4\/r9tBdDapOg905Tvs0x2mf5uj20N0qqLoVVN0KunOCdPa43Z44n+uuzpHm0Lu653OCNHe+R5DOPr\/h7tNf0pvhZ+iuxnV7p3c0SHN4T+BnpL0UVN0K0tnjuj10V4Oq02B3jtM+zXHapzm6PXS3CqpuBVW3gu6cIJ09brcnzue6q3OkOfSu7vmcIM2d7xGks89vuPv0l\/Rm+Bm6q3Hd3ukdDdIc3hP4GWkvBVW3gnT2uG4P3dWg6jTYneO0T3Oc9mmObg\/drYKqW0HVraA7J0hnj9vtifO57uocaQ69q3s+J0hz53sE6ezzG+4+\/SW9GX6G7mpct3d6R4M0h\/cEfkbaS0HVrSCdPa7bQ3c1qDoNduc47dMcp32ao9tDd6ug6lZQdSvozgnS2eN2e+J8rrs6R5pD7+qezwnS3PkeQTr7\/Ia7T39Jb4afobsa1+2d3tEgzeE9gZ+R9lJQdStIZ4\/r9tBdDapOg905Tvs0x2mf5uj20N0qqLoVVN0KunOCdPa43Z44n+uuzpHm0Lu653OCNHe+R5DOPr\/h7tNf0pvhZ+iuxnV7p3c0SHN4T+BnpL0UVN0K0tnjuj10V4Oq02B3jtM+zXHapzm6PXS3CqpuBVW3gu6cIJ09brcnzue6q3OkOfSu7vmcIM2d7xGks89vuPv0l\/Rm+Bm6q3Hd3ukdDdIc3hP4GWkvBVW3gnT2uG4P3dWg6jTYneO0T3Oc9mmObg\/drYKqW0HVraA7J0hnj9vtifO57uocaQ69q3s+J0hz53sE6ezzG+4+\/SW9GX6G7mpct3d6R4M0h\/cEfkbaS0HVrSCdPa7bQ3c1qDoNduc47dMcp32ao9tDd6ug6lZQdSvozgnS2eN2e+J8rrs6R5pD7+qezwnS3PkeQTr7\/Ia7T39Jb4afobsa1+2d3tEgzeE9gZ+R9lJQdStIZ4\/r9tBdDapOg905Tvs0x2mf5uj20N0qqLoVVN0KunOCdPa43Z44n+uuzpHm0Lu653OCNHe+R5DOPr\/h7tNf0pvhZ+iuxnV7p3c0SHN4T+BnpL0UVN0K0tnjuj10V4Oq02B3jtM+zXHapzm6PXS3CqpuBVW3gu6cIJ09brcnzue6q3OkOfSu7vmcIM2d7xGks89vuPv0l\/Rm+Bm6q3Hd3ukdDdIc3hP4GWkvBVW3gnT2uG4P3dWg6jTYneO0T3Oc9mmObg\/drYKqW0HVraA7J0hnj9vtifO57uocaQ69q3s+J0hz53sE6ezzG+4+\/SW9GX6G7mpct3d6R4M0h\/cEfkbaS0HVrSCdPa7bQ3c1qDoNduc47dMcp32ao9tDd6ug6lZQdSvozgnS2eN2e+J8rrs6R5pD7+qezwnS3PkeQTr7\/Ia7T39Jb4afobsa1+2d3tEgzeE9gZ+R9lJQdStIZ4\/r9tBdDapOg905Tvs0x2mf5uj20N0qqLoVVN0KunOCdPa43Z44n+uuzpHm0Lu653OCNHe+R5DOPr\/h7tNf0pvhZ+iuxnV7p3c0SHN4T+BnpL0UVN0K0tnjuj10V4Oq02B3jtM+zXHapzm6PXS3CqpuBVW3gu6cIJ09brcnzue6q3OkOfSu7vmcIM2d7xGks89vuPv0l\/Rm+Bm6q3Hd3ukdDdIc3hP4GWkvBVW3gnT2uG4P3dWg6jTYneO0T3Oc9mmObg\/drYKqW0HVraA7J0hnj9vtifO57uocaQ69q3s+J0hz53sE6ezzG+4+\/SW9GX6G7mpct3d6R4M0h\/cEfkbaS0HVrSCdPa7bQ3c1qDoNduc47dMcp32ao9tDd6ug6lZQdSvozgnS2eN2e+J8rrs6R5pD7+qezwnS3PkeQTr7\/Ia7T39Jb4afobsa1+2d3tEgzeE9gZ+R9lJQdStIZ4\/r9tBdDapOg905Tvs0x2mf5uj20N0qqLoVVN0KunOCdPa43Z44n+uuzpHm0Lu653OCNHe+R5DOPr\/h7tNf0pvhZ+iuxnV7p3c0SHN4T+BnpL0UVN0K0tnjuj10V4Oq02B3jtM+zXHapzm6PXS3CqpuBVW3gu6cIJ09brcnzue6q3OkOfSu7vmcIM2d7xGks89vuPv0l\/Rm+Bm6q3Hd3ukdDdIc3hP4GWkvBVW3gnT2uG4P3dWg6jTYneO0T3Oc9mmObg\/drYKqW0HVraA7J0hnj9vtifO57uocaQ69q3s+J0hz53sE6ezzG+4+\/SW9GX6G7mpct3d6R4M0h\/cEfkbaS0HVrSCdPa7bQ3c1qDoNduc47dMcp32ao9tDd6ug6lZQdSvozgnS2eN2e+J8rrs6R5pD7+qezwnS3PkeQTr7\/Ia7T39Jb4afobsa1+2d3tEgzeE9gZ+R9lJQdStIZ4\/r9tBdDapOg905Tvs0x2mf5uj20N0qqLoVVN0KunOCdPa43Z44n+uuzpHm0Lu653OCNHe+R5DOPr\/h7tNf0pvhZ+iuxnV7p3c0SHN4T+BnpL0UVN0K0tnjuj10V4Oq02B3jtM+zXHapzm6PXS3CqpuBVW3gu6cIJ09brcnzue6q3OkOfSu7vmcIM2d7xGks89vuPv0l\/Rm+Bm6q3Hd3ukdDdIc3hP4GWkvBVW3gnT2uG4P3dWg6jTYneO0T3Oc9mmObg\/drYKqW0HVraA7J0hnj9vtifO57uocaQ69q3s+J0hz53sE6ezzG+4+\/SW9GX6G7mpct3d6R4M0h\/cEfkbaS0HVrSCdPa7bQ3c1qDoNduc47dMcp32ao9tDd6ug6lZQdSvozgnS2eN2e+J8rrs6R5pD7+qezwnS3PkeQTr7\/Ia7T39Jb4afobsa1+2d3tEgzeE9gZ+R9lJQdStIZ4\/r9tBdDapOg905Tvs0x2mf5uj20N0qqLoVVN0KunOCdPa43Z44n+uuzpHm0Lu653OCNHe+R5DOPr\/h7tNf0pvhZ+iuxnV7p3c0SHN4T+BnpL0UVN0K0tnjuj10V4Oq02B3jtM+zXHapzm6PXS3CqpuBVW3gu6cIJ09brcnzue6q3OkOfSu7vmcIM2d7xGks89vuPv0l\/Rm+Bm6q3Hd3ukdDdIc3hP4GWkvBVW3gnT2uG4P3dWg6jTYneO0T3Oc9mmObg\/drYKqW0HVraA7J0hnj9vtifO57uocaQ69q3s+J0hz53sE6ezzG+4+\/SW9GX6G7mpct3d6R4M0h\/cEfkbaS0HVrSCdPa7bQ3c1qDoNduc47dMcp32ao9tDd6ug6lZQdSvozgnS2eN2e+J8rrs6R5pD7+qezwnS3PkeQTr7\/Ia7T39Jb4afobsa1+2d3tEgzeE9gZ+R9lJQdStIZ4\/r9tBdDapOg905Tvs0x2mf5uj20N0qqLoVVN0KunOCdPa43Z44n+uuzpHm0Lu653OCNHe+R5DOPr\/h7tPHGGN8lfnRGGOM0TY\/GmOMMdrmR2OMMUbb\/GiMMcZomx+NMcYYbfOjMcYYo21+NMYYY7TNj8YYY4y2+dEYY4zRNj8aY4wx2uZHY4wxRtv8aHwh\/5+XkY5fcYc8qe6sdLzb1ddKO5W59y\/fe0qSer2bdsb3mk\/zy1RfSE+l2tMk1a6nUu153ql29G6VpNrVJNWuJql2NUm1q0mqXY2rdt4lqXq9V2V8v\/kUv8i7L9+f0KHq392bbr978nS36t7dedeN7zKf4Jfofumqnad77+68u7f4zuk9VXXv9pfUz733fXLyuid3xveZT\/BLdL9w1d7T3ZM78L3Te6rq3u0vqZ977\/tk93Wf9pfOzvh88wn+YfyL2f2idvfcr75XzdOu872596\/uHp72q\/7pDrp743PNp\/eH8S9l90va3XO\/+l41T7vO9+bev7p7eNqv+qc76O6NzzWf3h+k+kJ2v6TdPXVyZ3l3r+re7Svfm3v\/6u4t7L7br\/qnO+jujc81n94fgi+jfyG7X9LuHtjfubM83au6d\/vK9+bev7p7S2e32mF2cnd8l\/n0\/gDvvrDdL2l3b2G3u4+ne6l7d0f53tz7V3dvedp919NVvXZVP77HfHpf7umL2P2S7u51dlXnXuqf7sH35t6\/fuXe0w59Fe3H95pP74v5F7LS\/ZJ29tjpvJ7q3ks7nbuL7829f\/3KvZ0dDfw8vs98el+q+kJWul\/Spz36zmupnXtp7\/T+3PtXZ+9XvtY7P70\/7ptP78vwpdv54j3tv+vp3t2v7N572j3t5977Hp297mslP70\/PsN8gl+EL93uF+\/pTuqZv7tbObn3tH\/az733\/cJOd6\/y0\/vje8wn+EVOv3Tcq+52ul0n957u0Fc70+13qrOzvNujq\/p33fg+8yl+Cf3ideKqHY2rdt4FVfcueueJ3quSVLuapNrVJNWuJql2NUm1q3nS2dvZeZfx\/eZT\/BLVF\/BdktO9p6Dq3kXvdOn9uff\/ndzr7p68pmb8OebTHGOM0TY\/GmOMMdrmR2OMMUbb\/GiMMcZomx+NMcYYbfOjMcYYo21+NMYYY7TNj8YYY4y2+dEYY4zRNj8aY4wx2uZHY4wxRtv8aIwxxmibH40xxhht86MxxhijbX40xhhjtM2PxhhjjLb50RhjjNE2PxpjjDHa5kdjjDFG2\/xojDHGaJsfjTHGGG3zozHGGKNtfjTGGGO0zY\/GGGOMtvnRGGOM0TY\/GmOMMdrmR+Mv9M8\/\/\/zf\/NduPRf+\/Bv\/nhvP\/Imf\/Hu\/7b919Mwn+he69WW+\/UfEn3\/j3\/NfP1Ofd\/Lskzv4yd3xueYT\/Qvd+jLf\/iPiz7\/x7\/mvn6nPO3n2yR385O74XPOJ\/oVufZlv\/xHx59\/491TPvPHv6PrJv+2T\/7vGuflE\/0K3vsy3\/4j482\/8e6pndv4dnZ3f4SfPvfVvHr\/XfKJ\/AP1ydr6onZ3f4dZz4c+\/8e85feZ\/fQ8\/uf\/TZ4\/PNJ\/oH0C\/nJ0vamfnd7j1XPjzb\/x7vu2Z7+4+veZPnjs+13yif6Ff\/WXm9Z5e82lHX+dp94S\/5u94xpPqmcyq7lf4yWu\/u\/f0mk\/9+E7zif6Ful9m9t7t+07aW1Kvd1MqnR3le9177\/Aa3dfyPb2rcWn+jr\/eT14jedc\/3R3faT7RL3L6JfR7nddhx6N8Vu2o1L+793TH847vdO68w33PO7pT7TNL8x1+h\/PO63T2007n7vg+84l+kdMvod97ep2qZ6bzd3uV1O3eeTfzufL+af+d6i6zd6+pO2mv6t7tV9L+u9epunf76id3x3eZT\/SLnH4J\/d7T66Te59VeNcNul\/Z35\/D+af+ddPfpNek7O+rpjkv7T6\/j\/dO++snd8T3mE\/0ifAl3vojVnafXSL3Pq71qhnfdov273dQx7957t\/sk3WWeXvddh2qnc0+l\/afX8f5pX\/3k7vge84l+Gb6InS9j2k3zRTvvO7NqZ2GeejztaO873Q7VXoe+lt9Pc6T5ku6m+TvVnWrm0p2On9wd32M+0S\/El7GbSrXXiat2bubp36SqWYe+XpXOzkl2Va+x8o7vVHeYVVHVbHy\/+US\/mH5Zqzyp7qwgzSu+WwVVR1TVryDNF++8X9L8id7hNarX8q6TdO\/U7uv4XnWPmcel+fhu84mOX+bdH5A\/xZ\/83\/erP79f\/XrjM8ynOX6Jv+EPxJ\/83\/erP78\/9X0a86MxDukfGc2f6k\/879PP7Xf89\/3q1xufYT7VceR3\/rH5RH\/if+Pv\/Pz0tX\/H64975tMcY4zRNj8aY4wx2uZHY4wxRtv8aIwxxmj63\/\/+Dw8WIPXez3vBAAAAAElFTkSuQmCC\",\"ImageName\":\"\\\\\\\\mofa2013\\\\SharedFolder\\\\barcodes\\\\barcodeImg_8238.png\",\"Text\":\"\",\"Readonly\":false,\"UserId\":\"-1\",\"Hidden\":false,\"ParentHeight\":0,\"ParentWidth\":0}]}",
+        "AttachmentId": 3332684,
+        "CanEditPDF": true,
+        "DocId": 8238,
+        "FileName": "8238_25a07eac-3556-474e-8781-51fe812a4a3a8215_بيان_سير_مكاتبة_مدير_المكتب_WithBurnedAnnotations.pdf",
+        "FolderId": 15144522,
+        "FolderName": "البريد الأصلي",
+        "IsOriginalMail": true,
+        "IsPrivate": false,
+        "ServerFileInfo": null,
+        "Status": 0,
+        "TransferId": 13535,
+        "URL": "http:\/\/mofa2013:9091\/Ipad\/Files\/temp\/63c970b5-2b58-42f2-81ae-ffdaafd0d216\/296_DISPLAY.pdf",
+        "editOfficeDetails": {
+          "fileId": null,
+          "isEditable": false,
+          "localUrl": null,
+          "name": null,
+          "siteId": null,
+          "spFrameUrl": null,
+          "spLocation": null,
+          "spUrl": null,
+          "webId": null
+        }
+      },
+      {
+        "Annotations": "[]",
+        "AttachmentId": 3342687,
+        "CanEditPDF": true,
+        "DocId": 8238,
+        "FileName": "8238_UserGuide.pdf",
+        "FolderId": 15144523,
+        "FolderName": "المرفقات",
+        "IsOriginalMail": false,
+        "IsPrivate": true,
+        "ServerFileInfo": null,
+        "Status": 0,
+        "TransferId": 13535,
+        "URL": null,
+        "editOfficeDetails": {
+          "fileId": null,
+          "isEditable": false,
+          "localUrl": null,
+          "name": null,
+          "siteId": null,
+          "spFrameUrl": null,
+          "spLocation": null,
+          "spUrl": null,
+          "webId": null
+        }
+      },
+      {
+        "Annotations": "[]",
+        "AttachmentId": 3342686,
+        "CanEditPDF": true,
+        "DocId": 8238,
+        "FileName": "8238_25a07eac-3556-474e-8781-51fe812a4a3a8215_بيا.pdf",
+        "FolderId": 15144523,
+        "FolderName": "المرفقات",
+        "IsOriginalMail": false,
+        "IsPrivate": false,
+        "ServerFileInfo": null,
+        "Status": 0,
+        "TransferId": 13535,
+        "URL": null,
+        "editOfficeDetails": {
+          "fileId": null,
+          "isEditable": false,
+          "localUrl": null,
+          "name": null,
+          "siteId": null,
+          "spFrameUrl": null,
+          "spLocation": null,
+          "spUrl": null,
+          "webId": null
+        }
+      },
+      {
+        "Annotations": "[]",
+        "AttachmentId": 3342682,
+        "CanEditPDF": true,
+        "DocId": 8238,
+        "FileName": "8238_abc23.docx",
+        "FolderId": 15144524,
+        "FolderName": "ملفات الكترونية",
+        "IsOriginalMail": false,
+        "IsPrivate": false,
+        "ServerFileInfo": null,
+        "Status": 2,
+        "TransferId": 13535,
+        "URL": null,
+        "editOfficeDetails": {
+          "fileId": null,
+          "isEditable": false,
+          "localUrl": null,
+          "name": null,
+          "siteId": null,
+          "spFrameUrl": null,
+          "spLocation": null,
+          "spUrl": null,
+          "webId": null
+        }
+      },
+      {
+        "Annotations": "[]",
+        "AttachmentId": 3342684,
+        "CanEditPDF": true,
+        "DocId": 8238,
+        "FileName": "8238_بيان_سير_مكاتبة_مساعد_مدير_المكتب.docx",
+        "FolderId": 15144524,
+        "FolderName": "ملفات الكترونية",
+        "IsOriginalMail": false,
+        "IsPrivate": false,
+        "ServerFileInfo": null,
+        "Status": 2,
+        "TransferId": 13535,
+        "URL": null,
+        "editOfficeDetails": {
+          "fileId": null,
+          "isEditable": false,
+          "localUrl": null,
+          "name": null,
+          "siteId": null,
+          "spFrameUrl": null,
+          "spLocation": null,
+          "spUrl": null,
+          "webId": null
+        }
+      },
+      {
+        "Annotations": "[]",
+        "AttachmentId": 3342685,
+        "CanEditPDF": true,
+        "DocId": 8238,
+        "FileName": "8238_test2222 (1).pdf",
+        "FolderId": 15144524,
+        "FolderName": "ملفات الكترونية",
+        "IsOriginalMail": false,
+        "IsPrivate": false,
+        "ServerFileInfo": null,
+        "Status": 0,
+        "TransferId": 13535,
+        "URL": null,
+        "editOfficeDetails": {
+          "fileId": null,
+          "isEditable": false,
+          "localUrl": null,
+          "name": null,
+          "siteId": null,
+          "spFrameUrl": null,
+          "spLocation": null,
+          "spUrl": null,
+          "webId": null
+        }
+      },
+      {
+        "Annotations": "[]",
+        "AttachmentId": 3342683,
+        "CanEditPDF": true,
+        "DocId": 8238,
+        "FileName": "8238_25a07eac-3556-474e-8781-51fe812a4a3a8215_بيا.pdf",
+        "FolderId": 15144524,
+        "FolderName": "ملفات الكترونية",
+        "IsOriginalMail": false,
+        "IsPrivate": false,
+        "ServerFileInfo": null,
+        "Status": 0,
+        "TransferId": 13535,
+        "URL": null,
+        "editOfficeDetails": {
+          "fileId": null,
+          "isEditable": false,
+          "localUrl": null,
+          "name": null,
+          "siteId": null,
+          "spFrameUrl": null,
+          "spLocation": null,
+          "spUrl": null,
+          "webId": null
+        }
+      }
+    ],
+    "IsLocked": false,
+    "LockedBy": "",
+    "hasVoice": false,
+    "isDocSigned": false,
+    "voiceNote": null
+  },
+  "correspondence": {
+    "CanRequestDueDate": false,
+    "CategoryId": "7",
+    "ClickableLock": false,
+    "Comments": null,
+    "ControlList": {
+      "CustomToolbarItems": null,
+      "ToolbarItems": [
+        {
+          "Children": null,
+          "Display": true,
+          "Label": null,
+          "Name": "MetaData",
+          "QuickAction": false
+        },
+        {
+          "Children": {
+            "CustomToolbarItems": null,
+            "ToolbarItems": [
+              {
+                "Children": null,
+                "Display": true,
+                "Label": null,
+                "Name": "ShowAttachments",
+                "QuickAction": false
+              }
+            ]
+          },
+          "Display": true,
+          "Label": null,
+          "Name": "Attachments",
+          "QuickAction": false
+        },
+        {
+          "Children": null,
+          "Display": true,
+          "Label": null,
+          "Name": "Transfer",
+          "QuickAction": true
+        },
+        {
+          "Children": {
+            "CustomToolbarItems": null,
+            "ToolbarItems": [
+              {
+                "Children": null,
+                "Display": true,
+                "Label": "تفاصيل الاجراءات",
+                "Name": "ViewActionLogs",
+                "QuickAction": false
+              },
+              {
+                "Children": null,
+                "Display": true,
+                "Label": "View Receivers",
+                "Name": "ViewReceivers",
+                "QuickAction": false
+              },
+              {
+                "Children": null,
+                "Display": true,
+                "Label": "View Transfers",
+                "Name": "ViewTransfers",
+                "QuickAction": false
+              }
+            ]
+          },
+          "Display": true,
+          "Label": null,
+          "Name": "More",
+          "QuickAction": false
+        }
+      ]
+    },
+    "CorrespondenceId": "8238",
+    "DocDueDate": null,
+    "DocDueDays": 0,
+    "FromStructure": "إدارة نظم المعلومات",
+    "FromUser": "مستخدم 760 مستخدم 760",
+    "FromUserId": 9673,
+    "GridInfo": [
+      {
+        "Label": "Subject",
+        "Value": "fdfd, 44444إدارة المراسم | 1"
+      },
+      {
+        "Label": "From User",
+        "Value": "إدارة نظم المعلومات"
+      },
+      {
+        "Label": "Ref#",
+        "Value": "2022\/0000007\/9"
+      },
+      {
+        "Label": "Date",
+        "Value": "4\/3\/2022"
+      }
+    ],
+    "HasAttachments": true,
+    "HasAttachmentsToBeDelivered": false,
+    "HasSummaries": false,
+    "InboxId": "0",
+    "IsCC": true,
+    "IsForGuideline": false,
+    "IsHighPriority": false,
+    "IsLocked": true,
+    "IsNew": false,
+    "IsShareable": false,
+    "Metadata": [
+      {
+        "Label": "Date",
+        "Value": "4\/3\/2022"
+      },
+      {
+        "Label": "Ref#",
+        "Value": "2022\/0000007\/9"
+      },
+      {
+        "Label": "Subject",
+        "Value": "fdfd, 44444إدارة المراسم | 1"
+      },
+      {
+        "Label": "From User",
+        "Value": "إدارة نظم المعلومات"
+      },
+      {
+        "Label": "Purpose",
+        "Value": "نسخة"
+      },
+      {
+        "Label": "Instructions From Sender",
+        "Value": null
+      },
+      {
+        "Label": "Transferred From",
+        "Value": "مستخدم 760 مستخدم 760"
+      },
+      {
+        "Label": "PrivacyLevel",
+        "Value": ""
+      },
+      {
+        "Label": "PriorityLevel",
+        "Value": "عادي"
+      },
+      {
+        "Label": "Registered By",
+        "Value": ""
+      }
+    ],
+    "PriorityId": "1",
+    "PrivacyId": "0",
+    "PurposeId": "22",
+    "ShowLock": false,
+    "Status": 0,
+    "ThumbnailUrl": "",
+    "TransferId": "13535",
+    "TsfDueDate": null,
+    "Type": "New",
+    "VisualTrackingUrl": "http:\/\/mofa2013:9091\/EverSuite.CTS.Mobile\/VisualTracking\/TransferVisualTracking\/NewTsfVisualTracking.aspx?Token=2NYWjZlF2fybu1s8C1nR&language=ar&DocumentId=8238",
+    "isTransferedToContact": true
+  }
+}

@@ -361,7 +361,7 @@ bool edit=false;
     canOpenDocumentApi.data =
     "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
 
- final  jsondata=await rootBundel.rootBundle.loadString("assets/json/canopen.json");
+ final  jsondata=await rootBundel.rootBundle.loadString("assets/json/canopendocument.json");
     canOpenDocumentModel=   CanOpenDocumentModel.fromJson(json.decode(jsondata));
 
     // canOpenDocumentApi.getData().then((value) {
@@ -371,6 +371,7 @@ bool edit=false;
     // });
     print(canOpenDocumentModel?.toJson());
     if(canOpenDocumentModel!.allow!){
+      Get.find<DocumentController>().updatecanOpenDocumentModel(canOpenDocumentModel!);
       Get.toNamed("/DocumentPage");
     }
    //

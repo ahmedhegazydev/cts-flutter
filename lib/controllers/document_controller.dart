@@ -50,6 +50,7 @@ import '../services/json_model/inopendocModel/get_attachment_item_model.dart';
 import '../services/json_model/inopendocModel/get_user_routing_model.dart';
 import '../services/json_model/inopendocModel/is_already_exported_as_paperwork_model.dart';
 import '../services/json_model/inopendocModel/is_already_exported_as_transfer_model.dart';
+import '../services/json_model/inopendocModel/save_document_annotation_model.dart';
 import '../services/json_model/login_model.dart';
 import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
 import '../services/models/signature_info.dart';
@@ -59,8 +60,12 @@ import '../utility/utilitie.dart';
 import '../widgets/custom_button_with_icon.dart';
 import 'inbox_controller.dart';
 import 'package:flutter/services.dart' as rootBundel;
+
 class DocumentController extends GetxController {
-Map<int,String>folder={};
+//Map<int,String>folder={};
+  String? oragnalFileDoc;
+  AttachmentsList? isOriginalMailAttachmentsList;
+  Map<String, List<AttachmentsList>>folder2 = {};
 
   Parents? toParent;
   TextEditingController textEditingControllerToParent =
@@ -78,53 +83,82 @@ Map<int,String>folder={};
   TextEditingController();
 
 
-  List<DepartmentList>toDepartmentList=[];
+  List<DepartmentList>toDepartmentList = [];
 
-  List<DepartmentList>cctoDepartmentList=[];
-
-  addtoDepartmentList({required DepartmentList department}){
+  List<DepartmentList>cctoDepartmentList = [];
+  PdfViewerController pdfViewerController=PdfViewerController();
+  GlobalKey? pdfViewerkey ;
+  addtoDepartmentList({required DepartmentList department}) {
     toDepartmentList.add(department);
     update();
   }
-  addcctoDepartmentList({required DepartmentList department}){
+
+  addcctoDepartmentList({required DepartmentList department}) {
     cctoDepartmentList.add(department);
     update();
   }
-  deltoDepartmentList({required DepartmentList department}){
+
+  deltoDepartmentList({required DepartmentList department}) {
     toDepartmentList.remove(department);
     update();
   }
-  delcctoDepartmentList({required DepartmentList department}){
+
+  delcctoDepartmentList({required DepartmentList department}) {
     cctoDepartmentList.remove(department);
     update();
   }
 
-  GetAttachmentItemAPI getAttachmentItemAPI=GetAttachmentItemAPI();
+  GetAttachmentItemAPI getAttachmentItemAPI = GetAttachmentItemAPI();
 
   GetAttAchmentItem? getAttAchmentItem;
 
-  getAttachmentItem( {documentId,transferId,attachmentId}){
-    getAttachmentItemAPI.data="Token=${secureStorage.token()}&documentId=$documentId&transferId=$transferId&attachmentId=$attachmentId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+  getAttachmentItem({documentId, transferId, attachmentId}) {
+    getAttachmentItemAPI.data = "Token=${secureStorage
+        .token()}&documentId=$documentId&transferId=$transferId&attachmentId=$attachmentId&language=${Get
+        .locale?.languageCode == "en" ? "en" : "ar"}";
     getAttachmentItemAPI.getData().then((value) {
-
-      getAttAchmentItem=value as GetAttAchmentItem;
-
-
-
+      getAttAchmentItem = value as GetAttAchmentItem;
     });
-
-
-
   }
-  getAttachmentItemlocal( {documentId,transferId,attachmentId})async{
 
-    final  jsondata=await rootBundel.rootBundle.loadString("assets/json/getattachmentitem.json");
+  getAttachmentItemlocal(
+      {documentId, transferId, attachmentId, required BuildContext context}) async {
+    final jsondata = await rootBundel.rootBundle.loadString(
+        "assets/json/getattachmentitem.json");
 
-    getAttAchmentItem=  GetAttAchmentItem.fromJson(json.decode(jsondata));
-    print("g2gInfoForExportModel?.toJson()=>  ${g2gInfoForExportModel?.toJson()}");
+    getAttAchmentItem = GetAttAchmentItem.fromJson(json.decode(jsondata));
+    print("g2gInfoForExportModel?.toJson()=>  ${g2gInfoForExportModel
+        ?.toJson()}");
 
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(getAttAchmentItem!.attachment!.fileName!),
+            content: SizedBox(
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .height * .7,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width * .7,
+                child: SfPdfViewer.network(
+                  //'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf'
+                    getAttAchmentItem!.attachment!.uRL!
 
-
+                )),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("Ok"),
+              ),
+            ],
+          );
+        });
   }
 
   // [OperationContract]
@@ -134,41 +168,99 @@ Map<int,String>folder={};
   //
 
 
+  final SaveDocumentAnnotationsAPI _saveDocumentAnnotationsApi =
+  SaveDocumentAnnotationsAPI();
+  SaveDocumentAnnotationModel? postSaveDocumentAnnotationsModel;
+
+ Future getSaveDocAnnotationsData({
+    userId,
+    correspondenceId,
+    transferId,
+    attachmentId,
+    isOriginalMail, //(string) input should “true” or “false”
+   required List<DocumentAnnotations>  documentAnnotationsString, //string converted from array contains the details of annotations)
+    delegateGctId //string) input “0”
+
+  }) async{
+
+    postSaveDocumentAnnotationsModel= SaveDocumentAnnotationModel(
+        AttachmentId:attachmentId.toString(), CorrespondenceId:correspondenceId, DelegateGctId:delegateGctId,
+    documentAnnotationsString: documentAnnotationsString,IsOriginalMail: isOriginalMail ,Token: secureStorage.token(),UserId:userId ,TransferId:transferId );
+  //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
+
+    print("postSaveDocumentAnnotationsModel?.toMap() =>${jsonEncode(postSaveDocumentAnnotationsModel?.toMap())}");
 
 
-
-
-
+    await  _saveDocumentAnnotationsApi
+        .post(postSaveDocumentAnnotationsModel?.toMap())
+        .then((value) {
+          print("value =>   ${value}");
+      postSaveDocumentAnnotationsModel = value as SaveDocumentAnnotationModel;
+          print("postSaveDocumentAnnotationsModel =>   ${postSaveDocumentAnnotationsModel?.toMap()}");
+    });
+  }
 
   SecureStorage secureStorage = SecureStorage();
   CanOpenDocumentModel? canOpenDocumentModel;
-updatecanOpenDocumentModel(CanOpenDocumentModel data){
-  canOpenDocumentModel=data;
 
 
-  for(int i=0;i< ( canOpenDocumentModel?.attachments?.attachments?.length??0);i++){
-    folder[i]=canOpenDocumentModel!.attachments!.attachments![i]!.folderName!;
+  //تحديث كان ابن فيل وجلب جميع البيانات الخاصه بلملف
+  updatecanOpenDocumentModel(CanOpenDocumentModel data) {
+ pdfViewerkey   = GlobalKey();
+ pdfAndSing.clear();
+    pdfAndSing.add(SfPdfViewer.network(
+        'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf'
+      // oragnalFileDoc??""
+,controller: pdfViewerController,
+key: pdfViewerkey,
+    ));
+
+
+    canOpenDocumentModel = data;
+    canOpenDocumentModel?.attachments?.attachments?.forEach((element) {
+      if (element.isOriginalMail!) {
+        oragnalFileDoc = element.uRL!;
+        isOriginalMailAttachmentsList=element;
+      }
+
+      if (element.isOriginalMail == false) {
+        if (folder2[element.folderName] != null) {
+          folder2[element.folderName]?.add(element);
+        } else {
+          List<AttachmentsList>a = [];
+          a.add(element);
+          folder2[element.folderName!] = a;
+        }
+      }
+    });
+    print("folder2=>${folder2.length}");
+    print("folder2=>${folder2}");
+    // for(int i=0;i< ( canOpenDocumentModel?.attachments?.attachments?.length??0);i++){
+    //   folder[i]=canOpenDocumentModel!.attachments!.attachments![i]!.folderName!;
+    //
+    //
+    // }
 
 
   }
-}
+
   IsAlreadyExportedAsPaperworkModel? isAlreadyExportedAsPaperworkModel;
   IsAlreadyExportedAsPaperworkAPI _alreadyExportedAsPaperworkAPI =
-      IsAlreadyExportedAsPaperworkAPI();
+  IsAlreadyExportedAsPaperworkAPI();
 
   CanExportAsPaperworkAPI _canExportAsPaperworkAPI = CanExportAsPaperworkAPI();
   CanExportAsPaperworkModel? canExportAsPaperworkModel;
 
   AutoSendToRecepientsAndCCAPI _autoSendToRecepientsAndCCAPI =
-      AutoSendToRecepientsAndCCAPI();
+  AutoSendToRecepientsAndCCAPI();
   AutoSendToRecepientsAndCCModel? autoSendToRecepientsAndCCModel;
 
   CheckForEmptyStructureRecipientsAPI _checkForEmptyStructureRecipientsAPI =
-      CheckForEmptyStructureRecipientsAPI();
+  CheckForEmptyStructureRecipientsAPI();
   CheckForEmptyStructureRecipientsModel? checkForEmptyStructureRecipientsModel;
 
   IsAlreadyExportedAsTransferAPI _isAlreadyExportedAsTransferAPI =
-      IsAlreadyExportedAsTransferAPI();
+  IsAlreadyExportedAsTransferAPI();
   IsAlreadyExportedAsTransferModel? isAlreadyExportedAsTransferModel;
 
   GetUserRoutingAPI _getUserRoutingAPI = GetUserRoutingAPI();
@@ -178,15 +270,13 @@ updatecanOpenDocumentModel(CanOpenDocumentModel data){
   G2GInfoForExportModel? g2gInfoForExportModel;
 
   CanReceiveG2GDocumentAPI _canReceiveG2GDocumentAPI =
-      CanReceiveG2GDocumentAPI();
+  CanReceiveG2GDocumentAPI();
   ReceiveDocumentUsingG2GApi _receiveDocumentUsingG2GApi =
-      ReceiveDocumentUsingG2GApi();
+  ReceiveDocumentUsingG2GApi();
 
   Map<String, dynamic>? logindata;
   Map<GlobalKey, String> singpic = {};
   List<Widget> pdfAndSing = [
-    SfPdfViewer.network(
-        'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf')
   ];
 
   addWidgetToPdfAndSing(Widget pic) {
@@ -206,15 +296,15 @@ updatecanOpenDocumentModel(CanOpenDocumentModel data){
 
 //===============================================
   final GetDocumentAuditLogsApi _getDocumentAuditLogsApi =
-      GetDocumentAuditLogsApi();
+  GetDocumentAuditLogsApi();
   GetDocumentLogsModel? getDocumentLogsModel;
   final GetDocumentLinksApi _getDocumentLinksApi = GetDocumentLinksApi();
   GetDocumentLinksModel? getDocumentLinksModel;
   final GetDocumentReceiversApi _getDocumentReceiversApi =
-      GetDocumentReceiversApi();
+  GetDocumentReceiversApi();
   GetDocumentReceiversModel? getDocumentReceiversModel;
   final GetDocumentTransfersApi _getDocumentTransfersApi =
-      GetDocumentTransfersApi();
+  GetDocumentTransfersApi();
 
   GetDocumentTransfersModel? getDocumentTransfersModel;
 
@@ -224,7 +314,8 @@ updatecanOpenDocumentModel(CanOpenDocumentModel data){
 
   getDocumentAuditLogsdata({required String docId}) {
     _getDocumentAuditLogsApi.data =
-        "Token=${secureStorage.token()}&docId=$docId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+    "Token=${secureStorage.token()}&docId=$docId&language=${Get.locale
+        ?.languageCode == "en" ? "en" : "ar"}";
 
     _getDocumentAuditLogsApi.getData().then((value) {
       getDocumentLogsModel = value as GetDocumentLogsModel;
@@ -233,7 +324,11 @@ updatecanOpenDocumentModel(CanOpenDocumentModel data){
 
   getDocumentLinksdata({correspondenceId, transferId}) {
     _getDocumentLinksApi.data =
-        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
+    "Token=${secureStorage
+        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
+        .locale?.languageCode == "en"
+        ? "en"
+        : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
 
     _getDocumentLinksApi.getData().then((value) {
       getDocumentLinksModel = value as GetDocumentLinksModel;
@@ -242,7 +337,11 @@ updatecanOpenDocumentModel(CanOpenDocumentModel data){
 
   getDocumentReceiversdata({correspondenceId, transferId}) {
     _getDocumentReceiversApi.data =
-        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
+    "Token=${secureStorage
+        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
+        .locale?.languageCode == "en"
+        ? "en"
+        : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
 
     _getDocumentReceiversApi.getData().then((value) {
       getDocumentReceiversModel = value as GetDocumentReceiversModel;
@@ -251,7 +350,11 @@ updatecanOpenDocumentModel(CanOpenDocumentModel data){
 
   getDocumentTransfersdata({correspondenceId, transferId}) {
     _getDocumentTransfersApi.data =
-        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
+    "Token=${secureStorage
+        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
+        .locale?.languageCode == "en"
+        ? "en"
+        : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
 
     _getDocumentTransfersApi.getData().then((value) {
       getDocumentTransfersModel = value as GetDocumentTransfersModel;
@@ -329,14 +432,17 @@ updatecanOpenDocumentModel(CanOpenDocumentModel data){
 
   getFindRecipientData() {
     _findRecipient.data =
-        "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+    "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en"
+        ? "en"
+        : "ar"}";
     _findRecipient.getData().then((value) {
       findRecipientModel = value as FindRecipientModel;
 
       Get.find<InboxController>().setFindRecipientData(findRecipientModel!);
       listOfUser(0);
       print(
-          "tis is  findRecipientModel?.toJson()              =>  ${findRecipientModel?.toJson()}");
+          "tis is  findRecipientModel?.toJson()              =>  ${findRecipientModel
+              ?.toJson()}");
     });
   }
 
@@ -407,7 +513,7 @@ updatecanOpenDocumentModel(CanOpenDocumentModel data){
   @override
   void onReady() {
     super.onReady();
-    getAttachmentItemlocal( );
+    // getAttachmentItemlocal( );
     logindata = secureStorage.readSecureJsonData(AllStringConst.LogInData);
     if (logindata != null) {
       LoginModel data = LoginModel.fromJson(logindata!);
@@ -450,7 +556,6 @@ updatecanOpenDocumentModel(CanOpenDocumentModel data){
     print(" i get startonInitonInitonInitonInit ");
     genratG2GExportDto();
     g2GInfoForExport();
-
   }
 
   @override
@@ -483,7 +588,10 @@ updatecanOpenDocumentModel(CanOpenDocumentModel data){
     appDocDir = await getApplicationDocumentsDirectory();
     _directoryPath = appDocDir!.path +
         '/' +
-        DateTime.now().millisecondsSinceEpoch.toString() +
+        DateTime
+            .now()
+            .millisecondsSinceEpoch
+            .toString() +
         '.aac';
 
     await audioRecorder?.startRecorder(toFile: _directoryPath);
@@ -539,7 +647,10 @@ updatecanOpenDocumentModel(CanOpenDocumentModel data){
     appDocDir = await getApplicationDocumentsDirectory();
     _directoryPath = appDocDir!.path +
         '/' +
-        DateTime.now().millisecondsSinceEpoch.toString() +
+        DateTime
+            .now()
+            .millisecondsSinceEpoch
+            .toString() +
         '.mp4';
     recording = true;
     update();
@@ -556,10 +667,9 @@ updatecanOpenDocumentModel(CanOpenDocumentModel data){
     transfarForMany[id]?.voiceNote = audioFileBes64;
   }
 
-  SetMultipleReplyWithVoiceNoteRequestModel(
-      {required int id,
-      required String transferId,
-      required String correspondencesId}) {
+  SetMultipleReplyWithVoiceNoteRequestModel({required int id,
+    required String transferId,
+    required String correspondencesId}) {
     ReplyWithVoiceNoteRequestModel model = ReplyWithVoiceNoteRequestModel(
         userId: id.toString(),
         transferId: transferId,
@@ -579,19 +689,23 @@ updatecanOpenDocumentModel(CanOpenDocumentModel data){
     } else {}
   }
 
-  getIsAlreadyExportedAsPaperwork(
-      {required correspondenceId,
-      required transferId,
-      required exportAction,
-      required context}) async {
+  getIsAlreadyExportedAsPaperwork({required correspondenceId,
+    required transferId,
+    required exportAction,
+    required context}) async {
     print("in  getIsAlreadyExportedAsPaperwork");
     _alreadyExportedAsPaperworkAPI.data =
-        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
+    "Token=${secureStorage
+        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
+        .locale?.languageCode == "en"
+        ? "en"
+        : "ar"}&exportAction=$exportAction";
     _alreadyExportedAsPaperworkAPI.getData().then((value) {
       isAlreadyExportedAsPaperworkModel =
-          value as IsAlreadyExportedAsPaperworkModel;
+      value as IsAlreadyExportedAsPaperworkModel;
       print(
-          "canExportAsPaperworkModel =>  ${isAlreadyExportedAsPaperworkModel?.isConfirm}");
+          "canExportAsPaperworkModel =>  ${isAlreadyExportedAsPaperworkModel
+              ?.isConfirm}");
 
       if (isAlreadyExportedAsPaperworkModel?.isConfirm ?? false) {
         showDilog(
@@ -609,28 +723,35 @@ updatecanOpenDocumentModel(CanOpenDocumentModel data){
               getSwitchMethod(exportAction: exportAction,
                   transferId: transferId,
                   correspondenceId: correspondenceId,
-                  context: context,name: isAlreadyExportedAsPaperworkModel!.yesMethod! );  });
+                  context: context,
+                  name: isAlreadyExportedAsPaperworkModel!.yesMethod!);
+            });
       } else {
         getSwitchMethod(exportAction: exportAction,
             transferId: transferId,
             correspondenceId: correspondenceId,
-            context: context,name: isAlreadyExportedAsPaperworkModel!.request! );
+            context: context,
+            name: isAlreadyExportedAsPaperworkModel!.request!);
       }
       // print("_alreadyExportedAsPaperworkAPI =>  ${isAlreadyExportedAsPaperworkModel!.toJson()}");
     });
   }
 
-  getCanExportAsPaperwork(
-      {required correspondenceId,
-      required transferId,
-      required exportAction,
-      required context}) {
+  getCanExportAsPaperwork({required correspondenceId,
+    required transferId,
+    required exportAction,
+    required context}) {
     _canExportAsPaperworkAPI.data =
-        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
+    "Token=${secureStorage
+        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
+        .locale?.languageCode == "en"
+        ? "en"
+        : "ar"}&exportAction=$exportAction";
     _canExportAsPaperworkAPI.getData().then((value) {
       canExportAsPaperworkModel = value as CanExportAsPaperworkModel;
       print(
-          "canExportAsPaperworkModel =>  ${canExportAsPaperworkModel?.isConfirm}");
+          "canExportAsPaperworkModel =>  ${canExportAsPaperworkModel
+              ?.isConfirm}");
       // if(canExportAsPaperworkModel?.isConfirm??false){
       //   Get.snackbar("", canExportAsPaperworkModel!.message!);
       // }
@@ -657,7 +778,11 @@ updatecanOpenDocumentModel(CanOpenDocumentModel data){
   autoSendToRecepientsAndCC(
       {required correspondenceId, required transferId, required exportAction}) {
     _autoSendToRecepientsAndCCAPI.data =
-        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
+    "Token=${secureStorage
+        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
+        .locale?.languageCode == "en"
+        ? "en"
+        : "ar"}&exportAction=$exportAction";
     _autoSendToRecepientsAndCCAPI.getData().then((value) {
       autoSendToRecepientsAndCCModel = value as AutoSendToRecepientsAndCCModel;
 
@@ -665,39 +790,50 @@ updatecanOpenDocumentModel(CanOpenDocumentModel data){
         Get.snackbar("", autoSendToRecepientsAndCCModel!.message!);
       }
       print(
-          "_alreadyExportedAsPaperworkAPI =>  ${autoSendToRecepientsAndCCModel!.toJson()}");
+          "_alreadyExportedAsPaperworkAPI =>  ${autoSendToRecepientsAndCCModel!
+              .toJson()}");
     });
   }
 
   checkForEmptyStructureRecipients(
       {required correspondenceId, required transferId, required exportAction}) {
     _checkForEmptyStructureRecipientsAPI.data =
-        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
+    "Token=${secureStorage
+        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
+        .locale?.languageCode == "en"
+        ? "en"
+        : "ar"}&exportAction=$exportAction";
     _checkForEmptyStructureRecipientsAPI.getData().then((value) {
       checkForEmptyStructureRecipientsModel =
-          value as CheckForEmptyStructureRecipientsModel;
+      value as CheckForEmptyStructureRecipientsModel;
 
       if (checkForEmptyStructureRecipientsModel?.isConfirm ?? false) {
         Get.snackbar("", checkForEmptyStructureRecipientsModel!.message!);
       }
       print(
-          "_alreadyExportedAsPaperworkAPI =>  ${checkForEmptyStructureRecipientsModel!.toJson()}");
+          "_alreadyExportedAsPaperworkAPI =>  ${checkForEmptyStructureRecipientsModel!
+              .toJson()}");
     });
   }
 
   isAlreadyExportedAsTransfer(
       {required correspondenceId, required transferId, required exportAction}) {
     _isAlreadyExportedAsTransferAPI.data =
-        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
+    "Token=${secureStorage
+        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
+        .locale?.languageCode == "en"
+        ? "en"
+        : "ar"}&exportAction=$exportAction";
     _isAlreadyExportedAsTransferAPI.getData().then((value) {
       isAlreadyExportedAsTransferModel =
-          value as IsAlreadyExportedAsTransferModel;
+      value as IsAlreadyExportedAsTransferModel;
 
       if (isAlreadyExportedAsTransferModel?.isConfirm ?? false) {
         Get.snackbar("", isAlreadyExportedAsTransferModel!.message!);
       }
       print(
-          "_alreadyExportedAsPaperworkAPI =>  ${isAlreadyExportedAsTransferModel!.toJson()}");
+          "_alreadyExportedAsPaperworkAPI =>  ${isAlreadyExportedAsTransferModel!
+              .toJson()}");
     });
   }
 
@@ -714,28 +850,33 @@ updatecanOpenDocumentModel(CanOpenDocumentModel data){
   }) {
     print("going to get");
     _g2gInfoForExportAPI.data =
-        "token=${secureStorage.token()}&documentId=$documentId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+    "token=${secureStorage.token()}&documentId=$documentId&language=${Get.locale
+        ?.languageCode == "en" ? "en" : "ar"}";
     _g2gInfoForExportAPI.getData().then((value) {
       g2gInfoForExportModel = value as G2GInfoForExportModel;
-      print( "g2gInfoForExportModelg2gInfoForExportModel =>  ${g2gInfoForExportModel?.toJson()}");
-    }).catchError((e){print("err =>  $e");});
-  }
-  g2GInfoForExport( )async{
-
-
-    final  jsondata=await rootBundel.rootBundle.loadString("assets/json/g2gInfoforexport.json");
-    g2gInfoForExportModel=   G2GInfoForExportModel.fromJson(json.decode(jsondata));
-
-    print("g2gInfoForExportModel?.toJson()=>  ${g2gInfoForExportModel?.toJson()}");
-
+      print(
+          "g2gInfoForExportModelg2gInfoForExportModel =>  ${g2gInfoForExportModel
+              ?.toJson()}");
+    }).catchError((e) {
+      print("err =>  $e");
+    });
   }
 
+  g2GInfoForExport() async {
+    final jsondata = await rootBundel.rootBundle.loadString(
+        "assets/json/g2gInfoforexport.json");
+    g2gInfoForExportModel =
+        G2GInfoForExportModel.fromJson(json.decode(jsondata));
+
+    print("g2gInfoForExportModel?.toJson()=>  ${g2gInfoForExportModel
+        ?.toJson()}");
+  }
 
 
   //-----------------------------------------------------------------------
   genratG2GExportDto() {
     G2GRecipient g2gRecipient =
-        G2GRecipient(childId: 5, isCC: false, parentId: 10);
+    G2GRecipient(childId: 5, isCC: false, parentId: 10);
     G2GExportDto g = G2GExportDto(
         token: secureStorage.token(),
         language: Get.locale?.languageCode == "en" ? "en" : "ar",
@@ -772,14 +913,13 @@ updatecanOpenDocumentModel(CanOpenDocumentModel data){
         .then((value) {});
   }
 
-  getSwitchMethod(
-      {required String name,
-      required correspondenceId,
-      required exportAction,
-      required transferId,required context}) {
+  getSwitchMethod({required String name,
+    required correspondenceId,
+    required exportAction,
+    required transferId, required context}) {
     switch (name) {
       case "CanExportAsPaperwork":
-        // do something
+      // do something
         getCanExportAsPaperwork(
             exportAction: exportAction,
             transferId: transferId,
@@ -787,18 +927,22 @@ updatecanOpenDocumentModel(CanOpenDocumentModel data){
             context: context);
         break;
       case "OpenTransferWindow":
-        // do something else
+      // do something else
         break;
       case "IsAlreadyExportedAsTransfer":
-        isAlreadyExportedAsTransfer(correspondenceId:correspondenceId ,transferId:transferId ,exportAction:exportAction );
+        isAlreadyExportedAsTransfer(correspondenceId: correspondenceId,
+            transferId: transferId,
+            exportAction: exportAction);
         // do something else
         break;
       case "CheckForEmptyStructureRecipients":
-        // do something else
-        checkForEmptyStructureRecipients(exportAction: exportAction,transferId: transferId,correspondenceId: correspondenceId);
+      // do something else
+        checkForEmptyStructureRecipients(exportAction: exportAction,
+            transferId: transferId,
+            correspondenceId: correspondenceId);
         break;
       case "ConfirmAgain":
-        // do something else
+      // do something else
         break;
       case "AutoSendToRecepientsAndCC":
         autoSendToRecepientsAndCC(
@@ -814,23 +958,22 @@ updatecanOpenDocumentModel(CanOpenDocumentModel data){
         // do something else
         break;
       case "NOTHING":
-        // do something else
+      // do something else
         break;
     }
   }
 }
 
-showDilog(
-    {required context,
-    required String massge,
-    required VoidCallback yes,
-    required VoidCallback no}) {
+showDilog({required context,
+  required String massge,
+  required VoidCallback yes,
+  required VoidCallback no}) {
   return showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Row(
-              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Spacer(),
                 InkWell(
@@ -846,7 +989,7 @@ showDilog(
               ]),
           content: SingleChildScrollView(
             child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(massge),
             ]),
           ),
@@ -889,7 +1032,6 @@ extension UtilListExtension on List{
 
       return result;
     } catch (e, s) {
-
       return this;
     }
   }

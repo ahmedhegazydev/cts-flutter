@@ -37,6 +37,11 @@ class SecureStorage  {
     var readData =   box.read( key);
     return readData;
   }
+  int? readIntSecureData(String key)   {
+
+    var readData =   box.read( key);
+    return readData;
+  }
   Map<String,dynamic>? readSecureJsonData(String key)   {
 
     var readData =   box.read( key);

@@ -19,9 +19,11 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import '../controllers/document_controller.dart';
 import '../controllers/main_controller.dart';
 import '../services/json_model/inopendocModel/g2g/g2g_Info_for_export_model.dart';
+import '../services/json_model/inopendocModel/save_document_annotation_model.dart';
 import '../services/json_model/login_model.dart';
 import '../services/models/signature_info.dart';
 import '../utility/all_const.dart';
+import '../utility/all_string_const.dart';
 import '../utility/utilitie.dart';
 import '../widgets/Custom_button_with_image.dart';
 import '../widgets/custom_button_with_icon.dart';
@@ -443,7 +445,9 @@ class DocumentPage extends GetWidget<DocumentController> {
                                       ),
                                       actions: <Widget>[
                                         FlatButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Get.back();
+                                          },
                                           child: Text("Ok"),
                                         ),
                                       ],
@@ -467,8 +471,11 @@ class DocumentPage extends GetWidget<DocumentController> {
                             height: size.height * .05,
                           ),
                           CustomSideButtonMenu(
-                            onClick: () {
-                              controller.singpic.forEach((key, value) {
+                            onClick: () async {
+                              List<DocumentAnnotations>listofdocumentAnnotations=[];
+                              RenderBox? pdfViewerRenderBox = controller.pdfViewerkey.currentContext
+                                  ?.findRenderObject() as RenderBox?;
+                               controller.singpic.forEach((key, value) async {
                                 print("image 64  => $value");
                                 RenderBox? box = key.currentContext
                                     ?.findRenderObject() as RenderBox?;
@@ -479,8 +486,65 @@ class DocumentPage extends GetWidget<DocumentController> {
                                 print(box?.size.height);
                                 print(pos?.dy);
                                 print(pos?.dx);
+                                DocumentAnnotations d = DocumentAnnotations(
+                                    FontSize
+                                    :12,
+                                    ForceViewers
+                                    :"",
+                                    Height
+                                    :box?.size.height,
+                                    ImageByte
+                                    :value,
+                                    ImageName
+                                    :"",
+                                    Text
+                                    :"",
+                                    ParentWidth
+                                    :pdfViewerRenderBox?.size.width,
+                                    ParentHeight
+                                    :pdfViewerRenderBox?.size.height,
+                                    Page
+                                    :controller.pdfViewerController.pageNumber,
+                                    IsExclusive
+                                    :false,
+                                    Type
+                                    :3.toString(),
+                                    Viewers
+                                    :  "Everyone",
+                                    Width
+                                    :box?.size.width,
+                                    X
+                                    :pos?.dx,
+                                    Y
+                                    :pos?.dy);
+                             listofdocumentAnnotations.add(d );
                               });
-                            },
+
+
+                               print("listofdocumentAnnotations=>${listofdocumentAnnotations.length}");
+                              print("listofdocumentAnnotations=>${listofdocumentAnnotations}");
+                              await controller.getSaveDocAnnotationsData(
+                                  attachmentId
+                                      : controller
+                                      .isOriginalMailAttachmentsList!
+                                      .attachmentId,
+                                  correspondenceId
+                                      : controller.canOpenDocumentModel!
+                                      .correspondence!.correspondenceId,
+                                  delegateGctId
+                                      : "0",
+                                  documentAnnotationsString
+                                      : listofdocumentAnnotations ,
+                                  isOriginalMail
+                                      : controller
+                                      .isOriginalMailAttachmentsList!
+                                      .isOriginalMail,
+                                  transferId
+                                      : controller.canOpenDocumentModel!
+                                      .correspondence!.transferId,
+                                  userId
+                                      : controller.secureStorage
+                                      .readIntSecureData(AllStringConst.UserId).toString());  },
                             label: "save".tr,
                             image: 'assets/images/save.png',
                           )
@@ -1271,7 +1335,7 @@ class DocumentPage extends GetWidget<DocumentController> {
         context: context,
         builder: (BuildContext context) {
           print(
-              " Get.find<DocumentController>() .canOpenDocumentModel?.attachments?.attachments?.length=>${ Get
+              " Get.find<DocumentController>() .canOpenDocumentModel?.attachments?.attachments?.length=>${Get
                   .find<DocumentController>()
                   .canOpenDocumentModel
                   ?.attachments
@@ -1289,30 +1353,62 @@ class DocumentPage extends GetWidget<DocumentController> {
                   scrollDirection: Axis.horizontal,
                   itemCount: Get
                       .find<DocumentController>()
-                      .folder
+                      .folder2
                       .length,
                   itemBuilder: (context, pos) {
-                    return Container(height: 100,
-                      width: 100,
-                      child: ListView.builder(itemCount: Get
-                          .find<DocumentController>()
-                          .folder.length, itemBuilder: (context, pos) {
+                    String key = Get
+                        .find<DocumentController>()
+                        .folder2
+                        .keys
+                        .elementAt(pos);
 
-                        print(Get
-                            .find<DocumentController>()
-                            .canOpenDocumentModel!.attachments!.attachments!.groupBy(Get
-                            .find<DocumentController>()
-                            .folder[pos]!));
-                        return Container(
-                          height: 100, width: 200, child: ListView.builder(
-                            itemCount:Get
-                                .find<DocumentController>()
-                              .canOpenDocumentModel!.attachments!.attachments!.groupBy(Get
-                                .find<DocumentController>()
-                                .folder[pos]!), itemBuilder: (context, indx) {
-                              return Column(children: [],);
-                        }),);
-                      }),);
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width * .3,
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                  width: double.infinity, color: Theme
+                                  .of(context)
+                                  .colorScheme
+                                  .primary, child: Text(key)),
+                            ),
+                            Expanded(
+                              child: ListView.builder(
+                                  itemCount:
+                                  Get
+                                      .find<DocumentController>()
+                                      .folder2[key]!
+                                      .length,
+                                  itemBuilder: (context, indx) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: GestureDetector(onTap: () {
+                                        Get.find<DocumentController>()
+                                            .getAttachmentItemlocal(
+                                            context: context);
+                                        //  _popShowAttachments(context);
+                                      },
+                                        child: Text(Get
+                                            .find<
+                                            DocumentController>()
+                                            .folder2[key]![indx]
+                                            .fileName!),
+                                      ),
+                                    );
+                                  }),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
                     // return GestureDetector(onTap: (){
                     //   _popShowAttachments(context);
                     // },
@@ -1427,8 +1523,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                     .of(context)
                     .size
                     .width * .7,
-                child:
-                SfPdfViewer.network(
+                child: SfPdfViewer.network(
                     'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf')),
             actions: <Widget>[
               TextButton(
@@ -1578,7 +1673,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                           return // Te(v.originalName!);
 
                                             ListTile(
-                                              title: FilterText(v!.parentName!),
+                                              title: FilterText(v.parentName!),
                                             );
                                         },
                                         onSuggestionSelected: (suggestion) {
@@ -1662,12 +1757,12 @@ class DocumentPage extends GetWidget<DocumentController> {
                                       decoration: BoxDecoration(
                                           border: Border.all(width: 1)),
                                       child: ListView.builder(
-                                          itemCount:
-                                          controller.toDepartmentList.length,
+                                          itemCount: controller
+                                              .toDepartmentList.length,
                                           itemBuilder: (context, pos) {
-                                            return Text(
-                                                controller.toDepartmentList[pos]
-                                                    .childName!);
+                                            return Text(controller
+                                                .toDepartmentList[pos]
+                                                .childName!);
                                           }),
                                     )
                                   ],
@@ -1756,7 +1851,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                           return // Te(v.originalName!);
 
                                             ListTile(
-                                              title: FilterText(v!.parentName!),
+                                              title: FilterText(v.parentName!),
                                             );
                                         },
                                         onSuggestionSelected: (suggestion) {
@@ -1843,8 +1938,8 @@ class DocumentPage extends GetWidget<DocumentController> {
                                       decoration: BoxDecoration(
                                           border: Border.all(width: 1)),
                                       child: ListView.builder(
-                                          itemCount:
-                                          controller.cctoDepartmentList.length,
+                                          itemCount: controller
+                                              .cctoDepartmentList.length,
                                           itemBuilder: (context, pos) {
                                             return Text(controller
                                                 .cctoDepartmentList[pos]

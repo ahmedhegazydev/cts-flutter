@@ -473,7 +473,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                           CustomSideButtonMenu(
                             onClick: () async {
                               List<DocumentAnnotations>listofdocumentAnnotations=[];
-                              RenderBox? pdfViewerRenderBox = controller.pdfViewerkey.currentContext
+                              RenderBox? pdfViewerRenderBox = controller.pdfViewerkey!.currentContext
                                   ?.findRenderObject() as RenderBox?;
                                controller.singpic.forEach((key, value) async {
                                 print("image 64  => $value");
@@ -486,43 +486,46 @@ class DocumentPage extends GetWidget<DocumentController> {
                                 print(box?.size.height);
                                 print(pos?.dy);
                                 print(pos?.dx);
-                                DocumentAnnotations d = DocumentAnnotations(
-                                    FontSize
-                                    :12,
-                                    ForceViewers
-                                    :"",
-                                    Height
-                                    :box?.size.height,
-                                    ImageByte
-                                    :value,
-                                    ImageName
-                                    :"",
-                                    Text
-                                    :"",
-                                    ParentWidth
-                                    :pdfViewerRenderBox?.size.width,
-                                    ParentHeight
-                                    :pdfViewerRenderBox?.size.height,
-                                    Page
-                                    :controller.pdfViewerController.pageNumber,
-                                    IsExclusive
-                                    :false,
-                                    Type
-                                    :3.toString(),
-                                    Viewers
-                                    :  "Everyone",
-                                    Width
-                                    :box?.size.width,
-                                    X
-                                    :pos?.dx,
-                                    Y
-                                    :pos?.dy);
+                                DocumentAnnotations d = DocumentAnnotations();
+                                 d.  FontSize
+                                 =12;
+                                 d.  ForceViewers
+                               ="";
+                                 d.  Height
+                          =box?.size.height;
+                                 d.  ImageByte
+                                =value;
+                                 d.  ImageName
+                                ="";
+                                 d.  Text
+                                 ="";
+                                 d.  ParentWidth
+                                =pdfViewerRenderBox?.size.width;
+                                 d.  ParentHeight
+                              =pdfViewerRenderBox?.size.height;
+                                 d.  Page
+                                =controller.pdfViewerController.pageNumber;
+                                 d.  IsExclusive
+                               =false.toString();
+                                 d.  Type
+                                =3.toString();
+                                 d.  Viewers
+                                =  "Everyone";
+                                 d.  Width
+                                 =box?.size.width;
+                                 d.  X
+                                  =pos?.dx;
+                                 d.  Y
+                                    =pos?.dy ;
                              listofdocumentAnnotations.add(d );
                               });
-
+                                             print("listofdocumentAnnotations.length=> ${listofdocumentAnnotations.length}");
 
                                print("listofdocumentAnnotations=>${listofdocumentAnnotations.length}");
                               print("listofdocumentAnnotations=>${listofdocumentAnnotations}");
+
+
+
                               await controller.getSaveDocAnnotationsData(
                                   attachmentId
                                       : controller
@@ -534,7 +537,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                   delegateGctId
                                       : "0",
                                   documentAnnotationsString
-                                      : listofdocumentAnnotations ,
+                                      :  listofdocumentAnnotations   ,
                                   isOriginalMail
                                       : controller
                                       .isOriginalMailAttachmentsList!

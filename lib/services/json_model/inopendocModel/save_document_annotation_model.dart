@@ -8,64 +8,54 @@ class SaveDocumentAnnotationModel extends AbstractJsonResource{
   String? CorrespondenceId;
   String? TransferId;
   String? AttachmentId;
-  String? IsOriginalMail;
+  bool? IsOriginalMail;
   String? DelegateGctId;
- //String? DocumentAnnotationsString;
 
   List<DocumentAnnotations>? documentAnnotationsString;
 
   SaveDocumentAnnotationModel(
-      {this.errorMessage,this.documentAnnotationsString,
-        this.status,
-        this.Token,
-        this.UserId,
-        this.CorrespondenceId,
-        this.TransferId,
-        this.AttachmentId,
-        this.IsOriginalMail,
-        this.DelegateGctId,
-     //   this.DocumentAnnotationsString,
-      });
-
-  SaveDocumentAnnotationModel.fromJson(Map<String, dynamic> json) {
-    errorMessage = json['ErrorMessage'];
-    status = json['Status'];
-    if (json['DocumentAnnotationsString'] != null) {
-      documentAnnotationsString = <DocumentAnnotations>[];
-      json['DocumentAnnotationsString'].forEach((v) {
-        documentAnnotationsString!.add(new DocumentAnnotations.fromJson(v));
-      });
-    }
-
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ErrorMessage'] = this.errorMessage;
-    data['Status'] = this.status;
-    if (this.documentAnnotationsString != null) {
-      data['DocumentReceivers'] =
-          this.documentAnnotationsString!.map((v) => v.toJson()).toList();
-    }
-    // if (this.documentTransfers != null) {
-    //   data['DocumentTransfers'] =
-    //       this.documentTransfers!.map((v) => v.toJson()).toList();
-    // }
-    return data;
-  }
+      {
+         this.errorMessage,
+       this.status,
+   required   this.Token,
+   required   this.UserId,
+   required   this.CorrespondenceId,
+   required   this.TransferId,
+   required   this.AttachmentId,
+   required   this.IsOriginalMail,
+   required   this.DelegateGctId,
+   required   this.documentAnnotationsString});
 
   Map<String, dynamic> toMap() {
-    Map <String,dynamic>data={};
-    data[ 'Token']= this.Token;
-    data['UserId'] = this.UserId;
-    // data['Language'] = this.Language;
-    data['CorrespondenceId'] = this.CorrespondenceId;
-    data['TransferId'] = this.TransferId;
-    data['AttachmentId'] = this.AttachmentId;
-    data['IsOriginalMail'] = this.IsOriginalMail;
-     data['DocumentAnnotationsString'] = this.documentAnnotationsString;
-    data['DelegateGctId'] = this.DelegateGctId;
-    return data;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+
+   data['errorMessage']   = this.errorMessage;
+   data['status']   = this.status;
+   data[ 'Token']  = this.Token;
+   data[ 'UserId']  = this.UserId;
+   data['CorrespondenceId']   = this.CorrespondenceId;
+   data[ 'TransferId']  = this.TransferId;
+   data[ 'AttachmentId']  = this.AttachmentId;
+   data['IsOriginalMail']   = this.IsOriginalMail;
+   data[ 'DelegateGctId']  = this.DelegateGctId;
+   data[ 'documentAnnotationsString']  = this.documentAnnotationsString;
+   return data;
+  }
+
+  factory SaveDocumentAnnotationModel.fromMap(Map<String, dynamic> map) {
+    return SaveDocumentAnnotationModel(
+      errorMessage: map['errorMessage'] as String,
+      status: map['status'] as int,
+      Token: map['Token'] as String,
+      UserId: map['UserId'] as String,
+      CorrespondenceId: map['CorrespondenceId'] as String,
+      TransferId: map['TransferId'] as String,
+      AttachmentId: map['AttachmentId'] as String,
+      IsOriginalMail: map['IsOriginalMail'] as bool,
+      DelegateGctId: map['DelegateGctId'] as String,
+      documentAnnotationsString:
+          map['documentAnnotationsString'] as List<DocumentAnnotations>,
+    );
   }
 }
 
@@ -80,7 +70,7 @@ class DocumentAnnotations {
   String? Type;
   String? ForceViewers;
   String? ImageByte;
-  bool? IsExclusive;
+  String? IsExclusive;
   int? FontSize;
   String? ImageName;
   String? Text;
@@ -124,22 +114,22 @@ class DocumentAnnotations {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    Page = data['Page'];
-    X = data['X'];
-    Y = data['Y'];
-    Height = data['Height'];
-    Width = data['Width'];
-    ParentHeight = data['ParentHeight'];
-    ParentWidth = data['ParentWidth'];
-    Type = data['Type'];
-    ForceViewers = data['ForceViewers'];
-    ImageByte = data['ImageByte'];
-    IsExclusive = data['IsExclusive'];
-    FontSize = data['FontSize'];
-    ImageName = data['ImageName'];
-    Text = data['Text'];
-    Viewers = data['Viewers'];
+    final Map<String, dynamic> data = {};
+    data['Page']=Page   ;
+    data['X']=X ;
+    data['Y']=Y  ;
+    data['Height']= Height  ;
+    data['Width']= Width  ;
+    data['ParentHeight']=ParentHeight ;
+    data['ParentWidth']=ParentWidth ;
+    data['Type']=Type  ;
+    data['ForceViewers']=ForceViewers  ;
+    data['ImageByte']=ImageByte  ;
+    data['IsExclusive']=IsExclusive ;
+    data['FontSize']=FontSize ;
+    data['ImageName'] = ImageName ;
+    data['Text']=Text ;
+    data['Viewers']=Viewers  ;
     return data;
   }
 }

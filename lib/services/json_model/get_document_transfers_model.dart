@@ -46,19 +46,19 @@ class GetDocumentTransfersModel extends AbstractJsonResource{
 }
 
 class DocumentReceivers {
-  Null? baseDocument;
-  Null? closureDate;
+  String? baseDocument;
+  String? closureDate;
   int? inboxId;
   bool? isLocked;
   bool? isRead;
   bool? isTransferClosed;
-  Null? parentTransferDate;
-  Null? parentTransferId;
+  String? parentTransferDate;
+  String? parentTransferId;
   Purpose? purpose;
-  Null? readDate;
+  String? readDate;
   String? transferDate;
   String? transferDescription;
-  Null? transferDueDate;
+  String? transferDueDate;
   int? transferId;
   TransferReceivedByStructure? transferReceivedByStructure;
   TransferReceivedByStructure? transferReceivedByUser;
@@ -66,11 +66,11 @@ class DocumentReceivers {
   TransferSentByUser? transferSentByUser;
   int? transferStatusId;
   bool? transferredToContact;
-  Null? strClosureDate;
-  Null? strParentTransferDate;
-  Null? strReadDate;
+  String? strClosureDate;
+  String? strParentTransferDate;
+  String? strReadDate;
   String? strTransferDate;
-  Null? strTransferDueDate;
+  String? strTransferDueDate;
 
   DocumentReceivers(
       {this.baseDocument,

@@ -138,7 +138,7 @@ class CustomListView extends StatelessWidget {
                                   //     transferId:
                                   //         correspondences[pos].transferId);
 
-
+                                  Get.find<DocumentController>().pdfViewerkey=null;
                                   Get.find<InboxController>().openfilee(docId: correspondences[pos].purposeId, correspondenceId: correspondences[pos]
                                       .correspondenceId, transferId:  correspondences[pos].transferId);
 

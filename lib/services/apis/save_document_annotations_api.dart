@@ -14,7 +14,7 @@ class SaveDocumentAnnotationsAPI extends ApiManager{
 
   @override
   AbstractJsonResource fromJson(data) {
-    return SaveDocumentAnnotationModel.fromJson(data);
+    return SaveDocumentAnnotationModel.fromMap(data);
   }
   
 }

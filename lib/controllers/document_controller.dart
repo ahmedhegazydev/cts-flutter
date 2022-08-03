@@ -86,7 +86,7 @@ class DocumentController extends GetxController {
 
   List<DepartmentList>cctoDepartmentList = [];
   PdfViewerController pdfViewerController=PdfViewerController();
-  final pdfViewerkey = GlobalKey();
+  GlobalKey? pdfViewerkey ;
   addtoDepartmentList({required DepartmentList department}) {
     toDepartmentList.add(department);
     update();
@@ -177,20 +177,25 @@ class DocumentController extends GetxController {
     transferId,
     attachmentId,
     isOriginalMail, //(string) input should “true” or “false”
-    documentAnnotationsString, //string converted from array contains the details of annotations)
+   required List<DocumentAnnotations>  documentAnnotationsString, //string converted from array contains the details of annotations)
     delegateGctId //string) input “0”
 
   }) async{
+
     postSaveDocumentAnnotationsModel= SaveDocumentAnnotationModel(
         AttachmentId:attachmentId.toString(), CorrespondenceId:correspondenceId, DelegateGctId:delegateGctId,
-     documentAnnotationsString:documentAnnotationsString,IsOriginalMail: isOriginalMail.toString(),Token: secureStorage.token(),UserId:userId ,TransferId:transferId );
+    documentAnnotationsString: documentAnnotationsString,IsOriginalMail: isOriginalMail ,Token: secureStorage.token(),UserId:userId ,TransferId:transferId );
   //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
-  await  _saveDocumentAnnotationsApi
+
+    print("postSaveDocumentAnnotationsModel?.toMap() =>${jsonEncode(postSaveDocumentAnnotationsModel?.toMap())}");
+
+
+    await  _saveDocumentAnnotationsApi
         .post(postSaveDocumentAnnotationsModel?.toMap())
         .then((value) {
           print("value =>   ${value}");
       postSaveDocumentAnnotationsModel = value as SaveDocumentAnnotationModel;
-          print("postSaveDocumentAnnotationsModel =>   ${postSaveDocumentAnnotationsModel?.toJson()}");
+          print("postSaveDocumentAnnotationsModel =>   ${postSaveDocumentAnnotationsModel?.toMap()}");
     });
   }
 
@@ -200,6 +205,8 @@ class DocumentController extends GetxController {
 
   //تحديث كان ابن فيل وجلب جميع البيانات الخاصه بلملف
   updatecanOpenDocumentModel(CanOpenDocumentModel data) {
+ pdfViewerkey   = GlobalKey();
+ pdfAndSing.clear();
     pdfAndSing.add(SfPdfViewer.network(
         'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf'
       // oragnalFileDoc??""

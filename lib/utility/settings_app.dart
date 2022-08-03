@@ -55,5 +55,9 @@ class SettingsApp {
   static const String PostReturnDocumentUsingG2GUrl =baseUrl+"ReturnDocumentUsingG2G";
 
 //Before can open document.
+  static const String PostUpdateSignatureUrl =baseUrl+"UpdateSignature";
+
+
+
 
 }

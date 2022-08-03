@@ -187,7 +187,7 @@ class DocumentController extends GetxController {
     documentAnnotationsString: documentAnnotationsString,IsOriginalMail: isOriginalMail ,Token: secureStorage.token(),UserId:userId ,TransferId:transferId );
   //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
 
-    print("postSaveDocumentAnnotationsModel?.toMap() =>${jsonEncode(postSaveDocumentAnnotationsModel?.toMap())}");
+ //   print("postSaveDocumentAnnotationsModel?.toMap() =>${jsonEncode(postSaveDocumentAnnotationsModel?.toMap())}");
 
 
     await  _saveDocumentAnnotationsApi

@@ -18,6 +18,7 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../controllers/document_controller.dart';
 import '../controllers/main_controller.dart';
+import '../controllers/web_view_controller.dart';
 import '../services/json_model/inopendocModel/g2g/g2g_Info_for_export_model.dart';
 import '../services/json_model/inopendocModel/save_document_annotation_model.dart';
 import '../services/json_model/login_model.dart';
@@ -78,6 +79,25 @@ class DocumentPage extends GetWidget<DocumentController> {
               const SizedBox(
                 width: 4,
               ),
+              // Container(width: size.width*.5,height: 50,
+              //   child: ListView.builder(shrinkWrap: true,   scrollDirection: Axis.horizontal,
+              //       itemCount: controller.canOpenDocumentModel?.correspondence?.controlList?.toolbarItems?.length,
+              //       itemBuilder: (context,pos){
+              //
+              //
+              //     return controller.canOpenDocumentModel!.correspondence!.controlList!.toolbarItems![pos].display!?
+              //
+              //
+              //
+              //       CustomButtonWithImage(
+              //               // onClick: () {},
+              //               image: 'assets/images/refer.png',
+              //               label:controller.canOpenDocumentModel!.correspondence!.controlList!.toolbarItems![pos].name! ,
+              //             ):SizedBox();
+              //
+              //
+              //       }),
+              // ),
               if (controller
                   .canOpenDocumentModel?.correspondence?.hasAttachments ??
                   true)
@@ -88,32 +108,33 @@ class DocumentPage extends GetWidget<DocumentController> {
                   child: CustomButtonWithImage(
                     // onClick: () {},
                     image: 'assets/images/refer.png',
-                    label: "hasAttachments".tr,
+                    label: "Attachments".tr,
                   ),
                 ),
+              // if (controller
+              //     .canOpenDocumentModel?.correspondence?.hasSummaries ??
+              //     true)
+              //   InkWell(
+              //     onTap: () {
+              //       _popUpExportG2GDocument(context);
+              //     },
+              //     child: CustomButtonWithImage(
+              //       //onClick: () {},
+              //       image: 'assets/images/refer.png',
+              //       label: "hasSummaries".tr,
+              //     ),
+              //   ),
               InkWell(
                 onTap: () {
                   controller.filePickerR();
                 },
                 child: CustomButtonWithImage(
                   //onClick: () {},
-                  image: 'assets/images/refer.png',
+                  image: 'assets/images/attachment.png',
                   label: "Add Attachments".tr,
                 ),
               ),
-              if (controller
-                  .canOpenDocumentModel?.correspondence?.hasSummaries ??
-                  true)
-                InkWell(
-                  onTap: () {
-                    _popUpExportG2GDocument(context);
-                  },
-                  child: CustomButtonWithImage(
-                    //onClick: () {},
-                    image: 'assets/images/refer.png',
-                    label: "hasSummaries".tr,
-                  ),
-                ),
+
               InkWell(
                 onTap: () {
                   _popUpMenu(context);
@@ -190,10 +211,15 @@ class DocumentPage extends GetWidget<DocumentController> {
                 width: 1,
                 color: Colors.grey[800],
               ),
-              CustomButtonWithImage(
-                // onClick: () {},
-                image: 'assets/images/track.png',
-                label: "tracking".tr,
+              GestureDetector(onTap: (){
+                Get.find<WebViewPageController>().url=controller.canOpenDocumentModel?.correspondence!.visualTrackingUrl!;
+                Get.toNamed( "WebViewPage",);
+              },
+                child: CustomButtonWithImage(
+                  // onClick: () {},
+                  image: 'assets/images/track.png',
+                  label: "tracking".tr,
+                ),
               ),
               Container(
                 height: 30,
@@ -472,10 +498,13 @@ class DocumentPage extends GetWidget<DocumentController> {
                           ),
                           CustomSideButtonMenu(
                             onClick: () async {
-                              List<DocumentAnnotations>listofdocumentAnnotations=[];
-                              RenderBox? pdfViewerRenderBox = controller.pdfViewerkey!.currentContext
+                              List<
+                                  DocumentAnnotations>listofdocumentAnnotations = [
+                              ];
+                              RenderBox? pdfViewerRenderBox = controller
+                                  .pdfViewerkey!.currentContext
                                   ?.findRenderObject() as RenderBox?;
-                               controller.singpic.forEach((key, value) async {
+                              controller.singpic.forEach((key, value) async {
                                 print("image 64  => $value");
                                 RenderBox? box = key.currentContext
                                     ?.findRenderObject() as RenderBox?;
@@ -487,43 +516,47 @@ class DocumentPage extends GetWidget<DocumentController> {
                                 print(pos?.dy);
                                 print(pos?.dx);
                                 DocumentAnnotations d = DocumentAnnotations();
-                                 d.  FontSize
-                                 =12;
-                                 d.  ForceViewers
-                               ="";
-                                 d.  Height
-                          =box?.size.height;
-                                 d.  ImageByte
-                                =value;
-                                 d.  ImageName
-                                ="";
-                                 d.  Text
-                                 ="";
-                                 d.  ParentWidth
-                                =pdfViewerRenderBox?.size.width;
-                                 d.  ParentHeight
-                              =pdfViewerRenderBox?.size.height;
-                                 d.  Page
-                                =controller.pdfViewerController.pageNumber;
-                                 d.  IsExclusive
-                               =false.toString();
-                                 d.  Type
-                                =3.toString();
-                                 d.  Viewers
-                                =  "Everyone";
-                                 d.  Width
-                                 =box?.size.width;
-                                 d.  X
-                                  =pos?.dx;
-                                 d.  Y
-                                    =pos?.dy ;
-                             listofdocumentAnnotations.add(d );
+                                d.FontSize
+                                = 12;
+                                d.ForceViewers
+                                = "";
+                                d.Height
+                                = box?.size.height;
+                                d.ImageByte
+                                = value;
+                                d.ImageName
+                                = "";
+                                d.Text
+                                = "";
+                                d.ParentWidth
+                                = pdfViewerRenderBox?.size.width;
+                                d.ParentHeight
+                                = pdfViewerRenderBox?.size.height;
+                                d.Page
+                                = controller.pdfViewerController.pageNumber;
+                                d.IsExclusive
+                                = false.toString();
+                                d.Type
+                                = 3.toString();
+                                d.Viewers
+                                = "Everyone";
+                                d.Width
+                                = box?.size.width;
+                                d.X
+                                = pos?.dx;
+                                d.Y
+                                = pos?.dy;
+                                listofdocumentAnnotations.add(d);
                               });
-                                             print("listofdocumentAnnotations.length=> ${listofdocumentAnnotations.length}");
+                              print(
+                                  "listofdocumentAnnotations.length=> ${listofdocumentAnnotations
+                                      .length}");
 
-                               print("listofdocumentAnnotations=>${listofdocumentAnnotations.length}");
-                              print("listofdocumentAnnotations=>${listofdocumentAnnotations}");
-
+                              print(
+                                  "listofdocumentAnnotations=>${listofdocumentAnnotations
+                                      .length}");
+                              print(
+                                  "listofdocumentAnnotations=>${listofdocumentAnnotations}");
 
 
                               await controller.getSaveDocAnnotationsData(
@@ -537,7 +570,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                   delegateGctId
                                       : "0",
                                   documentAnnotationsString
-                                      :  listofdocumentAnnotations   ,
+                                      : listofdocumentAnnotations,
                                   isOriginalMail
                                       : controller
                                       .isOriginalMailAttachmentsList!
@@ -547,7 +580,9 @@ class DocumentPage extends GetWidget<DocumentController> {
                                       .correspondence!.transferId,
                                   userId
                                       : controller.secureStorage
-                                      .readIntSecureData(AllStringConst.UserId).toString());  },
+                                      .readIntSecureData(AllStringConst.UserId)
+                                      .toString());
+                            },
                             label: "save".tr,
                             image: 'assets/images/save.png',
                           )

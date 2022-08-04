@@ -25,7 +25,9 @@ class CustomButtonWithImage extends StatelessWidget {
             //
             ,
             height: 20,
-            width: 20,
+            width: 20,color: Theme.of(context)
+              .colorScheme
+              .primary,
           ),SizedBox(width: 8,),
           Text(
             label,

@@ -10,7 +10,7 @@ import '../utility/utilitie.dart';
  import '../widgets/custom_listview.dart';
 
 class InboxPage extends GetWidget<InboxController> {
-  SecureStorage secureStorage = Get.find<SecureStorage>();
+  SecureStorage secureStorage = Get.put(SecureStorage());
 
   @override
   Widget build(BuildContext context) {

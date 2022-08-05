@@ -2596,7 +2596,7 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
                   children: [
                     TableRowInkWell(
                       onTap: () {
-                        openInbox();
+                        Get.toNamed("SearchPage");
                       },
                       child: _buildOtherFoldersRows(
                           context,

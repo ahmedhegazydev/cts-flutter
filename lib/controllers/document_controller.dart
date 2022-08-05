@@ -22,6 +22,7 @@ import '../services/apis/inOpenDocument/get_document_audit_logs_api.dart';
 import '../services/apis/inOpenDocument/get_document_links_api.dart';
 import '../services/apis/inOpenDocument/get_document_receivers_api.dart';
 import '../services/apis/inOpenDocument/get_document_transfers_api.dart';
+import '../services/apis/inOpenDocument/upload_attachment_api.dart';
 import '../services/apis/inside_doc/auto_send_to_recepients_and-cc_api.dart';
 import '../services/apis/inside_doc/can_export_as_paperwork_api.dart';
 import '../services/apis/inside_doc/check_for_empty_structure_recipients_api.dart';
@@ -39,6 +40,7 @@ import '../services/json_model/get_document_links_model.dart';
 import '../services/json_model/get_document_logs_model.dart';
 import '../services/json_model/get_document_receivers_model.dart';
 import '../services/json_model/get_document_transfers_model.dart';
+import '../services/json_model/inopendocModel/attachment_Info_model.dart';
 import '../services/json_model/inopendocModel/auto_send_to_recepients_and_cc_model.dart';
 import '../services/json_model/inopendocModel/can_export_as_paperwork_model.dart';
 import '../services/json_model/inopendocModel/check_for_empty_structure_recipients_model.dart';
@@ -66,6 +68,11 @@ class DocumentController extends GetxController {
   AttachmentsList? isOriginalMailAttachmentsList;
   Map<String, List<AttachmentsList>>folder2 = {};
 
+
+  UploadAttachmentApi _uploadAttachmentApi = UploadAttachmentApi();
+  AttachmentInfoModel? attachmentInfoModel;
+
+
   Parents? toParent;
   TextEditingController textEditingControllerToParent =
   TextEditingController();
@@ -85,8 +92,9 @@ class DocumentController extends GetxController {
   List<DepartmentList>toDepartmentList = [];
 
   List<DepartmentList>cctoDepartmentList = [];
-  PdfViewerController pdfViewerController=PdfViewerController();
-  GlobalKey? pdfViewerkey ;
+  PdfViewerController pdfViewerController = PdfViewerController();
+  GlobalKey? pdfViewerkey;
+
   addtoDepartmentList({required DepartmentList department}) {
     toDepartmentList.add(department);
     update();
@@ -171,31 +179,39 @@ class DocumentController extends GetxController {
   SaveDocumentAnnotationsAPI();
   SaveDocumentAnnotationModel? postSaveDocumentAnnotationsModel;
 
- Future getSaveDocAnnotationsData({
+  Future getSaveDocAnnotationsData({
     userId,
     correspondenceId,
     transferId,
     attachmentId,
     isOriginalMail, //(string) input should “true” or “false”
-   required List<DocumentAnnotations>  documentAnnotationsString, //string converted from array contains the details of annotations)
+    required List<
+        DocumentAnnotations> documentAnnotationsString, //string converted from array contains the details of annotations)
     delegateGctId //string) input “0”
 
-  }) async{
+  }) async {
+    postSaveDocumentAnnotationsModel = SaveDocumentAnnotationModel(
+        AttachmentId: attachmentId.toString(),
+        CorrespondenceId: correspondenceId,
+        DelegateGctId: delegateGctId,
+        documentAnnotationsString: documentAnnotationsString,
+        IsOriginalMail: isOriginalMail,
+        Token: secureStorage.token(),
+        UserId: userId,
+        TransferId: transferId);
+    //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
 
-    postSaveDocumentAnnotationsModel= SaveDocumentAnnotationModel(
-        AttachmentId:attachmentId.toString(), CorrespondenceId:correspondenceId, DelegateGctId:delegateGctId,
-    documentAnnotationsString: documentAnnotationsString,IsOriginalMail: isOriginalMail ,Token: secureStorage.token(),UserId:userId ,TransferId:transferId );
-  //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
-
- //   print("postSaveDocumentAnnotationsModel?.toMap() =>${jsonEncode(postSaveDocumentAnnotationsModel?.toMap())}");
+    //   print("postSaveDocumentAnnotationsModel?.toMap() =>${jsonEncode(postSaveDocumentAnnotationsModel?.toMap())}");
 
 
-    await  _saveDocumentAnnotationsApi
+    await _saveDocumentAnnotationsApi
         .post(postSaveDocumentAnnotationsModel?.toMap())
         .then((value) {
-          print("value =>   ${value}");
+      print("value =>   ${value}");
       postSaveDocumentAnnotationsModel = value as SaveDocumentAnnotationModel;
-          print("postSaveDocumentAnnotationsModel =>   ${postSaveDocumentAnnotationsModel?.toMap()}");
+      print(
+          "postSaveDocumentAnnotationsModel =>   ${postSaveDocumentAnnotationsModel
+              ?.toMap()}");
     });
   }
 
@@ -205,13 +221,13 @@ class DocumentController extends GetxController {
 
   //تحديث كان ابن فيل وجلب جميع البيانات الخاصه بلملف
   updatecanOpenDocumentModel(CanOpenDocumentModel data) {
- pdfViewerkey   = GlobalKey();
- pdfAndSing.clear();
+    pdfViewerkey = GlobalKey();
+    pdfAndSing.clear();
     pdfAndSing.add(SfPdfViewer.network(
-        'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf'
+      'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf'
       // oragnalFileDoc??""
-,controller: pdfViewerController,
-key: pdfViewerkey,
+      , controller: pdfViewerController,
+      key: pdfViewerkey,
     ));
 
 
@@ -219,7 +235,7 @@ key: pdfViewerkey,
     canOpenDocumentModel?.attachments?.attachments?.forEach((element) {
       if (element.isOriginalMail!) {
         oragnalFileDoc = element.uRL!;
-        isOriginalMailAttachmentsList=element;
+        isOriginalMailAttachmentsList = element;
       }
 
       if (element.isOriginalMail == false) {
@@ -646,8 +662,31 @@ key: pdfViewerkey,
 
     if (result != null) {
       File file = File(result.files.single.path!);
+      final bytes = File(file.path).readAsBytesSync();
+
+      String img64 = base64Encode(bytes);
+      String name=file.path.split("/").last.split(".").first;
+      print("filke path isss  =>${file.path}");
+      print("name =>$name");
+      print("img64 =>  $img64");
+      attachmentInfoModel = AttachmentInfoModel(token: secureStorage
+          .token()!,
+          correspondenceId: canOpenDocumentModel!.correspondence!.correspondenceId!,
+          fileName: name,
+          fileContent: img64,
+          language: Get
+              .locale?.languageCode == "en"
+              ? "en"
+              : "ar");
+
+      _uploadAttachmentApi.post(attachmentInfoModel?.toMap()).then((value) {
+        print("object  $value");
+      });
     } else {}
   }
+
+
+
 
   getIsAlreadyExportedAsPaperwork({required correspondenceId,
     required transferId,

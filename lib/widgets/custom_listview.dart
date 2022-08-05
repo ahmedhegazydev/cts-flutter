@@ -1159,6 +1159,15 @@ class CustomListView extends StatelessWidget {
 
 
                                                                     });
+
+                                                                    Get.find<InboxController>().multipleTransferspost(
+                                                                        transferId:
+
+                                                                        correspondences[pos]
+                                                                            .transferId
+                                                                    ,
+                                                                        correspondenceId:   correspondences[pos]
+                                                                            .correspondenceId, docDueDate: correspondences[pos].docDueDate);
                                                                     //Navigator.of(context).pop();
                                                                   },
                                                                   child: Text(
@@ -2436,6 +2445,17 @@ Get.find<DocumentController>().g2gInfoForExport(documentId: allCorrespondences[p
                                                                   //   print(v.status);
                                                                   //   print("1" * 50);
                                                                   // });
+
+                                                                  Get.find<DocumentController>().multipleTransferspost(
+                                                                      transferId:
+
+                                                                      allCorrespondences[pos]
+                                                                          .transferId
+
+                                                                      ,
+                                                                      correspondenceId: allCorrespondences[pos]
+
+                                                                          .correspondenceId);
                                                                   print(
                                                                       "$key      ${value.toMap()}");
                                                                 });

@@ -42,12 +42,8 @@ class DocumentPage extends GetWidget<DocumentController> {
 
   /// ToDo get the print
   _buildBody(BuildContext context) {
-    Orientation orientation = MediaQuery
-        .of(context)
-        .orientation;
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Orientation orientation = MediaQuery.of(context).orientation;
+    Size size = MediaQuery.of(context).size;
     // print(controller.correspondences?.toJson())
     // ;
     var v = controller.correspondences.toJson();
@@ -98,8 +94,23 @@ class DocumentPage extends GetWidget<DocumentController> {
               //
               //       }),
               // ),
+
               if (controller
-                  .canOpenDocumentModel?.correspondence?.hasAttachments ??
+                  .openAttachment
+                   )
+                InkWell(
+                  onTap: () {
+                   controller.updatecloseAttashment(controller.isOriginalMailAttachmentsList!.uRL!);
+
+                  },
+                  child: CustomButtonWithImage(
+                    // onClick: () {},
+                    image: 'assets/images/up_arrow.png',
+                    label: "backtooriginalfile".tr,
+                  ),
+                ),
+              if (controller
+                      .canOpenDocumentModel?.correspondence?.hasAttachments ??
                   true)
                 InkWell(
                   onTap: () {
@@ -114,17 +125,17 @@ class DocumentPage extends GetWidget<DocumentController> {
               // if (controller
               //     .canOpenDocumentModel?.correspondence?.hasSummaries ??
               //     true)
-                // InkWell(
-                //   onTap: () {
-                //     controller
-                //         .canOpenDocumentModel?.correspondence.
-                //   },
-                //   child: CustomButtonWithImage(
-                //     //onClick: () {},
-                //     image: 'assets/images/refer.png',
-                //     label: "hasSummaries".tr,
-                //   ),
-                // ),
+              // InkWell(
+              //   onTap: () {
+              //     controller
+              //         .canOpenDocumentModel?.correspondence.
+              //   },
+              //   child: CustomButtonWithImage(
+              //     //onClick: () {},
+              //     image: 'assets/images/refer.png',
+              //     label: "hasSummaries".tr,
+              //   ),
+              // ),
               InkWell(
                 onTap: () {
                   controller.filePickerR();
@@ -165,9 +176,9 @@ class DocumentPage extends GetWidget<DocumentController> {
                           controller.getIsAlreadyExportedAsPaperwork(
                               context: context,
                               correspondenceId:
-                              controller.correspondences.correspondenceId!,
+                                  controller.correspondences.correspondenceId!,
                               transferId:
-                              controller.correspondences.transferId!,
+                                  controller.correspondences.transferId!,
                               exportAction: "paper");
                         }),
                     PopupMenuItem(
@@ -176,9 +187,9 @@ class DocumentPage extends GetWidget<DocumentController> {
                           controller.getIsAlreadyExportedAsPaperwork(
                               context: context,
                               correspondenceId:
-                              controller.correspondences.correspondenceId!,
+                                  controller.correspondences.correspondenceId!,
                               transferId:
-                              controller.correspondences.transferId!,
+                                  controller.correspondences.transferId!,
                               exportAction: "electronic");
                           print("electronicExport");
                         }),
@@ -188,9 +199,9 @@ class DocumentPage extends GetWidget<DocumentController> {
                           controller.getIsAlreadyExportedAsPaperwork(
                               context: context,
                               correspondenceId:
-                              controller.correspondences.correspondenceId!,
+                                  controller.correspondences.correspondenceId!,
                               transferId:
-                              controller.correspondences.transferId!,
+                                  controller.correspondences.transferId!,
                               exportAction: "paperAndelectronic");
                           print("paperAndElectronicExport");
                         }),
@@ -212,10 +223,14 @@ class DocumentPage extends GetWidget<DocumentController> {
                 width: 1,
                 color: Colors.grey[800],
               ),
-              GestureDetector(onTap: (){
-                Get.find<WebViewPageController>().url=controller.canOpenDocumentModel?.correspondence!.visualTrackingUrl!;
-                Get.toNamed( "WebViewPage",);
-              },
+              GestureDetector(
+                onTap: () {
+                  Get.find<WebViewPageController>().url = controller
+                      .canOpenDocumentModel?.correspondence!.visualTrackingUrl!;
+                  Get.toNamed(
+                    "WebViewPage",
+                  );
+                },
                 child: CustomButtonWithImage(
                   // onClick: () {},
                   image: 'assets/images/track.png',
@@ -274,211 +289,196 @@ class DocumentPage extends GetWidget<DocumentController> {
                               print("object");
                               showDialog(
                                 context: context,
-                                builder: (ctx) =>
-                                    AlertDialog(
-                                      title: Text(" "),
-                                      content: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                          height:
-                                          MediaQuery
-                                              .of(context)
-                                              .size
-                                              .height *
+                                builder: (ctx) => AlertDialog(
+                                  title: Text(" "),
+                                  content: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
                                               .5,
-                                          width: MediaQuery
-                                              .of(context)
-                                              .size
-                                              .width *
-                                              .5,
-                                          color: Colors.grey[200],
-                                          child: Column(
-                                              mainAxisAlignment:
+                                      width: MediaQuery.of(context).size.width *
+                                          .5,
+                                      color: Colors.grey[200],
+                                      child: Column(
+                                          mainAxisAlignment:
                                               MainAxisAlignment.start,
-                                              crossAxisAlignment:
+                                          crossAxisAlignment:
                                               CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                    height: 300,
-                                                    width: double.infinity,
-                                                    child: Signature(
-                                                      controller:
+                                          children: [
+                                            Container(
+                                                height: 300,
+                                                width: double.infinity,
+                                                child: Signature(
+                                                  controller:
                                                       controller.controller,
-                                                    )),
-                                                Row(
-                                                  mainAxisAlignment:
+                                                )),
+                                            Row(
+                                              mainAxisAlignment:
                                                   MainAxisAlignment.spaceEvenly,
-                                                  children: [
-                                                    InkWell(
-                                                        onTap: () {
-                                                          controller.controller
-                                                              .clear();
-                                                        },
-                                                        child: Icon(
-                                                          Icons.clear,
-                                                          size: 50,
-                                                        )),
-                                                    InkWell(
-                                                        onTap: () async {
-                                                          final key = GlobalKey();
+                                              children: [
+                                                InkWell(
+                                                    onTap: () {
+                                                      controller.controller
+                                                          .clear();
+                                                    },
+                                                    child: Icon(
+                                                      Icons.clear,
+                                                      size: 50,
+                                                    )),
+                                                InkWell(
+                                                    onTap: () async {
+                                                      final key = GlobalKey();
 
-                                                          final Uint8List? data =
+                                                      final Uint8List? data =
                                                           await controller
                                                               .controller
                                                               .toPngBytes();
-                                                          controller
-                                                              .addWidgetToPdfAndSing(
+                                                      controller
+                                                          .addWidgetToPdfAndSing(
                                                               ResizebleWidget(
-                                                                child: Image
-                                                                    .memory(
-                                                                  data!,
-                                                                  fit: BoxFit
-                                                                      .fill,
-                                                                  key: key,
-                                                                  width: 100,
-                                                                  height: 100,
-                                                                ),
-                                                              ));
-                                                          RenderBox? box = key
+                                                        child: Image.memory(
+                                                          data!,
+                                                          fit: BoxFit.fill,
+                                                          key: key,
+                                                          width: 100,
+                                                          height: 100,
+                                                        ),
+                                                      ));
+                                                      RenderBox? box = key
                                                               .currentContext
                                                               ?.findRenderObject()
                                                           as RenderBox?;
 
-                                                          Offset? pos =
+                                                      Offset? pos =
                                                           box?.localToGlobal(
                                                               Offset.zero);
 
-                                                          controller
-                                                              .singpic[key] =
-                                                              base64.encode(
-                                                                  data); //SignatureInfo(offset:pos , signature: 'hguyggyuguy', size: box?.size);
+                                                      controller.singpic[key] =
+                                                          base64.encode(
+                                                              data); //SignatureInfo(offset:pos , signature: 'hguyggyuguy', size: box?.size);
 
-                                                          //
-                                                          //
-                                                          //
-                                                          //
-                                                          //
-                                                          //
+                                                      //
+                                                      //
+                                                      //
+                                                      //
+                                                      //
+                                                      //
 
-                                                          controller.controller
-                                                              .toPngBytes();
-                                                          Get.back();
-                                                        },
-                                                        child: Icon(
-                                                          Icons.save,
-                                                          size: 50,
-                                                        )),
-                                                  ],
-                                                ),
-                                                Divider(color: Colors.grey),
-                                                Expanded(
-                                                  child: GetBuilder<
-                                                      DocumentController>(
-                                                    assignId: true,
-                                                    builder: (logic) {
-                                                      return GridView.builder(
-                                                        itemCount: controller
-                                                            .multiSignatures
-                                                            .length,
-                                                        gridDelegate:
+                                                      controller.controller
+                                                          .toPngBytes();
+                                                      Get.back();
+                                                    },
+                                                    child: Icon(
+                                                      Icons.save,
+                                                      size: 50,
+                                                    )),
+                                              ],
+                                            ),
+                                            Divider(color: Colors.grey),
+                                            Expanded(
+                                              child: GetBuilder<
+                                                  DocumentController>(
+                                                assignId: true,
+                                                builder: (logic) {
+                                                  return GridView.builder(
+                                                    itemCount: controller
+                                                        .multiSignatures.length,
+                                                    gridDelegate:
                                                         SliverGridDelegateWithFixedCrossAxisCount(
                                                             crossAxisCount: 2,
                                                             crossAxisSpacing:
-                                                            4.0,
+                                                                4.0,
                                                             mainAxisSpacing:
-                                                            4.0),
-                                                        itemBuilder:
-                                                            (
-                                                            BuildContext context,
+                                                                4.0),
+                                                    itemBuilder:
+                                                        (BuildContext context,
                                                             int index) {
-                                                          return GestureDetector(
-                                                            onTap: () {
-                                                              final key =
+                                                      return GestureDetector(
+                                                        onTap: () {
+                                                          final key =
                                                               GlobalKey();
-                                                              controller
-                                                                  .addWidgetToPdfAndSing(
+                                                          controller
+                                                              .addWidgetToPdfAndSing(
                                                                   ResizebleWidget(
-                                                                    child: Image
-                                                                        .memory(
-                                                                      dataFromBase64String(
-                                                                          controller
-                                                                              .multiSignatures[
+                                                            child: Image.memory(
+                                                              dataFromBase64String(
+                                                                  controller
+                                                                      .multiSignatures[
                                                                           index]
-                                                                              .signature),
-                                                                      fit: BoxFit
-                                                                          .fill,
-                                                                      key: key,
-                                                                    ),
-                                                                  ));
+                                                                      .signature),
+                                                              fit: BoxFit.fill,
+                                                              key: key,
+                                                            ),
+                                                          ));
 
-                                                              controller
-                                                                  .singpic[
-                                                              key] =
+                                                          controller.singpic[
+                                                                  key] =
                                                               controller
                                                                   .multiSignatures[
-                                                              index]
+                                                                      index]
                                                                   .signature!;
 
-                                                              Get.back();
-                                                            },
-                                                            child: Image.memory(
-                                                                dataFromBase64String(
-                                                                    controller
-                                                                        .multiSignatures[
-                                                                    index]
-                                                                        .signature)),
-                                                          );
+                                                          Get.back();
                                                         },
+                                                        child: Image.memory(
+                                                            dataFromBase64String(
+                                                                controller
+                                                                    .multiSignatures[
+                                                                        index]
+                                                                    .signature)),
                                                       );
-
-                                                      // ListView.builder(
-                                                      //   itemCount: controller
-                                                      //       .multiSignatures
-                                                      //       .length,
-                                                      //   itemBuilder: (context,
-                                                      //       pos) {
-                                                      //     return Padding(
-                                                      //       padding: const EdgeInsets
-                                                      //           .all(8.0),
-                                                      //       child:
-                                                      //     GestureDetector(
-                                                      //         onTap: () {
-                                                      //           controller
-                                                      //               .addWidgetToPdfAndSing(
-                                                      //               ResizebleWidget(
-                                                      //                 child: Image
-                                                      //                     .memory(
-                                                      //                   dataFromBase64String(
-                                                      //                       controller
-                                                      //                           .multiSignatures[pos]
-                                                      //                           .signature),
-                                                      //                   fit: BoxFit.fill),));
-                                                      //           Get.back();
-                                                      //         },
-                                                      //         child: Image
-                                                      //             .memory(
-                                                      //             dataFromBase64String(
-                                                      //                 controller
-                                                      //                     .multiSignatures[pos]
-                                                      //                     .signature)),
-                                                      //       ),
-                                                      //     );
-                                                      //   });
                                                     },
-                                                  ),
-                                                )
-                                              ]),
-                                        ),
-                                      ),
-                                      actions: <Widget>[
-                                        FlatButton(
-                                          onPressed: () {
-                                            Get.back();
-                                          },
-                                          child: Text("Ok"),
-                                        ),
-                                      ],
+                                                  );
+
+                                                  // ListView.builder(
+                                                  //   itemCount: controller
+                                                  //       .multiSignatures
+                                                  //       .length,
+                                                  //   itemBuilder: (context,
+                                                  //       pos) {
+                                                  //     return Padding(
+                                                  //       padding: const EdgeInsets
+                                                  //           .all(8.0),
+                                                  //       child:
+                                                  //     GestureDetector(
+                                                  //         onTap: () {
+                                                  //           controller
+                                                  //               .addWidgetToPdfAndSing(
+                                                  //               ResizebleWidget(
+                                                  //                 child: Image
+                                                  //                     .memory(
+                                                  //                   dataFromBase64String(
+                                                  //                       controller
+                                                  //                           .multiSignatures[pos]
+                                                  //                           .signature),
+                                                  //                   fit: BoxFit.fill),));
+                                                  //           Get.back();
+                                                  //         },
+                                                  //         child: Image
+                                                  //             .memory(
+                                                  //             dataFromBase64String(
+                                                  //                 controller
+                                                  //                     .multiSignatures[pos]
+                                                  //                     .signature)),
+                                                  //       ),
+                                                  //     );
+                                                  //   });
+                                                },
+                                              ),
+                                            )
+                                          ]),
                                     ),
+                                  ),
+                                  actions: <Widget>[
+                                    FlatButton(
+                                      onPressed: () {
+                                        Get.back();
+                                      },
+                                      child: Text("Ok"),
+                                    ),
+                                  ],
+                                ),
                               );
 
                               //controller.pdfAndSing
@@ -499,9 +499,8 @@ class DocumentPage extends GetWidget<DocumentController> {
                           ),
                           CustomSideButtonMenu(
                             onClick: () async {
-                              List<
-                                  DocumentAnnotations>listofdocumentAnnotations = [
-                              ];
+                              List<DocumentAnnotations>
+                                  listofdocumentAnnotations = [];
                               RenderBox? pdfViewerRenderBox = controller
                                   .pdfViewerkey!.currentContext
                                   ?.findRenderObject() as RenderBox?;
@@ -517,70 +516,50 @@ class DocumentPage extends GetWidget<DocumentController> {
                                 print(pos?.dy);
                                 print(pos?.dx);
                                 DocumentAnnotations d = DocumentAnnotations();
-                                d.FontSize
-                                = 12;
-                                d.ForceViewers
-                                = "";
-                                d.Height
-                                = box?.size.height;
-                                d.ImageByte
-                                = value;
-                                d.ImageName
-                                = "";
-                                d.Text
-                                = "";
-                                d.ParentWidth
-                                = pdfViewerRenderBox?.size.width;
-                                d.ParentHeight
-                                = pdfViewerRenderBox?.size.height;
-                                d.Page
-                                = controller.pdfViewerController.pageNumber;
-                                d.IsExclusive
-                                = false.toString();
-                                d.Type
-                                = 3.toString();
-                                d.Viewers
-                                = "Everyone";
-                                d.Width
-                                = box?.size.width;
-                                d.X
-                                = pos?.dx;
-                                d.Y
-                                = pos?.dy;
+                                d.FontSize = 12;
+                                d.ForceViewers = "";
+                                d.Height = box?.size.height;
+                                d.ImageByte = value;
+                                d.ImageName = "";
+                                d.Text = "";
+                                d.ParentWidth = pdfViewerRenderBox?.size.width;
+                                d.ParentHeight =
+                                    pdfViewerRenderBox?.size.height;
+                                d.Page =
+                                    controller.pdfViewerController.pageNumber;
+                                d.IsExclusive = false.toString();
+                                d.Type = 3.toString();
+                                d.Viewers = "Everyone";
+                                d.Width = box?.size.width;
+                                d.X = pos?.dx;
+                                d.Y = pos?.dy;
                                 listofdocumentAnnotations.add(d);
                               });
                               print(
-                                  "listofdocumentAnnotations.length=> ${listofdocumentAnnotations
-                                      .length}");
+                                  "listofdocumentAnnotations.length=> ${listofdocumentAnnotations.length}");
 
                               print(
-                                  "listofdocumentAnnotations=>${listofdocumentAnnotations
-                                      .length}");
+                                  "listofdocumentAnnotations=>${listofdocumentAnnotations.length}");
                               print(
                                   "listofdocumentAnnotations=>${listofdocumentAnnotations}");
 
-
                               await controller.getSaveDocAnnotationsData(
-                                  attachmentId
-                                      : controller
+                                  attachmentId: controller
                                       .isOriginalMailAttachmentsList!
                                       .attachmentId,
-                                  correspondenceId
-                                      : controller.canOpenDocumentModel!
-                                      .correspondence!.correspondenceId,
-                                  delegateGctId
-                                      : "0",
-                                  documentAnnotationsString
-                                      : listofdocumentAnnotations,
-                                  isOriginalMail
-                                      : controller
+                                  correspondenceId: controller
+                                      .canOpenDocumentModel!
+                                      .correspondence!
+                                      .correspondenceId,
+                                  delegateGctId: "0",
+                                  documentAnnotationsString:
+                                      listofdocumentAnnotations,
+                                  isOriginalMail: controller
                                       .isOriginalMailAttachmentsList!
                                       .isOriginalMail,
-                                  transferId
-                                      : controller.canOpenDocumentModel!
+                                  transferId: controller.canOpenDocumentModel!
                                       .correspondence!.transferId,
-                                  userId
-                                      : controller.secureStorage
+                                  userId: controller.secureStorage
                                       .readIntSecureData(AllStringConst.UserId)
                                       .toString());
                             },
@@ -701,17 +680,17 @@ class DocumentPage extends GetWidget<DocumentController> {
                           //         : "no"),
                           Expanded(
                             child: ListView.builder(
-                              //shrinkWrap: true,
+                                //shrinkWrap: true,
                                 itemCount:
-                                controller.correspondences.metadata?.length,
+                                    controller.correspondences.metadata?.length,
                                 itemBuilder: (context, pos) {
                                   return _itemSideMenu(
                                       context: context,
                                       title: controller.correspondences
-                                          .metadata?[pos].label ??
+                                              .metadata?[pos].label ??
                                           "",
                                       data: controller.correspondences
-                                          .metadata?[pos].value ??
+                                              .metadata?[pos].value ??
                                           "");
                                 }),
                           ),
@@ -749,8 +728,7 @@ class DocumentPage extends GetWidget<DocumentController> {
       children: [
         Text(
           title,
-          style: Theme
-              .of(context)
+          style: Theme.of(context)
               .textTheme
               .headline3!
               .copyWith(color: Colors.grey, fontSize: 15),
@@ -758,8 +736,7 @@ class DocumentPage extends GetWidget<DocumentController> {
         ),
         Text(
           data,
-          style: Theme
-              .of(context)
+          style: Theme.of(context)
               .textTheme
               .headline3!
               .copyWith(color: Colors.black, fontSize: 15),
@@ -770,23 +747,18 @@ class DocumentPage extends GetWidget<DocumentController> {
   }
 
   _buildTopBar(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     return Container(
         padding: const EdgeInsets.all(10),
         height: 100,
         width: size.width,
-        color: Get
-            .find<MController>()
-            .appcolor,
+        color: Get.find<MController>().appcolor,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               "appTitle".tr,
-              style: Theme
-                  .of(context)
+              style: Theme.of(context)
                   .textTheme
                   .headline1!
                   .copyWith(color: Colors.white, fontSize: 25),
@@ -809,46 +781,42 @@ class DocumentPage extends GetWidget<DocumentController> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Row( //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            title: Row(//mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.asset(
-                    'assets/images/refer.png'
-                    //
-                    ,
-                    height: 20,
-                    width: 20,
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    "refer".tr,
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .headline3!
-                        .copyWith(
+              Image.asset(
+                'assets/images/refer.png'
+                //
+                ,
+                height: 20,
+                width: 20,
+              ),
+              const SizedBox(
+                width: 8,
+              ),
+              Text(
+                "refer".tr,
+                style: Theme.of(context).textTheme.headline3!.copyWith(
                       color: createMaterialColor(
                         const Color.fromRGBO(77, 77, 77, 1),
                       ),
                       fontSize: 15,
                     ),
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const Spacer(),
-                  InkWell(
-                    onTap: () {
-                      controller.filterWord = "";
-                      Navigator.pop(context);
-                    },
-                    child: Image.asset(
-                      'assets/images/close_button.png',
-                      width: 20,
-                      height: 20,
-                    ),
-                  ),
-                ]),
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const Spacer(),
+              InkWell(
+                onTap: () {
+                  controller.filterWord = "";
+                  Navigator.pop(context);
+                },
+                child: Image.asset(
+                  'assets/images/close_button.png',
+                  width: 20,
+                  height: 20,
+                ),
+              ),
+            ]),
             content: SingleChildScrollView(
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -862,8 +830,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                             child: Container(
                                 decoration: BoxDecoration(
                                     border: Border.all(
-                                        color: Theme
-                                            .of(context)
+                                        color: Theme.of(context)
                                             .colorScheme
                                             .primary),
                                     borderRadius: const BorderRadius.all(
@@ -906,117 +873,106 @@ class DocumentPage extends GetWidget<DocumentController> {
                     ),
                     Text("referTo".tr),
                     SizedBox(
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width * .8,
+                        width: MediaQuery.of(context).size.width * .8,
                         height: 100,
                         child: Row(
                           children: [
                             Expanded(
                                 child: GetBuilder<DocumentController>(
-                                  assignId: true, //tag: "alluser",
-                                  builder: (logic) {
-                                    return ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: controller.users.length,
-                                        itemBuilder: (context, pos) {
-                                          List<String>? a =
+                              assignId: true, //tag: "alluser",
+                              builder: (logic) {
+                                return ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: controller.users.length,
+                                    itemBuilder: (context, pos) {
+                                      List<String>? a =
                                           logic.users[pos].value?.split(" ");
 
-                                          // bool a=logic.user?[pos].value?.contains(logic.filterWord)??false;
-                                          if (logic.users[pos].value
+                                      // bool a=logic.user?[pos].value?.contains(logic.filterWord)??false;
+                                      if (logic.users[pos].value
                                               ?.contains(logic.filterWord) ??
-                                              false) {
-                                            return Padding(
-                                              padding: const EdgeInsets.all(
-                                                  8.0),
-                                              child: InkWell(
-                                                onTap: () {
-                                                  if (!controller
-                                                      .usersWillSendTo
-                                                      .contains(
-                                                      logic.users[pos])) {
-                                                    controller
-                                                        .addTousersWillSendTo(
-                                                        user: logic.users[pos]);
-                                                    controller
-                                                        .SetMultipleReplyWithVoiceNoteRequestModel(
+                                          false) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: InkWell(
+                                            onTap: () {
+                                              if (!controller.usersWillSendTo
+                                                  .contains(logic.users[pos])) {
+                                                controller.addTousersWillSendTo(
+                                                    user: logic.users[pos]);
+                                                controller
+                                                    .SetMultipleReplyWithVoiceNoteRequestModel(
                                                         correspondencesId:
-                                                        controller
-                                                            .correspondences
-                                                            .correspondenceId!,
+                                                            controller
+                                                                .correspondences
+                                                                .correspondenceId!,
                                                         transferId: controller
                                                             .correspondences
                                                             .transferId!,
                                                         id: logic
                                                             .users[pos].id!);
-                                                  }
-                                                },
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color: Theme
-                                                            .of(context)
-                                                            .colorScheme
-                                                            .primary,
-                                                        width: 1),
+                                              }
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary,
+                                                    width: 1),
+                                              ),
+                                              padding: EdgeInsets.all(2.0),
+                                              child: Row(
+                                                children: [
+                                                  Container(
+                                                    height: 50,
+                                                    width: 50,
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primary,
+                                                    ),
+                                                    child: Center(
+                                                        child: FittedBox(
+                                                            child: Text(
+                                                                "${a?[0][0]} ${a?[0][0] ?? ""}"))),
                                                   ),
-                                                  padding: EdgeInsets.all(2.0),
-                                                  child: Row(
-                                                    children: [
-                                                      Container(
-                                                        height: 50,
-                                                        width: 50,
-                                                        decoration: BoxDecoration(
-                                                          shape: BoxShape
-                                                              .circle,
-                                                          color: Theme
-                                                              .of(context)
-                                                              .colorScheme
-                                                              .primary,
-                                                        ),
-                                                        child: Center(
-                                                            child: FittedBox(
-                                                                child: Text(
-                                                                    "${a?[0][0]} ${a?[0][0] ??
-                                                                        ""}"))),
-                                                      ),
-                                                      Padding(
-                                                          padding:
+                                                  Padding(
+                                                      padding:
                                                           const EdgeInsets.only(
                                                               top: 2.0,
                                                               bottom: 2,
                                                               right: 8,
                                                               left: 8),
-                                                          child: Text(
-                                                            logic.users[pos]
+                                                      child: Text(
+                                                        logic.users[pos]
                                                                 .value ??
-                                                                "",
-                                                            maxLines: 3,
-                                                            softWrap: true,
-                                                          )
+                                                            "",
+                                                        maxLines: 3,
+                                                        softWrap: true,
+                                                      )
 
-                                                        //
-                                                        // Container(
-                                                        //   height: 50,
-                                                        //   width: 50,
-                                                        //   decoration: const BoxDecoration(
-                                                        //       shape: BoxShape.circle,
-                                                        //       color: Colors.green),
-                                                        // ),
+                                                      //
+                                                      // Container(
+                                                      //   height: 50,
+                                                      //   width: 50,
+                                                      //   decoration: const BoxDecoration(
+                                                      //       shape: BoxShape.circle,
+                                                      //       color: Colors.green),
+                                                      // ),
                                                       ),
-                                                    ],
-                                                  ),
-                                                ),
+                                                ],
                                               ),
-                                            );
-                                          } else {
-                                            return SizedBox();
-                                          }
-                                        });
-                                  },
-                                )),
+                                            ),
+                                          ),
+                                        );
+                                      } else {
+                                        return SizedBox();
+                                      }
+                                    });
+                              },
+                            )),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
@@ -1035,40 +991,37 @@ class DocumentPage extends GetWidget<DocumentController> {
                       color: Colors.grey,
                     ),
                     SizedBox(
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width * .8,
+                        width: MediaQuery.of(context).size.width * .8,
                         height: 300, // MediaQuery.of(context).size.height * .5,
                         child: GetBuilder<DocumentController>(
                           //   assignId: true,//tag: "user",
                           builder: (logic) {
                             return //Text(logic.filterWord);
 
-                              ListView.builder(
-                                  scrollDirection: Axis.vertical,
-                                  itemCount:
-                                  controller.usersWillSendTo.length,
-                                  itemBuilder: (context, pos) {
-                                    return //Text(controller.filterWord);
+                                ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    itemCount:
+                                        controller.usersWillSendTo.length,
+                                    itemBuilder: (context, pos) {
+                                      return //Text(controller.filterWord);
 
-                                      Padding(
+                                          Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Container(
                                           color: Colors.grey[200],
                                           child: Column(children: [
                                             Row(
                                                 crossAxisAlignment:
-                                                CrossAxisAlignment.center,
+                                                    CrossAxisAlignment.center,
                                                 children: [
                                                   Padding(
                                                     padding:
-                                                    const EdgeInsets.all(
-                                                        8.0),
+                                                        const EdgeInsets.all(
+                                                            8.0),
                                                     child: Text(logic
-                                                        .usersWillSendTo[
-                                                    pos]
-                                                        .value ??
+                                                            .usersWillSendTo[
+                                                                pos]
+                                                            .value ??
                                                         ""),
                                                     // child: Container(
                                                     //   height: 50,
@@ -1084,22 +1037,21 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                   ),
                                                   Text(
                                                     "name",
-                                                    style: Theme
-                                                        .of(context)
+                                                    style: Theme.of(context)
                                                         .textTheme
                                                         .headline3!
                                                         .copyWith(
-                                                      color:
-                                                      createMaterialColor(
-                                                        const Color
-                                                            .fromRGBO(
-                                                            77, 77, 77, 1),
-                                                      ),
-                                                      fontSize: 15,
-                                                    ),
+                                                          color:
+                                                              createMaterialColor(
+                                                            const Color
+                                                                    .fromRGBO(
+                                                                77, 77, 77, 1),
+                                                          ),
+                                                          fontSize: 15,
+                                                        ),
                                                     textAlign: TextAlign.center,
                                                     overflow:
-                                                    TextOverflow.ellipsis,
+                                                        TextOverflow.ellipsis,
                                                   ),
                                                   Spacer(),
                                                   GestureDetector(
@@ -1108,14 +1060,13 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                           "i deeeeeeeeeeeeeeeeeeeeeeee");
                                                       controller.transfarForMany
                                                           .remove(logic
-                                                          .usersWillSendTo[
-                                                      pos]
-                                                          .id);
-                                                      logic
-                                                          .delTousersWillSendTo(
-                                                          user: logic
                                                               .usersWillSendTo[
-                                                          pos]);
+                                                                  pos]
+                                                              .id);
+                                                      logic.delTousersWillSendTo(
+                                                          user: logic
+                                                                  .usersWillSendTo[
+                                                              pos]);
                                                     },
                                                     child: Image.asset(
                                                       'assets/images/close_button.png',
@@ -1149,11 +1100,11 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                     child: DropdownButton<
                                                         CustomActions>(
                                                       alignment:
-                                                      Alignment.topRight,
+                                                          Alignment.topRight,
                                                       value: logic.getactions(
                                                           logic
                                                               .usersWillSendTo[
-                                                          pos]
+                                                                  pos]
                                                               .id),
                                                       icon: const Icon(
                                                           Icons.arrow_downward),
@@ -1168,11 +1119,11 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                       ),
                                                       hint: Text("اختار"),
                                                       onChanged: (CustomActions?
-                                                      newValue) {
+                                                          newValue) {
                                                         controller.setactions(
                                                             logic
                                                                 .usersWillSendTo[
-                                                            pos]
+                                                                    pos]
                                                                 .id,
                                                             newValue!);
                                                         //  dropdownValue = newValue!;
@@ -1180,17 +1131,17 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                       items: controller
                                                           .customActions
                                                           ?.map<
-                                                          DropdownMenuItem<
-                                                              CustomActions>>(
+                                                                  DropdownMenuItem<
+                                                                      CustomActions>>(
                                                               (CustomActions
-                                                          value) {
-                                                            return DropdownMenuItem<
-                                                                CustomActions>(
-                                                              value: value,
-                                                              child:
+                                                                  value) {
+                                                        return DropdownMenuItem<
+                                                            CustomActions>(
+                                                          value: value,
+                                                          child:
                                                               Text(value.name!),
-                                                            );
-                                                          }).toList(),
+                                                        );
+                                                      }).toList(),
                                                     ),
                                                   ),
                                                 ),
@@ -1203,45 +1154,42 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                       color: Colors.grey[300],
                                                       child: Row(
                                                         mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
                                                         children: [
                                                           GestureDetector(
                                                             onTap: () async {
                                                               ///To Do Start and stop rec
                                                               controller
-                                                                  .recording
-                                                                  ? controller
-                                                                  .stopForMany(
-                                                                  id: logic
-                                                                      .usersWillSendTo[
-                                                                  pos]
-                                                                      .id!)
+                                                                      .recording
+                                                                  ? controller.stopForMany(
+                                                                      id: logic
+                                                                          .usersWillSendTo[
+                                                                              pos]
+                                                                          .id!)
                                                                   : controller
-                                                                  .recordForMany();
+                                                                      .recordForMany();
                                                             },
                                                             child: Padding(
                                                               padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
                                                               child: GetBuilder<
-                                                                  DocumentController>(
+                                                                      DocumentController>(
                                                                   builder:
                                                                       (logic) {
-                                                                    return Icon(
-                                                                        controller
-                                                                            .recording
-                                                                            ? Icons
-                                                                            .stop
-                                                                            : Icons
-                                                                            .mic);
-                                                                  }),
+                                                                return Icon(controller
+                                                                        .recording
+                                                                    ? Icons.stop
+                                                                    : Icons
+                                                                        .mic);
+                                                              }),
                                                             ),
                                                           ),
                                                           Padding(
                                                             padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
+                                                                const EdgeInsets
+                                                                    .all(8.0),
                                                             child: InkWell(
                                                               onTap: () {
                                                                 controller
@@ -1278,7 +1226,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                           ]),
                                         ),
                                       );
-                                  });
+                                    });
                           },
                         ))
                   ]),
@@ -1286,14 +1234,20 @@ class DocumentPage extends GetWidget<DocumentController> {
             actions: <Widget>[
               TextButton(
                 onPressed: () {
+                  ///ToDo
+                  ///send to many
+
                   print("i click ok");
                   print(
-                      "Get.find<InboxController>().   =>   ${controller
-                          .transfarForMany.length}");
-
-                  controller.transfarForMany.forEach((key, value) {
-                    print("$key      ${value.toMap()}");
-                  });
+                      "Get.find<InboxController>().   =>   ${controller.transfarForMany.length}");
+                  controller.multipleTransferspost(
+                      transferId: controller
+                          .canOpenDocumentModel!.correspondence!.transferId!,correspondenceId: controller
+                      .canOpenDocumentModel!.correspondence!.correspondenceId );
+                  // controller.transfarForMany.forEach((key, value) {
+                  //
+                  //   print("$key      ${value.toMap()}");
+                  // });
                   //  Navigator.of(context).pop();
                 },
                 child: Text("Ok"),
@@ -1374,29 +1328,17 @@ class DocumentPage extends GetWidget<DocumentController> {
         context: context,
         builder: (BuildContext context) {
           print(
-              " Get.find<DocumentController>() .canOpenDocumentModel?.attachments?.attachments?.length=>${Get
-                  .find<DocumentController>()
-                  .canOpenDocumentModel
-                  ?.attachments
-                  ?.attachments
-                  ?.length}");
+              " Get.find<DocumentController>() .canOpenDocumentModel?.attachments?.attachments?.length=>${Get.find<DocumentController>().canOpenDocumentModel?.attachments?.attachments?.length}");
           return AlertDialog(
             title: Text("Attachments"),
             content: SizedBox(
               height: 150,
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width * .7,
+              width: MediaQuery.of(context).size.width * .7,
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: Get
-                      .find<DocumentController>()
-                      .folder2
-                      .length,
+                  itemCount: Get.find<DocumentController>().folder2.length,
                   itemBuilder: (context, pos) {
-                    String key = Get
-                        .find<DocumentController>()
+                    String key = Get.find<DocumentController>()
                         .folder2
                         .keys
                         .elementAt(pos);
@@ -1404,42 +1346,35 @@ class DocumentPage extends GetWidget<DocumentController> {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
-
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width * .3,
+                        width: MediaQuery.of(context).size.width * .3,
                         child: Column(
                           children: [
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
-                                  width: double.infinity, color: Theme
-                                  .of(context)
-                                  .colorScheme
-                                  .primary, child: Text(key)),
+                                  width: double.infinity,
+                                  color: Theme.of(context).colorScheme.primary,
+                                  child: Text(key)),
                             ),
                             Expanded(
                               child: ListView.builder(
-                                  itemCount:
-                                  Get
-                                      .find<DocumentController>()
+                                  itemCount: Get.find<DocumentController>()
                                       .folder2[key]!
                                       .length,
                                   itemBuilder: (context, indx) {
                                     return Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: GestureDetector(onTap: () {
-                                        Get.find<DocumentController>()
-                                            .getAttachmentItemlocal(
-                                            context: context);
-                                        //  _popShowAttachments(context);
-                                      },
-                                        child: Text(Get
-                                            .find<
-                                            DocumentController>()
-                                            .folder2[key]![indx]
-                                            .fileName!),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Get.find<DocumentController>()
+                                              .getAttachmentItemlocal(
+                                                  context: context);
+                                          //  _popShowAttachments(context);
+                                        },
+                                        child: Text(
+                                            Get.find<DocumentController>()
+                                                .folder2[key]![indx]
+                                                .fileName!),
                                       ),
                                     );
                                   }),
@@ -1554,14 +1489,8 @@ class DocumentPage extends GetWidget<DocumentController> {
           return AlertDialog(
             title: Text("Attachments"),
             content: SizedBox(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * .7,
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * .7,
+                height: MediaQuery.of(context).size.height * .7,
+                width: MediaQuery.of(context).size.width * .7,
                 child: SfPdfViewer.network(
                     'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf')),
             actions: <Widget>[
@@ -1649,14 +1578,8 @@ class DocumentPage extends GetWidget<DocumentController> {
           return AlertDialog(
             title: Text(""),
             content: SizedBox(
-              height: MediaQuery
-                  .of(context)
-                  .size
-                  .height * .8,
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width * .8,
+              height: MediaQuery.of(context).size.height * .8,
+              width: MediaQuery.of(context).size.width * .8,
               child: GetBuilder<DocumentController>(builder: (logic) {
                 return SingleChildScrollView(
                   child: Column(children: [
@@ -1683,7 +1606,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                     Expanded(
                                       child: TypeAheadField<Parents>(
                                         textFieldConfiguration:
-                                        TextFieldConfiguration(
+                                            TextFieldConfiguration(
                                           controller: controller
                                               .textEditingControllerToParent,
                                           // autofocus: true,
@@ -1697,12 +1620,11 @@ class DocumentPage extends GetWidget<DocumentController> {
                                         suggestionsCallback: (pattern) async {
                                           return controller
                                               .g2gInfoForExportModel!.parents!
-                                              .where((element) =>
-                                              element
+                                              .where((element) => element
                                                   .parentName!
                                                   .toLowerCase()
                                                   .contains(
-                                                  pattern.toLowerCase()));
+                                                      pattern.toLowerCase()));
 
                                           //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
                                         },
@@ -1711,9 +1633,9 @@ class DocumentPage extends GetWidget<DocumentController> {
 
                                           return // Te(v.originalName!);
 
-                                            ListTile(
-                                              title: FilterText(v.parentName!),
-                                            );
+                                              ListTile(
+                                            title: FilterText(v.parentName!),
+                                          );
                                         },
                                         onSuggestionSelected: (suggestion) {
                                           Parents v = suggestion as Parents;
@@ -1740,43 +1662,39 @@ class DocumentPage extends GetWidget<DocumentController> {
                                     ),
                                     Expanded(
                                         child: Container(
-                                          decoration: BoxDecoration(
-                                              border: Border.all(width: 1)),
-                                          child: DropdownButton<DepartmentList>(
-                                            // value: dropdownValue,
-                                            icon: const Icon(
-                                                Icons.arrow_downward),
-                                            elevation: 16,
+                                      decoration: BoxDecoration(
+                                          border: Border.all(width: 1)),
+                                      child: DropdownButton<DepartmentList>(
+                                        // value: dropdownValue,
+                                        icon: const Icon(Icons.arrow_downward),
+                                        elevation: 16,
 
-                                            underline: Container(
-                                              height: 2,
-                                            ),
-                                            onChanged: (
-                                                DepartmentList? newValue) {
-                                              controller.addtoDepartmentList(
-                                                  department: newValue!);
-                                            },
-                                            items: controller
-                                                .g2gInfoForExportModel
-                                                ?.departmentList!
-                                                .map<
-                                                DropdownMenuItem<
-                                                    DepartmentList>>(
-                                                    (DepartmentList value) {
-                                                  return DropdownMenuItem<
-                                                      DepartmentList>(
-                                                    value: value,
-                                                    child: Text(
-                                                        value.childName!),
-                                                  );
-                                                })
-                                                .toList()
-                                                .where((element) =>
-                                            element.value?.parentGeid ==
+                                        underline: Container(
+                                          height: 2,
+                                        ),
+                                        onChanged: (DepartmentList? newValue) {
+                                          controller.addtoDepartmentList(
+                                              department: newValue!);
+                                        },
+                                        items: controller.g2gInfoForExportModel
+                                            ?.departmentList!
+                                            .map<
+                                                    DropdownMenuItem<
+                                                        DepartmentList>>(
+                                                (DepartmentList value) {
+                                              return DropdownMenuItem<
+                                                  DepartmentList>(
+                                                value: value,
+                                                child: Text(value.childName!),
+                                              );
+                                            })
+                                            .toList()
+                                            .where((element) =>
+                                                element.value?.parentGeid ==
                                                 controller.toParent?.parentGeid)
-                                                .toList(),
-                                          ),
-                                        ))
+                                            .toList(),
+                                      ),
+                                    ))
                                   ],
                                 ),
                                 SizedBox(
@@ -1861,7 +1779,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                     Expanded(
                                       child: TypeAheadField<Parents>(
                                         textFieldConfiguration:
-                                        TextFieldConfiguration(
+                                            TextFieldConfiguration(
                                           controller: controller
                                               .textEditingControllerToccParent,
                                           // autofocus: true,
@@ -1875,12 +1793,11 @@ class DocumentPage extends GetWidget<DocumentController> {
                                         suggestionsCallback: (pattern) async {
                                           return controller
                                               .g2gInfoForExportModel!.parents!
-                                              .where((element) =>
-                                              element
+                                              .where((element) => element
                                                   .parentName!
                                                   .toLowerCase()
                                                   .contains(
-                                                  pattern.toLowerCase()));
+                                                      pattern.toLowerCase()));
 
                                           //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
                                         },
@@ -1889,9 +1806,9 @@ class DocumentPage extends GetWidget<DocumentController> {
 
                                           return // Te(v.originalName!);
 
-                                            ListTile(
-                                              title: FilterText(v.parentName!),
-                                            );
+                                              ListTile(
+                                            title: FilterText(v.parentName!),
+                                          );
                                         },
                                         onSuggestionSelected: (suggestion) {
                                           Parents v = suggestion as Parents;
@@ -1921,43 +1838,39 @@ class DocumentPage extends GetWidget<DocumentController> {
                                     ),
                                     Expanded(
                                         child: Container(
-                                          decoration: BoxDecoration(
-                                              border: Border.all(width: 1)),
-                                          child: DropdownButton<DepartmentList>(
-                                            // value: dropdownValue,
-                                            icon: const Icon(
-                                                Icons.arrow_downward),
-                                            elevation: 16,
+                                      decoration: BoxDecoration(
+                                          border: Border.all(width: 1)),
+                                      child: DropdownButton<DepartmentList>(
+                                        // value: dropdownValue,
+                                        icon: const Icon(Icons.arrow_downward),
+                                        elevation: 16,
 
-                                            underline: Container(
-                                              height: 2,
-                                            ),
-                                            onChanged: (
-                                                DepartmentList? newValue) {
-                                              controller.addcctoDepartmentList(
-                                                  department: newValue!);
-                                            },
-                                            items: controller
-                                                .g2gInfoForExportModel
-                                                ?.departmentList!
-                                                .map<
-                                                DropdownMenuItem<
-                                                    DepartmentList>>(
-                                                    (DepartmentList value) {
-                                                  return DropdownMenuItem<
-                                                      DepartmentList>(
-                                                    value: value,
-                                                    child: Text(
-                                                        value.childName!),
-                                                  );
-                                                })
-                                                .toList()
-                                                .where((element) =>
-                                            element.value?.parentGeid ==
+                                        underline: Container(
+                                          height: 2,
+                                        ),
+                                        onChanged: (DepartmentList? newValue) {
+                                          controller.addcctoDepartmentList(
+                                              department: newValue!);
+                                        },
+                                        items: controller.g2gInfoForExportModel
+                                            ?.departmentList!
+                                            .map<
+                                                    DropdownMenuItem<
+                                                        DepartmentList>>(
+                                                (DepartmentList value) {
+                                              return DropdownMenuItem<
+                                                  DepartmentList>(
+                                                value: value,
+                                                child: Text(value.childName!),
+                                              );
+                                            })
+                                            .toList()
+                                            .where((element) =>
+                                                element.value?.parentGeid ==
                                                 controller.toParent?.parentGeid)
-                                                .toList(),
-                                          ),
-                                        ))
+                                            .toList(),
+                                      ),
+                                    ))
                                   ],
                                 ),
                                 SizedBox(

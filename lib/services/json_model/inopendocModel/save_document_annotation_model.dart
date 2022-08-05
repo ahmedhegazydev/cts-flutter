@@ -38,7 +38,11 @@ class SaveDocumentAnnotationModel extends AbstractJsonResource{
    data[ 'AttachmentId']  = this.AttachmentId;
    data['IsOriginalMail']   = this.IsOriginalMail;
    data[ 'DelegateGctId']  = this.DelegateGctId;
-   data[ 'documentAnnotationsString']  = this.documentAnnotationsString;
+    if (this.documentAnnotationsString != null) {
+
+      data[ 'documentAnnotationsString']  = this.documentAnnotationsString!.map((v) => v.toJson()).toList();
+    }
+
    return data;
   }
 

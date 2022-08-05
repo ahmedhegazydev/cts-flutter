@@ -33,10 +33,10 @@ class Attachment {
   int? docId;
   String? fileName;
   int? folderId;
-  Null? folderName;
+  String? folderName;
   bool? isOriginalMail;
   bool? isPrivate;
-  Null? serverFileInfo;
+  String? serverFileInfo;
   int? status;
   int? transferId;
   String? uRL;
@@ -100,15 +100,15 @@ class Attachment {
 }
 
 class EditOfficeDetails {
-  Null? fileId;
+  String? fileId;
   bool? isEditable;
-  Null? localUrl;
-  Null? name;
-  Null? siteId;
-  Null? spFrameUrl;
-  Null? spLocation;
-  Null? spUrl;
-  Null? webId;
+  String? localUrl;
+  String? name;
+  String? siteId;
+  String? spFrameUrl;
+  String? spLocation;
+  String? spUrl;
+  String? webId;
 
   EditOfficeDetails(
       {this.fileId,

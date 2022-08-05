@@ -32,6 +32,7 @@ import '../services/apis/inside_doc/g2g/receive_document_using_g2g_api.dart';
 import '../services/apis/inside_doc/get_user_routing_api.dart';
 import '../services/apis/inside_doc/is_already_exported_as_paperwork_api.dart';
 import '../services/apis/inside_doc/is_already_exported_as_transfer_api.dart';
+import '../services/apis/multiple_transfers_api.dart';
 import '../services/apis/save_document_annotations_api.dart';
 import '../services/json_model/can_open_document_model.dart';
 import '../services/json_model/find_recipient_model.dart';
@@ -51,6 +52,7 @@ import '../services/json_model/inopendocModel/get_attachment_item_model.dart';
 import '../services/json_model/inopendocModel/get_user_routing_model.dart';
 import '../services/json_model/inopendocModel/is_already_exported_as_paperwork_model.dart';
 import '../services/json_model/inopendocModel/is_already_exported_as_transfer_model.dart';
+import '../services/json_model/inopendocModel/multiple_transfers_model.dart';
 import '../services/json_model/inopendocModel/save_document_annotation_model.dart';
 import '../services/json_model/login_model.dart';
 import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
@@ -65,6 +67,7 @@ import 'package:flutter/services.dart' as rootBundel;
 class DocumentController extends GetxController {
 //Map<int,String>folder={};
   String? oragnalFileDoc;
+  bool openAttachment=false;
   AttachmentsList? isOriginalMailAttachmentsList;
   Map<String, List<AttachmentsList>>folder2 = {};
 
@@ -94,7 +97,16 @@ class DocumentController extends GetxController {
   List<DepartmentList>cctoDepartmentList = [];
   PdfViewerController pdfViewerController = PdfViewerController();
   GlobalKey? pdfViewerkey;
-
+updateopenAttashment(String link){
+  openAttachment=true;
+  oragnalFileDoc=link;
+  update();
+}
+  updatecloseAttashment(String link){
+    openAttachment=false;
+    oragnalFileDoc=link;
+    update();
+  }
   addtoDepartmentList({required DepartmentList department}) {
     toDepartmentList.add(department);
     update();
@@ -174,7 +186,43 @@ class DocumentController extends GetxController {
   // GetAttachmentItemResult GetAttachmentItem(string Token, string documentId, string transferId, string attachmentId, string language);
   //
 
+//=============================================================================================
+  MultipleTransfersAPI _multipleTransfersAPI = MultipleTransfersAPI();
 
+  multipleTransferspost(
+      {correspondenceId, transferId}) {
+        List<TransferNode>transfers=[];
+
+    transfarForMany.forEach((key, value) {
+      TransferNode transferNode = TransferNode(destinationId: key.toString(),
+          purposeId: value.correspondencesId!,
+          dueDate: canOpenDocumentModel!.correspondence!.docDueDate!,
+          voiceNote
+          :value.voiceNote!,
+          voiceNoteExt
+          : "m4a");
+print("transferNode=>  ${transferNode.toMap()}");
+
+      transfers.add(transferNode); });
+
+        print("transferNode=>  ${transfers.length}");
+
+    MultipleTransfersModel multipleTransfersModel = MultipleTransfersModel(
+        token: secureStorage.token()!,
+        correspondenceId: correspondenceId,
+        transferId: transferId,
+        transfers: transfers);
+
+print(multipleTransfersModel.toMap());
+    _multipleTransfersAPI.post(multipleTransfersModel.toMap()).then((value) {
+      print(" _multipleTransfersAPI end");
+print(value);
+
+    });
+  }
+
+
+//=====================================================================================
   final SaveDocumentAnnotationsAPI _saveDocumentAnnotationsApi =
   SaveDocumentAnnotationsAPI();
   SaveDocumentAnnotationModel? postSaveDocumentAnnotationsModel;
@@ -665,13 +713,18 @@ class DocumentController extends GetxController {
       final bytes = File(file.path).readAsBytesSync();
 
       String img64 = base64Encode(bytes);
-      String name=file.path.split("/").last.split(".").first;
+      String name = file.path
+          .split("/")
+          .last
+          .split(".")
+          .first;
       print("filke path isss  =>${file.path}");
       print("name =>$name");
       print("img64 =>  $img64");
       attachmentInfoModel = AttachmentInfoModel(token: secureStorage
           .token()!,
-          correspondenceId: canOpenDocumentModel!.correspondence!.correspondenceId!,
+          correspondenceId: canOpenDocumentModel!.correspondence!
+              .correspondenceId!,
           fileName: name,
           fileContent: img64,
           language: Get
@@ -684,8 +737,6 @@ class DocumentController extends GetxController {
       });
     } else {}
   }
-
-
 
 
   getIsAlreadyExportedAsPaperwork({required correspondenceId,

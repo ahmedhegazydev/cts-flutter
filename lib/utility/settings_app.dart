@@ -56,4 +56,10 @@ class SettingsApp {
 
 //Before can open document.
 
+  static const String PostUpdateSignatureUrl =baseUrl+"UpdateSignature";
+  static const String PostUploadAttachmentUrl =baseUrl+"UploadAttachment";
+
+
+
+
 }

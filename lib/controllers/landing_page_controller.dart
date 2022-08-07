@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cts/controllers/search_controller.dart';
 import 'package:get/get.dart';
 
 
@@ -23,6 +24,10 @@ class LandingPageController extends GetxController{
     _logindata  =_secureStorage.readSecureJsonData(AllStringConst.LogInData)  ;
     data=LoginModel.fromJson(_logindata!);
    // getFindRecipientData();
+
+
+
+   // Get.find<SearchController>().getAllData();
 Get.find<DocumentController>().getFindRecipientData();
   }
 

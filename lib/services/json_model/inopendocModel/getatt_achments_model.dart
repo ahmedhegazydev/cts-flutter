@@ -1,32 +1,58 @@
-import 'package:cts/services/abstract_json_resource.dart';
+import '../../abstract_json_resource.dart';
 
-class GetAttAchmentItem extends AbstractJsonResource{
+class GetattAchmentsModel extends AbstractJsonResource{
   String? errorMessage;
   int? status;
-  Attachment? attachment;
+  List<Attachments>? attachments;
+  bool? isLocked;
+  String? lockedBy;
+  bool? hasVoice;
+  bool? isDocSigned;
+  String? voiceNote;
 
-  GetAttAchmentItem({this.errorMessage, this.status, this.attachment});
+  GetattAchmentsModel(
+      {this.errorMessage,
+        this.status,
+        this.attachments,
+        this.isLocked,
+        this.lockedBy,
+        this.hasVoice,
+        this.isDocSigned,
+        this.voiceNote});
 
-  GetAttAchmentItem.fromJson(Map<String, dynamic> json) {
+  GetattAchmentsModel.fromJson(Map<String, dynamic> json) {
     errorMessage = json['ErrorMessage'];
     status = json['Status'];
-    attachment = json['attachment'] != null
-        ? new Attachment.fromJson(json['attachment'])
-        : null;
+    if (json['Attachments'] != null) {
+      attachments = <Attachments>[];
+      json['Attachments'].forEach((v) {
+        attachments!.add(new Attachments.fromJson(v));
+      });
+    }
+    isLocked = json['IsLocked'];
+    lockedBy = json['LockedBy'];
+    hasVoice = json['hasVoice'];
+    isDocSigned = json['isDocSigned'];
+    voiceNote = json['voiceNote'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['ErrorMessage'] = this.errorMessage;
     data['Status'] = this.status;
-    if (this.attachment != null) {
-      data['attachment'] = this.attachment!.toJson();
+    if (this.attachments != null) {
+      data['Attachments'] = this.attachments!.map((v) => v.toJson()).toList();
     }
+    data['IsLocked'] = this.isLocked;
+    data['LockedBy'] = this.lockedBy;
+    data['hasVoice'] = this.hasVoice;
+    data['isDocSigned'] = this.isDocSigned;
+    data['voiceNote'] = this.voiceNote;
     return data;
   }
 }
 
-class Attachment {
+class Attachments {
   String? annotations;
   int? attachmentId;
   bool? canEditPDF;
@@ -36,13 +62,13 @@ class Attachment {
   String? folderName;
   bool? isOriginalMail;
   bool? isPrivate;
-  String? serverFileInfo;
+  Null? serverFileInfo;
   int? status;
   int? transferId;
   String? uRL;
   EditOfficeDetails? editOfficeDetails;
 
-  Attachment(
+  Attachments(
       {this.annotations,
         this.attachmentId,
         this.canEditPDF,
@@ -58,7 +84,7 @@ class Attachment {
         this.uRL,
         this.editOfficeDetails});
 
-  Attachment.fromJson(Map<String, dynamic> json) {
+  Attachments.fromJson(Map<String, dynamic> json) {
     annotations = json['Annotations'];
     attachmentId = json['AttachmentId'];
     canEditPDF = json['CanEditPDF'];
@@ -100,15 +126,15 @@ class Attachment {
 }
 
 class EditOfficeDetails {
-  String? fileId;
+  Null? fileId;
   bool? isEditable;
-  String? localUrl;
-  String? name;
-  String? siteId;
-  String? spFrameUrl;
-  String? spLocation;
-  String? spUrl;
-  String? webId;
+  Null? localUrl;
+  Null? name;
+  Null? siteId;
+  Null? spFrameUrl;
+  Null? spLocation;
+  Null? spUrl;
+  Null? webId;
 
   EditOfficeDetails(
       {this.fileId,

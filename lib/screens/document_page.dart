@@ -18,6 +18,7 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../controllers/document_controller.dart';
 import '../controllers/main_controller.dart';
+import '../controllers/web_view_controller.dart';
 import '../services/json_model/inopendocModel/g2g/g2g_Info_for_export_model.dart';
 import '../services/json_model/inopendocModel/save_document_annotation_model.dart';
 import '../services/json_model/login_model.dart';
@@ -58,161 +59,213 @@ class DocumentPage extends GetWidget<DocumentController> {
       //  mainAxisSize: MainAxisSize.max,
       children: [
         _buildTopBar(context),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              Container(
-                  color: Colors.grey[400],
-                  height: 80,
-                  width: size.width * .1,
-                  child: Center(
-                    child: Image.asset(
-                      returnImageNameBasedOnDirection(
-                          "assets/images/arrow", context, "png"),
-                      color: Colors.white,
-                      height: 50,
-                      width: 50,
+        GetBuilder<DocumentController>(builder: (logic) {
+          return SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                Container(
+                    color: Colors.grey[400],
+                    height: 80,
+                    width: size.width * .1,
+                    child: Center(
+                      child: Image.asset(
+                        returnImageNameBasedOnDirection(
+                            "assets/images/arrow", context, "png"),
+                        color: Colors.white,
+                        height: 50,
+                        width: 50,
+                      ),
+                    )),
+                const SizedBox(
+                  width: 4,
+                ),
+                // Container(width: size.width*.5,height: 50,
+                //   child: ListView.builder(shrinkWrap: true,   scrollDirection: Axis.horizontal,
+                //       itemCount: controller.canOpenDocumentModel?.correspondence?.controlList?.toolbarItems?.length,
+                //       itemBuilder: (context,pos){
+                //
+                //
+                //     return controller.canOpenDocumentModel!.correspondence!.controlList!.toolbarItems![pos].display!?
+                //
+                //
+                //
+                //       CustomButtonWithImage(
+                //               // onClick: () {},
+                //               image: 'assets/images/refer.png',
+                //               label:controller.canOpenDocumentModel!.correspondence!.controlList!.toolbarItems![pos].name! ,
+                //             ):SizedBox();
+                //
+                //
+                //       }),
+                // ),
+
+                if (controller
+                    .openAttachment
+                )
+                  InkWell(
+                    onTap: () {
+                      controller.updatecloseAttashment(
+                          controller.isOriginalMailAttachmentsList!.uRL!);
+                    },
+                    child: CustomButtonWithImage(
+                      // onClick: () {},
+                      image: 'assets/images/up_arrow.png',
+                      label: "backtooriginalfile".tr,
                     ),
-                  )),
-              const SizedBox(
-                width: 4,
-              ),
-              if (controller
-                  .canOpenDocumentModel?.correspondence?.hasAttachments ??
-                  true)
+                  ),
+
+
+                if (controller
+                    .canOpenDocumentModel?.correspondence?.hasAttachments ??
+                    true)
+                  InkWell(
+                    onTap: () {
+                      _popUpMenuhasAttachments(context);
+                    },
+                    child: CustomButtonWithImage(
+                      // onClick: () {},
+                      image: 'assets/images/refer.png',
+                      label: "Attachments".tr,
+                    ),
+                  ),
+                // if (controller
+                //     .canOpenDocumentModel?.correspondence?.hasSummaries ??
+                //     true)
+                // InkWell(
+                //   onTap: () {
+                //     controller
+                //         .canOpenDocumentModel?.correspondence.
+                //   },
+                //   child: CustomButtonWithImage(
+                //     //onClick: () {},
+                //     image: 'assets/images/refer.png',
+                //     label: "hasSummaries".tr,
+                //   ),
+                // ),
                 InkWell(
                   onTap: () {
-                    _popUpMenuhasAttachments(context);
+                    controller.filePickerR();
                   },
                   child: CustomButtonWithImage(
-                    // onClick: () {},
-                    image: 'assets/images/refer.png',
-                    label: "hasAttachments".tr,
+                    //onClick: () {},
+                    image: 'assets/images/attachment.png',
+                    label: "Add Attachments".tr,
                   ),
                 ),
-              InkWell(
-                onTap: () {
-                  controller.filePickerR();
-                },
-                child: CustomButtonWithImage(
-                  //onClick: () {},
-                  image: 'assets/images/refer.png',
-                  label: "Add Attachments".tr,
-                ),
-              ),
-              if (controller
-                  .canOpenDocumentModel?.correspondence?.hasSummaries ??
-                  true)
+
                 InkWell(
                   onTap: () {
-                    _popUpExportG2GDocument(context);
+                    _popUpMenu(context);
                   },
                   child: CustomButtonWithImage(
                     //onClick: () {},
                     image: 'assets/images/refer.png',
-                    label: "hasSummaries".tr,
+                    label: "refer".tr,
                   ),
                 ),
-              InkWell(
-                onTap: () {
-                  _popUpMenu(context);
-                },
-                child: CustomButtonWithImage(
-                  //onClick: () {},
-                  image: 'assets/images/refer.png',
-                  label: "refer".tr,
+                Container(
+                  height: 30,
+                  width: 1,
+                  color: Colors.grey[800],
                 ),
-              ),
-              Container(
-                height: 30,
-                width: 1,
-                color: Colors.grey[800],
-              ),
-              PopupMenuButton(
-                elevation: 4,
-                child: CustomButtonWithImage(
-                  image: 'assets/images/up_arrow.png',
-                  label: "export".tr,
+                PopupMenuButton(
+                  elevation: 4,
+                  child: CustomButtonWithImage(
+                    image: 'assets/images/up_arrow.png',
+                    label: "export".tr,
+                  ),
+                  itemBuilder: (BuildContext context) {
+                    return [
+                      PopupMenuItem(
+                          child: Text("paperExport".tr),
+                          onTap: () {
+                            controller.getIsAlreadyExportedAsPaperwork(
+                                context: context,
+                                correspondenceId:
+                                controller.correspondences.correspondenceId!,
+                                transferId:
+                                controller.correspondences.transferId!,
+                                exportAction: "paper");
+                          }),
+                      PopupMenuItem(
+                          child: Text("electronicExport".tr),
+                          onTap: () {
+                            controller.getIsAlreadyExportedAsPaperwork(
+                                context: context,
+                                correspondenceId:
+                                controller.correspondences.correspondenceId!,
+                                transferId:
+                                controller.correspondences.transferId!,
+                                exportAction: "electronic");
+                            print("electronicExport");
+                          }),
+                      PopupMenuItem(
+                          child: Text("paperAndElectronicExport".tr),
+                          onTap: () {
+                            controller.getIsAlreadyExportedAsPaperwork(
+                                context: context,
+                                correspondenceId:
+                                controller.correspondences.correspondenceId!,
+                                transferId:
+                                controller.correspondences.transferId!,
+                                exportAction: "paperAndelectronic");
+                            print("paperAndElectronicExport");
+                          }),
+                    ];
+                  },
                 ),
-                itemBuilder: (BuildContext context) {
-                  return [
-                    PopupMenuItem(
-                        child: Text("paperExport".tr),
-                        onTap: () {
-                          controller.getIsAlreadyExportedAsPaperwork(
-                              context: context,
-                              correspondenceId:
-                              controller.correspondences.correspondenceId!,
-                              transferId:
-                              controller.correspondences.transferId!,
-                              exportAction: "paper");
-                        }),
-                    PopupMenuItem(
-                        child: Text("electronicExport".tr),
-                        onTap: () {
-                          controller.getIsAlreadyExportedAsPaperwork(
-                              context: context,
-                              correspondenceId:
-                              controller.correspondences.correspondenceId!,
-                              transferId:
-                              controller.correspondences.transferId!,
-                              exportAction: "electronic");
-                          print("electronicExport");
-                        }),
-                    PopupMenuItem(
-                        child: Text("paperAndElectronicExport".tr),
-                        onTap: () {
-                          controller.getIsAlreadyExportedAsPaperwork(
-                              context: context,
-                              correspondenceId:
-                              controller.correspondences.correspondenceId!,
-                              transferId:
-                              controller.correspondences.transferId!,
-                              exportAction: "paperAndelectronic");
-                          print("paperAndElectronicExport");
-                        }),
-                  ];
-                },
-              ),
-              Container(
-                height: 30,
-                width: 1,
-                color: Colors.grey[800],
-              ),
-              CustomButtonWithImage(
-                // onClick: () {},
-                image: 'assets/images/ending.png',
-                label: "ending".tr,
-              ),
-              Container(
-                height: 30,
-                width: 1,
-                color: Colors.grey[800],
-              ),
-              CustomButtonWithImage(
-                // onClick: () {},
-                image: 'assets/images/track.png',
-                label: "tracking".tr,
-              ),
-              Container(
-                height: 30,
-                width: 1,
-                color: Colors.grey[800],
-              ),
-              CustomButtonWithImage(
-                //    onClick: () {},
-                image: 'assets/images/referrals.png',
-                label: "referrals".tr,
-              ),
-              Container(
-                height: 30,
-                width: 1,
-                color: Colors.grey[800],
-              ),
-            ],
-          ),
-        ),
+                Container(
+                  height: 30,
+                  width: 1,
+                  color: Colors.grey[800],
+                ),
+                CustomButtonWithImage(
+                  // onClick: () {},
+                  image: 'assets/images/ending.png',
+                  label: "ending".tr,
+                ),
+                Container(
+                  height: 30,
+                  width: 1,
+                  color: Colors.grey[800],
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Get
+                        .find<WebViewPageController>()
+                        .url = controller
+                        .canOpenDocumentModel?.correspondence!
+                        .visualTrackingUrl!;
+                    Get.toNamed(
+                      "WebViewPage",
+                    );
+                  },
+                  child: CustomButtonWithImage(
+                    // onClick: () {},
+                    image: 'assets/images/track.png',
+                    label: "tracking".tr,
+                  ),
+                ),
+                Container(
+                  height: 30,
+                  width: 1,
+                  color: Colors.grey[800],
+                ),
+                CustomButtonWithImage(
+                  //    onClick: () {},
+                  image: 'assets/images/referrals.png',
+                  label: "referrals".tr,
+                ),
+                Container(
+                  height: 30,
+                  width: 1,
+                  color: Colors.grey[800],
+                ),
+              ],
+            ),
+          );
+        }),
         Container(
           height: 1,
           width: size.width,
@@ -472,10 +525,12 @@ class DocumentPage extends GetWidget<DocumentController> {
                           ),
                           CustomSideButtonMenu(
                             onClick: () async {
-                              List<DocumentAnnotations>listofdocumentAnnotations=[];
-                              RenderBox? pdfViewerRenderBox = controller.pdfViewerkey!.currentContext
+                              List<DocumentAnnotations>
+                              listofdocumentAnnotations = [];
+                              RenderBox? pdfViewerRenderBox = controller
+                                  .pdfViewerkey!.currentContext
                                   ?.findRenderObject() as RenderBox?;
-                               controller.singpic.forEach((key, value) async {
+                              controller.singpic.forEach((key, value) async {
                                 print("image 64  => $value");
                                 RenderBox? box = key.currentContext
                                     ?.findRenderObject() as RenderBox?;
@@ -487,67 +542,55 @@ class DocumentPage extends GetWidget<DocumentController> {
                                 print(pos?.dy);
                                 print(pos?.dx);
                                 DocumentAnnotations d = DocumentAnnotations();
-                                 d.  FontSize
-                                 =12;
-                                 d.  ForceViewers
-                               ="";
-                                 d.  Height
-                          =box?.size.height;
-                                 d.  ImageByte
-                                =value;
-                                 d.  ImageName
-                                ="";
-                                 d.  Text
-                                 ="";
-                                 d.  ParentWidth
-                                =pdfViewerRenderBox?.size.width;
-                                 d.  ParentHeight
-                              =pdfViewerRenderBox?.size.height;
-                                 d.  Page
-                                =controller.pdfViewerController.pageNumber;
-                                 d.  IsExclusive
-                               =false.toString();
-                                 d.  Type
-                                =3.toString();
-                                 d.  Viewers
-                                =  "Everyone";
-                                 d.  Width
-                                 =box?.size.width;
-                                 d.  X
-                                  =pos?.dx;
-                                 d.  Y
-                                    =pos?.dy ;
-                             listofdocumentAnnotations.add(d );
+                                d.FontSize = 12;
+                                d.ForceViewers = "";
+                                d.Height = box?.size.height;
+                                d.ImageByte = value;
+                                d.ImageName = "";
+                                d.Text = "";
+                                d.ParentWidth = pdfViewerRenderBox?.size.width;
+                                d.ParentHeight =
+                                    pdfViewerRenderBox?.size.height;
+                                d.Page =
+                                    controller.pdfViewerController.pageNumber;
+                                d.IsExclusive = false.toString();
+                                d.Type = 3.toString();
+                                d.Viewers = "Everyone";
+                                d.Width = box?.size.width;
+                                d.X = pos?.dx;
+                                d.Y = pos?.dy;
+                                listofdocumentAnnotations.add(d);
                               });
-                                             print("listofdocumentAnnotations.length=> ${listofdocumentAnnotations.length}");
+                              print(
+                                  "listofdocumentAnnotations.length=> ${listofdocumentAnnotations
+                                      .length}");
 
-                               print("listofdocumentAnnotations=>${listofdocumentAnnotations.length}");
-                              print("listofdocumentAnnotations=>${listofdocumentAnnotations}");
-
-
-
+                              print(
+                                  "listofdocumentAnnotations=>${listofdocumentAnnotations
+                                      .length}");
+                              print(
+                                  "listofdocumentAnnotations=>${listofdocumentAnnotations}");
+                                controller.getSaveDocAnnotationsDataLocalJson();
                               await controller.getSaveDocAnnotationsData(
-                                  attachmentId
-                                      : controller
+                                  attachmentId: controller
                                       .isOriginalMailAttachmentsList!
                                       .attachmentId,
-                                  correspondenceId
-                                      : controller.canOpenDocumentModel!
-                                      .correspondence!.correspondenceId,
-                                  delegateGctId
-                                      : "0",
-                                  documentAnnotationsString
-                                      :  listofdocumentAnnotations   ,
-                                  isOriginalMail
-                                      : controller
+                                  correspondenceId: controller
+                                      .canOpenDocumentModel!
+                                      .correspondence!
+                                      .correspondenceId,
+                                  delegateGctId: "0",
+                                  documentAnnotationsString:
+                                  listofdocumentAnnotations,
+                                  isOriginalMail: controller
                                       .isOriginalMailAttachmentsList!
                                       .isOriginalMail,
-                                  transferId
-                                      : controller.canOpenDocumentModel!
+                                  transferId: controller.canOpenDocumentModel!
                                       .correspondence!.transferId,
-                                  userId
-                                      : controller.secureStorage
-                                      .readIntSecureData(AllStringConst.UserId).toString());  },
+                                  userId: controller.secureStorage
+                                      .readIntSecureData(AllStringConst.UserId)
+                                      .toString());
+                            },
                             label: "save".tr,
                             image: 'assets/images/save.png',
                           )
@@ -559,20 +602,13 @@ class DocumentPage extends GetWidget<DocumentController> {
                   color: Colors.grey,
                 ),
                 GetBuilder<DocumentController>(builder: (logic) {
+                  print("i geeeeeeeeeeeeeet pilllll");
                   return Expanded(
                       flex: 4,
                       child: Container(
-                        child: Stack(children: [
-                          ...controller.pdfAndSing
+                        child:  Stack(children: [
 
-                          //                 ,    ResizebleWidget(
-                          //                       child: Text(
-                          //                         '''I've just did simple prototype to show main idea.
-                          // 1. Draw size handlers with container;
-                          // 2. Use GestureDetector to get new variables of sizes
-                          // 3. Refresh the main container size.''',
-                          //                       ),
-                          //                     ),
+                          ...controller.pdfAndSing
                         ]),
                         //  color: Colors.red,
                         //     child: SfPdfViewer.network(
@@ -1250,14 +1286,23 @@ class DocumentPage extends GetWidget<DocumentController> {
             actions: <Widget>[
               TextButton(
                 onPressed: () {
+                  ///ToDo
+                  ///send to many
+
                   print("i click ok");
                   print(
                       "Get.find<InboxController>().   =>   ${controller
                           .transfarForMany.length}");
-
-                  controller.transfarForMany.forEach((key, value) {
-                    print("$key      ${value.toMap()}");
-                  });
+                  controller.multipleTransferspost(
+                      transferId: controller
+                          .canOpenDocumentModel!.correspondence!.transferId!,
+                      correspondenceId: controller
+                          .canOpenDocumentModel!.correspondence!
+                          .correspondenceId);
+                  // controller.transfarForMany.forEach((key, value) {
+                  //
+                  //   print("$key      ${value.toMap()}");
+                  // });
                   //  Navigator.of(context).pop();
                 },
                 child: Text("Ok"),
@@ -1368,7 +1413,6 @@ class DocumentPage extends GetWidget<DocumentController> {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
-
                         width: MediaQuery
                             .of(context)
                             .size
@@ -1378,32 +1422,38 @@ class DocumentPage extends GetWidget<DocumentController> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
-                                  width: double.infinity, color: Theme
-                                  .of(context)
-                                  .colorScheme
-                                  .primary, child: Text(key)),
+                                  width: double.infinity,
+                                  color: Theme
+                                      .of(context)
+                                      .colorScheme
+                                      .primary,
+                                  child: Text(key)),
                             ),
                             Expanded(
                               child: ListView.builder(
-                                  itemCount:
-                                  Get
+                                  itemCount: Get
                                       .find<DocumentController>()
                                       .folder2[key]!
                                       .length,
                                   itemBuilder: (context, indx) {
                                     return Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: GestureDetector(onTap: () {
-                                        Get.find<DocumentController>()
-                                            .getAttachmentItemlocal(
-                                            context: context);
-                                        //  _popShowAttachments(context);
-                                      },
-                                        child: Text(Get
-                                            .find<
-                                            DocumentController>()
-                                            .folder2[key]![indx]
-                                            .fileName!),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Get.find<DocumentController>()
+                                              .getAttachmentItemlocal(
+                                              context: context);
+
+
+
+Get.back();
+                                          //  _popShowAttachments(context);
+                                        },
+                                        child: Text(
+                                            Get
+                                                .find<DocumentController>()
+                                                .folder2[key]![indx]
+                                                .fileName!),
                                       ),
                                     );
                                   }),

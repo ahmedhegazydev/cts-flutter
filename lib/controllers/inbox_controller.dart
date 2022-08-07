@@ -20,12 +20,14 @@ import '../services/apis/get_correspondences_all_api.dart';
 import '../services/apis/get_correspondences_api.dart';
 
 //import '../services/json_model/get_correspondences_model.dart';
+import '../services/apis/multiple_transfers_api.dart';
 import '../services/json_model/basket/add_documents_to_basket_request.dart';
 import '../services/json_model/basket/fetch_basket_list_model.dart';
 import '../services/json_model/can_open_document_model.dart';
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_correspondences_all_model.dart';
 import '../services/json_model/get_correspondences_model.dart';
+import '../services/json_model/inopendocModel/multiple_transfers_model.dart';
 import '../services/json_model/login_model.dart';
 import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
 import '../utility/all_string_const.dart';
@@ -425,7 +427,45 @@ bool edit=false;
   Map<int, ReplyWithVoiceNoteRequestModel> transfarForMany = {};
   Map<int, CustomActions> transfarForManyCustomActions = {};
  // Map<int, String> transfarForManyNots = {};
+//=============================================================================================
+  MultipleTransfersAPI _multipleTransfersAPI = MultipleTransfersAPI();
 
+  multipleTransferspost(
+      {required correspondenceId,required transferId,required docDueDate}) {
+    List<TransferNode>transfers=[];
+
+    transfarForMany.forEach((key, value) {
+      TransferNode transferNode = TransferNode(destinationId: key.toString(),
+          purposeId:correspondenceId,
+          dueDate: docDueDate.toString(),
+          voiceNote
+              :value.voiceNote!,
+          voiceNoteExt
+              : "m4a");
+      print("transferNode=>  ${transferNode.toMap()}");
+
+      transfers.add(transferNode); });
+
+    print("transferNode=>  ${transfers.length}");
+
+    MultipleTransfersModel multipleTransfersModel = MultipleTransfersModel(
+        token: secureStorage.token()!,
+        correspondenceId: correspondenceId,
+        transferId: transferId,
+        transfers: transfers);
+
+    print(multipleTransfersModel.toMap());
+    transfarForMany.clear();
+    usersWillSendTo.clear();
+    _multipleTransfersAPI.post(multipleTransfersModel.toMap()).then((value) {
+      print(" _multipleTransfersAPI end");
+      print(value);
+
+    });
+  }
+
+
+//=====================================================================================
   CustomActions? getactions(id) {
     return transfarForManyCustomActions[id];
     update();

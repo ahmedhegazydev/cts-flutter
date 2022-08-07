@@ -3,6 +3,7 @@
 import '../../utility/settings_app.dart';
 import '../abstract_json_resource.dart';
 import '../api_manager.dart';
+import '../json_model/inopendocModel/multiple_transfers_model.dart';
 
 class MultipleTransfersAPI extends ApiManager{
   @override
@@ -12,8 +13,7 @@ return SettingsApp.MultipleTransfersUrl ;
 
   @override
   AbstractJsonResource fromJson(data) {
-    // TODO: implement fromJson
-    throw UnimplementedError();
+ return MultipleTransfersModel.fromMap(data);
   }
   
 }

@@ -1159,6 +1159,15 @@ class CustomListView extends StatelessWidget {
 
 
                                                                     });
+
+                                                                    Get.find<InboxController>().multipleTransferspost(
+                                                                        transferId:
+
+                                                                        correspondences[pos]
+                                                                            .transferId
+                                                                    ,
+                                                                        correspondenceId:   correspondences[pos]
+                                                                            .correspondenceId, docDueDate: correspondences[pos].docDueDate);
                                                                     //Navigator.of(context).pop();
                                                                   },
                                                                   child: Text(
@@ -1326,7 +1335,7 @@ class CustomListView extends StatelessWidget {
                                                               onPressed:
                                                                   () async {
                                                                 /// ToDo send Replay
-
+print("77777777777777777777777777777777777777777777777777");
                                                                 Navigator.of(
                                                                         ctx)
                                                                     .pop();
@@ -1934,7 +1943,8 @@ Get.find<DocumentController>().g2gInfoForExport(documentId: allCorrespondences[p
                                                       ],
                                                     ),
                                                   );
-                                                } else if (v == 2) {
+                                                }
+                                                else if (v == 2) {
                                                   showDialog(
                                                       context: context,
                                                       builder: (BuildContext
@@ -2436,6 +2446,17 @@ Get.find<DocumentController>().g2gInfoForExport(documentId: allCorrespondences[p
                                                                   //   print(v.status);
                                                                   //   print("1" * 50);
                                                                   // });
+
+                                                                  Get.find<DocumentController>().multipleTransferspost(
+                                                                      transferId:
+
+                                                                      allCorrespondences[pos]
+                                                                          .transferId
+
+                                                                      ,
+                                                                      correspondenceId: allCorrespondences[pos]
+
+                                                                          .correspondenceId);
                                                                   print(
                                                                       "$key      ${value.toMap()}");
                                                                 });
@@ -2446,7 +2467,8 @@ Get.find<DocumentController>().g2gInfoForExport(documentId: allCorrespondences[p
                                                           ],
                                                         );
                                                       });
-                                                } else if (v == 3) {
+                                                }
+                                                else if (v == 3) {
                                                   showDialog(
                                                     context: context,
                                                     builder: (ctx) =>

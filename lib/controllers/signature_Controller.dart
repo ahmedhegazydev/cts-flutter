@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:signature/signature.dart';
 
+import '../services/apis/update_signature_api.dart';
 import '../services/json_model/login_model.dart';
+import '../services/json_model/signature_Info_model.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
 class SignaturePageController extends GetxController{
+
   Map <String,dynamic>?logindata;
   List<MultiSignatures> multiSignatures=[];
   final SecureStorage secureStorage = SecureStorage();
 
-
+  UpdateSignatureApi _updateSignatureApi=UpdateSignatureApi();
 
   final SignatureController controller = SignatureController(
     penStrokeWidth: 5,
@@ -19,7 +22,19 @@ class SignaturePageController extends GetxController{
   );
 
 
+  updateSignature({required SignatureInfoModel signatureInfoModel}){
 
+
+
+
+    _updateSignatureApi.post(signatureInfoModel.toMap()).then((value) {
+
+print(value);
+
+
+
+    });
+  }
 
 
 

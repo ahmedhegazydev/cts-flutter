@@ -1,8 +1,12 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:signature/signature.dart';
 
 import '../controllers/signature_Controller.dart';
+import '../services/json_model/signature_Info_model.dart';
 import '../utility/utilitie.dart';
 
 class SignaturePage extends GetView<SignaturePageController> {
@@ -15,11 +19,21 @@ class SignaturePage extends GetView<SignaturePageController> {
         Container(height: 300,
             width: double.infinity,
             child: Signature(controller: controller.controller,)),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,children: [
+        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           InkWell(onTap: () {
             controller.controller.clear();
-          }, child: Icon(Icons.clear,size: 50,)),
-          InkWell(onTap: () {}, child: Icon(Icons.save,size: 50,)),
+          }, child: Icon(Icons.clear, size: 50,)),
+          InkWell(onTap: ()async {
+            print("9999999999999999999999999999999");
+            final Uint8List? data =await controller.controller.toPngBytes();
+            SignatureInfoModel _signatureInfoModel = SignatureInfoModel(
+                signature:   base64.encode(data!), Token: controller.secureStorage.token()!,
+                SignatureId: controller.multiSignatures[0].cNTGctId.toString());
+
+               controller.updateSignature(signatureInfoModel: _signatureInfoModel);
+
+
+          }, child: Icon(Icons.save, size: 50,)),
         ],),
         Divider(color: Colors.grey)
         , Expanded(
@@ -35,12 +49,11 @@ class SignaturePage extends GetView<SignaturePageController> {
                       crossAxisSpacing: 4.0,
                       mainAxisSpacing: 4.0
                   ),
-                  itemBuilder: (BuildContext context, int index){
+                  itemBuilder: (BuildContext context, int index) {
                     return Image.memory(dataFromBase64String(controller
-                                  .multiSignatures[index].signature));
+                        .multiSignatures[index].signature));
                   },
                 );
-
 
 
               // ListView.builder(

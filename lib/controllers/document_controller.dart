@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -22,6 +23,7 @@ import '../services/apis/inOpenDocument/get_document_audit_logs_api.dart';
 import '../services/apis/inOpenDocument/get_document_links_api.dart';
 import '../services/apis/inOpenDocument/get_document_receivers_api.dart';
 import '../services/apis/inOpenDocument/get_document_transfers_api.dart';
+import '../services/apis/inOpenDocument/upload_attachment_api.dart';
 import '../services/apis/inside_doc/auto_send_to_recepients_and-cc_api.dart';
 import '../services/apis/inside_doc/can_export_as_paperwork_api.dart';
 import '../services/apis/inside_doc/check_for_empty_structure_recipients_api.dart';
@@ -31,6 +33,7 @@ import '../services/apis/inside_doc/g2g/receive_document_using_g2g_api.dart';
 import '../services/apis/inside_doc/get_user_routing_api.dart';
 import '../services/apis/inside_doc/is_already_exported_as_paperwork_api.dart';
 import '../services/apis/inside_doc/is_already_exported_as_transfer_api.dart';
+import '../services/apis/multiple_transfers_api.dart';
 import '../services/apis/save_document_annotations_api.dart';
 import '../services/json_model/can_open_document_model.dart';
 import '../services/json_model/find_recipient_model.dart';
@@ -39,6 +42,7 @@ import '../services/json_model/get_document_links_model.dart';
 import '../services/json_model/get_document_logs_model.dart';
 import '../services/json_model/get_document_receivers_model.dart';
 import '../services/json_model/get_document_transfers_model.dart';
+import '../services/json_model/inopendocModel/attachment_Info_model.dart';
 import '../services/json_model/inopendocModel/auto_send_to_recepients_and_cc_model.dart';
 import '../services/json_model/inopendocModel/can_export_as_paperwork_model.dart';
 import '../services/json_model/inopendocModel/check_for_empty_structure_recipients_model.dart';
@@ -47,8 +51,11 @@ import '../services/json_model/inopendocModel/g2g/g2g_export_dto.dart';
 import '../services/json_model/inopendocModel/g2g/g2g_receive_or_reject_dto.dart';
 import '../services/json_model/inopendocModel/get_attachment_item_model.dart';
 import '../services/json_model/inopendocModel/get_user_routing_model.dart';
+import '../services/json_model/inopendocModel/getatt_achments_model.dart'as getatt_achments_model;
+import '../services/json_model/inopendocModel/getatt_achments_model.dart';
 import '../services/json_model/inopendocModel/is_already_exported_as_paperwork_model.dart';
 import '../services/json_model/inopendocModel/is_already_exported_as_transfer_model.dart';
+import '../services/json_model/inopendocModel/multiple_transfers_model.dart';
 import '../services/json_model/inopendocModel/save_document_annotation_model.dart';
 import '../services/json_model/login_model.dart';
 import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
@@ -63,8 +70,15 @@ import 'package:flutter/services.dart' as rootBundel;
 class DocumentController extends GetxController {
 //Map<int,String>folder={};
   String? oragnalFileDoc;
+  String pdfUrlFile="";
+  bool openAttachment=false;
   AttachmentsList? isOriginalMailAttachmentsList;
   Map<String, List<AttachmentsList>>folder2 = {};
+
+
+  UploadAttachmentApi _uploadAttachmentApi = UploadAttachmentApi();
+  AttachmentInfoModel? attachmentInfoModel;
+
 
   Parents? toParent;
   TextEditingController textEditingControllerToParent =
@@ -85,8 +99,19 @@ class DocumentController extends GetxController {
   List<DepartmentList>toDepartmentList = [];
 
   List<DepartmentList>cctoDepartmentList = [];
-  PdfViewerController pdfViewerController=PdfViewerController();
-  GlobalKey? pdfViewerkey ;
+  PdfViewerController pdfViewerController = PdfViewerController();
+  GlobalKey? pdfViewerkey;
+
+updateopenAttashment(String link){
+  openAttachment=true;
+
+  update();
+}
+  updatecloseAttashment(String link){
+    openAttachment=false;
+
+    update();
+  }
   addtoDepartmentList({required DepartmentList department}) {
     toDepartmentList.add(department);
     update();
@@ -111,6 +136,9 @@ class DocumentController extends GetxController {
 
   GetAttAchmentItem? getAttAchmentItem;
 
+  //دي الرد بتاع السيف للاتاتشمنت
+ getatt_achments_model. Attachments ? saveAttAchmentItemAnnotationsresalt;
+  GetattAchmentsModel? saveAttAchmentItemAnnotationsData;
   getAttachmentItem({documentId, transferId, attachmentId}) {
     getAttachmentItemAPI.data = "Token=${secureStorage
         .token()}&documentId=$documentId&transferId=$transferId&attachmentId=$attachmentId&language=${Get
@@ -119,9 +147,12 @@ class DocumentController extends GetxController {
       getAttAchmentItem = value as GetAttAchmentItem;
     });
   }
-
+//open the AttachmentItem
   getAttachmentItemlocal(
       {documentId, transferId, attachmentId, required BuildContext context}) async {
+
+
+
     final jsondata = await rootBundel.rootBundle.loadString(
         "assets/json/getattachmentitem.json");
 
@@ -129,35 +160,40 @@ class DocumentController extends GetxController {
     print("g2gInfoForExportModel?.toJson()=>  ${g2gInfoForExportModel
         ?.toJson()}");
 
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(getAttAchmentItem!.attachment!.fileName!),
-            content: SizedBox(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * .7,
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * .7,
-                child: SfPdfViewer.network(
-                  //'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf'
-                    getAttAchmentItem!.attachment!.uRL!
+    pdfUrlFile=   getAttAchmentItem!.attachment!.uRL!;
 
-                )),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text("Ok"),
-              ),
-            ],
-          );
-        });
+update();
+
+
+    // showDialog(
+    //     context: context,
+    //     builder: (BuildContext context) {
+    //       return AlertDialog(
+    //         title: Text(getAttAchmentItem!.attachment!.fileName!),
+    //         content: SizedBox(
+    //             height: MediaQuery
+    //                 .of(context)
+    //                 .size
+    //                 .height * .7,
+    //             width: MediaQuery
+    //                 .of(context)
+    //                 .size
+    //                 .width * .7,
+    //             child: SfPdfViewer.network(
+    //               //'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf'
+    //                 getAttAchmentItem!.attachment!.uRL!
+    //
+    //             )),
+    //         actions: <Widget>[
+    //           TextButton(
+    //             onPressed: () {
+    //               Navigator.of(context).pop();
+    //             },
+    //             child: Text("Ok"),
+    //           ),
+    //         ],
+    //       );
+    //     });
   }
 
   // [OperationContract]
@@ -166,52 +202,156 @@ class DocumentController extends GetxController {
   // GetAttachmentItemResult GetAttachmentItem(string Token, string documentId, string transferId, string attachmentId, string language);
   //
 
+//=============================================================================================
+  MultipleTransfersAPI _multipleTransfersAPI = MultipleTransfersAPI();
 
+  multipleTransferspost(
+      {correspondenceId, transferId}) {
+        List<TransferNode>transfers=[];
+
+    transfarForMany.forEach((key, value) {
+      TransferNode transferNode = TransferNode(destinationId: key.toString(),
+          purposeId: value.correspondencesId!,
+          dueDate: canOpenDocumentModel!.correspondence!.docDueDate!,
+          voiceNote
+          :value.voiceNote!,
+          voiceNoteExt
+          : "m4a");
+print("transferNode=>  ${transferNode.toMap()}");
+
+      transfers.add(transferNode); });
+
+        print("transferNode=>  ${transfers.length}");
+
+    MultipleTransfersModel multipleTransfersModel = MultipleTransfersModel(
+        token: secureStorage.token()!,
+        correspondenceId: correspondenceId,
+        transferId: transferId,
+        transfers: transfers);
+
+print(multipleTransfersModel.toMap());
+        transfarForMany.clear();
+        usersWillSendTo.clear();
+    _multipleTransfersAPI.post(multipleTransfersModel.toMap()).then((value) {
+      print(" _multipleTransfersAPI end");
+print(value);
+
+    });
+  }
+
+
+//=====================================================================================
   final SaveDocumentAnnotationsAPI _saveDocumentAnnotationsApi =
   SaveDocumentAnnotationsAPI();
   SaveDocumentAnnotationModel? postSaveDocumentAnnotationsModel;
 
- Future getSaveDocAnnotationsData({
+  Future getSaveDocAnnotationsData({
     userId,
     correspondenceId,
     transferId,
     attachmentId,
     isOriginalMail, //(string) input should “true” or “false”
-   required List<DocumentAnnotations>  documentAnnotationsString, //string converted from array contains the details of annotations)
+    required List<
+        DocumentAnnotations> documentAnnotationsString, //string converted from array contains the details of annotations)
     delegateGctId //string) input “0”
 
-  }) async{
-
-    postSaveDocumentAnnotationsModel= SaveDocumentAnnotationModel(
-        AttachmentId:attachmentId.toString(), CorrespondenceId:correspondenceId, DelegateGctId:delegateGctId,
-    documentAnnotationsString: documentAnnotationsString,IsOriginalMail: isOriginalMail ,Token: secureStorage.token(),UserId:userId ,TransferId:transferId );
-  //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
+  }) async {
+    postSaveDocumentAnnotationsModel = SaveDocumentAnnotationModel(
+        AttachmentId: attachmentId.toString(),
+        CorrespondenceId: correspondenceId,
+        DelegateGctId: delegateGctId,
+        documentAnnotationsString: documentAnnotationsString,
+        IsOriginalMail: isOriginalMail,
+        Token: secureStorage.token(),
+        UserId: userId,
+        TransferId: transferId);
+    //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
 
     print("postSaveDocumentAnnotationsModel?.toMap() =>${jsonEncode(postSaveDocumentAnnotationsModel?.toMap())}");
 
 
-    await  _saveDocumentAnnotationsApi
+    await _saveDocumentAnnotationsApi
         .post(postSaveDocumentAnnotationsModel?.toMap())
         .then((value) {
-          print("value =>   ${value}");
-      postSaveDocumentAnnotationsModel = value as SaveDocumentAnnotationModel;
-          print("postSaveDocumentAnnotationsModel =>   ${postSaveDocumentAnnotationsModel?.toMap()}");
+      print("value =>   ${value}");
+      saveAttAchmentItemAnnotationsData = value as GetattAchmentsModel;
+      saveAttAchmentItemAnnotationsData?.attachments?.forEach((element) {
+        if(element.attachmentId==getAttAchmentItem!.attachment!.attachmentId){
+
+
+
+          saveAttAchmentItemAnnotationsresalt=element;
+          pdfAndSing.clear();
+          singpic.clear();
+
+          pdfAndSing.add(SfPdfViewer.network(
+            saveAttAchmentItemAnnotationsresalt!.uRL!
+            // oragnalFileDoc??""
+            , controller: pdfViewerController,
+            key: pdfViewerkey,
+          ));
+ String d=saveAttAchmentItemAnnotationsresalt!.annotations!..replaceAll(new RegExp(r'[^\w\s]+'),'');
+ print("ddddddddddddddddddddddd=>  $d");
+     //   DocumentAnnotations a=DocumentAnnotations.fromJson(jsonDecode( saveAttAchmentItemAnnotationsresalt!.annotations!));
+
+          //update();
+        }
+
+      });
+
     });
   }
+  Future getSaveDocAnnotationsDataLocalJson()async{
 
+    final jsondata = await rootBundel.rootBundle.loadString(
+        "assets/json/getattachments.json");
+    saveAttAchmentItemAnnotationsData =   GetattAchmentsModel.fromJson(jsonDecode(jsondata));
+    print("444444444444444444444=> ${saveAttAchmentItemAnnotationsData!.toJson()}");
+
+    saveAttAchmentItemAnnotationsData?.attachments?.forEach((element) {
+      print("saveAttAchmentItemAnnotationsData=>   ${saveAttAchmentItemAnnotationsData}");
+    String a= element.annotations!.replaceAll(new RegExp(r'[^\w\s]+'),'');
+    print("444444444444444444444=> $a");
+      if(element.attachmentId==getAttAchmentItem!.attachment!.attachmentId){
+
+
+
+        saveAttAchmentItemAnnotationsresalt=element;
+        pdfAndSing.clear();
+        singpic.clear();
+
+        pdfAndSing.add(SfPdfViewer.network(  'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf'
+         // saveAttAchmentItemAnnotationsresalt!.uRL!
+          // oragnalFileDoc??""
+          , controller: pdfViewerController,
+          key: pdfViewerkey,
+        ));
+        log(saveAttAchmentItemAnnotationsData.toString());
+        print("saveAttAchmentItemAnnotationsresalt!.annotations!=99999>  ${saveAttAchmentItemAnnotationsresalt!.annotations}");
+        String d=saveAttAchmentItemAnnotationsData.attachments.!.annotations!.replaceAll(new RegExp(r'[^\w\s]+'),'');
+        print("ddddddddddddddddddddddd=>  $d");
+      //  DocumentAnnotations a=DocumentAnnotations.fromJson(jsonDecode( saveAttAchmentItemAnnotationsresalt!.annotations!));
+//print("DocumentAnnotations=>  ${a.toJson()}");
+        update();
+      }
+
+    });
+
+
+  }
   SecureStorage secureStorage = SecureStorage();
   CanOpenDocumentModel? canOpenDocumentModel;
 
 
   //تحديث كان ابن فيل وجلب جميع البيانات الخاصه بلملف
   updatecanOpenDocumentModel(CanOpenDocumentModel data) {
- pdfViewerkey   = GlobalKey();
- pdfAndSing.clear();
+    pdfViewerkey = GlobalKey();
+    pdfAndSing.clear();
     pdfAndSing.add(SfPdfViewer.network(
-        'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf'
+      'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf'
       // oragnalFileDoc??""
-,controller: pdfViewerController,
-key: pdfViewerkey,
+      , controller: pdfViewerController,
+      key: pdfViewerkey,
     ));
 
 
@@ -219,7 +359,7 @@ key: pdfViewerkey,
     canOpenDocumentModel?.attachments?.attachments?.forEach((element) {
       if (element.isOriginalMail!) {
         oragnalFileDoc = element.uRL!;
-        isOriginalMailAttachmentsList=element;
+        isOriginalMailAttachmentsList = element;
       }
 
       if (element.isOriginalMail == false) {
@@ -277,6 +417,18 @@ key: pdfViewerkey,
   Map<GlobalKey, String> singpic = {};
   List<Widget> pdfAndSing = [
   ];
+
+  Map<GlobalKey, String> singpicopenattachment = {};
+  List<Widget> pdfAndSingopenattachment = [
+  ];
+
+
+
+  addWidgetToPdfAndSingopenattachment(Widget pic) {
+    pdfAndSingopenattachment.add(pic);
+    update();
+  }
+
 
   addWidgetToPdfAndSing(Widget pic) {
     pdfAndSing.add(pic);
@@ -654,8 +806,34 @@ key: pdfViewerkey,
 
     if (result != null) {
       File file = File(result.files.single.path!);
+      final bytes = File(file.path).readAsBytesSync();
+
+      String img64 = base64Encode(bytes);
+      String name = file.path
+          .split("/")
+          .last
+          .split(".")
+          .first;
+      print("filke path isss  =>${file.path}");
+      print("name =>$name");
+      print("img64 =>  $img64");
+      attachmentInfoModel = AttachmentInfoModel(token: secureStorage
+          .token()!,
+          correspondenceId: canOpenDocumentModel!.correspondence!
+              .correspondenceId!,
+          fileName: name,
+          fileContent: img64,
+          language: Get
+              .locale?.languageCode == "en"
+              ? "en"
+              : "ar");
+
+      _uploadAttachmentApi.post(attachmentInfoModel?.toMap()).then((value) {
+        print("object  $value");
+      });
     } else {}
   }
+
 
   getIsAlreadyExportedAsPaperwork({required correspondenceId,
     required transferId,
@@ -848,7 +1026,7 @@ key: pdfViewerkey,
     G2GExportDto g = G2GExportDto(
         token: secureStorage.token(),
         language: Get.locale?.languageCode == "en" ? "en" : "ar",
-        notes: "i9jjoj",
+        notes: " ",
         attachments: [],
         documentId: 2020,
         recipients: [g2gRecipient]);

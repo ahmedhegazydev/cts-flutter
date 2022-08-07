@@ -27,7 +27,7 @@ class LandingPageController extends GetxController{
 
 
 
-    Get.find<SearchController>().  getAllData();
+   // Get.find<SearchController>().getAllData();
 Get.find<DocumentController>().getFindRecipientData();
   }
 

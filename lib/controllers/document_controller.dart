@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -289,7 +290,9 @@ print(value);
             , controller: pdfViewerController,
             key: pdfViewerkey,
           ));
-          DocumentAnnotations a=DocumentAnnotations.fromJson(jsonDecode( saveAttAchmentItemAnnotationsresalt!.annotations!));
+ String d=saveAttAchmentItemAnnotationsresalt!.annotations!..replaceAll(new RegExp(r'[^\w\s]+'),'');
+ print("ddddddddddddddddddddddd=>  $d");
+     //   DocumentAnnotations a=DocumentAnnotations.fromJson(jsonDecode( saveAttAchmentItemAnnotationsresalt!.annotations!));
 
           //update();
         }
@@ -303,8 +306,12 @@ print(value);
     final jsondata = await rootBundel.rootBundle.loadString(
         "assets/json/getattachments.json");
     saveAttAchmentItemAnnotationsData =   GetattAchmentsModel.fromJson(jsonDecode(jsondata));
+    print("444444444444444444444=> ${saveAttAchmentItemAnnotationsData!.toJson()}");
+
     saveAttAchmentItemAnnotationsData?.attachments?.forEach((element) {
       print("saveAttAchmentItemAnnotationsData=>   ${saveAttAchmentItemAnnotationsData}");
+    String a= element.annotations!.replaceAll(new RegExp(r'[^\w\s]+'),'');
+    print("444444444444444444444=> $a");
       if(element.attachmentId==getAttAchmentItem!.attachment!.attachmentId){
 
 
@@ -319,8 +326,12 @@ print(value);
           , controller: pdfViewerController,
           key: pdfViewerkey,
         ));
-        DocumentAnnotations a=DocumentAnnotations.fromJson(jsonDecode( saveAttAchmentItemAnnotationsresalt!.annotations!));
-print("DocumentAnnotations=>  ${a.toJson()}");
+        log(saveAttAchmentItemAnnotationsData.toString());
+        print("saveAttAchmentItemAnnotationsresalt!.annotations!=99999>  ${saveAttAchmentItemAnnotationsresalt!.annotations}");
+        String d=saveAttAchmentItemAnnotationsData.attachments.!.annotations!.replaceAll(new RegExp(r'[^\w\s]+'),'');
+        print("ddddddddddddddddddddddd=>  $d");
+      //  DocumentAnnotations a=DocumentAnnotations.fromJson(jsonDecode( saveAttAchmentItemAnnotationsresalt!.annotations!));
+//print("DocumentAnnotations=>  ${a.toJson()}");
         update();
       }
 

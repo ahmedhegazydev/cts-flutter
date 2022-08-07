@@ -132,17 +132,18 @@ class DocumentPage extends GetWidget<DocumentController> {
                 // if (controller
                 //     .canOpenDocumentModel?.correspondence?.hasSummaries ??
                 //     true)
-                // InkWell(
-                //   onTap: () {
-                //     controller
-                //         .canOpenDocumentModel?.correspondence.
-                //   },
-                //   child: CustomButtonWithImage(
-                //     //onClick: () {},
-                //     image: 'assets/images/refer.png',
-                //     label: "hasSummaries".tr,
-                //   ),
-                // ),
+                InkWell(
+                  onTap: () {
+                    // controller
+                    //     .canOpenDocumentModel?.correspondence.
+                    _popUpExportG2GDocument(context);
+                  },
+                  child: CustomButtonWithImage(
+                    //onClick: () {},
+                    image: 'assets/images/refer.png',
+                    label: "hasSummaries".tr,
+                  ),
+                ),
                 InkWell(
                   onTap: () {
                     controller.filePickerR();

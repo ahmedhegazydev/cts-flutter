@@ -50,6 +50,8 @@ import '../services/json_model/inopendocModel/g2g/g2g_export_dto.dart';
 import '../services/json_model/inopendocModel/g2g/g2g_receive_or_reject_dto.dart';
 import '../services/json_model/inopendocModel/get_attachment_item_model.dart';
 import '../services/json_model/inopendocModel/get_user_routing_model.dart';
+import '../services/json_model/inopendocModel/getatt_achments_model.dart'as getatt_achments_model;
+import '../services/json_model/inopendocModel/getatt_achments_model.dart';
 import '../services/json_model/inopendocModel/is_already_exported_as_paperwork_model.dart';
 import '../services/json_model/inopendocModel/is_already_exported_as_transfer_model.dart';
 import '../services/json_model/inopendocModel/multiple_transfers_model.dart';
@@ -67,6 +69,7 @@ import 'package:flutter/services.dart' as rootBundel;
 class DocumentController extends GetxController {
 //Map<int,String>folder={};
   String? oragnalFileDoc;
+  String pdfUrlFile="";
   bool openAttachment=false;
   AttachmentsList? isOriginalMailAttachmentsList;
   Map<String, List<AttachmentsList>>folder2 = {};
@@ -97,14 +100,15 @@ class DocumentController extends GetxController {
   List<DepartmentList>cctoDepartmentList = [];
   PdfViewerController pdfViewerController = PdfViewerController();
   GlobalKey? pdfViewerkey;
+
 updateopenAttashment(String link){
   openAttachment=true;
-  oragnalFileDoc=link;
+
   update();
 }
   updatecloseAttashment(String link){
     openAttachment=false;
-    oragnalFileDoc=link;
+
     update();
   }
   addtoDepartmentList({required DepartmentList department}) {
@@ -131,6 +135,9 @@ updateopenAttashment(String link){
 
   GetAttAchmentItem? getAttAchmentItem;
 
+  //دي الرد بتاع السيف للاتاتشمنت
+ getatt_achments_model. Attachments ? saveAttAchmentItemAnnotationsresalt;
+  GetattAchmentsModel? saveAttAchmentItemAnnotationsData;
   getAttachmentItem({documentId, transferId, attachmentId}) {
     getAttachmentItemAPI.data = "Token=${secureStorage
         .token()}&documentId=$documentId&transferId=$transferId&attachmentId=$attachmentId&language=${Get
@@ -139,9 +146,12 @@ updateopenAttashment(String link){
       getAttAchmentItem = value as GetAttAchmentItem;
     });
   }
-
+//open the AttachmentItem
   getAttachmentItemlocal(
       {documentId, transferId, attachmentId, required BuildContext context}) async {
+
+
+
     final jsondata = await rootBundel.rootBundle.loadString(
         "assets/json/getattachmentitem.json");
 
@@ -149,35 +159,40 @@ updateopenAttashment(String link){
     print("g2gInfoForExportModel?.toJson()=>  ${g2gInfoForExportModel
         ?.toJson()}");
 
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(getAttAchmentItem!.attachment!.fileName!),
-            content: SizedBox(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * .7,
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * .7,
-                child: SfPdfViewer.network(
-                  //'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf'
-                    getAttAchmentItem!.attachment!.uRL!
+    pdfUrlFile=   getAttAchmentItem!.attachment!.uRL!;
 
-                )),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text("Ok"),
-              ),
-            ],
-          );
-        });
+update();
+
+
+    // showDialog(
+    //     context: context,
+    //     builder: (BuildContext context) {
+    //       return AlertDialog(
+    //         title: Text(getAttAchmentItem!.attachment!.fileName!),
+    //         content: SizedBox(
+    //             height: MediaQuery
+    //                 .of(context)
+    //                 .size
+    //                 .height * .7,
+    //             width: MediaQuery
+    //                 .of(context)
+    //                 .size
+    //                 .width * .7,
+    //             child: SfPdfViewer.network(
+    //               //'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf'
+    //                 getAttAchmentItem!.attachment!.uRL!
+    //
+    //             )),
+    //         actions: <Widget>[
+    //           TextButton(
+    //             onPressed: () {
+    //               Navigator.of(context).pop();
+    //             },
+    //             child: Text("Ok"),
+    //           ),
+    //         ],
+    //       );
+    //     });
   }
 
   // [OperationContract]
@@ -215,6 +230,7 @@ print("transferNode=>  ${transferNode.toMap()}");
 
 print(multipleTransfersModel.toMap());
         transfarForMany.clear();
+        usersWillSendTo.clear();
     _multipleTransfersAPI.post(multipleTransfersModel.toMap()).then((value) {
       print(" _multipleTransfersAPI end");
 print(value);
@@ -250,20 +266,68 @@ print(value);
         TransferId: transferId);
     //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
 
-    //   print("postSaveDocumentAnnotationsModel?.toMap() =>${jsonEncode(postSaveDocumentAnnotationsModel?.toMap())}");
+    print("postSaveDocumentAnnotationsModel?.toMap() =>${jsonEncode(postSaveDocumentAnnotationsModel?.toMap())}");
 
 
     await _saveDocumentAnnotationsApi
         .post(postSaveDocumentAnnotationsModel?.toMap())
         .then((value) {
       print("value =>   ${value}");
-      postSaveDocumentAnnotationsModel = value as SaveDocumentAnnotationModel;
-      print(
-          "postSaveDocumentAnnotationsModel =>   ${postSaveDocumentAnnotationsModel
-              ?.toMap()}");
+      saveAttAchmentItemAnnotationsData = value as GetattAchmentsModel;
+      saveAttAchmentItemAnnotationsData?.attachments?.forEach((element) {
+        if(element.attachmentId==getAttAchmentItem!.attachment!.attachmentId){
+
+
+
+          saveAttAchmentItemAnnotationsresalt=element;
+          pdfAndSing.clear();
+          singpic.clear();
+
+          pdfAndSing.add(SfPdfViewer.network(
+            saveAttAchmentItemAnnotationsresalt!.uRL!
+            // oragnalFileDoc??""
+            , controller: pdfViewerController,
+            key: pdfViewerkey,
+          ));
+          DocumentAnnotations a=DocumentAnnotations.fromJson(jsonDecode( saveAttAchmentItemAnnotationsresalt!.annotations!));
+
+          //update();
+        }
+
+      });
+
     });
   }
+  Future getSaveDocAnnotationsDataLocalJson()async{
 
+    final jsondata = await rootBundel.rootBundle.loadString(
+        "assets/json/getattachments.json");
+    saveAttAchmentItemAnnotationsData =   GetattAchmentsModel.fromJson(jsonDecode(jsondata));
+    saveAttAchmentItemAnnotationsData?.attachments?.forEach((element) {
+      print("saveAttAchmentItemAnnotationsData=>   ${saveAttAchmentItemAnnotationsData}");
+      if(element.attachmentId==getAttAchmentItem!.attachment!.attachmentId){
+
+
+
+        saveAttAchmentItemAnnotationsresalt=element;
+        pdfAndSing.clear();
+        singpic.clear();
+
+        pdfAndSing.add(SfPdfViewer.network(  'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf'
+         // saveAttAchmentItemAnnotationsresalt!.uRL!
+          // oragnalFileDoc??""
+          , controller: pdfViewerController,
+          key: pdfViewerkey,
+        ));
+        DocumentAnnotations a=DocumentAnnotations.fromJson(jsonDecode( saveAttAchmentItemAnnotationsresalt!.annotations!));
+print("DocumentAnnotations=>  ${a.toJson()}");
+        update();
+      }
+
+    });
+
+
+  }
   SecureStorage secureStorage = SecureStorage();
   CanOpenDocumentModel? canOpenDocumentModel;
 
@@ -342,6 +406,18 @@ print(value);
   Map<GlobalKey, String> singpic = {};
   List<Widget> pdfAndSing = [
   ];
+
+  Map<GlobalKey, String> singpicopenattachment = {};
+  List<Widget> pdfAndSingopenattachment = [
+  ];
+
+
+
+  addWidgetToPdfAndSingopenattachment(Widget pic) {
+    pdfAndSingopenattachment.add(pic);
+    update();
+  }
+
 
   addWidgetToPdfAndSing(Widget pic) {
     pdfAndSing.add(pic);
@@ -931,7 +1007,7 @@ print(value);
     G2GExportDto g = G2GExportDto(
         token: secureStorage.token(),
         language: Get.locale?.languageCode == "en" ? "en" : "ar",
-        notes: "i9jjoj",
+        notes: " ",
         attachments: [],
         documentId: 2020,
         recipients: [g2gRecipient]);

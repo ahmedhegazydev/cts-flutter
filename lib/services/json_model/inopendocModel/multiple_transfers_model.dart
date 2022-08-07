@@ -19,7 +19,7 @@ class MultipleTransfersModel extends AbstractJsonResource
 
      if (this.transfers != null) {
 
-       data[ 'documentAnnotationsString']  = this.transfers!.map((v) => v.toMap()).toList();
+       data[ 'documentAnnotationsString']  = this.transfers.map((v) => v.toMap()).toList();
      }
 return data;
   }

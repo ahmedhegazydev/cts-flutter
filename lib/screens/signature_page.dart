@@ -28,7 +28,7 @@ class SignaturePage extends GetView<SignaturePageController> {
             final Uint8List? data =await controller.controller.toPngBytes();
             SignatureInfoModel _signatureInfoModel = SignatureInfoModel(
                 signature:   base64.encode(data!), Token: controller.secureStorage.token()!,
-                SignatureId: controller!.multiSignatures[0]!.cNTGctId.toString()!);
+                SignatureId: controller.multiSignatures[0].cNTGctId.toString());
 
                controller.updateSignature(signatureInfoModel: _signatureInfoModel);
 

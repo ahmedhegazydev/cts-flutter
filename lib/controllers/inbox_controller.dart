@@ -456,6 +456,7 @@ bool edit=false;
 
     print(multipleTransfersModel.toMap());
     transfarForMany.clear();
+    usersWillSendTo.clear();
     _multipleTransfersAPI.post(multipleTransfersModel.toMap()).then((value) {
       print(" _multipleTransfersAPI end");
       print(value);

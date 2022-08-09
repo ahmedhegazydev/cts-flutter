@@ -2,7 +2,7 @@ class SettingsApp {
 
   // static const String baseUrl = 'http://192.168.1.2:9091/Mobility/CMS.svc/';
   // static const String baseUrl = 'http://win-7pnh2kgornc:9091/Mobility/CMS.svc/';
-  static const String baseUrl = 'http://192.168.1.185:9091/Mobility/CMS.svc/';
+  static const String baseUrl = 'http://192.168.1.2:9091/Mobility/CMS.svc/';
 
 
   static const String loginUrl =baseUrl;

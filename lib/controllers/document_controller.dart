@@ -309,9 +309,9 @@ print(value);
     print("444444444444444444444=> ${saveAttAchmentItemAnnotationsData!.toJson()}");
 
     saveAttAchmentItemAnnotationsData?.attachments?.forEach((element) {
-      print("saveAttAchmentItemAnnotationsData=>   ${saveAttAchmentItemAnnotationsData}");
-    String a= element.annotations!.replaceAll(new RegExp(r'[^\w\s]+'),'');
-    print("444444444444444444444=> $a");
+      print("saveAttAchmentItemAnnotationsData=>   ${element.toJson()}");
+    String a= element.annotations!.replaceAll(r"\", "");//.replaceAll(new RegExp(r'[^\w\s]+'),'');
+    print("cccccc=> $a");
       if(element.attachmentId==getAttAchmentItem!.attachment!.attachmentId){
 
 
@@ -328,7 +328,7 @@ print(value);
         ));
         log(saveAttAchmentItemAnnotationsData.toString());
         print("saveAttAchmentItemAnnotationsresalt!.annotations!=99999>  ${saveAttAchmentItemAnnotationsresalt!.annotations}");
-        String d=saveAttAchmentItemAnnotationsData.attachments.!.annotations!.replaceAll(new RegExp(r'[^\w\s]+'),'');
+        String d=saveAttAchmentItemAnnotationsData!.attachments![0].annotations!.replaceAll(new RegExp(r'[^\w\s]+'),'');
         print("ddddddddddddddddddddddd=>  $d");
       //  DocumentAnnotations a=DocumentAnnotations.fromJson(jsonDecode( saveAttAchmentItemAnnotationsresalt!.annotations!));
 //print("DocumentAnnotations=>  ${a.toJson()}");

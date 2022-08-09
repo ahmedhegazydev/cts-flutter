@@ -1804,19 +1804,21 @@ Get.back();
                                     SizedBox(
                                       width: 8,
                                     ),
-                                    Container(
-                                      height: 100,
-                                      width: 400,
-                                      decoration: BoxDecoration(
-                                          border: Border.all(width: 1)),
-                                      child: ListView.builder(
-                                          itemCount: controller
-                                              .toDepartmentList.length,
-                                          itemBuilder: (context, pos) {
-                                            return Text(controller
-                                                .toDepartmentList[pos]
-                                                .childName!);
-                                          }),
+                                    Expanded(
+                                      child: Container(
+                                        height: 100,
+                                       // width: 400,
+                                        decoration: BoxDecoration(
+                                            border: Border.all(width: 1)),
+                                        child: ListView.builder(
+                                            itemCount: controller
+                                                .toDepartmentList.length,
+                                            itemBuilder: (context, pos) {
+                                              return Text(controller
+                                                  .toDepartmentList[pos]
+                                                  .childName!);
+                                            }),
+                                      ),
                                     )
                                   ],
                                 ),

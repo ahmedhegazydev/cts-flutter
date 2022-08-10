@@ -17,6 +17,7 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../models/CorrespondencesModel.dart';
 import '../models/DocumentModel.dart';
+import '../screens/resize_sing.dart';
 import '../services/apis/find_recipient_api.dart';
 import '../services/apis/inOpenDocument/GetAttachmentItem_api.dart';
 import '../services/apis/inOpenDocument/get_document_audit_logs_api.dart';
@@ -42,6 +43,7 @@ import '../services/json_model/get_document_links_model.dart';
 import '../services/json_model/get_document_logs_model.dart';
 import '../services/json_model/get_document_receivers_model.dart';
 import '../services/json_model/get_document_transfers_model.dart';
+import '../services/json_model/inopendocModel/annotations_model.dart';
 import '../services/json_model/inopendocModel/attachment_Info_model.dart';
 import '../services/json_model/inopendocModel/auto_send_to_recepients_and_cc_model.dart';
 import '../services/json_model/inopendocModel/can_export_as_paperwork_model.dart';
@@ -69,8 +71,10 @@ import 'package:flutter/services.dart' as rootBundel;
 
 class DocumentController extends GetxController {
 //Map<int,String>folder={};
-  String? oragnalFileDoc;
-  String pdfUrlFile="";
+  bool notoragnalFileDoc=false;
+
+  String oragnalFileDocpdfUrlFile="";
+  String pdfUrlFile='https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
   bool openAttachment=false;
   AttachmentsList? isOriginalMailAttachmentsList;
   Map<String, List<AttachmentsList>>folder2 = {};
@@ -99,7 +103,7 @@ class DocumentController extends GetxController {
   List<DepartmentList>toDepartmentList = [];
 
   List<DepartmentList>cctoDepartmentList = [];
-  PdfViewerController pdfViewerController = PdfViewerController();
+  PdfViewerController? pdfViewerController = PdfViewerController();
   GlobalKey? pdfViewerkey;
 
 updateopenAttashment(String link){
@@ -151,7 +155,7 @@ updateopenAttashment(String link){
   getAttachmentItemlocal(
       {documentId, transferId, attachmentId, required BuildContext context}) async {
 
-
+    notoragnalFileDoc=true;
 
     final jsondata = await rootBundel.rootBundle.loadString(
         "assets/json/getattachmentitem.json");
@@ -256,6 +260,7 @@ print(value);
     delegateGctId //string) input “0”
 
   }) async {
+    // pdfViewerkey=null;
     postSaveDocumentAnnotationsModel = SaveDocumentAnnotationModel(
         AttachmentId: attachmentId.toString(),
         CorrespondenceId: correspondenceId,
@@ -278,20 +283,25 @@ print(value);
       saveAttAchmentItemAnnotationsData?.attachments?.forEach((element) {
         if(element.attachmentId==getAttAchmentItem!.attachment!.attachmentId){
 
-
-
+          pdfUrlFile=element.uRL!;//"http://www.africau.edu/images/default/sample.pdf";
+print(pdfUrlFile);
           saveAttAchmentItemAnnotationsresalt=element;
-          pdfAndSing.clear();
-          singpic.clear();
-
+         pdfAndSing.clear();
+         singpic.clear();
+          pdfUrlFile=  'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
           pdfAndSing.add(SfPdfViewer.network(
-            saveAttAchmentItemAnnotationsresalt!.uRL!
+            pdfUrlFile
+         //   saveAttAchmentItemAnnotationsresalt!.uRL!
             // oragnalFileDoc??""
             , controller: pdfViewerController,
-            key: pdfViewerkey,
+          //  key: pdfViewerkey,
           ));
- String d=saveAttAchmentItemAnnotationsresalt!.annotations!..replaceAll(new RegExp(r'[^\w\s]+'),'');
- print("ddddddddddddddddddddddd=>  $d");
+ // String d=saveAttAchmentItemAnnotationsresalt!.annotations!..replaceAll(new RegExp(r'[^\w\s]+'),'');
+ print("ddddddddddddddddddddddd=>  ${saveAttAchmentItemAnnotationsresalt?.annotations}");
+
+          Map<String,dynamic>dat=jsonDecode(saveAttAchmentItemAnnotationsresalt?.annotations??"");
+
+
      //   DocumentAnnotations a=DocumentAnnotations.fromJson(jsonDecode( saveAttAchmentItemAnnotationsresalt!.annotations!));
 
           //update();
@@ -302,63 +312,141 @@ print(value);
     });
   }
   Future getSaveDocAnnotationsDataLocalJson()async{
-
+///ToDo is oraginal file
+    ///
+    notoragnalFileDoc=true;
     final jsondata = await rootBundel.rootBundle.loadString(
         "assets/json/getattachments.json");
     saveAttAchmentItemAnnotationsData =   GetattAchmentsModel.fromJson(jsonDecode(jsondata));
-    print("444444444444444444444=> ${saveAttAchmentItemAnnotationsData!.toJson()}");
+   pdfAndSing.clear();
+   singpic.clear();
 
     saveAttAchmentItemAnnotationsData?.attachments?.forEach((element) {
-      print("saveAttAchmentItemAnnotationsData=>   ${element.toJson()}");
-    String a= element.annotations!.replaceAll(r"\", "");//.replaceAll(new RegExp(r'[^\w\s]+'),'');
-    print("cccccc=> $a");
-      if(element.attachmentId==getAttAchmentItem!.attachment!.attachmentId){
+    //   print("saveAttAchmentItemAnnotationsData=>   \n${element.toJson()}");
+    // String a= element.annotations!.replaceAll(r"\", ""); //.replaceAll(new RegExp(r'[^\w\s]+'),'');
+    //  var bbb=jsonDecode(a);
+//element.attachmentId==getAttAchmentItem!.attachment!.attachmentId
+      if(true ){
 
 
 
         saveAttAchmentItemAnnotationsresalt=element;
-        pdfAndSing.clear();
-        singpic.clear();
 
-        pdfAndSing.add(SfPdfViewer.network(  'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf'
-         // saveAttAchmentItemAnnotationsresalt!.uRL!
+      //  pdfViewerkey=null;
+      //  pdfViewerController=null;
+        pdfUrlFile=  'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
+
+        pdfAndSing.add(SfPdfViewer.network(  pdfUrlFile
+          // saveAttAchmentItemAnnotationsresalt!.uRL!
           // oragnalFileDoc??""
           , controller: pdfViewerController,
-          key: pdfViewerkey,
+       //   key: pdfViewerkey,
         ));
+
+        // pdfAndSing.add(Positioned(top: 100,right:100,
+        //     child:Container(height: 100,width: 100, color: Colors.red,)
+        // ));
+
+        if(element.annotations!.contains("[]")){
+print("[]");
+        }
+        else{
+          print("i will addddddd");
+          Map<dynamic,dynamic> dat=jsonDecode(element.annotations!);
+          dat.forEach((key, value) async{
+            print("--------------------------------------------");
+            Annotation annotation= Annotation.fromJson( value[0]);
+            List<int> list = annotation.imageByte!.codeUnits;
+            final Uint8List? data =    Uint8List.fromList(list);
+            print("the data is $data");
+            addWidgetToPdfAndSing(
+                Positioned(top: double.tryParse(annotation.y!),right:double.tryParse(annotation.x!),
+                  child: Image
+                      .memory(
+                    data!,
+                    fit: BoxFit
+                        .fill,
+
+                    width: double.tryParse(annotation.width!),
+                    height:  double.tryParse(annotation.height!),
+                  ),
+                ));
+            addWidgetToPdfAndSing(
+                Positioned(top: 100,right:500,
+                    child:Container(height: 100,width: 100, color: Colors.red,)
+                ));
+            pdfUrlFile=element.uRL!;
+            print(pdfUrlFile);
+
+
+            print(addWidgetToPdfAndSing);
+            print("i add image");
+          });
+        }
         log(saveAttAchmentItemAnnotationsData.toString());
         print("saveAttAchmentItemAnnotationsresalt!.annotations!=99999>  ${saveAttAchmentItemAnnotationsresalt!.annotations}");
-        String d=saveAttAchmentItemAnnotationsData!.attachments![0].annotations!.replaceAll(new RegExp(r'[^\w\s]+'),'');
-        print("ddddddddddddddddddddddd=>  $d");
-      //  DocumentAnnotations a=DocumentAnnotations.fromJson(jsonDecode( saveAttAchmentItemAnnotationsresalt!.annotations!));
-//print("DocumentAnnotations=>  ${a.toJson()}");
+
         update();
       }
 
+
+     // Map<String, dynamic> dat=   new Map<String, dynamic>.from(json.decode(element.annotations!));
+     // print("ddddddddddddddddddddddd=>  ${saveAttAchmentItemAnnotationsresalt?.annotations}");
+
+//       if(dat.runtimeType is List<dynamic>){
+//         print(dat.runtimeType );
+//       }
+// else{ print(dat as Map<dynamic,dynamic>);
+//
+//       }
+     // printWrapped("dat=> $dat");
+     //print(dat);
+    //  debugPrint(bbb.toString(), wrapWidth: 1024);
+
+
+
+
+
     });
 
-
+   update();
   }
   SecureStorage secureStorage = SecureStorage();
   CanOpenDocumentModel? canOpenDocumentModel;
 
+backTooragnalFileDocpdf(){
+  notoragnalFileDoc=false;
+ // pdfViewerkey=null;
 
+  pdfAndSing.clear();
+  singpic.clear();
+  pdfUrlFile=  'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
+  pdfAndSing.add(SfPdfViewer.network(
+    pdfUrlFile
+    //   saveAttAchmentItemAnnotationsresalt!.uRL!
+    // oragnalFileDoc??""
+    , controller: pdfViewerController,
+   // key: pdfViewerkey,
+  ));
+  update();
+}
   //تحديث كان ابن فيل وجلب جميع البيانات الخاصه بلملف
   updatecanOpenDocumentModel(CanOpenDocumentModel data) {
+
     pdfViewerkey = GlobalKey();
     pdfAndSing.clear();
     pdfAndSing.add(SfPdfViewer.network(
-      'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf'
+      pdfUrlFile
       // oragnalFileDoc??""
       , controller: pdfViewerController,
-      key: pdfViewerkey,
+    //  key: pdfViewerkey,
     ));
 
 
     canOpenDocumentModel = data;
     canOpenDocumentModel?.attachments?.attachments?.forEach((element) {
       if (element.isOriginalMail!) {
-        oragnalFileDoc = element.uRL!;
+        oragnalFileDocpdfUrlFile = element.uRL!;
         isOriginalMailAttachmentsList = element;
       }
 
@@ -432,6 +520,7 @@ print(value);
 
   addWidgetToPdfAndSing(Widget pic) {
     pdfAndSing.add(pic);
+    print("pdfAndSing.lengthpdfAndSing.length=>   ${pdfAndSing.length}");
     update();
   }
 

@@ -62,7 +62,7 @@ class DocumentPage extends GetWidget<DocumentController> {
         GetBuilder<DocumentController>(builder: (logic) {
           return SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Row(
+            child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,mainAxisSize: MainAxisSize.max,
               children: [
                 Container(
                     color: Colors.grey[400],
@@ -114,7 +114,13 @@ class DocumentPage extends GetWidget<DocumentController> {
                       label: "backtooriginalfile".tr,
                     ),
                   ),
-
+                if (controller
+                    .openAttachment
+                )  Container(
+                  height: 30,
+                  width: 1,
+                  color: Colors.grey[800],
+                ),
 
                 if (controller
                     .canOpenDocumentModel?.correspondence?.hasAttachments ??
@@ -129,6 +135,14 @@ class DocumentPage extends GetWidget<DocumentController> {
                       label: "Attachments".tr,
                     ),
                   ),
+                if (controller
+                    .canOpenDocumentModel?.correspondence?.hasAttachments ??
+                    true)
+                Container(
+                  height: 30,
+                  width: 1,
+                  color: Colors.grey[800],
+                ),
                 // if (controller
                 //     .canOpenDocumentModel?.correspondence?.hasSummaries ??
                 //     true)
@@ -143,6 +157,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                 //     label: "hasSummaries".tr,
                 //   ),
                 // ),
+
                 InkWell(
                   onTap: () {
                     controller.filePickerR();
@@ -153,7 +168,11 @@ class DocumentPage extends GetWidget<DocumentController> {
                     label: "Add Attachments".tr,
                   ),
                 ),
-
+                Container(
+                  height: 30,
+                  width: 1,
+                  color: Colors.grey[800],
+                ),
                 InkWell(
                   onTap: () {
                     _popUpMenu(context);
@@ -262,7 +281,16 @@ class DocumentPage extends GetWidget<DocumentController> {
                   width: 1,
                   color: Colors.grey[800],
                 ),
-              ],
+                if(controller.notoragnalFileDoc)
+                  GestureDetector(onTap: (){
+
+controller.backTooragnalFileDocpdf();
+
+                  },
+                    child:   Icon(Icons.home,size: 40,color: Theme.of(context)
+                        .colorScheme
+                        .primary,),
+                  ), ],
             ),
           );
         }),
@@ -552,7 +580,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                 d.ParentHeight =
                                     pdfViewerRenderBox?.size.height;
                                 d.Page =
-                                    controller.pdfViewerController.pageNumber;
+                                    controller.pdfViewerController!.pageNumber!;
                                 d.IsExclusive = false.toString();
                                 d.Type = 3.toString();
                                 d.Viewers = "Everyone";
@@ -605,7 +633,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                   print("i geeeeeeeeeeeeeet pilllll");
                   return Expanded(
                       flex: 4,
-                      child: Container(
+                      child: Container(key:logic.pdfViewerkey,
                         child:  Stack(children: [
 
                           ...controller.pdfAndSing

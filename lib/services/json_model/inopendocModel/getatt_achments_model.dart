@@ -20,7 +20,7 @@ class GetattAchmentsModel extends AbstractJsonResource{
         this.isDocSigned,
         this.voiceNote});
 
-  GetattAchmentsModel.fromJson(Map<String, dynamic> json) {
+  GetattAchmentsModel. fromJson(Map<String, dynamic> json) {
     errorMessage = json['ErrorMessage'];
     status = json['Status'];
     if (json['Attachments'] != null) {
@@ -62,7 +62,7 @@ class Attachments {
   String? folderName;
   bool? isOriginalMail;
   bool? isPrivate;
-  Null? serverFileInfo;
+  String? serverFileInfo;
   int? status;
   int? transferId;
   String? uRL;
@@ -126,15 +126,15 @@ class Attachments {
 }
 
 class EditOfficeDetails {
-  Null? fileId;
+  int? fileId;
   bool? isEditable;
-  Null? localUrl;
-  Null? name;
-  Null? siteId;
-  Null? spFrameUrl;
-  Null? spLocation;
-  Null? spUrl;
-  Null? webId;
+  String? localUrl;
+  String? name;
+  int? siteId;
+  String? spFrameUrl;
+  String? spLocation;
+  String? spUrl;
+  String? webId;
 
   EditOfficeDetails(
       {this.fileId,

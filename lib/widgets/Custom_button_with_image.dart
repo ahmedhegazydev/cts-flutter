@@ -17,7 +17,7 @@ class CustomButtonWithImage extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SizedBox(
-         width: size.width * .15,
+         width: 150,//size.width * .13,
       child: Center(
         child: Row(mainAxisAlignment: MainAxisAlignment.center,children: [
           Image.asset(
@@ -28,7 +28,7 @@ class CustomButtonWithImage extends StatelessWidget {
             width: 20,color: Theme.of(context)
               .colorScheme
               .primary,
-          ),SizedBox(width: 8,),
+          ),SizedBox(width: 4,),
           Text(
             label,
             style: Theme.of(context).textTheme.headline3!.copyWith(

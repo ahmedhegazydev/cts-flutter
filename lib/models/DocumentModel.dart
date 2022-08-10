@@ -1,5 +1,3 @@
-
-
 import 'CorrespondencesModel.dart';
 
 class DocumentModel {

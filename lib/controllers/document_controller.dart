@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:cts/models/DocumentModel.dart' as DocModel;
+import 'package:cts/services/apis/inside_doc/g2g/eport_using_g2g_api.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +48,9 @@ import '../services/json_model/inopendocModel/attachment_Info_model.dart';
 import '../services/json_model/inopendocModel/auto_send_to_recepients_and_cc_model.dart';
 import '../services/json_model/inopendocModel/can_export_as_paperwork_model.dart';
 import '../services/json_model/inopendocModel/check_for_empty_structure_recipients_model.dart';
+import '../services/json_model/inopendocModel/g2g/export_usign_g2g_model.dart';
 import '../services/json_model/inopendocModel/g2g/g2g_Info_for_export_model.dart';
+import '../services/json_model/inopendocModel/g2g/g2g_export_dto.dart';
 import '../services/json_model/inopendocModel/g2g/g2g_export_dto.dart';
 import '../services/json_model/inopendocModel/g2g/g2g_receive_or_reject_dto.dart';
 import '../services/json_model/inopendocModel/get_attachment_item_model.dart';
@@ -81,16 +85,22 @@ class DocumentController extends GetxController {
 
 
   Parents? toParent;
-  TextEditingController textEditingControllerToParent =
-  TextEditingController();
+
 
   TextEditingController textEditingControllerTodepartment =
   TextEditingController();
 
 
   Parents? ccToParent;
+
+  //Export Using G2G
+  TextEditingController textEditingControllerG2gNotes =
+  TextEditingController();
+  TextEditingController textEditingControllerToParent =
+  TextEditingController();
   TextEditingController textEditingControllerToccParent =
   TextEditingController();
+
 
   TextEditingController textEditingControllerToccdepartment =
   TextEditingController();
@@ -408,6 +418,12 @@ print(value);
   G2GInfoForExportAPI _g2gInfoForExportAPI = G2GInfoForExportAPI();
   G2GInfoForExportModel? g2gInfoForExportModel;
 
+  //Export using G2G
+  ExportUsingG2gAPI _exportUsingG2gAPI = ExportUsingG2gAPI();
+  // G2GExportDto? g2gExportDto;
+  // G2GRecipient? g2gRecipient;
+  ExportUsingG2gModel? exportUsingG2gModel;
+
   CanReceiveG2GDocumentAPI _canReceiveG2GDocumentAPI =
   CanReceiveG2GDocumentAPI();
   ReceiveDocumentUsingG2GApi _receiveDocumentUsingG2GApi =
@@ -422,7 +438,14 @@ print(value);
   List<Widget> pdfAndSingopenattachment = [
   ];
 
-
+    // deleteItem(DocModel.Attachments item) {
+    deleteItem(AttachmentsG2gInfoExport item) {
+    print("remove: $item");
+    print("Number of items before: ${g2gInfoForExportModel?.attachments?.length}");
+    g2gInfoForExportModel?.attachments?.remove(item);
+    print("Number of items after delete: ${g2gInfoForExportModel?.attachments?.length}");
+    update();
+   }
 
   addWidgetToPdfAndSingopenattachment(Widget pic) {
     pdfAndSingopenattachment.add(pic);
@@ -1021,18 +1044,57 @@ print(value);
 
   //-----------------------------------------------------------------------
   genratG2GExportDto() {
-    G2GRecipient g2gRecipient =
-    G2GRecipient(childId: 5, isCC: false, parentId: 10);
-    G2GExportDto g = G2GExportDto(
-        token: secureStorage.token(),
+    // g2gRecipient =
+    // G2GRecipient(childId: 5, isCC: false, parentId: 10);
+    // g2gExportDto = G2GExportDto(
+    //     token: secureStorage.token(),
+    //     language: Get.locale?.languageCode == "en" ? "en" : "ar",
+    //     notes: " ",
+    //     attachments: [],
+    //     documentId: 2020,
+    //     recipients: [g2gRecipient!]);
+    //
+    // print("this the map=> ${jsonEncode(g2gRecipient?.toMap())}");
+    // print("this the map=> ${jsonEncode(g2gExportDto?.toMap())}");
+  }
+
+  exportUsingG2g({notes}) {
+    G2GExportDto? g2gExportDto;
+    G2GRecipient? g2gRecipient;
+    List<int>? attachmentsIds  =  <int>[];
+    g2gInfoForExportModel?.attachments?.forEach((element) {
+      attachmentsIds.add(element.FileKey ?? 0);
+    });
+    g2gRecipient = G2GRecipient(childId: 5, isCC: false, parentId: 10);
+    g2gExportDto = G2GExportDto(
         language: Get.locale?.languageCode == "en" ? "en" : "ar",
-        notes: " ",
-        attachments: [],
-        documentId: 2020,
+        token: secureStorage.token()!,
+        notes: notes,
+        attachments: attachmentsIds,
+        documentId: int.parse(correspondences.correspondenceId ?? "2020"),
         recipients: [g2gRecipient]);
 
-    print("this the map=> ${jsonEncode(g2gRecipient.toMap())}");
-    print("this the map=> ${jsonEncode(g.toMap())}");
+    print("this the map=> ${jsonEncode(g2gRecipient?.toMap())}");
+    print("this the map=> ${jsonEncode(g2gExportDto?.toMap())}");
+
+    var allRecipients = <G2GRecipient>[];
+    var mergedList = new List<DepartmentList>.from(toDepartmentList)..addAll(
+        cctoDepartmentList
+    );
+    mergedList.forEach((element) {
+      allRecipients.add(new G2GRecipient(
+          childId: element.childG2GID, isCC: element.isCC, parentId: element.parentG2GID
+      ));
+    });
+    g2gExportDto.recipients = allRecipients;
+
+    _exportUsingG2gAPI
+        .post(g2gExportDto.toMap())
+        .then((value) {
+          print(" _exportUsingG2gAPI end $value");
+          print(value);
+
+    });
   }
 
   //Not used

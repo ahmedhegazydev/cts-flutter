@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:cts/models/DocumentModel.dart';
 import 'package:cts/screens/resize_sing.dart';
 import 'package:cts/screens/search_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,16 +21,19 @@ import '../controllers/document_controller.dart';
 import '../controllers/main_controller.dart';
 import '../controllers/web_view_controller.dart';
 import '../services/json_model/inopendocModel/g2g/g2g_Info_for_export_model.dart';
+import '../services/json_model/inopendocModel/g2g/g2g_export_dto.dart';
 import '../services/json_model/inopendocModel/save_document_annotation_model.dart';
 import '../services/json_model/login_model.dart';
 import '../services/models/signature_info.dart';
 import '../utility/all_const.dart';
 import '../utility/all_string_const.dart';
+import '../utility/storage.dart';
 import '../utility/utilitie.dart';
 import '../widgets/Custom_button_with_image.dart';
 import '../widgets/custom_button_with_icon.dart';
 import '../widgets/custom_side_button_menu.dart';
 import 'dart:developer';
+import 'package:cts/models/DocumentModel.dart' as DocModel;
 
 class DocumentPage extends GetWidget<DocumentController> {
   bool portraitIsActive = false;
@@ -1657,7 +1661,17 @@ Get.back();
     //         ));
   }
 
+  final List<_HomeItem> items = List.generate(
+    5,
+        (i) => _HomeItem(
+      i,
+      'Tile n°$i',
+    ),
+  );
+
   _popUpExportG2GDocument(context) {
+
+
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -1735,6 +1749,7 @@ Get.back();
                                           controller.toParent = v;
                                           controller
                                               .textEditingControllerToParent
+
                                               .text = v.parentName!;
                                           // v
                                           // .cLASNAMEDISPLAY;
@@ -2051,6 +2066,7 @@ Get.back();
                                                 border: Border.all(width: 1)),
                                             child: TextField(
                                               maxLines: 6,
+                                               controller: controller.textEditingControllerG2gNotes,
                                             ))),
                                   ],
                                 ),
@@ -2080,40 +2096,31 @@ Get.back();
                                     SizedBox(
                                       width: 8,
                                     ),
-                                    // Container(height: 150,width: double.infinity,
-                                    //     decoration: BoxDecoration(
-                                    //         border: Border.all(width: 1)),
-                                    //     child:
-                                    //
-                                    //     ListView.builder(
-                                    //         scrollDirection: Axis.horizontal,
-                                    //         itemCount: 10,
-                                    //         itemBuilder: (context, pos) {
-                                    //           return Padding(
-                                    //             padding: const EdgeInsets.all(8.0),
-                                    //             child: Card(
-                                    //                 elevation: 8,
-                                    //                 child: Column(
-                                    //                   children: [
-                                    //                     Expanded(
-                                    //                         child: Padding(
-                                    //                           padding: const EdgeInsets.all(8.0),
-                                    //                           child: Icon(Icons.note, size: 80),
-                                    //                         )),
-                                    //                     Expanded(
-                                    //                         child: Padding(
-                                    //                           padding: const EdgeInsets.all(8.0),
-                                    //                           child: Text("Attachment number $pos"),
-                                    //                         ))
-                                    //                   ],
-                                    //                 )),
-                                    //           );
-                                    //         }),
-                                    //
-                                    //
-                                    //
-                                    //
-                                    // ),
+                                    Expanded(child:
+                                    Container(
+                                      height: 150,
+                                      width: double.infinity,
+                                        decoration: BoxDecoration(
+                                            border: Border.all(width: 1)),
+                                      child:
+                                        // Text(
+                                        //     "${controller.g2gInfoForExportModel?.attachments!.length}"
+                                        //     // "Ahmed "
+                                        // )
+                                      ListView.builder(
+                                        // scrollDirection: Axis.horizontal,
+                                        //   itemCount: 1,
+                                          itemCount: controller.g2gInfoForExportModel?.attachments!.length,
+                                          itemBuilder: (context, pos) {
+                                            // return Tile(items![pos], controller.deleteItem);
+                                            return Tile(controller
+                                                .g2gInfoForExportModel
+                                            !.attachments![pos]  , controller.deleteItem);
+                                          }),
+
+                                    ),
+
+                                    ),
                                   ],
                                 ),
                               ],
@@ -2127,13 +2134,18 @@ Get.back();
             actions: <Widget>[
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  print(controller.textEditingControllerG2gNotes.text);
+                  Get.find<DocumentController>().exportUsingG2g(
+                      notes: controller.textEditingControllerG2gNotes.text
+                  );
                 },
-                child: Text("Ok"),
+                child: Text("ارسال"),
               ),
             ],
           );
         });
+
+
 
     // showCupertinoDialog(
     //     context: context,
@@ -2234,3 +2246,56 @@ Get.back();
 // )
 // ],
 // )
+
+
+class Tile extends StatefulWidget {
+  // final DocModel.AttachmentsList item;
+  final AttachmentsG2gInfoExport item;
+  final Function delete;
+
+  Tile(this.item, this.delete);
+
+  @override
+  State<StatefulWidget> createState() => _TileState(item, delete);
+}
+
+class _TileState extends State<Tile> {
+  // final DocModel.AttachmentsList item;
+  final AttachmentsG2gInfoExport item;
+  final Function delete;
+
+  _TileState(this.item, this.delete);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        ListTile(
+          leading: new IconButton(
+              icon: new Icon(Icons.close),
+              onPressed: () {
+                // Navigator.pop(context,true);
+                print("leading");
+                delete(item);
+              }), // for Right
+          // trailing: Icon(Icons.close),  // for Left
+          key: ValueKey(item.FileKey),
+          title: Text("${item.FileName}"),
+          // subtitle: Text("${item.fonam}"),
+          // onTap: () => delete(item),
+        ),
+        Divider(), //                           <-- Divider
+      ],
+    );
+  }
+}
+
+class _HomeItem {
+  const _HomeItem(
+      this.index,
+      this.title,
+      );
+
+  final int index;
+  final String title;
+}

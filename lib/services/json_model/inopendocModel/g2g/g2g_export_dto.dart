@@ -16,20 +16,27 @@ class G2GExportDto {
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> data = {};
-
     data['token'] = this.token;
     data['documentId'] = this.documentId;
     data['recipients'] =  this.recipients?.map((e) => e.toMap()).toList() ;
     data['attachments'] = this.attachments;
     data['notes'] = this.notes;
     data['language'] = this.language;
-
-    // Map author =
-    // this.author != null ? this.author.toJson() : null;
-    // List<Map> tags =
-    // this.tags != null ? this.tags.map((i) => i.toJson()).toList() : null;
     return data;
   }
+
+
+  factory G2GExportDto.fromMap(Map<String, dynamic> map) {
+    return G2GExportDto(
+      token: map['token'] as String,
+      documentId: map['documentId'] as int,
+      recipients: map['recipients'] as List<G2GRecipient>?,
+      attachments: map['attachments'] as  List<int>?,
+      notes: map['notes'] as String,
+      language: map['language'] as String,
+    );
+  }
+
 }
 
 // class G2GExportDto

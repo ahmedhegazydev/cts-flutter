@@ -8,7 +8,8 @@ class G2GInfoForExportModel extends AbstractJsonResource{
 
   String? errorMessage;
   int? status;
-  List<Attachments>? attachments;
+  // List<Attachments>? attachments;
+  List<AttachmentsG2gInfoExport>? attachments;
   List<DepartmentList>? departmentList;
   List<Parents>? parents;
 
@@ -22,10 +23,16 @@ class G2GInfoForExportModel extends AbstractJsonResource{
   G2GInfoForExportModel.fromJson(Map<String, dynamic> json) {
     errorMessage = json['ErrorMessage'];
     status = json['Status'];
+    // if (json['attachments'] != null) {
+    //   attachments = <Attachments>[];
+    //   json['attachments'].forEach((v) {
+    //     attachments!.add(new Attachments.fromJson(v));
+    //   });
+    // }
     if (json['attachments'] != null) {
-      attachments = <Attachments>[];
+      attachments = <AttachmentsG2gInfoExport>[];
       json['attachments'].forEach((v) {
-        attachments!.add(new Attachments.fromJson(v));
+        attachments!.add(new AttachmentsG2gInfoExport.fromJson(v));
       });
     }
     if (json['departmentList'] != null) {
@@ -57,6 +64,124 @@ class G2GInfoForExportModel extends AbstractJsonResource{
       data['parents'] = this.parents!.map((v) => v.toJson()).toList();
     }
     return data;
+  }
+}
+
+
+class AttachmentsG2gInfoExport {
+  AttachmentsG2gInfoExport({
+    this.CopiedFrom_DOCID,
+    this.CreateDate,
+    this.CREATESTC,
+    this.DOCCODE,
+    this.DocumentKey,
+    this.FileExtension,
+    this.FileKey,
+    this.FileName,
+    this.FileOwner,
+    this.FileStoragePath,
+    this.Is_Signed,
+    this.isBarcodeAdded,
+    this.IsCurrentVersion,
+    this.IsDMS,
+    this.isPrivate,
+    this.ISTEMPLATE,
+    this.MajorVersion,
+    this.MinorVersion,
+    this.ModificationVersion,
+    this.OrderBy,
+    this.SPFILE_ID,
+    this.SPSITE_ID,
+    this.SPWEB_ID,
+    this.StoragePath,
+    this.StorageSpace,
+    this.StructureGCTID,
+  });
+  late final String? CopiedFrom_DOCID;
+  late final int? CreateDate;
+  late final int? CREATESTC;
+  late final String? DOCCODE;
+  late final int? DocumentKey;
+  late final String? FileExtension;
+  late final int? FileKey;
+  late final String? FileName;
+  late final int? FileOwner;
+  late final String? FileStoragePath;
+  late final bool? Is_Signed;
+  late final String? isBarcodeAdded;
+  late final String? IsCurrentVersion;
+  late final bool? IsDMS;
+  late final bool? isPrivate;
+  late final bool? ISTEMPLATE;
+  late final int? MajorVersion;
+  late final int? MinorVersion;
+  late final int? ModificationVersion;
+  late final int? OrderBy;
+  late final String? SPFILE_ID;
+  late final String? SPSITE_ID;
+  late final String? SPWEB_ID;
+  late final String? StoragePath;
+  late final String? StorageSpace;
+  late final int? StructureGCTID;
+
+  AttachmentsG2gInfoExport.fromJson(Map<String, dynamic> json) {
+    CopiedFrom_DOCID = json['CopiedFrom_DOCID'];
+    CreateDate = json['CreateDate'];
+    CREATESTC = json['CREATESTC'];
+    DOCCODE = json['DOCCODE'];
+    DocumentKey = json['DocumentKey'];
+    FileExtension = json['FileExtension'];
+    FileKey = json['FileKey'];
+    FileName = json['FileName'];
+    FileOwner = json['FileOwner'];
+    FileStoragePath = json['FileStoragePath'];
+    Is_Signed = json['Is_Signed'];
+    isBarcodeAdded = json['isBarcodeAdded'];
+    IsCurrentVersion = json['IsCurrentVersion'];
+    IsDMS = json['IsDMS'];
+    isPrivate = json['isPrivate'];
+    ISTEMPLATE = json['ISTEMPLATE'];
+    MajorVersion = json['MajorVersion'];
+    MinorVersion = json['MinorVersion'];
+    ModificationVersion = json['ModificationVersion'];
+    OrderBy = json['OrderBy'];
+    SPFILE_ID = json['SPFILE_ID'];
+    SPSITE_ID = json['SPSITE_ID'];
+    SPWEB_ID = json['SPWEB_ID'];
+    StoragePath = json['StoragePath'];
+    StorageSpace = json['StorageSpace'];
+    StructureGCTID = json['StructureGCTID'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['CopiedFrom_DOCID'] = CopiedFrom_DOCID;
+    _data['CreateDate'] = CreateDate;
+    _data['CREATESTC'] = CREATESTC;
+    _data['DOCCODE'] = DOCCODE;
+    _data['DocumentKey'] = DocumentKey;
+    _data['FileExtension'] = FileExtension;
+    _data['FileKey'] = FileKey;
+    _data['FileName'] = FileName;
+    _data['FileOwner'] = FileOwner;
+    _data['FileStoragePath'] = FileStoragePath;
+    _data['Is_Signed'] = Is_Signed;
+    _data['isBarcodeAdded'] = isBarcodeAdded;
+    _data['IsCurrentVersion'] = IsCurrentVersion;
+    _data['IsDMS'] = IsDMS;
+    _data['isPrivate'] = isPrivate;
+    _data['ISTEMPLATE'] = ISTEMPLATE;
+    _data['MajorVersion'] = MajorVersion;
+    _data['MinorVersion'] = MinorVersion;
+    _data['ModificationVersion'] = ModificationVersion;
+    _data['OrderBy'] = OrderBy;
+    _data['SPFILE_ID'] = SPFILE_ID;
+    _data['SPSITE_ID'] = SPSITE_ID;
+    _data['SPWEB_ID'] = SPWEB_ID;
+    _data['StoragePath'] = StoragePath;
+    _data['StorageSpace'] = StorageSpace;
+    _data['StructureGCTID'] = StructureGCTID;
+    return _data;
   }
 }
 

@@ -1,7 +1,16 @@
 {
   "ErrorMessage": "",
   "Status": 1,
-  "attachments": [],
+  "attachments": [
+    {
+      "CREATESTC": 11,
+      "DOCCODE": "Attachments",
+      "DocumentKey": 15144523,
+      "FileExtension": "pdf",
+      "FileKey": 3342686,
+      "FileName": "8238_25a07eac-3556-474e-8781-51fe812a4a3a8215_بيا.pdf"
+    }
+  ],
   "departmentList": [
     {
       "ID": 442,

@@ -72,5 +72,24 @@ const Map<String, String> en = {
   "arabic_name": "Arabic name",
   "to":"To",
   "copyto":"copyto",
-  "backtooriginalfile":"back to original file"
+  "backtooriginalfile":"back to original file",
+  "AddAttachments":"Add Attachments"
+  ,
+  "Attachments":"Attachments"
+  ,
+  "ReferenceNumber":"Reference Number"
+  ,
+  "Subject":"Subject"
+  ,
+  "From":"From"
+  ,
+  "To":"To"
+  ,
+  "PrivacyLevel":"Privacy Level"
+  ,
+  "Status":"Status"
+  ,
+  "DocumentData":"Document Data"
+  ,
+  "Reset":"Reset"
 };

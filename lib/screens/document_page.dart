@@ -166,7 +166,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                   child: CustomButtonWithImage(
                     //onClick: () {},
                     image: 'assets/images/attachment.png',
-                    label: "Add Attachments".tr,
+                    label: "AddAttachments".tr,
                   ),
                 ),
                 Container(

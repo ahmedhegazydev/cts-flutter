@@ -10,7 +10,6 @@ import '../widgets/custom_button.dart';
 import '../widgets/custom_button_with_icon.dart';
 import '../widgets/custom_row_search.dart';
 import 'package:get/get.dart';
-
 class SearchPage extends GetWidget<SearchController> {
 //  TextEditingController a = TextEditingController();
 
@@ -25,7 +24,7 @@ class SearchPage extends GetWidget<SearchController> {
         padding: const EdgeInsets.all(8.0),
         child: GetBuilder<SearchController>(builder: (logic) {
           return ListView(children: [
-            Text("Advanceed Search",
+            Text("advancedSearch".tr,
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
             Row(children: [
               Expanded(
@@ -112,9 +111,9 @@ class SearchPage extends GetWidget<SearchController> {
                           const BorderRadius.all(Radius.circular(6))),
                       child: TextField(
                         controller: controller.textEditingControllerSubject,
-                        decoration: const InputDecoration(
+                        decoration:   InputDecoration(
                           border: UnderlineInputBorder(),
-                          labelText: 'Subject',
+                          labelText: 'Subject'.tr,
                         ),
                       ))),
             ]),
@@ -157,8 +156,8 @@ class SearchPage extends GetWidget<SearchController> {
                             //     .style
                             //     .copyWith(fontStyle: FontStyle.italic),
                             decoration:
-                            const InputDecoration(border: OutlineInputBorder(),
-                                labelText: 'From'),
+                              InputDecoration(border: OutlineInputBorder(),
+                                labelText: 'From'.tr),
                           ),
                           suggestionsCallback: (pattern) async {
                             return controller.users.where((element) =>
@@ -226,8 +225,8 @@ class SearchPage extends GetWidget<SearchController> {
                             //     .style
                             //     .copyWith(fontStyle: FontStyle.italic),
                             decoration:
-                            const InputDecoration(border: OutlineInputBorder(),
-                                labelText: 'To'),
+                              InputDecoration(border: OutlineInputBorder(),
+                                labelText: 'To'.tr),
                           ),
                           suggestionsCallback: (pattern) async {
                             return controller.users.where((element) =>
@@ -320,8 +319,8 @@ class SearchPage extends GetWidget<SearchController> {
                             //     .style
                             //     .copyWith(fontStyle: FontStyle.italic),
                             decoration:
-                            const InputDecoration(border: OutlineInputBorder(),
-                                labelText: 'From'),
+                              InputDecoration(border: OutlineInputBorder(),
+                                labelText: 'From'.tr),
                           ),
                           suggestionsCallback: (pattern) async {
                             return controller.users.where((element) =>
@@ -387,8 +386,8 @@ controller.from=v;
                             //     .style
                             //     .copyWith(fontStyle: FontStyle.italic),
                             decoration:
-                            const InputDecoration(border: OutlineInputBorder(),
-                                labelText: 'To'),
+                              InputDecoration(border: OutlineInputBorder(),
+                                labelText: 'To'.tr),
                           ),
                           suggestionsCallback: (pattern) async {
                             return controller.users.where((element) =>
@@ -482,7 +481,7 @@ controller.from=v;
                             Radius.circular(6))),
                     child: DropdownButton<Privacies>(
                       isExpanded: true,
-                      hint: Text("Privacy Level"),
+                      hint: Text("PrivacyLevel".tr),
                       value: controller.privacieVal,
                       // icon: const Icon(Icons.arrow_downward),
                       elevation: 16,
@@ -848,9 +847,9 @@ controller.from=v;
                         child:
                         TextField(enabled: false,
                           controller: controller.textEditingControllerFromDocDate,
-                          decoration: const InputDecoration(
+                          decoration:   InputDecoration(
                             border: UnderlineInputBorder(),
-                            labelText: 'From',
+                            labelText: 'From'.tr,
                           ),
                         )
                     ),
@@ -880,9 +879,9 @@ controller.from=v;
                         child:
           TextField(enabled: false,
        controller: controller.textEditingControllerToDocDate,
-          decoration: const InputDecoration(
+          decoration:   InputDecoration(
           border: UnderlineInputBorder(),
-          labelText: 'To',
+          labelText: 'To'.tr,
           ),
           )
                      //   Center(child: Text(controller.toDocDate))
@@ -923,7 +922,7 @@ controller.from=v;
                         .of(context)
                         .size
                         .width * .3,
-                    child: CustomButton(name: 'Search', onPressed: () {
+                    child: CustomButton(name: 'search'.tr, onPressed: () {
                       controller.searchCorrespondences();
                     }),
                   );
@@ -935,7 +934,7 @@ controller.from=v;
                         .size
                         .width * .3,
                     child: CustomButton(
-                        name: 'Reset', onPressed: controller.formReset)),
+                        name: 'Reset'.tr, onPressed: controller.formReset)),
                ],
             )
           ]);

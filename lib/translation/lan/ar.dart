@@ -72,5 +72,22 @@ const Map<String, String> ar = {
   "to":"الي",
   "copyto":"نسخة الي",
 
-"backtooriginalfile":"الرجوع للملف الاصلي"
+"backtooriginalfile":"الرجوع للملف الاصلي",
+"AddAttachments":"اضف مرفق"
+  ,
+  "Attachments":"المرفقات"
+  ,
+  "ReferenceNumber":"الرقم المرجعي"
+  ,
+  "Subject":"الموضوع"
+  ,
+  "From":"من"
+  ,
+  "To":"الي",
+  "PrivacyLevel":"درجة الخصوصية"
+  ,
+  "Status":"الحالة",
+"DocumentData":"معلومات الملف"
+  ,
+  "Reset":"مسح"
 };

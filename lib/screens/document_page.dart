@@ -62,7 +62,8 @@ class DocumentPage extends GetWidget<DocumentController> {
         GetBuilder<DocumentController>(builder: (logic) {
           return SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,mainAxisSize: MainAxisSize.max,
+            child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisSize: MainAxisSize.max,
               children: [
                 Container(
                     color: Colors.grey[400],
@@ -116,7 +117,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                   ),
                 if (controller
                     .openAttachment
-                )  Container(
+                ) Container(
                   height: 30,
                   width: 1,
                   color: Colors.grey[800],
@@ -138,11 +139,11 @@ class DocumentPage extends GetWidget<DocumentController> {
                 if (controller
                     .canOpenDocumentModel?.correspondence?.hasAttachments ??
                     true)
-                Container(
-                  height: 30,
-                  width: 1,
-                  color: Colors.grey[800],
-                ),
+                  Container(
+                    height: 30,
+                    width: 1,
+                    color: Colors.grey[800],
+                  ),
                 // if (controller
                 //     .canOpenDocumentModel?.correspondence?.hasSummaries ??
                 //     true)
@@ -282,15 +283,15 @@ class DocumentPage extends GetWidget<DocumentController> {
                   color: Colors.grey[800],
                 ),
                 if(controller.notoragnalFileDoc)
-                  GestureDetector(onTap: (){
-
-controller.backTooragnalFileDocpdf();
-
+                  GestureDetector(onTap: () {
+                    controller.backTooragnalFileDocpdf();
                   },
-                    child:   Icon(Icons.home,size: 40,color: Theme.of(context)
+                    child: Icon(Icons.home, size: 40, color: Theme
+                        .of(context)
                         .colorScheme
                         .primary,),
-                  ), ],
+                  ),
+              ],
             ),
           );
         }),
@@ -580,7 +581,7 @@ controller.backTooragnalFileDocpdf();
                                 d.ParentHeight =
                                     pdfViewerRenderBox?.size.height;
                                 d.Page =
-                                    controller.pdfViewerController!.pageNumber!;
+                                controller.pdfViewerController!.pageNumber!;
                                 d.IsExclusive = false.toString();
                                 d.Type = 3.toString();
                                 d.Viewers = "Everyone";
@@ -589,16 +590,8 @@ controller.backTooragnalFileDocpdf();
                                 d.Y = pos?.dy;
                                 listofdocumentAnnotations.add(d);
                               });
-                              print(
-                                  "listofdocumentAnnotations.length=> ${listofdocumentAnnotations
-                                      .length}");
 
-                              print(
-                                  "listofdocumentAnnotations=>${listofdocumentAnnotations
-                                      .length}");
-                              print(
-                                  "listofdocumentAnnotations=>${listofdocumentAnnotations}");
-                                controller.getSaveDocAnnotationsDataLocalJson();
+                              //controller.getSaveDocAnnotationsDataLocalJson();
                               await controller.getSaveDocAnnotationsData(
                                   attachmentId: controller
                                       .isOriginalMailAttachmentsList!
@@ -630,11 +623,11 @@ controller.backTooragnalFileDocpdf();
                   color: Colors.grey,
                 ),
                 GetBuilder<DocumentController>(builder: (logic) {
-                  print("i geeeeeeeeeeeeeet pilllll");
+
                   return Expanded(
                       flex: 4,
-                      child: Container(key:logic.pdfViewerkey,
-                        child:  Stack(children: [
+                      child: Container(key: logic.pdfViewerkey,
+                        child: Stack(children: [
 
                           ...controller.pdfAndSing
                         ]),
@@ -1468,13 +1461,22 @@ controller.backTooragnalFileDocpdf();
                                       padding: const EdgeInsets.all(8.0),
                                       child: GestureDetector(
                                         onTap: () {
+                                          // Get.find<DocumentController>()
+                                          //     .getAttachmentItemlocal(
+                                          //     context: context);
                                           Get.find<DocumentController>()
-                                              .getAttachmentItemlocal(
-                                              context: context);
+                                              .getAttachmentItem(
+                                              transferId:Get
+                                                  .find<DocumentController>()
+                                                  .folder2[key]![pos].transferId, attachmentId: Get
+                                              .find<DocumentController>()
+                                              .folder2[key]![pos].attachmentId,
+                                              documentId:Get
+                                                  .find<DocumentController>()
+                                                  .folder2[key]![pos].docId);
 
 
-
-Get.back();
+                                          Get.back();
                                           //  _popShowAttachments(context);
                                         },
                                         child: Text(
@@ -1835,7 +1837,7 @@ Get.back();
                                     Expanded(
                                       child: Container(
                                         height: 100,
-                                       // width: 400,
+                                        // width: 400,
                                         decoration: BoxDecoration(
                                             border: Border.all(width: 1)),
                                         child: ListView.builder(

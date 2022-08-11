@@ -249,6 +249,8 @@ bool edit=false;
   void onInit() {
     super.onInit();
     scrollController.addListener(_scrollListener);
+    List<bool> selected = List.generate(
+        texts1.length, (i) => false);
   }
 
   _scrollListener() {
@@ -632,4 +634,24 @@ Get.find<DocumentController>().gatAllDataAboutDOC(docId:  docId, transferId: tra
     }
 
 
+    //fileter
+
+    List<String> texts1 = [
+    "للعلم والاطلاع",
+    "لاجراء اللازم",
+    "للافاده",
+    "للتوجيه",
+  ];
+
+
+    List<String> texts2 = [
+    "مباشر",
+    "نسخه",
+    "خاص",
+  ];
+    List<String> texts3 = [
+    "عاجل",
+    "متوسط",
+    "عادي"
+  ];
 }

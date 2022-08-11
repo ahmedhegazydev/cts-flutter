@@ -17,6 +17,7 @@ import '../utility/utilitie.dart';
 import '../widgets/custom_inboxes_row.dart';
 import '../widgets/custom_landing_row.dart';
 import '../widgets/landing_head_item.dart';
+import 'basket_page.dart';
 
 class LandingPage extends GetWidget<LandingPageController> {
   SecureStorage secureStorage = Get.find<SecureStorage>();
@@ -465,7 +466,22 @@ Get.back();
                   },
                   child: Text("Ok"),
                 ),
-              ],
+                FlatButton(
+                  onPressed:
+                      () async {
+
+                    /// ToDo send Replay
+                        ///  Navigator.of(
+                        //                         ctx)
+                        //                         .pop();
+                        Navigator.of(
+                            ctx)
+                            .pop();
+                        Get.to(BasketPage());
+
+                  },
+                  child: Text("go to Basket"),
+                ),  ],
             ),
       );
      // Get.toNamed( "MyPocketsScreen",);//MyPocketsScreen

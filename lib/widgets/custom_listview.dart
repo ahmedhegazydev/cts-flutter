@@ -156,12 +156,16 @@ class CustomListView extends StatelessWidget {
                                                           logic.updateTexts1,
                                                     ),
                                                   ),
-                                                  TextField(
-                                                    controller: logic
-                                                        .textEditingControllerFilter,
-                                                    decoration: InputDecoration(
-                                                        hintText: "اخري",),
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: TextField(
+                                                      controller: logic
+                                                          .textEditingControllerFilter,
+                                                      decoration: InputDecoration(
+                                                          hintText: "اخري",),
+                                                    ),
                                                   ),
+                                           SizedBox(height: 30,),
                                            Padding(
                                              padding: const EdgeInsets.all(8.0),
                                              child: Divider(height: 2,thickness: 2),

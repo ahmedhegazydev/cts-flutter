@@ -2167,6 +2167,7 @@ Get.back();
                   Get.find<DocumentController>().exportUsingG2g(
                       notes: controller.textEditingControllerG2gNotes.text
                   );
+                  Navigator.pop(context,true);
                 },
                 child: Text("ارسال"),
               ),

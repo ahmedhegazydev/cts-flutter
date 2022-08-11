@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 
 import '../controllers/basket_controller.dart';
 import '../controllers/inbox_controller.dart';
 import '../controllers/landing_page_controller.dart';
 import '../controllers/login_controller.dart';
+import '../controllers/main_controller.dart';
 import '../controllers/web_view_controller.dart';
 import '../utility/all_const.dart';
 import '../utility/all_string_const.dart';
@@ -15,9 +17,12 @@ import '../utility/utilitie.dart';
 import '../widgets/custom_inboxes_row.dart';
 import '../widgets/custom_landing_row.dart';
 import '../widgets/landing_head_item.dart';
+import 'basket_page.dart';
 
 class LandingPage extends GetWidget<LandingPageController> {
   SecureStorage secureStorage = Get.find<SecureStorage>();
+  Color pickerColor = Color(0xff443a49);
+  Color currentColor = Color(0xff443a49);
 
   @override
   Widget build(BuildContext context) {
@@ -445,7 +450,10 @@ Get.back();
 
 
 
-                            ]),),
+                           GestureDetector(onTap: (){
+                             //هنا هنعمل دليت
+                           },child: Icon(Icons.delete)), ]),
+                            ),
                           );
                         })),
               ),
@@ -462,7 +470,30 @@ Get.back();
                   },
                   child: Text("Ok"),
                 ),
-              ],
+                // FlatButton(
+                //   onPressed:
+                //       () async {
+                //
+                //     /// ToDo send Replay
+                //         ///  Navigator.of(
+                //         //                         ctx)
+                //         //                         .pop();
+                //         Navigator.of(
+                //             ctx)
+                //             .pop();
+                //         Get.to(BasketPage());
+                //
+                //   },
+                //   child: Text("go to Basket"),
+                // ),
+                FlatButton(
+                  onPressed:
+                      () async {
+ //هنا هنكريت الباسكت
+
+                  },
+                  child: Text("new Basket"),
+                ), ],
             ),
       );
      // Get.toNamed( "MyPocketsScreen",);//MyPocketsScreen
@@ -550,40 +581,160 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
          ),
        ),
 
-       Container(
-         height: 120,
-         color: Colors.transparent,
-         child: Column(
-           mainAxisAlignment: MainAxisAlignment.spaceAround,
-           crossAxisAlignment: CrossAxisAlignment.center,
-           mainAxisSize: MainAxisSize.max,
-           children: [
-             Spacer(
-               flex: 1,
-             ),
-             Flexible(
-               flex: 3,
-               child: Image(
-                 image: AssetImage(
-                   'assets/images/palette_dark.png',
+       InkWell(onTap: (){
+         showDialog(
+             context: context,
+             builder: (context) => AlertDialog(
+               title: const Text("pick your Color"),
+               content: Column(children: [
+                 buildColorPicker(),
+                 Padding(
+                   padding: const EdgeInsets.only(
+                       top: 8.0, bottom: 8, right: 20, left: 20),
+                   child: Row(children: [
+                     Expanded(
+                       child: Container(
+                         padding: const EdgeInsets.only(
+                             left: 0,
+                             right: 0,
+                             top: 0,
+                             bottom: 0),
+
+                         height: 60,
+                         decoration: BoxDecoration(
+                             color: Theme.of(context)
+                                 .colorScheme
+                                 .primary,
+                             borderRadius: const BorderRadius.all(
+                                 Radius.circular(6))),
+                         child: ElevatedButton(
+                           onPressed:(){
+                             var locale = const Locale('ar', 'AR');
+                             Get.updateLocale(locale);
+                           },
+                           child: Text(
+                             "عربي",
+                             style: Theme.of(context)
+                                 .textTheme
+                                 .headline2!
+                                 .copyWith(
+                                 color: Colors.white),
+                             textAlign: TextAlign.center,
+                           ),
+                         ),
+                       ),
+                     )
+                     ,SizedBox(width: 10,)   ,
+
+                     Expanded(
+                       child: Container(
+                         padding: const EdgeInsets.only(
+                             left: 0,
+                             right: 0,
+                             top: 0,
+                             bottom: 0),
+
+                         height: 60,
+                         decoration: BoxDecoration(
+                             color: Theme.of(context)
+                                 .colorScheme
+                                 .primary,
+                             borderRadius: const BorderRadius.all(
+                                 Radius.circular(6))),
+                         child: ElevatedButton(
+                           onPressed:(){
+                             var locale = const Locale('en', 'US');
+                             Get.updateLocale(locale);
+                           },
+                           child: Text(
+                             "En",
+                             style: Theme.of(context)
+                                 .textTheme
+                                 .headline2!
+                                 .copyWith(
+                                 color: Colors.white),
+                             textAlign: TextAlign.center,
+                           ),
+                         ),
+                       ),
+                     )
+
+                   ]),
                  ),
-                 fit: BoxFit.contain,
-                 width: double.infinity,
-                 height: double.infinity,
+
+
+
+                 Container(width: MediaQuery.of(context).size.width*.7,
+                   padding: const EdgeInsets.only(
+                       left: 0,
+                       right: 0,
+                       top: 0,
+                       bottom: 0),
+
+                   height: 60,
+                   decoration: BoxDecoration(
+                       color: Theme.of(context)
+                           .colorScheme
+                           .primary,
+                       borderRadius: const BorderRadius.all(
+                           Radius.circular(6))),
+                   child: ElevatedButton(
+                     onPressed:(){
+                       Get.find<SecureStorage>().writeSecureData(
+                           AllStringConst.AppColor,
+                           Get.find<MController>().appcolor.value);
+                       Navigator.of(context).pop();
+                     },
+                     child: Text(
+                       "save",
+                       style: Theme.of(context)
+                           .textTheme
+                           .headline2!
+                           .copyWith(
+                           color: Colors.white),
+                       textAlign: TextAlign.center,
+                     ),
+                   ),
+                 )
+
+               ]),
+             ));
+       },
+         child: Container(
+           height: 120,
+           color: Colors.transparent,
+           child: Column(
+             mainAxisAlignment: MainAxisAlignment.spaceAround,
+             crossAxisAlignment: CrossAxisAlignment.center,
+             mainAxisSize: MainAxisSize.max,
+             children: [
+               Spacer(
+                 flex: 1,
                ),
-             ),
-             Flexible(
-               flex: 1,
-               child: Text(
-                 "appTheme".tr,
-                 textAlign: TextAlign.center,
-                 style: Theme.of(context)
-                     .textTheme
-                     .headline3!
-                     .copyWith(color: Colors.grey.shade600),
+               Flexible(
+                 flex: 3,
+                 child: Image(
+                   image: AssetImage(
+                     'assets/images/palette_dark.png',
+                   ),
+                   fit: BoxFit.contain,
+                   width: double.infinity,
+                   height: double.infinity,
+                 ),
                ),
-             ),
-           ],
+               Flexible(
+                 flex: 1,
+                 child: Text(
+                   "appTheme".tr,
+                   textAlign: TextAlign.center,
+                   style: Theme.of(context)
+                       .textTheme
+                       .headline3!
+                       .copyWith(color: Colors.grey.shade600),
+                 ),
+               ),
+             ],
+           ),
          ),
        ),
        InkWell(
@@ -2802,6 +2953,18 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
     //     transitionDuration: Duration(seconds: 0),
     //   ),
     // );
+  }
+
+
+  Widget buildColorPicker() {
+    return ColorPicker(
+      pickerColor: pickerColor,
+      onColorChanged: (Color color) {
+        Get.find<MController>().setAppColor(color);
+        print(color);
+        pickerColor = color;
+      },
+    );
   }
 }
 

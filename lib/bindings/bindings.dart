@@ -24,10 +24,10 @@ class AllBindings extends Bindings {
     Get.put(DocumentController(), permanent: true);
 
     Get.lazyPut(()=>  SignaturePageController(),fenix: true  );
-    Get.lazyPut(()=>  WebViewPageController()  );
-    Get.lazyPut(()=>  SearchPageResultController()  );
+    Get.lazyPut(()=>  WebViewPageController() ,fenix: true  );
+    Get.lazyPut(()=>  SearchPageResultController() ,fenix: true  );
 
-    Get.lazyPut(()=>  BasketController()  );
+    Get.lazyPut(()=>  BasketController(),fenix: true  );
     //MyPocketsController
     // Get.putAsync<SecureStorage>(()async => await SecureStorage());
 

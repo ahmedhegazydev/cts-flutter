@@ -159,56 +159,57 @@ updateopenAttashment(String link){
         .locale?.languageCode == "en" ? "en" : "ar"}";
     getAttachmentItemAPI.getData().then((value) {
       getAttAchmentItem = value as GetAttAchmentItem;
+
     });
   }
 //open the AttachmentItem
-  getAttachmentItemlocal(
-      {documentId, transferId, attachmentId, required BuildContext context}) async {
-
-    notoragnalFileDoc=true;
-
-    final jsondata = await rootBundel.rootBundle.loadString(
-        "assets/json/getattachmentitem.json");
-
-    getAttAchmentItem = GetAttAchmentItem.fromJson(json.decode(jsondata));
-    print("g2gInfoForExportModel?.toJson()=>  ${g2gInfoForExportModel
-        ?.toJson()}");
-
-    pdfUrlFile=   getAttAchmentItem!.attachment!.uRL!;
-
-update();
-
-
-    // showDialog(
-    //     context: context,
-    //     builder: (BuildContext context) {
-    //       return AlertDialog(
-    //         title: Text(getAttAchmentItem!.attachment!.fileName!),
-    //         content: SizedBox(
-    //             height: MediaQuery
-    //                 .of(context)
-    //                 .size
-    //                 .height * .7,
-    //             width: MediaQuery
-    //                 .of(context)
-    //                 .size
-    //                 .width * .7,
-    //             child: SfPdfViewer.network(
-    //               //'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf'
-    //                 getAttAchmentItem!.attachment!.uRL!
-    //
-    //             )),
-    //         actions: <Widget>[
-    //           TextButton(
-    //             onPressed: () {
-    //               Navigator.of(context).pop();
-    //             },
-    //             child: Text("Ok"),
-    //           ),
-    //         ],
-    //       );
-    //     });
-  }
+//   getAttachmentItemlocal(
+//       {documentId, transferId, attachmentId, required BuildContext context}) async {
+//
+//     notoragnalFileDoc=true;
+//
+//     final jsondata = await rootBundel.rootBundle.loadString(
+//         "assets/json/getattachmentitem.json");
+//
+//     getAttAchmentItem = GetAttAchmentItem.fromJson(json.decode(jsondata));
+//     print("g2gInfoForExportModel?.toJson()=>  ${g2gInfoForExportModel
+//         ?.toJson()}");
+//
+//     pdfUrlFile=   getAttAchmentItem!.attachment!.uRL!;
+//
+// update();
+//
+//
+//     // showDialog(
+//     //     context: context,
+//     //     builder: (BuildContext context) {
+//     //       return AlertDialog(
+//     //         title: Text(getAttAchmentItem!.attachment!.fileName!),
+//     //         content: SizedBox(
+//     //             height: MediaQuery
+//     //                 .of(context)
+//     //                 .size
+//     //                 .height * .7,
+//     //             width: MediaQuery
+//     //                 .of(context)
+//     //                 .size
+//     //                 .width * .7,
+//     //             child: SfPdfViewer.network(
+//     //               //'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf'
+//     //                 getAttAchmentItem!.attachment!.uRL!
+//     //
+//     //             )),
+//     //         actions: <Widget>[
+//     //           TextButton(
+//     //             onPressed: () {
+//     //               Navigator.of(context).pop();
+//     //             },
+//     //             child: Text("Ok"),
+//     //           ),
+//     //         ],
+//     //       );
+//     //     });
+//   }
 
   // [OperationContract]
   // [WebGet(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
@@ -282,13 +283,13 @@ print(value);
         TransferId: transferId);
     //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
 
-    print("postSaveDocumentAnnotationsModel?.toMap() =>${jsonEncode(postSaveDocumentAnnotationsModel?.toMap())}");
+  //  print("postSaveDocumentAnnotationsModel?.toMap() =>${jsonEncode(postSaveDocumentAnnotationsModel?.toMap())}");
 
 
     await _saveDocumentAnnotationsApi
         .post(postSaveDocumentAnnotationsModel?.toMap())
         .then((value) {
-      print("value =>   ${value}");
+     // print("value =>   ${value}");
       saveAttAchmentItemAnnotationsData = value as GetattAchmentsModel;
       saveAttAchmentItemAnnotationsData?.attachments?.forEach((element) {
         if(element.attachmentId==getAttAchmentItem!.attachment!.attachmentId){
@@ -298,23 +299,60 @@ print(pdfUrlFile);
           saveAttAchmentItemAnnotationsresalt=element;
          pdfAndSing.clear();
          singpic.clear();
-          pdfUrlFile=  'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
+          pdfUrlFile= element.uRL!;// 'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
           pdfAndSing.add(SfPdfViewer.network(
             pdfUrlFile
-         //   saveAttAchmentItemAnnotationsresalt!.uRL!
-            // oragnalFileDoc??""
+
             , controller: pdfViewerController,
           //  key: pdfViewerkey,
           ));
- // String d=saveAttAchmentItemAnnotationsresalt!.annotations!..replaceAll(new RegExp(r'[^\w\s]+'),'');
- print("ddddddddddddddddddddddd=>  ${saveAttAchmentItemAnnotationsresalt?.annotations}");
 
-          Map<String,dynamic>dat=jsonDecode(saveAttAchmentItemAnnotationsresalt?.annotations??"");
+          if(element.annotations!.contains("[]")){
+            print("[]");
+          }
+          else{
+            print("i will addddddd");
+            Map<dynamic,dynamic> dat=jsonDecode(element.annotations!);
+            dat.forEach((key, value) async{
+              print("--------------------------------------------");
+              Annotation annotation= Annotation.fromJson( value[0]);
+              List<int> list = annotation.imageByte!.codeUnits;
+              final Uint8List? data =    Uint8List.fromList(list);
+              print("the data is $data");
+              addWidgetToPdfAndSing(
+                  Positioned(top: double.tryParse(annotation.y!),left:double.tryParse(annotation.x!),
+                    child: Image
+                        .memory(
+                      data!,
+                      fit: BoxFit
+                          .fill,
+
+                      width: double.tryParse(annotation.width!),
+                      height:  double.tryParse(annotation.height!),
+                    ),
+                  ));
+              addWidgetToPdfAndSing(
+                  Positioned(top: 100,right:500,
+                      child:Container(height: 100,width: 100, color: Colors.red,)
+                  ));
+              pdfUrlFile=element.uRL!;
+              print(pdfUrlFile);
 
 
-     //   DocumentAnnotations a=DocumentAnnotations.fromJson(jsonDecode( saveAttAchmentItemAnnotationsresalt!.annotations!));
-
-          //update();
+              print(addWidgetToPdfAndSing);
+              print("i add image");
+            });
+          }
+          log(saveAttAchmentItemAnnotationsData.toString());
+ // // String d=saveAttAchmentItemAnnotationsresalt!.annotations!..replaceAll(new RegExp(r'[^\w\s]+'),'');
+ // print("ddddddddddddddddddddddd=>  ${saveAttAchmentItemAnnotationsresalt?.annotations}");
+ //
+ //          Map<String,dynamic>dat=jsonDecode(saveAttAchmentItemAnnotationsresalt?.annotations??"");
+ //
+ //
+ //     //   DocumentAnnotations a=DocumentAnnotations.fromJson(jsonDecode( saveAttAchmentItemAnnotationsresalt!.annotations!));
+ //
+ //          //update();
         }
 
       });
@@ -978,11 +1016,14 @@ backTooragnalFileDocpdf(){
               //     transferId: transferId,
               //     correspondenceId: correspondenceId,
               //     context: context);
+              print("oooooooooooooooooooooooooooooooooo");
               getSwitchMethod(exportAction: exportAction,
                   transferId: transferId,
                   correspondenceId: correspondenceId,
                   context: context,
                   name: isAlreadyExportedAsPaperworkModel!.yesMethod!);
+
+              //Navigator.of(context).pop();
             });
       } else {
         getSwitchMethod(exportAction: exportAction,
@@ -990,7 +1031,7 @@ backTooragnalFileDocpdf(){
             correspondenceId: correspondenceId,
             context: context,
             name: isAlreadyExportedAsPaperworkModel!.request!);
-      }
+        Navigator.of(context).pop();   }
       // print("_alreadyExportedAsPaperworkAPI =>  ${isAlreadyExportedAsPaperworkModel!.toJson()}");
     });
   }
@@ -1023,12 +1064,15 @@ backTooragnalFileDocpdf(){
               Navigator.of(context).pop();
             },
             yes: () {
+
+              print("oooooooooooooooooooooooooooooooooo");
+              Navigator.of(context).pop();
               getCanExportAsPaperwork(
                   exportAction: exportAction,
                   transferId: transferId,
                   correspondenceId: correspondenceId,
                   context: context);
-            });
+                    });
       }
     });
   }

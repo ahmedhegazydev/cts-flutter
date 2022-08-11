@@ -991,8 +991,8 @@ backTooragnalFileDocpdf(){
                   correspondenceId: correspondenceId,
                   context: context,
                   name: isAlreadyExportedAsPaperworkModel!.yesMethod!);
-
-              //Navigator.of(context).pop();
+Get.back();
+            // Navigator.of(context).pop();
             });
       } else {
         getSwitchMethod(exportAction: exportAction,
@@ -1000,7 +1000,9 @@ backTooragnalFileDocpdf(){
             correspondenceId: correspondenceId,
             context: context,
             name: isAlreadyExportedAsPaperworkModel!.request!);
-        Navigator.of(context).pop();   }
+        Get.back();
+      //  Navigator.of(context).pop();
+      }
       // print("_alreadyExportedAsPaperworkAPI =>  ${isAlreadyExportedAsPaperworkModel!.toJson()}");
     });
   }
@@ -1032,16 +1034,18 @@ backTooragnalFileDocpdf(){
             no: () {
               Navigator.of(context).pop();
             },
-            yes: () {
+            yes: isAlreadyExportedAsTransferModel!.yesMethod2!=null||isAlreadyExportedAsTransferModel!.yesMethod!=null?() {
 
               print("oooooooooooooooooooooooooooooooooo");
-              Navigator.of(context).pop();
+            //  Navigator.of(context).pop();
               getCanExportAsPaperwork(
                   exportAction: exportAction,
                   transferId: transferId,
                   correspondenceId: correspondenceId,
                   context: context);
-                    });
+              Get.back();}:(){
+              Get.back();
+            });
       }
     });
   }

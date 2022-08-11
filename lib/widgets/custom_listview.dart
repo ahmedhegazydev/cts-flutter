@@ -672,8 +672,9 @@ Get.find<InboxController>().canceldata();
                                                             ],
                                                           ),
                                                           onTap: () {
-                                                            print(
-                                                                "00000000000000000000000000000000000000000000000000000");
+                                                            Get.find<
+                                                                InboxController>()
+                                                                .getFetchBasketList();
                                                           },
                                                           value: 5,
                                                         ),
@@ -2117,7 +2118,8 @@ Get.find<InboxController>().canceldata();
                                                       ],
                                                     ),
                                                   );
-                                                } else if (v == 2) {
+                                                }
+                                                else if (v == 2) {
                                                   showDialog(
                                                       context: context,
                                                       builder: (BuildContext
@@ -2631,7 +2633,8 @@ Get.find<InboxController>().canceldata();
                                                           ],
                                                         );
                                                       });
-                                                } else if (v == 3) {
+                                                }
+                                                else if (v == 3) {
                                                   showDialog(
                                                     context: context,
                                                     builder: (ctx) =>
@@ -2726,7 +2729,8 @@ Get.find<InboxController>().canceldata();
                                                           InboxController>()
                                                       .customAction
                                                       ?.name);
-                                                } else if (v == 4) {
+                                                }
+                                                else if (v == 4) {
                                                   //correspondences[pos].
 
                                                 } else if (v == 5) {

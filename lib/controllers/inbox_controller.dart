@@ -249,7 +249,7 @@ bool edit=false;
   void onInit() {
     super.onInit();
     scrollController.addListener(_scrollListener);
-    List<bool> selected = List.generate(
+    selected = List.generate(
         texts1.length, (i) => false);
   }
 
@@ -635,15 +635,19 @@ Get.find<DocumentController>().gatAllDataAboutDOC(docId:  docId, transferId: tra
 
 
     //fileter
-
+  List<bool> selected=[];
     List<String> texts1 = [
     "للعلم والاطلاع",
     "لاجراء اللازم",
     "للافاده",
     "للتوجيه",
   ];
+int selectTexts1pos=0;
+updateTexts1(int ppos){
 
-
+  selectTexts1pos=ppos;
+update();
+}
     List<String> texts2 = [
     "مباشر",
     "نسخه",

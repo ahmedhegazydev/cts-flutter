@@ -115,46 +115,32 @@ class CustomListView extends StatelessWidget {
                                                   return Column(children: [
 
 
-                                                    // ListView.builder(
-                                                    //     shrinkWrap: true,
-                                                    //     physics: NeverScrollableScrollPhysics(),
-                                                    //     itemBuilder: (
-                                                    //         BuildContext context,
-                                                    //         int index) {
-                                                    //       return ListTile(
-                                                    //         // tileColor: _selected[index] ? Colors.blue : null,
-                                                    //         // tileColor: Colors.blue,
-                                                    //           leading:logic .selected[index]
-                                                    //               ? Icon(
-                                                    //             Icons.check,
-                                                    //             color: Colors
-                                                    //                 .black,)
-                                                    //               :
-                                                    //           Icon(Icons.check,
-                                                    //             color: Colors
-                                                    //                 .transparent,),
-                                                    //           title: Text(
-                                                    //             logic.  texts1[index]),
-                                                    //           onTap: () =>
-                                                    //           {
-                                                    //           for( var i = 0; i <
-                                                    //          logic .selected
-                                                    //               .length; i++ ) {
-                                                    //           logic.  selected[i] =
-                                                    //           false,
-                                                    //           },
-                                                    //           // _selected.forEach((element) {
-                                                    //           //     element = !element;
-                                                    //           //     print("object");
-                                                    //           //   }),
-                                                    //           logic.   selected[index] =
-                                                    //           logic.  !selected[index],
-                                                    //             // Scaffold.of(context).showSnackBar(SnackBar(content: Text(index.toString())))
-                                                    //           }
-                                                    //       );
-                                                    //     },
-                                                    //     itemCount: texts1
-                                                    //         .length)
+                                                    ListView.builder(
+                                                        shrinkWrap: true,
+                                                        physics: NeverScrollableScrollPhysics(),
+                                                        itemBuilder: (
+                                                            BuildContext context,
+                                                            int index) {
+                                                          return ListTile(
+                                                            // tileColor: _selected[index] ? Colors.blue : null,
+                                                            // tileColor: Colors.blue,
+                                                              leading:logic .selected[index]==logic.selectTexts1pos
+                                                                  ? Icon(
+                                                                Icons.check,
+                                                                color: Colors
+                                                                    .black,)
+                                                                  :
+                                                              Icon(Icons.check,
+                                                                color: Colors
+                                                                    .transparent,),
+                                                              title: Text(
+                                                                logic.  texts1[index]),
+                                                              onTap: logic.updateTexts1(index)
+
+                                                          );
+                                                        },
+                                                        itemCount: logic.texts1
+                                                            .length)
                                                   ],);
                                                 })),
                                       ),

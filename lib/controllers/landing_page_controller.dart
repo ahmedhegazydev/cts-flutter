@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cts/controllers/search_controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 
@@ -19,6 +20,10 @@ import 'document_controller.dart';
 
 class LandingPageController extends GetxController{
   final SecureStorage _secureStorage=Get.find<SecureStorage>();
+
+
+  TextEditingController textEditingControllerEnglishName=TextEditingController();
+  TextEditingController textEditingControllerArabicName=TextEditingController();
 
 
   AddEditBasketFlagApi _addEditBasketFlagApi = AddEditBasketFlagApi();

@@ -8,12 +8,14 @@ import '../controllers/inbox_controller.dart';
 import '../controllers/landing_page_controller.dart';
 import '../controllers/login_controller.dart';
 import '../controllers/main_controller.dart';
+import '../controllers/my_cart/create_basket_controller.dart';
 import '../controllers/web_view_controller.dart';
 import '../utility/all_const.dart';
 import '../utility/all_string_const.dart';
 import '../utility/device_size.dart';
 import '../utility/storage.dart';
 import '../utility/utilitie.dart';
+import '../widgets/custom_button.dart';
 import '../widgets/custom_inboxes_row.dart';
 import '../widgets/custom_landing_row.dart';
 import '../widgets/landing_head_item.dart';
@@ -496,8 +498,8 @@ Get.back();
                       () async {
  //هنا هنكريت الباسكت
 
-
-
+                        showInputDialog(
+                            context, 'CreateNewBasket', 'default inpit', 'message');
                   },
                   child: Text("new Basket"),
                 ), ],
@@ -594,7 +596,7 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
              builder: (context) => AlertDialog(
                title: const Text("pick your Color"),
                content: Column(children: [
-                 buildColorPicker(),
+                 buildColorPickerCreateNewTask(),
                  Padding(
                    padding: const EdgeInsets.only(
                        top: 8.0, bottom: 8, right: 20, left: 20),
@@ -1162,6 +1164,211 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
     //   ],
     // );
   }
+
+   Future<String?> showInputDialog(
+      BuildContext context, String title, String defaultInput, String message) {
+    var textController = TextEditingController(text: defaultInput);
+    var content = Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        // Text(message), TextField(controller: textController)
+        // CreateNewBasket(),
+
+        Form(
+          // key: controller.createBasketFormKey,
+          // child: LayoutBuilder(builder: (context, constraint) {
+          //   return Container(
+            child: Column(
+              children: [
+                // Spacer(),
+                // CustomInputTextFiled(
+                //     validator: controller.validators.nameValidator,
+                //     textEditingController: controller.englishName,
+                //     label: "english_name".tr),
+                // CustomInputTextFiled(
+                //     validator: controller.validators.nameValidator,
+                //     textEditingController: controller.arabicName,
+                //     label: "arabic_name".tr),
+
+                Container(
+                  // padding: EdgeInsets.only(right: 10, left: 10),
+                  padding: EdgeInsets.all(10),
+                  child: Container(
+                      padding: EdgeInsets.only(right: 8, left: 8),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Theme.of(context).colorScheme.primary),
+                          borderRadius: const BorderRadius.all(Radius.circular(6))),
+                      child: TextField(
+                        controller: controller.textEditingControllerEnglishName,
+                        decoration: InputDecoration(
+                          border: UnderlineInputBorder(),
+                          labelText: "english_name".tr,
+                        ),
+                      )),
+                ),
+
+                Container(
+                  // padding: EdgeInsets.only(right: 10, left: 10),
+                  padding: EdgeInsets.all(10),
+                  child: Container(
+                      padding: EdgeInsets.only(right: 8, left: 8),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Theme.of(context).colorScheme.primary),
+                          borderRadius: const BorderRadius.all(Radius.circular(6))),
+                      child: TextField(
+                        controller: controller.textEditingControllerArabicName,
+                        decoration: InputDecoration(
+                          border: UnderlineInputBorder(),
+                          labelText: "arabic_name".tr,
+                        ),
+                      )),
+                ),
+
+                Container(
+                  padding: EdgeInsets.only(right: 10, left: 10),
+                  width: MediaQuery.of(context).size.width * .3,
+                  child: RaisedButton(
+                      onPressed: () {
+                        // inboxController.applyFilter();
+                        // Navigator.pop(context);
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: Text(
+                                "pick your Color",
+                              ),
+                              content: Column(children: [
+                                ColorPicker(
+                                  pickerColor:
+                                  Get.find<CreateBasketController>()
+                                      .pickerColor,
+                                  onColorChanged: (Color color) {
+                                    // Get.find<MController>().setAppColor(color);
+                                    // print(color);
+                                    // controller.setPickerColor(color);
+                                    Get.find<CreateBasketController>()
+                                        .setPickerColor(color);
+                                    // setState(() {
+                                    //   controller.setPickerColor(color);
+                                    // });
+                                  },
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 8.0, bottom: 8, right: 20, left: 20),
+                                  child: Row(children: []),
+                                ),
+                                Container(
+                                  width: MediaQuery.of(context).size.width * .7,
+                                  padding: const EdgeInsets.only(
+                                      left: 0, right: 0, top: 0, bottom: 0),
+                                  height: 60,
+                                  decoration: BoxDecoration(
+                                      color:
+                                      Theme.of(context).colorScheme.primary,
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(6))),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      // Get.find<SecureStorage>().writeSecureData(
+                                      //     AllStringConst.AppColor,
+                                      //     Get.find<MController>().appcolor.value);
+                                      Navigator.of(context).pop();
+                                    },
+                                    child:
+                                    GestureDetector(onTap: (){
+                                      //هنا هنعمل دليت
+                                      controller.addEditBasket(
+                                         color: Get.find<CreateBasketController>().pickerColor.toString(),
+                                        nameAr: controller.textEditingControllerArabicName.text,
+                                        nameEn: controller.textEditingControllerEnglishName.text
+                                      );
+                                    },child:
+                                    Text(
+                                      "save",
+                                      textAlign: TextAlign.center,
+                                    ),)
+
+                                  ),
+                                )
+                              ]),
+                            ));
+                      },
+                      child: GetBuilder<CreateBasketController>(
+                        init: CreateBasketController(),
+                        builder: (_) {
+                          return Text("pick your Color",
+                              style: TextStyle(
+                                // backgroundColor: _.pickerColor,
+                                  color: _.pickerColor));
+                        },
+                      )),
+                ),
+
+                Container(
+                  height: 40,
+                  padding: EdgeInsets.only(right: 10, left: 10),
+                  width: MediaQuery.of(context).size.width * .3,
+                  child: CustomButton(
+                      name: 'register'.tr,
+                      onPressed: () {
+                        // controller.createNewBasket();
+                      }),
+                ),
+              ],
+              // ),
+              // );
+              // }
+            ))
+      ],
+    );
+    // var content = CreateNewBasket();
+
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        var mediaQuery = MediaQuery.of(context);
+
+        return AnimatedContainer(
+          padding: mediaQuery.padding,
+          duration: const Duration(milliseconds: 300),
+          child: AlertDialog(
+            title: Text(title),
+            content: content,
+            scrollable: true,
+            // actions: <Widget>[
+            //   TextButton(
+            //     child: const Text('Cancel'),
+            //     onPressed: () => Navigator.pop(context),
+            //   ),
+            //   TextButton(
+            //     child: const Text('Okay'),
+            //     onPressed: () => Navigator.pop(context, textController.text),
+            //   ),
+            // ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget buildColorPickerCreateNewTask() {
+    return ColorPicker(
+      pickerColor: Get.find<CreateBasketController>().pickerColor,
+      onColorChanged: (Color color) {
+        // Get.find<MController>().setAppColor(color);
+        // print(color);
+        // controller.setPickerColor(color);
+        Get.find<CreateBasketController>().setPickerColor(color);
+        // setState(() {
+        //   controller.setPickerColor(color);
+        // });
+      },
+    );
+  }
+
 
   landscapeDashboardContainer(BuildContext contex) {
     return Column(

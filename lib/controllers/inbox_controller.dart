@@ -357,70 +357,70 @@ bool edit=false;
     });
   }
 
+ //
+ //  openfilee({required docId,required correspondenceId, required transferId})async{
+ //    print("openfilee87y7878");
+ //    canOpenDocumentApi.data =
+ //    "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+ //
+ // final  jsondata=await rootBundel.rootBundle.loadString("assets/json/canopendocument.json");
+ //    canOpenDocumentModel=   CanOpenDocumentModel.fromJson(json.decode(jsondata));
+ //
+ //    // canOpenDocumentApi.getData().then((value) {
+ //    //
+ //    //   canOpenDocumentModel=value as CanOpenDocumentModel;
+ //    //   print("i get dayta");
+ //    // });
+ //    print(canOpenDocumentModel?.toJson());
+ //    if(canOpenDocumentModel!.allow!){
+ //      Get.find<DocumentController>().updatecanOpenDocumentModel(canOpenDocumentModel!);
+ //      Get.toNamed("/DocumentPage");
+ //    }
+ //   //
+ //  }
 
-  openfilee({required docId,required correspondenceId, required transferId})async{
-    print("openfilee87y7878");
+
+Future  canOpenDoc({required docId,required correspondenceId, required transferId})async {
+    print("canOpenDoc canOpenDoc canOpenDoc canOpenDoc");
     canOpenDocumentApi.data =
-    "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
 
- final  jsondata=await rootBundel.rootBundle.loadString("assets/json/canopendocument.json");
-    canOpenDocumentModel=   CanOpenDocumentModel.fromJson(json.decode(jsondata));
+  print( canOpenDocumentApi.data);
+    print( "canOpenDocumentApi.data");
+     canOpenDocumentApi.getData().then((value) {
 
-    // canOpenDocumentApi.getData().then((value) {
-    //
-    //   canOpenDocumentModel=value as CanOpenDocumentModel;
-    //   print("i get dayta");
-    // });
-    print(canOpenDocumentModel?.toJson());
-    if(canOpenDocumentModel!.allow!){
-      Get.find<DocumentController>().updatecanOpenDocumentModel(canOpenDocumentModel!);
-      Get.toNamed("/DocumentPage");
-    }
-   //
+canOpenDocumentModel=value as CanOpenDocumentModel;
+
+
+
+print("the valll ogfffcanOpenDocumentModel!.allow!cumentModel!.allow! =>${canOpenDocumentModel!.allow!}");
+
+   //   FindRecipientModel findRecipientModel = value as FindRecipientModel;
+if(canOpenDocumentModel!.allow!){
+Get.find<DocumentController>().canOpenDocumentModel=canOpenDocumentModel;
+
+Get.find<DocumentController>().gatAllDataAboutDOC(docId:  docId, transferId: transferId, correspondenceId: correspondenceId);
+  Get.find<DocumentController>().loadPdf();
+  Get.toNamed("/DocumentPage");
+}
+
+    }).catchError((e){
+      print ("eeeeeeeeeeeeeeee=>  $e");
+
+
+
+  });
+
+ // // عشان ندخل الملف وبعدين هنشوف مشكله الجسون
+ //
+ //    Get.find<DocumentController>().gatAllDataAboutDOC(docId:  docId, transferId: transferId, correspondenceId: correspondenceId);
+ //   Get.find<DocumentController>().loadPdf();
+   Get.toNamed("/DocumentPage");
+
+
+
+
   }
-
-//
-// Future  canOpenDoc({required docId,required correspondenceId, required transferId})async {
-//     print("canOpenDoc canOpenDoc canOpenDoc canOpenDoc");
-//     canOpenDocumentApi.data =
-//         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
-//
-//   print( canOpenDocumentApi.data);
-//     print( "canOpenDocumentApi.data");
-//      canOpenDocumentApi.getData().then((value) {
-//
-// canOpenDocumentModel=value as CanOpenDocumentModel;
-//
-//
-//
-// print("the valll ogfffcanOpenDocumentModel!.allow!cumentModel!.allow! =>${canOpenDocumentModel!.allow!}");
-//
-//    //   FindRecipientModel findRecipientModel = value as FindRecipientModel;
-// if(canOpenDocumentModel!.allow!){
-// Get.find<DocumentController>().canOpenDocumentModel=canOpenDocumentModel;
-//
-// Get.find<DocumentController>().gatAllDataAboutDOC(docId:  docId, transferId: transferId, correspondenceId: correspondenceId);
-//   Get.find<DocumentController>().loadPdf();
-//   Get.toNamed("/DocumentPage");
-// }
-//
-//     }).catchError((e){
-//       print ("eeeeeeeeeeeeeeee=>  $e");
-//
-//
-//
-//   });
-//
-//  // // عشان ندخل الملف وبعدين هنشوف مشكله الجسون
-//  //
-//  //    Get.find<DocumentController>().gatAllDataAboutDOC(docId:  docId, transferId: transferId, correspondenceId: correspondenceId);
-//  //   Get.find<DocumentController>().loadPdf();
-//    Get.toNamed("/DocumentPage");
-//
-//
-//
-//
-//   }
 
   int userId = 0;
 

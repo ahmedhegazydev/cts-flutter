@@ -132,15 +132,15 @@ class CustomListView extends StatelessWidget {
 
                                   InkWell(
                                 onTap: () {
-                                  // Get.find<InboxController>().canOpenDoc(docId: correspondences[pos].purposeId,
-                                  //     correspondenceId:
-                                  //         correspondences[pos].correspondenceId,
-                                  //     transferId:
-                                  //         correspondences[pos].transferId);
+                                  Get.find<InboxController>().canOpenDoc(docId: correspondences[pos].purposeId,
+                                      correspondenceId:
+                                          correspondences[pos].correspondenceId,
+                                      transferId:
+                                          correspondences[pos].transferId);
 
                                   Get.find<DocumentController>().pdfViewerkey=null;
-                                  Get.find<InboxController>().openfilee(docId: correspondences[pos].purposeId, correspondenceId: correspondences[pos]
-                                      .correspondenceId, transferId:  correspondences[pos].transferId);
+                                  // Get.find<InboxController>().openfilee(docId: correspondences[pos].purposeId, correspondenceId: correspondences[pos]
+                                  //     .correspondenceId, transferId:  correspondences[pos].transferId);
 
 
 
@@ -1411,17 +1411,17 @@ print("77777777777777777777777777777777777777777777777777");
                               return InkWell(
                                 onTap: () {
 
-                                  // Get.find<InboxController>().canOpenDoc(docId: allCorrespondences[pos].purposeId,
-                                  //     correspondenceId: allCorrespondences[pos]
-                                  //         .correspondenceId,
-                                  //     transferId:
-                                  //         allCorrespondences[pos].transferId);
+                                  Get.find<InboxController>().canOpenDoc(docId: allCorrespondences[pos].purposeId,
+                                      correspondenceId: allCorrespondences[pos]
+                                          .correspondenceId,
+                                      transferId:
+                                          allCorrespondences[pos].transferId);
 print(allCorrespondences[pos].purposeId);
 print(allCorrespondences[pos].correspondenceId);
 
-
-                                  Get.find<InboxController>().openfilee(docId: allCorrespondences[pos].purposeId, correspondenceId: allCorrespondences[pos]
-                                           .correspondenceId, transferId:  allCorrespondences[pos].transferId);
+                                  //
+                                  // Get.find<InboxController>().openfilee(docId: allCorrespondences[pos].purposeId, correspondenceId: allCorrespondences[pos]
+                                  //          .correspondenceId, transferId:  allCorrespondences[pos].transferId);
 
 
 

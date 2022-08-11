@@ -11,8 +11,10 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../models/CorrespondencesModel.dart';
 import '../services/apis/basket/add_documents_to_basket_api.dart';
+import '../services/apis/basket/add_edit_basket_result _api.dart';
 import '../services/apis/basket/getFetchBasketList_api.dart';
 import '../services/apis/basket/get_gasket_inbox_api.dart';
+import '../services/apis/basket/remove_basket_api.dart';
 import '../services/apis/can_open_document.dart';
 import '../services/apis/complete_in_correspondence_api.dart';
 import '../services/apis/find_recipient_api.dart';
@@ -22,7 +24,9 @@ import '../services/apis/get_correspondences_api.dart';
 //import '../services/json_model/get_correspondences_model.dart';
 import '../services/apis/multiple_transfers_api.dart';
 import '../services/json_model/basket/add_documents_to_basket_request.dart';
+import '../services/json_model/basket/add_edit_basket_flag_model.dart';
 import '../services/json_model/basket/fetch_basket_list_model.dart';
+import '../services/json_model/basket/remove_basket_request_model.dart';
 import '../services/json_model/can_open_document_model.dart';
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_correspondences_all_model.dart';
@@ -44,6 +48,14 @@ class InboxController extends GetxController {
 
   FetchBasketListModel? fetchBasketListModel;
   List<int>listSelectCorrespondences=[];
+
+
+  AddEditBasketFlagApi _addEditBasketFlagApi = AddEditBasketFlagApi();
+  // AddEditBasketFlagModel? addEditBasketFlagModel;
+
+  PostRemoveBasketApi _postRemoveBasketApi = PostRemoveBasketApi();
+  // RemoveBasketRequest? removeBasketRequest;
+
 Future addDocumentsToBasket({basketId })async{
   AddDocumentsToBasketRequest addDocumentsToBasketRequest=AddDocumentsToBasketRequest(basketId: basketId, language:Get.locale?.languageCode == "en" ? "en" : "ar",token:secureStorage.token()!,documentIds:listSelectCorrespondences );
   AddEDocumentsToBasketApi addEDocumentsToBasketApi=AddEDocumentsToBasketApi();
@@ -71,6 +83,36 @@ listSelectCorrespondences.clear();
     print("object");
   });
 }
+
+  Future addEditBasket({color, nameEn, nameAr}) async {
+    AddEditBasketFlagModel addEditBasketFlagModel =
+    AddEditBasketFlagModel(
+      Color: color,
+      Name: nameEn,
+      NameAr: nameAr
+    );
+    await _addEditBasketFlagApi
+        .post(addEditBasketFlagModel.toMap())
+        .then((value) {
+      print(value);
+      print("_addEditBasketFlagApi");
+    });
+  }
+
+  Future removeBasket({basketId }) async {
+    RemoveBasketRequest removeBasketRequest =
+    RemoveBasketRequest(
+        basketId: basketId,
+        language: Get.locale?.languageCode == "en" ? "en" : "ar",
+        token: secureStorage.token()!,
+    );
+    await _postRemoveBasketApi
+        .post(removeBasketRequest.toMap())
+        .then((value) {
+      print(value);
+      print("_postRemoveBasketApi");
+    });
+  }
 
   Future getFetchBasketList()async{
 print("getFetchBasketListgetFetchBasketListgetFetchBasketListgetFetchBasketList");

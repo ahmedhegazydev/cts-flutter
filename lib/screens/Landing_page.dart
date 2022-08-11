@@ -449,7 +449,10 @@ Get.back();
 
 
 
-                            ]),),
+                           GestureDetector(onTap: (){
+                             //هنا هنعمل دليت
+                           },child: Icon(Icons.delete)), ]),
+                            ),
                           );
                         })),
               ),
@@ -466,22 +469,30 @@ Get.back();
                   },
                   child: Text("Ok"),
                 ),
+                // FlatButton(
+                //   onPressed:
+                //       () async {
+                //
+                //     /// ToDo send Replay
+                //         ///  Navigator.of(
+                //         //                         ctx)
+                //         //                         .pop();
+                //         Navigator.of(
+                //             ctx)
+                //             .pop();
+                //         Get.to(BasketPage());
+                //
+                //   },
+                //   child: Text("go to Basket"),
+                // ),
                 FlatButton(
                   onPressed:
                       () async {
-
-                    /// ToDo send Replay
-                        ///  Navigator.of(
-                        //                         ctx)
-                        //                         .pop();
-                        Navigator.of(
-                            ctx)
-                            .pop();
-                        Get.to(BasketPage());
+ //هنا هنكريت الباسكت
 
                   },
-                  child: Text("go to Basket"),
-                ),  ],
+                  child: Text("new Basket"),
+                ), ],
             ),
       );
      // Get.toNamed( "MyPocketsScreen",);//MyPocketsScreen

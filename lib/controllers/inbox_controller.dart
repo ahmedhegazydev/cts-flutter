@@ -50,11 +50,6 @@ class InboxController extends GetxController {
   List<int>listSelectCorrespondences=[];
 
 
-  AddEditBasketFlagApi _addEditBasketFlagApi = AddEditBasketFlagApi();
-  // AddEditBasketFlagModel? addEditBasketFlagModel;
-
-  PostRemoveBasketApi _postRemoveBasketApi = PostRemoveBasketApi();
-  // RemoveBasketRequest? removeBasketRequest;
 
 Future addDocumentsToBasket({basketId })async{
   AddDocumentsToBasketRequest addDocumentsToBasketRequest=AddDocumentsToBasketRequest(basketId: basketId, language:Get.locale?.languageCode == "en" ? "en" : "ar",token:secureStorage.token()!,documentIds:listSelectCorrespondences );
@@ -84,35 +79,6 @@ listSelectCorrespondences.clear();
   });
 }
 
-  Future addEditBasket({color, nameEn, nameAr}) async {
-    AddEditBasketFlagModel addEditBasketFlagModel =
-    AddEditBasketFlagModel(
-      Color: color,
-      Name: nameEn,
-      NameAr: nameAr
-    );
-    await _addEditBasketFlagApi
-        .post(addEditBasketFlagModel.toMap())
-        .then((value) {
-      print(value);
-      print("_addEditBasketFlagApi");
-    });
-  }
-
-  Future removeBasket({basketId }) async {
-    RemoveBasketRequest removeBasketRequest =
-    RemoveBasketRequest(
-        basketId: basketId,
-        language: Get.locale?.languageCode == "en" ? "en" : "ar",
-        token: secureStorage.token()!,
-    );
-    await _postRemoveBasketApi
-        .post(removeBasketRequest.toMap())
-        .then((value) {
-      print(value);
-      print("_postRemoveBasketApi");
-    });
-  }
 
   Future getFetchBasketList()async{
 print("getFetchBasketListgetFetchBasketListgetFetchBasketListgetFetchBasketList");

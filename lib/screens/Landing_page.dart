@@ -452,6 +452,11 @@ Get.back();
 
                            GestureDetector(onTap: (){
                              //هنا هنعمل دليت
+                             controller.removeBasket(
+                               basketId: Get.find<InboxController>()
+                                   .fetchBasketListModel
+                                   ?.baskets?[pos].iD
+                             );
                            },child: Icon(Icons.delete)), ]),
                             ),
                           );
@@ -490,6 +495,8 @@ Get.back();
                   onPressed:
                       () async {
  //هنا هنكريت الباسكت
+
+
 
                   },
                   child: Text("new Basket"),

@@ -39,6 +39,11 @@ import '../widgets/custom_button_with_icon.dart';
 import 'document_controller.dart';
 import 'package:flutter/services.dart' as rootBundel;
 class InboxController extends GetxController {
+
+  TextEditingController textEditingControllerFilter=TextEditingController();
+
+
+
   CompleteInCorrespondenceAPI _completeInCorrespondenceAPI =
       CompleteInCorrespondenceAPI();
 
@@ -249,8 +254,7 @@ bool edit=false;
   void onInit() {
     super.onInit();
     scrollController.addListener(_scrollListener);
-    selected = List.generate(
-        texts1.length, (i) => false);
+
   }
 
   _scrollListener() {
@@ -635,15 +639,16 @@ Get.find<DocumentController>().gatAllDataAboutDOC(docId:  docId, transferId: tra
 
 
     //fileter
-  List<bool> selected=[];
+
     List<String> texts1 = [
-    "للعلم والاطلاع",
+    "للعلم و الاطلاع",
     "لاجراء اللازم",
     "للافاده",
     "للتوجيه",
+      "",
   ];
-int selectTexts1pos=0;
-updateTexts1(int ppos){
+String selectTexts1pos="";
+updateTexts1(  ppos){
 
   selectTexts1pos=ppos;
 update();
@@ -651,11 +656,34 @@ update();
     List<String> texts2 = [
     "مباشر",
     "نسخه",
-    "خاص",
+    "خاص",  "",
   ];
+  String selectTexts2pos="";
+  updateTexts2(  ppos){
+
+    selectTexts2pos=ppos;
+    update();
+  }
     List<String> texts3 = [
     "عاجل",
     "متوسط",
-    "عادي"
+    "عادي",
+      "",
   ];
+  String selectTexts3pos="";
+  updateTexts3(  ppos){
+
+    selectTexts3pos=ppos;
+    update();
+  }
+
+
+  canceldata(){
+    updateTexts1(texts1[4]  );
+    updateTexts2(texts1[3]  );
+    updateTexts3( texts1[3] );
+    update();
+
+
+  }
 }

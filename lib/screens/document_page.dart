@@ -581,7 +581,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                 d.ParentHeight =
                                     pdfViewerRenderBox?.size.height;
                                 d.Page =
-                                controller.pdfViewerController!.pageNumber!;
+                                controller.pdfViewerController!.pageNumber;
                                 d.IsExclusive = false.toString();
                                 d.Type = 3.toString();
                                 d.Viewers = "Everyone";

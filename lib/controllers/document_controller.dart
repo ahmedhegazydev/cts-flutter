@@ -53,7 +53,8 @@ import '../services/json_model/inopendocModel/g2g/g2g_export_dto.dart';
 import '../services/json_model/inopendocModel/g2g/g2g_receive_or_reject_dto.dart';
 import '../services/json_model/inopendocModel/get_attachment_item_model.dart';
 import '../services/json_model/inopendocModel/get_user_routing_model.dart';
-import '../services/json_model/inopendocModel/getatt_achments_model.dart'as getatt_achments_model;
+import '../services/json_model/inopendocModel/getatt_achments_model.dart'
+    as getatt_achments_model;
 import '../services/json_model/inopendocModel/getatt_achments_model.dart';
 import '../services/json_model/inopendocModel/is_already_exported_as_paperwork_model.dart';
 import '../services/json_model/inopendocModel/is_already_exported_as_transfer_model.dart';
@@ -71,51 +72,49 @@ import 'package:flutter/services.dart' as rootBundel;
 
 class DocumentController extends GetxController {
 //Map<int,String>folder={};
-  bool notoragnalFileDoc=false;
+  bool notoragnalFileDoc = false;
 
-  String oragnalFileDocpdfUrlFile="";
-  String pdfUrlFile='https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
-  bool openAttachment=false;
+  String oragnalFileDocpdfUrlFile =  'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
+  String pdfUrlFile =
+      'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
+  bool openAttachment = false;
   AttachmentsList? isOriginalMailAttachmentsList;
-  Map<String, List<AttachmentsList>>folder2 = {};
-
+  Map<String, List<AttachmentsList>> folder2 = {};
 
   UploadAttachmentApi _uploadAttachmentApi = UploadAttachmentApi();
   AttachmentInfoModel? attachmentInfoModel;
 
-
   Parents? toParent;
-  TextEditingController textEditingControllerToParent =
-  TextEditingController();
+  TextEditingController textEditingControllerToParent = TextEditingController();
 
   TextEditingController textEditingControllerTodepartment =
-  TextEditingController();
-
+      TextEditingController();
 
   Parents? ccToParent;
   TextEditingController textEditingControllerToccParent =
-  TextEditingController();
+      TextEditingController();
 
   TextEditingController textEditingControllerToccdepartment =
-  TextEditingController();
+      TextEditingController();
 
+  List<DepartmentList> toDepartmentList = [];
 
-  List<DepartmentList>toDepartmentList = [];
-
-  List<DepartmentList>cctoDepartmentList = [];
+  List<DepartmentList> cctoDepartmentList = [];
   PdfViewerController? pdfViewerController = PdfViewerController();
   GlobalKey? pdfViewerkey;
 
-updateopenAttashment(String link){
-  openAttachment=true;
-
-  update();
-}
-  updatecloseAttashment(String link){
-    openAttachment=false;
+  updateopenAttashment(String link) {
+    openAttachment = true;
 
     update();
   }
+
+  updatecloseAttashment(String link) {
+    openAttachment = false;
+
+    update();
+  }
+
   addtoDepartmentList({required DepartmentList department}) {
     toDepartmentList.add(department);
     update();
@@ -141,17 +140,17 @@ updateopenAttashment(String link){
   GetAttAchmentItem? getAttAchmentItem;
 
   //دي الرد بتاع السيف للاتاتشمنت
- getatt_achments_model. Attachments ? saveAttAchmentItemAnnotationsresalt;
+  getatt_achments_model.Attachments? saveAttAchmentItemAnnotationsresalt;
   GetattAchmentsModel? saveAttAchmentItemAnnotationsData;
+
   getAttachmentItem({documentId, transferId, attachmentId}) {
-    getAttachmentItemAPI.data = "Token=${secureStorage
-        .token()}&documentId=$documentId&transferId=$transferId&attachmentId=$attachmentId&language=${Get
-        .locale?.languageCode == "en" ? "en" : "ar"}";
+    getAttachmentItemAPI.data =
+        "Token=${secureStorage.token()}&documentId=$documentId&transferId=$transferId&attachmentId=$attachmentId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     getAttachmentItemAPI.getData().then((value) {
       getAttAchmentItem = value as GetAttAchmentItem;
-
     });
   }
+
 //open the AttachmentItem
 //   getAttachmentItemlocal(
 //       {documentId, transferId, attachmentId, required BuildContext context}) async {
@@ -210,23 +209,22 @@ updateopenAttashment(String link){
 //=============================================================================================
   MultipleTransfersAPI _multipleTransfersAPI = MultipleTransfersAPI();
 
-  multipleTransferspost(
-      {correspondenceId, transferId}) {
-        List<TransferNode>transfers=[];
+  multipleTransferspost({correspondenceId, transferId}) {
+    List<TransferNode> transfers = [];
 
     transfarForMany.forEach((key, value) {
-      TransferNode transferNode = TransferNode(destinationId: key.toString(),
+      TransferNode transferNode = TransferNode(
+          destinationId: key.toString(),
           purposeId: value.correspondencesId!,
           dueDate: canOpenDocumentModel!.correspondence!.docDueDate!,
-          voiceNote
-          :value.voiceNote!,
-          voiceNoteExt
-          : "m4a");
-print("transferNode=>  ${transferNode.toMap()}");
+          voiceNote: value.voiceNote!,
+          voiceNoteExt: "m4a");
+      print("transferNode=>  ${transferNode.toMap()}");
 
-      transfers.add(transferNode); });
+      transfers.add(transferNode);
+    });
 
-        print("transferNode=>  ${transfers.length}");
+    print("transferNode=>  ${transfers.length}");
 
     MultipleTransfersModel multipleTransfersModel = MultipleTransfersModel(
         token: secureStorage.token()!,
@@ -234,33 +232,31 @@ print("transferNode=>  ${transferNode.toMap()}");
         transferId: transferId,
         transfers: transfers);
 
-print(multipleTransfersModel.toMap());
-        transfarForMany.clear();
-        usersWillSendTo.clear();
+    print(multipleTransfersModel.toMap());
+    transfarForMany.clear();
+    usersWillSendTo.clear();
     _multipleTransfersAPI.post(multipleTransfersModel.toMap()).then((value) {
       print(" _multipleTransfersAPI end");
-print(value);
-
+      print(value);
     });
   }
 
-
 //=====================================================================================
   final SaveDocumentAnnotationsAPI _saveDocumentAnnotationsApi =
-  SaveDocumentAnnotationsAPI();
+      SaveDocumentAnnotationsAPI();
   SaveDocumentAnnotationModel? postSaveDocumentAnnotationsModel;
 
-  Future getSaveDocAnnotationsData({
-    userId,
-    correspondenceId,
-    transferId,
-    attachmentId,
-    isOriginalMail, //(string) input should “true” or “false”
-    required List<
-        DocumentAnnotations> documentAnnotationsString, //string converted from array contains the details of annotations)
-    delegateGctId //string) input “0”
+  Future getSaveDocAnnotationsData(
+      {userId,
+      correspondenceId,
+      transferId,
+      attachmentId,
+      isOriginalMail, //(string) input should “true” or “false”
+      required List<DocumentAnnotations>
+          documentAnnotationsString, //string converted from array contains the details of annotations)
+      delegateGctId //string) input “0”
 
-  }) async {
+      }) async {
     // pdfViewerkey=null;
     postSaveDocumentAnnotationsModel = SaveDocumentAnnotationModel(
         AttachmentId: attachmentId.toString(),
@@ -273,217 +269,309 @@ print(value);
         TransferId: transferId);
     //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
 
-  //  print("postSaveDocumentAnnotationsModel?.toMap() =>${jsonEncode(postSaveDocumentAnnotationsModel?.toMap())}");
-
+    //  print("postSaveDocumentAnnotationsModel?.toMap() =>${jsonEncode(postSaveDocumentAnnotationsModel?.toMap())}");
 
     await _saveDocumentAnnotationsApi
         .post(postSaveDocumentAnnotationsModel?.toMap())
         .then((value) {
-     // print("value =>   ${value}");
+      // print("value =>   ${value}");
       saveAttAchmentItemAnnotationsData = value as GetattAchmentsModel;
-      saveAttAchmentItemAnnotationsData?.attachments?.forEach((element) {
-        if(element.attachmentId==getAttAchmentItem!.attachment!.attachmentId){
+      for (int i = 0;
+          i < (saveAttAchmentItemAnnotationsData?.attachments?.length ?? 0);
+          i++) {
+        if (saveAttAchmentItemAnnotationsData!.attachments![i].attachmentId ==
+            getAttAchmentItem!.attachment!.attachmentId) {
+          pdfUrlFile = saveAttAchmentItemAnnotationsData!.attachments![i]
+              .uRL!; //"http://www.africau.edu/images/default/sample.pdf";
+          print(pdfUrlFile);
+          saveAttAchmentItemAnnotationsresalt = saveAttAchmentItemAnnotationsData!.attachments![i];
+          pdfAndSing.clear();
+          singpic.clear();
+          pdfAndSingannotation.clear();
+          pdfUrlFile = saveAttAchmentItemAnnotationsData!.attachments![i]
+              .uRL!;
+       //   pdfUrlFile = 'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
+          pdfAndSing.add(SfPdfViewer.network('https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf',
+           // pdfUrlFile,
+            controller: pdfViewerController,onPageChanged: (v){
 
-          pdfUrlFile=element.uRL!;//"http://www.africau.edu/images/default/sample.pdf";
-print(pdfUrlFile);
-          saveAttAchmentItemAnnotationsresalt=element;
-         pdfAndSing.clear();
-         singpic.clear();
-          pdfUrlFile= element.uRL!;// 'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
-          pdfAndSing.add(SfPdfViewer.network(
-            pdfUrlFile
+print("ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+for(int i =0;i<pdfAndSingannotation.length;i++){
+  if(int.parse(pdfAndSingannotation[i].page!)==    v.newPageNumber){
+    List<int> list = pdfAndSingannotation[i].imageByte!.codeUnits;
+    final Uint8List? data = Uint8List.fromList(list);
+    pdfAndSingannotationShowOrHide.add(   Positioned(
+      top: double.tryParse(pdfAndSingannotation[i].y!),
+      left: double.tryParse(pdfAndSingannotation[i].x!),
+      child: Image.memory(
+        data!,
+        fit: BoxFit.fill,
+        width: double.tryParse(pdfAndSingannotation[i].width!),
+        height: double.tryParse(pdfAndSingannotation[i].height!),
+      ),
+    ),);
+  }
+}
+            // pdfAndSingannotation
+            //   v.newPageNumber
 
-            , controller: pdfViewerController,
-          //  key: pdfViewerkey,
+          },
+            //  key: pdfViewerkey,
           ));
 
-          if(element.annotations!.contains("[]")){
+          if (saveAttAchmentItemAnnotationsData!.attachments![i].annotations!.contains("[]")) {
             print("[]");
-          }
-          else{
+          } else {
             print("i will addddddd");
-            Map<dynamic,dynamic> dat=jsonDecode(element.annotations!);
-            dat.forEach((key, value) async{
+            Map<dynamic, dynamic> dat = jsonDecode(saveAttAchmentItemAnnotationsData!.attachments![i].annotations!);
+            dat.forEach((key, value) async {
               print("--------------------------------------------");
-              Annotation annotation= Annotation.fromJson( value[0]);
+              Annotation annotation = Annotation.fromJson(value[0]);
               List<int> list = annotation.imageByte!.codeUnits;
-              final Uint8List? data =    Uint8List.fromList(list);
+              final Uint8List? data = Uint8List.fromList(list);
               print("the data is $data");
-              addWidgetToPdfAndSing(
-                  Positioned(top: double.tryParse(annotation.y!),left:double.tryParse(annotation.x!),
-                    child: Image
-                        .memory(
-                      data!,
-                      fit: BoxFit
-                          .fill,
-
-                      width: double.tryParse(annotation.width!),
-                      height:  double.tryParse(annotation.height!),
-                    ),
-                  ));
-              addWidgetToPdfAndSing(
-                  Positioned(top: 100,right:500,
-                      child:Container(height: 100,width: 100, color: Colors.red,)
-                  ));
-              pdfUrlFile=element.uRL!;
-              print(pdfUrlFile);
 
 
-              print(addWidgetToPdfAndSing);
-              print("i add image");
+
+pdfAndSingannotation.add(annotation);
+              // pdfAndSingannotation.add(
+              //   Positioned(
+              //     top: double.tryParse(annotation.y!),
+              //     left: double.tryParse(annotation.x!),
+              //     child: Image.memory(
+              //       data!,
+              //       fit: BoxFit.fill,
+              //       width: double.tryParse(annotation.width!),
+              //       height: double.tryParse(annotation.height!),
+              //     ),
+              //   ),
+              // );
+
+              pdfUrlFile = saveAttAchmentItemAnnotationsData!.attachments![i].uRL!;
+
             });
           }
           log(saveAttAchmentItemAnnotationsData.toString());
- // // String d=saveAttAchmentItemAnnotationsresalt!.annotations!..replaceAll(new RegExp(r'[^\w\s]+'),'');
- // print("ddddddddddddddddddddddd=>  ${saveAttAchmentItemAnnotationsresalt?.annotations}");
- //
- //          Map<String,dynamic>dat=jsonDecode(saveAttAchmentItemAnnotationsresalt?.annotations??"");
- //
- //
- //     //   DocumentAnnotations a=DocumentAnnotations.fromJson(jsonDecode( saveAttAchmentItemAnnotationsresalt!.annotations!));
- //
- //          //update();
+          // // String d=saveAttAchmentItemAnnotationsresalt!.annotations!..replaceAll(new RegExp(r'[^\w\s]+'),'');
+          // print("ddddddddddddddddddddddd=>  ${saveAttAchmentItemAnnotationsresalt?.annotations}");
+          //
+          //          Map<String,dynamic>dat=jsonDecode(saveAttAchmentItemAnnotationsresalt?.annotations??"");
+          //
+          //
+          //     //   DocumentAnnotations a=DocumentAnnotations.fromJson(jsonDecode( saveAttAchmentItemAnnotationsresalt!.annotations!));
+          //
+          //          //update();
         }
-
-      });
-
-    });
-  }
-  Future getSaveDocAnnotationsDataLocalJson()async{
-///ToDo is oraginal file
-    ///
-    notoragnalFileDoc=true;
-    final jsondata = await rootBundel.rootBundle.loadString(
-        "assets/json/getattachments.json");
-    saveAttAchmentItemAnnotationsData =   GetattAchmentsModel.fromJson(jsonDecode(jsondata));
-   pdfAndSing.clear();
-   singpic.clear();
-
-    saveAttAchmentItemAnnotationsData?.attachments?.forEach((element) {
-    //   print("saveAttAchmentItemAnnotationsData=>   \n${element.toJson()}");
-    // String a= element.annotations!.replaceAll(r"\", ""); //.replaceAll(new RegExp(r'[^\w\s]+'),'');
-    //  var bbb=jsonDecode(a);
-//element.attachmentId==getAttAchmentItem!.attachment!.attachmentId
-      if(true ){
-
-
-
-        saveAttAchmentItemAnnotationsresalt=element;
-
-      //  pdfViewerkey=null;
-      //  pdfViewerController=null;
-        pdfUrlFile=  'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
-
-        pdfAndSing.add(SfPdfViewer.network(  pdfUrlFile
-          // saveAttAchmentItemAnnotationsresalt!.uRL!
-          // oragnalFileDoc??""
-          , controller: pdfViewerController,
-       //   key: pdfViewerkey,
-        ));
-
-        // pdfAndSing.add(Positioned(top: 100,right:100,
-        //     child:Container(height: 100,width: 100, color: Colors.red,)
-        // ));
-
-        if(element.annotations!.contains("[]")){
-print("[]");
-        }
-        else{
-          print("i will addddddd");
-          Map<dynamic,dynamic> dat=jsonDecode(element.annotations!);
-          dat.forEach((key, value) async{
-            print("--------------------------------------------");
-            Annotation annotation= Annotation.fromJson( value[0]);
-            List<int> list = annotation.imageByte!.codeUnits;
-            final Uint8List? data =    Uint8List.fromList(list);
-            print("the data is $data");
-            addWidgetToPdfAndSing(
-                Positioned(top: double.tryParse(annotation.y!),right:double.tryParse(annotation.x!),
-                  child: Image
-                      .memory(
-                    data!,
-                    fit: BoxFit
-                        .fill,
-
-                    width: double.tryParse(annotation.width!),
-                    height:  double.tryParse(annotation.height!),
-                  ),
-                ));
-            addWidgetToPdfAndSing(
-                Positioned(top: 100,right:500,
-                    child:Container(height: 100,width: 100, color: Colors.red,)
-                ));
-            pdfUrlFile=element.uRL!;
-            print(pdfUrlFile);
-
-
-            print(addWidgetToPdfAndSing);
-            print("i add image");
-          });
-        }
-        log(saveAttAchmentItemAnnotationsData.toString());
-        print("saveAttAchmentItemAnnotationsresalt!.annotations!=99999>  ${saveAttAchmentItemAnnotationsresalt!.annotations}");
-
-        update();
       }
-
-
-     // Map<String, dynamic> dat=   new Map<String, dynamic>.from(json.decode(element.annotations!));
-     // print("ddddddddddddddddddddddd=>  ${saveAttAchmentItemAnnotationsresalt?.annotations}");
-
-//       if(dat.runtimeType is List<dynamic>){
-//         print(dat.runtimeType );
-//       }
-// else{ print(dat as Map<dynamic,dynamic>);
+//       saveAttAchmentItemAnnotationsData?.attachments?.forEach((element) {
+//         if(element.attachmentId==getAttAchmentItem!.attachment!.attachmentId){
 //
-//       }
-     // printWrapped("dat=> $dat");
-     //print(dat);
-    //  debugPrint(bbb.toString(), wrapWidth: 1024);
-
-
-
-
-
+//           pdfUrlFile=element.uRL!;//"http://www.africau.edu/images/default/sample.pdf";
+// print(pdfUrlFile);
+//           saveAttAchmentItemAnnotationsresalt=element;
+//          pdfAndSing.clear();
+//          singpic.clear();
+//           pdfUrlFile= element.uRL!;// 'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
+//           pdfAndSing.add(SfPdfViewer.network(
+//             pdfUrlFile
+//
+//             , controller: pdfViewerController,
+//           //  key: pdfViewerkey,
+//           ));
+//
+//           if(element.annotations!.contains("[]")){
+//             print("[]");
+//           }
+//           else{
+//             print("i will addddddd");
+//             Map<dynamic,dynamic> dat=jsonDecode(element.annotations!);
+//             dat.forEach((key, value) async{
+//               print("--------------------------------------------");
+//               Annotation annotation= Annotation.fromJson( value[0]);
+//               List<int> list = annotation.imageByte!.codeUnits;
+//               final Uint8List? data =    Uint8List.fromList(list);
+//               print("the data is $data");
+//
+//
+//
+//               pdfAndSingannotation.add(
+//                 Visibility(
+//                   child: Positioned(top: double.tryParse(annotation.y!),left:double.tryParse(annotation.x!),
+//                         child: Image
+//                             .memory(
+//                           data!,
+//                           fit: BoxFit
+//                               .fill,
+//
+//                           width: double.tryParse(annotation.width!),
+//                           height:  double.tryParse(annotation.height!),
+//                         ),
+//                       ),
+//                 ),
+//                   );
+//               addWidgetToPdfAndSing(
+//                   Positioned(top: 100,right:500,
+//                       child:Container(height: 100,width: 100, color: Colors.red,)
+//                   ));
+//               pdfUrlFile=element.uRL!;
+//               print(pdfUrlFile);
+//
+//
+//               print(addWidgetToPdfAndSing);
+//               print("i add image");
+//             });
+//           }
+//           log(saveAttAchmentItemAnnotationsData.toString());
+//  // // String d=saveAttAchmentItemAnnotationsresalt!.annotations!..replaceAll(new RegExp(r'[^\w\s]+'),'');
+//  // print("ddddddddddddddddddddddd=>  ${saveAttAchmentItemAnnotationsresalt?.annotations}");
+//  //
+//  //          Map<String,dynamic>dat=jsonDecode(saveAttAchmentItemAnnotationsresalt?.annotations??"");
+//  //
+//  //
+//  //     //   DocumentAnnotations a=DocumentAnnotations.fromJson(jsonDecode( saveAttAchmentItemAnnotationsresalt!.annotations!));
+//  //
+//  //          //update();
+//         }
+//
+//       });
     });
-
-   update();
   }
+
+//   Future getSaveDocAnnotationsDataLocalJson() async {
+//     ///ToDo is oraginal file
+//     ///
+//     notoragnalFileDoc = true;
+//     final jsondata = await rootBundel.rootBundle
+//         .loadString("assets/json/getattachments.json");
+//     saveAttAchmentItemAnnotationsData =
+//         GetattAchmentsModel.fromJson(jsonDecode(jsondata));
+//     pdfAndSing.clear();
+//     singpic.clear();
+//
+//     saveAttAchmentItemAnnotationsData?.attachments?.forEach((element) {
+//       //   print("saveAttAchmentItemAnnotationsData=>   \n${element.toJson()}");
+//       // String a= element.annotations!.replaceAll(r"\", ""); //.replaceAll(new RegExp(r'[^\w\s]+'),'');
+//       //  var bbb=jsonDecode(a);
+// //element.attachmentId==getAttAchmentItem!.attachment!.attachmentId
+//       if (true) {
+//         saveAttAchmentItemAnnotationsresalt = element;
+//
+//         //  pdfViewerkey=null;
+//         //  pdfViewerController=null;
+//         pdfUrlFile =
+//             'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
+//
+//         pdfAndSing.add(SfPdfViewer.network(
+//           pdfUrlFile
+//           // saveAttAchmentItemAnnotationsresalt!.uRL!
+//           // oragnalFileDoc??""
+//           ,
+//           controller: pdfViewerController,
+//           //   key: pdfViewerkey,
+//         ));
+//
+//         // pdfAndSing.add(Positioned(top: 100,right:100,
+//         //     child:Container(height: 100,width: 100, color: Colors.red,)
+//         // ));
+//
+//         if (element.annotations!.contains("[]")) {
+//           print("[]");
+//         } else {
+//           print("i will addddddd");
+//           Map<dynamic, dynamic> dat = jsonDecode(element.annotations!);
+//           dat.forEach((key, value) async {
+//             print("--------------------------------------------");
+//             Annotation annotation = Annotation.fromJson(value[0]);
+//             List<int> list = annotation.imageByte!.codeUnits;
+//             final Uint8List? data = Uint8List.fromList(list);
+//             print("the data is $data");
+//             addWidgetToPdfAndSing(Positioned(
+//               top: double.tryParse(annotation.y!),
+//               right: double.tryParse(annotation.x!),
+//               child: Image.memory(
+//                 data!,
+//                 fit: BoxFit.fill,
+//                 width: double.tryParse(annotation.width!),
+//                 height: double.tryParse(annotation.height!),
+//               ),
+//             ));
+//             addWidgetToPdfAndSing(Positioned(
+//                 top: 100,
+//                 right: 500,
+//                 child: Container(
+//                   height: 100,
+//                   width: 100,
+//                   color: Colors.red,
+//                 )));
+//             pdfUrlFile = element.uRL!;
+//             print(pdfUrlFile);
+//
+//             print(addWidgetToPdfAndSing);
+//             print("i add image");
+//           });
+//         }
+//         log(saveAttAchmentItemAnnotationsData.toString());
+//         print(
+//             "saveAttAchmentItemAnnotationsresalt!.annotations!=99999>  ${saveAttAchmentItemAnnotationsresalt!.annotations}");
+//
+//         update();
+//       }
+//
+//       // Map<String, dynamic> dat=   new Map<String, dynamic>.from(json.decode(element.annotations!));
+//       // print("ddddddddddddddddddddddd=>  ${saveAttAchmentItemAnnotationsresalt?.annotations}");
+//
+// //       if(dat.runtimeType is List<dynamic>){
+// //         print(dat.runtimeType );
+// //       }
+// // else{ print(dat as Map<dynamic,dynamic>);
+// //
+// //       }
+//       // printWrapped("dat=> $dat");
+//       //print(dat);
+//       //  debugPrint(bbb.toString(), wrapWidth: 1024);
+//     });
+//
+//     update();
+//   }
+
   SecureStorage secureStorage = SecureStorage();
   CanOpenDocumentModel? canOpenDocumentModel;
 
-backTooragnalFileDocpdf(){
-  notoragnalFileDoc=false;
- // pdfViewerkey=null;
+  backTooragnalFileDocpdf() {
+    notoragnalFileDoc = false;
+    // pdfViewerkey=null;
 
-  pdfAndSing.clear();
-  singpic.clear();
-  pdfUrlFile=  'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
-  pdfAndSing.add(SfPdfViewer.network(
-    pdfUrlFile
-    //   saveAttAchmentItemAnnotationsresalt!.uRL!
-    // oragnalFileDoc??""
-    , controller: pdfViewerController,
-   // key: pdfViewerkey,
-  ));
-  update();
-}
+    pdfAndSing.clear();
+    singpic.clear();
+    // pdfUrlFile =
+    //     'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
+    pdfAndSing.add(SfPdfViewer.network(
+      pdfUrlFile
+      //   saveAttAchmentItemAnnotationsresalt!.uRL!
+      // oragnalFileDoc??""
+      ,
+      controller: pdfViewerController,
+      // key: pdfViewerkey,
+    ));
+    update();
+  }
+
   //تحديث كان ابن فيل وجلب جميع البيانات الخاصه بلملف
   updatecanOpenDocumentModel(CanOpenDocumentModel data) {
-
     pdfViewerkey = GlobalKey();
     pdfAndSing.clear();
     pdfAndSing.add(SfPdfViewer.network(
       pdfUrlFile
       // oragnalFileDoc??""
-      , controller: pdfViewerController,
-    //  key: pdfViewerkey,
+      ,
+      controller: pdfViewerController,
+      //  key: pdfViewerkey,
     ));
-
 
     canOpenDocumentModel = data;
     canOpenDocumentModel?.attachments?.attachments?.forEach((element) {
       if (element.isOriginalMail!) {
+
         oragnalFileDocpdfUrlFile = element.uRL!;
         isOriginalMailAttachmentsList = element;
       }
@@ -492,7 +580,7 @@ backTooragnalFileDocpdf(){
         if (folder2[element.folderName] != null) {
           folder2[element.folderName]?.add(element);
         } else {
-          List<AttachmentsList>a = [];
+          List<AttachmentsList> a = [];
           a.add(element);
           folder2[element.folderName!] = a;
         }
@@ -505,27 +593,25 @@ backTooragnalFileDocpdf(){
     //
     //
     // }
-
-
   }
 
   IsAlreadyExportedAsPaperworkModel? isAlreadyExportedAsPaperworkModel;
   IsAlreadyExportedAsPaperworkAPI _alreadyExportedAsPaperworkAPI =
-  IsAlreadyExportedAsPaperworkAPI();
+      IsAlreadyExportedAsPaperworkAPI();
 
   CanExportAsPaperworkAPI _canExportAsPaperworkAPI = CanExportAsPaperworkAPI();
   CanExportAsPaperworkModel? canExportAsPaperworkModel;
 
   AutoSendToRecepientsAndCCAPI _autoSendToRecepientsAndCCAPI =
-  AutoSendToRecepientsAndCCAPI();
+      AutoSendToRecepientsAndCCAPI();
   AutoSendToRecepientsAndCCModel? autoSendToRecepientsAndCCModel;
 
   CheckForEmptyStructureRecipientsAPI _checkForEmptyStructureRecipientsAPI =
-  CheckForEmptyStructureRecipientsAPI();
+      CheckForEmptyStructureRecipientsAPI();
   CheckForEmptyStructureRecipientsModel? checkForEmptyStructureRecipientsModel;
 
   IsAlreadyExportedAsTransferAPI _isAlreadyExportedAsTransferAPI =
-  IsAlreadyExportedAsTransferAPI();
+      IsAlreadyExportedAsTransferAPI();
   IsAlreadyExportedAsTransferModel? isAlreadyExportedAsTransferModel;
 
   GetUserRoutingAPI _getUserRoutingAPI = GetUserRoutingAPI();
@@ -535,26 +621,25 @@ backTooragnalFileDocpdf(){
   G2GInfoForExportModel? g2gInfoForExportModel;
 
   CanReceiveG2GDocumentAPI _canReceiveG2GDocumentAPI =
-  CanReceiveG2GDocumentAPI();
+      CanReceiveG2GDocumentAPI();
   ReceiveDocumentUsingG2GApi _receiveDocumentUsingG2GApi =
-  ReceiveDocumentUsingG2GApi();
+      ReceiveDocumentUsingG2GApi();
 
   Map<String, dynamic>? logindata;
   Map<GlobalKey, String> singpic = {};
-  List<Widget> pdfAndSing = [
-  ];
+  List<Widget> pdfAndSing = [];
+
+  //لسته الامضاء القادمه مع الملف
+  List<Annotation> pdfAndSingannotation = [];
+  List<Widget> pdfAndSingannotationShowOrHide = [];
 
   Map<GlobalKey, String> singpicopenattachment = {};
-  List<Widget> pdfAndSingopenattachment = [
-  ];
-
-
+  List<Widget> pdfAndSingopenattachment = [];
 
   addWidgetToPdfAndSingopenattachment(Widget pic) {
     pdfAndSingopenattachment.add(pic);
     update();
   }
-
 
   addWidgetToPdfAndSing(Widget pic) {
     pdfAndSing.add(pic);
@@ -574,22 +659,21 @@ backTooragnalFileDocpdf(){
 
 //===============================================
   final GetDocumentAuditLogsApi _getDocumentAuditLogsApi =
-  GetDocumentAuditLogsApi();
+      GetDocumentAuditLogsApi();
   GetDocumentLogsModel? getDocumentLogsModel;
   final GetDocumentLinksApi _getDocumentLinksApi = GetDocumentLinksApi();
   GetDocumentLinksModel? getDocumentLinksModel;
   final GetDocumentReceiversApi _getDocumentReceiversApi =
-  GetDocumentReceiversApi();
+      GetDocumentReceiversApi();
   GetDocumentReceiversModel? getDocumentReceiversModel;
   final GetDocumentTransfersApi _getDocumentTransfersApi =
-  GetDocumentTransfersApi();
+      GetDocumentTransfersApi();
 
   GetDocumentTransfersModel? getDocumentTransfersModel;
 
   getDocumentAuditLogsdata({required String docId}) {
     _getDocumentAuditLogsApi.data =
-    "Token=${secureStorage.token()}&docId=$docId&language=${Get.locale
-        ?.languageCode == "en" ? "en" : "ar"}";
+        "Token=${secureStorage.token()}&docId=$docId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
 
     _getDocumentAuditLogsApi.getData().then((value) {
       getDocumentLogsModel = value as GetDocumentLogsModel;
@@ -598,11 +682,7 @@ backTooragnalFileDocpdf(){
 
   getDocumentLinksdata({correspondenceId, transferId}) {
     _getDocumentLinksApi.data =
-    "Token=${secureStorage
-        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
-        .locale?.languageCode == "en"
-        ? "en"
-        : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
 
     _getDocumentLinksApi.getData().then((value) {
       getDocumentLinksModel = value as GetDocumentLinksModel;
@@ -611,11 +691,7 @@ backTooragnalFileDocpdf(){
 
   getDocumentReceiversdata({correspondenceId, transferId}) {
     _getDocumentReceiversApi.data =
-    "Token=${secureStorage
-        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
-        .locale?.languageCode == "en"
-        ? "en"
-        : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
 
     _getDocumentReceiversApi.getData().then((value) {
       getDocumentReceiversModel = value as GetDocumentReceiversModel;
@@ -624,20 +700,17 @@ backTooragnalFileDocpdf(){
 
   getDocumentTransfersdata({correspondenceId, transferId}) {
     _getDocumentTransfersApi.data =
-    "Token=${secureStorage
-        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
-        .locale?.languageCode == "en"
-        ? "en"
-        : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
 
     _getDocumentTransfersApi.getData().then((value) {
       getDocumentTransfersModel = value as GetDocumentTransfersModel;
     });
   }
 
-  gatAllDataAboutDOC({required String docId,
-    required String transferId,
-    required String correspondenceId}) {
+  gatAllDataAboutDOC(
+      {required String docId,
+      required String transferId,
+      required String correspondenceId}) {
     print("gatAllDataAboutDOC");
     getDocumentAuditLogsdata(docId: docId);
     getDocumentTransfersdata(
@@ -677,17 +750,14 @@ backTooragnalFileDocpdf(){
 
   getFindRecipientData() {
     _findRecipient.data =
-    "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en"
-        ? "en"
-        : "ar"}";
+        "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     _findRecipient.getData().then((value) {
       findRecipientModel = value as FindRecipientModel;
 
       Get.find<InboxController>().setFindRecipientData(findRecipientModel!);
       listOfUser(0);
       print(
-          "tis is  findRecipientModel?.toJson()              =>  ${findRecipientModel
-              ?.toJson()}");
+          "tis is  findRecipientModel?.toJson()              =>  ${findRecipientModel?.toJson()}");
     });
   }
 
@@ -796,8 +866,36 @@ backTooragnalFileDocpdf(){
   void onInit() {
     super.onInit();
     print(" i get startonInitonInitonInitonInit ");
+
     genratG2GExportDto();
     g2GInfoForExport();
+    // pdfAndSing.add(SfPdfViewer.network(canOpenDocumentModel.correspondence.,
+    //   // pdfUrlFile,
+    //   controller: pdfViewerController,onPageChanged: (v){
+    //
+    //     print("ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+    //     for(int i =0;i<pdfAndSingannotation.length;i++){
+    //       if(int.parse(pdfAndSingannotation[i].page!)==    v.newPageNumber){
+    //         List<int> list = pdfAndSingannotation[i].imageByte!.codeUnits;
+    //         final Uint8List? data = Uint8List.fromList(list);
+    //         pdfAndSingannotationShowOrHide.add(   Positioned(
+    //           top: double.tryParse(pdfAndSingannotation[i].y!),
+    //           left: double.tryParse(pdfAndSingannotation[i].x!),
+    //           child: Image.memory(
+    //             data!,
+    //             fit: BoxFit.fill,
+    //             width: double.tryParse(pdfAndSingannotation[i].width!),
+    //             height: double.tryParse(pdfAndSingannotation[i].height!),
+    //           ),
+    //         ),);
+    //       }
+    //     }
+    //     // pdfAndSingannotation
+    //     //   v.newPageNumber
+    //
+    //   },
+    //   //  key: pdfViewerkey,
+    // ));
   }
 
   @override
@@ -829,10 +927,7 @@ backTooragnalFileDocpdf(){
     appDocDir = await getApplicationDocumentsDirectory();
     _directoryPath = appDocDir!.path +
         '/' +
-        DateTime
-            .now()
-            .millisecondsSinceEpoch
-            .toString() +
+        DateTime.now().millisecondsSinceEpoch.toString() +
         '.aac';
 
     await audioRecorder?.startRecorder(toFile: _directoryPath);
@@ -886,10 +981,7 @@ backTooragnalFileDocpdf(){
     appDocDir = await getApplicationDocumentsDirectory();
     _directoryPath = appDocDir!.path +
         '/' +
-        DateTime
-            .now()
-            .millisecondsSinceEpoch
-            .toString() +
+        DateTime.now().millisecondsSinceEpoch.toString() +
         '.mp4';
     recording = true;
     update();
@@ -906,9 +998,10 @@ backTooragnalFileDocpdf(){
     transfarForMany[id]?.voiceNote = audioFileBes64;
   }
 
-  SetMultipleReplyWithVoiceNoteRequestModel({required int id,
-    required String transferId,
-    required String correspondencesId}) {
+  SetMultipleReplyWithVoiceNoteRequestModel(
+      {required int id,
+      required String transferId,
+      required String correspondencesId}) {
     ReplyWithVoiceNoteRequestModel model = ReplyWithVoiceNoteRequestModel(
         userId: id.toString(),
         transferId: transferId,
@@ -928,24 +1021,17 @@ backTooragnalFileDocpdf(){
       final bytes = File(file.path).readAsBytesSync();
 
       String img64 = base64Encode(bytes);
-      String name = file.path
-          .split("/")
-          .last
-          .split(".")
-          .first;
+      String name = file.path.split("/").last.split(".").first;
       print("filke path isss  =>${file.path}");
       print("name =>$name");
       print("img64 =>  $img64");
-      attachmentInfoModel = AttachmentInfoModel(token: secureStorage
-          .token()!,
-          correspondenceId: canOpenDocumentModel!.correspondence!
-              .correspondenceId!,
+      attachmentInfoModel = AttachmentInfoModel(
+          token: secureStorage.token()!,
+          correspondenceId:
+              canOpenDocumentModel!.correspondence!.correspondenceId!,
           fileName: name,
           fileContent: img64,
-          language: Get
-              .locale?.languageCode == "en"
-              ? "en"
-              : "ar");
+          language: Get.locale?.languageCode == "en" ? "en" : "ar");
 
       _uploadAttachmentApi.post(attachmentInfoModel?.toMap()).then((value) {
         print("object  $value");
@@ -953,24 +1039,19 @@ backTooragnalFileDocpdf(){
     } else {}
   }
 
-
-  getIsAlreadyExportedAsPaperwork({required correspondenceId,
-    required transferId,
-    required exportAction,
-    required context}) async {
+  getIsAlreadyExportedAsPaperwork(
+      {required correspondenceId,
+      required transferId,
+      required exportAction,
+      required context}) async {
     print("in  getIsAlreadyExportedAsPaperwork");
     _alreadyExportedAsPaperworkAPI.data =
-    "Token=${secureStorage
-        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
-        .locale?.languageCode == "en"
-        ? "en"
-        : "ar"}&exportAction=$exportAction";
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
     _alreadyExportedAsPaperworkAPI.getData().then((value) {
       isAlreadyExportedAsPaperworkModel =
-      value as IsAlreadyExportedAsPaperworkModel;
+          value as IsAlreadyExportedAsPaperworkModel;
       print(
-          "canExportAsPaperworkModel =>  ${isAlreadyExportedAsPaperworkModel
-              ?.isConfirm}");
+          "canExportAsPaperworkModel =>  ${isAlreadyExportedAsPaperworkModel?.isConfirm}");
 
       if (isAlreadyExportedAsPaperworkModel?.isConfirm ?? false) {
         showDilog(
@@ -986,42 +1067,40 @@ backTooragnalFileDocpdf(){
               //     correspondenceId: correspondenceId,
               //     context: context);
               print("oooooooooooooooooooooooooooooooooo");
-              getSwitchMethod(exportAction: exportAction,
+              getSwitchMethod(
+                  exportAction: exportAction,
                   transferId: transferId,
                   correspondenceId: correspondenceId,
                   context: context,
                   name: isAlreadyExportedAsPaperworkModel!.yesMethod!);
-Get.back();
-            // Navigator.of(context).pop();
+              Get.back();
+              // Navigator.of(context).pop();
             });
       } else {
-        getSwitchMethod(exportAction: exportAction,
+        getSwitchMethod(
+            exportAction: exportAction,
             transferId: transferId,
             correspondenceId: correspondenceId,
             context: context,
             name: isAlreadyExportedAsPaperworkModel!.request!);
         Get.back();
-      //  Navigator.of(context).pop();
+        //  Navigator.of(context).pop();
       }
       // print("_alreadyExportedAsPaperworkAPI =>  ${isAlreadyExportedAsPaperworkModel!.toJson()}");
     });
   }
 
-  getCanExportAsPaperwork({required correspondenceId,
-    required transferId,
-    required exportAction,
-    required context}) {
+  getCanExportAsPaperwork(
+      {required correspondenceId,
+      required transferId,
+      required exportAction,
+      required context}) {
     _canExportAsPaperworkAPI.data =
-    "Token=${secureStorage
-        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
-        .locale?.languageCode == "en"
-        ? "en"
-        : "ar"}&exportAction=$exportAction";
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
     _canExportAsPaperworkAPI.getData().then((value) {
       canExportAsPaperworkModel = value as CanExportAsPaperworkModel;
       print(
-          "canExportAsPaperworkModel =>  ${canExportAsPaperworkModel
-              ?.isConfirm}");
+          "canExportAsPaperworkModel =>  ${canExportAsPaperworkModel?.isConfirm}");
       // if(canExportAsPaperworkModel?.isConfirm??false){
       //   Get.snackbar("", canExportAsPaperworkModel!.message!);
       // }
@@ -1034,18 +1113,21 @@ Get.back();
             no: () {
               Navigator.of(context).pop();
             },
-            yes: isAlreadyExportedAsTransferModel!.yesMethod2!=null||isAlreadyExportedAsTransferModel!.yesMethod!=null?() {
-
-              print("oooooooooooooooooooooooooooooooooo");
-            //  Navigator.of(context).pop();
-              getCanExportAsPaperwork(
-                  exportAction: exportAction,
-                  transferId: transferId,
-                  correspondenceId: correspondenceId,
-                  context: context);
-              Get.back();}:(){
-              Get.back();
-            });
+            yes: isAlreadyExportedAsTransferModel!.yesMethod2 != null ||
+                    isAlreadyExportedAsTransferModel!.yesMethod != null
+                ? () {
+                    print("oooooooooooooooooooooooooooooooooo");
+                    //  Navigator.of(context).pop();
+                    getCanExportAsPaperwork(
+                        exportAction: exportAction,
+                        transferId: transferId,
+                        correspondenceId: correspondenceId,
+                        context: context);
+                    Get.back();
+                  }
+                : () {
+                    Get.back();
+                  });
       }
     });
   }
@@ -1053,11 +1135,7 @@ Get.back();
   autoSendToRecepientsAndCC(
       {required correspondenceId, required transferId, required exportAction}) {
     _autoSendToRecepientsAndCCAPI.data =
-    "Token=${secureStorage
-        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
-        .locale?.languageCode == "en"
-        ? "en"
-        : "ar"}&exportAction=$exportAction";
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
     _autoSendToRecepientsAndCCAPI.getData().then((value) {
       autoSendToRecepientsAndCCModel = value as AutoSendToRecepientsAndCCModel;
 
@@ -1065,50 +1143,39 @@ Get.back();
         Get.snackbar("", autoSendToRecepientsAndCCModel!.message!);
       }
       print(
-          "_alreadyExportedAsPaperworkAPI =>  ${autoSendToRecepientsAndCCModel!
-              .toJson()}");
+          "_alreadyExportedAsPaperworkAPI =>  ${autoSendToRecepientsAndCCModel!.toJson()}");
     });
   }
 
   checkForEmptyStructureRecipients(
       {required correspondenceId, required transferId, required exportAction}) {
     _checkForEmptyStructureRecipientsAPI.data =
-    "Token=${secureStorage
-        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
-        .locale?.languageCode == "en"
-        ? "en"
-        : "ar"}&exportAction=$exportAction";
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
     _checkForEmptyStructureRecipientsAPI.getData().then((value) {
       checkForEmptyStructureRecipientsModel =
-      value as CheckForEmptyStructureRecipientsModel;
+          value as CheckForEmptyStructureRecipientsModel;
 
       if (checkForEmptyStructureRecipientsModel?.isConfirm ?? false) {
         Get.snackbar("", checkForEmptyStructureRecipientsModel!.message!);
       }
       print(
-          "_alreadyExportedAsPaperworkAPI =>  ${checkForEmptyStructureRecipientsModel!
-              .toJson()}");
+          "_alreadyExportedAsPaperworkAPI =>  ${checkForEmptyStructureRecipientsModel!.toJson()}");
     });
   }
 
   isAlreadyExportedAsTransfer(
       {required correspondenceId, required transferId, required exportAction}) {
     _isAlreadyExportedAsTransferAPI.data =
-    "Token=${secureStorage
-        .token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get
-        .locale?.languageCode == "en"
-        ? "en"
-        : "ar"}&exportAction=$exportAction";
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
     _isAlreadyExportedAsTransferAPI.getData().then((value) {
       isAlreadyExportedAsTransferModel =
-      value as IsAlreadyExportedAsTransferModel;
+          value as IsAlreadyExportedAsTransferModel;
 
       if (isAlreadyExportedAsTransferModel?.isConfirm ?? false) {
         Get.snackbar("", isAlreadyExportedAsTransferModel!.message!);
       }
       print(
-          "_alreadyExportedAsPaperworkAPI =>  ${isAlreadyExportedAsTransferModel!
-              .toJson()}");
+          "_alreadyExportedAsPaperworkAPI =>  ${isAlreadyExportedAsTransferModel!.toJson()}");
     });
   }
 
@@ -1125,33 +1192,30 @@ Get.back();
   }) {
     print("going to get");
     _g2gInfoForExportAPI.data =
-    "token=${secureStorage.token()}&documentId=$documentId&language=${Get.locale
-        ?.languageCode == "en" ? "en" : "ar"}";
+        "token=${secureStorage.token()}&documentId=$documentId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     _g2gInfoForExportAPI.getData().then((value) {
       g2gInfoForExportModel = value as G2GInfoForExportModel;
       print(
-          "g2gInfoForExportModelg2gInfoForExportModel =>  ${g2gInfoForExportModel
-              ?.toJson()}");
+          "g2gInfoForExportModelg2gInfoForExportModel =>  ${g2gInfoForExportModel?.toJson()}");
     }).catchError((e) {
       print("err =>  $e");
     });
   }
 
   g2GInfoForExport() async {
-    final jsondata = await rootBundel.rootBundle.loadString(
-        "assets/json/g2gInfoforexport.json");
+    final jsondata = await rootBundel.rootBundle
+        .loadString("assets/json/g2gInfoforexport.json");
     g2gInfoForExportModel =
         G2GInfoForExportModel.fromJson(json.decode(jsondata));
 
-    print("g2gInfoForExportModel?.toJson()=>  ${g2gInfoForExportModel
-        ?.toJson()}");
+    print(
+        "g2gInfoForExportModel?.toJson()=>  ${g2gInfoForExportModel?.toJson()}");
   }
-
 
   //-----------------------------------------------------------------------
   genratG2GExportDto() {
     G2GRecipient g2gRecipient =
-    G2GRecipient(childId: 5, isCC: false, parentId: 10);
+        G2GRecipient(childId: 5, isCC: false, parentId: 10);
     G2GExportDto g = G2GExportDto(
         token: secureStorage.token(),
         language: Get.locale?.languageCode == "en" ? "en" : "ar",
@@ -1186,13 +1250,15 @@ Get.back();
         .then((value) {});
   }
 
-  getSwitchMethod({required String name,
-    required correspondenceId,
-    required exportAction,
-    required transferId, required context}) {
+  getSwitchMethod(
+      {required String name,
+      required correspondenceId,
+      required exportAction,
+      required transferId,
+      required context}) {
     switch (name) {
       case "CanExportAsPaperwork":
-      // do something
+        // do something
         getCanExportAsPaperwork(
             exportAction: exportAction,
             transferId: transferId,
@@ -1200,22 +1266,24 @@ Get.back();
             context: context);
         break;
       case "OpenTransferWindow":
-      // do something else
+        // do something else
         break;
       case "IsAlreadyExportedAsTransfer":
-        isAlreadyExportedAsTransfer(correspondenceId: correspondenceId,
+        isAlreadyExportedAsTransfer(
+            correspondenceId: correspondenceId,
             transferId: transferId,
             exportAction: exportAction);
         // do something else
         break;
       case "CheckForEmptyStructureRecipients":
-      // do something else
-        checkForEmptyStructureRecipients(exportAction: exportAction,
+        // do something else
+        checkForEmptyStructureRecipients(
+            exportAction: exportAction,
             transferId: transferId,
             correspondenceId: correspondenceId);
         break;
       case "ConfirmAgain":
-      // do something else
+        // do something else
         break;
       case "AutoSendToRecepientsAndCC":
         autoSendToRecepientsAndCC(
@@ -1231,22 +1299,23 @@ Get.back();
         // do something else
         break;
       case "NOTHING":
-      // do something else
+        // do something else
         break;
     }
   }
 }
 
-showDilog({required context,
-  required String massge,
-  required VoidCallback yes,
-  required VoidCallback no}) {
+showDilog(
+    {required context,
+    required String massge,
+    required VoidCallback yes,
+    required VoidCallback no}) {
   return showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Row(
-            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Spacer(),
                 InkWell(
@@ -1262,7 +1331,7 @@ showDilog({required context,
               ]),
           content: SingleChildScrollView(
             child:
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(massge),
             ]),
           ),
@@ -1290,7 +1359,8 @@ showDilog({required context,
         );
       });
 }
-extension UtilListExtension on List{
+
+extension UtilListExtension on List {
   groupBy(String key) {
     try {
       List<Map<String, dynamic>> result = [];

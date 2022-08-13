@@ -1,3 +1,4 @@
+import 'package:cts/utility/Extenstions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -1279,12 +1280,6 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
                                     },
                                     child:
                                     GestureDetector(onTap: (){
-                                      //هنا هنعمل دليت
-                                      controller.addEditBasket(
-                                         color: Get.find<CreateBasketController>().pickerColor.toString(),
-                                        nameAr: controller.textEditingControllerArabicName.text,
-                                        nameEn: controller.textEditingControllerEnglishName.text
-                                      );
                                     },child:
                                     Text(
                                       "save",
@@ -1315,6 +1310,11 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
                       name: 'register'.tr,
                       onPressed: () {
                         // controller.createNewBasket();
+                        controller.addEditBasket(
+                            color: Get.find<CreateBasketController>().pickerColor.toHex(),
+                            nameAr: controller.textEditingControllerArabicName.text,
+                            nameEn: controller.textEditingControllerEnglishName.text
+                        );
                       }),
                 ),
               ],

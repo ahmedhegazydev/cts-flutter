@@ -58,7 +58,8 @@ return name??"";
     AddEditBasketFlagModel(
         Color: color,
         Name: nameEn,
-        NameAr: nameAr
+        NameAr: nameAr,
+      ID: 0,
     );
     await _addEditBasketFlagApi
         .post(addEditBasketFlagModel.toMap())

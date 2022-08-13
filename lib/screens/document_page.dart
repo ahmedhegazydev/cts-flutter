@@ -633,7 +633,11 @@ class DocumentPage extends GetWidget<DocumentController> {
                       child: Container(key: logic.pdfViewerkey,
                         child: Stack(children: [
 
-                          ...controller.pdfAndSing
+                          ...controller.pdfAndSing,
+
+                          ...controller.pdfAndSingannotationShowOrHide
+
+
                         ]),
                         //  color: Colors.red,
                         //     child: SfPdfViewer.network(

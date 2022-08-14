@@ -6,11 +6,14 @@ import 'package:get/get.dart' as a;
 import 'package:get/get_core/src/get_main.dart';
 
 import '../screens/Login_page.dart';
+import '../utility/all_string_const.dart';
+import '../utility/storage.dart';
 import 'abstract_json_resource.dart';
 import 'dio_singleton.dart';
 
 abstract class ApiManager {
   final DioSingleton dioSingleton = DioSingleton();
+  static SecureStorage secureStorage = new SecureStorage();
 
   //final _storge= a.Get.find<SecureStorage>();
   /// Returns the API URL of current API ressource
@@ -21,7 +24,9 @@ abstract class ApiManager {
   Future<AbstractJsonResource?> getData({data}) async {
     AbstractJsonResource? json;
     var data;
-    await dioSingleton.dio.get(apiUrl(), queryParameters: data).then((value) {
+    print("checkIfSavedSettingsBasUrl = $checkIfSavedSettingsBasUrl");
+
+    await dioSingleton.dio.get(checkIfSavedSettingsBasUrl(), queryParameters: data).then((value) {
       if (value.data["Status"] == 0) {
         a.Get.snackbar("Error".tr, "${value.data["ErrorMessage"]}");
       } else {
@@ -67,6 +72,13 @@ abstract class ApiManager {
     });
     return jsonList;
   }
-//
+
+  String checkIfSavedSettingsBasUrl() {
+    var storageBaseUrl = secureStorage.readSecureData(AllStringConst.BaseUrl) ?? "";
+    if(storageBaseUrl.isNotEmpty){
+      return storageBaseUrl;
+    }
+    return apiUrl();
+  }
 
 }

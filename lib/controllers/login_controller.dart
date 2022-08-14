@@ -13,6 +13,10 @@ import '../utility/validator.dart';
 
 class LoginController extends GetxController {
   TextEditingController userName = TextEditingController();
+  TextEditingController baseUrl = TextEditingController(
+    // text: 'http://192.168.1.7:9091/Mobility/CMS.svc/'
+    text: 'http://ecm-mob.mofa.gov.qa:9091/EverSuite.CTS.Mobile/CMS.svc/'
+  );
   TextEditingController passWord = TextEditingController();
   Validators validators = Validators();
   final loginFormKey = GlobalKey<FormState>();

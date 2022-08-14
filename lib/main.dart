@@ -1,4 +1,3 @@
-
 import 'package:cts/screens/Login_page.dart';
 import 'package:cts/screens/basket_page.dart';
 import 'package:cts/screens/my_cart/MyPocketsScreen.dart';
@@ -7,6 +6,7 @@ import 'package:cts/services/json_model/send_json_model/reply_with_voice_note_re
 import 'package:cts/utility/all_string_const.dart';
 import 'package:cts/screens/filter/FilterSideScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -35,15 +35,53 @@ void main() async {
   // print(data.customActions );
   // print("000000");
   //var bb=json.decode(a.toString());
- //  secureStorage.deleteSecureData(AllStringConst.Token);
+  //  secureStorage.deleteSecureData(AllStringConst.Token);
 
   //Get.put(SecureStorage());
   Get.put(MController());
 
+  // runApp(
+  //   Phoenix(
+  //     child: MyApp(),
+  //   ),
+  // );
 
+  runApp(
+    RestartWidget(
+      child: MyApp(),
+    ),
+  );
+}
 
+class RestartWidget extends StatefulWidget {
+  RestartWidget({required this.child});
 
-  runApp(const MyApp());
+  final Widget child;
+
+  static void restartApp(BuildContext context) {
+    context.findAncestorStateOfType<_RestartWidgetState>()?.restartApp();
+  }
+
+  @override
+  _RestartWidgetState createState() => _RestartWidgetState();
+}
+
+class _RestartWidgetState extends State<RestartWidget> {
+  Key key = UniqueKey();
+
+  void restartApp() {
+    setState(() {
+      key = UniqueKey();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return KeyedSubtree(
+      key: key,
+      child: widget.child,
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -69,73 +107,66 @@ class MyApp extends StatelessWidget {
                 fontWeight: FontWeight.bold),
             headline3: TextStyle(fontSize: 14, fontStyle: FontStyle.normal),
           ).apply(
-
-            bodyColor: createMaterialColor(Get
-                .find<MController>()
-                .appcolor // AppColor
-              //Color.fromRGBO(96, 175, 189, 1),
-            ),
+            bodyColor:
+                createMaterialColor(Get.find<MController>().appcolor // AppColor
+                    //Color.fromRGBO(96, 175, 189, 1),
+                    ),
             displayColor: createMaterialColor(
-                Get
-                    .find<MController>()
-                    .appcolor //      AppColor
-            ),
+                Get.find<MController>().appcolor //      AppColor
+                ),
           ),
           fontFamily: "Bahij",
-          primarySwatch: createMaterialColor(
-              Get
-                  .find<MController>()
-                  .appcolor //  AppColor
-          ),
+          primarySwatch:
+              createMaterialColor(Get.find<MController>().appcolor //  AppColor
+                  ),
         ),
         getPages: [
-          GetPage(name: "/", page: () =>
-              LoginPage(),
+          GetPage(name: "/", page: () => LoginPage(),
               // LandingPage(),
               // InboxPage(),
-              middlewares: [
-            AuthMiddleWare()
-          ])
-          ,       //SearchPage
-          GetPage(name: "/Landing",//SearchPage(),// LandingPage()
+              middlewares: [AuthMiddleWare()]), //SearchPage
+          GetPage(
+              name: "/Landing", //SearchPage(),// LandingPage()
               page: () => LandingPage(),
               transition: Transition.rightToLeft),
 
-          GetPage(name: "/Filter",//
+          GetPage(
+              name: "/Filter", //
               page: () => FilterSlidePage(),
-              transition: Transition.rightToLeft)
-          ,
-          GetPage(name: "/InboxPage",
+              transition: Transition.rightToLeft),
+          GetPage(
+              name: "/InboxPage",
               page: () => InboxPage(),
-              transition: Transition.rightToLeft)
-          ,
-          GetPage(name: "/DocumentPage",
+              transition: Transition.rightToLeft),
+          GetPage(
+              name: "/DocumentPage",
               page: () => DocumentPage(),
-              transition: Transition.rightToLeft)
-          ,
-          GetPage(name: "/OpenPDFFile",
+              transition: Transition.rightToLeft),
+          GetPage(
+              name: "/OpenPDFFile",
               page: () => OpenPDFFile(),
-              transition: Transition.rightToLeft)
-          ,
-          GetPage(name: "/SignaturePage",
+              transition: Transition.rightToLeft),
+          GetPage(
+              name: "/SignaturePage",
               page: () => SignaturePage(),
-              transition: Transition.rightToLeft)
-          ,
-          GetPage(name: "/SearchPageResult",
+              transition: Transition.rightToLeft),
+          GetPage(
+              name: "/SearchPageResult",
               page: () => SearchPageResult(),
+              transition: Transition.rightToLeft),
+          GetPage(
+              name: "/WebViewPage",
+              page: () => WebViewPage(),
+              transition: Transition.rightToLeft),
+          GetPage(
+              name: "/SearchPage",
+              page: () => SearchPage(),
+              transition: Transition.rightToLeft),
+          GetPage(
+              name: "/MyPocketsScreen",
+              page: () => MyPocketsScreen(),
               transition: Transition.rightToLeft)
-          ,
-          GetPage(name: "/WebViewPage",
-              page: () => WebViewPage( ),
-              transition: Transition.rightToLeft)
-          ,
-          GetPage(name: "/SearchPage",
-              page: () => SearchPage( ),
-              transition: Transition.rightToLeft)
-          ,
-          GetPage(name: "/MyPocketsScreen",
-              page: () => MyPocketsScreen( ),
-              transition: Transition.rightToLeft) ], //initialRoute:"/" ,
+        ], //initialRoute:"/" ,
         // home: const MyHomePage(title: 'Flutter Demo Home Page'),
       );
     });

@@ -1,11 +1,12 @@
 import 'package:cts/controllers/filter/filter_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get.dart';
-
 
 import '../controllers/login_controller.dart';
 import '../controllers/main_controller.dart';
+import '../main.dart';
 import '../utility/all_const.dart';
 import '../utility/all_string_const.dart';
 import '../utility/device_size.dart';
@@ -14,6 +15,7 @@ import '../utility/utilitie.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_image_button.dart';
 import '../widgets/custom_input_text_filed.dart';
+import 'package:restart_app/restart_app.dart';
 
 class LoginPage extends GetWidget<LoginController> {
   // create some values
@@ -148,140 +150,250 @@ class LoginPage extends GetWidget<LoginController> {
             //
             landscapeBody(context),
         floatingActionButton: showFab
-            ? FloatingActionButton(
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                            title: const Text("pick your Color"),
-                            content: Column(children: [
-                              buildColorPicker(),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 8.0, bottom: 8, right: 20, left: 20),
-                                child: Row(children: [
-                                Expanded(
-                                  child: Container(
-                                  padding: const EdgeInsets.only(
-                                      left: 0,
-                                      right: 0,
-                                      top: 0,
-                                      bottom: 0),
-                                  
-                                  height: 60,
-                                  decoration: BoxDecoration(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primary,
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(6))),
-                                  child: ElevatedButton(
-                                    onPressed:(){
-                                      var locale = const Locale('ar', 'AR');
-                                      Get.updateLocale(locale);
-                                    },
-                                    child: Text(
-                                      "عربي",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline2!
-                                          .copyWith(
-                                          color: Colors.white),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                              ),
-                                )
-                            ,SizedBox(width: 10,)   ,
-
-                  Expanded(
-                    child: Container(
-                    padding: const EdgeInsets.only(
-                    left: 0,
-                    right: 0,
-                    top: 0,
-                    bottom: 0),
-           
-                    height: 60,
-                    decoration: BoxDecoration(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .primary,
-                    borderRadius: const BorderRadius.all(
-                    Radius.circular(6))),
-                    child: ElevatedButton(
-                    onPressed:(){
-                      var locale = const Locale('en', 'US');
-                      Get.updateLocale(locale);
-                    },
-                    child: Text(
-                      "En",
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline2!
-                        .copyWith(
-                    color: Colors.white),
-                    textAlign: TextAlign.center,
+            ? Stack(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(left: 31),
+                    child: Align(
+                      alignment: Alignment.bottomLeft,
+                      child: FloatingActionButton(
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                    title: const Text("pick your Color"),
+                                    content: Column(children: [
+                                      buildColorPicker(),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 8.0,
+                                            bottom: 8,
+                                            right: 20,
+                                            left: 20),
+                                        child: Row(children: [
+                                          Expanded(
+                                            child: Container(
+                                              padding: const EdgeInsets.only(
+                                                  left: 0,
+                                                  right: 0,
+                                                  top: 0,
+                                                  bottom: 0),
+                                              height: 60,
+                                              decoration: BoxDecoration(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
+                                                  borderRadius:
+                                                      const BorderRadius.all(
+                                                          Radius.circular(6))),
+                                              child: ElevatedButton(
+                                                onPressed: () {
+                                                  var locale =
+                                                      const Locale('ar', 'AR');
+                                                  Get.updateLocale(locale);
+                                                },
+                                                child: Text(
+                                                  "عربي",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline2!
+                                                      .copyWith(
+                                                          color: Colors.white),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Container(
+                                              padding: const EdgeInsets.only(
+                                                  left: 0,
+                                                  right: 0,
+                                                  top: 0,
+                                                  bottom: 0),
+                                              height: 60,
+                                              decoration: BoxDecoration(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
+                                                  borderRadius:
+                                                      const BorderRadius.all(
+                                                          Radius.circular(6))),
+                                              child: ElevatedButton(
+                                                onPressed: () {
+                                                  var locale =
+                                                      const Locale('en', 'US');
+                                                  Get.updateLocale(locale);
+                                                },
+                                                child: Text(
+                                                  "En",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline2!
+                                                      .copyWith(
+                                                          color: Colors.white),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        ]),
+                                      ),
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                .7,
+                                        padding: const EdgeInsets.only(
+                                            left: 0,
+                                            right: 0,
+                                            top: 0,
+                                            bottom: 0),
+                                        height: 60,
+                                        decoration: BoxDecoration(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(6))),
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            Get.find<SecureStorage>()
+                                                .writeSecureData(
+                                                    AllStringConst.AppColor,
+                                                    Get.find<MController>()
+                                                        .appcolor
+                                                        .value);
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text(
+                                            "save",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline2!
+                                                .copyWith(color: Colors.white),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      )
+                                    ]),
+                                  ));
+                        },
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(6.0),
+                          ),
+                        ),
+                        child: Image(
+                          image: AssetImage(
+                            'assets/images/palette.png',
+                          ),
+                          fit: BoxFit.contain,
+                          width: 25,
+                          height: 25,
+                        ),
+                      ),
                     ),
-                    ),
-                    ),
-                  )
-
-                                ]),
-                              ),
-
-
-
-                              Container(width: MediaQuery.of(context).size.width*.7,
-                                padding: const EdgeInsets.only(
-                                    left: 0,
-                                    right: 0,
-                                    top: 0,
-                                    bottom: 0),
-
-                                height: 60,
-                                decoration: BoxDecoration(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .primary,
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(6))),
-                                child: ElevatedButton(
-                                  onPressed:(){
-                                    Get.find<SecureStorage>().writeSecureData(
-                                        AllStringConst.AppColor,
-                                        Get.find<MController>().appcolor.value);
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text(
-                                    "save",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline2!
-                                        .copyWith(
-                                        color: Colors.white),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              )
-
-                            ]),
-                          ));
-                },
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(6.0),
                   ),
-                ),
-                child: Image(
-                  image: AssetImage(
-                    'assets/images/palette.png',
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Row(
+                      children: [
+                        SizedBox(width: 110,),
+                        FloatingActionButton(
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: const Text("Settings"),
+                                    content: Column(children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 8.0,
+                                            bottom: 8,
+                                            right: 0,
+                                            left: 0),
+                                        child: Column(children: [
+                                          CustomInputTextFiled(
+                                            validator: controller
+                                                .validators.userNameValidator,
+                                            textEditingController:
+                                            controller.baseUrl,
+                                            label: "Base Url",
+                                          ),
+                                        ]),
+                                      ),
+                                      // SizedBox(
+                                      //   height: 100,
+                                      // ),
+                                      Container(
+                                        width:
+                                        MediaQuery.of(context).size.width *
+                                            .7,
+                                        padding: const EdgeInsets.only(
+                                            left: 0,
+                                            right: 0,
+                                            top: 0,
+                                            bottom: 0),
+                                        height: 60,
+                                        decoration: BoxDecoration(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                            borderRadius:
+                                            const BorderRadius.all(
+                                                Radius.circular(6))),
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            Get.find<SecureStorage>()
+                                                .writeSecureData(
+                                                AllStringConst.BaseUrl,
+                                                controller.baseUrl.text);
+                                            // Restart.restartApp();
+                                            // Phoenix.rebirth(context);
+                                            RestartWidget.restartApp(context);
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text(
+                                            "Save Settings",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline2!
+                                                .copyWith(color: Colors.white),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      )
+                                    ]),
+                                  ));
+                            },
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(6.0),
+                              ),
+                            ),
+                            child: Icon(
+                              Icons.settings,
+                              color: Colors.white,
+                            )
+                          // Image(
+                          //   image: AssetImage(
+                          //     'assets/images/palette.png',
+                          //   ),
+                          //   fit: BoxFit.contain,
+                          //   width: 25,
+                          //   height: 25,
+                          // ),
+                        )
+                      ],
+                    ),
                   ),
-                  fit: BoxFit.contain,
-                  width: 25,
-                  height: 25,
-                ),
+                ],
               )
             : null,
         floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,

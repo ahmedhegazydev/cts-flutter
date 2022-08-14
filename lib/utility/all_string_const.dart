@@ -3,6 +3,7 @@ class AllStringConst{
   static const String UserId="UserId";
 
   static const String FirstName= "firstName";
+  static const String BaseUrl= "baseUrlAppSettings";
   static const String LastName="lastName";
   static const String DepartmentName= "departmentName";
   static const String Pincode= "pincode";

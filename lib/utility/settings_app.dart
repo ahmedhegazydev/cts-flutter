@@ -1,9 +1,14 @@
+import 'package:cts/utility/all_string_const.dart';
+import 'package:cts/utility/storage.dart';
+
 class SettingsApp {
 
+  static SecureStorage secureStorage = new SecureStorage();
   // static const String baseUrl = 'http://192.168.1.2:9091/Mobility/CMS.svc/';
   // static const String baseUrl = 'http://win-7pnh2kgornc:9091/Mobility/CMS.svc/';
   static const String baseUrl = 'http://192.168.1.7:9091/Mobility/CMS.svc/';
 
+  SettingsApp(){}
 
   static const String loginUrl =baseUrl;
   static const String FindRecipientUrl =baseUrl+"FindRecipient?typeId=&criteria=*&";//Token=oeXQq9ZIRfxAu8ixipXg&language=en";

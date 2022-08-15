@@ -121,8 +121,9 @@ class MyApp extends StatelessWidget {
                   ),
         ),
         getPages: [
-          GetPage(name: "/", page: () => LoginPage(),
-              // LandingPage(),
+          GetPage(name: "/", page: () =>
+              // LoginPage(),
+              LandingPage(),
               // InboxPage(),
               middlewares: [AuthMiddleWare()]), //SearchPage
           GetPage(

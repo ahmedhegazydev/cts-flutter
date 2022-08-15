@@ -11,6 +11,7 @@ import '../controllers/login_controller.dart';
 import '../controllers/main_controller.dart';
 import '../controllers/my_cart/create_basket_controller.dart';
 import '../controllers/web_view_controller.dart';
+import '../services/json_model/basket/fetch_basket_list_model.dart';
 import '../utility/all_const.dart';
 import '../utility/all_string_const.dart';
 import '../utility/device_size.dart';
@@ -31,7 +32,8 @@ class LandingPage extends GetWidget<LandingPageController> {
   Widget build(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
 
-    print("the Token Is => ${secureStorage.readSecureData(AllStringConst.Token)}");
+    print(
+        "the Token Is => ${secureStorage.readSecureData(AllStringConst.Token)}");
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -214,587 +216,630 @@ class LandingPage extends GetWidget<LandingPageController> {
   }
 
   _buildSideMenu(BuildContext context) {
-  return   ListView(children: [
-    InkWell(onTap: (){
-      print("999999999999");
-      Get.toNamed("SignaturePage");
-    },
-    child: Container(
-      height: calculateWidth(120, context),
-      color: Colors.transparent,
-      child: Column(
-        //    mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Spacer(
-            flex: 1,
-          ),
-          Flexible(
-            flex: 3,
-            child: Image(
-              image: AssetImage(
-                'assets/images/signature.png',
-              ),
-              fit: BoxFit.contain,
-              width: double.infinity,
-              height: double.infinity,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              "mySignatures".tr,
-              textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline3!
-                  .copyWith(color: Colors.grey.shade600),
-            ),
-          ),
-        ],
-      ),
-    ),
-  ),
-    InkWell(
-      onTap: () {
-        // Get.bottomSheet(
-        //   Container(
-        //     //height: 100,
-        //       margin: EdgeInsets.all(20),
-        //       padding: EdgeInsets.all(20),
-        //       decoration: const BoxDecoration(
-        //           color: Colors.white,
-        //           borderRadius: BorderRadius.only(
-        //               topLeft: Radius.circular(20),
-        //               topRight: Radius.circular(20))),
-        //       child: ListView.builder(
-        //           itemCount: //11
-        //           controller.findRecipientModel?.sections?[0]
-        //               .destination?.length,
-        //           itemBuilder: (context, pos) {
-        //             return Padding(
-        //               padding: const EdgeInsets.all(8.0),
-        //               child: Card(elevation: 5,
-        //                 child: Padding(
-        //                   padding: const EdgeInsets.all(8.0),
-        //                   child: Text(controller.findRecipientModel
-        //                       ?.sections?[0].destination?[pos]?.value ??
-        //                       ""),
-        //                 ),
-        //               ),
-        //             );
-        //           })),
-        //   enterBottomSheetDuration: const Duration(seconds: 1),
-        // );
-      },
-      child: Container(
-        height: 140,
-        color: Colors.transparent,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Spacer(
-              flex: 1,
-            ),
-            Flexible(
-              flex: 3,
-              child: Image(
-                image: AssetImage(
-                  'assets/images/fav_users.png',
+    return ListView(
+      children: [
+        InkWell(
+          onTap: () {
+            print("999999999999");
+            Get.toNamed("SignaturePage");
+          },
+          child: Container(
+            height: calculateWidth(120, context),
+            color: Colors.transparent,
+            child: Column(
+              //    mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Spacer(
+                  flex: 1,
                 ),
-                fit: BoxFit.contain,
-                width: double.infinity,
-                height: double.infinity,
-              ),
+                Flexible(
+                  flex: 3,
+                  child: Image(
+                    image: AssetImage(
+                      'assets/images/signature.png',
+                    ),
+                    fit: BoxFit.contain,
+                    width: double.infinity,
+                    height: double.infinity,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "mySignatures".tr,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: Colors.grey.shade600),
+                  ),
+                ),
+              ],
             ),
-            Flexible(
-              flex: 2,
-              child: Text(
-                "favoritesUsers".tr,
-                textAlign: TextAlign.center,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline3!
-                    .copyWith(color: Colors.grey.shade600),
-              ),
-            ),
-          ],
+          ),
         ),
-      ),
-    ),
-       InkWell(onTap: (){
-         // Get.bottomSheet(
-         //   Container(
-         //     //height: 100,
-         //       margin: EdgeInsets.all(20),
-         //       padding: EdgeInsets.all(20),
-         //       decoration: const BoxDecoration(
-         //           color: Colors.white,
-         //           borderRadius: BorderRadius.only(
-         //               topLeft: Radius.circular(20),
-         //               topRight: Radius.circular(20))),
-         //       child: ListView.builder(
-         //           itemCount: //11
-         //           controller.findRecipientModel?.sections?[0]
-         //               .destination?.length,
-         //           itemBuilder: (context, pos) {
-         //             return Padding(
-         //               padding: const EdgeInsets.all(8.0),
-         //               child: Card(elevation: 5,
-         //                 child: Padding(
-         //                   padding: const EdgeInsets.all(8.0),
-         //                   child: Text(controller.findRecipientModel
-         //                       ?.sections?[2].destination?[pos]?.value ??
-         //                       ""),
-         //                 ),
-         //               ),
-         //             );
-         //           })),
-         //   enterBottomSheetDuration: const Duration(seconds: 1),
-         // );
-       },
-         child: Container(
-           height: 120,
-           color: Colors.transparent,
-           child: Column(
-             mainAxisAlignment: MainAxisAlignment.spaceAround,
-             crossAxisAlignment: CrossAxisAlignment.center,
-             mainAxisSize: MainAxisSize.max,
-             children: [
-               Spacer(
-                 flex: 1,
-               ),
-               Flexible(
-                 flex: 3,
-                 child: Image(
-                   image: AssetImage(
-                     'assets/images/delegation.png',
-                   ),
-                   fit: BoxFit.contain,
-                   width: double.infinity,
-                   height: double.infinity,
-                 ),
-               ),
-               Flexible(
-                 flex: 1,
-                 child: Text(
-                   "myDelegations".tr,
-                   textAlign: TextAlign.center,
-                   style: Theme.of(context)
-                       .textTheme
-                       .headline3!
-                       .copyWith(color: Colors.grey.shade600),
-                 ),
-               ),
-             ],
-           ),
-         ),
-       ),
+        InkWell(
+          onTap: () {
+            // Get.bottomSheet(
+            //   Container(
+            //     //height: 100,
+            //       margin: EdgeInsets.all(20),
+            //       padding: EdgeInsets.all(20),
+            //       decoration: const BoxDecoration(
+            //           color: Colors.white,
+            //           borderRadius: BorderRadius.only(
+            //               topLeft: Radius.circular(20),
+            //               topRight: Radius.circular(20))),
+            //       child: ListView.builder(
+            //           itemCount: //11
+            //           controller.findRecipientModel?.sections?[0]
+            //               .destination?.length,
+            //           itemBuilder: (context, pos) {
+            //             return Padding(
+            //               padding: const EdgeInsets.all(8.0),
+            //               child: Card(elevation: 5,
+            //                 child: Padding(
+            //                   padding: const EdgeInsets.all(8.0),
+            //                   child: Text(controller.findRecipientModel
+            //                       ?.sections?[0].destination?[pos]?.value ??
+            //                       ""),
+            //                 ),
+            //               ),
+            //             );
+            //           })),
+            //   enterBottomSheetDuration: const Duration(seconds: 1),
+            // );
+          },
+          child: Container(
+            height: 140,
+            color: Colors.transparent,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Spacer(
+                  flex: 1,
+                ),
+                Flexible(
+                  flex: 3,
+                  child: Image(
+                    image: AssetImage(
+                      'assets/images/fav_users.png',
+                    ),
+                    fit: BoxFit.contain,
+                    width: double.infinity,
+                    height: double.infinity,
+                  ),
+                ),
+                Flexible(
+                  flex: 2,
+                  child: Text(
+                    "favoritesUsers".tr,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: Colors.grey.shade600),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        InkWell(
+          onTap: () {
+            // Get.bottomSheet(
+            //   Container(
+            //     //height: 100,
+            //       margin: EdgeInsets.all(20),
+            //       padding: EdgeInsets.all(20),
+            //       decoration: const BoxDecoration(
+            //           color: Colors.white,
+            //           borderRadius: BorderRadius.only(
+            //               topLeft: Radius.circular(20),
+            //               topRight: Radius.circular(20))),
+            //       child: ListView.builder(
+            //           itemCount: //11
+            //           controller.findRecipientModel?.sections?[0]
+            //               .destination?.length,
+            //           itemBuilder: (context, pos) {
+            //             return Padding(
+            //               padding: const EdgeInsets.all(8.0),
+            //               child: Card(elevation: 5,
+            //                 child: Padding(
+            //                   padding: const EdgeInsets.all(8.0),
+            //                   child: Text(controller.findRecipientModel
+            //                       ?.sections?[2].destination?[pos]?.value ??
+            //                       ""),
+            //                 ),
+            //               ),
+            //             );
+            //           })),
+            //   enterBottomSheetDuration: const Duration(seconds: 1),
+            // );
+          },
+          child: Container(
+            height: 120,
+            color: Colors.transparent,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Spacer(
+                  flex: 1,
+                ),
+                Flexible(
+                  flex: 3,
+                  child: Image(
+                    image: AssetImage(
+                      'assets/images/delegation.png',
+                    ),
+                    fit: BoxFit.contain,
+                    width: double.infinity,
+                    height: double.infinity,
+                  ),
+                ),
+                Flexible(
+                  flex: 1,
+                  child: Text(
+                    "myDelegations".tr,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: Colors.grey.shade600),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        InkWell(
+          onTap: () async {
+            await Get.find<InboxController>().getFetchBasketList();
+            showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                title: Text(" "),
+                content: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                      width: MediaQuery.of(context).size.width * .3,
+                      color: Colors.grey[200],
+                      child: ReorderableListView(
+                        padding: const EdgeInsets.symmetric(horizontal: 40),
+                        children: <Widget>[
+                          for (int index = 0;
+                              index <
+                                  Get.find<InboxController>()
+                                      .fetchBasketListModel!
+                                      .baskets!
+                                      .length;
+                              // 4;
+                              index += 1)
+                            ListTile(
+                              key: Key('$index'),
+                              // tileColor: _items[index].isOdd ? oddItemColor : evenItemColor,
+                              title: Card(
+                                elevation: 10,
+                                child: Column(children: [
+                                  Text(Get.find<InboxController>()
+                                          .fetchBasketListModel
+                                          ?.baskets?[index]
+                                          .name ??
+                                      ""),
+                                  Text(Get.find<InboxController>()
+                                          .fetchBasketListModel
+                                          ?.baskets?[index]
+                                          .nameAr ??
+                                      ""),
+                                  // Text( "color :${Get.find<InboxController>()
+                                  //     .fetchBasketListModel
+                                  //     ?.baskets?[pos].color}",style: TextStyle( color:  HexColor(Get.find<InboxController>()
+                                  //     .fetchBasketListModel
+                                  //     ?.baskets?[pos].color??"#000000"))),
 
-    InkWell(onTap: ()async{
-      await    Get.find<InboxController>().getFetchBasketList();
-      showDialog(
-        context: context,
-        builder: (ctx) =>
-            AlertDialog(
-              title: Text(" "),
-              content: Padding(
-                padding:
-                const EdgeInsets
-                    .all(8.0),
-                child: Container(
-                    width: MediaQuery.of(
-                        context)
-                        .size
-                        .width *
-                        .3,
-                    color: Colors
-                        .grey[200],
-                    child: ListView.builder(
-                        itemCount: Get.find<
-                            InboxController>()
-                            .fetchBasketListModel
-                            ?.baskets
-                            ?.length,
-                        itemBuilder:
-                            (context,
-                            pos) {
-                          return InkWell(onTap: ()async{
-
-print("${Get.find<InboxController>()
-    .fetchBasketListModel
-    ?.baskets?[pos].iD}");
-
-Get.find<BasketController>().getBasketInbox(id:Get.find<InboxController>()
-    .fetchBasketListModel
-   !.baskets![pos].iD! ,pageSize:20 ,pageNumber: 0);
-
-Get.back();
-
-
-                             Get.toNamed("MyPocketsScreen");
-
-                          },
-                            child: Card(elevation: 10,child: Column(children: [
-                              Text( Get.find<InboxController>()
-                                  .fetchBasketListModel
-                                  ?.baskets?[pos].name??""),
-                              Text( Get.find<InboxController>()
-                                  .fetchBasketListModel
-                                  ?.baskets?[pos].nameAr??""),
-                              // Text( "color :${Get.find<InboxController>()
-                              //     .fetchBasketListModel
-                              //     ?.baskets?[pos].color}",style: TextStyle( color: HexColor(Get.find<InboxController>()
-                              //     .fetchBasketListModel
-                              //     ?.baskets?[pos].color??"#000000"))),
-
-
-
-                           GestureDetector(onTap: (){
-                             //هنا هنعمل دليت
-                             controller.removeBasket(
-                               basketId: Get.find<InboxController>()
-                                   .fetchBasketListModel
-                                   ?.baskets?[pos].iD
-                             );
-                           },child: Icon(Icons.delete)), ]),
+                                  GestureDetector(
+                                      onTap: () {
+                                        //هنا هنعمل دليت
+                                        controller.removeBasket(
+                                            basketId:
+                                                Get.find<InboxController>()
+                                                    .fetchBasketListModel
+                                                    ?.baskets?[index]
+                                                    .iD);
+                                      },
+                                      child: Icon(Icons.delete)),
+                                ]),
+                              ),
                             ),
-                          );
-                        })),
-              ),
-              actions: <Widget>[
-                FlatButton(
-                  onPressed:
-                      () async {
+                        ],
+                        onReorder: (int oldIndex, int newIndex) {
+                          if (oldIndex < newIndex) {
+                            newIndex -= 1;
+                          }
+                          final Baskets item = Get.find<InboxController>()
+                              .fetchBasketListModel!
+                              .baskets!
+                              .removeAt(oldIndex);
+                          Get.find<InboxController>()
+                              .fetchBasketListModel!
+                              .baskets!
+                              .insert(newIndex, item);
+                        },
+                      )
 
-                    /// ToDo send Replay
+                      // child: ListView.builder(
+                      //     // itemCount: Get.find<InboxController>()
+                      //     //     .fetchBasketListModel
+                      //     //     ?.baskets
+                      //     //     ?.length,
+                      //     itemCount: 5,
+                      //     itemBuilder: (context, pos) {
+                      //       return InkWell(
+                      //         onTap: () async {
+                      //           print(
+                      //               "${Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].iD}");
+                      //
+                      //           Get.find<BasketController>().getBasketInbox(
+                      //               id: Get.find<InboxController>()
+                      //                   .fetchBasketListModel!
+                      //                   .baskets![pos]
+                      //                   .iD!,
+                      //               pageSize: 20,
+                      //               pageNumber: 0);
+                      //
+                      //           Get.back();
+                      //
+                      //           Get.toNamed("MyPocketsScreen");
+                      //         },
+                      //         child: Card(
+                      //           elevation: 10,
+                      //           child: Column(children: [
+                      //             Text(Get.find<InboxController>()
+                      //                 .fetchBasketListModel
+                      //                 ?.baskets?[pos]
+                      //                 .name ??
+                      //                 ""),
+                      //             Text(Get.find<InboxController>()
+                      //                 .fetchBasketListModel
+                      //                 ?.baskets?[pos]
+                      //                 .nameAr ??
+                      //                 ""),
+                      //             // Text( "color :${Get.find<InboxController>()
+                      //             //     .fetchBasketListModel
+                      //             //     ?.baskets?[pos].color}",style: TextStyle( color:  HexColor(Get.find<InboxController>()
+                      //             //     .fetchBasketListModel
+                      //             //     ?.baskets?[pos].color??"#000000"))),
+                      //
+                      //             GestureDetector(
+                      //                 onTap: () {
+                      //                   //هنا هنعمل دليت
+                      //                   controller.removeBasket(
+                      //                       basketId:
+                      //                       Get.find<InboxController>()
+                      //                           .fetchBasketListModel
+                      //                           ?.baskets?[pos]
+                      //                           .iD);
+                      //                 },
+                      //                 child: Icon(Icons.delete)),
+                      //           ]),
+                      //         ),
+                      //       );
+                      //     })
 
-                    Navigator.of(
-                        ctx)
-                        .pop();
-                  },
-                  child: Text("Ok"),
+                      ),
                 ),
-                // FlatButton(
-                //   onPressed:
-                //       () async {
-                //
-                //     /// ToDo send Replay
-                //         ///  Navigator.of(
-                //         //                         ctx)
-                //         //                         .pop();
-                //         Navigator.of(
-                //             ctx)
-                //             .pop();
-                //         Get.to(BasketPage());
-                //
-                //   },
-                //   child: Text("go to Basket"),
-                // ),
-                FlatButton(
-                  onPressed:
-                      () async {
- //هنا هنكريت الباسكت
+                actions: <Widget>[
+                  FlatButton(
+                    onPressed: () async {
+                      /// ToDo send Replay
 
-                        showInputDialog(
-                            context, 'CreateNewBasket', 'default inpit', 'message');
-                  },
-                  child: Text("new Basket"),
-                ), ],
-            ),
-      );
-     // Get.toNamed( "MyPocketsScreen",);//MyPocketsScreen
-    },
-      child: Container(
-        height: 120,
-        color: Colors.transparent,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Spacer(
-              flex: 1,
-            ),
-            Flexible(
-              flex: 3,
-              child: Image(
-                image: AssetImage(
-                  'assets/images/delegation.png',
+                      Navigator.of(ctx).pop();
+                    },
+                    child: Text("Ok"),
+                  ),
+                  // FlatButton(
+                  //   onPressed:
+                  //       () async {
+                  //
+                  //     /// ToDo send Replay
+                  //         ///  Navigator.of(
+                  //         //                         ctx)
+                  //         //                         .pop();
+                  //         Navigator.of(
+                  //             ctx)
+                  //             .pop();
+                  //         Get.to(BasketPage());
+                  //
+                  //   },
+                  //   child: Text("go to Basket"),
+                  // ),
+                  FlatButton(
+                    onPressed: () async {
+                      //هنا هنكريت الباسكت
+
+                      showInputDialog(context, 'CreateNewBasket',
+                          'default inpit', 'message');
+                    },
+                    child: Text("new Basket"),
+                  ),
+                ],
+              ),
+            );
+            // Get.toNamed( "MyPocketsScreen",);//MyPocketsScreen
+          },
+          child: Container(
+            height: 120,
+            color: Colors.transparent,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Spacer(
+                  flex: 1,
                 ),
-                fit: BoxFit.contain,
-                width: double.infinity,
-                height: double.infinity,
-              ),
+                Flexible(
+                  flex: 3,
+                  child: Image(
+                    image: AssetImage(
+                      'assets/images/delegation.png',
+                    ),
+                    fit: BoxFit.contain,
+                    width: double.infinity,
+                    height: double.infinity,
+                  ),
+                ),
+                Flexible(
+                  flex: 1,
+                  child: Text(
+                    "Basket".tr,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: Colors.grey.shade600),
+                  ),
+                ),
+              ],
             ),
-            Flexible(
-              flex: 1,
-              child: Text(
-                "Basket".tr,
-                textAlign: TextAlign.center,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline3!
-                    .copyWith(color: Colors.grey.shade600),
-              ),
-            ),
-          ],
+          ),
         ),
-      ),
-    ),
-       InkWell(onTap: (){
-         ///ToDo
-         ///open url and go to userGuideUrl
-       //  controller.data.userGuideUrl
+        InkWell(
+          onTap: () {
+            ///ToDo
+            ///open url and go to userGuideUrl
+            //  controller.data.userGuideUrl
 
-Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
-         Get.toNamed( "WebViewPage",);
-       },
-         child: Container(
-           height: 120,
-           color: Colors.transparent,
-           child: Column(
-             mainAxisAlignment: MainAxisAlignment.spaceAround,
-             crossAxisAlignment: CrossAxisAlignment.center,
-             mainAxisSize: MainAxisSize.max,
-             children: [
-               Spacer(
-                 flex: 1,
-               ),
-               Flexible(
-                 flex: 3,
-                 child: Image(
-                   image: AssetImage(
-                     'assets/images/delegation.png',
-                   ),
-                   fit: BoxFit.contain,
-                   width: double.infinity,
-                   height: double.infinity,
-                 ),
-               ),
-               Flexible(
-                 flex: 1,
-                 child: Text(
-                   "user Guide".tr,
-                   textAlign: TextAlign.center,
-                   style: Theme.of(context)
-                       .textTheme
-                       .headline3!
-                       .copyWith(color: Colors.grey.shade600),
-                 ),
-               ),
-             ],
-           ),
-         ),
-       ),
+            Get.find<WebViewPageController>().url =
+                controller.data?.userGuideUrl;
+            Get.toNamed(
+              "WebViewPage",
+            );
+          },
+          child: Container(
+            height: 120,
+            color: Colors.transparent,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Spacer(
+                  flex: 1,
+                ),
+                Flexible(
+                  flex: 3,
+                  child: Image(
+                    image: AssetImage(
+                      'assets/images/delegation.png',
+                    ),
+                    fit: BoxFit.contain,
+                    width: double.infinity,
+                    height: double.infinity,
+                  ),
+                ),
+                Flexible(
+                  flex: 1,
+                  child: Text(
+                    "user Guide".tr,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: Colors.grey.shade600),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        InkWell(
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                      title: const Text("pick your Color"),
+                      content: Column(children: [
+                        buildColorPickerCreateNewTask(),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 8.0, bottom: 8, right: 20, left: 20),
+                          child: Row(children: [
+                            Expanded(
+                              child: Container(
+                                padding: const EdgeInsets.only(
+                                    left: 0, right: 0, top: 0, bottom: 0),
+                                height: 60,
+                                decoration: BoxDecoration(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(6))),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    var locale = const Locale('ar', 'AR');
+                                    Get.updateLocale(locale);
+                                  },
+                                  child: Text(
+                                    "عربي",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline2!
+                                        .copyWith(color: Colors.white),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Container(
+                                padding: const EdgeInsets.only(
+                                    left: 0, right: 0, top: 0, bottom: 0),
+                                height: 60,
+                                decoration: BoxDecoration(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(6))),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    var locale = const Locale('en', 'US');
+                                    Get.updateLocale(locale);
+                                  },
+                                  child: Text(
+                                    "En",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline2!
+                                        .copyWith(color: Colors.white),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ]),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * .7,
+                          padding: const EdgeInsets.only(
+                              left: 0, right: 0, top: 0, bottom: 0),
+                          height: 60,
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.primary,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(6))),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Get.find<SecureStorage>().writeSecureData(
+                                  AllStringConst.AppColor,
+                                  Get.find<MController>().appcolor.value);
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              "save",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .copyWith(color: Colors.white),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        )
+                      ]),
+                    ));
+          },
+          child: Container(
+            height: 120,
+            color: Colors.transparent,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Spacer(
+                  flex: 1,
+                ),
+                Flexible(
+                  flex: 3,
+                  child: Image(
+                    image: AssetImage(
+                      'assets/images/palette_dark.png',
+                    ),
+                    fit: BoxFit.contain,
+                    width: double.infinity,
+                    height: double.infinity,
+                  ),
+                ),
+                Flexible(
+                  flex: 1,
+                  child: Text(
+                    "appTheme".tr,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: Colors.grey.shade600),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        InkWell(
+          onTap: () {
+            /// ToDo
+            /// delet token and go to login
 
-       InkWell(onTap: (){
-         showDialog(
-             context: context,
-             builder: (context) => AlertDialog(
-               title: const Text("pick your Color"),
-               content: Column(children: [
-                 buildColorPickerCreateNewTask(),
-                 Padding(
-                   padding: const EdgeInsets.only(
-                       top: 8.0, bottom: 8, right: 20, left: 20),
-                   child: Row(children: [
-                     Expanded(
-                       child: Container(
-                         padding: const EdgeInsets.only(
-                             left: 0,
-                             right: 0,
-                             top: 0,
-                             bottom: 0),
-
-                         height: 60,
-                         decoration: BoxDecoration(
-                             color: Theme.of(context)
-                                 .colorScheme
-                                 .primary,
-                             borderRadius: const BorderRadius.all(
-                                 Radius.circular(6))),
-                         child: ElevatedButton(
-                           onPressed:(){
-                             var locale = const Locale('ar', 'AR');
-                             Get.updateLocale(locale);
-                           },
-                           child: Text(
-                             "عربي",
-                             style: Theme.of(context)
-                                 .textTheme
-                                 .headline2!
-                                 .copyWith(
-                                 color: Colors.white),
-                             textAlign: TextAlign.center,
-                           ),
-                         ),
-                       ),
-                     )
-                     ,SizedBox(width: 10,)   ,
-
-                     Expanded(
-                       child: Container(
-                         padding: const EdgeInsets.only(
-                             left: 0,
-                             right: 0,
-                             top: 0,
-                             bottom: 0),
-
-                         height: 60,
-                         decoration: BoxDecoration(
-                             color: Theme.of(context)
-                                 .colorScheme
-                                 .primary,
-                             borderRadius: const BorderRadius.all(
-                                 Radius.circular(6))),
-                         child: ElevatedButton(
-                           onPressed:(){
-                             var locale = const Locale('en', 'US');
-                             Get.updateLocale(locale);
-                           },
-                           child: Text(
-                             "En",
-                             style: Theme.of(context)
-                                 .textTheme
-                                 .headline2!
-                                 .copyWith(
-                                 color: Colors.white),
-                             textAlign: TextAlign.center,
-                           ),
-                         ),
-                       ),
-                     )
-
-                   ]),
-                 ),
-
-
-
-                 Container(width: MediaQuery.of(context).size.width*.7,
-                   padding: const EdgeInsets.only(
-                       left: 0,
-                       right: 0,
-                       top: 0,
-                       bottom: 0),
-
-                   height: 60,
-                   decoration: BoxDecoration(
-                       color: Theme.of(context)
-                           .colorScheme
-                           .primary,
-                       borderRadius: const BorderRadius.all(
-                           Radius.circular(6))),
-                   child: ElevatedButton(
-                     onPressed:(){
-                       Get.find<SecureStorage>().writeSecureData(
-                           AllStringConst.AppColor,
-                           Get.find<MController>().appcolor.value);
-                       Navigator.of(context).pop();
-                     },
-                     child: Text(
-                       "save",
-                       style: Theme.of(context)
-                           .textTheme
-                           .headline2!
-                           .copyWith(
-                           color: Colors.white),
-                       textAlign: TextAlign.center,
-                     ),
-                   ),
-                 )
-
-               ]),
-             ));
-       },
-         child: Container(
-           height: 120,
-           color: Colors.transparent,
-           child: Column(
-             mainAxisAlignment: MainAxisAlignment.spaceAround,
-             crossAxisAlignment: CrossAxisAlignment.center,
-             mainAxisSize: MainAxisSize.max,
-             children: [
-               Spacer(
-                 flex: 1,
-               ),
-               Flexible(
-                 flex: 3,
-                 child: Image(
-                   image: AssetImage(
-                     'assets/images/palette_dark.png',
-                   ),
-                   fit: BoxFit.contain,
-                   width: double.infinity,
-                   height: double.infinity,
-                 ),
-               ),
-               Flexible(
-                 flex: 1,
-                 child: Text(
-                   "appTheme".tr,
-                   textAlign: TextAlign.center,
-                   style: Theme.of(context)
-                       .textTheme
-                       .headline3!
-                       .copyWith(color: Colors.grey.shade600),
-                 ),
-               ),
-             ],
-           ),
-         ),
-       ),
-       InkWell(
-         onTap: () {
-
-
-
-           /// ToDo
-           /// delet token and go to login
-
-           //   Globals.navigatorKey.currentState?.pushNamed(LoginPageRoute);
-         },
-         child: Container(
-           height: 120,
-           color: Colors.transparent,
-           child: Column(
-             mainAxisAlignment: MainAxisAlignment.spaceAround,
-             crossAxisAlignment: CrossAxisAlignment.center,
-             mainAxisSize: MainAxisSize.max,
-             children: [
-               Spacer(
-                 flex: 1,
-               ),
-               Flexible(
-                 flex: 3,
-                 child: Image(
-                   image: AssetImage(
-                     'assets/images/logout.png',
-                   ),
-                   fit: BoxFit.contain,
-                   width: double.infinity,
-                   height: double.infinity,
-                 ),
-               ),
-               Flexible(
-                 flex: 1,
-                 child: Text(
-                   "logout".tr,
-                   textAlign: TextAlign.center,
-                   style: Theme.of(context)
-                       .textTheme
-                       .headline3!
-                       .copyWith(color: Colors.grey.shade600),
-                 ),
-               ),
-             ],
-           ),
-         ),
-       )
-],);
+            //   Globals.navigatorKey.currentState?.pushNamed(LoginPageRoute);
+          },
+          child: Container(
+            height: 120,
+            color: Colors.transparent,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Spacer(
+                  flex: 1,
+                ),
+                Flexible(
+                  flex: 3,
+                  child: Image(
+                    image: AssetImage(
+                      'assets/images/logout.png',
+                    ),
+                    fit: BoxFit.contain,
+                    width: double.infinity,
+                    height: double.infinity,
+                  ),
+                ),
+                Flexible(
+                  flex: 1,
+                  child: Text(
+                    "logout".tr,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: Colors.grey.shade600),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        )
+      ],
+    );
     // return Column(
     //   mainAxisAlignment: MainAxisAlignment.center,
     //   crossAxisAlignment: CrossAxisAlignment.center,
@@ -1166,7 +1211,7 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
     // );
   }
 
-   Future<String?> showInputDialog(
+  Future<String?> showInputDialog(
       BuildContext context, String title, String defaultInput, String message) {
     var textController = TextEditingController(text: defaultInput);
     var content = Column(
@@ -1176,75 +1221,75 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
         // CreateNewBasket(),
 
         Form(
-          // key: controller.createBasketFormKey,
-          // child: LayoutBuilder(builder: (context, constraint) {
-          //   return Container(
+            // key: controller.createBasketFormKey,
+            // child: LayoutBuilder(builder: (context, constraint) {
+            //   return Container(
             child: Column(
-              children: [
-                // Spacer(),
-                // CustomInputTextFiled(
-                //     validator: controller.validators.nameValidator,
-                //     textEditingController: controller.englishName,
-                //     label: "english_name".tr),
-                // CustomInputTextFiled(
-                //     validator: controller.validators.nameValidator,
-                //     textEditingController: controller.arabicName,
-                //     label: "arabic_name".tr),
+          children: [
+            // Spacer(),
+            // CustomInputTextFiled(
+            //     validator: controller.validators.nameValidator,
+            //     textEditingController: controller.englishName,
+            //     label: "english_name".tr),
+            // CustomInputTextFiled(
+            //     validator: controller.validators.nameValidator,
+            //     textEditingController: controller.arabicName,
+            //     label: "arabic_name".tr),
 
-                Container(
-                  // padding: EdgeInsets.only(right: 10, left: 10),
-                  padding: EdgeInsets.all(10),
-                  child: Container(
-                      padding: EdgeInsets.only(right: 8, left: 8),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              color: Theme.of(context).colorScheme.primary),
-                          borderRadius: const BorderRadius.all(Radius.circular(6))),
-                      child: TextField(
-                        controller: controller.textEditingControllerEnglishName,
-                        decoration: InputDecoration(
-                          border: UnderlineInputBorder(),
-                          labelText: "english_name".tr,
-                        ),
-                      )),
-                ),
+            Container(
+              // padding: EdgeInsets.only(right: 10, left: 10),
+              padding: EdgeInsets.all(10),
+              child: Container(
+                  padding: EdgeInsets.only(right: 8, left: 8),
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          color: Theme.of(context).colorScheme.primary),
+                      borderRadius: const BorderRadius.all(Radius.circular(6))),
+                  child: TextField(
+                    controller: controller.textEditingControllerEnglishName,
+                    decoration: InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: "english_name".tr,
+                    ),
+                  )),
+            ),
 
-                Container(
-                  // padding: EdgeInsets.only(right: 10, left: 10),
-                  padding: EdgeInsets.all(10),
-                  child: Container(
-                      padding: EdgeInsets.only(right: 8, left: 8),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              color: Theme.of(context).colorScheme.primary),
-                          borderRadius: const BorderRadius.all(Radius.circular(6))),
-                      child: TextField(
-                        controller: controller.textEditingControllerArabicName,
-                        decoration: InputDecoration(
-                          border: UnderlineInputBorder(),
-                          labelText: "arabic_name".tr,
-                        ),
-                      )),
-                ),
+            Container(
+              // padding: EdgeInsets.only(right: 10, left: 10),
+              padding: EdgeInsets.all(10),
+              child: Container(
+                  padding: EdgeInsets.only(right: 8, left: 8),
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          color: Theme.of(context).colorScheme.primary),
+                      borderRadius: const BorderRadius.all(Radius.circular(6))),
+                  child: TextField(
+                    controller: controller.textEditingControllerArabicName,
+                    decoration: InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: "arabic_name".tr,
+                    ),
+                  )),
+            ),
 
-                Container(
-                  padding: EdgeInsets.only(right: 10, left: 10),
-                  width: MediaQuery.of(context).size.width * .3,
-                  child: RaisedButton(
-                      onPressed: () {
-                        // inboxController.applyFilter();
-                        // Navigator.pop(context);
-                        showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
+            Container(
+              padding: EdgeInsets.only(right: 10, left: 10),
+              width: MediaQuery.of(context).size.width * .3,
+              child: RaisedButton(
+                  onPressed: () {
+                    // inboxController.applyFilter();
+                    // Navigator.pop(context);
+                    showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
                               title: Text(
                                 "pick your Color",
                               ),
                               content: Column(children: [
                                 ColorPicker(
                                   pickerColor:
-                                  Get.find<CreateBasketController>()
-                                      .pickerColor,
+                                      Get.find<CreateBasketController>()
+                                          .pickerColor,
                                   onColorChanged: (Color color) {
                                     // Get.find<MController>().setAppColor(color);
                                     // print(color);
@@ -1268,60 +1313,60 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
                                   height: 60,
                                   decoration: BoxDecoration(
                                       color:
-                                      Theme.of(context).colorScheme.primary,
+                                          Theme.of(context).colorScheme.primary,
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(6))),
                                   child: ElevatedButton(
-                                    onPressed: () {
-                                      // Get.find<SecureStorage>().writeSecureData(
-                                      //     AllStringConst.AppColor,
-                                      //     Get.find<MController>().appcolor.value);
-                                      Navigator.of(context).pop();
-                                    },
-                                    child:
-                                    GestureDetector(onTap: (){
-                                    },child:
-                                    Text(
-                                      "save",
-                                      textAlign: TextAlign.center,
-                                    ),)
-
-                                  ),
+                                      onPressed: () {
+                                        // Get.find<SecureStorage>().writeSecureData(
+                                        //     AllStringConst.AppColor,
+                                        //     Get.find<MController>().appcolor.value);
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: GestureDetector(
+                                        onTap: () {},
+                                        child: Text(
+                                          "save",
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      )),
                                 )
                               ]),
                             ));
-                      },
-                      child: GetBuilder<CreateBasketController>(
-                        init: CreateBasketController(),
-                        builder: (_) {
-                          return Text("pick your Color",
-                              style: TextStyle(
-                                // backgroundColor: _.pickerColor,
-                                  color: _.pickerColor));
-                        },
-                      )),
-                ),
+                  },
+                  child: GetBuilder<CreateBasketController>(
+                    init: CreateBasketController(),
+                    builder: (_) {
+                      return Text("pick your Color",
+                          style: TextStyle(
+                              // backgroundColor: _.pickerColor,
+                              color: _.pickerColor));
+                    },
+                  )),
+            ),
 
-                Container(
-                  height: 40,
-                  padding: EdgeInsets.only(right: 10, left: 10),
-                  width: MediaQuery.of(context).size.width * .3,
-                  child: CustomButton(
-                      name: 'register'.tr,
-                      onPressed: () {
-                        // controller.createNewBasket();
-                        controller.addEditBasket(
-                            color: Get.find<CreateBasketController>().pickerColor.toHex(),
-                            nameAr: controller.textEditingControllerArabicName.text,
-                            nameEn: controller.textEditingControllerEnglishName.text
-                        );
-                      }),
-                ),
-              ],
-              // ),
-              // );
-              // }
-            ))
+            Container(
+              height: 40,
+              padding: EdgeInsets.only(right: 10, left: 10),
+              width: MediaQuery.of(context).size.width * .3,
+              child: CustomButton(
+                  name: 'register'.tr,
+                  onPressed: () {
+                    // controller.createNewBasket();
+                    controller.addEditBasket(
+                        color: Get.find<CreateBasketController>()
+                            .pickerColor
+                            .toHex(),
+                        nameAr: controller.textEditingControllerArabicName.text,
+                        nameEn:
+                            controller.textEditingControllerEnglishName.text);
+                  }),
+            ),
+          ],
+          // ),
+          // );
+          // }
+        ))
       ],
     );
     // var content = CreateNewBasket();
@@ -1368,7 +1413,6 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
       },
     );
   }
-
 
   landscapeDashboardContainer(BuildContext contex) {
     return Column(
@@ -1739,8 +1783,7 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
                             Flexible(
                               flex: 1,
                               child: Text(
-
-                                    "pendingCorrespondences"
+                                "pendingCorrespondences"
                                 //controller.data?.transferData.sections[].destination
                                 // controller.data?.transferData.priorities
                                 //   controller.data?.transferData.privacies.
@@ -2735,7 +2778,7 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
                 children: [
                   TableRowInkWell(
                     onTap: () {
-                Get.toNamed("SearchPage");
+                      Get.toNamed("SearchPage");
                     },
                     child: _buildOtherFoldersRows(context, "advancedSearch".tr,
                         "assets/images/search.png", false, 0),
@@ -3168,7 +3211,6 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
     //   ),
     // );
   }
-
 
   Widget buildColorPicker() {
     return ColorPicker(

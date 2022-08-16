@@ -30,6 +30,7 @@ class SettingsApp {
   static const String GetDocumentReceiversUrl =baseUrl+"/GetDocumentReceivers?";//
   static const String GetFetchBasketListUrl =baseUrl+"/FetchBasketList?";//
   static const String PostAddEditBasketFlagUrl =baseUrl+"/AddEditBasketFlag";//
+  static const String PostReorderBasketsUrl =baseUrl+"/ReOrderBasket";//
   static const String PostAddDocumentsToBasketUrl =baseUrl+"/AddDocumentsToBasket";//
   static const String PostRemoveItemsFromBasketUrl =baseUrl+"/RemoveItemsFromBasket";//
   static const String PostRemoveBasketUrl =baseUrl+"/RemoveBasket";//

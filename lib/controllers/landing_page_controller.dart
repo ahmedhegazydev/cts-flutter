@@ -7,10 +7,12 @@ import 'package:get/get.dart';
 
 import '../services/apis/basket/add_edit_basket_result _api.dart';
 import '../services/apis/basket/remove_basket_api.dart';
+import '../services/apis/basket/reorder_baskets_result _api.dart';
 import '../services/apis/find_recipient_api.dart';
 import '../services/apis/get_correspondences_api.dart';
 import '../services/json_model/basket/add_edit_basket_flag_model.dart';
 import '../services/json_model/basket/remove_basket_request_model.dart';
+import '../services/json_model/basket/reorder_baskets_request_model.dart';
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_correspondences_model.dart';
 import '../services/json_model/login_model.dart';
@@ -32,6 +34,7 @@ class LandingPageController extends GetxController{
   PostRemoveBasketApi _postRemoveBasketApi = PostRemoveBasketApi();
   // RemoveBasketRequest? removeBasketRequest;
 
+  ReOrderBasketsApi _postReorderBasketsApi = ReOrderBasketsApi();
 
   Map <String,dynamic>?_logindata;
   LoginModel? data ;
@@ -66,6 +69,21 @@ return name??"";
         .then((value) {
       print(value);
       print("_addEditBasketFlagApi");
+    });
+  }
+
+  Future reOrderBaskets({baskets }) async {
+    ReorderBasketsRequest reorderBasketsRequest =
+    ReorderBasketsRequest(
+      baskets: baskets,
+      language: Get.locale?.languageCode == "en" ? "en" : "ar",
+      token: _secureStorage.token()!,
+    );
+    await _postReorderBasketsApi
+        .post(reorderBasketsRequest.toMap())
+        .then((value) {
+      print(value);
+      print("_postReorderBasketsApi");
     });
   }
 

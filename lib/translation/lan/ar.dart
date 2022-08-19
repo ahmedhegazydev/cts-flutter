@@ -90,4 +90,11 @@ const Map<String, String> ar = {
 "DocumentData":"معلومات الملف"
   ,
   "Reset":"مسح"
+  ,
+  "filter":"تصفية"
+  ,
+  "Modify":"تحرير"
+  ,
+  "back":"الغاء تحرير"
+
 };

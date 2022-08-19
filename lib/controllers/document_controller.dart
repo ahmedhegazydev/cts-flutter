@@ -4,10 +4,8 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
-import 'dart:ui' as ui;
 
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
@@ -17,7 +15,6 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../models/CorrespondencesModel.dart';
 import '../models/DocumentModel.dart';
-import '../screens/resize_sing.dart';
 import '../services/apis/find_recipient_api.dart';
 import '../services/apis/inOpenDocument/GetAttachmentItem_api.dart';
 import '../services/apis/inOpenDocument/get_document_audit_logs_api.dart';
@@ -38,7 +35,6 @@ import '../services/apis/multiple_transfers_api.dart';
 import '../services/apis/save_document_annotations_api.dart';
 import '../services/json_model/can_open_document_model.dart';
 import '../services/json_model/find_recipient_model.dart';
-import '../services/json_model/get_correspondences_model.dart';
 import '../services/json_model/get_document_links_model.dart';
 import '../services/json_model/get_document_logs_model.dart';
 import '../services/json_model/get_document_receivers_model.dart';
@@ -62,11 +58,9 @@ import '../services/json_model/inopendocModel/multiple_transfers_model.dart';
 import '../services/json_model/inopendocModel/save_document_annotation_model.dart';
 import '../services/json_model/login_model.dart';
 import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
-import '../services/models/signature_info.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
 import '../utility/utilitie.dart';
-import '../widgets/custom_button_with_icon.dart';
 import 'inbox_controller.dart';
 import 'package:flutter/services.dart' as rootBundel;
 
@@ -587,7 +581,7 @@ pdfAndSingannotation.add(annotation);
       }
     });
     print("folder2=>${folder2.length}");
-    print("folder2=>${folder2}");
+    print("folder2=>$folder2");
     // for(int i=0;i< ( canOpenDocumentModel?.attachments?.attachments?.length??0);i++){
     //   folder[i]=canOpenDocumentModel!.attachments!.attachments![i]!.folderName!;
     //
@@ -1374,7 +1368,7 @@ extension UtilListExtension on List {
       });
 
       return result;
-    } catch (e, s) {
+    } catch (e) {
       return this;
     }
   }

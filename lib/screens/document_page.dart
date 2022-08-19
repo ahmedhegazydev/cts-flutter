@@ -3,12 +3,10 @@ import 'dart:typed_data';
 
 import 'package:cts/screens/resize_sing.dart';
 import 'package:cts/screens/search_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 //import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
 
-import 'dart:ui' as ui;
 
 import 'package:get/get.dart';
 import 'package:signature/signature.dart';
@@ -22,8 +20,6 @@ import '../controllers/web_view_controller.dart';
 import '../services/json_model/inopendocModel/g2g/g2g_Info_for_export_model.dart';
 import '../services/json_model/inopendocModel/save_document_annotation_model.dart';
 import '../services/json_model/login_model.dart';
-import '../services/models/signature_info.dart';
-import '../utility/all_const.dart';
 import '../utility/all_string_const.dart';
 import '../utility/utilitie.dart';
 import '../widgets/Custom_button_with_image.dart';
@@ -663,6 +659,16 @@ class DocumentPage extends GetWidget<DocumentController> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+
+
+
+                          ///ToDo
+                          ///
+//    naser
+       Text(controller.correspondences.comments??""),
+
+
+
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -1755,7 +1761,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                           //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
                                         },
                                         itemBuilder: (context, suggestion) {
-                                          Parents v = suggestion as Parents;
+                                          Parents v = suggestion;
 
                                           return // Te(v.originalName!);
 
@@ -1764,7 +1770,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                             );
                                         },
                                         onSuggestionSelected: (suggestion) {
-                                          Parents v = suggestion as Parents;
+                                          Parents v = suggestion;
                                           controller.toParent = v;
                                           controller
                                               .textEditingControllerToParent
@@ -1935,7 +1941,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                           //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
                                         },
                                         itemBuilder: (context, suggestion) {
-                                          Parents v = suggestion as Parents;
+                                          Parents v = suggestion;
 
                                           return // Te(v.originalName!);
 
@@ -1944,7 +1950,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                             );
                                         },
                                         onSuggestionSelected: (suggestion) {
-                                          Parents v = suggestion as Parents;
+                                          Parents v = suggestion;
                                           controller.ccToParent = v;
                                           controller
                                               .textEditingControllerToccParent

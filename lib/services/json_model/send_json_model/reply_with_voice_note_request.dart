@@ -1,4 +1,3 @@
-import 'package:cts/services/abstract_json_resource.dart';
 
 class ReplyWithVoiceNoteRequestModel  {
   String?  token ;

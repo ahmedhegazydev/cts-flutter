@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'dart:io';
-import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
@@ -12,7 +10,6 @@ import 'package:permission_handler/permission_handler.dart';
 import '../models/CorrespondencesModel.dart';
 import '../services/apis/basket/add_documents_to_basket_api.dart';
 import '../services/apis/basket/getFetchBasketList_api.dart';
-import '../services/apis/basket/get_gasket_inbox_api.dart';
 import '../services/apis/can_open_document.dart';
 import '../services/apis/complete_in_correspondence_api.dart';
 import '../services/apis/find_recipient_api.dart';
@@ -26,18 +23,14 @@ import '../services/json_model/basket/fetch_basket_list_model.dart';
 import '../services/json_model/can_open_document_model.dart';
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_correspondences_all_model.dart';
-import '../services/json_model/get_correspondences_model.dart';
 import '../services/json_model/inopendocModel/multiple_transfers_model.dart';
 import '../services/json_model/login_model.dart';
 import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
-import 'dart:developer';
 
 import '../utility/utilitie.dart';
-import '../widgets/custom_button_with_icon.dart';
 import 'document_controller.dart';
-import 'package:flutter/services.dart' as rootBundel;
 class InboxController extends GetxController {
 
   TextEditingController textEditingControllerFilter=TextEditingController();
@@ -645,7 +638,7 @@ Get.find<DocumentController>().gatAllDataAboutDOC(docId:  docId, transferId: tra
     "لاجراء اللازم",
     "للافاده",
     "للتوجيه",
-      "",
+
   ];
 String selectTexts1pos="";
 updateTexts1(  ppos){
@@ -656,7 +649,7 @@ update();
     List<String> texts2 = [
     "مباشر",
     "نسخه",
-    "خاص",  "",
+    "خاص",
   ];
   String selectTexts2pos="";
   updateTexts2(  ppos){
@@ -665,10 +658,10 @@ update();
     update();
   }
     List<String> texts3 = [
-    "عاجل",
-    "متوسط",
-    "عادي",
-      "",
+    "high".tr,
+    "medium".tr,
+    "low".tr,
+
   ];
   String selectTexts3pos="";
   updateTexts3(  ppos){
@@ -679,9 +672,13 @@ update();
 
 
   canceldata(){
-    updateTexts1(texts1[4]  );
-    updateTexts2(texts1[3]  );
-    updateTexts3( texts1[3] );
+    // updateTexts1(texts1[3]  );
+    // updateTexts2(texts1[2]  );
+    // updateTexts3( texts1[2] );
+    updateTexts1( ""  );
+    updateTexts2(""  );
+    updateTexts3( "" );
+    Get.back();
     update();
 
 

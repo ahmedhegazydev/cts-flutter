@@ -1,6 +1,4 @@
-import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,7 +6,6 @@ import '../controllers/document_controller.dart';
 import '../controllers/inbox_controller.dart';
 
 import '../models/CorrespondencesModel.dart';
-import '../screens/basket_page.dart';
 import '../services/apis/reply_with_voice_note_api.dart';
 import '../services/json_model/login_model.dart';
 import '../services/json_model/reply_with_voicenote_model.dart';
@@ -67,7 +64,7 @@ class CustomListView extends StatelessWidget {
                         Icons.mark_email_unread,
                         color: Colors.black,
                       ),
-                      child: Text("new", style: TextStyle(color: Colors.black)),
+                      child: Text("new".tr, style: TextStyle(color: Colors.black)),
                       // text: "all",
                     ),
                     Tab(
@@ -75,7 +72,7 @@ class CustomListView extends StatelessWidget {
                         Icons.email_outlined,
                         color: Colors.black,
                       ),
-                      child: Text("All", style: TextStyle(color: Colors.black)),
+                      child: Text("All".tr, style: TextStyle(color: Colors.black)),
                       // text: "all",
                     ),
                   ]),
@@ -273,7 +270,7 @@ Get.find<InboxController>().canceldata();
                                   ),
                                 );
                               },
-                              child: Text("تصفية",
+                              child: Text("filter".tr,
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20)),
@@ -287,8 +284,8 @@ Get.find<InboxController>().canceldata();
                               },
                               child: Text(
                                   Get.find<InboxController>().edit
-                                      ? "الغاء تحرير"
-                                      : "تحرير",
+                                      ? "back".tr
+                                      : "Modify".tr,
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20)),
@@ -304,6 +301,8 @@ Get.find<InboxController>().canceldata();
                           itemBuilder: (context, pos) {
                             if (pos < correspondences.length) {
                               // print("correspondences[pos].privacyId    ${correspondences[pos].privacyId}");
+
+
                               return
                                   // correspondences[pos].isNew??false?
 
@@ -364,6 +363,12 @@ Get.find<InboxController>().canceldata();
                                                               ?.length,
                                                       itemBuilder:
                                                           (context, index) {
+
+
+
+
+
+
                                                         return Row(
                                                           crossAxisAlignment:
                                                               CrossAxisAlignment
@@ -1122,6 +1127,11 @@ Get.find<InboxController>().canceldata();
                                                                                       scrollDirection: Axis.vertical,
                                                                                       itemCount: Get.find<InboxController>().usersWillSendTo.length,
                                                                                       itemBuilder: (context, pos) {
+
+
+
+
+
                                                                                         return //Text(controller.filterWord);
 
                                                                                             Padding(
@@ -1552,9 +1562,192 @@ Get.find<InboxController>().canceldata();
                             SizedBox(
                               width: 4,
                             ),
-                            Text("تصفية",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20)),
+                            GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (ctx) => AlertDialog(
+                                    title: Text(" "),
+                                    content: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                          width: MediaQuery.of(context)
+                                              .size
+                                              .width *
+                                              .3,
+                                          color: Colors.grey[200],
+                                          child: GetBuilder<InboxController>(
+                                              builder: (logic) {
+                                                return SingleChildScrollView(
+                                                  child: Column(
+                                                    children: [
+                                                      Text("الغاية"),
+                                                      ListTile(
+                                                        title:
+                                                        Text(logic.texts1[0].tr),
+                                                        leading: Radio(
+                                                          value: logic.texts1[0],
+                                                          groupValue:
+                                                          logic.selectTexts1pos,
+                                                          onChanged:
+                                                          logic.updateTexts1,
+                                                        ),
+                                                      ),
+                                                      ListTile(
+                                                        title:
+                                                        Text(logic.texts1[1].tr),
+                                                        leading: Radio(
+                                                          value: logic.texts1[1],
+                                                          groupValue:
+                                                          logic.selectTexts1pos,
+                                                          onChanged:
+                                                          logic.updateTexts1,
+                                                        ),
+                                                      ),
+                                                      ListTile(
+                                                        title:
+                                                        Text(logic.texts1[2].tr),
+                                                        leading: Radio(
+                                                          value: logic.texts1[2],
+                                                          groupValue:
+                                                          logic.selectTexts1pos,
+                                                          onChanged:
+                                                          logic.updateTexts1,
+                                                        ),
+                                                      ),
+                                                      ListTile(
+                                                        title:
+                                                        Text(logic.texts1[3].tr),
+                                                        leading: Radio(
+                                                          value: logic.texts1[3],
+                                                          groupValue:
+                                                          logic.selectTexts1pos,
+                                                          onChanged:
+                                                          logic.updateTexts1,
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding: const EdgeInsets.all(8.0),
+                                                        child: TextField(
+                                                          controller: logic
+                                                              .textEditingControllerFilter,
+                                                          decoration: InputDecoration(
+                                                            hintText: "اخري",),
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 30,),
+                                                      Padding(
+                                                        padding: const EdgeInsets.all(8.0),
+                                                        child: Divider(height: 2,thickness: 2),
+                                                      ),
+                                                      Text("النوع"),
+                                                      ListTile(
+                                                        title:
+                                                        Text(logic.texts2[0].tr),
+                                                        leading: Radio(
+                                                          value: logic.texts2[0],
+                                                          groupValue:
+                                                          logic.selectTexts2pos,
+                                                          onChanged:
+                                                          logic.updateTexts2,
+                                                        ),
+                                                      ),
+                                                      ListTile(
+                                                        title:
+                                                        Text(logic.texts2[1].tr),
+                                                        leading: Radio(
+                                                          value: logic.texts2[1],
+                                                          groupValue:
+                                                          logic.selectTexts2pos,
+                                                          onChanged:
+                                                          logic.updateTexts2,
+                                                        ),
+                                                      ),
+                                                      ListTile(
+                                                        title:
+                                                        Text(logic.texts2[2].tr),
+                                                        leading: Radio(
+                                                          value: logic.texts2[2],
+                                                          groupValue:
+                                                          logic.selectTexts2pos,
+                                                          onChanged:
+                                                          logic.updateTexts2,
+                                                        ),
+                                                      ),
+
+                                                      Padding(
+                                                        padding: const EdgeInsets.all(8.0),
+                                                        child: Divider(height: 2,thickness: 2),
+                                                      ),
+                                                      Text("prioritie"),
+                                                      ListTile(
+                                                        title:
+                                                        Text(logic.texts3[0].tr),
+                                                        leading: Radio(
+                                                          value: logic.texts3[0],
+                                                          groupValue:
+                                                          logic.selectTexts3pos,
+                                                          onChanged:
+                                                          logic.updateTexts3,
+                                                        ),
+                                                      ),
+                                                      ListTile(
+                                                        title:
+                                                        Text(logic.texts3[1].tr),
+                                                        leading: Radio(
+                                                          value: logic.texts3[1],
+                                                          groupValue:
+                                                          logic.selectTexts3pos,
+                                                          onChanged:
+                                                          logic.updateTexts3,
+                                                        ),
+                                                      ),
+                                                      ListTile(
+                                                        title:
+                                                        Text(logic.texts3[2].tr),
+                                                        leading: Radio(
+                                                          value: logic.texts3[2],
+                                                          groupValue:
+                                                          logic.selectTexts3pos,
+                                                          onChanged:
+                                                          logic.updateTexts3,
+                                                        ),
+                                                      ),
+
+                                                    ],
+                                                  ),
+                                                );
+                                              })),
+                                    ),
+                                    actions: <Widget>[
+                                      FlatButton(
+                                        onPressed: () async {
+                                          /// ToDo send Replay
+
+                                          Navigator.of(ctx).pop();
+                                        },
+                                        child: Text("تطبيق"),
+                                      ),
+                                      FlatButton(
+                                        onPressed: () async {
+                                          /// ToDo send Replay
+                                          ///  Navigator.of(
+                                          //                         ctx)
+                                          //                         .pop();
+                                          //    Navigator.of(ctx).pop();
+                                          Get.find<InboxController>().canceldata();
+                                        },
+                                        child: Text("الغاء"),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                              child: Text("filter".tr,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20)),
+                            ),
                             SizedBox(
                               width: 8,
                             ),
@@ -1564,8 +1757,8 @@ Get.find<InboxController>().canceldata();
                               },
                               child: Text(
                                   Get.find<InboxController>().edit
-                                      ? "الغاء تحرير"
-                                      : "تحرير",
+                                      ? "back".tr
+                                      : "Modify".tr,
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20)),

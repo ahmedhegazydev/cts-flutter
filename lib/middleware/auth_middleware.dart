@@ -15,5 +15,6 @@ class AuthMiddleWare extends GetMiddleware {
       // return const RouteSettings(name: "/InboxPage");
       // return const RouteSettings(name: "/Filter");
     }
+    return null;
   }
 }

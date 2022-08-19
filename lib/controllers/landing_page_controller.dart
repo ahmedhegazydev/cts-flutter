@@ -1,13 +1,7 @@
-import 'dart:developer';
 
-import 'package:cts/controllers/search_controller.dart';
 import 'package:get/get.dart';
 
 
-import '../services/apis/find_recipient_api.dart';
-import '../services/apis/get_correspondences_api.dart';
-import '../services/json_model/find_recipient_model.dart';
-import '../services/json_model/get_correspondences_model.dart';
 import '../services/json_model/login_model.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';

@@ -6,7 +6,6 @@ import '../services/apis/basket/get_gasket_inbox_api.dart';
 import '../services/apis/find_recipient_api.dart';
 import '../services/json_model/basket/get_basket_inbox_model.dart';
 import '../services/json_model/find_recipient_model.dart';
-import '../services/json_model/get_correspondences_all_model.dart';
 import '../utility/storage.dart';
 
 class BasketController extends GetxController {

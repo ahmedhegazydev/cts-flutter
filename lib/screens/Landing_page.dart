@@ -1,23 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 
 import '../controllers/basket_controller.dart';
 import '../controllers/inbox_controller.dart';
 import '../controllers/landing_page_controller.dart';
-import '../controllers/login_controller.dart';
 import '../controllers/main_controller.dart';
 import '../controllers/web_view_controller.dart';
-import '../utility/all_const.dart';
 import '../utility/all_string_const.dart';
 import '../utility/device_size.dart';
 import '../utility/storage.dart';
 import '../utility/utilitie.dart';
-import '../widgets/custom_inboxes_row.dart';
-import '../widgets/custom_landing_row.dart';
-import '../widgets/landing_head_item.dart';
-import 'basket_page.dart';
 
 class LandingPage extends GetWidget<LandingPageController> {
   SecureStorage secureStorage = Get.find<SecureStorage>();

@@ -1,16 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
-import 'package:get_storage/get_storage.dart';
 
-import '../../controllers/main_controller.dart';
 import '../../controllers/my_cart/create_basket_controller.dart';
-import '../../utility/all_string_const.dart';
-import '../../utility/storage.dart';
-import '../../widgets/custom_button.dart';
-import '../../widgets/custom_input_text_filed.dart';
 
 // class CreateNewBasket extends GetWidget<CreateBasketController> {
 class CreateNewBasket extends StatefulWidget {

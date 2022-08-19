@@ -47,10 +47,8 @@ class Inbox {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.correspondences != null) {
-      data['Correspondences'] =
-          this.correspondences.map((v) => v.toJson()).toList();
-    }
+    data['Correspondences'] =
+        this.correspondences.map((v) => v.toJson()).toList();
     data['Id'] = this.id;
     data['Total'] = this.total;
     return data;

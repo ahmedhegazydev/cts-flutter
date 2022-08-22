@@ -30,7 +30,9 @@ class SignaturePage extends GetView<SignaturePageController> {
                 signature:   base64.encode(data!), Token: controller.secureStorage.token()!,
                 SignatureId: controller.multiSignatures[0].cNTGctId.toString());
 
-               controller.updateSignature(signatureInfoModel: _signatureInfoModel);
+               controller.updateSignature(
+                   context: context,
+                   signatureInfoModel: _signatureInfoModel);
 
 
           }, child: Icon(Icons.save, size: 50,)),

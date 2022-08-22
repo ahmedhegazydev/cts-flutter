@@ -113,8 +113,8 @@ class CustomListView extends StatelessWidget {
                                                 children: [
                                                   Text("الغاية"),
                                                   ListTile(
-                                                    title:
-                                                        Text(logic.texts1[0].tr),
+                                                    title: Text(
+                                                        logic.texts1[0].tr),
                                                     leading: Radio(
                                                       value: logic.texts1[0],
                                                       groupValue:
@@ -124,8 +124,8 @@ class CustomListView extends StatelessWidget {
                                                     ),
                                                   ),
                                                   ListTile(
-                                                    title:
-                                                        Text(logic.texts1[1].tr),
+                                                    title: Text(
+                                                        logic.texts1[1].tr),
                                                     leading: Radio(
                                                       value: logic.texts1[1],
                                                       groupValue:
@@ -135,8 +135,8 @@ class CustomListView extends StatelessWidget {
                                                     ),
                                                   ),
                                                   ListTile(
-                                                    title:
-                                                        Text(logic.texts1[2].tr),
+                                                    title: Text(
+                                                        logic.texts1[2].tr),
                                                     leading: Radio(
                                                       value: logic.texts1[2],
                                                       groupValue:
@@ -146,8 +146,8 @@ class CustomListView extends StatelessWidget {
                                                     ),
                                                   ),
                                                   ListTile(
-                                                    title:
-                                                        Text(logic.texts1[3].tr),
+                                                    title: Text(
+                                                        logic.texts1[3].tr),
                                                     leading: Radio(
                                                       value: logic.texts1[3],
                                                       groupValue:
@@ -157,93 +157,105 @@ class CustomListView extends StatelessWidget {
                                                     ),
                                                   ),
                                                   Padding(
-                                                    padding: const EdgeInsets.all(8.0),
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
                                                     child: TextField(
                                                       controller: logic
                                                           .textEditingControllerFilter,
-                                                      decoration: InputDecoration(
-                                                          hintText: "اخري",),
+                                                      decoration:
+                                                          InputDecoration(
+                                                        hintText: "اخري",
+                                                      ),
                                                     ),
                                                   ),
-                                           SizedBox(height: 30,),
-                                           Padding(
-                                             padding: const EdgeInsets.all(8.0),
-                                             child: Divider(height: 2,thickness: 2),
-                                           ),
+                                                  SizedBox(
+                                                    height: 30,
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Divider(
+                                                        height: 2,
+                                                        thickness: 2),
+                                                  ),
                                                   Text("النوع"),
                                                   ListTile(
-                                                    title:
-                                                    Text(logic.texts2[0].tr),
+                                                    title: Text(
+                                                        logic.texts2[0].tr),
                                                     leading: Radio(
                                                       value: logic.texts2[0],
                                                       groupValue:
-                                                      logic.selectTexts2pos,
+                                                          logic.selectTexts2pos,
                                                       onChanged:
-                                                      logic.updateTexts2,
+                                                          logic.updateTexts2,
                                                     ),
                                                   ),
                                                   ListTile(
-                                                    title:
-                                                    Text(logic.texts2[1].tr),
+                                                    title: Text(
+                                                        logic.texts2[1].tr),
                                                     leading: Radio(
                                                       value: logic.texts2[1],
                                                       groupValue:
-                                                      logic.selectTexts2pos,
+                                                          logic.selectTexts2pos,
                                                       onChanged:
-                                                      logic.updateTexts2,
+                                                          logic.updateTexts2,
                                                     ),
                                                   ),
                                                   ListTile(
-                                                    title:
-                                                    Text(logic.texts2[2].tr),
+                                                    title: Text(
+                                                        logic.texts2[2].tr),
                                                     leading: Radio(
                                                       value: logic.texts2[2],
                                                       groupValue:
-                                                      logic.selectTexts2pos,
+                                                          logic.selectTexts2pos,
                                                       onChanged:
-                                                      logic.updateTexts2,
+                                                          logic.updateTexts2,
                                                     ),
                                                   ),
-
                                                   Padding(
-                                                    padding: const EdgeInsets.all(8.0),
-                                                    child: Divider(height: 2,thickness: 2),
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Divider(
+                                                        height: 2,
+                                                        thickness: 2),
                                                   ),
                                                   Text("الاولوية"),
                                                   ListTile(
-                                                    title:
-                                                    Text(logic.texts3[0].tr),
+                                                    title: Text(
+                                                        logic.texts3[0].tr),
                                                     leading: Radio(
                                                       value: logic.texts3[0],
                                                       groupValue:
-                                                      logic.selectTexts3pos,
+                                                          logic.selectTexts3pos,
                                                       onChanged:
-                                                      logic.updateTexts3,
+                                                          logic.updateTexts3,
                                                     ),
                                                   ),
                                                   ListTile(
-                                                    title:
-                                                    Text(logic.texts3[1].tr),
+                                                    title: Text(
+                                                        logic.texts3[1].tr),
                                                     leading: Radio(
                                                       value: logic.texts3[1],
                                                       groupValue:
-                                                      logic.selectTexts3pos,
+                                                          logic.selectTexts3pos,
                                                       onChanged:
-                                                      logic.updateTexts3,
+                                                          logic.updateTexts3,
                                                     ),
                                                   ),
                                                   ListTile(
-                                                    title:
-                                                    Text(logic.texts3[2].tr),
+                                                    title: Text(
+                                                        logic.texts3[2].tr),
                                                     leading: Radio(
                                                       value: logic.texts3[2],
                                                       groupValue:
-                                                      logic.selectTexts3pos,
+                                                          logic.selectTexts3pos,
                                                       onChanged:
-                                                      logic.updateTexts3,
+                                                          logic.updateTexts3,
                                                     ),
                                                   ),
-
                                                 ],
                                               ),
                                             );
@@ -264,8 +276,9 @@ class CustomListView extends StatelessWidget {
                                           ///  Navigator.of(
                                           //                         ctx)
                                           //                         .pop();
-                                      //    Navigator.of(ctx).pop();
-Get.find<InboxController>().canceldata();
+                                          //    Navigator.of(ctx).pop();
+                                          Get.find<InboxController>()
+                                              .canceldata();
                                         },
                                         child: Text("الغاء"),
                                       ),
@@ -310,6 +323,7 @@ Get.find<InboxController>().canceldata();
                                   InkWell(
                                 onTap: () {
                                   Get.find<InboxController>().canOpenDoc(
+                                      context: context,
                                       docId: correspondences[pos].purposeId,
                                       correspondenceId:
                                           correspondences[pos].correspondenceId,
@@ -327,6 +341,7 @@ Get.find<InboxController>().canceldata();
                                   //  Get.find<DocumentController>().loadPdf();
                                   Get.find<DocumentController>()
                                       .gatAllDataAboutDOC(
+                                      context: context,
                                           docId:
                                               correspondences[pos].purposeId!,
                                           correspondenceId: correspondences[pos]
@@ -335,6 +350,7 @@ Get.find<InboxController>().canceldata();
                                               correspondences[pos].transferId!);
                                   Get.find<DocumentController>()
                                       .g2gInfoForExport(
+                                      context: context,
                                           documentId: correspondences[pos]
                                               .correspondenceId!);
                                   //  Get.find<DocumentController>().loadPdf();
@@ -673,8 +689,10 @@ Get.find<InboxController>().canceldata();
                                                           ),
                                                           onTap: () {
                                                             Get.find<
-                                                                InboxController>()
-                                                                .getFetchBasketList();
+                                                                    InboxController>()
+                                                                .getFetchBasketList(
+                                                                    context:
+                                                                        context);
                                                           },
                                                           value: 5,
                                                         ),
@@ -826,7 +844,8 @@ Get.find<InboxController>().canceldata();
 
                                                                 ReplyWithVoiceNoteApi
                                                                     replayAPI =
-                                                                    ReplyWithVoiceNoteApi();
+                                                                    ReplyWithVoiceNoteApi(
+                                                                        context);
 
                                                                 ReplyWithVoiceNoteRequestModel v = ReplyWithVoiceNoteRequestModel(
                                                                     userId: correspondences[
@@ -1332,6 +1351,7 @@ Get.find<InboxController>().canceldata();
                                                                     });
 
                                                                     Get.find<InboxController>().multipleTransferspost(
+                                                                        context: context,
                                                                         transferId:
                                                                             correspondences[pos]
                                                                                 .transferId,
@@ -1417,6 +1437,8 @@ Get.find<InboxController>().canceldata();
                                                                 Get.find<
                                                                         InboxController>()
                                                                     .completeInCorrespondence(
+                                                                        context:
+                                                                            context,
                                                                         data:
                                                                             data);
 
@@ -1453,7 +1475,8 @@ Get.find<InboxController>().canceldata();
                                                     } else if (v == 5) {
                                                       await Get.find<
                                                               InboxController>()
-                                                          .getFetchBasketList();
+                                                          .getFetchBasketList(
+                                                              context: context);
                                                       //    print("Get.find<InboxController>().getFetchBasketList()");
 
                                                       showDialog(
@@ -1487,7 +1510,7 @@ Get.find<InboxController>().canceldata();
                                                                                 () async {
                                                                               Get.find<InboxController>().listSelectCorrespondences.add(int.parse(correspondences[pos].correspondenceId!));
 
-                                                                              await Get.find<InboxController>().addDocumentsToBasket(basketId: Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].iD);
+                                                                              await Get.find<InboxController>().addDocumentsToBasket(context: context, basketId: Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].iD);
                                                                               Get.back();
                                                                             },
                                                                             child:
@@ -1584,6 +1607,7 @@ Get.find<InboxController>().canceldata();
                               return InkWell(
                                 onTap: () {
                                   Get.find<InboxController>().canOpenDoc(
+                                      context: context,
                                       docId: allCorrespondences[pos].purposeId,
                                       correspondenceId: allCorrespondences[pos]
                                           .correspondenceId,
@@ -1602,6 +1626,7 @@ Get.find<InboxController>().canceldata();
                                       allCorrespondences[pos];
                                   Get.find<DocumentController>()
                                       .g2gInfoForExport(
+                                      context: context,
                                           documentId: allCorrespondences[pos]
                                               .correspondenceId);
                                   // Get.find<DocumentController>().loadPdf();
@@ -1903,7 +1928,9 @@ Get.find<InboxController>().canceldata();
                                                       onTap: () {
                                                         Get.find<
                                                                 InboxController>()
-                                                            .getFetchBasketList();
+                                                            .getFetchBasketList(
+                                                                context:
+                                                                    context);
                                                       },
                                                       value: 5,
                                                     ),
@@ -2063,7 +2090,8 @@ Get.find<InboxController>().canceldata();
 
                                                             ReplyWithVoiceNoteApi
                                                                 replayAPI =
-                                                                ReplyWithVoiceNoteApi();
+                                                                ReplyWithVoiceNoteApi(
+                                                                    context);
 
                                                             ReplyWithVoiceNoteRequestModel v = ReplyWithVoiceNoteRequestModel(
                                                                 userId: allCorrespondences[pos]
@@ -2118,8 +2146,7 @@ Get.find<InboxController>().canceldata();
                                                       ],
                                                     ),
                                                   );
-                                                }
-                                                else if (v == 2) {
+                                                } else if (v == 2) {
                                                   showDialog(
                                                       context: context,
                                                       builder: (BuildContext
@@ -2562,7 +2589,8 @@ Get.find<InboxController>().canceldata();
                                                               onPressed: () {
                                                                 ReplyWithVoiceNoteApi
                                                                     replayAPI =
-                                                                    ReplyWithVoiceNoteApi();
+                                                                    ReplyWithVoiceNoteApi(
+                                                                        context);
 
                                                                 print(
                                                                     "i click ok");
@@ -2617,6 +2645,7 @@ Get.find<InboxController>().canceldata();
                                                                   // });
 
                                                                   Get.find<DocumentController>().multipleTransferspost(
+                                                                      context: context,
                                                                       transferId:
                                                                           allCorrespondences[pos]
                                                                               .transferId,
@@ -2633,8 +2662,7 @@ Get.find<InboxController>().canceldata();
                                                           ],
                                                         );
                                                       });
-                                                }
-                                                else if (v == 3) {
+                                                } else if (v == 3) {
                                                   showDialog(
                                                     context: context,
                                                     builder: (ctx) =>
@@ -2701,6 +2729,8 @@ Get.find<InboxController>().canceldata();
                                                             Get.find<
                                                                     InboxController>()
                                                                 .completeInCorrespondence(
+                                                                    context:
+                                                                        context,
                                                                     data: data);
 
                                                             Navigator.of(ctx)
@@ -2729,14 +2759,14 @@ Get.find<InboxController>().canceldata();
                                                           InboxController>()
                                                       .customAction
                                                       ?.name);
-                                                }
-                                                else if (v == 4) {
+                                                } else if (v == 4) {
                                                   //correspondences[pos].
 
                                                 } else if (v == 5) {
                                                   await Get.find<
                                                           InboxController>()
-                                                      .getFetchBasketList();
+                                                      .getFetchBasketList(
+                                                          context: context);
                                                   print(
                                                       "Get.find<InboxController>().getFetchBasketList()");
 
@@ -2778,8 +2808,9 @@ Get.find<InboxController>().canceldata();
                                                                           Get.find<InboxController>()
                                                                               .listSelectCorrespondences
                                                                               .add(int.parse(correspondences[pos].correspondenceId!));
-                                                                          Get.find<InboxController>()
-                                                                              .addDocumentsToBasket(basketId: Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].iD);
+                                                                          Get.find<InboxController>().addDocumentsToBasket(
+                                                                              context: context,
+                                                                              basketId: Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].iD);
 
                                                                           Get.back();
                                                                         },

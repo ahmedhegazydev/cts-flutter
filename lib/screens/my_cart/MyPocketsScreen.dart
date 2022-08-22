@@ -1397,6 +1397,8 @@ class _ListView1State extends State<ListView1> {
 
   @override
   Widget build(BuildContext context) {
+    controller.context = context;
+
     return GetBuilder<BasketController>(builder: (logic) {
       // return logic.getBasketInboxModel == null
       //     ? Center(
@@ -1441,6 +1443,7 @@ class _ListView1State extends State<ListView1> {
                     Get.find<DocumentController>().loadPdf();
                     Get.find<DocumentController>()
                         .gatAllDataAboutDOC(
+                        context: context,
                         docId:
                      logic. getBasketInboxModel!.  correspondences![pos].purposeId!,
                         correspondenceId:logic.getBasketInboxModel!. correspondences![pos]
@@ -1845,7 +1848,7 @@ class _ListView1State extends State<ListView1> {
 
                                                     ReplyWithVoiceNoteApi
                                                   replayAPI =
-                                                  ReplyWithVoiceNoteApi();
+                                                  ReplyWithVoiceNoteApi(context);
 
                                                   ReplyWithVoiceNoteRequestModel v = ReplyWithVoiceNoteRequestModel(
                                                       userId:  logic.getBasketInboxModel!.correspondences![
@@ -2363,6 +2366,7 @@ class _ListView1State extends State<ListView1> {
                                                   Get.find<
                                                       InboxController>()
                                                       .completeInCorrespondence(
+                                                    context: context,
                                                       data:
                                                       data);
 

@@ -3,8 +3,11 @@ import 'dart:developer';
 import 'package:cts/controllers/search_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-
-
+import 'package:get_storage/get_storage.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/safe_area_values.dart';
+import 'package:top_snackbar_flutter/tap_bounce_container.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../services/apis/basket/add_edit_basket_result _api.dart';
 import '../services/apis/basket/remove_basket_api.dart';
 import '../services/apis/basket/reorder_baskets_result _api.dart';
@@ -20,61 +23,70 @@ import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
 import 'document_controller.dart';
 
-class LandingPageController extends GetxController{
-  final SecureStorage _secureStorage=Get.find<SecureStorage>();
+class LandingPageController extends GetxController {
+  // final SecureStorage _secureStorage = Get.find<SecureStorage>();
+  SecureStorage _secureStorage = SecureStorage();
 
+  TextEditingController textEditingControllerEnglishName =
+      TextEditingController();
+  TextEditingController textEditingControllerArabicName =
+      TextEditingController();
 
-  TextEditingController textEditingControllerEnglishName=TextEditingController();
-  TextEditingController textEditingControllerArabicName=TextEditingController();
-
-
-  AddEditBasketFlagApi _addEditBasketFlagApi = AddEditBasketFlagApi();
   // AddEditBasketFlagModel? addEditBasketFlagModel;
 
-  PostRemoveBasketApi _postRemoveBasketApi = PostRemoveBasketApi();
   // RemoveBasketRequest? removeBasketRequest;
 
-  ReOrderBasketsApi _postReorderBasketsApi = ReOrderBasketsApi();
+  Map<String, dynamic>? _logindata;
+  LoginModel? data;
+  BuildContext? context;
 
-  Map <String,dynamic>?_logindata;
-  LoginModel? data ;
   @override
   void onReady() {
     super.onReady();
-    _logindata  =_secureStorage.readSecureJsonData(AllStringConst.LogInData)  ;
-    data=LoginModel.fromJson(_logindata!);
-   // getFindRecipientData();
+    _logindata = _secureStorage.readSecureJsonData(AllStringConst.LogInData);
+    data = LoginModel.fromJson(_logindata!);
+    // getFindRecipientData();
 
-
-
-   // Get.find<SearchController>().getAllData();
-Get.find<DocumentController>().getFindRecipientData();
+    // Get.find<SearchController>().getAllData();
+    Get.find<DocumentController>().getFindRecipientData(context: context);
   }
 
-  String userName(){
-    String? name=_secureStorage.readSecureData(AllStringConst.FirstName);
-return name??"";
+  String userName() {
+    String? name = _secureStorage.readSecureData(AllStringConst.FirstName);
+    return name ?? "";
   }
 
-  Future addEditBasket({color, nameEn, nameAr}) async {
-    AddEditBasketFlagModel addEditBasketFlagModel =
-    AddEditBasketFlagModel(
+  Future addEditBasket({context, color, nameEn, nameAr}) async {
+    AddEditBasketFlagApi _addEditBasketFlagApi = AddEditBasketFlagApi(context);
+
+    BasketDto basketDto = new BasketDto(
         Color: color,
         Name: nameEn,
         NameAr: nameAr,
-      ID: 0,
+        ID: 0,
+        //=========
+        CanBeReOrder: false,
+        OrderBy: 0,
+        AdminIsDeleted: false,
+        isDeleted: false,
+        UserGctId: 0);
+    AddEditBasketFlagModel addEditBasketFlagModel = AddEditBasketFlagModel(
+      token: _secureStorage.token(),
+      language: Get.locale?.languageCode == "en" ? "en" : "ar",
+      basketFlag: basketDto,
     );
     await _addEditBasketFlagApi
         .post(addEditBasketFlagModel.toMap())
         .then((value) {
+      Navigator.pop(context);
       print(value);
       print("_addEditBasketFlagApi");
     });
   }
 
-  Future reOrderBaskets({baskets }) async {
-    ReorderBasketsRequest reorderBasketsRequest =
-    ReorderBasketsRequest(
+  Future reOrderBaskets({context, baskets}) async {
+    ReOrderBasketsApi _postReorderBasketsApi = ReOrderBasketsApi(context);
+    ReorderBasketsRequest reorderBasketsRequest = ReorderBasketsRequest(
       baskets: baskets,
       language: Get.locale?.languageCode == "en" ? "en" : "ar",
       token: _secureStorage.token()!,
@@ -87,19 +99,27 @@ return name??"";
     });
   }
 
-  Future removeBasket({basketId }) async {
-    RemoveBasketRequest removeBasketRequest =
-    RemoveBasketRequest(
+  Future removeBasket(
+      {context, basketId, required Function? onSuccess(String message)}) async {
+    PostRemoveBasketApi _postRemoveBasketApi = PostRemoveBasketApi(context);
+    RemoveBasketRequest removeBasketRequest = RemoveBasketRequest(
       basketId: basketId,
       language: Get.locale?.languageCode == "en" ? "en" : "ar",
-      token: _secureStorage.token()!,
+      token: _secureStorage.token(),
     );
-    await _postRemoveBasketApi
-        .post(removeBasketRequest.toMap())
-        .then((value) {
+    await _postRemoveBasketApi.post(removeBasketRequest.toMap()).then((value) {
       print(value);
+      // Navigator.pop(context);
+      // Get.back();
+      onSuccess(value.toString());
+      // showTopSnackBar(
+      //   context,
+      //   CustomSnackBar.success(
+      //     message:
+      //     "Good job, basket have been deleted",
+      //   ),
+      // );
       print("_postRemoveBasketApi");
     });
   }
-
 }

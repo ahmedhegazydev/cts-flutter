@@ -23,11 +23,11 @@ class FilterController extends GetxController {
   // var selectedValue = "".obs;
   // var selectedValue = "";
 
-  logIngRequst() {
+  logIngRequst({required context}) {
     if (loginFormKey.currentState!.validate()) {
       islogin = true;
       update();
-      userLogin();
+      userLogin(context: context);
     }
   }
 
@@ -54,8 +54,8 @@ class FilterController extends GetxController {
     return encrypted.base64;
   }
 
-  userLogin() async {
-    LogInApi logInApi = LogInApi();
+  userLogin({required context}) async {
+    LogInApi logInApi = LogInApi(context);
     var encryptedPassword = encryptPassword(passWord.text);
     //language=${defaultLocale == "en" ? "en" : "ar"}
 

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../utility/settings_app.dart';
@@ -8,7 +9,11 @@ import '../json_model/login_model.dart';
 import 'dart:developer';
 
 class LogInApi extends ApiManager {
+
+
   String loginData = "";
+
+  LogInApi(BuildContext context) : super(context);
 
   @override
   String apiUrl() {

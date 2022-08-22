@@ -24,6 +24,7 @@ class LoginPage extends GetWidget<LoginController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.context = context;
     Size size = MediaQuery.of(context).size;
     // Orientation orientation = MediaQuery.of(context).orientation;
     final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
@@ -303,73 +304,79 @@ class LoginPage extends GetWidget<LoginController> {
                     alignment: Alignment.bottomLeft,
                     child: Row(
                       children: [
-                        SizedBox(width: 110,),
+                        SizedBox(
+                          width: 110,
+                        ),
                         FloatingActionButton(
                             onPressed: () {
                               showDialog(
                                   context: context,
                                   builder: (context) => AlertDialog(
-                                    title: const Text("Settings"),
-                                    content: Column(children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 8.0,
-                                            bottom: 8,
-                                            right: 0,
-                                            left: 0),
-                                        child: Column(children: [
-                                          CustomInputTextFiled(
-                                            validator: controller
-                                                .validators.userNameValidator,
-                                            textEditingController:
-                                            controller.baseUrl,
-                                            label: "Base Url",
+                                        title: const Text("Settings"),
+                                        content: Column(children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 8.0,
+                                                bottom: 8,
+                                                right: 0,
+                                                left: 0),
+                                            child: Column(children: [
+                                              CustomInputTextFiled(
+                                                validator: controller.validators
+                                                    .userNameValidator,
+                                                textEditingController:
+                                                    controller.baseUrl,
+                                                label: "Base Url",
+                                              ),
+                                            ]),
                                           ),
+                                          // SizedBox(
+                                          //   height: 100,
+                                          // ),
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                .7,
+                                            padding: const EdgeInsets.only(
+                                                left: 0,
+                                                right: 0,
+                                                top: 0,
+                                                bottom: 0),
+                                            height: 60,
+                                            decoration: BoxDecoration(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary,
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(6))),
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                Get.find<SecureStorage>()
+                                                    .writeSecureData(
+                                                        AllStringConst.BaseUrl,
+                                                        controller
+                                                            .baseUrl.text);
+                                                // Restart.restartApp();
+                                                // Phoenix.rebirth(context);
+                                                RestartWidget.restartApp(
+                                                    context);
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text(
+                                                "Save Settings",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline2!
+                                                    .copyWith(
+                                                        color: Colors.white),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                          )
                                         ]),
-                                      ),
-                                      // SizedBox(
-                                      //   height: 100,
-                                      // ),
-                                      Container(
-                                        width:
-                                        MediaQuery.of(context).size.width *
-                                            .7,
-                                        padding: const EdgeInsets.only(
-                                            left: 0,
-                                            right: 0,
-                                            top: 0,
-                                            bottom: 0),
-                                        height: 60,
-                                        decoration: BoxDecoration(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                            borderRadius:
-                                            const BorderRadius.all(
-                                                Radius.circular(6))),
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            Get.find<SecureStorage>()
-                                                .writeSecureData(
-                                                AllStringConst.BaseUrl,
-                                                controller.baseUrl.text);
-                                            // Restart.restartApp();
-                                            // Phoenix.rebirth(context);
-                                            RestartWidget.restartApp(context);
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Text(
-                                            "Save Settings",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline2!
-                                                .copyWith(color: Colors.white),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      )
-                                    ]),
-                                  ));
+                                      ));
                             },
                             elevation: 0,
                             shape: RoundedRectangleBorder(
@@ -381,15 +388,15 @@ class LoginPage extends GetWidget<LoginController> {
                               Icons.settings,
                               color: Colors.white,
                             )
-                          // Image(
-                          //   image: AssetImage(
-                          //     'assets/images/palette.png',
-                          //   ),
-                          //   fit: BoxFit.contain,
-                          //   width: 25,
-                          //   height: 25,
-                          // ),
-                        )
+                            // Image(
+                            //   image: AssetImage(
+                            //     'assets/images/palette.png',
+                            //   ),
+                            //   fit: BoxFit.contain,
+                            //   width: 25,
+                            //   height: 25,
+                            // ),
+                            )
                       ],
                     ),
                   ),
@@ -401,7 +408,7 @@ class LoginPage extends GetWidget<LoginController> {
     );
   }
 
-  Widget logForm(context) {
+  Widget logForm(BuildContext context1) {
     return Form(
         key: controller.loginFormKey,
         child: LayoutBuilder(builder: (context, constraint) {
@@ -455,17 +462,10 @@ class LoginPage extends GetWidget<LoginController> {
                             Flexible(
                               flex: 20,
                               child:
-                                  GetBuilder<LoginController>(builder: (logic) {
-                                return logic.islogin
-                                    ? const Center(
-                                        child: SizedBox(
-                                            child: CircularProgressIndicator(),
-                                            width: 50))
-                                    : CustomButton(
-                                        onPressed: controller.logIngRequst,
-                                        name: "login".tr);
-                              }),
-                            ),
+                              CustomButton(
+                                  onPressed: controller.logIngRequst,
+                                  name: "login".tr)),
+
                           ],
                         ),
                       ),

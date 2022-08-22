@@ -13,7 +13,6 @@ class SearchPageResultController extends GetxController{
   ScrollController scrollController = ScrollController();
   final SecureStorage _secureStorage = SecureStorage();
   Map <String,dynamic>?logindata;
-  CanOpenDocumentApi canOpenDocumentApi = CanOpenDocumentApi();
   List<Correspondences> correspondences = [];
   List<CustomActions>? customActions=[];
 
@@ -38,7 +37,10 @@ class SearchPageResultController extends GetxController{
 
 
 
-  canOpenDoc({required correspondenceId, required transferId}) {
+  canOpenDoc({
+    context,
+    required correspondenceId, required transferId}) {
+    CanOpenDocumentApi canOpenDocumentApi = CanOpenDocumentApi(context);
     canOpenDocumentApi.data =
     "Token=${_secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     canOpenDocumentApi.getData().then((value) {

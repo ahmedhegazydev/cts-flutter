@@ -597,6 +597,7 @@ class DocumentPage extends GetWidget<DocumentController> {
 
                               //controller.getSaveDocAnnotationsDataLocalJson();
                               await controller.getSaveDocAnnotationsData(
+                                  context: context,
                                   attachmentId: controller
                                       .isOriginalMailAttachmentsList!
                                       .attachmentId,
@@ -1323,6 +1324,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                       "Get.find<InboxController>().   =>   ${controller
                           .transfarForMany.length}");
                   controller.multipleTransferspost(
+                      context: context,
                       transferId: controller
                           .canOpenDocumentModel!.correspondence!.transferId!,
                       correspondenceId: controller
@@ -1474,6 +1476,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                           //     context: context);
                                           Get.find<DocumentController>()
                                               .getAttachmentItem(
+                                              context: context,
                                               transferId:Get
                                                   .find<DocumentController>()
                                                   .folder2[key]![pos].transferId, attachmentId: Get
@@ -2171,6 +2174,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                 onPressed: () {
                   print(controller.textEditingControllerG2gNotes.text);
                   Get.find<DocumentController>().exportUsingG2g(
+                      context: context,
                       notes: controller.textEditingControllerG2gNotes.text
                   );
                   Navigator.pop(context,true);

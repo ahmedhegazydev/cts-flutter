@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:cts/utility/utilitie.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart' as a;
 import 'package:get/get_core/src/get_main.dart';
 
@@ -12,6 +14,12 @@ import 'abstract_json_resource.dart';
 import 'dio_singleton.dart';
 
 abstract class ApiManager {
+  BuildContext? context;
+
+  ApiManager(BuildContext context) {
+    this.context = context;
+  }
+
   final DioSingleton dioSingleton = DioSingleton();
   static SecureStorage secureStorage = new SecureStorage();
 
@@ -21,18 +29,23 @@ abstract class ApiManager {
 
   AbstractJsonResource fromJson(data);
 
-  Future<AbstractJsonResource?> getData({data}) async {
+  Future<AbstractJsonResource?> getData({
+    // context,
+    data}) async {
     AbstractJsonResource? json;
     var data;
     print("checkIfSavedSettingsBasUrl = $checkIfSavedSettingsBasUrl");
-
-    await dioSingleton.dio.get(checkIfSavedSettingsBasUrl(), queryParameters: data).then((value) {
+    showLoaderDialog(context!);
+    await dioSingleton.dio
+        .get(checkIfSavedSettingsBasUrl(), queryParameters: data)
+        .then((value) {
+      Navigator.pop(context!);
       if (value.data["Status"] == 0) {
         a.Get.snackbar("Error".tr, "${value.data["ErrorMessage"]}");
       } else {
         if (value.data["Status"] == 2) {
           Get.to(LoginPage());
-        }else {
+        } else {
           print(value);
           data = value.data;
           json = fromJson(data);
@@ -54,8 +67,9 @@ abstract class ApiManager {
         'Content-Type': 'application/json',
       },
     );
+    showLoaderDialog(context!);
     await dioSingleton.dio
-        .post(apiUrl(), data: jsonEncode(dataToPost), options: options
+        .post(checkIfSavedSettingsBasUrl(), data: jsonEncode(dataToPost), options: options
             // Options(
             //     followRedirects: false,
             //     validateStatus: (status) {
@@ -63,22 +77,27 @@ abstract class ApiManager {
             //     }),
             )
         .then((value) {
+      Navigator.pop(context!);
       if (value.data["Status"] == 0) {
         a.Get.snackbar("Error".tr, "${value.data["ErrorMessage"]}");
       } else {
-        data = value.data;
-        jsonList = fromJson(data);
+        if (value.data["Status"] == 2) {
+          // Get.to(LoginPage());
+        } else {
+          data = value.data;
+          jsonList = fromJson(data);
+        }
       }
     });
     return jsonList;
   }
 
   String checkIfSavedSettingsBasUrl() {
-    var storageBaseUrl = secureStorage.readSecureData(AllStringConst.BaseUrl) ?? "";
-    if(storageBaseUrl.isNotEmpty){
+    var storageBaseUrl =
+        secureStorage.readSecureData(AllStringConst.BaseUrl) ?? "";
+    if (storageBaseUrl.isNotEmpty) {
       return storageBaseUrl;
     }
     return apiUrl();
   }
-
 }

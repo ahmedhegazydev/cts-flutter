@@ -10,8 +10,6 @@
 // const Color blackcolore=Color(0xff000000);
 // const Color framColor=Color(0xffef7d25);
 
-
-
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
@@ -20,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import 'package:intl/intl.dart';
+
 String getCurrentYearString() {
   initializeDateFormatting();
   DateTime now = DateTime.now();
@@ -27,6 +26,7 @@ String getCurrentYearString() {
   String date = formatter.format(now);
   return date;
 }
+
 MaterialColor createMaterialColor(Color color) {
   List strengths = <double>[.05];
   final swatch = <int, Color>{};
@@ -57,9 +57,10 @@ bool isDirectionRTL(BuildContext context) {
 
 String returnImageNameBasedOnDirection(
     String imageName, BuildContext context, String extension) {
-  if (isDirectionRTL(context)) {//"_R."
+  if (isDirectionRTL(context)) {
+    //"_R."
     return imageName + "_L." + extension;
-  }//_L.
+  } //_L.
   return imageName + "_R." + extension;
 }
 
@@ -97,9 +98,6 @@ String calculateDate(String dateFormat, String locale) {
   return date;
 }
 
-
-
-
 class HexColor extends Color {
   static int _getColorFromHex(String hexColor) {
     hexColor = hexColor.toUpperCase().replaceAll("#", "");
@@ -111,6 +109,7 @@ class HexColor extends Color {
 
   HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
 }
+
 Image imageFromBase64String(String base64String) {
   return Image.memory(base64Decode(base64String));
 }
@@ -123,15 +122,14 @@ String base64String(Uint8List data) {
   return base64Encode(data);
 }
 
-
-Future<String?> audiobase64String({  File? file})async{
-String? fileString;
-  List<int>? fileBytes =   file?.readAsBytesSync();
-  if(fileBytes!=null){
+Future<String?> audiobase64String({File? file}) async {
+  String? fileString;
+  List<int>? fileBytes = file?.readAsBytesSync();
+  if (fileBytes != null) {
     //String base64String = base64Encode(fileBytes);
-    String base64String =base64.encode(fileBytes)  ;
-   // fileString = 'data:audio/mp4;base64,$base64String';
-  fileString = base64String;
+    String base64String = base64.encode(fileBytes);
+    // fileString = 'data:audio/mp4;base64,$base64String';
+    fileString = base64String;
   }
 
   return fileString;
@@ -153,17 +151,20 @@ void printWrapped(String text) {
   pattern.allMatches(text).forEach((match) => print(match.group(0)));
 }
 
-showLoaderDialog(BuildContext context){
-  AlertDialog alert=AlertDialog(
+showLoaderDialog(BuildContext context) {
+  AlertDialog alert = AlertDialog(
     content: new Row(
       children: [
         CircularProgressIndicator(),
-        Container(margin: EdgeInsets.only(left: 7),child:Text("Loading..." )),
-      ],),
+        Container(margin: EdgeInsets.only(left: 7), child: Text("Loading...")),
+      ],
+    ),
   );
-  showDialog(barrierDismissible: false,
-    context:context,
-    builder:(BuildContext context){
+  showDialog(
+    barrierDismissible: true,
+    // barrierDismissible: false,
+    context: context,
+    builder: (BuildContext context) {
       return alert;
     },
   );

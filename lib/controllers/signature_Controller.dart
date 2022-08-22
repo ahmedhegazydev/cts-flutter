@@ -7,13 +7,11 @@ import '../services/json_model/login_model.dart';
 import '../services/json_model/signature_Info_model.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
-class SignaturePageController extends GetxController{
 
-  Map <String,dynamic>?logindata;
-  List<MultiSignatures> multiSignatures=[];
+class SignaturePageController extends GetxController {
+  Map<String, dynamic>? logindata;
+  List<MultiSignatures> multiSignatures = [];
   final SecureStorage secureStorage = SecureStorage();
-
-  UpdateSignatureApi _updateSignatureApi=UpdateSignatureApi();
 
   final SignatureController controller = SignatureController(
     penStrokeWidth: 5,
@@ -21,42 +19,24 @@ class SignaturePageController extends GetxController{
     exportBackgroundColor: Colors.white,
   );
 
-
-  updateSignature({required SignatureInfoModel signatureInfoModel}){
-
-
-
-
+  updateSignature({
+    context,
+    required SignatureInfoModel signatureInfoModel}) {
+    UpdateSignatureApi _updateSignatureApi=UpdateSignatureApi(context);
     _updateSignatureApi.post(signatureInfoModel.toMap()).then((value) {
-
-print(value);
-
-
-
+      print(value);
     });
   }
-
-
-
-
-
-
-
 
   @override
   void onReady() {
     super.onReady();
 
-
-
-
-    logindata=secureStorage.readSecureJsonData(AllStringConst.LogInData) ;
-    if(logindata!=null){
-      LoginModel data=LoginModel.fromJson(logindata!);
-    multiSignatures=  data.multiSignatures??[];
-update();
+    logindata = secureStorage.readSecureJsonData(AllStringConst.LogInData);
+    if (logindata != null) {
+      LoginModel data = LoginModel.fromJson(logindata!);
+      multiSignatures = data.multiSignatures ?? [];
+      update();
     }
-
-
   }
 }

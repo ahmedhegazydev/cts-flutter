@@ -7,7 +7,7 @@ import '../utility/all_const.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
 import '../utility/utilitie.dart';
- import '../widgets/custom_listview.dart';
+import '../widgets/custom_listview.dart';
 
 class InboxPage extends GetWidget<InboxController> {
   SecureStorage secureStorage = Get.put(SecureStorage());
@@ -113,9 +113,10 @@ class InboxPage extends GetWidget<InboxController> {
             child: Row(
               children: [
                 GetBuilder<InboxController>(builder: (logic) {
-                    return Checkbox(value: controller.unread, onChanged: controller.updateUnread);
-                  }
-                ),
+                  return Checkbox(
+                      value: controller.unread,
+                      onChanged: controller.updateUnread);
+                }),
                 Text("unread".tr)
               ],
             ),
@@ -262,8 +263,8 @@ class InboxPage extends GetWidget<InboxController> {
                     ),
                     FittedBox(
                       child: Text(
-                      //  "hello".tr +
-                            "${secureStorage.readSecureData(AllStringConst.FirstName)} ${secureStorage.readSecureData(AllStringConst.LastName)}",
+                        //  "hello".tr +
+                        "${secureStorage.readSecureData(AllStringConst.FirstName)} ${secureStorage.readSecureData(AllStringConst.LastName)}",
                         style: Theme.of(context).textTheme.headline2!.copyWith(
                             color: createMaterialColor(
                               const Color.fromRGBO(77, 77, 77, 1),
@@ -437,7 +438,6 @@ class InboxPage extends GetWidget<InboxController> {
                   .headline1!
                   .copyWith(color: Colors.grey, fontSize: 21),
             ),
-
           ],
           tabBarProperties: TabBarProperties(
             width: MediaQuery.of(context).size.width,
@@ -475,49 +475,54 @@ class InboxPage extends GetWidget<InboxController> {
                 child: controller.getData
                     ? const Center(child: CircularProgressIndicator())
                     : Column(
-                      children: [
-
-
-                        Visibility(visible: false,child: _filterMail(context)),
-
-
-                        Expanded(
-                          child: CustomListView(
+                        children: [
+                          Visibility(
+                              visible: false, child: _filterMail(context)),
+                          Expanded(
+                            child: CustomListView(
                               function: controller.onRefresh(),
-                              correspondences: controller.correspondences ,
+                              correspondences: controller.correspondences,
                               scrollController: controller.scrollController,
                               haveMoreData: controller.haveMoreData,
                               onClickItem: () {
-
-                           //     Get.toNamed("/DocumentPage");
-                              }, functionSummary: () {  }, allCorrespondences:controller.allCorrespondences, customActions: controller.customActions, functionReply: () {  }, functionTrunsfer: () {  }, functionComplet: () {  },
+                                //     Get.toNamed("/DocumentPage");
+                              },
+                              functionSummary: () {},
+                              allCorrespondences: controller.allCorrespondences,
+                              customActions: controller.customActions,
+                              functionReply: () {},
+                              functionTrunsfer: () {},
+                              functionComplet: () {},
                             ),
-                        ),
-                      ],
-                    )),
+                          ),
+                        ],
+                      )),
             Center(
                 child: controller.getData
                     ? const Center(child: CircularProgressIndicator())
                     : Column(
-                      children: [
-
-                        Visibility(visible: false,child: _filterMail(context)),
-
-
-
-                        Expanded(
-                          child: CustomListView(
+                        children: [
+                          Visibility(
+                              visible: false, child: _filterMail(context)),
+                          Expanded(
+                            child: CustomListView(
                               function: controller.onRefresh(),
-                              correspondences: controller.correspondences ,
+                              correspondences: controller.correspondences,
                               scrollController: controller.scrollController,
                               haveMoreData: controller.haveMoreData,
                               onClickItem: () {
                                 Get.toNamed("/DocumentPage");
-                              }, functionSummary: () {  }, allCorrespondences: controller.allCorrespondences, customActions:controller.customActions, functionReply: () {  }, functionTrunsfer: () {  }, functionComplet: () {  },
+                              },
+                              functionSummary: () {},
+                              allCorrespondences: controller.allCorrespondences,
+                              customActions: controller.customActions,
+                              functionReply: () {},
+                              functionTrunsfer: () {},
+                              functionComplet: () {},
                             ),
-                        ),
-                      ],
-                    )),
+                          ),
+                        ],
+                      )),
             // Center(
             //     child: controller.getData
             //         ? const Center(child: CircularProgressIndicator())
@@ -554,19 +559,19 @@ class InboxPage extends GetWidget<InboxController> {
               //  Globals.inboxIdForCorrespondencesList = 5;
 
               controller.inboxId = 5;
-              controller.getCorrespondencesData(inboxId: 5);
+              controller.getCorrespondencesData(context: context, inboxId: 5);
             } else if (value == 1) {
               controller.inboxId = 1;
-              controller.getCorrespondencesData(inboxId: 1);
+              controller.getCorrespondencesData(context: context, inboxId: 1);
               //     Globals.inboxIdForCorrespondencesList = 1;
               controller.inboxId = 1;
             } else if (value == 2) {
               controller.inboxId = 5;
-              controller.getCorrespondencesData(inboxId: 5);
+              controller.getCorrespondencesData(context: context, inboxId: 5);
               //  Globals.inboxIdForCorrespondencesList = 5;
             } else if (value == 3) {
               controller.inboxId = 3;
-              controller.getCorrespondencesData(inboxId: 3);
+              controller.getCorrespondencesData(context: context, inboxId: 3);
               //   Globals.inboxIdForCorrespondencesList = 3;
             }
             //  else {
@@ -652,12 +657,14 @@ class InboxPage extends GetWidget<InboxController> {
       padding: const EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 0),
       width: double.infinity,
       color: Colors.transparent,
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           GestureDetector(
             // onTap:,
             child: SizedBox(
-           //   width: double.infinity,
+              //   width: double.infinity,
               height: calculateHeight(80, context),
               child: Align(
                 alignment: isDirectionRTL(context)
@@ -677,7 +684,7 @@ class InboxPage extends GetWidget<InboxController> {
             ),
           ),
           SizedBox(
-             //width: double.infinity,
+            //width: double.infinity,
             height: 80,
             child: Align(
               alignment: isDirectionRTL(context)

@@ -20,22 +20,19 @@ import '../services/models/LoginModel.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
 import 'dart:io';
+
 class SearchController extends GetxController {
   FindRecipientModel? findRecipientModel;
-  final FindRecipient _findRecipient = FindRecipient();
 
   List<Destination> users = [];
   List<Destination> usersWillSendTo = [];
   Destination? from;
   Destination? to;
 
-
   bool getSerchData = false;
 
   BuildContext? context;
-  final GetLookupsApi _getLookupsApi = GetLookupsApi();
-  final SearchCorrespondencesApi _searchCorrespondencesApi =
-      SearchCorrespondencesApi();
+
 
   SearchCorrespondencesModel? searchCorrespondencesModel;
 
@@ -73,32 +70,24 @@ class SearchController extends GetxController {
   TextEditingController textEditingControllerTransferTo =
       TextEditingController();
 
-  TextEditingController textEditingControllerFromDocDate = TextEditingController();
-  TextEditingController textEditingControllerToDocDate = TextEditingController();
-
+  TextEditingController textEditingControllerFromDocDate =
+      TextEditingController();
+  TextEditingController textEditingControllerToDocDate =
+      TextEditingController();
 
   TextEditingController textEditingControllerDocData = TextEditingController();
-
 
   TextEditingController textEditingControllerdocCountrieVal =
       TextEditingController();
   DocCountries? countrieVal;
 
-
   TextEditingController textEditingControllerClassificationsVal =
       TextEditingController();
-
-
 
   Classifications? classificationsVal;
   TextEditingController textEditingControllerprimaryClassificationsVal =
       TextEditingController();
   PrimaryClassifications? primaryClassificationval;
-
-
-
-
-
 
   setPrioritieVal(Priorities? prioritie) {
     prioritieVal = prioritie;
@@ -119,8 +108,6 @@ class SearchController extends GetxController {
     update();
   }
 
-
-
   formReset() {
     // setDocCountrieVal(null);
     // setClassificationsVal(null);
@@ -128,17 +115,14 @@ class SearchController extends GetxController {
 
     // fromDocDate = "";
     // toDocDate = "";
-      from=null;
-      to=null;
+    from = null;
+    to = null;
 
+    prioritieVal = null;
 
+    privacieVal = null;
 
-    prioritieVal=null;
-
-    privacieVal=null;
-
-    statuseVal=null;
-
+    statuseVal = null;
 
     textEditingControllerReferenceNumber1.clear();
     textEditingControllerReferenceNumber2.clear();
@@ -162,7 +146,8 @@ class SearchController extends GetxController {
         firstDate: DateTime(2000),
         lastDate: DateTime(2050));
     if (pickedDate != null) {
-      textEditingControllerFromDocDate.text = pickedDate.toString().substring(0, 10);
+      textEditingControllerFromDocDate.text =
+          pickedDate.toString().substring(0, 10);
 
       var outputFormat = DateFormat('dd/MM/yyyy');
       var outputDate = outputFormat.format(pickedDate);
@@ -179,7 +164,8 @@ class SearchController extends GetxController {
         firstDate: DateTime(2000),
         lastDate: DateTime(2050));
     if (pickedDate != null) {
-      textEditingControllerToDocDate.text = pickedDate.toString().substring(0, 10);
+      textEditingControllerToDocDate.text =
+          pickedDate.toString().substring(0, 10);
       var outputFormat = DateFormat('dd/MM/yyyy');
       var outputDate = outputFormat.format(pickedDate);
       serachData["ToDocumentDate"] = outputDate;
@@ -207,10 +193,12 @@ class SearchController extends GetxController {
     priorities = data.transferData?.priorities;
     getAllData();
   }
-  getAllData(){
-    getFindRecipientData();
-    getData();
+
+  getAllData() {
+    getFindRecipientData(context: context);
+    getData(context: context);
   }
+
 // لسته الافراد الي اختار منهم في البحث
   listOfUser(int pos) {
     users = findRecipientModel?.sections?[pos].destination ?? [];
@@ -218,30 +206,33 @@ class SearchController extends GetxController {
   }
 
 //الحصور علي جميع الافراد
-  getFindRecipientData() async{
+  getFindRecipientData({required context}) async {
+    final FindRecipient _findRecipient = FindRecipient(context);
     _findRecipient.data =
-    "Token=${_secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
-  await  _findRecipient.getData().then((value) {
+        "Token=${_secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+    await _findRecipient.getData().then((value) {
       findRecipientModel = value as FindRecipientModel;
       listOfUser(0);
       //print(findRecipientModel?.toJson() );
     });
- update(); }
-  getData() async{
+    update();
+  }
+
+  getData({context}) async {
+    final GetLookupsApi _getLookupsApi = GetLookupsApi(context);
     print("i get ");
     _getLookupsApi.data =
         "Token=${_secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
-   await _getLookupsApi.getData().then((value) {
+    await _getLookupsApi.getData().then((value) {
       print("this is data $value");
       getLookupsModel = value as GetLookupsModel;
 
       countries = getLookupsModel.docCountries ?? [];
       classifications = getLookupsModel.classifications ?? [];
       primaryClassifications = getLookupsModel.primaryClassifications ?? [];
-
-
     });
-    update(); }
+    update();
+  }
 
   searchCorrespondences() {
     getSerchData = true;
@@ -281,15 +272,15 @@ class SearchController extends GetxController {
     //   serachData["           "] = textEditingControllerDocData.text;
     // }
 
-
-
     String cr =
-        "ReferenceNumber:${textEditingControllerReferenceNumber1.text}/${textEditingControllerReferenceNumber2.text}/${textEditingControllerReferenceNumber2.text};%23Subject:${textEditingControllerSubject.text};%23From:${from?.id??""};%23To:${to?.id??""};%23TransferFrom:;%23TransferTo:;%23Privacy:${privacieVal?.id??""};%23Priority:${prioritieVal?.id??""};%23Status:${statuseVal?.id??""};%23Country:${countrieVal?.id??""};%23Classification:${classificationsVal?.id??""};%23PrimaryClassification:${primaryClassificationval?.iD??""};%23FromDocumentDate:${textEditingControllerFromDocDate.text};%23ToDocumentDate:${textEditingControllerToDocDate.text};%23RegisterDate:;%23";
-
+        "ReferenceNumber:${textEditingControllerReferenceNumber1.text}/${textEditingControllerReferenceNumber2.text}/${textEditingControllerReferenceNumber2.text};%23Subject:${textEditingControllerSubject.text};%23From:${from?.id ?? ""};%23To:${to?.id ?? ""};%23TransferFrom:;%23TransferTo:;%23Privacy:${privacieVal?.id ?? ""};%23Priority:${prioritieVal?.id ?? ""};%23Status:${statuseVal?.id ?? ""};%23Country:${countrieVal?.id ?? ""};%23Classification:${classificationsVal?.id ?? ""};%23PrimaryClassification:${primaryClassificationval?.iD ?? ""};%23FromDocumentDate:${textEditingControllerFromDocDate.text};%23ToDocumentDate:${textEditingControllerToDocDate.text};%23RegisterDate:;%23";
+    final SearchCorrespondencesApi _searchCorrespondencesApi =
+    SearchCorrespondencesApi(context!);
     print(cr);
     _searchCorrespondencesApi.post({
       "Token": "${_secureStorage.token()}",
-      "Criteria":cr,      "IsAdvanced": 1,
+      "Criteria": cr,
+      "IsAdvanced": 1,
       "Language": Get.locale?.languageCode == "en" ? "en" : "ar"
     }).then((value) {
       searchCorrespondencesModel = value as SearchCorrespondencesModel;
@@ -297,12 +288,12 @@ class SearchController extends GetxController {
       if ((searchCorrespondencesModel?.correspondences?.length ?? 0) < 1) {
         Get.snackbar("", "emptylist".tr);
       } else {
-        Get.find<SearchPageResultController>().correspondences=searchCorrespondencesModel?.correspondences!??[] ;
-        print( Get.find<SearchPageResultController>().correspondences.length);
-
-
+        Get.find<SearchPageResultController>().correspondences =
+            searchCorrespondencesModel?.correspondences! ?? [];
+        print(Get.find<SearchPageResultController>().correspondences.length);
 
         Get.toNamed("SearchPageResult");
+
         /// ToDo go to list of reslt
         ///
         ///
@@ -319,44 +310,36 @@ class SearchController extends GetxController {
 // {"Token":"oeXQq9ZIRfAahZs9UpXg","Criteria":"ReferenceNumber:2020//;%23Subject:;%23From:;%23To:;%23TransferFrom:;%23TransferTo:;%23Privacy:;%23Priority:;%23Status:;%23Country:;%23Classification:;%23PrimaryClassification:;%23FromDocumentDate:;%23ToDocumentDate:;%23RegisterDate:;%23","IsAdvanced":1,"Language":"ar"}
   FlutterSoundRecorder? audioRecorder;
   FlutterSoundPlayer? audioPlayer;
-  final pathToSave="audio.aac";
-  bool recording=false;
+  final pathToSave = "audio.aac";
+  bool recording = false;
   String _directoryPath = '/storage/emulated/0/SoundRecorder';
   Directory? appDocDir;
-  Future record2()async{
 
-
+  Future record2() async {
     await Permission.storage.request();
     await Permission.manageExternalStorage.request();
-    final stats=await Permission.microphone.request();
+    final stats = await Permission.microphone.request();
 
-    if(stats !=PermissionStatus.granted){
-     throw RecordingPermissionException("Microphone Permission");
-
+    if (stats != PermissionStatus.granted) {
+      throw RecordingPermissionException("Microphone Permission");
     }
-    audioRecorder=FlutterSoundRecorder();
-    audioPlayer=FlutterSoundPlayer();
+    audioRecorder = FlutterSoundRecorder();
+    audioPlayer = FlutterSoundPlayer();
     // audioRecorder!.openAudioSession();
     audioRecorder!.stopRecorder();
     appDocDir = await getApplicationDocumentsDirectory();
-    _directoryPath=appDocDir!.path+ '/' + DateTime.now().millisecondsSinceEpoch.toString() +
+    _directoryPath = appDocDir!.path +
+        '/' +
+        DateTime.now().millisecondsSinceEpoch.toString() +
         '.aac';
-
-
 
     await audioRecorder?.startRecorder(toFile: _directoryPath);
   }
-  Future stop2()async{
 
+  Future stop2() async {
     await audioRecorder?.stopRecorder();
- // await   audioPlayer!.openAudioSession();
+    // await   audioPlayer!.openAudioSession();
     await audioPlayer!.stopPlayer();
-    await    audioPlayer!.startPlayer(fromURI: _directoryPath);
-
-
-
-
-
-
+    await audioPlayer!.startPlayer(fromURI: _directoryPath);
   }
 }

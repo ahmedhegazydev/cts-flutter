@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -35,6 +36,7 @@ import '../services/json_model/inopendocModel/multiple_transfers_model.dart';
 import '../services/json_model/login_model.dart';
 import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
 import '../utility/all_string_const.dart';
+import '../utility/Extenstions.dart';
 import '../utility/storage.dart';
 import 'dart:developer';
 
@@ -42,100 +44,96 @@ import '../utility/utilitie.dart';
 import '../widgets/custom_button_with_icon.dart';
 import 'document_controller.dart';
 import 'package:flutter/services.dart' as rootBundel;
+
 class InboxController extends GetxController {
-
-  TextEditingController textEditingControllerFilter=TextEditingController();
-
-
-
-  CompleteInCorrespondenceAPI _completeInCorrespondenceAPI =
-      CompleteInCorrespondenceAPI();
-
+  TextEditingController textEditingControllerFilter = TextEditingController();
+  BuildContext? context;
   FetchBasketListModel? fetchBasketListModel;
-  List<int>listSelectCorrespondences=[];
+  List<int> listSelectCorrespondences = [];
 
+  Future addDocumentsToBasket({context, basketId}) async {
+    AddDocumentsToBasketRequest addDocumentsToBasketRequest =
+        AddDocumentsToBasketRequest(
+            basketId: basketId,
+            language: Get.locale?.languageCode == "en" ? "en" : "ar",
+            token: secureStorage.token()!,
+            documentIds: listSelectCorrespondences);
+    AddEDocumentsToBasketApi addEDocumentsToBasketApi =
+        AddEDocumentsToBasketApi(context);
 
+    Map<String, dynamic> a = {
+      "token": secureStorage.token(),
+      "basketId": basketId,
+      "language": "ar",
+      "documentIds": listSelectCorrespondences
+    };
 
-Future addDocumentsToBasket({basketId })async{
-  AddDocumentsToBasketRequest addDocumentsToBasketRequest=AddDocumentsToBasketRequest(basketId: basketId, language:Get.locale?.languageCode == "en" ? "en" : "ar",token:secureStorage.token()!,documentIds:listSelectCorrespondences );
-  AddEDocumentsToBasketApi addEDocumentsToBasketApi=AddEDocumentsToBasketApi();
+    await addEDocumentsToBasketApi
+        .post(addDocumentsToBasketRequest.toMap())
+        .then((value) {
+      listSelectCorrespondences.clear();
 
-  Map<String,dynamic> a=   {
-    "token":secureStorage.token(),
-    "basketId":basketId,
-    "language":"ar",
-    "documentIds":listSelectCorrespondences
-
-
-  };
-
-await  addEDocumentsToBasketApi.post(
-      addDocumentsToBasketRequest.toMap()
-
-
-
-  ).then((value) {
-
-
-listSelectCorrespondences.clear();
-
-    print(value);
-    print("object");
-  });
-}
-
-
-  Future getFetchBasketList()async{
-print("getFetchBasketListgetFetchBasketListgetFetchBasketListgetFetchBasketList");
-    GetFetchBasketListApi getFetchBasketListApi=GetFetchBasketListApi();
-    getFetchBasketListApi.data="Token=${secureStorage.token()}&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
- await getFetchBasketListApi.getData().then((value) {
-    fetchBasketListModel =value  as FetchBasketListModel;
-    update();
-    print(fetchBasketListModel?.toJson());
-print("getFetchBasketList i getit");
-
-  });
-
+      print(value);
+      print("object");
+    });
   }
 
+  Future getFetchBasketList({context}) async {
+    print(
+        "getFetchBasketListgetFetchBasketListgetFetchBasketListgetFetchBasketList");
+    GetFetchBasketListApi getFetchBasketListApi =
+        GetFetchBasketListApi(context);
+    getFetchBasketListApi.data =
+        "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+    await getFetchBasketListApi.getData().then((value) {
+      fetchBasketListModel = value as FetchBasketListModel;
+      // fetchBasketListModel?.baskets?.forEach((element) {
+      //   element.orderBy = Random().nextInt(100);
+      // });
+      // fetchBasketListModel?.baskets?.sortedBy((it) => it.orderBy ?? 0);
+      fetchBasketListModel?.baskets?.sort();
 
+      update();
+      print(fetchBasketListModel?.toJson());
+      print("getFetchBasketList i getit");
+    });
+  }
 
-
-
-updateSelect(v){
-
-}
+  updateSelect(v) {}
 
   String completeNote = "";
   String replyNote = "";
   CustomActions? completeCustomActions;
 
   int? valueOfRadio = 1;
-bool? alwes=false;
-  setValueOfRadio(int? v){
-    valueOfRadio=v;
+  bool? alwes = false;
+
+  setValueOfRadio(int? v) {
+    valueOfRadio = v;
     update();
   }
-  setalwes( bool? v){
-    alwes=v;
+
+  setalwes(bool? v) {
+    alwes = v;
     update();
   }
+
 // updatecompleteCustomActions({CustomActions actions,int id}){
 //   completeCustomActions =actions;
 //
 //   update();
 // }
 
-bool edit=false;
-  setEdit(){
-    if(edit){
-      edit=false;
-    }else{
-      edit=true;
-    }
-  update();}
+  bool edit = false;
 
+  setEdit() {
+    if (edit) {
+      edit = false;
+    } else {
+      edit = true;
+    }
+    update();
+  }
 
   Map<String, dynamic>? logindata;
   String filterWord = "";
@@ -149,20 +147,14 @@ bool edit=false;
   bool showHideMyFavListScreen = false;
   bool showHideCreateNewBasketScreen = false;
 
-  final GetCorrespondencesApi _correspondencesApi = GetCorrespondencesApi();
-  final GetCorrespondencesAllAPI _getCorrespondencesAllAPI =
-      GetCorrespondencesAllAPI();
-
   GetCorrespondencesAllModel? getCorrespondencesAllModel;
   CorrespondencesModel? correspondencesModel;
-
 
   List<Correspondences> correspondences = [];
   List<Correspondences> allCorrespondences = [];
 
   final SecureStorage secureStorage = SecureStorage();
 
-  CanOpenDocumentApi canOpenDocumentApi = CanOpenDocumentApi();
   CanOpenDocumentModel? canOpenDocumentModel;
 
   bool getData = false;
@@ -170,28 +162,22 @@ bool edit=false;
   bool unread = false;
 
   FindRecipientModel? findRecipientModel;
-  final FindRecipient _findRecipient = FindRecipient();
 
   List<CustomActions>? customActions = [];
   CustomActions? customAction;
   List<Destination> users = [];
   List<Destination> usersWillSendTo = [];
 
-
-
-
-
-
-  TextEditingController textEditingControllerFromDocDate = TextEditingController();
-  TextEditingController textEditingControllerToDocDate = TextEditingController();
-  TextEditingController textEditingControllerSearch= TextEditingController();
-
+  TextEditingController textEditingControllerFromDocDate =
+      TextEditingController();
+  TextEditingController textEditingControllerToDocDate =
+      TextEditingController();
+  TextEditingController textEditingControllerSearch = TextEditingController();
 
   addTousersWillSendTo({required Destination user}) {
-    if(!usersWillSendTo.contains(user)){
+    if (!usersWillSendTo.contains(user)) {
       usersWillSendTo.add(user);
     }
-
 
     update(); // update(["user"]);
   }
@@ -241,14 +227,22 @@ bool edit=false;
     }
   }
 
-  getAllData() {
+  getAllData({required context}) {
+    final GetCorrespondencesApi _correspondencesApi =
+        GetCorrespondencesApi(context);
     getCorrespondencesData(
-        inboxId: inboxId, pageSize: 20, showThumbnails: false);
+        context: context,
+        inboxId: inboxId,
+        pageSize: 20,
+        showThumbnails: false);
     getAllCorrespondencesData(
-        inboxId: inboxId, pageSize: 20, showThumbnails: false);
+        context: context,
+        inboxId: inboxId,
+        pageSize: 20,
+        showThumbnails: false);
 
     //getFindRecipientData();
-    getFetchBasketList();
+    getFetchBasketList(context: context);
   }
 
   Future<void> onRefresh() async {
@@ -261,17 +255,16 @@ bool edit=false;
   @override
   void onInit() {
     super.onInit();
-    scrollController.addListener(_scrollListener);
-
+    // scrollController.addListener(_scrollListener(context: context));
   }
 
-  _scrollListener() {
+  _scrollListener({required context}) {
     if (scrollController.offset >= scrollController.position.maxScrollExtent &&
         !scrollController.position.outOfRange) {
       index++;
       addToList = true;
       if (haveMoreData) {
-        getCorrespondencesData(inboxId: inboxId);
+        getCorrespondencesData(context: context, inboxId: inboxId);
         print("reach the bottom");
       }
     }
@@ -281,8 +274,7 @@ bool edit=false;
     }
   }
 
-  applyFilter(){
-
+  applyFilter() {
     update();
   }
 
@@ -292,23 +284,28 @@ bool edit=false;
     scrollController.dispose();
   }
 
-   showFilterScreen(bool show){
+  showFilterScreen(bool show) {
     showHideFilterScreen = show;
     update();
   }
 
-  showMyFavListScreen(bool show){
+  showMyFavListScreen(bool show) {
     showHideMyFavListScreen = show;
     update();
   }
 
-  showCreateNewBasketScreen(bool show){
+  showCreateNewBasketScreen(bool show) {
     showHideCreateNewBasketScreen = show;
     update();
   }
 
   void getCorrespondencesData(
-      {required int inboxId, int pageSize = 20, bool showThumbnails = false}) {
+      {required context,
+      required int inboxId,
+      int pageSize = 20,
+      bool showThumbnails = false}) {
+    final GetCorrespondencesApi _correspondencesApi =
+        GetCorrespondencesApi(context);
     getData = true;
     haveMoreData = true;
     update();
@@ -339,7 +336,12 @@ bool edit=false;
   }
 
   getAllCorrespondencesData(
-      {required int inboxId, int pageSize = 20, bool showThumbnails = false}) {
+      {required context,
+      required int inboxId,
+      int pageSize = 20,
+      bool showThumbnails = false}) {
+    final GetCorrespondencesAllAPI _getCorrespondencesAllAPI =
+        GetCorrespondencesAllAPI(context);
     correspondences.clear();
     getData = true;
     haveMoreData = true;
@@ -371,94 +373,98 @@ bool edit=false;
     });
   }
 
- //
- //  openfilee({required docId,required correspondenceId, required transferId})async{
- //    print("openfilee87y7878");
- //    canOpenDocumentApi.data =
- //    "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
- //
- // final  jsondata=await rootBundel.rootBundle.loadString("assets/json/canopendocument.json");
- //    canOpenDocumentModel=   CanOpenDocumentModel.fromJson(json.decode(jsondata));
- //
- //    // canOpenDocumentApi.getData().then((value) {
- //    //
- //    //   canOpenDocumentModel=value as CanOpenDocumentModel;
- //    //   print("i get dayta");
- //    // });
- //    print(canOpenDocumentModel?.toJson());
- //    if(canOpenDocumentModel!.allow!){
- //      Get.find<DocumentController>().updatecanOpenDocumentModel(canOpenDocumentModel!);
- //      Get.toNamed("/DocumentPage");
- //    }
- //   //
- //  }
+  //
+  //  openfilee({required docId,required correspondenceId, required transferId})async{
+  //    print("openfilee87y7878");
+  //    canOpenDocumentApi.data =
+  //    "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+  //
+  // final  jsondata=await rootBundel.rootBundle.loadString("assets/json/canopendocument.json");
+  //    canOpenDocumentModel=   CanOpenDocumentModel.fromJson(json.decode(jsondata));
+  //
+  //    // canOpenDocumentApi.getData().then((value) {
+  //    //
+  //    //   canOpenDocumentModel=value as CanOpenDocumentModel;
+  //    //   print("i get dayta");
+  //    // });
+  //    print(canOpenDocumentModel?.toJson());
+  //    if(canOpenDocumentModel!.allow!){
+  //      Get.find<DocumentController>().updatecanOpenDocumentModel(canOpenDocumentModel!);
+  //      Get.toNamed("/DocumentPage");
+  //    }
+  //   //
+  //  }
 
+  Future canOpenDoc(
+      {required context,
+      required docId,
+      required correspondenceId,
+      required transferId}) async {
+    CanOpenDocumentApi canOpenDocumentApi = CanOpenDocumentApi(context);
 
-Future  canOpenDoc({required docId,required correspondenceId, required transferId})async {
     print("canOpenDoc canOpenDoc canOpenDoc canOpenDoc");
     canOpenDocumentApi.data =
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
 
-  print( canOpenDocumentApi.data);
-    print( "canOpenDocumentApi.data");
-     canOpenDocumentApi.getData().then((value) {
+    print(canOpenDocumentApi.data);
+    print("canOpenDocumentApi.data");
+    canOpenDocumentApi.getData().then((value) {
+      canOpenDocumentModel = value as CanOpenDocumentModel;
 
-canOpenDocumentModel=value as CanOpenDocumentModel;
+      print(
+          "the valll ogfffcanOpenDocumentModel!.allow!cumentModel!.allow! =>${canOpenDocumentModel!.allow!}");
 
+      //   FindRecipientModel findRecipientModel = value as FindRecipientModel;
+      if (canOpenDocumentModel!.allow!) {
+        Get.find<DocumentController>().canOpenDocumentModel =
+            canOpenDocumentModel;
 
+        Get.find<DocumentController>().gatAllDataAboutDOC(
+            context: context,
+            docId: docId,
+            transferId: transferId,
+            correspondenceId: correspondenceId);
+        Get.find<DocumentController>().loadPdf();
+        Get.toNamed("/DocumentPage");
+      }
+    }).catchError((e) {
+      print("eeeeeeeeeeeeeeee=>  $e");
+    });
 
-print("the valll ogfffcanOpenDocumentModel!.allow!cumentModel!.allow! =>${canOpenDocumentModel!.allow!}");
-
-   //   FindRecipientModel findRecipientModel = value as FindRecipientModel;
-if(canOpenDocumentModel!.allow!){
-Get.find<DocumentController>().canOpenDocumentModel=canOpenDocumentModel;
-
-Get.find<DocumentController>().gatAllDataAboutDOC(docId:  docId, transferId: transferId, correspondenceId: correspondenceId);
-  Get.find<DocumentController>().loadPdf();
-  Get.toNamed("/DocumentPage");
-}
-
-    }).catchError((e){
-      print ("eeeeeeeeeeeeeeee=>  $e");
-
-
-
-  });
-
- // // عشان ندخل الملف وبعدين هنشوف مشكله الجسون
- //
- //    Get.find<DocumentController>().gatAllDataAboutDOC(docId:  docId, transferId: transferId, correspondenceId: correspondenceId);
- //   Get.find<DocumentController>().loadPdf();
-   Get.toNamed("/DocumentPage");
-
-
-
-
+    // // عشان ندخل الملف وبعدين هنشوف مشكله الجسون
+    //
+    //    Get.find<DocumentController>().gatAllDataAboutDOC(docId:  docId, transferId: transferId, correspondenceId: correspondenceId);
+    //   Get.find<DocumentController>().loadPdf();
+    Get.toNamed("/DocumentPage");
   }
 
   int userId = 0;
 
   Map<int, ReplyWithVoiceNoteRequestModel> transfarForMany = {};
   Map<int, CustomActions> transfarForManyCustomActions = {};
- // Map<int, String> transfarForManyNots = {};
+
+  // Map<int, String> transfarForManyNots = {};
 //=============================================================================================
-  MultipleTransfersAPI _multipleTransfersAPI = MultipleTransfersAPI();
 
   multipleTransferspost(
-      {required correspondenceId,required transferId,required docDueDate}) {
-    List<TransferNode>transfers=[];
+      {required context,
+      required correspondenceId,
+      required transferId,
+      required docDueDate}) {
+    MultipleTransfersAPI _multipleTransfersAPI = MultipleTransfersAPI(context);
+    List<TransferNode> transfers = [];
 
     transfarForMany.forEach((key, value) {
-      TransferNode transferNode = TransferNode(destinationId: key.toString(),
-          purposeId:correspondenceId,
+      TransferNode transferNode = TransferNode(
+          destinationId: key.toString(),
+          purposeId: correspondenceId,
           dueDate: docDueDate.toString(),
-          voiceNote
-              :value.voiceNote!,
-          voiceNoteExt
-              : "m4a");
+          voiceNote: value.voiceNote!,
+          voiceNoteExt: "m4a");
       print("transferNode=>  ${transferNode.toMap()}");
 
-      transfers.add(transferNode); });
+      transfers.add(transferNode);
+    });
 
     print("transferNode=>  ${transfers.length}");
 
@@ -474,10 +480,8 @@ Get.find<DocumentController>().gatAllDataAboutDOC(docId:  docId, transferId: tra
     _multipleTransfersAPI.post(multipleTransfersModel.toMap()).then((value) {
       print(" _multipleTransfersAPI end");
       print(value);
-
     });
   }
-
 
 //=====================================================================================
   CustomActions? getactions(id) {
@@ -487,12 +491,12 @@ Get.find<DocumentController>().gatAllDataAboutDOC(docId:  docId, transferId: tra
 
   setactions(id, CustomActions customActions) {
     transfarForManyCustomActions[id] = customActions;
-    transfarForMany[id] ?.actionType=customActions.name;
+    transfarForMany[id]?.actionType = customActions.name;
     update();
   }
 
-  setNots({required int id,  String? not}) {
-    transfarForMany[id] ?.notes= not;
+  setNots({required int id, String? not}) {
+    transfarForMany[id]?.notes = not;
     update();
   }
 
@@ -507,7 +511,8 @@ Get.find<DocumentController>().gatAllDataAboutDOC(docId:  docId, transferId: tra
         correspondencesId: correspondencesId,
         notes: "",
         voiceNoteExt: "m4a",
-        language: Get.locale?.languageCode == "en" ? "en" : "ar",token:secureStorage.token() );
+        language: Get.locale?.languageCode == "en" ? "en" : "ar",
+        token: secureStorage.token());
     transfarForMany[id] = model;
   }
 
@@ -560,14 +565,14 @@ Get.find<DocumentController>().gatAllDataAboutDOC(docId:  docId, transferId: tra
     await audioPlayer!.startPlayer(fromURI: _directoryPath);
   }
 
-  completeInCorrespondence({data}) {
+  completeInCorrespondence({context, data}) {
+    CompleteInCorrespondenceAPI _completeInCorrespondenceAPI =
+        CompleteInCorrespondenceAPI(context);
     _completeInCorrespondenceAPI.data = data;
     _completeInCorrespondenceAPI.getData().then((value) {
       print("000000000000000000000");
     });
   }
-
-
 
   //================================================================================================
   Future recordForMany() async {
@@ -588,7 +593,7 @@ Get.find<DocumentController>().gatAllDataAboutDOC(docId:  docId, transferId: tra
         DateTime.now().millisecondsSinceEpoch.toString() +
         '.mp4';
     recording = true;
-    update( );
+    update();
 
     await audioRecorder?.startRecorder(codec: _codec, toFile: _directoryPath);
   }
@@ -597,18 +602,10 @@ Get.find<DocumentController>().gatAllDataAboutDOC(docId:  docId, transferId: tra
     await audioRecorder?.stopRecorder();
     recordFile = File(_directoryPath);
     recording = false;
-    String? audioFileBes64 =
-    await audiobase64String(
-        file:  recordFile);
-    update( );
-    transfarForMany[id]?.voiceNote=audioFileBes64;
-
+    String? audioFileBes64 = await audiobase64String(file: recordFile);
+    update();
+    transfarForMany[id]?.voiceNote = audioFileBes64;
   }
-
-
-
-
-
 
   Future<void> selectFromDocDate({required BuildContext context}) async {
     final DateTime? pickedDate = await showDatePicker(
@@ -617,11 +614,12 @@ Get.find<DocumentController>().gatAllDataAboutDOC(docId:  docId, transferId: tra
         firstDate: DateTime(2000),
         lastDate: DateTime(2050));
     if (pickedDate != null) {
-      textEditingControllerFromDocDate.text = pickedDate.toString().substring(0, 10);
+      textEditingControllerFromDocDate.text =
+          pickedDate.toString().substring(0, 10);
 
       var outputFormat = DateFormat('dd/MM/yyyy');
       var outputDate = outputFormat.format(pickedDate);
-     //fromDocDate.toString();
+      //fromDocDate.toString();
       update();
     }
   }
@@ -633,68 +631,61 @@ Get.find<DocumentController>().gatAllDataAboutDOC(docId:  docId, transferId: tra
         firstDate: DateTime(2000),
         lastDate: DateTime(2050));
     if (pickedDate != null) {
-      textEditingControllerToDocDate.text = pickedDate.toString().substring(0, 10);
+      textEditingControllerToDocDate.text =
+          pickedDate.toString().substring(0, 10);
       var outputFormat = DateFormat('dd/MM/yyyy');
       var outputDate = outputFormat.format(pickedDate);
 
       update();
     }
+  }
 
+  //fileter
 
-
-
-
-
-
-    }
-
-
-    //fileter
-
-    List<String> texts1 = [
+  List<String> texts1 = [
     "للعلم و الاطلاع",
     "لاجراء اللازم",
     "للافاده",
     "للتوجيه",
-      "",
+    "",
   ];
-String selectTexts1pos="";
-updateTexts1(  ppos){
+  String selectTexts1pos = "";
 
-  selectTexts1pos=ppos;
-update();
-}
-    List<String> texts2 = [
-    "مباشر",
-    "نسخه",
-    "خاص",  "",
-  ];
-  String selectTexts2pos="";
-  updateTexts2(  ppos){
-
-    selectTexts2pos=ppos;
+  updateTexts1(ppos) {
+    selectTexts1pos = ppos;
     update();
   }
-    List<String> texts3 = [
+
+  List<String> texts2 = [
+    "مباشر",
+    "نسخه",
+    "خاص",
+    "",
+  ];
+  String selectTexts2pos = "";
+
+  updateTexts2(ppos) {
+    selectTexts2pos = ppos;
+    update();
+  }
+
+  List<String> texts3 = [
     "عاجل",
     "متوسط",
     "عادي",
-      "",
+    "",
   ];
-  String selectTexts3pos="";
-  updateTexts3(  ppos){
+  String selectTexts3pos = "";
 
-    selectTexts3pos=ppos;
+  updateTexts3(ppos) {
+    selectTexts3pos = ppos;
     update();
   }
 
-
-  canceldata(){
-    updateTexts1(texts1[4]  );
-    updateTexts2(texts1[3]  );
-    updateTexts3( texts1[3] );
+  canceldata() {
+    updateTexts1(texts1[4]);
+    updateTexts2(texts1[3]);
+    updateTexts3(texts1[3]);
     update();
-
-
   }
 }

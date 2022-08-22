@@ -45,6 +45,8 @@ class _FilterSlidePageState extends State<FilterSlidePage> {
 
   @override
   Widget build(BuildContext context) {
+    inboxController.context =  context;
+
     List<String> images1 = [
       "assets/images/icons8-checked-64.png",
       "assets/images/icons8-checked-64.png",
@@ -394,6 +396,7 @@ class _ListView3State extends State<ListView3> {
   Widget myLayoutWidget(BuildContext context) {
 
     final inboxController = Get.put(InboxController());
+    inboxController.context = context;
 
     return Container(
       child: Row(

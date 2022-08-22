@@ -35,6 +35,7 @@ class _AllAvailablePocketsPageState extends State<AllAvailablePocketsPage> {
 
   @override
   Widget build(BuildContext context) {
+    inboxController.context = context;
     List<String> images1 = [
       "assets/images/icons8-checked-64.png",
       "assets/images/icons8-checked-64.png",

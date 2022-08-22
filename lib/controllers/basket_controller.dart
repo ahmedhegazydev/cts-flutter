@@ -10,8 +10,8 @@ import '../services/json_model/get_correspondences_all_model.dart';
 import '../utility/storage.dart';
 
 class BasketController extends GetxController {
+  BuildContext? context;
   FindRecipientModel? findRecipientModel;
-  final FindRecipient _findRecipient = FindRecipient();
   List<Destination> users = [];
   bool haveMoreData = true;
   final SecureStorage secureStorage = SecureStorage();
@@ -81,7 +81,9 @@ class BasketController extends GetxController {
       pageNumber++;
 
       if (haveMoreData) {
-        getBasketInbox(id: basketId!,pageSize: pageNumber );
+        getBasketInbox(
+            context: context,
+            id: basketId!,pageSize: pageNumber );
         print("reach the bottom");
       }
     }
@@ -94,8 +96,9 @@ class BasketController extends GetxController {
 
 
 
-  getBasketInbox( {required int id,int pageSize=20,int pageNumber=0}){
-    GetBasketInboxApi getBasketInboxApi=GetBasketInboxApi();
+  getBasketInbox( {
+    required context, required int id,int pageSize=20,int pageNumber=0}){
+    GetBasketInboxApi getBasketInboxApi=GetBasketInboxApi(context);
 
 
 
@@ -117,7 +120,8 @@ update();
   }
 
 
-getFindRecipientData(){
+getFindRecipientData({context}){
+  final FindRecipient _findRecipient = FindRecipient(context);
   print("this is unbox getAllDatagetAllData ");
   _findRecipient.data="Token=${secureStorage.token()}&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
   _findRecipient.getData().then((value) {

@@ -1,21 +1,25 @@
+class AddDocumentsToBasketRequest {
+  String token;
 
-class AddDocumentsToBasketRequest
-{
-    String token ;
-  List<int> documentIds ;
-  int basketId ;
-  String language ;
+  List<int> documentIds;
 
-    AddDocumentsToBasketRequest(
-        {required this.token,required this.documentIds,required this.basketId,required this.language});
+  int basketId;
 
-    Map<String, dynamic> toMap() {
-      final Map<String, dynamic> data = new Map<String, dynamic>();
+  String language;
 
-   data['token']  =this.token;
-   data['documentIds']  = this.documentIds;
-   data['basketId']  = this.basketId;
-   data[ 'language'] = this.language;
+  AddDocumentsToBasketRequest(
+      {required this.token,
+      required this.documentIds,
+      required this.basketId,
+      required this.language});
+
+  Map<String, dynamic> toMap() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+
+    data['token'] = this.token;
+    data['documentIds'] = this.documentIds;
+    data['basketId'] = this.basketId;
+    data['language'] = this.language;
     return data;
   }
 

@@ -14,20 +14,22 @@ import '../utility/validator.dart';
 class LoginController extends GetxController {
   TextEditingController userName = TextEditingController();
   TextEditingController baseUrl = TextEditingController(
-    // text: 'http://192.168.1.7:9091/Mobility/CMS.svc'
-    text: 'http://ecm-mob.mofa.gov.qa:9091/EverSuite.CTS.Mobile/CMS.svc'
-  );
+      text: 'http://192.168.1.7:9091/Mobility/CMS.svc'
+      // text: 'http://ecm-mob.mofa.gov.qa:9091/EverSuite.CTS.Mobile/CMS.svc'
+      );
+  BuildContext? context;
   TextEditingController passWord = TextEditingController();
   Validators validators = Validators();
   final loginFormKey = GlobalKey<FormState>();
   bool islogin = false;
 
-  logIngRequst() {
+  logIngRequst(
+  // { required context}
+  ) {
     if (loginFormKey.currentState!.validate()) {
       islogin = true;
       update();
-
-      userLogin();
+      userLogin(context: context!);
     }
   }
 
@@ -42,26 +44,26 @@ class LoginController extends GetxController {
     return encrypted.base64;
   }
 
-  userLogin() async {
-    LogInApi logInApi = LogInApi();
+  userLogin(
+  { required context}
+  ) async {
+    LogInApi logInApi = LogInApi(context!);
     var encryptedPassword = encryptPassword(passWord.text);
     //language=${defaultLocale == "en" ? "en" : "ar"}
-
     print("pass word            :    $encryptedPassword");
     logInApi.loginData =
-        'Login?userCode=${userName.text}&password=$encryptedPassword&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&includeIcons=true';
+        'userCode=${userName.text}&password=$encryptedPassword&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&includeIcons=true';
 
     try {
-      await logInApi.getData().then((value) async {
+      await logInApi.getData(
+          // context: context
+      ).then((value) async {
         SecureStorage secureStorage = Get.find<SecureStorage>();
         if (value != null) {
           LoginModel loginModel = value as LoginModel;
-
           loginModel.inbox?.inboxItems?.forEach((element) {
-            //
             // print(element?.total);
             print("0000000000000000000000000000000000000000000000000000000");
-
             print(element.name);
             print(element.inboxId);
             print("0000000000000000000000000000000000000000000000000000000");

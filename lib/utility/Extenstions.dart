@@ -28,3 +28,8 @@ extension HexColor on Color {
       '${green.toRadixString(16).padLeft(2, '0')}'
       '${blue.toRadixString(16).padLeft(2, '0')}';
 }
+
+extension MyIterable<E> on Iterable<E> {
+  Iterable<E> sortedBy(Comparable key(E e)) =>
+      toList()..sort((a, b) => key(a).compareTo(key(b)));
+}

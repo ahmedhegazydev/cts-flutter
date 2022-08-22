@@ -1,6 +1,8 @@
 
 
 
+import 'package:flutter/src/widgets/framework.dart';
+
 import '../../../utility/settings_app.dart';
 import '../../abstract_json_resource.dart';
 import '../../api_manager.dart';
@@ -10,6 +12,8 @@ import '../../json_model/get_correspondences_all_model.dart';
 
 class GetBasketInboxApi  extends ApiManager{
   String data="";
+
+  GetBasketInboxApi(BuildContext context) : super(context);
   @override
   String apiUrl() {
     return SettingsApp.GetBasketInboxUrl+data;

@@ -29,7 +29,7 @@ class FetchBasketListModel extends AbstractJsonResource{
   }
 }
 
-class Baskets extends AbstractJsonResource{
+class Baskets extends AbstractJsonResource implements Comparable{
   bool? adminIsDeleted;
   String? color;
   int? iD;
@@ -50,6 +50,24 @@ class Baskets extends AbstractJsonResource{
         this.userGctId,
         this.isDeleted,
         this.canBeReOrder});
+
+
+  @override
+  int compareTo(otherPerson){
+    if(this.orderBy! > otherPerson.orderBy){
+      return 1;
+    }
+
+    if(this.orderBy! < otherPerson.orderBy){
+      return 0;
+    }
+
+    if(this.orderBy == otherPerson.orderBy){
+      return 0;
+    }
+
+    return 0;
+  }
 
   Baskets.fromJson(Map<String, dynamic> json) {
     adminIsDeleted = json['AdminIsDeleted'];

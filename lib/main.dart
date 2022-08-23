@@ -1,9 +1,5 @@
-import 'package:cts/screens/Login_page.dart';
-import 'package:cts/screens/basket_page.dart';
 import 'package:cts/screens/my_cart/MyPocketsScreen.dart';
 import 'package:cts/screens/web_view_page.dart';
-import 'package:cts/services/json_model/send_json_model/reply_with_voice_note_request.dart';
-import 'package:cts/utility/all_string_const.dart';
 import 'package:cts/screens/filter/FilterSideScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
@@ -21,7 +17,6 @@ import 'screens/open_file.dart';
 import 'screens/search_page.dart';
 import 'screens/search_page_result.dart';
 import 'screens/signature_page.dart';
-import 'utility/all_const.dart';
 import 'utility/storage.dart';
 import 'utility/utilitie.dart';
 

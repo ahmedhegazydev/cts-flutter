@@ -1,6 +1,5 @@
 
 
-import 'package:cts/services/json_model/get_correspondences_model.dart';
 
 import '../../models/CorrespondencesModel.dart';
 import '../abstract_json_resource.dart';

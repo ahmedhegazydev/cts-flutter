@@ -1,6 +1,3 @@
-import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
-import 'package:cts/screens/filter/FilterSideScreen.dart';
-import 'package:cts/screens/my_cart/CreateNewBasket.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';

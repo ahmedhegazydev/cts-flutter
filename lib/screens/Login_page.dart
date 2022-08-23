@@ -1,4 +1,3 @@
-import 'package:cts/controllers/filter/filter_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
@@ -9,7 +8,6 @@ import '../controllers/main_controller.dart';
 import '../main.dart';
 import '../utility/all_const.dart';
 import '../utility/all_string_const.dart';
-import '../utility/device_size.dart';
 import '../utility/storage.dart';
 import '../utility/utilitie.dart';
 import '../widgets/custom_button.dart';

@@ -8,7 +8,6 @@ import '../services/json_model/get_lookups_model.dart';
 import '../services/models/LoginModel.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_button_with_icon.dart';
-import '../widgets/custom_row_search.dart';
 import 'package:get/get.dart';
 class SearchPage extends GetWidget<SearchController> {
 //  TextEditingController a = TextEditingController();
@@ -168,7 +167,7 @@ class SearchPage extends GetWidget<SearchController> {
                             //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
                           },
                           itemBuilder: (context, suggestion) {
-                            Destination v = suggestion as Destination;
+                            Destination v = suggestion;
 
                             return // Te(v.originalName!);
 
@@ -178,7 +177,7 @@ class SearchPage extends GetWidget<SearchController> {
                               );
                           },
                           onSuggestionSelected: (suggestion) {
-                            Destination v = suggestion as Destination;
+                            Destination v = suggestion;
                             controller.textEditingControllerClassificationsVal.text =
                                 v.value ?? "";
 
@@ -237,7 +236,7 @@ class SearchPage extends GetWidget<SearchController> {
                             //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
                           },
                           itemBuilder: (context, suggestion) {
-                            Destination v = suggestion as Destination;
+                            Destination v = suggestion;
 
                             return // Te(v.originalName!);
 
@@ -247,7 +246,7 @@ class SearchPage extends GetWidget<SearchController> {
                               );
                           },
                           onSuggestionSelected: (suggestion) {
-                            Destination v = suggestion as Destination;
+                            Destination v = suggestion;
                             controller.textEditingControllerClassificationsVal.text =
                                 v.value ?? "";
 
@@ -331,7 +330,7 @@ class SearchPage extends GetWidget<SearchController> {
                             //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
                           },
                           itemBuilder: (context, suggestion) {
-                            Destination v = suggestion as Destination;
+                            Destination v = suggestion;
 
                             return // Te(v.originalName!);
 
@@ -341,7 +340,7 @@ class SearchPage extends GetWidget<SearchController> {
                               );
                           },
                           onSuggestionSelected: (suggestion) {
-                            Destination v = suggestion as Destination;
+                            Destination v = suggestion;
                             controller.textEditingControllerFrom.text =
                                 v.value ?? "";
 controller.from=v;
@@ -398,7 +397,7 @@ controller.from=v;
                             //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
                           },
                           itemBuilder: (context, suggestion) {
-                            Destination v = suggestion as Destination;
+                            Destination v = suggestion;
 
                             return // Te(v.originalName!);
 
@@ -408,7 +407,7 @@ controller.from=v;
                               );
                           },
                           onSuggestionSelected: (suggestion) {
-                            Destination v = suggestion as Destination;
+                            Destination v = suggestion;
                             controller.textEditingControllerTo.text =
                                 v.value ?? "";
                             controller.to=v;
@@ -524,7 +523,7 @@ controller.from=v;
                             Radius.circular(6))),
                     child: DropdownButton<Priorities>(
                       isExpanded: true,
-                      hint: Text("Priority"),
+                      hint: Text("Priority".tr),
                       value: controller.prioritieVal,
                       // icon: const Icon(Icons.arrow_downward),
                       elevation: 16,
@@ -625,7 +624,7 @@ controller.from=v;
                       //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
                     },
                     itemBuilder: (context, suggestion) {
-                      DocCountries v = suggestion as DocCountries;
+                      DocCountries v = suggestion;
 
                       return
 
@@ -635,7 +634,7 @@ controller.from=v;
                         );
                     },
                     onSuggestionSelected: (suggestion) {
-                      DocCountries v = suggestion as DocCountries;
+                      DocCountries v = suggestion;
                       controller.textEditingControllerdocCountrieVal.text = v
                           .originalName ?? "";
  controller.countrieVal=v;
@@ -736,7 +735,7 @@ controller.from=v;
                       //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
                     },
                     itemBuilder: (context, suggestion) {
-                      Classifications v = suggestion as Classifications;
+                      Classifications v = suggestion;
 
                       return // Te(v.originalName!);
 
@@ -746,7 +745,7 @@ controller.from=v;
                         );
                     },
                     onSuggestionSelected: (suggestion) {
-                      Classifications v = suggestion as Classifications;
+                      Classifications v = suggestion;
                       controller.textEditingControllerClassificationsVal.text =
                           v.cLASNAMEDISPLAY ?? "";
 
@@ -793,7 +792,7 @@ controller.from=v;
                       //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
                     },
                     itemBuilder: (context, suggestion) {
-                      PrimaryClassifications v = suggestion as PrimaryClassifications;
+                      PrimaryClassifications v = suggestion;
 
                       return // Te(v.originalName!);
 
@@ -803,7 +802,7 @@ controller.from=v;
                         );
                     },
                     onSuggestionSelected: (suggestion) {
-                      PrimaryClassifications v = suggestion as PrimaryClassifications;
+                      PrimaryClassifications v = suggestion;
                       controller.textEditingControllerprimaryClassificationsVal
                           .text = v.pCLASNAME ?? "";
                       controller.primaryClassificationval=v;

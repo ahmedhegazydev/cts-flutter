@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../utility/utilitie.dart';
 
 class LandingHeadItem extends StatelessWidget {
   final String title;

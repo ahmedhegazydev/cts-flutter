@@ -1,6 +1,5 @@
 import 'package:cts/utility/Extenstions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -9,7 +8,6 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../controllers/basket_controller.dart';
 import '../controllers/inbox_controller.dart';
 import '../controllers/landing_page_controller.dart';
-import '../controllers/login_controller.dart';
 import '../controllers/main_controller.dart';
 import '../controllers/my_cart/create_basket_controller.dart';
 import '../controllers/web_view_controller.dart';

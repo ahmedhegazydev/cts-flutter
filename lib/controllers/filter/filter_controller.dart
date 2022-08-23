@@ -4,7 +4,6 @@ import 'package:encrypt/encrypt.dart' as enc;
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 import '../../services/apis/log_api.dart';
 import '../../services/json_model/login_model.dart';

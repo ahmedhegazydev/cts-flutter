@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 import 'dart:ui' as ui;
@@ -31,17 +30,14 @@ import '../services/json_model/basket/remove_basket_request_model.dart';
 import '../services/json_model/can_open_document_model.dart';
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_correspondences_all_model.dart';
-import '../services/json_model/get_correspondences_model.dart';
 import '../services/json_model/inopendocModel/multiple_transfers_model.dart';
 import '../services/json_model/login_model.dart';
 import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
 import '../utility/all_string_const.dart';
 import '../utility/Extenstions.dart';
 import '../utility/storage.dart';
-import 'dart:developer';
 
 import '../utility/utilitie.dart';
-import '../widgets/custom_button_with_icon.dart';
 import 'document_controller.dart';
 import 'package:flutter/services.dart' as rootBundel;
 
@@ -658,7 +654,7 @@ class InboxController extends GetxController {
     "لاجراء اللازم",
     "للافاده",
     "للتوجيه",
-    "",
+
   ];
   String selectTexts1pos = "";
 
@@ -671,7 +667,6 @@ class InboxController extends GetxController {
     "مباشر",
     "نسخه",
     "خاص",
-    "",
   ];
   String selectTexts2pos = "";
 
@@ -679,12 +674,11 @@ class InboxController extends GetxController {
     selectTexts2pos = ppos;
     update();
   }
+    List<String> texts3 = [
+    "high".tr,
+    "medium".tr,
+    "low".tr,
 
-  List<String> texts3 = [
-    "عاجل",
-    "متوسط",
-    "عادي",
-    "",
   ];
   String selectTexts3pos = "";
 
@@ -693,10 +687,15 @@ class InboxController extends GetxController {
     update();
   }
 
-  canceldata() {
-    updateTexts1(texts1[4]);
-    updateTexts2(texts1[3]);
-    updateTexts3(texts1[3]);
+
+  canceldata(){
+    // updateTexts1(texts1[3]  );
+    // updateTexts2(texts1[2]  );
+    // updateTexts3( texts1[2] );
+    updateTexts1( ""  );
+    updateTexts2(""  );
+    updateTexts3( "" );
+    Get.back();
     update();
   }
 }

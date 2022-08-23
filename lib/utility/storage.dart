@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 import 'all_string_const.dart';

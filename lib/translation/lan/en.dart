@@ -92,4 +92,13 @@ const Map<String, String> en = {
   "DocumentData":"Document Data"
   ,
   "Reset":"Reset"
+  ,
+  "filter":"filter"  ,
+  "Modify":"Modify"
+  ,
+  "back":"back"
+
+  ,
+  "Priority":"Priority",
+  "high":"high"
 };

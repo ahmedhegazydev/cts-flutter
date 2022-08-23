@@ -26,6 +26,7 @@ import 'document_controller.dart';
 class LandingPageController extends GetxController {
   // final SecureStorage _secureStorage = Get.find<SecureStorage>();
   SecureStorage _secureStorage = SecureStorage();
+  bool isSavingOrder = false;
 
   TextEditingController textEditingControllerEnglishName =
       TextEditingController();
@@ -39,6 +40,11 @@ class LandingPageController extends GetxController {
   Map<String, dynamic>? _logindata;
   LoginModel? data;
   BuildContext? context;
+
+  setSavingOrder(bool saving){
+    this.isSavingOrder = saving;
+    update();
+  }
 
   @override
   void onReady() {

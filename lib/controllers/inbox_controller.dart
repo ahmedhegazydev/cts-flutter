@@ -50,6 +50,18 @@ class InboxController extends GetxController {
   BuildContext? context;
   FetchBasketListModel? fetchBasketListModel;
   List<int> listSelectCorrespondences = [];
+  int? oldIndex = 0;
+  int? newIndex = 0;
+
+  setOldIndex(int oldIndex){
+    this.oldIndex = oldIndex;
+    update();
+  }
+
+  setNewIndex(int newIndex){
+    this.newIndex = newIndex;
+    update();
+  }
 
   Future addDocumentsToBasket({context, basketId}) async {
     AddDocumentsToBasketRequest addDocumentsToBasketRequest =
@@ -90,7 +102,6 @@ class InboxController extends GetxController {
       // fetchBasketListModel?.baskets?.forEach((element) {
       //   element.orderBy = Random().nextInt(100);
       // });
-      // fetchBasketListModel?.baskets?.sortedBy((it) => it.orderBy ?? 0);
       fetchBasketListModel?.baskets?.sort();
 
       update();

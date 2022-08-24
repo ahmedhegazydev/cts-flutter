@@ -95,6 +95,10 @@ const Map<String, String> ar = {
   ,
   "Modify":"تحرير"
   ,
-  "back":"الغاء تحرير"
+  "back":"الغاء تحرير",
+  "Base Url":"اللينك الاساسي"
+  , "Settings": "الاعدادات"
+  , "Save Settings": "حفظ الاعدادات"
+  , "pick your Color": "اختر اللون المناسب"
 
 };

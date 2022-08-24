@@ -22,6 +22,7 @@ class LoginController extends GetxController {
   Validators validators = Validators();
   final loginFormKey = GlobalKey<FormState>();
   bool islogin = false;
+  SecureStorage secureStorage = Get.find<SecureStorage>();
 
   logIngRequst(
   // { required context}
@@ -58,7 +59,6 @@ class LoginController extends GetxController {
       await logInApi.getData(
           // context: context
       ).then((value) async {
-        SecureStorage secureStorage = Get.find<SecureStorage>();
         if (value != null) {
           LoginModel loginModel = value as LoginModel;
           loginModel.inbox?.inboxItems?.forEach((element) {

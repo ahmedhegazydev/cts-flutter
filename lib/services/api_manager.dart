@@ -33,7 +33,7 @@ abstract class ApiManager {
     data}) async {
     AbstractJsonResource? json;
     var data;
-  //  print("checkIfSavedSettingsBasUrl = $checkIfSavedSettingsBasUrl");
+    print("checkIfSavedSettingsBasUrl = $checkIfSavedSettingsBasUrl");
     showLoaderDialog(context!);
     await dioSingleton.dio
         .get(checkIfSavedSettingsBasUrl(), queryParameters: data)
@@ -44,7 +44,7 @@ abstract class ApiManager {
       } else {
         if (value.data["Status"] == 2) {
           // Get.to(LoginPage());
-          Get.offAll(LoginPage());
+          // Get.offAll(LoginPage());
         } else {
           print(value);
           data = value.data;
@@ -83,7 +83,7 @@ abstract class ApiManager {
       } else {
         if (value.data["Status"] == 2) {
           // Get.to(LoginPage());
-          Get.offAll(LoginPage());
+          // Get.offAll(LoginPage());
         } else {
           data = value.data;
           jsonList = fromJson(data);
@@ -94,11 +94,18 @@ abstract class ApiManager {
   }
 
   String checkIfSavedSettingsBasUrl() {
-    // var storageBaseUrl =
-    //     secureStorage.readSecureData(AllStringConst.BaseUrl) ?? "";
-    // if (storageBaseUrl.isNotEmpty) {
-    //   return storageBaseUrl;
-    // }
+    var storageBaseUrl =
+        secureStorage.readSecureData(AllStringConst.BaseUrl) ?? "";
+    print("apiUrl = " + apiUrl());
+    print("storageBaseUrl = " + storageBaseUrl);
+    var fullPath = apiUrl();
+    const start = "CMS.svc";
+    var pos = fullPath.indexOf(start);
+    String endPoint = (pos != -1)? fullPath.substring(pos + start.length, fullPath.length): fullPath;
+    print("fullPath__ = " + storageBaseUrl + endPoint);
+    if (storageBaseUrl.isNotEmpty) {
+      return storageBaseUrl + endPoint;
+    }
     return apiUrl();
   }
 }

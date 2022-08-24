@@ -101,4 +101,9 @@ const Map<String, String> en = {
   ,
   "Priority":"Priority",
   "high":"high"
+, "Base Url": "Base Url"
+, "Settings": "Settings"
+  , "Save Settings": "Save Settings"
+  , "pick your Color": "Pick your color"
+
 };

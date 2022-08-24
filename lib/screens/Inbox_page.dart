@@ -626,8 +626,13 @@ class InboxPage extends GetWidget<InboxController> {
               height: 1,
             ),
             _buildSideMenuFolders(
-                context, "flagged".tr, "assets/images/flagged.png", true, 05),
-            _buildSideMenuFolders(context, "notifications".tr,
+                context,
+                // "flagged".tr,
+                "وارد للكل",
+                "assets/images/flagged.png", true, 05),
+            _buildSideMenuFolders(context,
+                // "notifications".tr,
+                "صادر للكل",
                 "assets/images/notification.png", true, 19)
           ],
         ),

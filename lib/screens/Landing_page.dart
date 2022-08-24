@@ -3351,7 +3351,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                             child: Container(
                               width: double.infinity,
                               child: Text(
-                                "flagged".tr,
+                                // "flagged".tr,
+                                "وارد للكل",
                                 style: Theme
                                     .of(context)
                                     .textTheme
@@ -3437,7 +3438,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                             child: Container(
                               width: double.infinity,
                               child: Text(
-                                "notifications".tr,
+                                // "notifications".tr,
+                                "صادر للكل",
                                 style: Theme
                                     .of(context)
                                     .textTheme
@@ -3597,7 +3599,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                       },
                       child: _buildOtherFoldersRows(
                         context,
-                        "flagged".tr,
+                        // "flagged".tr,
+                        // "assets/images/flagged.png",
+                        "وارد للكل",
                         "assets/images/flagged.png",
                         true,
                         5,
@@ -3613,7 +3617,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                       },
                       child: _buildOtherFoldersRows(
                         context,
-                        "notifications".tr,
+                        // "notifications".tr,
+                        // "assets/images/notification.png",
+                        "صادر للكل",
                         "assets/images/notification.png",
                         true,
                         9,
@@ -3621,6 +3627,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                     ),
                   ],
                 ),
+
+
               ],
             ),
             _buildDataLabelTitleLabel(context, "search".tr),
@@ -3834,7 +3842,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                       },
                       child: _buildOtherFoldersRows(
                         context,
-                        "flagged".tr,
+                        // "flagged".tr,
+                        "وارد للكل",
                         "assets/images/flagged.png",
                         true,
                         5,
@@ -3850,7 +3859,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                       },
                       child: _buildOtherFoldersRows(
                         context,
-                        "notifications".tr,
+                        // "notifications".tr,
+                        "صادر للكل",
                         "assets/images/notification.png",
                         true,
                         9,

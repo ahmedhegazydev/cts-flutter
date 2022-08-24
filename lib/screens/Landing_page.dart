@@ -182,6 +182,433 @@ class LandingPage extends GetWidget<LandingPageController> {
     );
   }
 
+  Future<void> showAllBasketsDialog(BuildContext context) async {
+    await inboxController.getFetchBasketList(context: context);
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(" "),
+        content: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+              width: MediaQuery.of(context).size.width * .3,
+              color: Colors.grey[200],
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Spacer(),
+                      // controller.isSavingOrder
+                      //     ? IconButton(
+                      //         icon: Icon(Icons.check), onPressed: () {})
+                      //     : Container(),
+                    ],
+                  ),
+                  Expanded(
+                      child: ReorderableListView(
+                        buildDefaultDragHandles: true,
+                        // buildDefaultDragHandles: false,
+                        padding: const EdgeInsets.symmetric(horizontal: 40),
+                        children: <Widget>[
+                          // for (int index = 0;
+                          //     index <
+                          //         inboxController
+                          //             .fetchBasketListModel!
+                          //             .baskets!
+                          //             .length;
+                          //     // 4;
+                          //     index += 1)
+                          for (final basket
+                          in inboxController.fetchBasketListModel!.baskets!)
+                            ListTile(
+                              // key: Key('$index'),
+                              key: ValueKey(basket),
+                              // tileColor: _items[index].isOdd ? oddItemColor : evenItemColor,
+                              onLongPress:
+                              !(basket.canBeReOrder ?? false) ? () {} : null,
+                              onTap: !(basket.canBeReOrder ?? false) ? () {} : null,
+                              enabled: !(basket.canBeReOrder ?? false),
+                              enableFeedback: !(basket.canBeReOrder ?? false),
+                              title: Card(
+                                elevation: 10,
+                                color: basket.color?.toColor(),
+                                child: Column(children: [
+                                  Text(basket.name ?? ""),
+                                  Text(basket.nameAr ?? ""),
+                                  // Text( "color :${inboxController
+                                  //     .fetchBasketListModel
+                                  //     ?.baskets?[pos].color}",style: TextStyle( color:  HexColor(inboxController
+                                  //     .fetchBasketListModel
+                                  //     ?.baskets?[pos].color??"#000000"))),
+
+                                  GestureDetector(
+                                    onTap: () {
+                                      //هنا هنعمل دليت
+                                      controller.removeBasket(
+                                        context: context,
+                                        basketId: basket.iD,
+                                        onSuccess: (String message) {
+                                          // Navigator.pop(context);
+                                          // Get.back();
+                                          // showAllBasketsDialog(context);
+                                          return null;
+                                        },
+                                      );
+                                      // showTopSnackBar(
+                                      //   context,
+                                      //   CustomSnackBar.success(
+                                      //     message:
+                                      //     "Good job, basket have been deleted",
+                                      //   ),
+                                      // );
+                                    },
+                                    // child:  Icon(Icons.delete, color: (basket.canBeReOrder ?? false) ? Colors.black: Colors.transparent,) ,
+                                    child: (basket.canBeReOrder ?? false)
+                                        ? Icon(Icons.delete)
+                                        : Container(),
+                                  ),
+                                ]),
+                              ),
+                            )
+                        ],
+                        onReorder: (int oldIndex, int newIndex) {
+                          print("onReorder = $oldIndex - $newIndex");
+                          if (oldIndex < newIndex) {
+                            newIndex -= 1;
+                          }
+                          final Baskets item = inboxController
+                              .fetchBasketListModel!.baskets!
+                              .removeAt(oldIndex);
+                          inboxController.fetchBasketListModel!.baskets!
+                              .insert(newIndex, item);
+                        },
+                        onReorderStart: (int index) {
+                          //0-1-2-....
+                          print("onReorderStart = $index");
+                          inboxController.setOldIndex(index);
+                          // print("onReorderStart = ${inboxController.fetchBasketListModel!.baskets![index].canBeReOrder}");
+                          // if (inboxController
+                          //         .fetchBasketListModel!.baskets![index].canBeReOrder ==
+                          //     false) {
+                          //
+                          // }else{
+                          //
+                          // }
+                        },
+                        onReorderEnd: (int index) {
+                          controller.setSavingOrder(true);
+                          //get the item that will be replaced
+                          //check if ite canBeReorder or not
+                          //2-3-4-...
+                          print("onReorderEnd = $index");
+                          if (inboxController.fetchBasketListModel!.baskets![index]
+                              .canBeReOrder ==
+                              false) {
+                            showTopSnackBar(
+                              context,
+                              CustomSnackBar.error(
+                                message:
+                                "${inboxController.fetchBasketListModel!.baskets![index].name} canBeReOrder = false",
+                              ),
+                            );
+                          } else {
+                            // print("fetchBasketListModel__ = ${inboxController.fetchBasketListModel?.baskets.toString()}");
+                            // inboxController.fetchBasketListModel?.baskets?.forEach((element) {
+                            //   print(element.orderBy);
+                            // });
+                            if(inboxController.oldIndex != index) {
+                              controller.reOrderBaskets(
+                                  context: context,
+                                  baskets: inboxController
+                                      .fetchBasketListModel!
+                                      .baskets);
+                            }
+                          }
+                        },
+                      ))
+                ],
+              )
+
+            // child: ListView.builder(
+            //     // itemCount: inboxController
+            //     //     .fetchBasketListModel
+            //     //     ?.baskets
+            //     //     ?.length,
+            //     itemCount: 5,
+            //     itemBuilder: (context, pos) {
+            //       return InkWell(
+            //         onTap: () async {
+            //           print(
+            //               "${inboxController.fetchBasketListModel?.baskets?[pos].iD}");
+            //
+            //           Get.find<BasketController>().getBasketInbox(
+            //               id: inboxController
+            //                   .fetchBasketListModel!
+            //                   .baskets![pos]
+            //                   .iD!,
+            //               pageSize: 20,
+            //               pageNumber: 0);
+            //
+            //           Get.back();
+            //
+            //           Get.toNamed("MyPocketsScreen");
+            //         },
+            //         child: Card(
+            //           elevation: 10,
+            //           child: Column(children: [
+            //             Text(inboxController
+            //                 .fetchBasketListModel
+            //                 ?.baskets?[pos]
+            //                 .name ??
+            //                 ""),
+            //             Text(inboxController
+            //                 .fetchBasketListModel
+            //                 ?.baskets?[pos]
+            //                 .nameAr ??
+            //                 ""),
+            //             // Text( "color :${inboxController
+            //             //     .fetchBasketListModel
+            //             //     ?.baskets?[pos].color}",style: TextStyle( color:  HexColor(inboxController
+            //             //     .fetchBasketListModel
+            //             //     ?.baskets?[pos].color??"#000000"))),
+            //
+            //             GestureDetector(
+            //                 onTap: () {
+            //                   //هنا هنعمل دليت
+            //                   controller.removeBasket(
+            //                       basketId:
+            //                       inboxController
+            //                           .fetchBasketListModel
+            //                           ?.baskets?[pos]
+            //                           .iD);
+            //                 },
+            //                 child: Icon(Icons.delete)),
+            //           ]),
+            //         ),
+            //       );
+            //     })
+
+          ),
+        ),
+        actions: <Widget>[
+          FlatButton(
+            onPressed: () async {
+              Navigator.of(ctx).pop();
+            },
+            child: Text("Ok"),
+          ),
+          // Visibility(
+          //     visible: controller.isSavingOrder,
+          //     child: FlatButton(
+          //       onPressed: () async {
+          //         // Navigator.of(ctx).pop();
+          //         // Get.to(BasketPage());
+          //       },
+          //       child: Text("Save Order"),
+          //     )),
+          FlatButton(
+            onPressed: () async {
+              //هنا هنكريت الباسكت
+
+              showInputDialog(
+                  context, 'CreateNewBasket', 'default inpit', 'message');
+            },
+            child: Text("new Basket"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<String?> showInputDialog(
+      BuildContext context, String title, String defaultInput, String message) {
+    var textController = TextEditingController(text: defaultInput);
+    var content = Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        // Text(message), TextField(controller: textController)
+        // CreateNewBasket(),
+
+        Form(
+          // key: controller.createBasketFormKey,
+          // child: LayoutBuilder(builder: (context, constraint) {
+          //   return Container(
+            child: Column(
+              children: [
+                // Spacer(),
+                // CustomInputTextFiled(
+                //     validator: controller.validators.nameValidator,
+                //     textEditingController: controller.englishName,
+                //     label: "english_name".tr),
+                // CustomInputTextFiled(
+                //     validator: controller.validators.nameValidator,
+                //     textEditingController: controller.arabicName,
+                //     label: "arabic_name".tr),
+
+                Container(
+                  // padding: EdgeInsets.only(right: 10, left: 10),
+                  padding: EdgeInsets.all(10),
+                  child: Container(
+                      padding: EdgeInsets.only(right: 8, left: 8),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Theme.of(context).colorScheme.primary),
+                          borderRadius: const BorderRadius.all(Radius.circular(6))),
+                      child: TextField(
+                        controller: controller.textEditingControllerEnglishName,
+                        decoration: InputDecoration(
+                          border: UnderlineInputBorder(),
+                          labelText: "english_name".tr,
+                        ),
+                      )),
+                ),
+
+                Container(
+                  // padding: EdgeInsets.only(right: 10, left: 10),
+                  padding: EdgeInsets.all(10),
+                  child: Container(
+                      padding: EdgeInsets.only(right: 8, left: 8),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Theme.of(context).colorScheme.primary),
+                          borderRadius: const BorderRadius.all(Radius.circular(6))),
+                      child: TextField(
+                        controller: controller.textEditingControllerArabicName,
+                        decoration: InputDecoration(
+                          border: UnderlineInputBorder(),
+                          labelText: "arabic_name".tr,
+                        ),
+                      )),
+                ),
+
+                Container(
+                  padding: EdgeInsets.only(right: 10, left: 10),
+                  width: MediaQuery.of(context).size.width * .3,
+                  child: RaisedButton(
+                      onPressed: () {
+                        // inboxController.applyFilter();
+                        // Navigator.pop(context);
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: Text(
+                                "pick your Color",
+                              ),
+                              content: Column(children: [
+                                ColorPicker(
+                                  pickerColor:
+                                  Get.find<CreateBasketController>()
+                                      .pickerColor,
+                                  onColorChanged: (Color color) {
+                                    // Get.find<MController>().setAppColor(color);
+                                    // print(color);
+                                    // controller.setPickerColor(color);
+                                    Get.find<CreateBasketController>()
+                                        .setPickerColor(color);
+                                    // setState(() {
+                                    //   controller.setPickerColor(color);
+                                    // });
+                                  },
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 8.0, bottom: 8, right: 20, left: 20),
+                                  child: Row(children: []),
+                                ),
+                                Container(
+                                  width: MediaQuery.of(context).size.width * .7,
+                                  padding: const EdgeInsets.only(
+                                      left: 0, right: 0, top: 0, bottom: 0),
+                                  height: 60,
+                                  decoration: BoxDecoration(
+                                      color:
+                                      Theme.of(context).colorScheme.primary,
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(6))),
+                                  child: ElevatedButton(
+                                      onPressed: () {
+                                        // Get.find<SecureStorage>().writeSecureData(
+                                        //     AllStringConst.AppColor,
+                                        //     Get.find<MController>().appcolor.value);
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: GestureDetector(
+                                        onTap: () {},
+                                        child: Text(
+                                          "save",
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      )),
+                                )
+                              ]),
+                            ));
+                      },
+                      child: GetBuilder<CreateBasketController>(
+                        init: CreateBasketController(),
+                        builder: (_) {
+                          return Text("pick your Color",
+                              style: TextStyle(
+                                // backgroundColor: _.pickerColor,
+                                  color: _.pickerColor));
+                        },
+                      )),
+                ),
+
+                Container(
+                  height: 40,
+                  padding: EdgeInsets.only(right: 10, left: 10),
+                  width: MediaQuery.of(context).size.width * .3,
+                  child: CustomButton(
+                      name: 'register'.tr,
+                      onPressed: () {
+                        // controller.createNewBasket();
+                        controller.addEditBasket(
+                            context: context,
+                            color: Get.find<CreateBasketController>()
+                                .pickerColor
+                                .toHex(),
+                            nameAr: controller.textEditingControllerArabicName.text,
+                            nameEn:
+                            controller.textEditingControllerEnglishName.text);
+                      }),
+                ),
+              ],
+              // ),
+              // );
+              // }
+            ))
+      ],
+    );
+    // var content = CreateNewBasket();
+
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        var mediaQuery = MediaQuery.of(context);
+
+        return AnimatedContainer(
+          padding: mediaQuery.padding,
+          duration: const Duration(milliseconds: 300),
+          child: AlertDialog(
+            title: Text(title),
+            content: content,
+            scrollable: true,
+            // actions: <Widget>[
+            //   TextButton(
+            //     child: const Text('Cancel'),
+            //     onPressed: () => Navigator.pop(context),
+            //   ),
+            //   TextButton(
+            //     child: const Text('Okay'),
+            //     onPressed: () => Navigator.pop(context, textController.text),
+            //   ),
+            // ],
+          ),
+        );
+      },
+    );
+  }
+
   portiraitDashboardContainer(BuildContext contex) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -1276,7 +1703,9 @@ Get.offAll(LoginPage());
                                       .fetchBasketListModel
                                       ?.baskets?[pos].iD}");
 
-                                  Get.find<BasketController>().getBasketInbox(id:Get.find<InboxController>()
+                                  Get.find<BasketController>().getBasketInbox(
+                                    context: context,
+                                      id:Get.find<InboxController>()
                                       .fetchBasketListModel
                                   !.baskets![pos].iD! ,pageSize:20 ,pageNumber: 0);
 

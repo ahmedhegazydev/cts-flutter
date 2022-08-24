@@ -668,7 +668,6 @@ class DocumentPage extends GetWidget<DocumentController> {
        Text(controller.correspondences.comments??""),
 
 
-
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

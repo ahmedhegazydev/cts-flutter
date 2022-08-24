@@ -11,6 +11,7 @@ import '../utility/all_string_const.dart';
 import '../utility/device_size.dart';
 import '../utility/storage.dart';
 import '../utility/utilitie.dart';
+import 'Login_page.dart';
 
 class LandingPage extends GetWidget<LandingPageController> {
   SecureStorage secureStorage = Get.find<SecureStorage>();
@@ -731,8 +732,8 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
        ),
        InkWell(
          onTap: () {
-
-
+           secureStorage.deleteSecureData(AllStringConst.Token);
+Get.offAll(LoginPage());
 
            /// ToDo
            /// delet token and go to login

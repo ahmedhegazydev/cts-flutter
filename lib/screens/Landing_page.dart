@@ -68,21 +68,23 @@ class LandingPage extends GetWidget<LandingPageController> {
                   ),
                 ),
               ),
+        //    _buildSideMenuPort(  context)
+
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 30, bottom: 5),
-          child: Align(
-            alignment: appLocale == "ar"
-                ? Alignment.bottomLeft
-                : Alignment.bottomRight,
-            child: Image.asset(
-              "assets/images/arrow_right.png",
-              width: 200,
-            ),
-          ),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.only(left: 30, bottom: 5),
+        //   child: Align(
+        //     alignment: appLocale == "ar"
+        //         ? Alignment.bottomLeft
+        //         : Alignment.bottomRight,
+        //     child: Image.asset(
+        //       "assets/images/arrow_right.png",
+        //       width: 200,
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }
@@ -199,6 +201,7 @@ class LandingPage extends GetWidget<LandingPageController> {
           flex: 9,
           child: portiraitDashboard(contex),
         ),
+
       ],
     );
   }
@@ -1148,7 +1151,531 @@ Get.offAll(LoginPage());
     //   ],
     // );
   }
+  _buildSideMenuPort(BuildContext context){
+    return   Container(height: 150,
+      child: Row(  mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
+        InkWell(onTap: (){
+          print("999999999999");
+          Get.toNamed("SignaturePage");
+        },
+          child: Column(
+            //    mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
 
+            children: [
+
+              Image(
+                image: AssetImage(
+                  'assets/images/signature.png',
+                ),
+                fit: BoxFit.contain,
+                width: 50,
+                height:50,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "mySignatures".tr,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline3!
+                      .copyWith(color: Colors.grey.shade600),
+                ),
+              ),
+            ],
+          ),
+        ),
+        InkWell(
+          onTap: () {
+            // Get.bottomSheet(
+            //   Container(
+            //     //height: 100,
+            //       margin: EdgeInsets.all(20),
+            //       padding: EdgeInsets.all(20),
+            //       decoration: const BoxDecoration(
+            //           color: Colors.white,
+            //           borderRadius: BorderRadius.only(
+            //               topLeft: Radius.circular(20),
+            //               topRight: Radius.circular(20))),
+            //       child: ListView.builder(
+            //           itemCount: //11
+            //           controller.findRecipientModel?.sections?[0]
+            //               .destination?.length,
+            //           itemBuilder: (context, pos) {
+            //             return Padding(
+            //               padding: const EdgeInsets.all(8.0),
+            //               child: Card(elevation: 5,
+            //                 child: Padding(
+            //                   padding: const EdgeInsets.all(8.0),
+            //                   child: Text(controller.findRecipientModel
+            //                       ?.sections?[0].destination?[pos]?.value ??
+            //                       ""),
+            //                 ),
+            //               ),
+            //             );
+            //           })),
+            //   enterBottomSheetDuration: const Duration(seconds: 1),
+            // );
+          },
+          child: Container(width: 50,
+            height: 140,
+            color: Colors.transparent,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+
+
+              children: [
+
+                Image(
+                  image: AssetImage(
+                    'assets/images/fav_users.png',
+                  ),
+                  fit: BoxFit.contain,
+                  width: 50,
+                  height:50,
+                ),
+                Text(
+                  "favoritesUsers".tr,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline3!
+                      .copyWith(color: Colors.grey.shade600),
+                ),
+              ],
+            ),
+          ),
+        ),
+        InkWell(onTap: (){
+          // Get.bottomSheet(
+          //   Container(
+          //     //height: 100,
+          //       margin: EdgeInsets.all(20),
+          //       padding: EdgeInsets.all(20),
+          //       decoration: const BoxDecoration(
+          //           color: Colors.white,
+          //           borderRadius: BorderRadius.only(
+          //               topLeft: Radius.circular(20),
+          //               topRight: Radius.circular(20))),
+          //       child: ListView.builder(
+          //           itemCount: //11
+          //           controller.findRecipientModel?.sections?[0]
+          //               .destination?.length,
+          //           itemBuilder: (context, pos) {
+          //             return Padding(
+          //               padding: const EdgeInsets.all(8.0),
+          //               child: Card(elevation: 5,
+          //                 child: Padding(
+          //                   padding: const EdgeInsets.all(8.0),
+          //                   child: Text(controller.findRecipientModel
+          //                       ?.sections?[2].destination?[pos]?.value ??
+          //                       ""),
+          //                 ),
+          //               ),
+          //             );
+          //           })),
+          //   enterBottomSheetDuration: const Duration(seconds: 1),
+          // );
+        },
+          child: Container(
+            height: 120,width: 50,
+            color: Colors.transparent,
+            child: Column(
+
+
+              children: [
+
+                Image(
+                  image: AssetImage(
+                    'assets/images/delegation.png',
+                  ),
+                  fit: BoxFit.contain,
+                  width: 50,
+                  height: 50,
+                ),
+                Text(
+                  "myDelegations".tr,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline3!
+                      .copyWith(color: Colors.grey.shade600),
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        Container(height: 50,width: 50,
+          child: InkWell(onTap: ()async{
+            await    Get.find<InboxController>().getFetchBasketList();
+            showDialog(
+              context: context,
+              builder: (ctx) =>
+                  AlertDialog(
+                    title: Text(" "),
+                    content: Padding(
+                      padding:
+                      const EdgeInsets
+                          .all(8.0),
+                      child: Container(
+                          width: MediaQuery.of(
+                              context)
+                              .size
+                              .width *
+                              .3,
+                          color: Colors
+                              .grey[200],
+                          child: ListView.builder(
+                              itemCount: Get.find<
+                                  InboxController>()
+                                  .fetchBasketListModel
+                                  ?.baskets
+                                  ?.length,
+                              itemBuilder:
+                                  (context,
+                                  pos) {
+                                return InkWell(onTap: ()async{
+
+                                  print("${Get.find<InboxController>()
+                                      .fetchBasketListModel
+                                      ?.baskets?[pos].iD}");
+
+                                  Get.find<BasketController>().getBasketInbox(id:Get.find<InboxController>()
+                                      .fetchBasketListModel
+                                  !.baskets![pos].iD! ,pageSize:20 ,pageNumber: 0);
+
+                                  Get.back();
+
+
+                                  Get.toNamed("MyPocketsScreen");
+
+                                },
+                                  child: Card(elevation: 10,child: Column(children: [
+                                    Text( Get.find<InboxController>()
+                                        .fetchBasketListModel
+                                        ?.baskets?[pos].name??""),
+                                    Text( Get.find<InboxController>()
+                                        .fetchBasketListModel
+                                        ?.baskets?[pos].nameAr??""),
+                                    // Text( "color :${Get.find<InboxController>()
+                                    //     .fetchBasketListModel
+                                    //     ?.baskets?[pos].color}",style: TextStyle( color: HexColor(Get.find<InboxController>()
+                                    //     .fetchBasketListModel
+                                    //     ?.baskets?[pos].color??"#000000"))),
+
+
+
+                                    GestureDetector(onTap: (){
+                                      //هنا هنعمل دليت
+                                    },child: Icon(Icons.delete)), ]),
+                                  ),
+                                );
+                              })),
+                    ),
+                    actions: <Widget>[
+                      FlatButton(
+                        onPressed:
+                            () async {
+
+                          /// ToDo send Replay
+
+                          Navigator.of(
+                              ctx)
+                              .pop();
+                        },
+                        child: Text("Ok"),
+                      ),
+                      // FlatButton(
+                      //   onPressed:
+                      //       () async {
+                      //
+                      //     /// ToDo send Replay
+                      //         ///  Navigator.of(
+                      //         //                         ctx)
+                      //         //                         .pop();
+                      //         Navigator.of(
+                      //             ctx)
+                      //             .pop();
+                      //         Get.to(BasketPage());
+                      //
+                      //   },
+                      //   child: Text("go to Basket"),
+                      // ),
+                      FlatButton(
+                        onPressed:
+                            () async {
+                          //هنا هنكريت الباسكت
+
+                        },
+                        child: Text("new Basket"),
+                      ), ],
+                  ),
+            );
+            // Get.toNamed( "MyPocketsScreen",);//MyPocketsScreen
+          },
+            child: Container(
+              height: 120,
+              color: Colors.transparent,
+              child: Column(
+
+                children: [
+
+                  Flexible(
+                    flex: 2,
+                    child: Image(
+                      image: AssetImage(
+                        'assets/images/delegation.png',
+                      ),
+                      fit: BoxFit.contain,
+                      width: double.infinity,
+                      height: double.infinity,
+                    ),
+                  ),
+                  Flexible(
+                    flex: 1,
+                    child: Text(
+                      "Basket".tr,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline3!
+                          .copyWith(color: Colors.grey.shade600),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        InkWell(onTap: (){
+          ///ToDo
+          ///open url and go to userGuideUrl
+          //  controller.data.userGuideUrl
+
+          Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
+          Get.toNamed( "WebViewPage",);
+        },
+          child: Container(width: 50,
+            height: 120,
+            color: Colors.transparent,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+
+              children: [
+
+                Image(
+                  image: AssetImage(
+                    'assets/images/delegation.png',
+                  ),
+                  fit: BoxFit.contain,
+                  width: 50,
+                  height: 50,
+                ),
+                Text(
+                  "user Guide".tr,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline3!
+                      .copyWith(color: Colors.grey.shade600),
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        Container(height: 100,width: 50,
+          child: InkWell(onTap: (){
+            showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text("pick your Color"),
+                  content: Column(children: [
+                    buildColorPicker(),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          top: 8.0, bottom: 8, right: 20, left: 20),
+                      child: Row(children: [
+                        Container(
+                          padding: const EdgeInsets.only(
+                              left: 0,
+                              right: 0,
+                              top: 0,
+                              bottom: 0),
+
+                          height: 60,
+                          decoration: BoxDecoration(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primary,
+                              borderRadius: const BorderRadius.all(
+                                  Radius.circular(6))),
+                          child: ElevatedButton(
+                            onPressed:(){
+                              var locale = const Locale('ar', 'AR');
+                              Get.updateLocale(locale);
+                            },
+                            child: Text(
+                              "عربي",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .copyWith(
+                                  color: Colors.white),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        )
+                        ,SizedBox(width: 10,)   ,
+
+                        Container(
+                          padding: const EdgeInsets.only(
+                              left: 0,
+                              right: 0,
+                              top: 0,
+                              bottom: 0),
+
+                          height: 60,
+                          decoration: BoxDecoration(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primary,
+                              borderRadius: const BorderRadius.all(
+                                  Radius.circular(6))),
+                          child: ElevatedButton(
+                            onPressed:(){
+                              var locale = const Locale('en', 'US');
+                              Get.updateLocale(locale);
+                            },
+                            child: Text(
+                              "En",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .copyWith(
+                                  color: Colors.white),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        )
+
+                      ]),
+                    ),
+
+
+
+                    Container(width: MediaQuery.of(context).size.width*.7,
+                      padding: const EdgeInsets.only(
+                          left: 0,
+                          right: 0,
+                          top: 0,
+                          bottom: 0),
+
+                      height: 60,
+                      decoration: BoxDecoration(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primary,
+                          borderRadius: const BorderRadius.all(
+                              Radius.circular(6))),
+                      child: ElevatedButton(
+                        onPressed:(){
+                          Get.find<SecureStorage>().writeSecureData(
+                              AllStringConst.AppColor,
+                              Get.find<MController>().appcolor.value);
+                          Navigator.of(context).pop();
+                        },
+                        child: Text(
+                          "save",
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline2!
+                              .copyWith(
+                              color: Colors.white),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    )
+
+                  ]),
+                ));
+          },
+            child: Container(
+              height: 120,
+              color: Colors.transparent,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+
+                children: [
+
+                  Image(
+                    image: AssetImage(
+                      'assets/images/palette_dark.png',
+                    ),
+                    fit: BoxFit.contain,
+                    width: 50,
+                    height:50,
+                  ),
+                  Text(
+                    "appTheme".tr,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: Colors.grey.shade600),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        InkWell(
+          onTap: () {
+            secureStorage.deleteSecureData(AllStringConst.Token);
+            Get.offAll(LoginPage());
+
+            /// ToDo
+            /// delet token and go to login
+
+            //   Globals.navigatorKey.currentState?.pushNamed(LoginPageRoute);
+          },
+          child: Container(
+            height: 120,
+            color: Colors.transparent,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+
+              children: [
+
+                Image(
+                  image: AssetImage(
+                    'assets/images/logout.png',
+                  ),
+                  fit: BoxFit.contain,
+                  width: 50,
+                  height:50,
+                ),
+                Text(
+                  "logout".tr,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline3!
+                      .copyWith(color: Colors.grey.shade600),
+                ),
+              ],
+            ),
+          ),
+        )
+      ],),
+    );
+
+  }
   landscapeDashboardContainer(BuildContext contex) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -2356,7 +2883,7 @@ Get.offAll(LoginPage());
                       ),
                     ),
                   ),
-                ],
+               ],
               ),
             ),
           )
@@ -2373,229 +2900,9 @@ Get.offAll(LoginPage());
       decoration: BoxDecoration(
         color: createMaterialColor(Color.fromRGBO(255, 255, 255, 0.8)),
       ),
-      child: Wrap(
-        crossAxisAlignment: WrapCrossAlignment.start,
-        children: [
-          _buildDataLabelTitleLabel(
-            context,
-            "mail".tr,
-          ),
-          Table(
-            border: TableBorder(
-              horizontalInside: BorderSide(
-                  width: 1,
-                  color: Colors.grey.shade300,
-                  style: BorderStyle.solid),
-              bottom: BorderSide(
-                  width: 1,
-                  color: Colors.grey.shade300,
-                  style: BorderStyle.solid),
-            ),
-            children: [
-              TableRow(
-                children: [
-                  TableRowInkWell(
-                    onTap: () {
-                      openInbox();
-                    },
-                    child: _buildInboxesRow(
-                      context,
-                      "forAction".tr,
-                      5,
-                    ),
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  TableRowInkWell(
-                    onTap: () {
-                      openInbox();
-                    },
-                    child: _buildInboxesRow(
-                      context,
-                      "forSignature".tr,
-                      07,
-                    ),
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  TableRowInkWell(
-                    onTap: () {
-                      openInbox();
-                    },
-                    child: _buildInboxesRow(
-                      context,
-                      "forInfo".tr,
-                      09,
-                    ),
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  TableRowInkWell(
-                    onTap: () {
-                      openInbox();
-                    },
-                    child: _buildInboxesRow(
-                      context,
-                      "all".tr,
-                      2,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          _buildDataLabelTitleLabel(context, "folders".tr),
-          Table(
-            border: TableBorder(
-              horizontalInside: BorderSide(
-                  width: 1,
-                  color: Colors.grey.shade300,
-                  style: BorderStyle.solid),
-              bottom: BorderSide(
-                  width: 1,
-                  color: Colors.grey.shade300,
-                  style: BorderStyle.solid),
-            ),
-            children: [
-              TableRow(
-                children: [
-                  TableRowInkWell(
-                    onTap: () {
-                      openInbox();
-                    },
-                    child: _buildOtherFoldersRows(
-                      context,
-                      "flagged".tr,
-                      "assets/images/flagged.png",
-                      true,
-                      5,
-                    ),
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  TableRowInkWell(
-                    onTap: () {
-                      openInbox();
-                    },
-                    child: _buildOtherFoldersRows(
-                      context,
-                      "notifications".tr,
-                      "assets/images/notification.png",
-                      true,
-                      9,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          _buildDataLabelTitleLabel(context, "search".tr),
-          Table(
-            border: TableBorder(
-              horizontalInside: BorderSide(
-                  width: 1,
-                  color: Colors.grey.shade300,
-                  style: BorderStyle.solid),
-              bottom: BorderSide(
-                  width: 1,
-                  color: Colors.grey.shade300,
-                  style: BorderStyle.solid),
-            ),
-            children: [
-              TableRow(
-                children: [
-                  TableRowInkWell(
-                    onTap: () {
-                Get.toNamed("SearchPage");
-                    },
-                    child: _buildOtherFoldersRows(context, "advancedSearch".tr,
-                        "assets/images/search.png", false, 0),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Container(
-                  color: Colors.grey[200],
-                  padding:
-                      EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 0),
-                  height: 65,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        child: Image(
-                          image: AssetImage(
-                            returnImageNameBasedOnOppositeDirection(
-                                "assets/images/arrow", context, "png"),
-                          ),
-                        ),
-                      ),
-                      Text(
-                        controller.data?.departmentName ?? "",
-                        //        "sharedServicesAdministration".tr,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline2!
-                            .copyWith(color: Colors.grey),
-                        textAlign: TextAlign.start,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  landscapeDataTable(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-          left: 60,
-          right: 60,
-          top: calculateHeight(100, context),
-          bottom: calculateHeight(80, context)),
-      child: Container(
-        alignment: Alignment.centerRight,
-        decoration: BoxDecoration(
-          color: createMaterialColor(Color.fromRGBO(255, 255, 255, 0.8)),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(6),
-            topRight: Radius.circular(6),
-            bottomLeft: Radius.circular(6),
-            bottomRight: Radius.circular(6),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.25),
-              spreadRadius: 6,
-              blurRadius: 6,
-              offset: Offset(0, 0),
-            ),
-          ],
-        ),
+      child: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+         // crossAxisAlignment: WrapCrossAlignment.start,
           children: [
             _buildDataLabelTitleLabel(
               context,
@@ -2671,9 +2978,238 @@ Get.offAll(LoginPage());
                 ),
               ],
             ),
+            _buildDataLabelTitleLabel(context, "folders".tr),
+            Table(
+              border: TableBorder(
+                horizontalInside: BorderSide(
+                    width: 1,
+                    color: Colors.grey.shade300,
+                    style: BorderStyle.solid),
+                bottom: BorderSide(
+                    width: 1,
+                    color: Colors.grey.shade300,
+                    style: BorderStyle.solid),
+              ),
+              children: [
+                TableRow(
+                  children: [
+                    TableRowInkWell(
+                      onTap: () {
+                        openInbox();
+                      },
+                      child: _buildOtherFoldersRows(
+                        context,
+                        "flagged".tr,
+                        "assets/images/flagged.png",
+                        true,
+                        5,
+                      ),
+                    ),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    TableRowInkWell(
+                      onTap: () {
+                        openInbox();
+                      },
+                      child: _buildOtherFoldersRows(
+                        context,
+                        "notifications".tr,
+                        "assets/images/notification.png",
+                        true,
+                        9,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            _buildDataLabelTitleLabel(context, "search".tr),
+            Table(
+              border: TableBorder(
+                horizontalInside: BorderSide(
+                    width: 1,
+                    color: Colors.grey.shade300,
+                    style: BorderStyle.solid),
+                bottom: BorderSide(
+                    width: 1,
+                    color: Colors.grey.shade300,
+                    style: BorderStyle.solid),
+              ),
+              children: [
+                TableRow(
+                  children: [
+                    TableRowInkWell(
+                      onTap: () {
+                  Get.toNamed("SearchPage");
+                      },
+                      child: _buildOtherFoldersRows(context, "advancedSearch".tr,
+                          "assets/images/search.png", false, 0),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Container(  height: 100,width: MediaQuery.of(context).size.width, child: _buildSideMenuPort(  context),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Container(
+                    color: Colors.grey[200],
+                    padding:
+                        EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 0),
+                    height: 65,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: Image(
+                            image: AssetImage(
+                              returnImageNameBasedOnOppositeDirection(
+                                  "assets/images/arrow", context, "png"),
+                            ),
+                          ),
+                        ),
+                        Text(
+                          controller.data?.departmentName ?? "",
+                          //        "sharedServicesAdministration".tr,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline2!
+                              .copyWith(color: Colors.grey),
+                          textAlign: TextAlign.start,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  landscapeDataTable(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+          left: 60,
+          right: 60,
+          top: calculateHeight(100, context),
+          bottom: calculateHeight(80, context)),
+      child: Container(
+        alignment: Alignment.centerRight,
+        decoration: BoxDecoration(
+          color: createMaterialColor(Color.fromRGBO(255, 255, 255, 0.8)),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(6),
+            topRight: Radius.circular(6),
+            bottomLeft: Radius.circular(6),
+            bottomRight: Radius.circular(6),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.25),
+              spreadRadius: 6,
+              blurRadius: 6,
+              offset: Offset(0, 0),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            _buildDataLabelTitleLabel(
+              context,
+              "mail".tr,
+            ),
+
+
+            Table(
+              border: TableBorder(
+                horizontalInside: BorderSide(
+                    width: 1,
+                    color: Colors.grey.shade300,
+                    style: BorderStyle.solid),
+                bottom: BorderSide(
+                    width: 1,
+                    color: Colors.grey.shade300,
+                    style: BorderStyle.solid),
+              ),
+              children: [
+                TableRow(
+                  children: [
+                    TableRowInkWell(
+                      onTap: () {
+                        openInbox();
+                      },
+                      child: _buildInboxesRow(
+                        context,
+                        "forAction".tr,
+                        5,
+                      ),
+                    ),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    TableRowInkWell(
+                      onTap: () {
+                        openInbox();
+                      },
+                      child: _buildInboxesRow(
+                        context,
+                        "forSignature".tr,
+                        07,
+                      ),
+                    ),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    TableRowInkWell(
+                      onTap: () {
+                        openInbox();
+                      },
+                      child: _buildInboxesRow(
+                        context,
+                        "forInfo".tr,
+                        09,
+                      ),
+                    ),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    TableRowInkWell(
+                      onTap: () {
+                        openInbox();
+                      },
+                      child: _buildInboxesRow(
+                        context,
+                        "all".tr,
+                        2,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+
+          //  Container(color: Colors.red, height: 100,width: MediaQuery.of(context).size.width, child: _buildSideMenuPort(  context),),
             Container(
               height: 30,
             ),
+
             _buildDataLabelTitleLabel(context, "folders".tr),
             Table(
               border: TableBorder(
@@ -2722,7 +3258,7 @@ Get.offAll(LoginPage());
               ],
             ),
             Container(
-              height: 30,
+              height: 10,
             ),
             _buildDataLabelTitleLabel(context, "search".tr),
             Table(

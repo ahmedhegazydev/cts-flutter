@@ -1,6 +1,8 @@
+import 'package:cts/screens/search_page.dart';
 import 'package:cts/utility/Extenstions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -10,14 +12,17 @@ import '../controllers/inbox_controller.dart';
 import '../controllers/landing_page_controller.dart';
 import '../controllers/main_controller.dart';
 import '../controllers/my_cart/create_basket_controller.dart';
+import '../controllers/search_controller.dart';
 import '../controllers/web_view_controller.dart';
 import '../services/json_model/basket/fetch_basket_list_model.dart';
+import '../services/json_model/find_recipient_model.dart';
 import '../utility/all_const.dart';
 import '../utility/all_string_const.dart';
 import '../utility/device_size.dart';
 import '../utility/storage.dart';
 import '../utility/utilitie.dart';
 import '../widgets/custom_button.dart';
+import '../widgets/custom_button_with_icon.dart';
 import '../widgets/custom_inboxes_row.dart';
 import '../widgets/custom_landing_row.dart';
 import '../widgets/landing_head_item.dart';
@@ -1549,35 +1554,102 @@ Get.offAll(LoginPage());
         ),
         InkWell(
           onTap: () {
-            // Get.bottomSheet(
-            //   Container(
-            //     //height: 100,
-            //       margin: EdgeInsets.all(20),
-            //       padding: EdgeInsets.all(20),
-            //       decoration: const BoxDecoration(
-            //           color: Colors.white,
-            //           borderRadius: BorderRadius.only(
-            //               topLeft: Radius.circular(20),
-            //               topRight: Radius.circular(20))),
-            //       child: ListView.builder(
-            //           itemCount: //11
-            //           controller.findRecipientModel?.sections?[0]
-            //               .destination?.length,
-            //           itemBuilder: (context, pos) {
-            //             return Padding(
-            //               padding: const EdgeInsets.all(8.0),
-            //               child: Card(elevation: 5,
-            //                 child: Padding(
-            //                   padding: const EdgeInsets.all(8.0),
-            //                   child: Text(controller.findRecipientModel
-            //                       ?.sections?[0].destination?[pos]?.value ??
-            //                       ""),
-            //                 ),
-            //               ),
-            //             );
-            //           })),
-            //   enterBottomSheetDuration: const Duration(seconds: 1),
-            // );
+            Get.bottomSheet(
+              Container(
+                //height: 100,
+                  margin: EdgeInsets.all(20),
+                  padding: EdgeInsets.all(20),
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20))),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TypeAheadField<Destination>(
+                              textFieldConfiguration: TextFieldConfiguration(
+                                controller: controller
+                                    .textEditingControllerTo,
+                                // autofocus: true,
+                                // style: DefaultTextStyle.of(context)
+                                //     .style
+                                //     .copyWith(fontStyle: FontStyle.italic),
+                                decoration:
+                                InputDecoration(border: OutlineInputBorder(),
+                                    labelText: 'To'.tr),
+                              ),
+                              suggestionsCallback: (pattern) async {
+                                return controller.users.where((element) =>
+                                    element.value!
+                                        .toLowerCase()
+                                        .contains(pattern.toLowerCase()));
+
+                                //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
+                              },
+                              itemBuilder: (context, suggestion) {
+                                Destination v = suggestion;
+
+                                return // Te(v.originalName!);
+
+
+                                  ListTile(
+                                    title: FilterText(v.value!),
+                                  );
+                              },
+                              onSuggestionSelected: (suggestion) {
+                                Destination v = suggestion;
+                                controller.textEditingControllerTo.text =
+                                    v.value ?? "";
+                                controller.to=v;
+
+
+                                // v
+                                // .cLASNAMEDISPLAY;
+                                // Navigator.of(context).push(MaterialPageRoute(
+                                //     builder: (context) => ProductPage(product: suggestion)
+                                // ));
+                              },
+                            ),
+                          ),
+                          SizedBox(width: 2,),
+                          CustomButtonWithIcon(icon: Icons.person,onClick: (){
+                            controller.listOfUser(0);
+                          },)
+                          ,
+                          SizedBox(width: 2,),
+                          CustomButtonWithIcon(icon:Icons.account_balance,onClick: (){
+                            controller.listOfUser(2);
+                          },)
+                          ,
+                          SizedBox(width: 2,),
+                          CustomButtonWithIcon(icon: Icons.clear,onClick: (){
+                            controller.listOfUser(0);
+                          },)],
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                            itemCount: 11
+                          ,
+                            itemBuilder: (context, pos) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Card(elevation: 5,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                        "jklniooii"),
+                                  ),
+                                ),
+                              );
+                            }),
+                      ),
+                    ],
+                  )),
+              enterBottomSheetDuration: const Duration(seconds: 1),
+             );
           },
           child: Container(width: 50,
             height: 140,

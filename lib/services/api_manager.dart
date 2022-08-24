@@ -33,7 +33,7 @@ abstract class ApiManager {
     data}) async {
     AbstractJsonResource? json;
     var data;
-    print("checkIfSavedSettingsBasUrl = $checkIfSavedSettingsBasUrl");
+  //  print("checkIfSavedSettingsBasUrl = $checkIfSavedSettingsBasUrl");
     showLoaderDialog(context!);
     await dioSingleton.dio
         .get(checkIfSavedSettingsBasUrl(), queryParameters: data)
@@ -94,11 +94,11 @@ abstract class ApiManager {
   }
 
   String checkIfSavedSettingsBasUrl() {
-    var storageBaseUrl =
-        secureStorage.readSecureData(AllStringConst.BaseUrl) ?? "";
-    if (storageBaseUrl.isNotEmpty) {
-      return storageBaseUrl;
-    }
+    // var storageBaseUrl =
+    //     secureStorage.readSecureData(AllStringConst.BaseUrl) ?? "";
+    // if (storageBaseUrl.isNotEmpty) {
+    //   return storageBaseUrl;
+    // }
     return apiUrl();
   }
 }

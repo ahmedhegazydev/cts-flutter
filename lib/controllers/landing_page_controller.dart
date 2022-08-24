@@ -35,6 +35,7 @@ class LandingPageController extends GetxController {
       TextEditingController();
   TextEditingController textEditingControllerTo = TextEditingController();
   List<Destination> users = [];
+  List<Destination> selectFavusers = [];
   Destination? to;
   FindRecipientModel? findRecipientModel;
   // AddEditBasketFlagModel? addEditBasketFlagModel;
@@ -64,7 +65,17 @@ class LandingPageController extends GetxController {
     users = findRecipientModel?.sections?[pos].destination ?? [];
     update();
   }
+  updateselectFavusers(Destination destination){
+    if(!selectFavusers.contains(destination)){
+      selectFavusers.add(destination);
+      update();
+    }
 
+  }
+ deletselectFavusers(Destination destination){
+    selectFavusers.remove(destination);
+    update();
+  }
   @override
   void onReady() {
     super.onReady();

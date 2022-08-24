@@ -2546,19 +2546,20 @@ class LandingPage extends GetWidget<LandingPageController> {
                                     .copyWith(
                                     color: Colors.grey,
                                     fontSize:
-                                    calculateFontSize(16, context)),
+                                    calculateFontSize(25, context)),
                                 textAlign: TextAlign.center,
                               ),
                             ),
                             Flexible(
                               flex: 1,
                               child: Text(
-                                controller.data?.inbox.toString() ?? "",
+                                // controller.data?.inbox.toString() ?? "",
+                                "20",
                                 style: Theme
                                     .of(context)
                                     .textTheme
                                     .headline3!
-                                    .copyWith(fontSize: 24),
+                                    .copyWith(fontSize: 20),
                                 textAlign: TextAlign.center,
                               ),
                             )
@@ -2607,14 +2608,14 @@ class LandingPage extends GetWidget<LandingPageController> {
                                     .copyWith(
                                     color: Colors.grey,
                                     fontSize:
-                                    calculateFontSize(16, context)),
+                                    calculateFontSize(25, context)),
                                 textAlign: TextAlign.center,
                               ),
                             ),
                             Flexible(
                               flex: 1,
                               child: Text(
-                                "pendingCorrespondences"
+                                "20"
                                 //controller.data?.transferData.sections[].destination
                                 // controller.data?.transferData.priorities
                                 //   controller.data?.transferData.privacies.
@@ -2626,7 +2627,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                     .of(context)
                                     .textTheme
                                     .headline3!
-                                    .copyWith(fontSize: 24),
+                                    .copyWith(fontSize: 20),
                                 textAlign: TextAlign.center,
                               ),
                             )
@@ -2694,7 +2695,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                     .copyWith(
                                     color: Colors.grey,
                                     fontSize:
-                                    calculateFontSize(16, context)),
+                                    calculateFontSize(25, context)),
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -2706,7 +2707,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                     .of(context)
                                     .textTheme
                                     .headline3!
-                                    .copyWith(fontSize: 24),
+                                    .copyWith(fontSize: 20),
                                 textAlign: TextAlign.center,
                               ),
                             )
@@ -2757,7 +2758,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                     .copyWith(
                                     color: Colors.grey,
                                     fontSize:
-                                    calculateFontSize(16, context)),
+                                    calculateFontSize(25, context)),
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -2769,7 +2770,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                     .of(context)
                                     .textTheme
                                     .headline3!
-                                    .copyWith(fontSize: 24),
+                                    .copyWith(fontSize: 20),
                                 textAlign: TextAlign.center,
                               ),
                             )
@@ -3032,7 +3033,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                                       .copyWith(
                                     color: Colors.grey,
                                     fontSize:
-                                    calculateFontSize(30, context),
+                                    // 25
+                                    calculateFontSize(25, context),
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -3047,7 +3049,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                                       .headline3!
                                       .copyWith(
                                     fontSize:
-                                    calculateFontSize(80, context),
+                                      // 20
+                                    calculateFontSize(20, context),
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -3104,7 +3107,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                       .copyWith(
                                     color: Colors.grey,
                                     fontSize:
-                                    calculateFontSize(30, context),
+                                    calculateFontSize(25, context),
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -3119,7 +3122,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                       .headline3!
                                       .copyWith(
                                     fontSize:
-                                    calculateFontSize(80, context),
+                                    calculateFontSize(20, context),
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -3191,7 +3194,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                       .copyWith(
                                     color: Colors.grey,
                                     fontSize:
-                                    calculateFontSize(30, context),
+                                    calculateFontSize(25, context),
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -3206,7 +3209,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                       .headline3!
                                       .copyWith(
                                     fontSize:
-                                    calculateFontSize(80, context),
+                                    calculateFontSize(20, context),
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -3263,7 +3266,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                       .copyWith(
                                     color: Colors.grey,
                                     fontSize:
-                                    calculateFontSize(38, context),
+                                    calculateFontSize(25, context),
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -3278,7 +3281,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                       .headline3!
                                       .copyWith(
                                     fontSize:
-                                    calculateFontSize(47, context),
+                                    calculateFontSize(20, context),
                                   ),
                                   textAlign: TextAlign.center,
                                 ),

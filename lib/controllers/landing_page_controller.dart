@@ -33,7 +33,11 @@ class LandingPageController extends GetxController {
       TextEditingController();
   TextEditingController textEditingControllerArabicName =
       TextEditingController();
-
+  TextEditingController textEditingControllerTo = TextEditingController();
+  List<Destination> users = [];
+  List<Destination> selectFavusers = [];
+  Destination? to;
+  FindRecipientModel? findRecipientModel;
   // AddEditBasketFlagModel? addEditBasketFlagModel;
 
   // RemoveBasketRequest? removeBasketRequest;
@@ -46,16 +50,42 @@ class LandingPageController extends GetxController {
     this.isSavingOrder = saving;
     update();
   }
+  getFindRecipientData({required context}) async {
+    final FindRecipient _findRecipient = FindRecipient(context);
+    _findRecipient.data =
+    "Token=${_secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+    await _findRecipient.getData().then((value) {
+      findRecipientModel = value as FindRecipientModel;
+      listOfUser(0);
+      //print(findRecipientModel?.toJson() );
+    });
+    update();
+  }
+  listOfUser(int pos) {
+    users = findRecipientModel?.sections?[pos].destination ?? [];
+    update();
+  }
+  updateselectFavusers(Destination destination){
+    if(!selectFavusers.contains(destination)){
+      selectFavusers.add(destination);
+      update();
+    }
 
+  }
+ deletselectFavusers(Destination destination){
+    selectFavusers.remove(destination);
+    update();
+  }
   @override
   void onReady() {
     super.onReady();
     _logindata = _secureStorage.readSecureJsonData(AllStringConst.LogInData);
     data = LoginModel.fromJson(_logindata!);
     // getFindRecipientData();
-
-    // Get.find<SearchController>().getAllData();
+    getFindRecipientData(context: context);
+     //Get.find<SearchController>().getAllData();
     Get.find<DocumentController>().getFindRecipientData(context: context);
+
   }
 
   String userName() {

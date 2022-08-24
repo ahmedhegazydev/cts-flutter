@@ -33,7 +33,7 @@ abstract class ApiManager {
     data}) async {
     AbstractJsonResource? json;
     var data;
-    print("checkIfSavedSettingsBasUrl = $checkIfSavedSettingsBasUrl");
+  //  print("checkIfSavedSettingsBasUrl = $checkIfSavedSettingsBasUrl");
     showLoaderDialog(context!);
     await dioSingleton.dio
         .get(checkIfSavedSettingsBasUrl(), queryParameters: data)

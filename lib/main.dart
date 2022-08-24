@@ -1,3 +1,4 @@
+import 'package:cts/screens/Login_page.dart';
 import 'package:cts/screens/my_cart/MyPocketsScreen.dart';
 import 'package:cts/screens/web_view_page.dart';
 import 'package:cts/screens/filter/FilterSideScreen.dart';
@@ -117,8 +118,8 @@ class MyApp extends StatelessWidget {
         ),
         getPages: [
           GetPage(name: "/", page: () =>
-              // LoginPage(),
-              LandingPage(),
+              LoginPage(),
+              // LandingPage(),
               // InboxPage(),
               middlewares: [AuthMiddleWare()]), //SearchPage
           GetPage(

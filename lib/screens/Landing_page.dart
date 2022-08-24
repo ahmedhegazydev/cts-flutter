@@ -1109,6 +1109,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                           enableFeedback: !(basket.canBeReOrder ?? false),
                           title: Card(
                             elevation: 10,
+                            color: basket.color?.toColor(),
                             child: Column(children: [
                               Text(basket.name ?? ""),
                               Text(basket.nameAr ?? ""),

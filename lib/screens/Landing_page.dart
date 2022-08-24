@@ -2686,8 +2686,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                               child: Text(
                                 "myTransfersInMonth".tr +
                                     " " +
-                                    calculateDate(
-                                        'MMMM', getLocaleCode(context)),
+                                    // calculateDate('MMMM', getLocaleCode(context)),
+                                    calculateDate('MMMM', Get.locale?.languageCode == "en" ? "en" : "ar"),
                                 style: Theme
                                     .of(context)
                                     .textTheme

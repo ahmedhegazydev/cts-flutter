@@ -38,6 +38,7 @@ class _BasketListTileState extends State<BasketListTile> {
     );
   }
 }
+import 'Login_page.dart';
 
 class LandingPage extends GetWidget<LandingPageController> {
   SecureStorage secureStorage = Get.find<SecureStorage>();
@@ -465,188 +466,210 @@ class LandingPage extends GetWidget<LandingPageController> {
             ///open url and go to userGuideUrl
             //  controller.data.userGuideUrl
 
-            Get.find<WebViewPageController>().url =
-                controller.data?.userGuideUrl;
-            Get.toNamed(
-              "WebViewPage",
-            );
-          },
-          child: Container(
-            height: 120,
-            color: Colors.transparent,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Spacer(
-                  flex: 1,
-                ),
-                Flexible(
-                  flex: 3,
-                  child: Image(
-                    image: AssetImage(
-                      'assets/images/delegation.png',
-                    ),
-                    fit: BoxFit.contain,
-                    width: double.infinity,
-                    height: double.infinity,
-                  ),
-                ),
-                Flexible(
-                  flex: 1,
-                  child: Text(
-                    "user Guide".tr,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline3!
-                        .copyWith(color: Colors.grey.shade600),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        InkWell(
-          onTap: () {
-            showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                      title: const Text("pick your Color"),
-                      content: Column(children: [
-                        buildColorPickerCreateNewTask(),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 8.0, bottom: 8, right: 20, left: 20),
-                          child: Row(children: [
-                            Expanded(
-                              child: Container(
-                                padding: const EdgeInsets.only(
-                                    left: 0, right: 0, top: 0, bottom: 0),
-                                height: 60,
-                                decoration: BoxDecoration(
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(6))),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    var locale = const Locale('ar', 'AR');
-                                    Get.updateLocale(locale);
-                                  },
-                                  child: Text(
-                                    "عربي",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline2!
-                                        .copyWith(color: Colors.white),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                              child: Container(
-                                padding: const EdgeInsets.only(
-                                    left: 0, right: 0, top: 0, bottom: 0),
-                                height: 60,
-                                decoration: BoxDecoration(
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(6))),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    var locale = const Locale('en', 'US');
-                                    Get.updateLocale(locale);
-                                  },
-                                  child: Text(
-                                    "En",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline2!
-                                        .copyWith(color: Colors.white),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              ),
-                            )
-                          ]),
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * .7,
-                          padding: const EdgeInsets.only(
-                              left: 0, right: 0, top: 0, bottom: 0),
-                          height: 60,
-                          decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.primary,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(6))),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Get.find<SecureStorage>().writeSecureData(
-                                  AllStringConst.AppColor,
-                                  Get.find<MController>().appcolor.value);
-                              Navigator.of(context).pop();
-                            },
-                            child: Text(
-                              "save",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline2!
-                                  .copyWith(color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        )
-                      ]),
-                    ));
-          },
-          child: Container(
-            height: 120,
-            color: Colors.transparent,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Spacer(
-                  flex: 1,
-                ),
-                Flexible(
-                  flex: 3,
-                  child: Image(
-                    image: AssetImage(
-                      'assets/images/palette_dark.png',
-                    ),
-                    fit: BoxFit.contain,
-                    width: double.infinity,
-                    height: double.infinity,
-                  ),
-                ),
-                Flexible(
-                  flex: 1,
-                  child: Text(
-                    "appTheme".tr,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline3!
-                        .copyWith(color: Colors.grey.shade600),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        InkWell(
-          onTap: () {
-            /// ToDo
-            /// delet token and go to login
+Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
+         Get.toNamed( "WebViewPage",);
+       },
+         child: Container(
+           height: 120,
+           color: Colors.transparent,
+           child: Column(
+             mainAxisAlignment: MainAxisAlignment.spaceAround,
+             crossAxisAlignment: CrossAxisAlignment.center,
+             mainAxisSize: MainAxisSize.max,
+             children: [
+               Spacer(
+                 flex: 1,
+               ),
+               Flexible(
+                 flex: 3,
+                 child: Image(
+                   image: AssetImage(
+                     'assets/images/delegation.png',
+                   ),
+                   fit: BoxFit.contain,
+                   width: double.infinity,
+                   height: double.infinity,
+                 ),
+               ),
+               Flexible(
+                 flex: 1,
+                 child: Text(
+                   "user Guide".tr,
+                   textAlign: TextAlign.center,
+                   style: Theme.of(context)
+                       .textTheme
+                       .headline3!
+                       .copyWith(color: Colors.grey.shade600),
+                 ),
+               ),
+             ],
+           ),
+         ),
+       ),
+
+       InkWell(onTap: (){
+         showDialog(
+             context: context,
+             builder: (context) => AlertDialog(
+               title: const Text("pick your Color"),
+               content: Column(children: [
+                 buildColorPicker(),
+                 Padding(
+                   padding: const EdgeInsets.only(
+                       top: 8.0, bottom: 8, right: 20, left: 20),
+                   child: Row(children: [
+                     Expanded(
+                       child: Container(
+                         padding: const EdgeInsets.only(
+                             left: 0,
+                             right: 0,
+                             top: 0,
+                             bottom: 0),
+
+                         height: 60,
+                         decoration: BoxDecoration(
+                             color: Theme.of(context)
+                                 .colorScheme
+                                 .primary,
+                             borderRadius: const BorderRadius.all(
+                                 Radius.circular(6))),
+                         child: ElevatedButton(
+                           onPressed:(){
+                             var locale = const Locale('ar', 'AR');
+                             Get.updateLocale(locale);
+                           },
+                           child: Text(
+                             "عربي",
+                             style: Theme.of(context)
+                                 .textTheme
+                                 .headline2!
+                                 .copyWith(
+                                 color: Colors.white),
+                             textAlign: TextAlign.center,
+                           ),
+                         ),
+                       ),
+                     )
+                     ,SizedBox(width: 10,)   ,
+
+                     Expanded(
+                       child: Container(
+                         padding: const EdgeInsets.only(
+                             left: 0,
+                             right: 0,
+                             top: 0,
+                             bottom: 0),
+
+                         height: 60,
+                         decoration: BoxDecoration(
+                             color: Theme.of(context)
+                                 .colorScheme
+                                 .primary,
+                             borderRadius: const BorderRadius.all(
+                                 Radius.circular(6))),
+                         child: ElevatedButton(
+                           onPressed:(){
+                             var locale = const Locale('en', 'US');
+                             Get.updateLocale(locale);
+                           },
+                           child: Text(
+                             "En",
+                             style: Theme.of(context)
+                                 .textTheme
+                                 .headline2!
+                                 .copyWith(
+                                 color: Colors.white),
+                             textAlign: TextAlign.center,
+                           ),
+                         ),
+                       ),
+                     )
+
+                   ]),
+                 ),
+
+
+
+                 Container(width: MediaQuery.of(context).size.width*.7,
+                   padding: const EdgeInsets.only(
+                       left: 0,
+                       right: 0,
+                       top: 0,
+                       bottom: 0),
+
+                   height: 60,
+                   decoration: BoxDecoration(
+                       color: Theme.of(context)
+                           .colorScheme
+                           .primary,
+                       borderRadius: const BorderRadius.all(
+                           Radius.circular(6))),
+                   child: ElevatedButton(
+                     onPressed:(){
+                       Get.find<SecureStorage>().writeSecureData(
+                           AllStringConst.AppColor,
+                           Get.find<MController>().appcolor.value);
+                       Navigator.of(context).pop();
+                     },
+                     child: Text(
+                       "save",
+                       style: Theme.of(context)
+                           .textTheme
+                           .headline2!
+                           .copyWith(
+                           color: Colors.white),
+                       textAlign: TextAlign.center,
+                     ),
+                   ),
+                 )
+
+               ]),
+             ));
+       },
+         child: Container(
+           height: 120,
+           color: Colors.transparent,
+           child: Column(
+             mainAxisAlignment: MainAxisAlignment.spaceAround,
+             crossAxisAlignment: CrossAxisAlignment.center,
+             mainAxisSize: MainAxisSize.max,
+             children: [
+               Spacer(
+                 flex: 1,
+               ),
+               Flexible(
+                 flex: 3,
+                 child: Image(
+                   image: AssetImage(
+                     'assets/images/palette_dark.png',
+                   ),
+                   fit: BoxFit.contain,
+                   width: double.infinity,
+                   height: double.infinity,
+                 ),
+               ),
+               Flexible(
+                 flex: 1,
+                 child: Text(
+                   "appTheme".tr,
+                   textAlign: TextAlign.center,
+                   style: Theme.of(context)
+                       .textTheme
+                       .headline3!
+                       .copyWith(color: Colors.grey.shade600),
+                 ),
+               ),
+             ],
+           ),
+         ),
+       ),
+       InkWell(
+         onTap: () {
+           secureStorage.deleteSecureData(AllStringConst.Token);
+Get.offAll(LoginPage());
+
+           /// ToDo
+           /// delet token and go to login
 
             //   Globals.navigatorKey.currentState?.pushNamed(LoginPageRoute);
           },

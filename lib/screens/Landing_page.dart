@@ -99,21 +99,23 @@ class LandingPage extends GetWidget<LandingPageController> {
                   ),
                 ),
               ),
+        //    _buildSideMenuPort(  context)
+
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 30, bottom: 5),
-          child: Align(
-            alignment: appLocale == "ar"
-                ? Alignment.bottomLeft
-                : Alignment.bottomRight,
-            child: Image.asset(
-              "assets/images/arrow_right.png",
-              width: 200,
-            ),
-          ),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.only(left: 30, bottom: 5),
+        //   child: Align(
+        //     alignment: appLocale == "ar"
+        //         ? Alignment.bottomLeft
+        //         : Alignment.bottomRight,
+        //     child: Image.asset(
+        //       "assets/images/arrow_right.png",
+        //       width: 200,
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }
@@ -231,6 +233,7 @@ class LandingPage extends GetWidget<LandingPageController> {
           flex: 9,
           child: portiraitDashboard(contex),
         ),
+
       ],
     );
   }
@@ -1082,449 +1085,531 @@ Get.offAll(LoginPage());
     //   ],
     // );
   }
+  _buildSideMenuPort(BuildContext context){
+    return   Container(height: 150,
+      child: Row(  mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
+        InkWell(onTap: (){
+          print("999999999999");
+          Get.toNamed("SignaturePage");
+        },
+          child: Column(
+            //    mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
 
-  Future<void> showAllBasketsDialog(BuildContext context) async {
-    await inboxController.getFetchBasketList(context: context);
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(" "),
-        content: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-              width: MediaQuery.of(context).size.width * .3,
-              color: Colors.grey[200],
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Spacer(),
-                      // controller.isSavingOrder
-                      //     ? IconButton(
-                      //         icon: Icon(Icons.check), onPressed: () {})
-                      //     : Container(),
-                    ],
+            children: [
+
+              Image(
+                image: AssetImage(
+                  'assets/images/signature.png',
+                ),
+                fit: BoxFit.contain,
+                width: 50,
+                height:50,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "mySignatures".tr,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline3!
+                      .copyWith(color: Colors.grey.shade600),
+                ),
+              ),
+            ],
+          ),
+        ),
+        InkWell(
+          onTap: () {
+            // Get.bottomSheet(
+            //   Container(
+            //     //height: 100,
+            //       margin: EdgeInsets.all(20),
+            //       padding: EdgeInsets.all(20),
+            //       decoration: const BoxDecoration(
+            //           color: Colors.white,
+            //           borderRadius: BorderRadius.only(
+            //               topLeft: Radius.circular(20),
+            //               topRight: Radius.circular(20))),
+            //       child: ListView.builder(
+            //           itemCount: //11
+            //           controller.findRecipientModel?.sections?[0]
+            //               .destination?.length,
+            //           itemBuilder: (context, pos) {
+            //             return Padding(
+            //               padding: const EdgeInsets.all(8.0),
+            //               child: Card(elevation: 5,
+            //                 child: Padding(
+            //                   padding: const EdgeInsets.all(8.0),
+            //                   child: Text(controller.findRecipientModel
+            //                       ?.sections?[0].destination?[pos]?.value ??
+            //                       ""),
+            //                 ),
+            //               ),
+            //             );
+            //           })),
+            //   enterBottomSheetDuration: const Duration(seconds: 1),
+            // );
+          },
+          child: Container(width: 50,
+            height: 140,
+            color: Colors.transparent,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+
+
+              children: [
+
+                Image(
+                  image: AssetImage(
+                    'assets/images/fav_users.png',
                   ),
-                  Expanded(
-                      child: ReorderableListView(
-                    buildDefaultDragHandles: true,
-                    // buildDefaultDragHandles: false,
-                    padding: const EdgeInsets.symmetric(horizontal: 40),
-                    children: <Widget>[
-                      // for (int index = 0;
-                      //     index <
-                      //         inboxController
-                      //             .fetchBasketListModel!
-                      //             .baskets!
-                      //             .length;
-                      //     // 4;
-                      //     index += 1)
-                      for (final basket
-                          in inboxController.fetchBasketListModel!.baskets!)
-                        ListTile(
-                          // key: Key('$index'),
-                          key: ValueKey(basket),
-                          // tileColor: _items[index].isOdd ? oddItemColor : evenItemColor,
-                          onLongPress:
-                              !(basket.canBeReOrder ?? false) ? () {} : null,
-                          onTap: !(basket.canBeReOrder ?? false) ? () {} : null,
-                          enabled: !(basket.canBeReOrder ?? false),
-                          enableFeedback: !(basket.canBeReOrder ?? false),
-                          title: Card(
-                            elevation: 10,
-                            color: basket.color?.toColor(),
-                            child: Column(children: [
-                              Text(basket.name ?? ""),
-                              Text(basket.nameAr ?? ""),
-                              // Text( "color :${inboxController
-                              //     .fetchBasketListModel
-                              //     ?.baskets?[pos].color}",style: TextStyle( color:  HexColor(inboxController
-                              //     .fetchBasketListModel
-                              //     ?.baskets?[pos].color??"#000000"))),
+                  fit: BoxFit.contain,
+                  width: 50,
+                  height:50,
+                ),
+                Text(
+                  "favoritesUsers".tr,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline3!
+                      .copyWith(color: Colors.grey.shade600),
+                ),
+              ],
+            ),
+          ),
+        ),
+        InkWell(onTap: (){
+          // Get.bottomSheet(
+          //   Container(
+          //     //height: 100,
+          //       margin: EdgeInsets.all(20),
+          //       padding: EdgeInsets.all(20),
+          //       decoration: const BoxDecoration(
+          //           color: Colors.white,
+          //           borderRadius: BorderRadius.only(
+          //               topLeft: Radius.circular(20),
+          //               topRight: Radius.circular(20))),
+          //       child: ListView.builder(
+          //           itemCount: //11
+          //           controller.findRecipientModel?.sections?[0]
+          //               .destination?.length,
+          //           itemBuilder: (context, pos) {
+          //             return Padding(
+          //               padding: const EdgeInsets.all(8.0),
+          //               child: Card(elevation: 5,
+          //                 child: Padding(
+          //                   padding: const EdgeInsets.all(8.0),
+          //                   child: Text(controller.findRecipientModel
+          //                       ?.sections?[2].destination?[pos]?.value ??
+          //                       ""),
+          //                 ),
+          //               ),
+          //             );
+          //           })),
+          //   enterBottomSheetDuration: const Duration(seconds: 1),
+          // );
+        },
+          child: Container(
+            height: 120,width: 50,
+            color: Colors.transparent,
+            child: Column(
 
-                              GestureDetector(
-                                onTap: () {
-                                  //هنا هنعمل دليت
-                                  controller.removeBasket(
-                                    context: context,
-                                    basketId: basket.iD,
-                                    onSuccess: (String message) {
-                                      // Navigator.pop(context);
-                                      // Get.back();
-                                      // showAllBasketsDialog(context);
-                                      return null;
-                                    },
-                                  );
-                                  // showTopSnackBar(
-                                  //   context,
-                                  //   CustomSnackBar.success(
-                                  //     message:
-                                  //     "Good job, basket have been deleted",
-                                  //   ),
-                                  // );
+
+              children: [
+
+                Image(
+                  image: AssetImage(
+                    'assets/images/delegation.png',
+                  ),
+                  fit: BoxFit.contain,
+                  width: 50,
+                  height: 50,
+                ),
+                Text(
+                  "myDelegations".tr,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline3!
+                      .copyWith(color: Colors.grey.shade600),
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        Container(height: 50,width: 50,
+          child: InkWell(onTap: ()async{
+            await    Get.find<InboxController>().getFetchBasketList();
+            showDialog(
+              context: context,
+              builder: (ctx) =>
+                  AlertDialog(
+                    title: Text(" "),
+                    content: Padding(
+                      padding:
+                      const EdgeInsets
+                          .all(8.0),
+                      child: Container(
+                          width: MediaQuery.of(
+                              context)
+                              .size
+                              .width *
+                              .3,
+                          color: Colors
+                              .grey[200],
+                          child: ListView.builder(
+                              itemCount: Get.find<
+                                  InboxController>()
+                                  .fetchBasketListModel
+                                  ?.baskets
+                                  ?.length,
+                              itemBuilder:
+                                  (context,
+                                  pos) {
+                                return InkWell(onTap: ()async{
+
+                                  print("${Get.find<InboxController>()
+                                      .fetchBasketListModel
+                                      ?.baskets?[pos].iD}");
+
+                                  Get.find<BasketController>().getBasketInbox(id:Get.find<InboxController>()
+                                      .fetchBasketListModel
+                                  !.baskets![pos].iD! ,pageSize:20 ,pageNumber: 0);
+
+                                  Get.back();
+
+
+                                  Get.toNamed("MyPocketsScreen");
+
                                 },
-                                // child:  Icon(Icons.delete, color: (basket.canBeReOrder ?? false) ? Colors.black: Colors.transparent,) ,
-                                child: (basket.canBeReOrder ?? false)
-                                    ? Icon(Icons.delete)
-                                    : Container(),
-                              ),
-                            ]),
+                                  child: Card(elevation: 10,child: Column(children: [
+                                    Text( Get.find<InboxController>()
+                                        .fetchBasketListModel
+                                        ?.baskets?[pos].name??""),
+                                    Text( Get.find<InboxController>()
+                                        .fetchBasketListModel
+                                        ?.baskets?[pos].nameAr??""),
+                                    // Text( "color :${Get.find<InboxController>()
+                                    //     .fetchBasketListModel
+                                    //     ?.baskets?[pos].color}",style: TextStyle( color: HexColor(Get.find<InboxController>()
+                                    //     .fetchBasketListModel
+                                    //     ?.baskets?[pos].color??"#000000"))),
+
+
+
+                                    GestureDetector(onTap: (){
+                                      //هنا هنعمل دليت
+                                    },child: Icon(Icons.delete)), ]),
+                                  ),
+                                );
+                              })),
+                    ),
+                    actions: <Widget>[
+                      FlatButton(
+                        onPressed:
+                            () async {
+
+                          /// ToDo send Replay
+
+                          Navigator.of(
+                              ctx)
+                              .pop();
+                        },
+                        child: Text("Ok"),
+                      ),
+                      // FlatButton(
+                      //   onPressed:
+                      //       () async {
+                      //
+                      //     /// ToDo send Replay
+                      //         ///  Navigator.of(
+                      //         //                         ctx)
+                      //         //                         .pop();
+                      //         Navigator.of(
+                      //             ctx)
+                      //             .pop();
+                      //         Get.to(BasketPage());
+                      //
+                      //   },
+                      //   child: Text("go to Basket"),
+                      // ),
+                      FlatButton(
+                        onPressed:
+                            () async {
+                          //هنا هنكريت الباسكت
+
+                        },
+                        child: Text("new Basket"),
+                      ), ],
+                  ),
+            );
+            // Get.toNamed( "MyPocketsScreen",);//MyPocketsScreen
+          },
+            child: Container(
+              height: 120,
+              color: Colors.transparent,
+              child: Column(
+
+                children: [
+
+                  Flexible(
+                    flex: 2,
+                    child: Image(
+                      image: AssetImage(
+                        'assets/images/delegation.png',
+                      ),
+                      fit: BoxFit.contain,
+                      width: double.infinity,
+                      height: double.infinity,
+                    ),
+                  ),
+                  Flexible(
+                    flex: 1,
+                    child: Text(
+                      "Basket".tr,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline3!
+                          .copyWith(color: Colors.grey.shade600),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        InkWell(onTap: (){
+          ///ToDo
+          ///open url and go to userGuideUrl
+          //  controller.data.userGuideUrl
+
+          Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
+          Get.toNamed( "WebViewPage",);
+        },
+          child: Container(width: 50,
+            height: 120,
+            color: Colors.transparent,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+
+              children: [
+
+                Image(
+                  image: AssetImage(
+                    'assets/images/delegation.png',
+                  ),
+                  fit: BoxFit.contain,
+                  width: 50,
+                  height: 50,
+                ),
+                Text(
+                  "user Guide".tr,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline3!
+                      .copyWith(color: Colors.grey.shade600),
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        Container(height: 100,width: 50,
+          child: InkWell(onTap: (){
+            showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text("pick your Color"),
+                  content: Column(children: [
+                    buildColorPicker(),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          top: 8.0, bottom: 8, right: 20, left: 20),
+                      child: Row(children: [
+                        Container(
+                          padding: const EdgeInsets.only(
+                              left: 0,
+                              right: 0,
+                              top: 0,
+                              bottom: 0),
+
+                          height: 60,
+                          decoration: BoxDecoration(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primary,
+                              borderRadius: const BorderRadius.all(
+                                  Radius.circular(6))),
+                          child: ElevatedButton(
+                            onPressed:(){
+                              var locale = const Locale('ar', 'AR');
+                              Get.updateLocale(locale);
+                            },
+                            child: Text(
+                              "عربي",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .copyWith(
+                                  color: Colors.white),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                         )
-                    ],
-                    onReorder: (int oldIndex, int newIndex) {
-                      print("onReorder = $oldIndex - $newIndex");
-                      if (oldIndex < newIndex) {
-                        newIndex -= 1;
-                      }
-                      final Baskets item = inboxController
-                          .fetchBasketListModel!.baskets!
-                          .removeAt(oldIndex);
-                      inboxController.fetchBasketListModel!.baskets!
-                          .insert(newIndex, item);
-                    },
-                    onReorderStart: (int index) {
-                      //0-1-2-....
-                      print("onReorderStart = $index");
-                      inboxController.setOldIndex(index);
-                      // print("onReorderStart = ${inboxController.fetchBasketListModel!.baskets![index].canBeReOrder}");
-                      // if (inboxController
-                      //         .fetchBasketListModel!.baskets![index].canBeReOrder ==
-                      //     false) {
-                      //
-                      // }else{
-                      //
-                      // }
-                    },
-                    onReorderEnd: (int index) {
-                      controller.setSavingOrder(true);
-                      //get the item that will be replaced
-                      //check if ite canBeReorder or not
-                      //2-3-4-...
-                      print("onReorderEnd = $index");
-                      if (inboxController.fetchBasketListModel!.baskets![index]
-                              .canBeReOrder ==
-                          false) {
-                        showTopSnackBar(
-                          context,
-                          CustomSnackBar.error(
-                            message:
-                                "${inboxController.fetchBasketListModel!.baskets![index].name} canBeReOrder = false",
+                        ,SizedBox(width: 10,)   ,
+
+                        Container(
+                          padding: const EdgeInsets.only(
+                              left: 0,
+                              right: 0,
+                              top: 0,
+                              bottom: 0),
+
+                          height: 60,
+                          decoration: BoxDecoration(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primary,
+                              borderRadius: const BorderRadius.all(
+                                  Radius.circular(6))),
+                          child: ElevatedButton(
+                            onPressed:(){
+                              var locale = const Locale('en', 'US');
+                              Get.updateLocale(locale);
+                            },
+                            child: Text(
+                              "En",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .copyWith(
+                                  color: Colors.white),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
-                        );
-                      } else {
-                        // print("fetchBasketListModel__ = ${inboxController.fetchBasketListModel?.baskets.toString()}");
-                        // inboxController.fetchBasketListModel?.baskets?.forEach((element) {
-                        //   print(element.orderBy);
-                        // });
-                        if(inboxController.oldIndex != index) {
-                          controller.reOrderBaskets(
-                              context: context,
-                              baskets: inboxController
-                                  .fetchBasketListModel!
-                                  .baskets);
-                        }
-                      }
-                    },
-                  ))
+                        )
+
+                      ]),
+                    ),
+
+
+
+                    Container(width: MediaQuery.of(context).size.width*.7,
+                      padding: const EdgeInsets.only(
+                          left: 0,
+                          right: 0,
+                          top: 0,
+                          bottom: 0),
+
+                      height: 60,
+                      decoration: BoxDecoration(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primary,
+                          borderRadius: const BorderRadius.all(
+                              Radius.circular(6))),
+                      child: ElevatedButton(
+                        onPressed:(){
+                          Get.find<SecureStorage>().writeSecureData(
+                              AllStringConst.AppColor,
+                              Get.find<MController>().appcolor.value);
+                          Navigator.of(context).pop();
+                        },
+                        child: Text(
+                          "save",
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline2!
+                              .copyWith(
+                              color: Colors.white),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    )
+
+                  ]),
+                ));
+          },
+            child: Container(
+              height: 120,
+              color: Colors.transparent,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+
+                children: [
+
+                  Image(
+                    image: AssetImage(
+                      'assets/images/palette_dark.png',
+                    ),
+                    fit: BoxFit.contain,
+                    width: 50,
+                    height:50,
+                  ),
+                  Text(
+                    "appTheme".tr,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: Colors.grey.shade600),
+                  ),
                 ],
-              )
-
-              // child: ListView.builder(
-              //     // itemCount: inboxController
-              //     //     .fetchBasketListModel
-              //     //     ?.baskets
-              //     //     ?.length,
-              //     itemCount: 5,
-              //     itemBuilder: (context, pos) {
-              //       return InkWell(
-              //         onTap: () async {
-              //           print(
-              //               "${inboxController.fetchBasketListModel?.baskets?[pos].iD}");
-              //
-              //           Get.find<BasketController>().getBasketInbox(
-              //               id: inboxController
-              //                   .fetchBasketListModel!
-              //                   .baskets![pos]
-              //                   .iD!,
-              //               pageSize: 20,
-              //               pageNumber: 0);
-              //
-              //           Get.back();
-              //
-              //           Get.toNamed("MyPocketsScreen");
-              //         },
-              //         child: Card(
-              //           elevation: 10,
-              //           child: Column(children: [
-              //             Text(inboxController
-              //                 .fetchBasketListModel
-              //                 ?.baskets?[pos]
-              //                 .name ??
-              //                 ""),
-              //             Text(inboxController
-              //                 .fetchBasketListModel
-              //                 ?.baskets?[pos]
-              //                 .nameAr ??
-              //                 ""),
-              //             // Text( "color :${inboxController
-              //             //     .fetchBasketListModel
-              //             //     ?.baskets?[pos].color}",style: TextStyle( color:  HexColor(inboxController
-              //             //     .fetchBasketListModel
-              //             //     ?.baskets?[pos].color??"#000000"))),
-              //
-              //             GestureDetector(
-              //                 onTap: () {
-              //                   //هنا هنعمل دليت
-              //                   controller.removeBasket(
-              //                       basketId:
-              //                       inboxController
-              //                           .fetchBasketListModel
-              //                           ?.baskets?[pos]
-              //                           .iD);
-              //                 },
-              //                 child: Icon(Icons.delete)),
-              //           ]),
-              //         ),
-              //       );
-              //     })
-
               ),
+            ),
+          ),
         ),
-        actions: <Widget>[
-          FlatButton(
-            onPressed: () async {
-              Navigator.of(ctx).pop();
-            },
-            child: Text("Ok"),
-          ),
-          // Visibility(
-          //     visible: controller.isSavingOrder,
-          //     child: FlatButton(
-          //       onPressed: () async {
-          //         // Navigator.of(ctx).pop();
-          //         // Get.to(BasketPage());
-          //       },
-          //       child: Text("Save Order"),
-          //     )),
-          FlatButton(
-            onPressed: () async {
-              //هنا هنكريت الباسكت
+        InkWell(
+          onTap: () {
+            secureStorage.deleteSecureData(AllStringConst.Token);
+            Get.offAll(LoginPage());
 
-              showInputDialog(
-                  context, 'CreateNewBasket', 'default inpit', 'message');
-            },
-            child: Text("new Basket"),
-          ),
-        ],
-      ),
-    );
-  }
+            /// ToDo
+            /// delet token and go to login
 
-  Future<String?> showInputDialog(
-      BuildContext context, String title, String defaultInput, String message) {
-    var textController = TextEditingController(text: defaultInput);
-    var content = Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        // Text(message), TextField(controller: textController)
-        // CreateNewBasket(),
-
-        Form(
-            // key: controller.createBasketFormKey,
-            // child: LayoutBuilder(builder: (context, constraint) {
-            //   return Container(
+            //   Globals.navigatorKey.currentState?.pushNamed(LoginPageRoute);
+          },
+          child: Container(
+            height: 120,
+            color: Colors.transparent,
             child: Column(
-          children: [
-            // Spacer(),
-            // CustomInputTextFiled(
-            //     validator: controller.validators.nameValidator,
-            //     textEditingController: controller.englishName,
-            //     label: "english_name".tr),
-            // CustomInputTextFiled(
-            //     validator: controller.validators.nameValidator,
-            //     textEditingController: controller.arabicName,
-            //     label: "arabic_name".tr),
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
 
-            Container(
-              // padding: EdgeInsets.only(right: 10, left: 10),
-              padding: EdgeInsets.all(10),
-              child: Container(
-                  padding: EdgeInsets.only(right: 8, left: 8),
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                          color: Theme.of(context).colorScheme.primary),
-                      borderRadius: const BorderRadius.all(Radius.circular(6))),
-                  child: TextField(
-                    controller: controller.textEditingControllerEnglishName,
-                    decoration: InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: "english_name".tr,
-                    ),
-                  )),
+              children: [
+
+                Image(
+                  image: AssetImage(
+                    'assets/images/logout.png',
+                  ),
+                  fit: BoxFit.contain,
+                  width: 50,
+                  height:50,
+                ),
+                Text(
+                  "logout".tr,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline3!
+                      .copyWith(color: Colors.grey.shade600),
+                ),
+              ],
             ),
-
-            Container(
-              // padding: EdgeInsets.only(right: 10, left: 10),
-              padding: EdgeInsets.all(10),
-              child: Container(
-                  padding: EdgeInsets.only(right: 8, left: 8),
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                          color: Theme.of(context).colorScheme.primary),
-                      borderRadius: const BorderRadius.all(Radius.circular(6))),
-                  child: TextField(
-                    controller: controller.textEditingControllerArabicName,
-                    decoration: InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: "arabic_name".tr,
-                    ),
-                  )),
-            ),
-
-            Container(
-              padding: EdgeInsets.only(right: 10, left: 10),
-              width: MediaQuery.of(context).size.width * .3,
-              child: RaisedButton(
-                  onPressed: () {
-                    // inboxController.applyFilter();
-                    // Navigator.pop(context);
-                    showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                              title: Text(
-                                "pick your Color",
-                              ),
-                              content: Column(children: [
-                                ColorPicker(
-                                  pickerColor:
-                                      Get.find<CreateBasketController>()
-                                          .pickerColor,
-                                  onColorChanged: (Color color) {
-                                    // Get.find<MController>().setAppColor(color);
-                                    // print(color);
-                                    // controller.setPickerColor(color);
-                                    Get.find<CreateBasketController>()
-                                        .setPickerColor(color);
-                                    // setState(() {
-                                    //   controller.setPickerColor(color);
-                                    // });
-                                  },
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 8.0, bottom: 8, right: 20, left: 20),
-                                  child: Row(children: []),
-                                ),
-                                Container(
-                                  width: MediaQuery.of(context).size.width * .7,
-                                  padding: const EdgeInsets.only(
-                                      left: 0, right: 0, top: 0, bottom: 0),
-                                  height: 60,
-                                  decoration: BoxDecoration(
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(6))),
-                                  child: ElevatedButton(
-                                      onPressed: () {
-                                        // Get.find<SecureStorage>().writeSecureData(
-                                        //     AllStringConst.AppColor,
-                                        //     Get.find<MController>().appcolor.value);
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: GestureDetector(
-                                        onTap: () {},
-                                        child: Text(
-                                          "save",
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      )),
-                                )
-                              ]),
-                            ));
-                  },
-                  child: GetBuilder<CreateBasketController>(
-                    init: CreateBasketController(),
-                    builder: (_) {
-                      return Text("pick your Color",
-                          style: TextStyle(
-                              // backgroundColor: _.pickerColor,
-                              color: _.pickerColor));
-                    },
-                  )),
-            ),
-
-            Container(
-              height: 40,
-              padding: EdgeInsets.only(right: 10, left: 10),
-              width: MediaQuery.of(context).size.width * .3,
-              child: CustomButton(
-                  name: 'register'.tr,
-                  onPressed: () {
-                    // controller.createNewBasket();
-                    controller.addEditBasket(
-                        context: context,
-                        color: Get.find<CreateBasketController>()
-                            .pickerColor
-                            .toHex(),
-                        nameAr: controller.textEditingControllerArabicName.text,
-                        nameEn:
-                            controller.textEditingControllerEnglishName.text);
-                  }),
-            ),
-          ],
-          // ),
-          // );
-          // }
-        ))
-      ],
-    );
-    // var content = CreateNewBasket();
-
-    return showDialog<String>(
-      context: context,
-      builder: (BuildContext context) {
-        var mediaQuery = MediaQuery.of(context);
-
-        return AnimatedContainer(
-          padding: mediaQuery.padding,
-          duration: const Duration(milliseconds: 300),
-          child: AlertDialog(
-            title: Text(title),
-            content: content,
-            scrollable: true,
-            // actions: <Widget>[
-            //   TextButton(
-            //     child: const Text('Cancel'),
-            //     onPressed: () => Navigator.pop(context),
-            //   ),
-            //   TextButton(
-            //     child: const Text('Okay'),
-            //     onPressed: () => Navigator.pop(context, textController.text),
-            //   ),
-            // ],
           ),
-        );
-      },
+        )
+      ],),
     );
-  }
 
-  Widget buildColorPickerCreateNewTask() {
-    return ColorPicker(
-      pickerColor: Get.find<CreateBasketController>().pickerColor,
-      onColorChanged: (Color color) {
-        // Get.find<MController>().setAppColor(color);
-        // print(color);
-        // controller.setPickerColor(color);
-        Get.find<CreateBasketController>().setPickerColor(color);
-        // setState(() {
-        //   controller.setPickerColor(color);
-        // });
-      },
-    );
   }
-
   landscapeDashboardContainer(BuildContext contex) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -2731,7 +2816,7 @@ Get.offAll(LoginPage());
                       ),
                     ),
                   ),
-                ],
+               ],
               ),
             ),
           )
@@ -2748,229 +2833,9 @@ Get.offAll(LoginPage());
       decoration: BoxDecoration(
         color: createMaterialColor(Color.fromRGBO(255, 255, 255, 0.8)),
       ),
-      child: Wrap(
-        crossAxisAlignment: WrapCrossAlignment.start,
-        children: [
-          _buildDataLabelTitleLabel(
-            context,
-            "mail".tr,
-          ),
-          Table(
-            border: TableBorder(
-              horizontalInside: BorderSide(
-                  width: 1,
-                  color: Colors.grey.shade300,
-                  style: BorderStyle.solid),
-              bottom: BorderSide(
-                  width: 1,
-                  color: Colors.grey.shade300,
-                  style: BorderStyle.solid),
-            ),
-            children: [
-              TableRow(
-                children: [
-                  TableRowInkWell(
-                    onTap: () {
-                      openInbox();
-                    },
-                    child: _buildInboxesRow(
-                      context,
-                      "forAction".tr,
-                      5,
-                    ),
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  TableRowInkWell(
-                    onTap: () {
-                      openInbox();
-                    },
-                    child: _buildInboxesRow(
-                      context,
-                      "forSignature".tr,
-                      07,
-                    ),
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  TableRowInkWell(
-                    onTap: () {
-                      openInbox();
-                    },
-                    child: _buildInboxesRow(
-                      context,
-                      "forInfo".tr,
-                      09,
-                    ),
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  TableRowInkWell(
-                    onTap: () {
-                      openInbox();
-                    },
-                    child: _buildInboxesRow(
-                      context,
-                      "all".tr,
-                      2,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          _buildDataLabelTitleLabel(context, "folders".tr),
-          Table(
-            border: TableBorder(
-              horizontalInside: BorderSide(
-                  width: 1,
-                  color: Colors.grey.shade300,
-                  style: BorderStyle.solid),
-              bottom: BorderSide(
-                  width: 1,
-                  color: Colors.grey.shade300,
-                  style: BorderStyle.solid),
-            ),
-            children: [
-              TableRow(
-                children: [
-                  TableRowInkWell(
-                    onTap: () {
-                      openInbox();
-                    },
-                    child: _buildOtherFoldersRows(
-                      context,
-                      "flagged".tr,
-                      "assets/images/flagged.png",
-                      true,
-                      5,
-                    ),
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  TableRowInkWell(
-                    onTap: () {
-                      openInbox();
-                    },
-                    child: _buildOtherFoldersRows(
-                      context,
-                      "notifications".tr,
-                      "assets/images/notification.png",
-                      true,
-                      9,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          _buildDataLabelTitleLabel(context, "search".tr),
-          Table(
-            border: TableBorder(
-              horizontalInside: BorderSide(
-                  width: 1,
-                  color: Colors.grey.shade300,
-                  style: BorderStyle.solid),
-              bottom: BorderSide(
-                  width: 1,
-                  color: Colors.grey.shade300,
-                  style: BorderStyle.solid),
-            ),
-            children: [
-              TableRow(
-                children: [
-                  TableRowInkWell(
-                    onTap: () {
-                      Get.toNamed("SearchPage");
-                    },
-                    child: _buildOtherFoldersRows(context, "advancedSearch".tr,
-                        "assets/images/search.png", false, 0),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Container(
-                  color: Colors.grey[200],
-                  padding:
-                      EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 0),
-                  height: 65,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        child: Image(
-                          image: AssetImage(
-                            returnImageNameBasedOnOppositeDirection(
-                                "assets/images/arrow", context, "png"),
-                          ),
-                        ),
-                      ),
-                      Text(
-                        controller.data?.departmentName ?? "",
-                        //        "sharedServicesAdministration".tr,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline2!
-                            .copyWith(color: Colors.grey),
-                        textAlign: TextAlign.start,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  landscapeDataTable(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-          left: 60,
-          right: 60,
-          top: calculateHeight(100, context),
-          bottom: calculateHeight(80, context)),
-      child: Container(
-        alignment: Alignment.centerRight,
-        decoration: BoxDecoration(
-          color: createMaterialColor(Color.fromRGBO(255, 255, 255, 0.8)),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(6),
-            topRight: Radius.circular(6),
-            bottomLeft: Radius.circular(6),
-            bottomRight: Radius.circular(6),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.25),
-              spreadRadius: 6,
-              blurRadius: 6,
-              offset: Offset(0, 0),
-            ),
-          ],
-        ),
+      child: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+         // crossAxisAlignment: WrapCrossAlignment.start,
           children: [
             _buildDataLabelTitleLabel(
               context,
@@ -3046,9 +2911,238 @@ Get.offAll(LoginPage());
                 ),
               ],
             ),
+            _buildDataLabelTitleLabel(context, "folders".tr),
+            Table(
+              border: TableBorder(
+                horizontalInside: BorderSide(
+                    width: 1,
+                    color: Colors.grey.shade300,
+                    style: BorderStyle.solid),
+                bottom: BorderSide(
+                    width: 1,
+                    color: Colors.grey.shade300,
+                    style: BorderStyle.solid),
+              ),
+              children: [
+                TableRow(
+                  children: [
+                    TableRowInkWell(
+                      onTap: () {
+                        openInbox();
+                      },
+                      child: _buildOtherFoldersRows(
+                        context,
+                        "flagged".tr,
+                        "assets/images/flagged.png",
+                        true,
+                        5,
+                      ),
+                    ),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    TableRowInkWell(
+                      onTap: () {
+                        openInbox();
+                      },
+                      child: _buildOtherFoldersRows(
+                        context,
+                        "notifications".tr,
+                        "assets/images/notification.png",
+                        true,
+                        9,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            _buildDataLabelTitleLabel(context, "search".tr),
+            Table(
+              border: TableBorder(
+                horizontalInside: BorderSide(
+                    width: 1,
+                    color: Colors.grey.shade300,
+                    style: BorderStyle.solid),
+                bottom: BorderSide(
+                    width: 1,
+                    color: Colors.grey.shade300,
+                    style: BorderStyle.solid),
+              ),
+              children: [
+                TableRow(
+                  children: [
+                    TableRowInkWell(
+                      onTap: () {
+                  Get.toNamed("SearchPage");
+                      },
+                      child: _buildOtherFoldersRows(context, "advancedSearch".tr,
+                          "assets/images/search.png", false, 0),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Container(  height: 100,width: MediaQuery.of(context).size.width, child: _buildSideMenuPort(  context),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Container(
+                    color: Colors.grey[200],
+                    padding:
+                        EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 0),
+                    height: 65,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: Image(
+                            image: AssetImage(
+                              returnImageNameBasedOnOppositeDirection(
+                                  "assets/images/arrow", context, "png"),
+                            ),
+                          ),
+                        ),
+                        Text(
+                          controller.data?.departmentName ?? "",
+                          //        "sharedServicesAdministration".tr,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline2!
+                              .copyWith(color: Colors.grey),
+                          textAlign: TextAlign.start,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  landscapeDataTable(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+          left: 60,
+          right: 60,
+          top: calculateHeight(100, context),
+          bottom: calculateHeight(80, context)),
+      child: Container(
+        alignment: Alignment.centerRight,
+        decoration: BoxDecoration(
+          color: createMaterialColor(Color.fromRGBO(255, 255, 255, 0.8)),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(6),
+            topRight: Radius.circular(6),
+            bottomLeft: Radius.circular(6),
+            bottomRight: Radius.circular(6),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.25),
+              spreadRadius: 6,
+              blurRadius: 6,
+              offset: Offset(0, 0),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            _buildDataLabelTitleLabel(
+              context,
+              "mail".tr,
+            ),
+
+
+            Table(
+              border: TableBorder(
+                horizontalInside: BorderSide(
+                    width: 1,
+                    color: Colors.grey.shade300,
+                    style: BorderStyle.solid),
+                bottom: BorderSide(
+                    width: 1,
+                    color: Colors.grey.shade300,
+                    style: BorderStyle.solid),
+              ),
+              children: [
+                TableRow(
+                  children: [
+                    TableRowInkWell(
+                      onTap: () {
+                        openInbox();
+                      },
+                      child: _buildInboxesRow(
+                        context,
+                        "forAction".tr,
+                        5,
+                      ),
+                    ),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    TableRowInkWell(
+                      onTap: () {
+                        openInbox();
+                      },
+                      child: _buildInboxesRow(
+                        context,
+                        "forSignature".tr,
+                        07,
+                      ),
+                    ),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    TableRowInkWell(
+                      onTap: () {
+                        openInbox();
+                      },
+                      child: _buildInboxesRow(
+                        context,
+                        "forInfo".tr,
+                        09,
+                      ),
+                    ),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    TableRowInkWell(
+                      onTap: () {
+                        openInbox();
+                      },
+                      child: _buildInboxesRow(
+                        context,
+                        "all".tr,
+                        2,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+
+          //  Container(color: Colors.red, height: 100,width: MediaQuery.of(context).size.width, child: _buildSideMenuPort(  context),),
             Container(
               height: 30,
             ),
+
             _buildDataLabelTitleLabel(context, "folders".tr),
             Table(
               border: TableBorder(
@@ -3097,7 +3191,7 @@ Get.offAll(LoginPage());
               ],
             ),
             Container(
-              height: 30,
+              height: 10,
             ),
             _buildDataLabelTitleLabel(context, "search".tr),
             Table(

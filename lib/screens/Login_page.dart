@@ -160,87 +160,12 @@ class LoginPage extends GetWidget<LoginController> {
                           showDialog(
                               context: context,
                               builder: (context) => AlertDialog(
-                                    title: const Text("pick your Color"),
+                                    title:  Text("pick your Color".tr),
                                     content: Column(children: [
                                       buildColorPicker(),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 8.0,
-                                            bottom: 8,
-                                            right: 20,
-                                            left: 20),
-                                        child: Row(children: [
-                                          Expanded(
-                                            child: Container(
-                                              padding: const EdgeInsets.only(
-                                                  left: 0,
-                                                  right: 0,
-                                                  top: 0,
-                                                  bottom: 0),
-                                              height: 60,
-                                              decoration: BoxDecoration(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .primary,
-                                                  borderRadius:
-                                                      const BorderRadius.all(
-                                                          Radius.circular(6))),
-                                              child: ElevatedButton(
-                                                onPressed: () {
-                                                  var locale =
-                                                      const Locale('ar', 'AR');
-                                                  Get.updateLocale(locale);
-                                                },
-                                                child: Text(
-                                                  "عربي",
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .headline2!
-                                                      .copyWith(
-                                                          color: Colors.white),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Expanded(
-                                            child: Container(
-                                              padding: const EdgeInsets.only(
-                                                  left: 0,
-                                                  right: 0,
-                                                  top: 0,
-                                                  bottom: 0),
-                                              height: 60,
-                                              decoration: BoxDecoration(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .primary,
-                                                  borderRadius:
-                                                      const BorderRadius.all(
-                                                          Radius.circular(6))),
-                                              child: ElevatedButton(
-                                                onPressed: () {
-                                                  var locale =
-                                                      const Locale('en', 'US');
-                                                  Get.updateLocale(locale);
-                                                },
-                                                child: Text(
-                                                  "En",
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .headline2!
-                                                      .copyWith(
-                                                          color: Colors.white),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                        ]),
-                                      ),
+
+                                      SizedBox(height: 30,),
+
                                       Container(
                                         width:
                                             MediaQuery.of(context).size.width *
@@ -260,7 +185,7 @@ class LoginPage extends GetWidget<LoginController> {
                                                     Radius.circular(6))),
                                         child: ElevatedButton(
                                           onPressed: () {
-                                            Get.find<SecureStorage>()
+                                            controller.secureStorage
                                                 .writeSecureData(
                                                     AllStringConst.AppColor,
                                                     Get.find<MController>()
@@ -269,7 +194,7 @@ class LoginPage extends GetWidget<LoginController> {
                                             Navigator.of(context).pop();
                                           },
                                           child: Text(
-                                            "save",
+                                            "save".tr,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headline2!
@@ -310,8 +235,9 @@ class LoginPage extends GetWidget<LoginController> {
                               showDialog(
                                   context: context,
                                   builder: (context) => AlertDialog(
-                                        title: const Text("Settings"),
+                                        title:  Text("Settings".tr),
                                         content: Column(children: [
+
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 top: 8.0,
@@ -324,13 +250,93 @@ class LoginPage extends GetWidget<LoginController> {
                                                     .userNameValidator,
                                                 textEditingController:
                                                     controller.baseUrl,
-                                                label: "Base Url",
+                                                label: "Base Url".tr,
                                               ),
                                             ]),
                                           ),
                                           // SizedBox(
                                           //   height: 100,
                                           // ),
+
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 8.0,
+                                                bottom: 30,
+                                                right: 0,
+                                                left: 0),
+                                            child: Row(children: [
+                                              Expanded(
+                                                child: Container(
+                                                  padding: const EdgeInsets.only(
+                                                      left: 0,
+                                                      right: 0,
+                                                      top: 0,
+                                                      bottom: 0),
+                                                  height: 60,
+                                                  decoration: BoxDecoration(
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primary,
+                                                      borderRadius:
+                                                      const BorderRadius.all(
+                                                          Radius.circular(6))),
+                                                  child: ElevatedButton(
+                                                    onPressed: () {
+                                                      var locale =
+                                                      const Locale('ar', 'AR');
+                                                      Get.updateLocale(locale);
+                                                    },
+                                                    child: Text(
+                                                      "عربي",
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headline2!
+                                                          .copyWith(
+                                                          color: Colors.white),
+                                                      textAlign: TextAlign.center,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Expanded(
+                                                child: Container(
+                                                  padding: const EdgeInsets.only(
+                                                      left: 0,
+                                                      right: 0,
+                                                      top: 0,
+                                                      bottom: 0),
+                                                  height: 60,
+                                                  decoration: BoxDecoration(
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primary,
+                                                      borderRadius:
+                                                      const BorderRadius.all(
+                                                          Radius.circular(6))),
+                                                  child: ElevatedButton(
+                                                    onPressed: () {
+                                                      var locale =
+                                                      const Locale('en', 'US');
+                                                      Get.updateLocale(locale);
+                                                    },
+                                                    child: Text(
+                                                      "En",
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headline2!
+                                                          .copyWith(
+                                                          color: Colors.white),
+                                                      textAlign: TextAlign.center,
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            ]),
+                                          ),
+
                                           Container(
                                             width: MediaQuery.of(context)
                                                     .size
@@ -351,19 +357,18 @@ class LoginPage extends GetWidget<LoginController> {
                                                         Radius.circular(6))),
                                             child: ElevatedButton(
                                               onPressed: () {
-                                                Get.find<SecureStorage>()
-                                                    .writeSecureData(
+                                                controller.secureStorage                                                    .writeSecureData(
                                                         AllStringConst.BaseUrl,
                                                         controller
                                                             .baseUrl.text);
                                                 // Restart.restartApp();
                                                 // Phoenix.rebirth(context);
+                                                Navigator.of(context).pop();
                                                 RestartWidget.restartApp(
                                                     context);
-                                                Navigator.of(context).pop();
                                               },
                                               child: Text(
-                                                "Save Settings",
+                                                "Save Settings".tr,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .headline2!

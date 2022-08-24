@@ -250,7 +250,6 @@ class LandingPage extends GetWidget<LandingPageController> {
                                         onSuccess: (String message) {
                                           // Navigator.pop(context);
                                           // Get.back();
-                                          // showAllBasketsDialog(context);
                                           return null;
                                         },
                                       );
@@ -850,7 +849,7 @@ class LandingPage extends GetWidget<LandingPageController> {
         ),
         InkWell(
           onTap: () async {
-            await showAllBasketsDialog(context);
+            showAllBasketsDialog(context);
             // Get.toNamed( "MyPocketsScreen",);//MyPocketsScreen
           },
           child: Container(
@@ -941,7 +940,7 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
          showDialog(
              context: context,
              builder: (context) => AlertDialog(
-               title: const Text("pick your Color"),
+               title: Text("pick your Color".tr),
                content: Column(children: [
                  buildColorPicker(),
                  Padding(
@@ -1855,81 +1854,9 @@ Get.offAll(LoginPage());
             showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: const Text("pick your Color"),
+                  title:  Text("pick your Color".tr),
                   content: Column(children: [
                     buildColorPicker(),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          top: 8.0, bottom: 8, right: 20, left: 20),
-                      child: Row(children: [
-                        Container(
-                          padding: const EdgeInsets.only(
-                              left: 0,
-                              right: 0,
-                              top: 0,
-                              bottom: 0),
-
-                          height: 60,
-                          decoration: BoxDecoration(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primary,
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(6))),
-                          child: ElevatedButton(
-                            onPressed:(){
-                              var locale = const Locale('ar', 'AR');
-                              Get.updateLocale(locale);
-                            },
-                            child: Text(
-                              "عربي",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline2!
-                                  .copyWith(
-                                  color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        )
-                        ,SizedBox(width: 10,)   ,
-
-                        Container(
-                          padding: const EdgeInsets.only(
-                              left: 0,
-                              right: 0,
-                              top: 0,
-                              bottom: 0),
-
-                          height: 60,
-                          decoration: BoxDecoration(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primary,
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(6))),
-                          child: ElevatedButton(
-                            onPressed:(){
-                              var locale = const Locale('en', 'US');
-                              Get.updateLocale(locale);
-                            },
-                            child: Text(
-                              "En",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline2!
-                                  .copyWith(
-                                  color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        )
-
-                      ]),
-                    ),
-
-
-
                     Container(width: MediaQuery.of(context).size.width*.7,
                       padding: const EdgeInsets.only(
                           left: 0,

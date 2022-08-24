@@ -22,6 +22,7 @@ import '../widgets/custom_inboxes_row.dart';
 import '../widgets/custom_landing_row.dart';
 import '../widgets/landing_head_item.dart';
 import 'basket_page.dart';
+import 'Login_page.dart';
 
 class BasketListTile extends StatefulWidget {
   const BasketListTile({Key? key}) : super(key: key);
@@ -38,7 +39,6 @@ class _BasketListTileState extends State<BasketListTile> {
     );
   }
 }
-import 'Login_page.dart';
 
 class LandingPage extends GetWidget<LandingPageController> {
   SecureStorage secureStorage = Get.find<SecureStorage>();

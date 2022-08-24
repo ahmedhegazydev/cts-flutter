@@ -43,7 +43,8 @@ abstract class ApiManager {
         a.Get.snackbar("Error".tr, "${value.data["ErrorMessage"]}");
       } else {
         if (value.data["Status"] == 2) {
-          Get.to(LoginPage());
+          // Get.to(LoginPage());
+          Get.offAll(LoginPage());
         } else {
           print(value);
           data = value.data;
@@ -81,7 +82,8 @@ abstract class ApiManager {
         a.Get.snackbar("Error".tr, "${value.data["ErrorMessage"]}");
       } else {
         if (value.data["Status"] == 2) {
-          Get.to(LoginPage());
+          // Get.to(LoginPage());
+          Get.offAll(LoginPage());
         } else {
           data = value.data;
           jsonList = fromJson(data);

@@ -134,14 +134,14 @@ class InboxPage extends GetWidget<InboxController> {
         Expanded(
           child: Container(
             height: size.height * .1,
-           
+
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: 20,
                 itemBuilder: (context, pos) {
                   return Padding(
                     padding: const EdgeInsets.all(4.0),
-                    child: CircleAvatar(
+                    child: CircleAvatar(backgroundImage: AssetImage("assets/images/pr.jpg"),
                       backgroundColor: Colors.cyan,
                       maxRadius: 30,
                       minRadius: 30,

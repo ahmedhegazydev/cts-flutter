@@ -35,14 +35,16 @@ void main() async {
   //  secureStorage.deleteSecureData(AllStringConst.Token);
 String? appLan=secureStorage.readSecureData(AllStringConst.AppLan);
 if(appLan==null){
+  print("theeeeeeeeeeeeeeeeeeeee=>  appLan");
   Get.updateLocale(Locale('ar', 'AR'));
 }else{
 
 
   if(appLan=="ar"){
+    print("================================>  arrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
     Get.updateLocale(Locale('ar', 'AR'));
   }else{
-
+    print("================================>  ennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
     Get.updateLocale(Locale('en', 'US'));
 
   }

@@ -109,5 +109,8 @@ const Map<String, String> en = {
   "Summary":"Summary",
   "Complete":"Complete",
   "Transfer":"Transfer"
-,"Reply":"Reply"
+,"Reply":"Reply",
+  "All":"All",
+  "new":"new",
+  "veryimportant":  "very important"
 };

@@ -106,5 +106,9 @@ const Map<String, String> ar = {
 "Complete":"انهاء",
 
 "Transfer":"تحويل"
-,"Reply":"رد"
+,"Reply":"رد",
+
+"All":"الكل",
+  "new":"جديد",
+  "veryimportant":  "عاجل"
 };

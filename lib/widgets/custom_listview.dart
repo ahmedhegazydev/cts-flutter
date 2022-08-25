@@ -484,37 +484,46 @@ class CustomListView extends StatelessWidget {
                                                   padding:
                                                       const EdgeInsets.all(8.0),
                                                   child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
+                                                    // mainAxisAlignment:
+                                                    //     MainAxisAlignment
+                                                    //         .spaceAround,
                                                     children: [
                                                       Icon(correspondences[pos]
                                                               .isLocked!
                                                           ? Icons.lock
                                                           : Icons.lock_open),
 
+                                                      Spacer(),
+                                                      // Container(
+                                                      //   height: 20,
+                                                      //   width: 20,
+                                                      //   decoration: BoxDecoration(
+                                                      //       color: correspondences[
+                                                      //                       pos]
+                                                      //                   .priorityId ==
+                                                      //               "1"
+                                                      //           ? Colors.green
+                                                      //           : Colors.red,
+                                                      //       shape: BoxShape
+                                                      //           .circle),
+                                                      // ),
+                                                      if(correspondences[
+                                                      pos]
+                                                          .priorityId ==
+                                                          "1") Icon(Icons.warning_amber,color: Colors.red), SizedBox(
+                                                        width: 4,
+                                                      ),
+                                                      if(correspondences[pos].priorityId ==
+                                                          "1") Text( "veryimportant".tr,style: TextStyle(color: Colors.red),)
 
-                                                      Container(
-                                                        height: 20,
-                                                        width: 20,
-                                                        decoration: BoxDecoration(
-                                                            color: correspondences[
-                                                                            pos]
-                                                                        .priorityId ==
-                                                                    "1"
-                                                                ? Colors.green
-                                                                : Colors.red,
-                                                            shape: BoxShape
-                                                                .circle),
-                                                      )
 
                                                       //   correspondences[pos].priorityId
                                                       //  correspondences[pos].purposeId
 
                                                       ,
                                                       SizedBox(
-                                                        width: 4,
-                                                      ),
+                                                        width: 8,
+                                                      ),Spacer(),
                                                       Text(correspondences[pos]
                                                               .fromUser ??
                                                           ""),

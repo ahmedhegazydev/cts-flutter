@@ -10,7 +10,7 @@ import 'lan/en.dart';
 
 class LocalizationService extends Translations {
   // Default locale
-  static final locale =  Locale('en');
+  static final locale =  Locale('ar');
 
   // fallbackLocale saves the day when the locale gets in trouble
   static final fallbackLocale = Locale('en');

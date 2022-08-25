@@ -1052,6 +1052,10 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
                            onPressed:(){
                              var locale = const Locale('ar', 'AR');
                              Get.updateLocale(locale);
+                             SecureStorage secureStorage = SecureStorage();
+
+                             secureStorage.writeSecureData(AllStringConst.AppLan,"ar");
+                             Get.updateLocale(locale);
                            },
                            child: Text(
                              "عربي",
@@ -1085,6 +1089,10 @@ Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
                          child: ElevatedButton(
                            onPressed:(){
                              var locale = const Locale('en', 'US');
+                             SecureStorage secureStorage = SecureStorage();
+
+                             secureStorage.writeSecureData(AllStringConst.AppLan,"en");
+                             Get.updateLocale(locale);
                              Get.updateLocale(locale);
                            },
                            child: Text(
@@ -1964,6 +1972,9 @@ Get.offAll(LoginPage());
                           child: ElevatedButton(
                             onPressed:(){
                               var locale = const Locale('ar', 'AR');
+                              SecureStorage secureStorage = SecureStorage();
+
+                              secureStorage.writeSecureData(AllStringConst.AppLan,"ar");
                               Get.updateLocale(locale);
                             },
                             child: Text(
@@ -1996,6 +2007,9 @@ Get.offAll(LoginPage());
                           child: ElevatedButton(
                             onPressed:(){
                               var locale = const Locale('en', 'US');
+                              SecureStorage secureStorage = SecureStorage();
+
+                              secureStorage.writeSecureData(AllStringConst.AppLan,"en");
                               Get.updateLocale(locale);
                             },
                             child: Text(

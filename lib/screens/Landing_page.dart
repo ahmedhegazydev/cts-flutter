@@ -3532,7 +3532,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       child: _buildInboxesRow(
                         context,
                         "forAction".tr,
-                        5,
+                        5.toString(),
                       ),
                     ),
                   ],
@@ -3546,7 +3546,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       child: _buildInboxesRow(
                         context,
                         "forSignature".tr,
-                        07,
+                        07.toString(),
                       ),
                     ),
                   ],
@@ -3560,7 +3560,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       child: _buildInboxesRow(
                         context,
                         "forInfo".tr,
-                        09,
+                        09.toString(),
                       ),
                     ),
                   ],
@@ -3574,7 +3574,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       child: _buildInboxesRow(
                         context,
                         "all".tr,
-                        2,
+                        25.toString(),
                       ),
                     ),
                   ],
@@ -3606,7 +3606,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                         // "assets/images/flagged.png",
                         "وارد للكل".tr,
                         "assets/images/incoming.png",
-                        true,
+                        false,
                         5,
                       ),
                     ),
@@ -3624,7 +3624,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                         // "assets/images/notification.png",
                         "صادر للكل".tr,
                         "assets/images/outgoing.png",
-                        true,
+                        false,
                         9,
                       ),
                     ),
@@ -3769,7 +3769,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       child: _buildInboxesRow(
                         context,
                         "forAction".tr,
-                        5,
+                        5.toString(),
                       ),
                     ),
                   ],
@@ -3783,7 +3783,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       child: _buildInboxesRow(
                         context,
                         "forSignature".tr,
-                        07,
+                        07.toString(),
                       ),
                     ),
                   ],
@@ -3797,7 +3797,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       child: _buildInboxesRow(
                         context,
                         "forInfo".tr,
-                        09,
+                        09.toString(),
                       ),
                     ),
                   ],
@@ -3811,7 +3811,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       child: _buildInboxesRow(
                         context,
                         "all".tr,
-                        2,
+                        "18",
                       ),
                     ),
                   ],
@@ -3848,7 +3848,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                         // "flagged".tr,
                         "وارد للكل".tr,
                         "assets/images/incoming.png",
-                        true,
+                        false,
                         5,
                       ),
                     ),
@@ -3865,7 +3865,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                         // "notifications".tr,
                         "صادر للكل".tr,
                         "assets/images/outgoing.png",
-                        true,
+                        false,
                         9,
                       ),
                     ),
@@ -3934,7 +3934,7 @@ class LandingPage extends GetWidget<LandingPageController> {
     );
   }
 
-  _buildInboxesRow(BuildContext content, String title, int count) {
+  _buildInboxesRow(BuildContext content, String title, String count) {
     return Container(
       padding: EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 0),
       width: double.infinity,
@@ -3983,16 +3983,17 @@ class LandingPage extends GetWidget<LandingPageController> {
           ),
           Spacer(flex: 1),
           Flexible(
+            flex: 2,
             child: Container(
               color: Colors.transparent,
-              width: 40,
+              width: 60,
               child: Text(
                 count.toString(),
                 style: Theme
                     .of(content)
                     .textTheme
                     .headline2!
-                    .copyWith(fontSize: 17),
+                    .copyWith(fontSize: 19),
                 textAlign: TextAlign.end,
               ),
             ),

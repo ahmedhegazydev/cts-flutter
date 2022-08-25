@@ -634,7 +634,7 @@ class InboxPage extends GetWidget<InboxController> {
                 // "notifications".tr,
                 "صادر للكل".tr,
                 "assets/images/outgoing.png",
-                true, 19)
+                false, 19)
           ],
         ),
       ),

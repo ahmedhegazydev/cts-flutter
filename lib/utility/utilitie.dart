@@ -15,6 +15,8 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import 'package:intl/intl.dart';
@@ -52,7 +54,11 @@ String getLocaleCode(BuildContext context) {
 }
 
 bool isDirectionRTL(BuildContext context) {
-  return Bidi.isRtlLanguage(Localizations.localeOf(context).languageCode);
+  return Bidi.isRtlLanguage(
+      // Localizations.localeOf(context).languageCode
+      Get.locale?.languageCode == "en" ? "ar" : "en"
+      // Get.locale?.languageCode
+  );
 }
 
 String returnImageNameBasedOnDirection(

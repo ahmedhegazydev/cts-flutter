@@ -34,7 +34,7 @@ class SignaturePage extends GetView<SignaturePageController> {
                    context: context,
                    signatureInfoModel: _signatureInfoModel);
 
-
+controller.replaceSing(base64.encode(data!));
           }, child: Icon(Icons.save, size: 50,)),
         ],),
         Divider(color: Colors.grey)
@@ -44,7 +44,7 @@ class SignaturePage extends GetView<SignaturePageController> {
             builder: (logic) {
               return
                 GridView.builder(
-                  itemCount: controller
+                  itemCount: logic.haveNewSing?logic.newSing.length: controller
                       .multiSignatures.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
@@ -52,7 +52,8 @@ class SignaturePage extends GetView<SignaturePageController> {
                       mainAxisSpacing: 4.0
                   ),
                   itemBuilder: (BuildContext context, int index) {
-                    return Image.memory(dataFromBase64String(controller
+                    return logic.haveNewSing?  Image.memory(dataFromBase64String(controller
+                        .newSing[index])):   Image.memory(dataFromBase64String(controller
                         .multiSignatures[index].signature));
                   },
                 );

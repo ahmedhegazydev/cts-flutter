@@ -284,6 +284,9 @@ class LoginPage extends GetWidget<LoginController> {
                                                     onPressed: () {
                                                       var locale =
                                                       const Locale('ar', 'AR');
+                                                      SecureStorage secureStorage = SecureStorage();
+
+                                                      secureStorage.writeSecureData(AllStringConst.AppLan,"ar");
                                                       Get.updateLocale(locale);
                                                     },
                                                     child: Text(
@@ -318,8 +321,10 @@ class LoginPage extends GetWidget<LoginController> {
                                                           Radius.circular(6))),
                                                   child: ElevatedButton(
                                                     onPressed: () {
+                                                      SecureStorage secureStorage = SecureStorage();
                                                       var locale =
                                                       const Locale('en', 'US');
+                                                      secureStorage.writeSecureData(AllStringConst.AppLan,"en");
                                                       Get.updateLocale(locale);
                                                     },
                                                     child: Text(
@@ -361,6 +366,14 @@ class LoginPage extends GetWidget<LoginController> {
                                                         AllStringConst.BaseUrl,
                                                         controller
                                                             .baseUrl.text);
+
+
+
+
+
+
+
+
                                                 // Restart.restartApp();
                                                 // Phoenix.rebirth(context);
                                                 Navigator.of(context).pop();

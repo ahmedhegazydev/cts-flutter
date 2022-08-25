@@ -12,13 +12,19 @@ class SignaturePageController extends GetxController {
   Map<String, dynamic>? logindata;
   List<MultiSignatures> multiSignatures = [];
   final SecureStorage secureStorage = SecureStorage();
-
+  bool haveNewSing=false;
+List newSing=[];
   final SignatureController controller = SignatureController(
     penStrokeWidth: 5,
     penColor: Colors.black,
     exportBackgroundColor: Colors.white,
   );
-
+replaceSing(sin){
+  newSing.clear();
+  newSing.add(sin);
+  haveNewSing=true;
+  update();
+}
   updateSignature({
     context,
     required SignatureInfoModel signatureInfoModel}) {

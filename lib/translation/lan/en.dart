@@ -29,7 +29,7 @@ const Map<String, String> en = {
   "outgoing": "Outgoing",
   "internal": "Internal",
   "unread": "Unread",
-  "sender": "Sender",
+  "sender": "Sender  : ",
   "secret": "Secret",
   "urgent": "Urgent",
   "allInbox": "All inbox",
@@ -109,4 +109,16 @@ const Map<String, String> en = {
   , "وارد للكل": "Incoming all"
   , "Basket": "My Basket",
 "user Guide": "user Guide"
+  ,"addtoBasket":"add to Basket",
+  "Summary":"Summary",
+  "Complete":"Complete",
+  "Transfer":"Transfer"
+,"Reply":"Reply",
+  "All":"All",
+  "new":"new",
+  "veryimportant":  "very important",
+"start":"Start date"
+  ,
+  "end":"End date"  ,
+  "reason":"Reason"
 };

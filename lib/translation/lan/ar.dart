@@ -28,7 +28,7 @@ const Map<String, String> ar = {
   "outgoing": "الصادر",
   "internal": "الداخلي",
   "unread": "غير مقروء",
-  "sender": "المرسل",
+  "sender": "المرسل : ",
   "secret": "سري",
   "urgent": "عاجل",
   "allInbox": "كل البريد",
@@ -100,9 +100,25 @@ const Map<String, String> ar = {
   , "Settings": "الاعدادات"
   , "Save Settings": "حفظ الاعدادات"
   , "pick your Color": "اختر اللون المناسب"
+  ,"addtoBasket":"اضف الي السلة",
+  "Summary":"معلومات",
+
+"Complete":"انهاء",
   , "صادر للكل": "صادر الكل"
   , "وارد للكل": "وارد الكل"
   , "Basket": "محفظتي",
 "user Guide": "دليل المستخدم"
 
+"Transfer":"تحويل"
+,"Reply":"رد",
+
+"All":"الكل",
+  "new":"جديد",
+  "veryimportant":  "عاجل"
+  ,
+  "start":"تاريخ البدء"
+  ,
+  "end":"تاريخ الانتهاء"
+  ,
+  "reason":"السبب"
 };

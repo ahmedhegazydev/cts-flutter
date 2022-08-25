@@ -440,7 +440,7 @@ class InboxPage extends GetWidget<InboxController> {
             ),
           ],
           tabBarProperties: TabBarProperties(
-            width: MediaQuery.of(context).size.width,
+            width: MediaQuery.of(context).size.width*.4,
             height: 70.0,
             indicatorColor: Theme.of(context).colorScheme.primary,
             indicatorWeight: 5.0,

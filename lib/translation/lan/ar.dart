@@ -100,5 +100,7 @@ const Map<String, String> ar = {
   , "Settings": "الاعدادات"
   , "Save Settings": "حفظ الاعدادات"
   , "pick your Color": "اختر اللون المناسب"
+  , "صادر للكل": "صادر الكل"
+  , "وارد للكل": "وارد الكل"
 
 };

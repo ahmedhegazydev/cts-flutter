@@ -3352,7 +3352,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                               width: double.infinity,
                               child: Text(
                                 // "flagged".tr,
-                                "وارد للكل",
+                                "وارد للكل".tr,
                                 style: Theme
                                     .of(context)
                                     .textTheme
@@ -3439,7 +3439,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                               width: double.infinity,
                               child: Text(
                                 // "notifications".tr,
-                                "صادر للكل",
+                                "صادر للكل".tr,
                                 style: Theme
                                     .of(context)
                                     .textTheme
@@ -3601,7 +3601,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                         context,
                         // "flagged".tr,
                         // "assets/images/flagged.png",
-                        "وارد للكل",
+                        "وارد للكل".tr,
                         "assets/images/flagged.png",
                         true,
                         5,
@@ -3619,7 +3619,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                         context,
                         // "notifications".tr,
                         // "assets/images/notification.png",
-                        "صادر للكل",
+                        "صادر للكل".tr,
                         "assets/images/notification.png",
                         true,
                         9,
@@ -3843,7 +3843,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       child: _buildOtherFoldersRows(
                         context,
                         // "flagged".tr,
-                        "وارد للكل",
+                        "وارد للكل".tr,
                         "assets/images/flagged.png",
                         true,
                         5,
@@ -3860,7 +3860,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       child: _buildOtherFoldersRows(
                         context,
                         // "notifications".tr,
-                        "صادر للكل",
+                        "صادر للكل".tr,
                         "assets/images/notification.png",
                         true,
                         9,

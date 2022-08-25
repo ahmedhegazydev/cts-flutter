@@ -105,5 +105,7 @@ const Map<String, String> en = {
 , "Settings": "Settings"
   , "Save Settings": "Save Settings"
   , "pick your Color": "Pick your color"
+  , "صادر للكل": "Out Going"
+  , "وارد للكل": "Inboxing"
 
 };

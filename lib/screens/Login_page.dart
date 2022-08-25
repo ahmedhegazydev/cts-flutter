@@ -377,8 +377,8 @@ class LoginPage extends GetWidget<LoginController> {
                                                 // Restart.restartApp();
                                                 // Phoenix.rebirth(context);
                                                 Navigator.of(context).pop();
-                                                RestartWidget.restartApp(
-                                                    context);
+                                                // RestartWidget.restartApp(
+                                                //     context);
                                               },
                                               child: Text(
                                                 "Save Settings".tr,

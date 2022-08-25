@@ -976,9 +976,10 @@ class LandingPage extends GetWidget<LandingPageController> {
                   ),
                 ),
                 Flexible(
-                  flex: 1,
+                  flex: 2,
                   child: Text(
                     "myDelegations".tr,
+                // "اعادة توجيه\n المراسلات",
                     textAlign: TextAlign.center,
                     style: Theme
                         .of(context)
@@ -3337,7 +3338,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                             flex: 2,
                             child: Image(
                               image: AssetImage(
-                                'assets/images/flagged.png',
+                                // 'assets/images/flagged.png',
+                                'assets/images/incoming.png',
                               ),
                               fit: BoxFit.contain,
                               width: double.infinity,
@@ -3424,7 +3426,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                             flex: 2,
                             child: Image(
                               image: AssetImage(
-                                'assets/images/notification.png',
+                                // 'assets/images/notification.png',
+                                'assets/images/outgoing.png',
                               ),
                               fit: BoxFit.contain,
                               width: double.infinity,
@@ -3602,7 +3605,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                         // "flagged".tr,
                         // "assets/images/flagged.png",
                         "وارد للكل".tr,
-                        "assets/images/flagged.png",
+                        "assets/images/incoming.png",
                         true,
                         5,
                       ),
@@ -3620,7 +3623,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                         // "notifications".tr,
                         // "assets/images/notification.png",
                         "صادر للكل".tr,
-                        "assets/images/notification.png",
+                        "assets/images/outgoing.png",
                         true,
                         9,
                       ),
@@ -3844,7 +3847,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                         context,
                         // "flagged".tr,
                         "وارد للكل".tr,
-                        "assets/images/flagged.png",
+                        "assets/images/incoming.png",
                         true,
                         5,
                       ),
@@ -3861,7 +3864,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                         context,
                         // "notifications".tr,
                         "صادر للكل".tr,
-                        "assets/images/notification.png",
+                        "assets/images/outgoing.png",
                         true,
                         9,
                       ),

@@ -1105,11 +1105,11 @@ class MyPocketsScreen extends GetWidget<InboxController> {
                 context,
                 // "flagged".tr,
                 "وارد للكل".tr,
-                "assets/images/flagged.png", true, 05),
+                "assets/images/incoming.png", true, 05),
             _buildSideMenuFolders(context,
                 // "notifications".tr,
                 "صادر للكل".tr,
-                "assets/images/notification.png", true, 19)
+                "assets/images/outgoing.png", true, 19)
           ],
         ),
       ),

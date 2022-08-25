@@ -6,7 +6,7 @@ const Map<String, String> ar = {
   "login": "تسجيل الدخول",
   "mySignatures": "تواقيعي",
   "favoritesUsers": "المستخدمين المفضلين",
-  "myDelegations": "اعادة توجيه المراسلات",
+  "myDelegations": "اعادة توجيه\n المراسلات",
   "appTheme": "سمات التطبيق",
   "logout": "تسجيل الخروج",
   "hello": "مرحبًا",
@@ -102,5 +102,7 @@ const Map<String, String> ar = {
   , "pick your Color": "اختر اللون المناسب"
   , "صادر للكل": "صادر الكل"
   , "وارد للكل": "وارد الكل"
+  , "Basket": "محفظتي",
+"user Guide": "دليل المستخدم"
 
 };

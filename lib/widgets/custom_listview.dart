@@ -492,6 +492,14 @@ class CustomListView extends StatelessWidget {
                                                               .isLocked!
                                                           ? Icons.lock
                                                           : Icons.lock_open),
+                                                    if(  correspondences[pos]
+                                                        .isLocked??false) Text("closed".tr),
+Spacer(),
+                                                      if(correspondences[pos]
+                                                          .showLock ??false)  Icon(Icons.lock),
+                                                    if(correspondences[pos]
+                                                        .showLock ??false)  Text("secret".tr),
+
 
                                                       Spacer(),
                                                       // Container(
@@ -524,9 +532,15 @@ class CustomListView extends StatelessWidget {
                                                       SizedBox(
                                                         width: 8,
                                                       ),Spacer(),
+                                                      Text("sender".tr),
+SizedBox(width: 4,),
                                                       Text(correspondences[pos]
                                                               .fromUser ??
                                                           ""),
+
+
+                                                    
+
                                                       if (correspondences[pos]
                                                               .hasAttachments ??
                                                           false)

@@ -730,6 +730,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                           topRight: Radius.circular(20))),
                   child: Column(
                     children: [
+                      Text(     "favoritesUsers".tr, style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14)),
                       Row(
                         children: [
                           Expanded(
@@ -743,7 +744,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                 //     .copyWith(fontStyle: FontStyle.italic),
                                 decoration:
                                 InputDecoration(border: OutlineInputBorder(),
-                                    labelText: 'To'.tr),
+                                    labelText: ""),
                               ),
                               suggestionsCallback: (pattern) async {
                                 return controller.users.where((element) =>
@@ -866,35 +867,211 @@ class LandingPage extends GetWidget<LandingPageController> {
         ),
         InkWell(
           onTap: () {
-            // Get.bottomSheet(
-            //   Container(
-            //     //height: 100,
-            //       margin: EdgeInsets.all(20),
-            //       padding: EdgeInsets.all(20),
-            //       decoration: const BoxDecoration(
-            //           color: Colors.white,
-            //           borderRadius: BorderRadius.only(
-            //               topLeft: Radius.circular(20),
-            //               topRight: Radius.circular(20))),
-            //       child: ListView.builder(
-            //           itemCount: //11
-            //           controller.findRecipientModel?.sections?[0]
-            //               .destination?.length,
-            //           itemBuilder: (context, pos) {
-            //             return Padding(
-            //               padding: const EdgeInsets.all(8.0),
-            //               child: Card(elevation: 5,
-            //                 child: Padding(
-            //                   padding: const EdgeInsets.all(8.0),
-            //                   child: Text(controller.findRecipientModel
-            //                       ?.sections?[2].destination?[pos]?.value ??
-            //                       ""),
-            //                 ),
-            //               ),
-            //             );
-            //           })),
-            //   enterBottomSheetDuration: const Duration(seconds: 1),
-            // );
+            Get.bottomSheet(
+              Container(
+                //height: 100,
+                  margin: EdgeInsets.all(20),
+                  padding: EdgeInsets.all(20),
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20))),
+                  child: SingleChildScrollView(
+                    child: Column(mainAxisAlignment: MainAxisAlignment.start,crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(      "myDelegations".tr, style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14)),
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TypeAheadField<Destination>(
+                                textFieldConfiguration: TextFieldConfiguration(
+                                  controller: controller
+                                      .textEditingControllerTo,
+                                  // autofocus: true,
+                                  // style: DefaultTextStyle.of(context)
+                                  //     .style
+                                  //     .copyWith(fontStyle: FontStyle.italic),
+                                  decoration:
+                                  InputDecoration(border: OutlineInputBorder(),
+                                      labelText: 'To'.tr),
+                                ),
+                                suggestionsCallback: (pattern) async {
+                                  return controller.users.where((element) =>
+                                      element.value!
+                                          .toLowerCase()
+                                          .contains(pattern.toLowerCase()));
+
+                                  //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
+                                },
+                                itemBuilder: (context, suggestion) {
+                                  Destination v = suggestion;
+
+                                  return // Te(v.originalName!);
+
+
+                                    ListTile(
+                                      title: FilterText(v.value!),
+                                    );
+                                },
+                                onSuggestionSelected: (suggestion) {
+                                  Destination v = suggestion;
+                                  controller.textEditingControllerTo.text =
+                                      v.value ?? "";
+                                  controller.to = v;
+
+                                  controller.updateselectFavusers(v);
+                                  controller.textEditingControllerTo.clear();
+                                  // v
+                                  // .cLASNAMEDISPLAY;
+                                  // Navigator.of(context).push(MaterialPageRoute(
+                                  //     builder: (context) => ProductPage(product: suggestion)
+                                  // ));
+                                },
+                              ),
+                            ),
+                            SizedBox(width: 2,),
+                            CustomButtonWithIcon(icon: Icons.person, onClick: () {
+                              controller.listOfUser(0);
+                            },)
+                            ,
+                            SizedBox(width: 2,),
+                            CustomButtonWithIcon(
+                              icon: Icons.account_balance, onClick: () {
+                              controller.listOfUser(2);
+                            },)
+                            ,
+                            SizedBox(width: 2,),
+                            CustomButtonWithIcon(icon: Icons.clear, onClick: () {
+                              controller.listOfUser(0);
+                            },)
+                          ],
+                        ),
+
+
+Text("start".tr),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: InkWell(onTap: () {
+                            controller.selectFromDocDate(context: context);
+                          },
+                            child: Container(
+                                height: 60,
+                                padding: EdgeInsets.only(right: 8, left: 8),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Theme
+                                            .of(context)
+                                            .colorScheme
+                                            .primary),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(6))),
+                                child:
+                                TextField(enabled: false,
+                                  controller: controller.textEditingControllerFromDocDate,
+                                  decoration:   InputDecoration(
+                                    border: UnderlineInputBorder(),
+                                    labelText: 'From'.tr,
+                                  ),
+                                )
+                            ),
+                          ),
+                        ),
+                        Text("end".tr),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: InkWell(onTap: () {
+                            controller.selectToDocDate(context: context);
+                          },
+                            child: Container(
+                                height: 60,
+                                padding: EdgeInsets.only(right: 8, left: 8),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Theme
+                                            .of(context)
+                                            .colorScheme
+                                            .primary),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(6))),
+                                child:
+                                TextField(enabled: false,
+                                  controller: controller.textEditingControllerToDocDate,
+                                  decoration:   InputDecoration(
+                                    border: UnderlineInputBorder(),
+                                    labelText: 'To'.tr,
+                                  ),
+                                )
+                              //   Center(child: Text(controller.toDocDate))
+                            ),
+                          ),
+                        ),
+Text( "reason".tr),
+                        Container(
+                            height: 60,
+                            padding: EdgeInsets.only(right: 8, left: 8),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Theme
+                                        .of(context)
+                                        .colorScheme
+                                        .primary),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(6))),
+                            child:
+                            TextField(enabled: false,
+
+                              decoration:   InputDecoration(
+                                border: UnderlineInputBorder(),
+                                labelText: 'To'.tr,
+                              ),
+                            )
+                          //   Center(child: Text(controller.toDocDate))
+                        ),
+
+SizedBox(height: 10,),
+                        Center(
+                          child: Container(
+                            width: MediaQuery.of(context)
+                                .size
+                                .width *
+                                .5,
+                            padding: const EdgeInsets.only(
+                                left: 0,
+                                right: 0,
+                                top: 0,
+                                bottom: 0),
+                            height: 60,
+                            decoration: BoxDecoration(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primary,
+                                borderRadius:
+                                const BorderRadius.all(
+                                    Radius.circular(6))),
+                            child: ElevatedButton(
+                              onPressed: () {
+                              
+                              },
+                              child: Text(
+                                "Save".tr,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline2!
+                                    .copyWith(
+                                    color: Colors.white),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        )   ],
+                    ),
+                  )),
+              enterBottomSheetDuration: const Duration(seconds: 1),
+            );
           },
           child: Container(
             height: 120,
@@ -907,8 +1084,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                 Spacer(
                   flex: 1,
                 ),
-                Flexible(
-                  flex: 3,
+                Expanded(
+
                   child: Image(
                     image: AssetImage(
                       'assets/images/delegation.png',
@@ -918,16 +1095,13 @@ class LandingPage extends GetWidget<LandingPageController> {
                     height: double.infinity,
                   ),
                 ),
-                Flexible(
-                  flex: 1,
-                  child: Text(
-                    "myDelegations".tr,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline3!
-                        .copyWith(color: Colors.grey.shade600),
-                  ),
+                Text(
+                  "myDelegations".tr,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline3!
+                      .copyWith(color: Colors.grey.shade600),
                 ),
               ],
             ),
@@ -1642,37 +1816,117 @@ Get.offAll(LoginPage());
         ),
         InkWell(
           onTap: () {
-            // Get.bottomSheet(
-            //   Container(
-            //     //height: 100,
-            //       margin: EdgeInsets.all(20),
-            //       padding: EdgeInsets.all(20),
-            //       decoration: const BoxDecoration(
-            //           color: Colors.white,
-            //           borderRadius: BorderRadius.only(
-            //               topLeft: Radius.circular(20),
-            //               topRight: Radius.circular(20))),
-            //       child: ListView.builder(
-            //           itemCount: //11
-            //           controller.findRecipientModel?.sections?[0]
-            //               .destination?.length,
-            //           itemBuilder: (context, pos) {
-            //             return Padding(
-            //               padding: const EdgeInsets.all(8.0),
-            //               child: Card(elevation: 5,
-            //                 child: Padding(
-            //                   padding: const EdgeInsets.all(8.0),
-            //                   child: Text(controller.findRecipientModel
-            //                       ?.sections?[0].destination?[pos]?.value ??
-            //                       ""),
-            //                 ),
-            //               ),
-            //             );
-            //           })),
-            //   enterBottomSheetDuration: const Duration(seconds: 1),
-            // );
+            Get.bottomSheet(
+              Container(
+                //height: 100,
+                  margin: EdgeInsets.all(20),
+                  padding: EdgeInsets.all(20),
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20))),
+                  child: Column(
+                    children: [
+                      Text(     "favoritesUsers".tr, style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14)),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TypeAheadField<Destination>(
+                              textFieldConfiguration: TextFieldConfiguration(
+                                controller: controller
+                                    .textEditingControllerTo,
+                                // autofocus: true,
+                                // style: DefaultTextStyle.of(context)
+                                //     .style
+                                //     .copyWith(fontStyle: FontStyle.italic),
+                                decoration:
+                                InputDecoration(border: OutlineInputBorder(),
+                                    labelText: ""),
+                              ),
+                              suggestionsCallback: (pattern) async {
+                                return controller.users.where((element) =>
+                                    element.value!
+                                        .toLowerCase()
+                                        .contains(pattern.toLowerCase()));
+
+                                //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
+                              },
+                              itemBuilder: (context, suggestion) {
+                                Destination v = suggestion;
+
+                                return // Te(v.originalName!);
+
+
+                                  ListTile(
+                                    title: FilterText(v.value!),
+                                  );
+                              },
+                              onSuggestionSelected: (suggestion) {
+                                Destination v = suggestion;
+                                controller.textEditingControllerTo.text =
+                                    v.value ?? "";
+                                controller.to = v;
+
+                                controller.updateselectFavusers(v);
+                                controller.textEditingControllerTo.clear();
+                                // v
+                                // .cLASNAMEDISPLAY;
+                                // Navigator.of(context).push(MaterialPageRoute(
+                                //     builder: (context) => ProductPage(product: suggestion)
+                                // ));
+                              },
+                            ),
+                          ),
+                          SizedBox(width: 2,),
+                          CustomButtonWithIcon(icon: Icons.person, onClick: () {
+                            controller.listOfUser(0);
+                          },)
+                          ,
+                          SizedBox(width: 2,),
+                          CustomButtonWithIcon(
+                            icon: Icons.account_balance, onClick: () {
+                            controller.listOfUser(2);
+                          },)
+                          ,
+                          SizedBox(width: 2,),
+                          CustomButtonWithIcon(icon: Icons.clear, onClick: () {
+                            controller.listOfUser(0);
+                          },)
+                        ],
+                      ),
+                      GetBuilder<LandingPageController>(builder: (logic) {
+                        return Expanded(
+                          child: ListView.builder(
+                              itemCount: controller.selectFavusers.length
+                              ,
+                              itemBuilder: (context, pos) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Card(elevation: 5,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                              controller.selectFavusers[pos]
+                                                  .value ?? ""),
+                                          GestureDetector(onTap: (){
+                                            controller.deletselectFavusers( controller.selectFavusers[pos]);
+                                          },child: Icon(Icons.delete)) ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }),
+                        );
+                      }),
+                    ],
+                  )),
+              enterBottomSheetDuration: const Duration(seconds: 1),
+            );
           },
-          child: Container(width: 50,
+          child: Container(width: 100,
             height: 140,
             color: Colors.transparent,
             child: Column(
@@ -1702,38 +1956,214 @@ Get.offAll(LoginPage());
           ),
         ),
         InkWell(onTap: (){
-          // Get.bottomSheet(
-          //   Container(
-          //     //height: 100,
-          //       margin: EdgeInsets.all(20),
-          //       padding: EdgeInsets.all(20),
-          //       decoration: const BoxDecoration(
-          //           color: Colors.white,
-          //           borderRadius: BorderRadius.only(
-          //               topLeft: Radius.circular(20),
-          //               topRight: Radius.circular(20))),
-          //       child: ListView.builder(
-          //           itemCount: //11
-          //           controller.findRecipientModel?.sections?[0]
-          //               .destination?.length,
-          //           itemBuilder: (context, pos) {
-          //             return Padding(
-          //               padding: const EdgeInsets.all(8.0),
-          //               child: Card(elevation: 5,
-          //                 child: Padding(
-          //                   padding: const EdgeInsets.all(8.0),
-          //                   child: Text(controller.findRecipientModel
-          //                       ?.sections?[2].destination?[pos]?.value ??
-          //                       ""),
-          //                 ),
-          //               ),
-          //             );
-          //           })),
-          //   enterBottomSheetDuration: const Duration(seconds: 1),
-          // );
+          Get.bottomSheet(
+            Container(
+              //height: 100,
+                margin: EdgeInsets.all(20),
+                padding: EdgeInsets.all(20),
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20))),
+                child: SingleChildScrollView(
+                  child: Column(mainAxisAlignment: MainAxisAlignment.start,crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(      "myDelegations".tr, style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14)),
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TypeAheadField<Destination>(
+                              textFieldConfiguration: TextFieldConfiguration(
+                                controller: controller
+                                    .textEditingControllerTo,
+                                // autofocus: true,
+                                // style: DefaultTextStyle.of(context)
+                                //     .style
+                                //     .copyWith(fontStyle: FontStyle.italic),
+                                decoration:
+                                InputDecoration(border: OutlineInputBorder(),
+                                    labelText: 'To'.tr),
+                              ),
+                              suggestionsCallback: (pattern) async {
+                                return controller.users.where((element) =>
+                                    element.value!
+                                        .toLowerCase()
+                                        .contains(pattern.toLowerCase()));
+
+                                //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
+                              },
+                              itemBuilder: (context, suggestion) {
+                                Destination v = suggestion;
+
+                                return // Te(v.originalName!);
+
+
+                                  ListTile(
+                                    title: FilterText(v.value!),
+                                  );
+                              },
+                              onSuggestionSelected: (suggestion) {
+                                Destination v = suggestion;
+                                controller.textEditingControllerTo.text =
+                                    v.value ?? "";
+                                controller.to = v;
+
+                                controller.updateselectFavusers(v);
+                                controller.textEditingControllerTo.clear();
+                                // v
+                                // .cLASNAMEDISPLAY;
+                                // Navigator.of(context).push(MaterialPageRoute(
+                                //     builder: (context) => ProductPage(product: suggestion)
+                                // ));
+                              },
+                            ),
+                          ),
+                          SizedBox(width: 2,),
+                          CustomButtonWithIcon(icon: Icons.person, onClick: () {
+                            controller.listOfUser(0);
+                          },)
+                          ,
+                          SizedBox(width: 2,),
+                          CustomButtonWithIcon(
+                            icon: Icons.account_balance, onClick: () {
+                            controller.listOfUser(2);
+                          },)
+                          ,
+                          SizedBox(width: 2,),
+                          CustomButtonWithIcon(icon: Icons.clear, onClick: () {
+                            controller.listOfUser(0);
+                          },)
+                        ],
+                      ),
+
+
+                      Text("start".tr),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(onTap: () {
+                          controller.selectFromDocDate(context: context);
+                        },
+                          child: Container(
+                              height: 60,
+                              padding: EdgeInsets.only(right: 8, left: 8),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Theme
+                                          .of(context)
+                                          .colorScheme
+                                          .primary),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(6))),
+                              child:
+                              TextField(enabled: false,
+                                controller: controller.textEditingControllerFromDocDate,
+                                decoration:   InputDecoration(
+                                  border: UnderlineInputBorder(),
+                                  labelText: 'From'.tr,
+                                ),
+                              )
+                          ),
+                        ),
+                      ),
+                      Text("end".tr),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(onTap: () {
+                          controller.selectToDocDate(context: context);
+                        },
+                          child: Container(
+                              height: 60,
+                              padding: EdgeInsets.only(right: 8, left: 8),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Theme
+                                          .of(context)
+                                          .colorScheme
+                                          .primary),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(6))),
+                              child:
+                              TextField(enabled: false,
+                                controller: controller.textEditingControllerToDocDate,
+                                decoration:   InputDecoration(
+                                  border: UnderlineInputBorder(),
+                                  labelText: 'To'.tr,
+                                ),
+                              )
+                            //   Center(child: Text(controller.toDocDate))
+                          ),
+                        ),
+                      ),
+                      Text( "reason".tr),
+                      Container(
+                          height: 60,
+                          padding: EdgeInsets.only(right: 8, left: 8),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Theme
+                                      .of(context)
+                                      .colorScheme
+                                      .primary),
+                              borderRadius: const BorderRadius.all(
+                                  Radius.circular(6))),
+                          child:
+                          TextField(maxLines: 3,enabled: false,
+
+                            decoration:   InputDecoration(
+                              border: UnderlineInputBorder(),
+                              labelText: ' ',
+                            ),
+                          )
+                        //   Center(child: Text(controller.toDocDate))
+                      ),
+
+                      SizedBox(height: 10,),
+                      Center(
+                        child: Container(
+                          width: MediaQuery.of(context)
+                              .size
+                              .width *
+                              .5,
+                          padding: const EdgeInsets.only(
+                              left: 0,
+                              right: 0,
+                              top: 0,
+                              bottom: 0),
+                          height: 60,
+                          decoration: BoxDecoration(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primary,
+                              borderRadius:
+                              const BorderRadius.all(
+                                  Radius.circular(6))),
+                          child: ElevatedButton(
+                            onPressed: () {
+
+                            },
+                            child: Text(
+                              "Save".tr,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .copyWith(
+                                  color: Colors.white),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                      )   ],
+                  ),
+                )),
+            enterBottomSheetDuration: const Duration(seconds: 1),
+          );
         },
           child: Container(
-            height: 120,width: 50,
+            height: 100,width: 100,
             color: Colors.transparent,
             child: Column(
 
@@ -2507,7 +2937,7 @@ Get.offAll(LoginPage());
                             Flexible(
                               flex: 1,
                               child: Text(
-                                "pendingCorrespondences"
+                                "pendingCorrespondences".tr
                                 //controller.data?.transferData.sections[].destination
                                 // controller.data?.transferData.priorities
                                 //   controller.data?.transferData.privacies.
@@ -2670,185 +3100,185 @@ Get.offAll(LoginPage());
               ),
             ),
           ),
-          Flexible(
-            flex: 2,
-            child: Container(
-              color: Colors.transparent,
-              padding:
-                  EdgeInsets.only(left: 80, right: 80, top: 10, bottom: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Flexible(
-                    flex: 1,
-                    child: Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(6),
-                            topRight: Radius.circular(6),
-                            bottomLeft: Radius.circular(6),
-                            bottomRight: Radius.circular(6)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.25),
-                            spreadRadius: 6,
-                            blurRadius: 6,
-                            offset: Offset(0, 0),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Spacer(flex: 2),
-                          const Flexible(
-                            flex: 2,
-                            child: Image(
-                              image: AssetImage(
-                                'assets/images/flagged.png',
-                              ),
-                              fit: BoxFit.contain,
-                              width: double.infinity,
-                              height: double.infinity,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          const Spacer(flex: 1),
-                          Flexible(
-                            flex: 10,
-                            child: Container(
-                              width: double.infinity,
-                              child: Text(
-                                "flagged".tr,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .copyWith(
-                                        color: Colors.grey,
-                                        fontSize:
-                                            calculateFontSize(16, context)),
-                                textAlign: TextAlign.start,
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            flex: 3,
-                            child: Container(
-                              width: double.infinity,
-                              child: Text(
-                                "5",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline3!
-                                    .copyWith(
-                                      fontSize: 22,
-                                      color: createMaterialColor(
-                                        Color.fromRGBO(247, 148, 29, 1),
-                                      ),
-                                    ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                          Spacer(flex: 2)
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 20),
-                  Flexible(
-                    flex: 1,
-                    child: Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(6),
-                          topRight: Radius.circular(6),
-                          bottomLeft: Radius.circular(6),
-                          bottomRight: Radius.circular(6),
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.25),
-                            spreadRadius: 6,
-                            blurRadius: 6,
-                            offset: Offset(0, 0),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          const Spacer(flex: 2),
-                          const Flexible(
-                            flex: 2,
-                            child: Image(
-                              image: AssetImage(
-                                'assets/images/notification.png',
-                              ),
-                              fit: BoxFit.contain,
-                              width: double.infinity,
-                              height: double.infinity,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          const Spacer(flex: 1),
-                          Flexible(
-                            flex: 10,
-                            child: Container(
-                              width: double.infinity,
-                              child: Text(
-                                "notifications".tr,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .copyWith(
-                                        color: Colors.grey,
-                                        fontSize:
-                                            calculateFontSize(16, context)),
-                                textAlign: TextAlign.start,
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            flex: 3,
-                            child: Container(
-                              width: double.infinity,
-                              child: Text(
-                                "9",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline3!
-                                    .copyWith(
-                                      fontSize: 22,
-                                      color: createMaterialColor(
-                                        Color.fromRGBO(247, 148, 29, 1),
-                                      ),
-                                    ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                          Spacer(flex: 2)
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          )
+          // Flexible(
+          //   flex: 2,
+          //   child: Container(
+          //     color: Colors.transparent,
+          //     padding:
+          //         EdgeInsets.only(left: 80, right: 80, top: 10, bottom: 10),
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //       crossAxisAlignment: CrossAxisAlignment.center,
+          //       mainAxisSize: MainAxisSize.max,
+          //       children: [
+          //         Flexible(
+          //           flex: 1,
+          //           child: Container(
+          //             width: double.infinity,
+          //             height: double.infinity,
+          //             decoration: BoxDecoration(
+          //               color: Colors.white,
+          //               borderRadius: BorderRadius.only(
+          //                   topLeft: Radius.circular(6),
+          //                   topRight: Radius.circular(6),
+          //                   bottomLeft: Radius.circular(6),
+          //                   bottomRight: Radius.circular(6)),
+          //               boxShadow: [
+          //                 BoxShadow(
+          //                   color: Colors.grey.withOpacity(0.25),
+          //                   spreadRadius: 6,
+          //                   blurRadius: 6,
+          //                   offset: Offset(0, 0),
+          //                 ),
+          //               ],
+          //             ),
+          //             child: Row(
+          //               mainAxisAlignment: MainAxisAlignment.center,
+          //               crossAxisAlignment: CrossAxisAlignment.center,
+          //               mainAxisSize: MainAxisSize.max,
+          //               children: [
+          //                 Spacer(flex: 2),
+          //                 const Flexible(
+          //                   flex: 2,
+          //                   child: Image(
+          //                     image: AssetImage(
+          //                       'assets/images/flagged.png',
+          //                     ),
+          //                     fit: BoxFit.contain,
+          //                     width: double.infinity,
+          //                     height: double.infinity,
+          //                     color: Colors.grey,
+          //                   ),
+          //                 ),
+          //                 const Spacer(flex: 1),
+          //                 Flexible(
+          //                   flex: 10,
+          //                   child: Container(
+          //                     width: double.infinity,
+          //                     child: Text(
+          //                       "flagged".tr,
+          //                       style: Theme.of(context)
+          //                           .textTheme
+          //                           .headline2!
+          //                           .copyWith(
+          //                               color: Colors.grey,
+          //                               fontSize:
+          //                                   calculateFontSize(16, context)),
+          //                       textAlign: TextAlign.start,
+          //                     ),
+          //                   ),
+          //                 ),
+          //                 Flexible(
+          //                   flex: 3,
+          //                   child: Container(
+          //                     width: double.infinity,
+          //                     child: Text(
+          //                       "5",
+          //                       style: Theme.of(context)
+          //                           .textTheme
+          //                           .headline3!
+          //                           .copyWith(
+          //                             fontSize: 22,
+          //                             color: createMaterialColor(
+          //                               Color.fromRGBO(247, 148, 29, 1),
+          //                             ),
+          //                           ),
+          //                       textAlign: TextAlign.center,
+          //                     ),
+          //                   ),
+          //                 ),
+          //                 Spacer(flex: 2)
+          //               ],
+          //             ),
+          //           ),
+          //         ),
+          //         SizedBox(width: 20),
+          //         Flexible(
+          //           flex: 1,
+          //           child: Container(
+          //             width: double.infinity,
+          //             height: double.infinity,
+          //             decoration: BoxDecoration(
+          //               color: Colors.white,
+          //               borderRadius: BorderRadius.only(
+          //                 topLeft: Radius.circular(6),
+          //                 topRight: Radius.circular(6),
+          //                 bottomLeft: Radius.circular(6),
+          //                 bottomRight: Radius.circular(6),
+          //               ),
+          //               boxShadow: [
+          //                 BoxShadow(
+          //                   color: Colors.grey.withOpacity(0.25),
+          //                   spreadRadius: 6,
+          //                   blurRadius: 6,
+          //                   offset: Offset(0, 0),
+          //                 ),
+          //               ],
+          //             ),
+          //             child: Row(
+          //               mainAxisAlignment: MainAxisAlignment.center,
+          //               crossAxisAlignment: CrossAxisAlignment.center,
+          //               mainAxisSize: MainAxisSize.max,
+          //               children: [
+          //                 const Spacer(flex: 2),
+          //                 const Flexible(
+          //                   flex: 2,
+          //                   child: Image(
+          //                     image: AssetImage(
+          //                       'assets/images/notification.png',
+          //                     ),
+          //                     fit: BoxFit.contain,
+          //                     width: double.infinity,
+          //                     height: double.infinity,
+          //                     color: Colors.grey,
+          //                   ),
+          //                 ),
+          //                 const Spacer(flex: 1),
+          //                 Flexible(
+          //                   flex: 10,
+          //                   child: Container(
+          //                     width: double.infinity,
+          //                     child: Text(
+          //                       "notifications".tr,
+          //                       style: Theme.of(context)
+          //                           .textTheme
+          //                           .headline2!
+          //                           .copyWith(
+          //                               color: Colors.grey,
+          //                               fontSize:
+          //                                   calculateFontSize(16, context)),
+          //                       textAlign: TextAlign.start,
+          //                     ),
+          //                   ),
+          //                 ),
+          //                 Flexible(
+          //                   flex: 3,
+          //                   child: Container(
+          //                     width: double.infinity,
+          //                     child: Text(
+          //                       "9",
+          //                       style: Theme.of(context)
+          //                           .textTheme
+          //                           .headline3!
+          //                           .copyWith(
+          //                             fontSize: 22,
+          //                             color: createMaterialColor(
+          //                               Color.fromRGBO(247, 148, 29, 1),
+          //                             ),
+          //                           ),
+          //                       textAlign: TextAlign.center,
+          //                     ),
+          //                   ),
+          //                 ),
+          //                 Spacer(flex: 2)
+          //               ],
+          //             ),
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );

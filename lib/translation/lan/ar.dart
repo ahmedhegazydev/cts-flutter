@@ -111,4 +111,10 @@ const Map<String, String> ar = {
 "All":"الكل",
   "new":"جديد",
   "veryimportant":  "عاجل"
+  ,
+  "start":"تاريخ البدء"
+  ,
+  "end":"تاريخ الانتهاء"
+  ,
+  "reason":"السبب"
 };

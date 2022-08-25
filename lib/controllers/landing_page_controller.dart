@@ -1,8 +1,10 @@
 
 import 'package:cts/controllers/search_controller.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/safe_area_values.dart';
 import 'package:top_snackbar_flutter/tap_bounce_container.dart';
@@ -159,4 +161,43 @@ class LandingPageController extends GetxController {
       print("_postRemoveBasketApi");
     });
   }
+
+  TextEditingController textEditingControllerFromDocDate =
+  TextEditingController();
+  Future<void> selectFromDocDate({required BuildContext context}) async {
+    final DateTime? pickedDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2050));
+    if (pickedDate != null) {
+      textEditingControllerFromDocDate.text =
+          pickedDate.toString().substring(0, 10);
+
+      var outputFormat = DateFormat('dd/MM/yyyy');
+      var outputDate = outputFormat.format(pickedDate);
+
+      update();
+    }
+  }
+
+
+  TextEditingController textEditingControllerToDocDate =
+  TextEditingController();
+  Future<void> selectToDocDate({required BuildContext context}) async {
+    final DateTime? pickedDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2050));
+    if (pickedDate != null) {
+      textEditingControllerToDocDate.text =
+          pickedDate.toString().substring(0, 10);
+      var outputFormat = DateFormat('dd/MM/yyyy');
+      var outputDate = outputFormat.format(pickedDate);
+
+      update();
+    }
+  }
+
 }

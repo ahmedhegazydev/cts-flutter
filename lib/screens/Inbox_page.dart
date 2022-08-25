@@ -448,6 +448,8 @@ class InboxPage extends GetWidget<InboxController> {
             unselectedLabelColor: Colors.black87,
             alignment: TabBarAlignment.start,
           ),
+
+
           views: [
             // Center(
             //     child: controller.getData && !controller.addToList
@@ -476,8 +478,12 @@ class InboxPage extends GetWidget<InboxController> {
                     ? const Center(child: CircularProgressIndicator())
                     : Column(
                         children: [
+
+
+
+
                           Visibility(
-                              visible: false, child: _filterMail(context)),
+                              visible: true, child: _filterMail(context)),
                           Expanded(
                             child: CustomListView(
                               function: controller.onRefresh(),
@@ -503,7 +509,7 @@ class InboxPage extends GetWidget<InboxController> {
                     : Column(
                         children: [
                           Visibility(
-                              visible: false, child: _filterMail(context)),
+                              visible: true, child: _filterMail(context)),
                           Expanded(
                             child: CustomListView(
                               function: controller.onRefresh(),
@@ -529,7 +535,7 @@ class InboxPage extends GetWidget<InboxController> {
                     : Column(
                       children: [
 
-                        Visibility(visible: false,child: _filterMail(context)),
+                        Visibility(visible: true,child: _filterMail(context)),
 
 
 

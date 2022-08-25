@@ -417,13 +417,13 @@ class InboxPage extends GetWidget<InboxController> {
         length: 2,
         child: ContainedTabBarView(
           tabs: [
-            // Text(
-            //   "all".tr,
-            //   style: Theme.of(context).textTheme.headline1!.copyWith(
-            //         color: Colors.grey,
-            //         fontSize: 21,
-            //       ),
-            // ),
+            Text(
+              "all".tr,
+              style: Theme.of(context).textTheme.headline1!.copyWith(
+                    color: Colors.grey,
+                    fontSize: 21,
+                  ),
+            ),
             Text(
               "incoming".tr,
               style: Theme.of(context)
@@ -523,33 +523,33 @@ class InboxPage extends GetWidget<InboxController> {
                           ),
                         ],
                       )),
-            // Center(
-            //     child: controller.getData
-            //         ? const Center(child: CircularProgressIndicator())
-            //         : Column(
-            //           children: [
-            //
-            //             Visibility(visible: false,child: _filterMail(context)),
-            //
-            //
-            //
-            //
-            //
-            //
-            //
-            //             Expanded(
-            //               child: CustomListView(
-            //                   function: controller.onRefresh(),
-            //                   correspondences: controller.correspondences ,
-            //                   scrollController: controller.scrollController,
-            //                   haveMoreData: controller.haveMoreData,
-            //                   onClickItem: () {
-            //                     Get.toNamed("/DocumentPage");
-            //                   }, functionSummary: () {  }, allCorrespondences: [], customActions: [], functionReply: () {  }, functionTrunsfer: () {  }, functionComplet: () {  },
-            //                 ),
-            //             ),
-            //           ],
-            //         )),
+            Center(
+                child: controller.getData
+                    ? const Center(child: CircularProgressIndicator())
+                    : Column(
+                      children: [
+
+                        Visibility(visible: false,child: _filterMail(context)),
+
+
+
+
+
+
+
+                        Expanded(
+                          child: CustomListView(
+                              function: controller.onRefresh(),
+                              correspondences: controller.correspondences ,
+                              scrollController: controller.scrollController,
+                              haveMoreData: controller.haveMoreData,
+                              onClickItem: () {
+                                Get.toNamed("/DocumentPage");
+                              }, functionSummary: () {  }, allCorrespondences: [], customActions: [], functionReply: () {  }, functionTrunsfer: () {  }, functionComplet: () {  },
+                            ),
+                        ),
+                      ],
+                    )),
           ],
           onChange: (value) {
             controller.getData = true;

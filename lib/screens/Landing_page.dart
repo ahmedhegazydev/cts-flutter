@@ -3371,7 +3371,7 @@ Get.offAll(LoginPage());
                   children: [
                     TableRowInkWell(
                       onTap: () {
-                        openInbox();
+                        openInbox(context);
                       },
                       child: _buildInboxesRow(
                         context,
@@ -3385,7 +3385,7 @@ Get.offAll(LoginPage());
                   children: [
                     TableRowInkWell(
                       onTap: () {
-                        openInbox();
+                        openInbox(context);
                       },
                       child: _buildInboxesRow(
                         context,
@@ -3399,7 +3399,7 @@ Get.offAll(LoginPage());
                   children: [
                     TableRowInkWell(
                       onTap: () {
-                        openInbox();
+                        openInbox(context);
                       },
                       child: _buildInboxesRow(
                         context,
@@ -3413,7 +3413,7 @@ Get.offAll(LoginPage());
                   children: [
                     TableRowInkWell(
                       onTap: () {
-                        openInbox();
+                        openInbox(context);
                       },
                       child: _buildInboxesRow(
                         context,
@@ -3442,7 +3442,7 @@ Get.offAll(LoginPage());
                   children: [
                     TableRowInkWell(
                       onTap: () {
-                        openInbox();
+                        openInbox(context);
                       },
                       child: _buildOtherFoldersRows(
                         context,
@@ -3458,7 +3458,7 @@ Get.offAll(LoginPage());
                   children: [
                     TableRowInkWell(
                       onTap: () {
-                        openInbox();
+                        openInbox(context);
                       },
                       child: _buildOtherFoldersRows(
                         context,
@@ -3597,7 +3597,7 @@ Get.offAll(LoginPage());
                   children: [
                     TableRowInkWell(
                       onTap: () {
-                        openInbox();
+                        openInbox(context);
                       },
                       child: _buildInboxesRow(
                         context,
@@ -3611,7 +3611,7 @@ Get.offAll(LoginPage());
                   children: [
                     TableRowInkWell(
                       onTap: () {
-                        openInbox();
+                        openInbox(context);
                       },
                       child: _buildInboxesRow(
                         context,
@@ -3625,7 +3625,7 @@ Get.offAll(LoginPage());
                   children: [
                     TableRowInkWell(
                       onTap: () {
-                        openInbox();
+                        openInbox(context);
                       },
                       child: _buildInboxesRow(
                         context,
@@ -3639,7 +3639,7 @@ Get.offAll(LoginPage());
                   children: [
                     TableRowInkWell(
                       onTap: () {
-                        openInbox();
+                        openInbox(context);
                       },
                       child: _buildInboxesRow(
                         context,
@@ -3674,7 +3674,7 @@ Get.offAll(LoginPage());
                   children: [
                     TableRowInkWell(
                       onTap: () {
-                        openInbox();
+                        openInbox(context);
                       },
                       child: _buildOtherFoldersRows(
                         context,
@@ -3690,7 +3690,7 @@ Get.offAll(LoginPage());
                   children: [
                     TableRowInkWell(
                       onTap: () {
-                        openInbox();
+                        openInbox(context);
                       },
                       child: _buildOtherFoldersRows(
                         context,
@@ -3920,7 +3920,11 @@ Get.offAll(LoginPage());
     );
   }
 
-  openInbox() {
+  openInbox(context) {
+
+
+
+    Get.find<InboxController>().getAllData(context: context);
     Get.toNamed("/InboxPage");
     // Navigator.push(
     //   context,

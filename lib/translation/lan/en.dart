@@ -105,5 +105,9 @@ const Map<String, String> en = {
 , "Settings": "Settings"
   , "Save Settings": "Save Settings"
   , "pick your Color": "Pick your color"
-
+  ,"addtoBasket":"add to Basket",
+  "Summary":"Summary",
+  "Complete":"Complete",
+  "Transfer":"Transfer"
+,"Reply":"Reply"
 };

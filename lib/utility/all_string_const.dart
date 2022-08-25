@@ -1,7 +1,7 @@
 class AllStringConst{
   static const String Token="Token";
   static const String UserId="UserId";
-
+  static const String AppLan= "appLan";
   static const String FirstName= "firstName";
   static const String BaseUrl= "baseUrlAppSettings";
   static const String LastName="lastName";

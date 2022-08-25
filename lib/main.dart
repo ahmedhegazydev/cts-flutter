@@ -2,6 +2,7 @@ import 'package:cts/screens/Login_page.dart';
 import 'package:cts/screens/my_cart/MyPocketsScreen.dart';
 import 'package:cts/screens/web_view_page.dart';
 import 'package:cts/screens/filter/FilterSideScreen.dart';
+import 'package:cts/utility/all_string_const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get.dart';
@@ -32,6 +33,20 @@ void main() async {
   // print("000000");
   //var bb=json.decode(a.toString());
   //  secureStorage.deleteSecureData(AllStringConst.Token);
+String? appLan=secureStorage.readSecureData(AllStringConst.AppLan);
+if(appLan==null){
+  Get.updateLocale(Locale('ar', 'AR'));
+}else{
+
+
+  if(appLan=="ar"){
+    Get.updateLocale(Locale('ar', 'AR'));
+  }else{
+
+    Get.updateLocale(Locale('en', 'US'));
+
+  }
+}
 
   //Get.put(SecureStorage());
   Get.put(MController());

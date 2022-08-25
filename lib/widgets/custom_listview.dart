@@ -492,6 +492,8 @@ class CustomListView extends StatelessWidget {
                                                               .isLocked!
                                                           ? Icons.lock
                                                           : Icons.lock_open),
+
+
                                                       Container(
                                                         height: 20,
                                                         width: 20,
@@ -616,7 +618,7 @@ class CustomListView extends StatelessWidget {
                                                               SizedBox(
                                                                 width: 4,
                                                               ),
-                                                              Text("Reply"),
+                                                              Text("Reply".tr),
                                                             ],
                                                           ),
                                                           value: 1,
@@ -633,7 +635,7 @@ class CustomListView extends StatelessWidget {
                                                               SizedBox(
                                                                 width: 4,
                                                               ),
-                                                              Text("Transfer"),
+                                                              Text("Transfer".tr),
                                                             ],
                                                           ),
                                                           value: 2,
@@ -651,7 +653,7 @@ class CustomListView extends StatelessWidget {
                                                               SizedBox(
                                                                 width: 4,
                                                               ),
-                                                              Text("Complete"),
+                                                              Text("Complete".tr),
                                                             ],
                                                           ),
                                                           onTap:
@@ -670,7 +672,7 @@ class CustomListView extends StatelessWidget {
                                                                 SizedBox(
                                                                   width: 4,
                                                                 ),
-                                                                Text("Summary"),
+                                                                Text("Summary".tr),
                                                               ],
                                                             ),
                                                             onTap:
@@ -689,7 +691,7 @@ class CustomListView extends StatelessWidget {
                                                                 width: 4,
                                                               ),
                                                               Text(
-                                                                  "add to Basket"),
+                                                                  "addtoBasket".tr),
                                                             ],
                                                           ),
                                                           onTap: () {
@@ -2048,7 +2050,7 @@ class CustomListView extends StatelessWidget {
                                                           SizedBox(
                                                             width: 4,
                                                           ),
-                                                          Text("Reply"),
+                                                          Text("Reply".tr),
                                                         ],
                                                       ),
                                                       value: 1,
@@ -2065,7 +2067,7 @@ class CustomListView extends StatelessWidget {
                                                           SizedBox(
                                                             width: 4,
                                                           ),
-                                                          Text("Transfer"),
+                                                          Text("Transfer".tr),
                                                         ],
                                                       ),
                                                       value: 2,
@@ -2080,7 +2082,7 @@ class CustomListView extends StatelessWidget {
                                                           SizedBox(
                                                             width: 4,
                                                           ),
-                                                          Text("Complete"),
+                                                          Text("Complete".tr),
                                                         ],
                                                       ),
                                                       onTap: functionComplet,
@@ -2098,7 +2100,7 @@ class CustomListView extends StatelessWidget {
                                                             SizedBox(
                                                               width: 4,
                                                             ),
-                                                            Text("Summary"),
+                                                            Text("Summary".tr),
                                                           ],
                                                         ),
                                                         onTap: functionSummary,
@@ -2115,7 +2117,7 @@ class CustomListView extends StatelessWidget {
                                                           SizedBox(
                                                             width: 4,
                                                           ),
-                                                          Text("add to Basket"),
+                                                          Text("addtoBasket".tr),
                                                         ],
                                                       ),
                                                       onTap: () {

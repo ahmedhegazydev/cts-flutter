@@ -100,5 +100,11 @@ const Map<String, String> ar = {
   , "Settings": "الاعدادات"
   , "Save Settings": "حفظ الاعدادات"
   , "pick your Color": "اختر اللون المناسب"
+  ,"addtoBasket":"اضف الي السلة",
+  "Summary":"معلومات",
 
+"Complete":"انهاء",
+
+"Transfer":"تحويل"
+,"Reply":"رد"
 };

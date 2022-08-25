@@ -131,86 +131,26 @@ class InboxPage extends GetWidget<InboxController> {
         Container(
           child: Center(child: Text("sender".tr)),
         ),
-        Container(
-          height: size.height * .1,
-          width: size.width * .3,
-          child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 20,
-              itemBuilder: (context, pos) {
-                return Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: CircleAvatar(
-                    backgroundColor: Colors.cyan,
-                    maxRadius: 30,
-                    minRadius: 30,
-                  ),
-                );
-              }),
-        ),
-        Container(
-          padding: EdgeInsets.only(right: 8, left: 8),
-          height: size.height * .03,
-          width: 1,
-          color: Colors.grey,
-        ),
         Expanded(
-          flex: 2,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 8.0, right: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                      color: AppColor, borderRadius: BorderRadius.circular(8)),
-                  // margin: EdgeInsets.only(right: 8, left: 8),
-                  //   height: size.height * .03,
-                  ////width: 1,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.warning,
-                        color: Colors.white,
-                      ),
-                      Text(
-                        "urgent".tr,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline1!
-                            .copyWith(color: Colors.white, fontSize: 21),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  width: 4,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.grey[400],
-                      borderRadius: BorderRadius.circular(8)),
-                  //  padding: EdgeInsets.only(right: 8, left: 8),
-                  child: Row(
-                    children: [
-                      Icon(Icons.lock),
-                      SizedBox(
-                        width: 4,
-                      ),
-                      Text(
-                        "secret".tr,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline1!
-                            .copyWith(color: Colors.black, fontSize: 21),
-                      ),
-                    ],
-                  ),
-                  ////width: 1,
-                ),
-              ],
-            ),
+          child: Container(
+            height: size.height * .1,
+           
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 20,
+                itemBuilder: (context, pos) {
+                  return Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: CircleAvatar(
+                      backgroundColor: Colors.cyan,
+                      maxRadius: 30,
+                      minRadius: 30,
+                    ),
+                  );
+                }),
           ),
+        ),SizedBox(
+          width: 16,
         ),
         Container(
           padding: EdgeInsets.only(right: 8, left: 8),
@@ -218,12 +158,77 @@ class InboxPage extends GetWidget<InboxController> {
           width: 1,
           color: Colors.grey,
         ),
-        Expanded(
-            flex: 1,
-            child: Icon(
-              Icons.clear,
-            ))
-      ],
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0, right: 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    color: AppColor, borderRadius: BorderRadius.circular(8)),
+                // margin: EdgeInsets.only(right: 8, left: 8),
+                //   height: size.height * .03,
+                ////width: 1,
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.warning,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      "urgent".tr,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline1!
+                          .copyWith(color: Colors.white, fontSize: 21),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: 16,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    color: Colors.grey[400],
+                    borderRadius: BorderRadius.circular(8)),
+                //  padding: EdgeInsets.only(right: 8, left: 8),
+                child: Row(
+                  children: [
+                    Icon(Icons.lock),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      "secret".tr,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline1!
+                          .copyWith(color: Colors.black, fontSize: 21),
+                    ),
+                  ],
+                ),
+                ////width: 1,
+              ),
+            ],
+          ),
+        ),SizedBox(
+          width: 16,
+        ),
+        Container(
+          padding: EdgeInsets.only(right: 8, left: 8),
+          height: size.height * .03,
+          width: 1,
+          color: Colors.grey,
+        ),SizedBox(
+          width: 8,
+        ),
+        Icon(
+          Icons.clear,color: Theme.of(context)
+            .colorScheme
+            .primary,
+        ),
+    SizedBox(width: 4,)  ],
     );
   }
 

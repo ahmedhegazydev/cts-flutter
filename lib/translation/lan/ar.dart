@@ -104,11 +104,11 @@ const Map<String, String> ar = {
   "Summary":"معلومات",
 
 "Complete":"انهاء",
-  , "صادر للكل": "صادر الكل"
+   "صادر للكل": "صادر الكل"
   , "وارد للكل": "وارد الكل"
   , "Basket": "محفظتي",
 "user Guide": "دليل المستخدم"
-
+,
 "Transfer":"تحويل"
 ,"Reply":"رد",
 
@@ -120,5 +120,6 @@ const Map<String, String> ar = {
   ,
   "end":"تاريخ الانتهاء"
   ,
-  "reason":"السبب"
+  "reason":"السبب",
+  "Loading...":"  تحميل .... ",
 };

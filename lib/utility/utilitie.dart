@@ -53,10 +53,18 @@ String getLocaleCode(BuildContext context) {
   return Localizations.localeOf(context).languageCode;
 }
 
-bool isDirectionRTL(BuildContext context) {
+bool isDirectionRTLForBackArrow(BuildContext context) {
   return Bidi.isRtlLanguage(
       // Localizations.localeOf(context).languageCode
-      Get.locale?.languageCode == "en" ? "ar" : "en"
+    Get.locale?.languageCode == "en" ? "ar" : "en"
+    // Get.locale?.languageCode
+  );
+}
+
+bool isDirectionRTL(BuildContext context) {
+  return Bidi.isRtlLanguage(
+      Localizations.localeOf(context).languageCode
+      // Get.locale?.languageCode == "en" ? "ar" : "en"
       // Get.locale?.languageCode
   );
 }
@@ -72,7 +80,7 @@ String returnImageNameBasedOnDirection(
 
 String returnImageNameBasedOnOppositeDirection(
     String imageName, BuildContext context, String extension) {
-  if (isDirectionRTL(context)) {
+  if (isDirectionRTLForBackArrow(context)) {
     return imageName + "_R." + extension;
   }
   return imageName + "_L." + extension;
@@ -162,7 +170,7 @@ showLoaderDialog(BuildContext context) {
     content: new Row(
       children: [
         CircularProgressIndicator(),
-        Container(margin: EdgeInsets.only(left: 7), child: Text("Loading...")),
+        Container(margin: EdgeInsets.only(left: 7), child: Text("Loading...".tr)),
       ],
     ),
   );

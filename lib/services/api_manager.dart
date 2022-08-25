@@ -38,13 +38,14 @@ abstract class ApiManager {
     await dioSingleton.dio
         .get(checkIfSavedSettingsBasUrl(), queryParameters: data)
         .then((value) {
-      Navigator.pop(context!);
+      // Navigator.pop(context!);
+      // Get.back();
       if (value.data["Status"] == 0) {
         a.Get.snackbar("Error".tr, "${value.data["ErrorMessage"]}");
       } else {
         if (value.data["Status"] == 2) {
           // Get.to(LoginPage());
-          // Get.offAll(LoginPage());
+          Get.offAll(LoginPage());
         } else {
           print(value);
           data = value.data;
@@ -77,13 +78,14 @@ abstract class ApiManager {
             //     }),
             )
         .then((value) {
-      Navigator.pop(context!);
+      // Navigator.pop(context!);
+      // Get.back();
       if (value.data["Status"] == 0) {
         a.Get.snackbar("Error".tr, "${value.data["ErrorMessage"]}");
       } else {
         if (value.data["Status"] == 2) {
           // Get.to(LoginPage());
-          // Get.offAll(LoginPage());
+          Get.offAll(LoginPage());
         } else {
           data = value.data;
           jsonList = fromJson(data);

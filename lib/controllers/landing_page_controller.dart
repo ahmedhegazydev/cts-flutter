@@ -54,7 +54,7 @@ class LandingPageController extends GetxController {
   }
   getFindRecipientData({required context}) async {
     final FindRecipient _findRecipient = FindRecipient(context);
-    _findRecipient.data = "Token=${_secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&typeId=&criteria=*";
+    _findRecipient.data = "Token=${_secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&typeId=&criteria=//*";
     await _findRecipient.getData().then((value) {
       findRecipientModel = value as FindRecipientModel;
       listOfUser(0);

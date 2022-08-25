@@ -1073,7 +1073,7 @@ SizedBox(height: 10,),
             );
           },
           child: Container(
-            height: 120,
+            height: 140,
             color: Colors.transparent,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -1083,8 +1083,8 @@ SizedBox(height: 10,),
                 Spacer(
                   flex: 1,
                 ),
-                Expanded(
-
+                Flexible(
+                  flex: 4,
                   child: Image(
                     image: AssetImage(
                       'assets/images/delegation.png',

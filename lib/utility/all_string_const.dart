@@ -13,4 +13,5 @@ class AllStringConst{
   static const String ServiceType="serviceType";
   static const String AppColor="AppColor";
   static const String LogInData="logindata";
+  static const String Newsignature="Newsignature";
 }

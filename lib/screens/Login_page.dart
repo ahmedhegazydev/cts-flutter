@@ -160,12 +160,12 @@ class LoginPage extends GetWidget<LoginController> {
                           showDialog(
                               context: context,
                               builder: (context) => AlertDialog(
-                                    title:  Text("pick your Color".tr),
+                                    title: Text("pick your Color".tr),
                                     content: Column(children: [
                                       buildColorPicker(),
-
-                                      SizedBox(height: 30,),
-
+                                      SizedBox(
+                                        height: 30,
+                                      ),
                                       Container(
                                         width:
                                             MediaQuery.of(context).size.width *
@@ -235,163 +235,182 @@ class LoginPage extends GetWidget<LoginController> {
                               showDialog(
                                   context: context,
                                   builder: (context) => AlertDialog(
-                                        title:  Text("Settings".tr),
-                                        content: Column(children: [
-
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 8.0,
-                                                bottom: 8,
-                                                right: 0,
-                                                left: 0),
-                                            child: Column(children: [
-                                              CustomInputTextFiled(
-                                                validator: controller.validators
-                                                    .userNameValidator,
-                                                textEditingController:
-                                                    controller.baseUrl,
-                                                label: "Base Url".tr,
-                                              ),
-                                            ]),
-                                          ),
-                                          // SizedBox(
-                                          //   height: 100,
-                                          // ),
-
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 8.0,
-                                                bottom: 30,
-                                                right: 0,
-                                                left: 0),
-                                            child: Row(children: [
-                                              Expanded(
-                                                child: Container(
-                                                  padding: const EdgeInsets.only(
-                                                      left: 0,
-                                                      right: 0,
-                                                      top: 0,
-                                                      bottom: 0),
-                                                  height: 60,
-                                                  decoration: BoxDecoration(
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .primary,
-                                                      borderRadius:
-                                                      const BorderRadius.all(
-                                                          Radius.circular(6))),
-                                                  child: ElevatedButton(
-                                                    onPressed: () {
-                                                      var locale =
-                                                      const Locale('ar', 'AR');
-                                                      SecureStorage secureStorage = SecureStorage();
-
-                                                      secureStorage.writeSecureData(AllStringConst.AppLan,"ar");
-                                                      Get.updateLocale(locale);
-                                                    },
-                                                    child: Text(
-                                                      "عربي",
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .headline2!
-                                                          .copyWith(
-                                                          color: Colors.white),
-                                                      textAlign: TextAlign.center,
-                                                    ),
-                                                  ),
+                                        title: Text("Settings".tr),
+                                        content:
+                                        SingleChildScrollView(
+                                          child: Column(children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 8.0,
+                                                  bottom: 8,
+                                                  right: 0,
+                                                  left: 0),
+                                              child: Column(children: [
+                                                CustomInputTextFiled(
+                                                  validator: controller.validators
+                                                      .userNameValidator,
+                                                  textEditingController:
+                                                  controller.baseUrl,
+                                                  label: "Base Url".tr,
                                                 ),
-                                              ),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                child: Container(
-                                                  padding: const EdgeInsets.only(
-                                                      left: 0,
-                                                      right: 0,
-                                                      top: 0,
-                                                      bottom: 0),
-                                                  height: 60,
-                                                  decoration: BoxDecoration(
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .primary,
-                                                      borderRadius:
-                                                      const BorderRadius.all(
-                                                          Radius.circular(6))),
-                                                  child: ElevatedButton(
-                                                    onPressed: () {
-                                                      SecureStorage secureStorage = SecureStorage();
-                                                      var locale =
-                                                      const Locale('en', 'US');
-                                                      secureStorage.writeSecureData(AllStringConst.AppLan,"en");
-                                                      Get.updateLocale(locale);
-                                                    },
-                                                    child: Text(
-                                                      "En",
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .headline2!
-                                                          .copyWith(
-                                                          color: Colors.white),
-                                                      textAlign: TextAlign.center,
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                            ]),
-                                          ),
-
-                                          Container(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                .7,
-                                            padding: const EdgeInsets.only(
-                                                left: 0,
-                                                right: 0,
-                                                top: 0,
-                                                bottom: 0),
-                                            height: 60,
-                                            decoration: BoxDecoration(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .primary,
-                                                borderRadius:
-                                                    const BorderRadius.all(
-                                                        Radius.circular(6))),
-                                            child: ElevatedButton(
-                                              onPressed: () {
-                                                controller.secureStorage                                                    .writeSecureData(
-                                                        AllStringConst.BaseUrl,
-                                                        controller
-                                                            .baseUrl.text);
-
-
-
-
-
-
-
-
-                                                // Restart.restartApp();
-                                                // Phoenix.rebirth(context);
-                                                Navigator.of(context).pop();
-                                                // RestartWidget.restartApp(
-                                                //     context);
-                                              },
-                                              child: Text(
-                                                "Save Settings".tr,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline2!
-                                                    .copyWith(
-                                                        color: Colors.white),
-                                                textAlign: TextAlign.center,
-                                              ),
+                                              ]),
                                             ),
-                                          )
-                                        ]),
+                                            // SizedBox(
+                                            //   height: 100,
+                                            // ),
+
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 8.0,
+                                                  bottom: 30,
+                                                  right: 0,
+                                                  left: 0),
+                                              child: Row(children: [
+                                                Expanded(
+                                                  child: Container(
+                                                    padding:
+                                                    const EdgeInsets.only(
+                                                        left: 0,
+                                                        right: 0,
+                                                        top: 0,
+                                                        bottom: 0),
+                                                    height: 60,
+                                                    decoration: BoxDecoration(
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primary,
+                                                        borderRadius:
+                                                        const BorderRadius
+                                                            .all(
+                                                            Radius.circular(
+                                                                6))),
+                                                    child: ElevatedButton(
+                                                      onPressed: () {
+                                                        var locale = const Locale(
+                                                            'ar', 'AR');
+                                                        SecureStorage
+                                                        secureStorage =
+                                                        SecureStorage();
+
+                                                        secureStorage
+                                                            .writeSecureData(
+                                                            AllStringConst
+                                                                .AppLan,
+                                                            "ar");
+                                                        Get.updateLocale(locale);
+                                                      },
+                                                      child: Text(
+                                                        "عربي",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .headline2!
+                                                            .copyWith(
+                                                            color:
+                                                            Colors.white),
+                                                        textAlign:
+                                                        TextAlign.center,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Expanded(
+                                                  child: Container(
+                                                    padding:
+                                                    const EdgeInsets.only(
+                                                        left: 0,
+                                                        right: 0,
+                                                        top: 0,
+                                                        bottom: 0),
+                                                    height: 60,
+                                                    decoration: BoxDecoration(
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primary,
+                                                        borderRadius:
+                                                        const BorderRadius
+                                                            .all(
+                                                            Radius.circular(
+                                                                6))),
+                                                    child: ElevatedButton(
+                                                      onPressed: () {
+                                                        SecureStorage
+                                                        secureStorage =
+                                                        SecureStorage();
+                                                        var locale = const Locale(
+                                                            'en', 'US');
+                                                        secureStorage
+                                                            .writeSecureData(
+                                                            AllStringConst
+                                                                .AppLan,
+                                                            "en");
+                                                        Get.updateLocale(locale);
+                                                      },
+                                                      child: Text(
+                                                        "En",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .headline2!
+                                                            .copyWith(
+                                                            color:
+                                                            Colors.white),
+                                                        textAlign:
+                                                        TextAlign.center,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                )
+                                              ]),
+                                            ),
+
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                                  .7,
+                                              padding: const EdgeInsets.only(
+                                                  left: 0,
+                                                  right: 0,
+                                                  top: 0,
+                                                  bottom: 0),
+                                              height: 60,
+                                              decoration: BoxDecoration(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
+                                                  borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(6))),
+                                              child: ElevatedButton(
+                                                onPressed: () {
+                                                  controller.secureStorage
+                                                      .writeSecureData(
+                                                      AllStringConst.BaseUrl,
+                                                      controller
+                                                          .baseUrl.text);
+
+                                                  // Restart.restartApp();
+                                                  // Phoenix.rebirth(context);
+                                                  Navigator.of(context).pop();
+                                                  // RestartWidget.restartApp(
+                                                  //     context);
+                                                },
+                                                child: Text(
+                                                  "Save Settings".tr,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline2!
+                                                      .copyWith(
+                                                      color: Colors.white),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                            )
+                                          ]),
+                                        ),
+
                                       ));
                             },
                             elevation: 0,
@@ -476,12 +495,10 @@ class LoginPage extends GetWidget<LoginController> {
                               child: Container(),
                             ),
                             Flexible(
-                              flex: 20,
-                              child:
-                              CustomButton(
-                                  onPressed: controller.logIngRequst,
-                                  name: "login".tr)),
-
+                                flex: 20,
+                                child: CustomButton(
+                                    onPressed: controller.logIngRequst,
+                                    name: "login".tr)),
                           ],
                         ),
                       ),

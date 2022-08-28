@@ -23,8 +23,8 @@ List newSing=[];
     exportBackgroundColor: Colors.white,
   );
 replaceSing(sin){
-  newSing.clear();
-  newSing.add(sin);
+  // newSing.clear();
+  // newSing.add(sin);
 
   update();
 }

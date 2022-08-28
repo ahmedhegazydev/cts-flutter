@@ -116,5 +116,8 @@ const Map<String, String> ar = {
   ,
   "end":"تاريخ الانتهاء"
   ,
-  "reason":"السبب"
+  "reason":"السبب",
+"defaultsignature":"الامضاء الافتراضية"
+  ,
+  "multisignature":"جميع الامضاءات"
 };

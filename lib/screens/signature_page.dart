@@ -15,7 +15,7 @@ class SignaturePage extends GetView<SignaturePageController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Column(
+    return Scaffold(body: Column(crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(height: 300,
             width: double.infinity,
@@ -30,8 +30,10 @@ class SignaturePage extends GetView<SignaturePageController> {
         ],),
         Divider(color: Colors.grey),
         
-        Text("signature"),
-        Image.memory(dataFromBase64String(controller.secureStorage.readSecureData(AllStringConst.Signature)) ,height: 100,)
+        Text("defaultsignature".tr),
+        Image.memory(dataFromBase64String(controller.secureStorage.readSecureData(AllStringConst.Signature)) ,height: 100,),
+        Divider(color: Colors.grey),
+        Text("multisignature".tr)
         , Expanded(
           child: GetBuilder<SignaturePageController>(
             assignId: true,

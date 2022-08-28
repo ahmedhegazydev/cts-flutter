@@ -6,7 +6,7 @@ class SettingsApp {
 
   // static const String baseUrl = 'http://192.168.1.2:9091/Mobility/CMS.svc';
   // static const String baseUrl = 'http://win-7pnh2kgornc:9091/Mobility/CMS.svc';
-  static const String baseUrl = 'http://192.168.0.100:9091/Mobility/CMS.svc';
+  static const String baseUrl = 'http://192.168.1.191:9091/Mobility/CMS.svc';
 
   SettingsApp() {}
 
@@ -87,4 +87,18 @@ class SettingsApp {
 
   static const String PostUpdateSignatureUrl = baseUrl + "/UpdateSignature";
   static const String PostUploadAttachmentUrl = baseUrl + "/UploadAttachment";
+
+  //==========================================
+
+
+
+  static const String GetMyRoutingSettingsUrl =
+      baseUrl + "/GetMyRoutingSettings?"; //Token={Token}&GctId={GctId}")
+
+  static const String SaveMyRoutingSettingsUrl =
+      baseUrl + "/SaveMyRoutingSettings"; //Token={Token}&GctId={GctId}")
+
+  static const String RemoveMyRoutingSettingsUrl =
+      baseUrl + "/RemoveMyRoutingSettings"; //Token={Token}&GctId={GctId}")
+
 }

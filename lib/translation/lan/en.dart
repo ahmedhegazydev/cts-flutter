@@ -117,4 +117,8 @@ const Map<String, String> en = {
   ,
   "end":"End date"  ,
   "reason":"Reason"
+  ,
+  "defaultsignature":"Default Signature"
+  ,
+  "multisignature":"multi-signature"
 };

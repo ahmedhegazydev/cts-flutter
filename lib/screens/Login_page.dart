@@ -236,8 +236,7 @@ class LoginPage extends GetWidget<LoginController> {
                                   context: context,
                                   builder: (context) => AlertDialog(
                                         title: Text("Settings".tr),
-                                        content:
-                                        SingleChildScrollView(
+                                        content: SingleChildScrollView(
                                           child: Column(children: [
                                             Padding(
                                               padding: const EdgeInsets.only(
@@ -247,10 +246,11 @@ class LoginPage extends GetWidget<LoginController> {
                                                   left: 0),
                                               child: Column(children: [
                                                 CustomInputTextFiled(
-                                                  validator: controller.validators
+                                                  validator: controller
+                                                      .validators
                                                       .userNameValidator,
                                                   textEditingController:
-                                                  controller.baseUrl,
+                                                      controller.baseUrl,
                                                   label: "Base Url".tr,
                                                 ),
                                               ]),
@@ -269,35 +269,37 @@ class LoginPage extends GetWidget<LoginController> {
                                                 Expanded(
                                                   child: Container(
                                                     padding:
-                                                    const EdgeInsets.only(
-                                                        left: 0,
-                                                        right: 0,
-                                                        top: 0,
-                                                        bottom: 0),
+                                                        const EdgeInsets.only(
+                                                            left: 0,
+                                                            right: 0,
+                                                            top: 0,
+                                                            bottom: 0),
                                                     height: 60,
                                                     decoration: BoxDecoration(
                                                         color: Theme.of(context)
                                                             .colorScheme
                                                             .primary,
                                                         borderRadius:
-                                                        const BorderRadius
-                                                            .all(
-                                                            Radius.circular(
-                                                                6))),
+                                                            const BorderRadius
+                                                                    .all(
+                                                                Radius.circular(
+                                                                    6))),
                                                     child: ElevatedButton(
                                                       onPressed: () {
-                                                        var locale = const Locale(
-                                                            'ar', 'AR');
+                                                        var locale =
+                                                            const Locale(
+                                                                'ar', 'AR');
                                                         SecureStorage
-                                                        secureStorage =
-                                                        SecureStorage();
+                                                            secureStorage =
+                                                            SecureStorage();
 
                                                         secureStorage
                                                             .writeSecureData(
-                                                            AllStringConst
-                                                                .AppLan,
-                                                            "ar");
-                                                        Get.updateLocale(locale);
+                                                                AllStringConst
+                                                                    .AppLan,
+                                                                "ar");
+                                                        Get.updateLocale(
+                                                            locale);
                                                       },
                                                       child: Text(
                                                         "عربي",
@@ -305,10 +307,10 @@ class LoginPage extends GetWidget<LoginController> {
                                                             .textTheme
                                                             .headline2!
                                                             .copyWith(
-                                                            color:
-                                                            Colors.white),
+                                                                color: Colors
+                                                                    .white),
                                                         textAlign:
-                                                        TextAlign.center,
+                                                            TextAlign.center,
                                                       ),
                                                     ),
                                                   ),
@@ -319,34 +321,36 @@ class LoginPage extends GetWidget<LoginController> {
                                                 Expanded(
                                                   child: Container(
                                                     padding:
-                                                    const EdgeInsets.only(
-                                                        left: 0,
-                                                        right: 0,
-                                                        top: 0,
-                                                        bottom: 0),
+                                                        const EdgeInsets.only(
+                                                            left: 0,
+                                                            right: 0,
+                                                            top: 0,
+                                                            bottom: 0),
                                                     height: 60,
                                                     decoration: BoxDecoration(
                                                         color: Theme.of(context)
                                                             .colorScheme
                                                             .primary,
                                                         borderRadius:
-                                                        const BorderRadius
-                                                            .all(
-                                                            Radius.circular(
-                                                                6))),
+                                                            const BorderRadius
+                                                                    .all(
+                                                                Radius.circular(
+                                                                    6))),
                                                     child: ElevatedButton(
                                                       onPressed: () {
                                                         SecureStorage
-                                                        secureStorage =
-                                                        SecureStorage();
-                                                        var locale = const Locale(
-                                                            'en', 'US');
+                                                            secureStorage =
+                                                            SecureStorage();
+                                                        var locale =
+                                                            const Locale(
+                                                                'en', 'US');
                                                         secureStorage
                                                             .writeSecureData(
-                                                            AllStringConst
-                                                                .AppLan,
-                                                            "en");
-                                                        Get.updateLocale(locale);
+                                                                AllStringConst
+                                                                    .AppLan,
+                                                                "en");
+                                                        Get.updateLocale(
+                                                            locale);
                                                       },
                                                       child: Text(
                                                         "En",
@@ -354,10 +358,10 @@ class LoginPage extends GetWidget<LoginController> {
                                                             .textTheme
                                                             .headline2!
                                                             .copyWith(
-                                                            color:
-                                                            Colors.white),
+                                                                color: Colors
+                                                                    .white),
                                                         textAlign:
-                                                        TextAlign.center,
+                                                            TextAlign.center,
                                                       ),
                                                     ),
                                                   ),
@@ -367,8 +371,8 @@ class LoginPage extends GetWidget<LoginController> {
 
                                             Container(
                                               width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
+                                                      .size
+                                                      .width *
                                                   .7,
                                               padding: const EdgeInsets.only(
                                                   left: 0,
@@ -381,15 +385,16 @@ class LoginPage extends GetWidget<LoginController> {
                                                       .colorScheme
                                                       .primary,
                                                   borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(6))),
+                                                      const BorderRadius.all(
+                                                          Radius.circular(6))),
                                               child: ElevatedButton(
                                                 onPressed: () {
                                                   controller.secureStorage
                                                       .writeSecureData(
-                                                      AllStringConst.BaseUrl,
-                                                      controller
-                                                          .baseUrl.text);
+                                                          AllStringConst
+                                                              .BaseUrl,
+                                                          controller
+                                                              .baseUrl.text);
 
                                                   // Restart.restartApp();
                                                   // Phoenix.rebirth(context);
@@ -403,14 +408,13 @@ class LoginPage extends GetWidget<LoginController> {
                                                       .textTheme
                                                       .headline2!
                                                       .copyWith(
-                                                      color: Colors.white),
+                                                          color: Colors.white),
                                                   textAlign: TextAlign.center,
                                                 ),
                                               ),
                                             )
                                           ]),
                                         ),
-
                                       ));
                             },
                             elevation: 0,
@@ -462,47 +466,56 @@ class LoginPage extends GetWidget<LoginController> {
                             Theme.of(context).textTheme.headline1!.copyWith(),
                       ),
                     ),
-                    CustomInputTextFiled(
-                        validator: controller.validators.userNameValidator,
-                        textEditingController: controller.userName,
-                        label: "name".tr),
-                    CustomInputTextFiled(
-                        validator: controller.validators.passWordValidator,
-                        textEditingController: controller.passWord,
-                        label: "password".tr),
                     Padding(
-                      padding:
-                          const EdgeInsets.only(top: 50.0, left: 8, right: 8),
-                      child: Container(
-                        width: double.infinity,
-                        height: 50,
-                        color: Colors.transparent,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
+                        padding: const EdgeInsets.all(60),
+                        child: Column(
                           children: [
-                            const Spacer(),
-                            Flexible(
-                                flex: 8,
-                                child: CustomImageButton(
-                                  imagePath: 'assets/images/faceid.png',
-                                  onClick: controller.faceIdButtonOnClick,
-                                )),
-                            Flexible(
-                              //space
-                              flex: 1,
-                              child: Container(),
+                            CustomInputTextFiled(
+                                validator:
+                                    controller.validators.userNameValidator,
+                                textEditingController: controller.userName,
+                                label: "name".tr),
+                            CustomInputTextFiled(
+                                validator:
+                                    controller.validators.passWordValidator,
+                                textEditingController: controller.passWord,
+                                label: "password".tr),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 50.0, left: 8, right: 8),
+                              child: Container(
+                                width: double.infinity,
+                                height: 50,
+                                color: Colors.transparent,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    const Spacer(),
+                                    Flexible(
+                                        flex: 8,
+                                        child: CustomImageButton(
+                                          imagePath: 'assets/images/faceid.png',
+                                          onClick:
+                                              controller.faceIdButtonOnClick,
+                                        )),
+                                    Flexible(
+                                      //space
+                                      flex: 1,
+                                      child: Container(),
+                                    ),
+                                    Flexible(
+                                        flex: 20,
+                                        child: CustomButton(
+                                            onPressed: controller.logIngRequst,
+                                            name: "login".tr)),
+                                  ],
+                                ),
+                              ),
                             ),
-                            Flexible(
-                                flex: 20,
-                                child: CustomButton(
-                                    onPressed: controller.logIngRequst,
-                                    name: "login".tr)),
                           ],
-                        ),
-                      ),
-                    ),
+                        )),
                     Spacer(),
                     Container(
                       height: 35,

@@ -57,7 +57,9 @@ flutter:
     - assets/json/
   
   fonts:
-     - family: Bahij
+     - family: Bahij_light
        fonts:
          - asset: assets/fonts/Bahij_TheSansArabic-Plain.ttf
-         - asset: assets/fonts/bahijthesansarabic-bold.ttf
+     - family: Bahij_bold
+       fonts:
+        - asset: assets/fonts/bahijthesansarabic-bold.ttf

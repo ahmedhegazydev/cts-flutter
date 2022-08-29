@@ -21,6 +21,7 @@ import '../services/json_model/basket/remove_basket_request_model.dart';
 import '../services/json_model/basket/reorder_baskets_request_model.dart';
 import '../services/json_model/favorites/add/AddFavoriteRecipients_request.dart';
 import '../services/json_model/favorites/list_all/ListFavoriteRecipients_request.dart';
+import '../services/json_model/favorites/list_all/ListFavoriteRecipients_response.dart';
 import '../services/json_model/favorites/remove/RemoveFavoriteRecipients_request.dart';
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_correspondences_model.dart';
@@ -44,6 +45,7 @@ class LandingPageController extends GetxController {
   List<Destination> selectFavusers = [];
   Destination? to;
   FindRecipientModel? findRecipientModel;
+  final SecureStorage secureStorage = SecureStorage();
 
   // AddEditBasketFlagModel? addEditBasketFlagModel;
 
@@ -52,6 +54,12 @@ class LandingPageController extends GetxController {
   Map<String, dynamic>? _logindata;
   LoginModel? data;
   BuildContext? context;
+
+
+  //Favorites
+  ListFavoriteRecipientsResponse? favoriteRecipientsResponse;
+
+
 
   setSavingOrder(bool saving) {
     this.isSavingOrder = saving;
@@ -214,17 +222,21 @@ class LandingPageController extends GetxController {
   /**
    * mofa-favorite-recipients-api (1)
    */
-  Future listFavoriteRecipients({context, baskets}) async {
+  Future listFavoriteRecipients({context}) async {
     ListFavoriteRecipientsApi listFavoriteRecipientsApi =
         ListFavoriteRecipientsApi(context);
-    ListFavoriteRecipientsRequest reorderBasketsRequest =
-        ListFavoriteRecipientsRequest(
-      language: Get.locale?.languageCode == "en" ? "en" : "ar",
-      token: _secureStorage.token()!,
-    );
+    // ListFavoriteRecipientsRequest reorderBasketsRequest =
+    //     ListFavoriteRecipientsRequest(
+    //   language: Get.locale?.languageCode == "en" ? "en" : "ar",
+    //   token: _secureStorage.token()!,
+    // );
+    listFavoriteRecipientsApi.data =
+    "Token=${secureStorage.token()}&Language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+
     await listFavoriteRecipientsApi
-        .post(reorderBasketsRequest.toMap())
+        .getData()
         .then((value) {
+      favoriteRecipientsResponse = value as ListFavoriteRecipientsResponse;
       print(value);
       print("listFavoriteRecipientsApi");
     });

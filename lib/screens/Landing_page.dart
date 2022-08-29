@@ -104,8 +104,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                   ),
                 ),
               ),
-        //    _buildSideMenuPort(  context)
-
+              //    _buildSideMenuPort(  context)
             ],
           ),
         ),
@@ -211,188 +210,187 @@ class LandingPage extends GetWidget<LandingPageController> {
                   ),
                   Expanded(
                       child: ReorderableListView(
-                        buildDefaultDragHandles: true,
-                        // buildDefaultDragHandles: false,
-                        padding: const EdgeInsets.symmetric(horizontal: 40),
-                        children: <Widget>[
-                          // for (int index = 0;
-                          //     index <
-                          //         inboxController
-                          //             .fetchBasketListModel!
-                          //             .baskets!
-                          //             .length;
-                          //     // 4;
-                          //     index += 1)
-                          for (final basket
+                    buildDefaultDragHandles: true,
+                    // buildDefaultDragHandles: false,
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    children: <Widget>[
+                      // for (int index = 0;
+                      //     index <
+                      //         inboxController
+                      //             .fetchBasketListModel!
+                      //             .baskets!
+                      //             .length;
+                      //     // 4;
+                      //     index += 1)
+                      for (final basket
                           in inboxController.fetchBasketListModel!.baskets!)
-                            ListTile(
-                              // key: Key('$index'),
-                              key: ValueKey(basket),
-                              // tileColor: _items[index].isOdd ? oddItemColor : evenItemColor,
-                              onLongPress:
+                        ListTile(
+                          // key: Key('$index'),
+                          key: ValueKey(basket),
+                          // tileColor: _items[index].isOdd ? oddItemColor : evenItemColor,
+                          onLongPress:
                               !(basket.canBeReOrder ?? false) ? () {} : null,
-                              onTap: !(basket.canBeReOrder ?? false) ? () {} : null,
-                              enabled: !(basket.canBeReOrder ?? false),
-                              enableFeedback: !(basket.canBeReOrder ?? false),
-                              title: Card(
-                                elevation: 10,
-                                color: basket.color?.toColor(),
-                                child: Column(children: [
-                                  Text(basket.name ?? ""),
-                                  Text(basket.nameAr ?? ""),
-                                  // Text( "color :${inboxController
-                                  //     .fetchBasketListModel
-                                  //     ?.baskets?[pos].color}",style: TextStyle( color:  HexColor(inboxController
-                                  //     .fetchBasketListModel
-                                  //     ?.baskets?[pos].color??"#000000"))),
+                          onTap: !(basket.canBeReOrder ?? false) ? () {} : null,
+                          enabled: !(basket.canBeReOrder ?? false),
+                          enableFeedback: !(basket.canBeReOrder ?? false),
+                          title: Card(
+                            elevation: 10,
+                            color: basket.color?.toColor(),
+                            child: Column(children: [
+                              Text(basket.name ?? ""),
+                              Text(basket.nameAr ?? ""),
+                              // Text( "color :${inboxController
+                              //     .fetchBasketListModel
+                              //     ?.baskets?[pos].color}",style: TextStyle( color:  HexColor(inboxController
+                              //     .fetchBasketListModel
+                              //     ?.baskets?[pos].color??"#000000"))),
 
-                                      GestureDetector(
-                                        onTap: () {
-                                          //هنا هنعمل دليت
-                                          controller.removeBasket(
-                                            context: context,
-                                            basketId: basket.iD,
-                                            onSuccess: (String message) {
-                                              // Navigator.pop(context);
-                                              // Get.back();
-                                              return null;
-                                        },
-                                      );
-                                      // showTopSnackBar(
-                                      //   context,
-                                      //   CustomSnackBar.success(
-                                      //     message:
-                                      //     "Good job, basket have been deleted",
-                                      //   ),
-                                      // );
+                              GestureDetector(
+                                onTap: () {
+                                  //هنا هنعمل دليت
+                                  controller.removeBasket(
+                                    context: context,
+                                    basketId: basket.iD,
+                                    onSuccess: (String message) {
+                                      // Navigator.pop(context);
+                                      // Get.back();
+                                      return null;
                                     },
-                                    // child:  Icon(Icons.delete, color: (basket.canBeReOrder ?? false) ? Colors.black: Colors.transparent,) ,
-                                    child: (basket.canBeReOrder ?? false)
-                                        ? Icon(Icons.delete)
-                                        : Container(),
-                                  ),
-                                ]),
+                                  );
+                                  // showTopSnackBar(
+                                  //   context,
+                                  //   CustomSnackBar.success(
+                                  //     message:
+                                  //     "Good job, basket have been deleted",
+                                  //   ),
+                                  // );
+                                },
+                                // child:  Icon(Icons.delete, color: (basket.canBeReOrder ?? false) ? Colors.black: Colors.transparent,) ,
+                                child: (basket.canBeReOrder ?? false)
+                                    ? Icon(Icons.delete)
+                                    : Container(),
                               ),
-                            )
-                        ],
-                        onReorder: (int oldIndex, int newIndex) {
-                          print("onReorder = $oldIndex - $newIndex");
-                          if (oldIndex < newIndex) {
-                            newIndex -= 1;
-                          }
-                          final Baskets item = inboxController
-                              .fetchBasketListModel!.baskets!
-                              .removeAt(oldIndex);
-                          inboxController.fetchBasketListModel!.baskets!
-                              .insert(newIndex, item);
-                        },
-                        onReorderStart: (int index) {
-                          //0-1-2-....
-                          print("onReorderStart = $index");
-                          inboxController.setOldIndex(index);
-                          // print("onReorderStart = ${inboxController.fetchBasketListModel!.baskets![index].canBeReOrder}");
-                          // if (inboxController
-                          //         .fetchBasketListModel!.baskets![index].canBeReOrder ==
-                          //     false) {
-                          //
-                          // }else{
-                          //
-                          // }
-                        },
-                        onReorderEnd: (int index) {
-                          controller.setSavingOrder(true);
-                          //get the item that will be replaced
-                          //check if ite canBeReorder or not
-                          //2-3-4-...
-                          print("onReorderEnd = $index");
-                          if (inboxController.fetchBasketListModel!.baskets![index]
+                            ]),
+                          ),
+                        )
+                    ],
+                    onReorder: (int oldIndex, int newIndex) {
+                      print("onReorder = $oldIndex - $newIndex");
+                      if (oldIndex < newIndex) {
+                        newIndex -= 1;
+                      }
+                      final Baskets item = inboxController
+                          .fetchBasketListModel!.baskets!
+                          .removeAt(oldIndex);
+                      inboxController.fetchBasketListModel!.baskets!
+                          .insert(newIndex, item);
+                    },
+                    onReorderStart: (int index) {
+                      //0-1-2-....
+                      print("onReorderStart = $index");
+                      inboxController.setOldIndex(index);
+                      // print("onReorderStart = ${inboxController.fetchBasketListModel!.baskets![index].canBeReOrder}");
+                      // if (inboxController
+                      //         .fetchBasketListModel!.baskets![index].canBeReOrder ==
+                      //     false) {
+                      //
+                      // }else{
+                      //
+                      // }
+                    },
+                    onReorderEnd: (int index) {
+                      controller.setSavingOrder(true);
+                      //get the item that will be replaced
+                      //check if ite canBeReorder or not
+                      //2-3-4-...
+                      print("onReorderEnd = $index");
+                      if (inboxController.fetchBasketListModel!.baskets![index]
                               .canBeReOrder ==
-                              false) {
-                            showTopSnackBar(
-                              context,
-                              CustomSnackBar.error(
-                                message:
+                          false) {
+                        showTopSnackBar(
+                          context,
+                          CustomSnackBar.error(
+                            message:
                                 "${inboxController.fetchBasketListModel!.baskets![index].name} canBeReOrder = false",
-                              ),
-                            );
-                          } else {
-                            // print("fetchBasketListModel__ = ${inboxController.fetchBasketListModel?.baskets.toString()}");
-                            // inboxController.fetchBasketListModel?.baskets?.forEach((element) {
-                            //   print(element.orderBy);
-                            // });
-                            if(inboxController.oldIndex != index) {
-                              controller.reOrderBaskets(
-                                  context: context,
-                                  baskets: inboxController
-                                      .fetchBasketListModel!
-                                      .baskets);
-                            }
-                          }
-                        },
-                      ))
+                          ),
+                        );
+                      } else {
+                        // print("fetchBasketListModel__ = ${inboxController.fetchBasketListModel?.baskets.toString()}");
+                        // inboxController.fetchBasketListModel?.baskets?.forEach((element) {
+                        //   print(element.orderBy);
+                        // });
+                        if (inboxController.oldIndex != index) {
+                          controller.reOrderBaskets(
+                              context: context,
+                              baskets: inboxController
+                                  .fetchBasketListModel!.baskets);
+                        }
+                      }
+                    },
+                  ))
                 ],
               )
 
-            // child: ListView.builder(
-            //     // itemCount: inboxController
-            //     //     .fetchBasketListModel
-            //     //     ?.baskets
-            //     //     ?.length,
-            //     itemCount: 5,
-            //     itemBuilder: (context, pos) {
-            //       return InkWell(
-            //         onTap: () async {
-            //           print(
-            //               "${inboxController.fetchBasketListModel?.baskets?[pos].iD}");
-            //
-            //           Get.find<BasketController>().getBasketInbox(
-            //               id: inboxController
-            //                   .fetchBasketListModel!
-            //                   .baskets![pos]
-            //                   .iD!,
-            //               pageSize: 20,
-            //               pageNumber: 0);
-            //
-            //           Get.back();
-            //
-            //           Get.toNamed("MyPocketsScreen");
-            //         },
-            //         child: Card(
-            //           elevation: 10,
-            //           child: Column(children: [
-            //             Text(inboxController
-            //                 .fetchBasketListModel
-            //                 ?.baskets?[pos]
-            //                 .name ??
-            //                 ""),
-            //             Text(inboxController
-            //                 .fetchBasketListModel
-            //                 ?.baskets?[pos]
-            //                 .nameAr ??
-            //                 ""),
-            //             // Text( "color :${inboxController
-            //             //     .fetchBasketListModel
-            //             //     ?.baskets?[pos].color}",style: TextStyle( color:  HexColor(inboxController
-            //             //     .fetchBasketListModel
-            //             //     ?.baskets?[pos].color??"#000000"))),
-            //
-            //             GestureDetector(
-            //                 onTap: () {
-            //                   //هنا هنعمل دليت
-            //                   controller.removeBasket(
-            //                       basketId:
-            //                       inboxController
-            //                           .fetchBasketListModel
-            //                           ?.baskets?[pos]
-            //                           .iD);
-            //                 },
-            //                 child: Icon(Icons.delete)),
-            //           ]),
-            //         ),
-            //       );
-            //     })
+              // child: ListView.builder(
+              //     // itemCount: inboxController
+              //     //     .fetchBasketListModel
+              //     //     ?.baskets
+              //     //     ?.length,
+              //     itemCount: 5,
+              //     itemBuilder: (context, pos) {
+              //       return InkWell(
+              //         onTap: () async {
+              //           print(
+              //               "${inboxController.fetchBasketListModel?.baskets?[pos].iD}");
+              //
+              //           Get.find<BasketController>().getBasketInbox(
+              //               id: inboxController
+              //                   .fetchBasketListModel!
+              //                   .baskets![pos]
+              //                   .iD!,
+              //               pageSize: 20,
+              //               pageNumber: 0);
+              //
+              //           Get.back();
+              //
+              //           Get.toNamed("MyPocketsScreen");
+              //         },
+              //         child: Card(
+              //           elevation: 10,
+              //           child: Column(children: [
+              //             Text(inboxController
+              //                 .fetchBasketListModel
+              //                 ?.baskets?[pos]
+              //                 .name ??
+              //                 ""),
+              //             Text(inboxController
+              //                 .fetchBasketListModel
+              //                 ?.baskets?[pos]
+              //                 .nameAr ??
+              //                 ""),
+              //             // Text( "color :${inboxController
+              //             //     .fetchBasketListModel
+              //             //     ?.baskets?[pos].color}",style: TextStyle( color:  HexColor(inboxController
+              //             //     .fetchBasketListModel
+              //             //     ?.baskets?[pos].color??"#000000"))),
+              //
+              //             GestureDetector(
+              //                 onTap: () {
+              //                   //هنا هنعمل دليت
+              //                   controller.removeBasket(
+              //                       basketId:
+              //                       inboxController
+              //                           .fetchBasketListModel
+              //                           ?.baskets?[pos]
+              //                           .iD);
+              //                 },
+              //                 child: Icon(Icons.delete)),
+              //           ]),
+              //         ),
+              //       );
+              //     })
 
-          ),
+              ),
         ),
         actions: <Widget>[
           FlatButton(
@@ -434,75 +432,75 @@ class LandingPage extends GetWidget<LandingPageController> {
         // CreateNewBasket(),
 
         Form(
-          // key: controller.createBasketFormKey,
-          // child: LayoutBuilder(builder: (context, constraint) {
-          //   return Container(
+            // key: controller.createBasketFormKey,
+            // child: LayoutBuilder(builder: (context, constraint) {
+            //   return Container(
             child: Column(
-              children: [
-                // Spacer(),
-                // CustomInputTextFiled(
-                //     validator: controller.validators.nameValidator,
-                //     textEditingController: controller.englishName,
-                //     label: "english_name".tr),
-                // CustomInputTextFiled(
-                //     validator: controller.validators.nameValidator,
-                //     textEditingController: controller.arabicName,
-                //     label: "arabic_name".tr),
+          children: [
+            // Spacer(),
+            // CustomInputTextFiled(
+            //     validator: controller.validators.nameValidator,
+            //     textEditingController: controller.englishName,
+            //     label: "english_name".tr),
+            // CustomInputTextFiled(
+            //     validator: controller.validators.nameValidator,
+            //     textEditingController: controller.arabicName,
+            //     label: "arabic_name".tr),
 
-                Container(
-                  // padding: EdgeInsets.only(right: 10, left: 10),
-                  padding: EdgeInsets.all(10),
-                  child: Container(
-                      padding: EdgeInsets.only(right: 8, left: 8),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              color: Theme.of(context).colorScheme.primary),
-                          borderRadius: const BorderRadius.all(Radius.circular(6))),
-                      child: TextField(
-                        controller: controller.textEditingControllerEnglishName,
-                        decoration: InputDecoration(
-                          border: UnderlineInputBorder(),
-                          labelText: "english_name".tr,
-                        ),
-                      )),
-                ),
+            Container(
+              // padding: EdgeInsets.only(right: 10, left: 10),
+              padding: EdgeInsets.all(10),
+              child: Container(
+                  padding: EdgeInsets.only(right: 8, left: 8),
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          color: Theme.of(context).colorScheme.primary),
+                      borderRadius: const BorderRadius.all(Radius.circular(6))),
+                  child: TextField(
+                    controller: controller.textEditingControllerEnglishName,
+                    decoration: InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: "english_name".tr,
+                    ),
+                  )),
+            ),
 
-                Container(
-                  // padding: EdgeInsets.only(right: 10, left: 10),
-                  padding: EdgeInsets.all(10),
-                  child: Container(
-                      padding: EdgeInsets.only(right: 8, left: 8),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              color: Theme.of(context).colorScheme.primary),
-                          borderRadius: const BorderRadius.all(Radius.circular(6))),
-                      child: TextField(
-                        controller: controller.textEditingControllerArabicName,
-                        decoration: InputDecoration(
-                          border: UnderlineInputBorder(),
-                          labelText: "arabic_name".tr,
-                        ),
-                      )),
-                ),
+            Container(
+              // padding: EdgeInsets.only(right: 10, left: 10),
+              padding: EdgeInsets.all(10),
+              child: Container(
+                  padding: EdgeInsets.only(right: 8, left: 8),
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          color: Theme.of(context).colorScheme.primary),
+                      borderRadius: const BorderRadius.all(Radius.circular(6))),
+                  child: TextField(
+                    controller: controller.textEditingControllerArabicName,
+                    decoration: InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: "arabic_name".tr,
+                    ),
+                  )),
+            ),
 
-                Container(
-                  padding: EdgeInsets.only(right: 10, left: 10),
-                  width: MediaQuery.of(context).size.width * .3,
-                  child: RaisedButton(
-                      onPressed: () {
-                        // inboxController.applyFilter();
-                        // Navigator.pop(context);
-                        showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
+            Container(
+              padding: EdgeInsets.only(right: 10, left: 10),
+              width: MediaQuery.of(context).size.width * .3,
+              child: RaisedButton(
+                  onPressed: () {
+                    // inboxController.applyFilter();
+                    // Navigator.pop(context);
+                    showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
                               title: Text(
                                 "pick your Color",
                               ),
                               content: Column(children: [
                                 ColorPicker(
                                   pickerColor:
-                                  Get.find<CreateBasketController>()
-                                      .pickerColor,
+                                      Get.find<CreateBasketController>()
+                                          .pickerColor,
                                   onColorChanged: (Color color) {
                                     // Get.find<MController>().setAppColor(color);
                                     // print(color);
@@ -526,7 +524,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                   height: 60,
                                   decoration: BoxDecoration(
                                       color:
-                                      Theme.of(context).colorScheme.primary,
+                                          Theme.of(context).colorScheme.primary,
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(6))),
                                   child: ElevatedButton(
@@ -546,41 +544,41 @@ class LandingPage extends GetWidget<LandingPageController> {
                                 )
                               ]),
                             ));
-                      },
-                      child: GetBuilder<CreateBasketController>(
-                        init: CreateBasketController(),
-                        builder: (_) {
-                          return Text("pick your Color",
-                              style: TextStyle(
-                                // backgroundColor: _.pickerColor,
-                                  color: _.pickerColor));
-                        },
-                      )),
-                ),
+                  },
+                  child: GetBuilder<CreateBasketController>(
+                    init: CreateBasketController(),
+                    builder: (_) {
+                      return Text("pick your Color",
+                          style: TextStyle(
+                              // backgroundColor: _.pickerColor,
+                              color: _.pickerColor));
+                    },
+                  )),
+            ),
 
-                Container(
-                  height: 40,
-                  padding: EdgeInsets.only(right: 10, left: 10),
-                  width: MediaQuery.of(context).size.width * .3,
-                  child: CustomButton(
-                      name: 'register'.tr,
-                      onPressed: () {
-                        // controller.createNewBasket();
-                        controller.addEditBasket(
-                            context: context,
-                            color: Get.find<CreateBasketController>()
-                                .pickerColor
-                                .toHex(),
-                            nameAr: controller.textEditingControllerArabicName.text,
-                            nameEn:
+            Container(
+              height: 40,
+              padding: EdgeInsets.only(right: 10, left: 10),
+              width: MediaQuery.of(context).size.width * .3,
+              child: CustomButton(
+                  name: 'register'.tr,
+                  onPressed: () {
+                    // controller.createNewBasket();
+                    controller.addEditBasket(
+                        context: context,
+                        color: Get.find<CreateBasketController>()
+                            .pickerColor
+                            .toHex(),
+                        nameAr: controller.textEditingControllerArabicName.text,
+                        nameEn:
                             controller.textEditingControllerEnglishName.text);
-                      }),
-                ),
-              ],
-              // ),
-              // );
-              // }
-            ))
+                  }),
+            ),
+          ],
+          // ),
+          // );
+          // }
+        ))
       ],
     );
     // var content = CreateNewBasket();
@@ -664,7 +662,6 @@ class LandingPage extends GetWidget<LandingPageController> {
           flex: 9,
           child: portiraitDashboard(contex),
         ),
-
       ],
     );
   }
@@ -704,8 +701,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                   child: Text(
                     "mySignatures".tr,
                     textAlign: TextAlign.center,
-                    style: Theme
-                        .of(context)
+                    style: Theme.of(context)
                         .textTheme
                         .headline3!
                         .copyWith(color: Colors.grey.shade600),
@@ -716,10 +712,12 @@ class LandingPage extends GetWidget<LandingPageController> {
           ),
         ),
         InkWell(
-          onTap: () {
+          onTap: () async {
+            await Get.find<LandingPageController>()
+                .listFavoriteRecipients(context: context);
             Get.bottomSheet(
               Container(
-                //height: 100,
+                  //height: 100,
                   margin: EdgeInsets.all(20),
                   padding: EdgeInsets.all(20),
                   decoration: const BoxDecoration(
@@ -729,20 +727,21 @@ class LandingPage extends GetWidget<LandingPageController> {
                           topRight: Radius.circular(20))),
                   child: Column(
                     children: [
-                      Text(     "favoritesUsers".tr, style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14)),
+                      Text("favoritesUsers".tr,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 14)),
                       Row(
                         children: [
                           Expanded(
                             child: TypeAheadField<Destination>(
                               textFieldConfiguration: TextFieldConfiguration(
-                                controller: controller
-                                    .textEditingControllerTo,
+                                controller: controller.textEditingControllerTo,
                                 // autofocus: true,
                                 // style: DefaultTextStyle.of(context)
                                 //     .style
                                 //     .copyWith(fontStyle: FontStyle.italic),
-                                decoration:
-                                InputDecoration(border: OutlineInputBorder(),
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
                                     labelText: ""),
                               ),
                               suggestionsCallback: (pattern) async {
@@ -758,10 +757,9 @@ class LandingPage extends GetWidget<LandingPageController> {
 
                                 return // Te(v.originalName!);
 
-
-                                  ListTile(
-                                    title: FilterText(v.value!),
-                                  );
+                                    ListTile(
+                                  title: FilterText(v.value!),
+                                );
                               },
                               onSuggestionSelected: (suggestion) {
                                 Destination v = suggestion;
@@ -779,42 +777,61 @@ class LandingPage extends GetWidget<LandingPageController> {
                               },
                             ),
                           ),
-                          SizedBox(width: 2,),
-                          CustomButtonWithIcon(icon: Icons.person, onClick: () {
-                            controller.listOfUser(0);
-                          },)
-                          ,
-                          SizedBox(width: 2,),
+                          SizedBox(
+                            width: 2,
+                          ),
                           CustomButtonWithIcon(
-                            icon: Icons.account_balance, onClick: () {
-                            controller.listOfUser(2);
-                          },)
-                          ,
-                          SizedBox(width: 2,),
-                          CustomButtonWithIcon(icon: Icons.clear, onClick: () {
-                            controller.listOfUser(0);
-                          },)
+                            icon: Icons.person,
+                            onClick: () {
+                              controller.listOfUser(0);
+                            },
+                          ),
+                          SizedBox(
+                            width: 2,
+                          ),
+                          CustomButtonWithIcon(
+                            icon: Icons.account_balance,
+                            onClick: () {
+                              controller.listOfUser(2);
+                            },
+                          ),
+                          SizedBox(
+                            width: 2,
+                          ),
+                          CustomButtonWithIcon(
+                            icon: Icons.clear,
+                            onClick: () {
+                              controller.listOfUser(0);
+                            },
+                          )
                         ],
                       ),
                       GetBuilder<LandingPageController>(builder: (logic) {
                         return Expanded(
                           child: ListView.builder(
-                              itemCount: controller.selectFavusers.length
-                              ,
+                              itemCount: controller.selectFavusers.length,
                               itemBuilder: (context, pos) {
                                 return Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Card(elevation: 5,
+                                  child: Card(
+                                    elevation: 5,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(
-                                              controller.selectFavusers[pos]
-                                                  .value ?? ""),
-                                          GestureDetector(onTap: (){
-                                            controller.deletselectFavusers( controller.selectFavusers[pos]);
-                                          },child: Icon(Icons.delete)) ],
+                                          Text(controller
+                                                  .selectFavusers[pos].value ??
+                                              ""),
+                                          GestureDetector(
+                                              onTap: () {
+                                                controller.deletselectFavusers(
+                                                    controller
+                                                        .selectFavusers[pos]);
+                                              },
+                                              child: Icon(Icons.delete))
+                                        ],
                                       ),
                                     ),
                                   ),
@@ -868,7 +885,7 @@ class LandingPage extends GetWidget<LandingPageController> {
           onTap: () {
             Get.bottomSheet(
               Container(
-                //height: 100,
+                  //height: 100,
                   margin: EdgeInsets.all(20),
                   padding: EdgeInsets.all(20),
                   decoration: const BoxDecoration(
@@ -877,25 +894,29 @@ class LandingPage extends GetWidget<LandingPageController> {
                           topLeft: Radius.circular(20),
                           topRight: Radius.circular(20))),
                   child: SingleChildScrollView(
-                    child: Column(mainAxisAlignment: MainAxisAlignment.start,crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(      "myDelegations".tr, style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14)),
+                          child: Text("myDelegations".tr,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 14)),
                         ),
                         Row(
                           children: [
                             Expanded(
                               child: TypeAheadField<Destination>(
                                 textFieldConfiguration: TextFieldConfiguration(
-                                  controller: controller
-                                      .textEditingControllerTo,
+                                  controller:
+                                      controller.textEditingControllerTo,
                                   // autofocus: true,
                                   // style: DefaultTextStyle.of(context)
                                   //     .style
                                   //     .copyWith(fontStyle: FontStyle.italic),
-                                  decoration:
-                                  InputDecoration(border: OutlineInputBorder(),
+                                  decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
                                       labelText: 'To'.tr),
                                 ),
                                 suggestionsCallback: (pattern) async {
@@ -911,10 +932,9 @@ class LandingPage extends GetWidget<LandingPageController> {
 
                                   return // Te(v.originalName!);
 
-
-                                    ListTile(
-                                      title: FilterText(v.value!),
-                                    );
+                                      ListTile(
+                                    title: FilterText(v.value!),
+                                  );
                                 },
                                 onSuggestionSelected: (suggestion) {
                                   Destination v = suggestion;
@@ -932,141 +952,139 @@ class LandingPage extends GetWidget<LandingPageController> {
                                 },
                               ),
                             ),
-                            SizedBox(width: 2,),
-                            CustomButtonWithIcon(icon: Icons.person, onClick: () {
-                              controller.listOfUser(0);
-                            },)
-                            ,
-                            SizedBox(width: 2,),
+                            SizedBox(
+                              width: 2,
+                            ),
                             CustomButtonWithIcon(
-                              icon: Icons.account_balance, onClick: () {
-                              controller.listOfUser(2);
-                            },)
-                            ,
-                            SizedBox(width: 2,),
-                            CustomButtonWithIcon(icon: Icons.clear, onClick: () {
-                              controller.listOfUser(0);
-                            },)
+                              icon: Icons.person,
+                              onClick: () {
+                                controller.listOfUser(0);
+                              },
+                            ),
+                            SizedBox(
+                              width: 2,
+                            ),
+                            CustomButtonWithIcon(
+                              icon: Icons.account_balance,
+                              onClick: () {
+                                controller.listOfUser(2);
+                              },
+                            ),
+                            SizedBox(
+                              width: 2,
+                            ),
+                            CustomButtonWithIcon(
+                              icon: Icons.clear,
+                              onClick: () {
+                                controller.listOfUser(0);
+                              },
+                            )
                           ],
                         ),
-
-
-Text("start".tr),
+                        Text("start".tr),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: InkWell(onTap: () {
-                            controller.selectFromDocDate(context: context);
-                          },
+                          child: InkWell(
+                            onTap: () {
+                              controller.selectFromDocDate(context: context);
+                            },
                             child: Container(
                                 height: 60,
                                 padding: EdgeInsets.only(right: 8, left: 8),
                                 decoration: BoxDecoration(
                                     border: Border.all(
-                                        color: Theme
-                                            .of(context)
+                                        color: Theme.of(context)
                                             .colorScheme
                                             .primary),
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(6))),
-                                child:
-                                TextField(enabled: false,
-                                  controller: controller.textEditingControllerFromDocDate,
-                                  decoration:   InputDecoration(
+                                child: TextField(
+                                  enabled: false,
+                                  controller: controller
+                                      .textEditingControllerFromDocDate,
+                                  decoration: InputDecoration(
                                     border: UnderlineInputBorder(),
                                     labelText: 'From'.tr,
                                   ),
-                                )
-                            ),
+                                )),
                           ),
                         ),
                         Text("end".tr),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: InkWell(onTap: () {
-                            controller.selectToDocDate(context: context);
-                          },
+                          child: InkWell(
+                            onTap: () {
+                              controller.selectToDocDate(context: context);
+                            },
                             child: Container(
                                 height: 60,
                                 padding: EdgeInsets.only(right: 8, left: 8),
                                 decoration: BoxDecoration(
                                     border: Border.all(
-                                        color: Theme
-                                            .of(context)
+                                        color: Theme.of(context)
                                             .colorScheme
                                             .primary),
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(6))),
-                                child:
-                                TextField(enabled: false,
-                                  controller: controller.textEditingControllerToDocDate,
-                                  decoration:   InputDecoration(
+                                child: TextField(
+                                  enabled: false,
+                                  controller:
+                                      controller.textEditingControllerToDocDate,
+                                  decoration: InputDecoration(
                                     border: UnderlineInputBorder(),
                                     labelText: 'To'.tr,
                                   ),
                                 )
-                              //   Center(child: Text(controller.toDocDate))
-                            ),
+                                //   Center(child: Text(controller.toDocDate))
+                                ),
                           ),
                         ),
-Text( "reason".tr),
+                        Text("reason".tr),
                         Container(
                             height: 60,
                             padding: EdgeInsets.only(right: 8, left: 8),
                             decoration: BoxDecoration(
                                 border: Border.all(
-                                    color: Theme
-                                        .of(context)
-                                        .colorScheme
-                                        .primary),
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(6))),
-                            child:
-                            TextField(enabled: false,
-
-                              decoration:   InputDecoration(
+                                    color:
+                                        Theme.of(context).colorScheme.primary),
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(6))),
+                            child: TextField(
+                              enabled: false,
+                              decoration: InputDecoration(
                                 border: UnderlineInputBorder(),
                                 labelText: 'To'.tr,
                               ),
                             )
-                          //   Center(child: Text(controller.toDocDate))
+                            //   Center(child: Text(controller.toDocDate))
+                            ),
+                        SizedBox(
+                          height: 10,
                         ),
-
-SizedBox(height: 10,),
                         Center(
                           child: Container(
-                            width: MediaQuery.of(context)
-                                .size
-                                .width *
-                                .5,
+                            width: MediaQuery.of(context).size.width * .5,
                             padding: const EdgeInsets.only(
-                                left: 0,
-                                right: 0,
-                                top: 0,
-                                bottom: 0),
+                                left: 0, right: 0, top: 0, bottom: 0),
                             height: 60,
                             decoration: BoxDecoration(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .primary,
+                                color: Theme.of(context).colorScheme.primary,
                                 borderRadius:
-                                const BorderRadius.all(
-                                    Radius.circular(6))),
+                                    const BorderRadius.all(Radius.circular(6))),
                             child: ElevatedButton(
-                              onPressed: () {
-
-                              },
+                              onPressed: () {},
                               child: Text(
                                 "Save".tr,
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline2!
-                                    .copyWith(
-                                    color: Colors.white),
+                                    .copyWith(color: Colors.white),
                                 textAlign: TextAlign.center,
                               ),
                             ),
                           ),
-                        )   ],
+                        )
+                      ],
                     ),
                   )),
               enterBottomSheetDuration: const Duration(seconds: 1),
@@ -1098,10 +1116,9 @@ SizedBox(height: 10,),
                   flex: 2,
                   child: Text(
                     "myDelegations".tr,
-                // "اعادة توجيه\n المراسلات",
+                    // "اعادة توجيه\n المراسلات",
                     textAlign: TextAlign.center,
-                    style: Theme
-                        .of(context)
+                    style: Theme.of(context)
                         .textTheme
                         .headline3!
                         .copyWith(color: Colors.grey.shade600),
@@ -1159,10 +1176,11 @@ SizedBox(height: 10,),
             ///open url and go to userGuideUrl
             //  controller.data.userGuideUrl
 
-            Get
-                .find<WebViewPageController>()
-                .url = controller.data?.userGuideUrl;
-            Get.toNamed("WebViewPage",);
+            Get.find<WebViewPageController>().url =
+                controller.data?.userGuideUrl;
+            Get.toNamed(
+              "WebViewPage",
+            );
           },
           child: Container(
             height: 120,
@@ -1191,8 +1209,7 @@ SizedBox(height: 10,),
                   child: Text(
                     "user Guide".tr,
                     textAlign: TextAlign.center,
-                    style: Theme
-                        .of(context)
+                    style: Theme.of(context)
                         .textTheme
                         .headline3!
                         .copyWith(color: Colors.grey.shade600),
@@ -1202,179 +1219,160 @@ SizedBox(height: 10,),
             ),
           ),
         ),
+        InkWell(
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                      title: Text("pick your Color".tr),
+                      content: Column(children: [
+                        buildColorPicker(),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 8.0, bottom: 8, right: 20, left: 20),
+                          child: Row(children: [
+                            Expanded(
+                              child: Container(
+                                padding: const EdgeInsets.only(
+                                    left: 0, right: 0, top: 0, bottom: 0),
+                                height: 60,
+                                decoration: BoxDecoration(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(6))),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    var locale = const Locale('ar', 'AR');
+                                    Get.updateLocale(locale);
+                                    SecureStorage secureStorage =
+                                        SecureStorage();
 
-        InkWell(onTap: () {
-          showDialog(
-              context: context,
-              builder: (context) =>
-                  AlertDialog(
-                    title: Text("pick your Color".tr),
-                    content: Column(children: [
-                      buildColorPicker(),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 8.0, bottom: 8, right: 20, left: 20),
-                        child: Row(children: [
-                          Expanded(
-                            child: Container(
-                              padding: const EdgeInsets.only(
-                                  left: 0,
-                                  right: 0,
-                                  top: 0,
-                                  bottom: 0),
+                                    secureStorage.writeSecureData(
+                                        AllStringConst.AppLan, "ar");
+                                    Get.updateLocale(locale);
+                                  },
+                                  child: Text(
+                                    "عربي",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline2!
+                                        .copyWith(color: Colors.white),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Container(
+                                padding: const EdgeInsets.only(
+                                    left: 0, right: 0, top: 0, bottom: 0),
+                                height: 60,
+                                decoration: BoxDecoration(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(6))),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    var locale = const Locale('en', 'US');
+                                    SecureStorage secureStorage =
+                                        SecureStorage();
 
-                         height: 60,
-                         decoration: BoxDecoration(
-                             color: Theme.of(context)
-                                 .colorScheme
-                                 .primary,
-                             borderRadius: const BorderRadius.all(
-                                 Radius.circular(6))),
-                         child: ElevatedButton(
-                           onPressed:(){
-                             var locale = const Locale('ar', 'AR');
-                             Get.updateLocale(locale);
-                             SecureStorage secureStorage = SecureStorage();
+                                    secureStorage.writeSecureData(
+                                        AllStringConst.AppLan, "en");
+                                    Get.updateLocale(locale);
+                                    Get.updateLocale(locale);
+                                  },
+                                  child: Text(
+                                    "En",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline2!
+                                        .copyWith(color: Colors.white),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ]),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * .7,
+                          padding: const EdgeInsets.only(
+                              left: 0, right: 0, top: 0, bottom: 0),
+                          height: 60,
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.primary,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(6))),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Get.find<SecureStorage>().writeSecureData(
+                                  AllStringConst.AppColor,
+                                  Get.find<MController>().appcolor.value);
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              "save",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .copyWith(color: Colors.white),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        )
+                      ]),
+                    ));
+          },
+          child: Container(
+            height: 120,
+            color: Colors.transparent,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Spacer(
+                  flex: 1,
+                ),
+                Flexible(
+                  flex: 3,
+                  child: Image(
+                    image: AssetImage(
+                      'assets/images/palette_dark.png',
+                    ),
+                    fit: BoxFit.contain,
+                    width: double.infinity,
+                    height: double.infinity,
+                  ),
+                ),
+                Flexible(
+                  flex: 1,
+                  child: Text(
+                    "appTheme".tr,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: Colors.grey.shade600),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        InkWell(
+          onTap: () {
+            secureStorage.deleteSecureData(AllStringConst.Token);
+            Get.offAll(LoginPage());
 
-                             secureStorage.writeSecureData(AllStringConst.AppLan,"ar");
-                             Get.updateLocale(locale);
-                           },
-                           child: Text(
-                             "عربي",
-                             style: Theme.of(context)
-                                 .textTheme
-                                 .headline2!
-                                 .copyWith(
-                                 color: Colors.white),
-                             textAlign: TextAlign.center,
-                           ),
-                         ),
-                       ),
-                     )
-                     ,SizedBox(width: 10,)   ,
-
-                     Expanded(
-                       child: Container(
-                         padding: const EdgeInsets.only(
-                             left: 0,
-                             right: 0,
-                             top: 0,
-                             bottom: 0),
-
-                         height: 60,
-                         decoration: BoxDecoration(
-                             color: Theme.of(context)
-                                 .colorScheme
-                                 .primary,
-                             borderRadius: const BorderRadius.all(
-                                 Radius.circular(6))),
-                         child: ElevatedButton(
-                           onPressed:(){
-                             var locale = const Locale('en', 'US');
-                             SecureStorage secureStorage = SecureStorage();
-
-                             secureStorage.writeSecureData(AllStringConst.AppLan,"en");
-                             Get.updateLocale(locale);
-                             Get.updateLocale(locale);
-                           },
-                           child: Text(
-                             "En",
-                             style: Theme.of(context)
-                                 .textTheme
-                                 .headline2!
-                                 .copyWith(
-                                 color: Colors.white),
-                             textAlign: TextAlign.center,
-                           ),
-                         ),
-                       ),
-                     )
-
-                   ]),
-                 ),
-
-
-
-                 Container(width: MediaQuery.of(context).size.width*.7,
-                   padding: const EdgeInsets.only(
-                       left: 0,
-                       right: 0,
-                       top: 0,
-                       bottom: 0),
-
-                   height: 60,
-                   decoration: BoxDecoration(
-                       color: Theme.of(context)
-                           .colorScheme
-                           .primary,
-                       borderRadius: const BorderRadius.all(
-                           Radius.circular(6))),
-                   child: ElevatedButton(
-                     onPressed:(){
-                       Get.find<SecureStorage>().writeSecureData(
-                           AllStringConst.AppColor,
-                           Get.find<MController>().appcolor.value);
-                       Navigator.of(context).pop();
-                     },
-                     child: Text(
-                       "save",
-                       style: Theme.of(context)
-                           .textTheme
-                           .headline2!
-                           .copyWith(
-                           color: Colors.white),
-                       textAlign: TextAlign.center,
-                     ),
-                   ),
-                 )
-
-               ]),
-             ));
-       },
-         child: Container(
-           height: 120,
-           color: Colors.transparent,
-           child: Column(
-             mainAxisAlignment: MainAxisAlignment.spaceAround,
-             crossAxisAlignment: CrossAxisAlignment.center,
-             mainAxisSize: MainAxisSize.max,
-             children: [
-               Spacer(
-                 flex: 1,
-               ),
-               Flexible(
-                 flex: 3,
-                 child: Image(
-                   image: AssetImage(
-                     'assets/images/palette_dark.png',
-                   ),
-                   fit: BoxFit.contain,
-                   width: double.infinity,
-                   height: double.infinity,
-                 ),
-               ),
-               Flexible(
-                 flex: 1,
-                 child: Text(
-                   "appTheme".tr,
-                   textAlign: TextAlign.center,
-                   style: Theme.of(context)
-                       .textTheme
-                       .headline3!
-                       .copyWith(color: Colors.grey.shade600),
-                 ),
-               ),
-             ],
-           ),
-         ),
-       ),
-       InkWell(
-         onTap: () {
-           secureStorage.deleteSecureData(AllStringConst.Token);
-Get.offAll(LoginPage());
-
-           /// ToDo
-           /// delet token and go to login
+            /// ToDo
+            /// delet token and go to login
 
             //   Globals.navigatorKey.currentState?.pushNamed(LoginPageRoute);
           },
@@ -1787,498 +1785,516 @@ Get.offAll(LoginPage());
     //   ],
     // );
   }
-  _buildSideMenuPort(BuildContext context){
-    return   Container(height: 150,
-      child: Row(  mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
-        InkWell(onTap: (){
-          print("999999999999");
-          Get.toNamed("SignaturePage");
-        },
-          child: Column(
-            //    mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
 
-            children: [
-
-              Image(
-                image: AssetImage(
-                  'assets/images/signature.png',
-                ),
-                fit: BoxFit.contain,
-                width: 50,
-                height:50,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "mySignatures".tr,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline3!
-                      .copyWith(color: Colors.grey.shade600),
-                ),
-              ),
-            ],
-          ),
-        ),
-        InkWell(
-          onTap: () {
-            Get.bottomSheet(
-              Container(
-                //height: 100,
-                  margin: EdgeInsets.all(20),
-                  padding: EdgeInsets.all(20),
-                  decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20))),
-                  child: Column(
-                    children: [
-                      Text(     "favoritesUsers".tr, style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14)),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TypeAheadField<Destination>(
-                              textFieldConfiguration: TextFieldConfiguration(
-                                controller: controller
-                                    .textEditingControllerTo,
-                                // autofocus: true,
-                                // style: DefaultTextStyle.of(context)
-                                //     .style
-                                //     .copyWith(fontStyle: FontStyle.italic),
-                                decoration:
-                                InputDecoration(border: OutlineInputBorder(),
-                                    labelText: ""),
-                              ),
-                              suggestionsCallback: (pattern) async {
-                                return controller.users.where((element) =>
-                                    element.value!
-                                        .toLowerCase()
-                                        .contains(pattern.toLowerCase()));
-
-                                //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
-                              },
-                              itemBuilder: (context, suggestion) {
-                                Destination v = suggestion;
-
-                                return // Te(v.originalName!);
-
-
-                                  ListTile(
-                                    title: FilterText(v.value!),
-                                  );
-                              },
-                              onSuggestionSelected: (suggestion) {
-                                Destination v = suggestion;
-                                controller.textEditingControllerTo.text =
-                                    v.value ?? "";
-                                controller.to = v;
-
-                                controller.updateselectFavusers(v);
-                                controller.textEditingControllerTo.clear();
-                                // v
-                                // .cLASNAMEDISPLAY;
-                                // Navigator.of(context).push(MaterialPageRoute(
-                                //     builder: (context) => ProductPage(product: suggestion)
-                                // ));
-                              },
-                            ),
-                          ),
-                          SizedBox(width: 2,),
-                          CustomButtonWithIcon(icon: Icons.person, onClick: () {
-                            controller.listOfUser(0);
-                          },)
-                          ,
-                          SizedBox(width: 2,),
-                          CustomButtonWithIcon(
-                            icon: Icons.account_balance, onClick: () {
-                            controller.listOfUser(2);
-                          },)
-                          ,
-                          SizedBox(width: 2,),
-                          CustomButtonWithIcon(icon: Icons.clear, onClick: () {
-                            controller.listOfUser(0);
-                          },)
-                        ],
-                      ),
-                      GetBuilder<LandingPageController>(builder: (logic) {
-                        return Expanded(
-                          child: ListView.builder(
-                              itemCount: controller.selectFavusers.length
-                              ,
-                              itemBuilder: (context, pos) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Card(elevation: 5,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                              controller.selectFavusers[pos]
-                                                  .value ?? ""),
-                                          GestureDetector(onTap: (){
-                                            controller.deletselectFavusers( controller.selectFavusers[pos]);
-                                          },child: Icon(Icons.delete)) ],
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }),
-                        );
-                      }),
-                    ],
-                  )),
-              enterBottomSheetDuration: const Duration(seconds: 1),
-            );
-          },
-          child: Container(width: 100,
-            height: 140,
-            color: Colors.transparent,
+  _buildSideMenuPort(BuildContext context) {
+    return Container(
+      height: 150,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          InkWell(
+            onTap: () {
+              print("999999999999");
+              Get.toNamed("SignaturePage");
+            },
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-
+              //    mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
 
               children: [
-
-                Expanded(
-                  child: Image(
-                    image: AssetImage(
-                      'assets/images/fav_users.png',
-                    ),
-                    fit: BoxFit.contain,
-
-                  ),
-                ),
-                Text(
-                  "favoritesUsers".tr,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline3!
-                      .copyWith(color: Colors.grey.shade600),
-                ),
-              ],
-            ),
-          ),
-        ),
-        InkWell(onTap: (){
-          Get.bottomSheet(
-            Container(
-              //height: 100,
-                margin: EdgeInsets.all(20),
-                padding: EdgeInsets.all(20),
-                decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20))),
-                child: SingleChildScrollView(
-                  child: Column(mainAxisAlignment: MainAxisAlignment.start,crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(      "myDelegations".tr, style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14)),
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TypeAheadField<Destination>(
-                              textFieldConfiguration: TextFieldConfiguration(
-                                controller: controller
-                                    .textEditingControllerTo,
-                                // autofocus: true,
-                                // style: DefaultTextStyle.of(context)
-                                //     .style
-                                //     .copyWith(fontStyle: FontStyle.italic),
-                                decoration:
-                                InputDecoration(border: OutlineInputBorder(),
-                                    labelText: 'To'.tr),
-                              ),
-                              suggestionsCallback: (pattern) async {
-                                return controller.users.where((element) =>
-                                    element.value!
-                                        .toLowerCase()
-                                        .contains(pattern.toLowerCase()));
-
-                                //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
-                              },
-                              itemBuilder: (context, suggestion) {
-                                Destination v = suggestion;
-
-                                return // Te(v.originalName!);
-
-
-                                  ListTile(
-                                    title: FilterText(v.value!),
-                                  );
-                              },
-                              onSuggestionSelected: (suggestion) {
-                                Destination v = suggestion;
-                                controller.textEditingControllerTo.text =
-                                    v.value ?? "";
-                                controller.to = v;
-
-                                controller.updateselectFavusers(v);
-                                controller.textEditingControllerTo.clear();
-                                // v
-                                // .cLASNAMEDISPLAY;
-                                // Navigator.of(context).push(MaterialPageRoute(
-                                //     builder: (context) => ProductPage(product: suggestion)
-                                // ));
-                              },
-                            ),
-                          ),
-                          SizedBox(width: 2,),
-                          CustomButtonWithIcon(icon: Icons.person, onClick: () {
-                            controller.listOfUser(0);
-                          },)
-                          ,
-                          SizedBox(width: 2,),
-                          CustomButtonWithIcon(
-                            icon: Icons.account_balance, onClick: () {
-                            controller.listOfUser(2);
-                          },)
-                          ,
-                          SizedBox(width: 2,),
-                          CustomButtonWithIcon(icon: Icons.clear, onClick: () {
-                            controller.listOfUser(0);
-                          },)
-                        ],
-                      ),
-
-
-                      Text("start".tr),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: InkWell(onTap: () {
-                          controller.selectFromDocDate(context: context);
-                        },
-                          child: Container(
-                              height: 60,
-                              padding: EdgeInsets.only(right: 8, left: 8),
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: Theme
-                                          .of(context)
-                                          .colorScheme
-                                          .primary),
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(6))),
-                              child:
-                              TextField(enabled: false,
-                                controller: controller.textEditingControllerFromDocDate,
-                                decoration:   InputDecoration(
-                                  border: UnderlineInputBorder(),
-                                  labelText: 'From'.tr,
-                                ),
-                              )
-                          ),
-                        ),
-                      ),
-                      Text("end".tr),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: InkWell(onTap: () {
-                          controller.selectToDocDate(context: context);
-                        },
-                          child: Container(
-                              height: 60,
-                              padding: EdgeInsets.only(right: 8, left: 8),
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: Theme
-                                          .of(context)
-                                          .colorScheme
-                                          .primary),
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(6))),
-                              child:
-                              TextField(enabled: false,
-                                controller: controller.textEditingControllerToDocDate,
-                                decoration:   InputDecoration(
-                                  border: UnderlineInputBorder(),
-                                  labelText: 'To'.tr,
-                                ),
-                              )
-                            //   Center(child: Text(controller.toDocDate))
-                          ),
-                        ),
-                      ),
-                      Text( "reason".tr),
-                      Container(
-                          height: 60,
-                          padding: EdgeInsets.only(right: 8, left: 8),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Theme
-                                      .of(context)
-                                      .colorScheme
-                                      .primary),
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(6))),
-                          child:
-                          TextField(maxLines: 3,enabled: false,
-
-                            decoration:   InputDecoration(
-                              border: UnderlineInputBorder(),
-                              labelText: ' ',
-                            ),
-                          )
-                        //   Center(child: Text(controller.toDocDate))
-                      ),
-
-                      SizedBox(height: 10,),
-                      Center(
-                        child: Container(
-                          width: MediaQuery.of(context)
-                              .size
-                              .width *
-                              .5,
-                          padding: const EdgeInsets.only(
-                              left: 0,
-                              right: 0,
-                              top: 0,
-                              bottom: 0),
-                          height: 60,
-                          decoration: BoxDecoration(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primary,
-                              borderRadius:
-                              const BorderRadius.all(
-                                  Radius.circular(6))),
-                          child: ElevatedButton(
-                            onPressed: () {
-
-                            },
-                            child: Text(
-                              "Save".tr,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline2!
-                                  .copyWith(
-                                  color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      )   ],
-                  ),
-                )),
-            enterBottomSheetDuration: const Duration(seconds: 1),
-          );
-        },
-          child: Container(
-            height: 100,width: 100,
-            color: Colors.transparent,
-            child: Column(
-
-
-              children: [
-
                 Image(
                   image: AssetImage(
-                    'assets/images/delegation.png',
+                    'assets/images/signature.png',
                   ),
                   fit: BoxFit.contain,
                   width: 50,
                   height: 50,
                 ),
-                Text(
-                  "myDelegations".tr,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline3!
-                      .copyWith(color: Colors.grey.shade600),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "mySignatures".tr,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: Colors.grey.shade600),
+                  ),
                 ),
               ],
             ),
           ),
-        ),
+          InkWell(
+            onTap: () {
+              Get.bottomSheet(
+                Container(
+                    //height: 100,
+                    margin: EdgeInsets.all(20),
+                    padding: EdgeInsets.all(20),
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20))),
+                    child: Column(
+                      children: [
+                        Text("favoritesUsers".tr,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 14)),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TypeAheadField<Destination>(
+                                textFieldConfiguration: TextFieldConfiguration(
+                                  controller:
+                                      controller.textEditingControllerTo,
+                                  // autofocus: true,
+                                  // style: DefaultTextStyle.of(context)
+                                  //     .style
+                                  //     .copyWith(fontStyle: FontStyle.italic),
+                                  decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      labelText: ""),
+                                ),
+                                suggestionsCallback: (pattern) async {
+                                  return controller.users.where((element) =>
+                                      element.value!
+                                          .toLowerCase()
+                                          .contains(pattern.toLowerCase()));
 
-        Container(height: 50,width: 50,
-          child: InkWell(onTap: ()async{
-            await    Get.find<InboxController>().getFetchBasketList();
-            showDialog(
-              context: context,
-              builder: (ctx) =>
-                  AlertDialog(
+                                  //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
+                                },
+                                itemBuilder: (context, suggestion) {
+                                  Destination v = suggestion;
+
+                                  return // Te(v.originalName!);
+
+                                      ListTile(
+                                    title: FilterText(v.value!),
+                                  );
+                                },
+                                onSuggestionSelected: (suggestion) {
+                                  Destination v = suggestion;
+                                  controller.textEditingControllerTo.text =
+                                      v.value ?? "";
+                                  controller.to = v;
+
+                                  controller.updateselectFavusers(v);
+                                  controller.textEditingControllerTo.clear();
+                                  // v
+                                  // .cLASNAMEDISPLAY;
+                                  // Navigator.of(context).push(MaterialPageRoute(
+                                  //     builder: (context) => ProductPage(product: suggestion)
+                                  // ));
+                                },
+                              ),
+                            ),
+                            SizedBox(
+                              width: 2,
+                            ),
+                            CustomButtonWithIcon(
+                              icon: Icons.person,
+                              onClick: () {
+                                controller.listOfUser(0);
+                              },
+                            ),
+                            SizedBox(
+                              width: 2,
+                            ),
+                            CustomButtonWithIcon(
+                              icon: Icons.account_balance,
+                              onClick: () {
+                                controller.listOfUser(2);
+                              },
+                            ),
+                            SizedBox(
+                              width: 2,
+                            ),
+                            CustomButtonWithIcon(
+                              icon: Icons.clear,
+                              onClick: () {
+                                controller.listOfUser(0);
+                              },
+                            )
+                          ],
+                        ),
+                        GetBuilder<LandingPageController>(builder: (logic) {
+                          return Expanded(
+                            child: ListView.builder(
+                                itemCount: controller.selectFavusers.length,
+                                itemBuilder: (context, pos) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Card(
+                                      elevation: 5,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(controller.selectFavusers[pos]
+                                                    .value ??
+                                                ""),
+                                            GestureDetector(
+                                                onTap: () {
+                                                  controller.deletselectFavusers(
+                                                      controller
+                                                          .selectFavusers[pos]);
+                                                },
+                                                child: Icon(Icons.delete))
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }),
+                          );
+                        }),
+                      ],
+                    )),
+                enterBottomSheetDuration: const Duration(seconds: 1),
+              );
+            },
+            child: Container(
+              width: 100,
+              height: 140,
+              color: Colors.transparent,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Expanded(
+                    child: Image(
+                      image: AssetImage(
+                        'assets/images/fav_users.png',
+                      ),
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  Text(
+                    "favoritesUsers".tr,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: Colors.grey.shade600),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              Get.bottomSheet(
+                Container(
+                    //height: 100,
+                    margin: EdgeInsets.all(20),
+                    padding: EdgeInsets.all(20),
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20))),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text("myDelegations".tr,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 14)),
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TypeAheadField<Destination>(
+                                  textFieldConfiguration:
+                                      TextFieldConfiguration(
+                                    controller:
+                                        controller.textEditingControllerTo,
+                                    // autofocus: true,
+                                    // style: DefaultTextStyle.of(context)
+                                    //     .style
+                                    //     .copyWith(fontStyle: FontStyle.italic),
+                                    decoration: InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        labelText: 'To'.tr),
+                                  ),
+                                  suggestionsCallback: (pattern) async {
+                                    return controller.users.where((element) =>
+                                        element.value!
+                                            .toLowerCase()
+                                            .contains(pattern.toLowerCase()));
+
+                                    //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
+                                  },
+                                  itemBuilder: (context, suggestion) {
+                                    Destination v = suggestion;
+
+                                    return // Te(v.originalName!);
+
+                                        ListTile(
+                                      title: FilterText(v.value!),
+                                    );
+                                  },
+                                  onSuggestionSelected: (suggestion) {
+                                    Destination v = suggestion;
+                                    controller.textEditingControllerTo.text =
+                                        v.value ?? "";
+                                    controller.to = v;
+
+                                    controller.updateselectFavusers(v);
+                                    controller.textEditingControllerTo.clear();
+                                    // v
+                                    // .cLASNAMEDISPLAY;
+                                    // Navigator.of(context).push(MaterialPageRoute(
+                                    //     builder: (context) => ProductPage(product: suggestion)
+                                    // ));
+                                  },
+                                ),
+                              ),
+                              SizedBox(
+                                width: 2,
+                              ),
+                              CustomButtonWithIcon(
+                                icon: Icons.person,
+                                onClick: () {
+                                  controller.listOfUser(0);
+                                },
+                              ),
+                              SizedBox(
+                                width: 2,
+                              ),
+                              CustomButtonWithIcon(
+                                icon: Icons.account_balance,
+                                onClick: () {
+                                  controller.listOfUser(2);
+                                },
+                              ),
+                              SizedBox(
+                                width: 2,
+                              ),
+                              CustomButtonWithIcon(
+                                icon: Icons.clear,
+                                onClick: () {
+                                  controller.listOfUser(0);
+                                },
+                              )
+                            ],
+                          ),
+                          Text("start".tr),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: InkWell(
+                              onTap: () {
+                                controller.selectFromDocDate(context: context);
+                              },
+                              child: Container(
+                                  height: 60,
+                                  padding: EdgeInsets.only(right: 8, left: 8),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(6))),
+                                  child: TextField(
+                                    enabled: false,
+                                    controller: controller
+                                        .textEditingControllerFromDocDate,
+                                    decoration: InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'From'.tr,
+                                    ),
+                                  )),
+                            ),
+                          ),
+                          Text("end".tr),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: InkWell(
+                              onTap: () {
+                                controller.selectToDocDate(context: context);
+                              },
+                              child: Container(
+                                  height: 60,
+                                  padding: EdgeInsets.only(right: 8, left: 8),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(6))),
+                                  child: TextField(
+                                    enabled: false,
+                                    controller: controller
+                                        .textEditingControllerToDocDate,
+                                    decoration: InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'To'.tr,
+                                    ),
+                                  )
+                                  //   Center(child: Text(controller.toDocDate))
+                                  ),
+                            ),
+                          ),
+                          Text("reason".tr),
+                          Container(
+                              height: 60,
+                              padding: EdgeInsets.only(right: 8, left: 8),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(6))),
+                              child: TextField(
+                                maxLines: 3,
+                                enabled: false,
+                                decoration: InputDecoration(
+                                  border: UnderlineInputBorder(),
+                                  labelText: ' ',
+                                ),
+                              )
+                              //   Center(child: Text(controller.toDocDate))
+                              ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Center(
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * .5,
+                              padding: const EdgeInsets.only(
+                                  left: 0, right: 0, top: 0, bottom: 0),
+                              height: 60,
+                              decoration: BoxDecoration(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(6))),
+                              child: ElevatedButton(
+                                onPressed: () {},
+                                child: Text(
+                                  "Save".tr,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline2!
+                                      .copyWith(color: Colors.white),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    )),
+                enterBottomSheetDuration: const Duration(seconds: 1),
+              );
+            },
+            child: Container(
+              height: 100,
+              width: 100,
+              color: Colors.transparent,
+              child: Column(
+                children: [
+                  Image(
+                    image: AssetImage(
+                      'assets/images/delegation.png',
+                    ),
+                    fit: BoxFit.contain,
+                    width: 50,
+                    height: 50,
+                  ),
+                  Text(
+                    "myDelegations".tr,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: Colors.grey.shade600),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            height: 50,
+            width: 50,
+            child: InkWell(
+              onTap: () async {
+                await Get.find<InboxController>().getFetchBasketList();
+                showDialog(
+                  context: context,
+                  builder: (ctx) => AlertDialog(
                     title: Text(" "),
                     content: Padding(
-                      padding:
-                      const EdgeInsets
-                          .all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: Container(
-                          width: MediaQuery.of(
-                              context)
-                              .size
-                              .width *
-                              .3,
-                          color: Colors
-                              .grey[200],
+                          width: MediaQuery.of(context).size.width * .3,
+                          color: Colors.grey[200],
                           child: ListView.builder(
-                              itemCount: Get.find<
-                                  InboxController>()
+                              itemCount: Get.find<InboxController>()
                                   .fetchBasketListModel
                                   ?.baskets
                                   ?.length,
-                              itemBuilder:
-                                  (context,
-                                  pos) {
-                                return InkWell(onTap: ()async{
+                              itemBuilder: (context, pos) {
+                                return InkWell(
+                                  onTap: () async {
+                                    print(
+                                        "${Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].iD}");
 
-                                  print("${Get.find<InboxController>()
-                                      .fetchBasketListModel
-                                      ?.baskets?[pos].iD}");
+                                    Get.find<BasketController>().getBasketInbox(
+                                        context: context,
+                                        id: Get.find<InboxController>()
+                                            .fetchBasketListModel!
+                                            .baskets![pos]
+                                            .iD!,
+                                        pageSize: 20,
+                                        pageNumber: 0);
 
-                                  Get.find<BasketController>().getBasketInbox(
-                                    context: context,
-                                      id:Get.find<InboxController>()
-                                      .fetchBasketListModel
-                                  !.baskets![pos].iD! ,pageSize:20 ,pageNumber: 0);
+                                    Get.back();
 
-                                  Get.back();
+                                    Get.toNamed("MyPocketsScreen");
+                                  },
+                                  child: Card(
+                                    elevation: 10,
+                                    child: Column(children: [
+                                      Text(Get.find<InboxController>()
+                                              .fetchBasketListModel
+                                              ?.baskets?[pos]
+                                              .name ??
+                                          ""),
+                                      Text(Get.find<InboxController>()
+                                              .fetchBasketListModel
+                                              ?.baskets?[pos]
+                                              .nameAr ??
+                                          ""),
+                                      // Text( "color :${Get.find<InboxController>()
+                                      //     .fetchBasketListModel
+                                      //     ?.baskets?[pos].color}",style: TextStyle( color: HexColor(Get.find<InboxController>()
+                                      //     .fetchBasketListModel
+                                      //     ?.baskets?[pos].color??"#000000"))),
 
-
-                                  Get.toNamed("MyPocketsScreen");
-
-                                },
-                                  child: Card(elevation: 10,child: Column(children: [
-                                    Text( Get.find<InboxController>()
-                                        .fetchBasketListModel
-                                        ?.baskets?[pos].name??""),
-                                    Text( Get.find<InboxController>()
-                                        .fetchBasketListModel
-                                        ?.baskets?[pos].nameAr??""),
-                                    // Text( "color :${Get.find<InboxController>()
-                                    //     .fetchBasketListModel
-                                    //     ?.baskets?[pos].color}",style: TextStyle( color: HexColor(Get.find<InboxController>()
-                                    //     .fetchBasketListModel
-                                    //     ?.baskets?[pos].color??"#000000"))),
-
-
-
-                                    GestureDetector(onTap: (){
-                                      //هنا هنعمل دليت
-                                    },child: Icon(Icons.delete)), ]),
+                                      GestureDetector(
+                                          onTap: () {
+                                            //هنا هنعمل دليت
+                                          },
+                                          child: Icon(Icons.delete)),
+                                    ]),
                                   ),
                                 );
                               })),
                     ),
                     actions: <Widget>[
                       FlatButton(
-                        onPressed:
-                            () async {
-
+                        onPressed: () async {
                           /// ToDo send Replay
 
-                          Navigator.of(
-                              ctx)
-                              .pop();
+                          Navigator.of(ctx).pop();
                         },
                         child: Text("Ok"),
                       ),
@@ -2299,157 +2315,78 @@ Get.offAll(LoginPage());
                       //   child: Text("go to Basket"),
                       // ),
                       FlatButton(
-                        onPressed:
-                            () async {
+                        onPressed: () async {
                           //هنا هنكريت الباسكت
-
                         },
                         child: Text("new Basket"),
-                      ), ],
-                  ),
-            );
-            // Get.toNamed( "MyPocketsScreen",);//MyPocketsScreen
-          },
-            child: Container(
-              height: 120,
-              color: Colors.transparent,
-              child: Column(
-
-                children: [
-
-                  Flexible(
-                    flex: 2,
-                    child: Image(
-                      image: AssetImage(
-                        'assets/images/delegation.png',
                       ),
-                      fit: BoxFit.contain,
-width: double.infinity,
-                      height: double.infinity,
-                    ),
+                    ],
                   ),
-                  Flexible(
-                    flex: 1,
-                    child: Text(
-                      "Basket".tr,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline3!
-                          .copyWith(color: Colors.grey.shade600),
+                );
+                // Get.toNamed( "MyPocketsScreen",);//MyPocketsScreen
+              },
+              child: Container(
+                height: 120,
+                color: Colors.transparent,
+                child: Column(
+                  children: [
+                    Flexible(
+                      flex: 2,
+                      child: Image(
+                        image: AssetImage(
+                          'assets/images/delegation.png',
+                        ),
+                        fit: BoxFit.contain,
+                        width: double.infinity,
+                        height: double.infinity,
+                      ),
                     ),
-                  ),
-                ],
+                    Flexible(
+                      flex: 1,
+                      child: Text(
+                        "Basket".tr,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline3!
+                            .copyWith(color: Colors.grey.shade600),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        InkWell(onTap: (){
-          ///ToDo
-          ///open url and go to userGuideUrl
-          //  controller.data.userGuideUrl
+          InkWell(
+            onTap: () {
+              ///ToDo
+              ///open url and go to userGuideUrl
+              //  controller.data.userGuideUrl
 
-          Get.find<WebViewPageController>().url=controller.data?.userGuideUrl;
-          Get.toNamed( "WebViewPage",);
-        },
-          child: Container(width: 50,
-            height: 120,
-            color: Colors.transparent,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
-
-              children: [
-
-                Image(
-                  image: AssetImage(
-                    'assets/images/delegation.png',
-                  ),
-                  fit: BoxFit.contain,
-                  width: 50,
-                  height: 50,
-                ),
-                Text(
-                  "user Guide".tr,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline3!
-                      .copyWith(color: Colors.grey.shade600),
-                ),
-              ],
-            ),
-          ),
-        ),
-
-        Container(height: 100,width: 50,
-          child: InkWell(onTap: (){
-            showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title:  Text("pick your Color".tr),
-                      content: Column(children: [
-                        buildColorPicker(),
-                        Container(width: MediaQuery.of(context).size.width*.7,
-                      padding: const EdgeInsets.only(
-                          left: 0,
-                          right: 0,
-                          top: 0,
-                          bottom: 0),
-
-                          height: 60,
-                          decoration: BoxDecoration(
-                              color: Theme
-                                  .of(context)
-                                  .colorScheme
-                                  .primary,
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(6))),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Get.find<SecureStorage>().writeSecureData(
-                                  AllStringConst.AppColor,
-                                  Get
-                                      .find<MController>()
-                                      .appcolor
-                                      .value);
-                              Navigator.of(context).pop();
-                            },
-                            child: Text(
-                              "save",
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .headline2!
-                                  .copyWith(
-                                  color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        )
-
-                      ]),
-                    ));
-          },
+              Get.find<WebViewPageController>().url =
+                  controller.data?.userGuideUrl;
+              Get.toNamed(
+                "WebViewPage",
+              );
+            },
             child: Container(
+              width: 50,
               height: 120,
               color: Colors.transparent,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
-
                 children: [
-
                   Image(
                     image: AssetImage(
-                      'assets/images/palette_dark.png',
+                      'assets/images/delegation.png',
                     ),
                     fit: BoxFit.contain,
                     width: 50,
-                    height:50,
+                    height: 50,
                   ),
                   Text(
-                    "appTheme".tr,
+                    "user Guide".tr,
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
                         .textTheme
@@ -2460,50 +2397,116 @@ width: double.infinity,
               ),
             ),
           ),
-        ),
-        InkWell(
-          onTap: () {
-            secureStorage.deleteSecureData(AllStringConst.Token);
-            Get.offAll(LoginPage());
-
-            /// ToDo
-            /// delet token and go to login
-
-            //   Globals.navigatorKey.currentState?.pushNamed(LoginPageRoute);
-          },
-          child: Container(
-            height: 120,
-            color: Colors.transparent,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
-
-              children: [
-
-                Image(
-                  image: AssetImage(
-                    'assets/images/logout.png',
-                  ),
-                  fit: BoxFit.contain,
-                  width: 50,
-                  height:50,
+          Container(
+            height: 100,
+            width: 50,
+            child: InkWell(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                          title: Text("pick your Color".tr),
+                          content: Column(children: [
+                            buildColorPicker(),
+                            Container(
+                              width: MediaQuery.of(context).size.width * .7,
+                              padding: const EdgeInsets.only(
+                                  left: 0, right: 0, top: 0, bottom: 0),
+                              height: 60,
+                              decoration: BoxDecoration(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(6))),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Get.find<SecureStorage>().writeSecureData(
+                                      AllStringConst.AppColor,
+                                      Get.find<MController>().appcolor.value);
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(
+                                  "save",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline2!
+                                      .copyWith(color: Colors.white),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            )
+                          ]),
+                        ));
+              },
+              child: Container(
+                height: 120,
+                color: Colors.transparent,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image(
+                      image: AssetImage(
+                        'assets/images/palette_dark.png',
+                      ),
+                      fit: BoxFit.contain,
+                      width: 50,
+                      height: 50,
+                    ),
+                    Text(
+                      "appTheme".tr,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline3!
+                          .copyWith(color: Colors.grey.shade600),
+                    ),
+                  ],
                 ),
-                Text(
-                  "logout".tr,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline3!
-                      .copyWith(color: Colors.grey.shade600),
-                ),
-              ],
+              ),
             ),
           ),
-        )
-      ],),
-    );
+          InkWell(
+            onTap: () {
+              secureStorage.deleteSecureData(AllStringConst.Token);
+              Get.offAll(LoginPage());
 
+              /// ToDo
+              /// delet token and go to login
+
+              //   Globals.navigatorKey.currentState?.pushNamed(LoginPageRoute);
+            },
+            child: Container(
+              height: 120,
+              color: Colors.transparent,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image(
+                    image: AssetImage(
+                      'assets/images/logout.png',
+                    ),
+                    fit: BoxFit.contain,
+                    width: 50,
+                    height: 50,
+                  ),
+                  Text(
+                    "logout".tr,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: Colors.grey.shade600),
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
+
   landscapeDashboardContainer(BuildContext contex) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -2945,7 +2948,11 @@ width: double.infinity,
                                 "myTransfersInMonth".tr +
                                     " " +
                                     // calculateDate('MMMM', getLocaleCode(context)),
-                                    calculateDate('MMMM', Get.locale?.languageCode == "en" ? "en" : "ar"),
+                                    calculateDate(
+                                        'MMMM',
+                                        Get.locale?.languageCode == "en"
+                                            ? "en"
+                                            : "ar"),
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline2!
@@ -3283,7 +3290,7 @@ width: double.infinity,
                                         color: Colors.grey,
                                         fontSize:
                                             // 25
-                                    calculateFontSize(25, context),
+                                            calculateFontSize(25, context),
                                       ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -3296,9 +3303,9 @@ width: double.infinity,
                                       .textTheme
                                       .headline3!
                                       .copyWith(
-                                    fontSize:
-                                      // 20
-                                    calculateFontSize(20, context),
+                                        fontSize:
+                                            // 20
+                                            calculateFontSize(20, context),
                                       ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -3717,7 +3724,7 @@ width: double.infinity,
                       ),
                     ),
                   ),
-               ],
+                ],
               ),
             ),
           )
@@ -3736,7 +3743,7 @@ width: double.infinity,
       ),
       child: SingleChildScrollView(
         child: Column(
-         // crossAxisAlignment: WrapCrossAlignment.start,
+          // crossAxisAlignment: WrapCrossAlignment.start,
           children: [
             _buildDataLabelTitleLabel(
               context,
@@ -3861,8 +3868,6 @@ width: double.infinity,
                     ),
                   ],
                 ),
-
-
               ],
             ),
             _buildDataLabelTitleLabel(context, "search".tr),
@@ -3882,16 +3887,23 @@ width: double.infinity,
                   children: [
                     TableRowInkWell(
                       onTap: () {
-                  Get.toNamed("SearchPage");
+                        Get.toNamed("SearchPage");
                       },
-                      child: _buildOtherFoldersRows(context, "advancedSearch".tr,
-                          "assets/images/search.png", false, 0),
+                      child: _buildOtherFoldersRows(
+                          context,
+                          "advancedSearch".tr,
+                          "assets/images/search.png",
+                          false,
+                          0),
                     ),
                   ],
                 ),
               ],
             ),
-            Container(  height: 100,width: MediaQuery.of(context).size.width, child: _buildSideMenuPort(  context),
+            Container(
+              height: 100,
+              width: MediaQuery.of(context).size.width,
+              child: _buildSideMenuPort(context),
             ),
             Align(
               alignment: Alignment.bottomCenter,
@@ -3902,8 +3914,8 @@ width: double.infinity,
                 children: [
                   Container(
                     color: Colors.grey[200],
-                    padding:
-                        EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 0),
+                    padding: EdgeInsets.only(
+                        left: 20, right: 20, top: 10, bottom: 0),
                     height: 65,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -3972,7 +3984,6 @@ width: double.infinity,
               context,
               "mail".tr,
             ),
-
 
             Table(
               border: TableBorder(
@@ -4045,7 +4056,7 @@ width: double.infinity,
               ],
             ),
 
-          //  Container(color: Colors.red, height: 100,width: MediaQuery.of(context).size.width, child: _buildSideMenuPort(  context),),
+            //  Container(color: Colors.red, height: 100,width: MediaQuery.of(context).size.width, child: _buildSideMenuPort(  context),),
             Container(
               height: 30,
             ),
@@ -4195,7 +4206,8 @@ width: double.infinity,
                 style: Theme.of(content)
                     .textTheme
                     .headline1!
-                    .copyWith(color: Colors.grey, fontSize: 17),
+                    .copyWith(color: Colors.grey, fontSize: 17,
+                fontFamily: "Bahij_bold"),
                 textAlign: TextAlign.start,
               ),
             ),
@@ -4317,9 +4329,6 @@ width: double.infinity,
   }
 
   openInbox(context) {
-
-
-
     Get.find<InboxController>().getAllData(context: context);
     Get.toNamed("/InboxPage");
     // Navigator.push(

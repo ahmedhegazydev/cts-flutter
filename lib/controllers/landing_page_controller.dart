@@ -107,6 +107,7 @@ class LandingPageController extends GetxController {
 
   DashboardStatsResultModel? dashboardStatsResultModel;
   getDashboardStats({context}){
+
     DashboardStatsResultApi  dashboardStatsResultApi=DashboardStatsResultApi( );
     dashboardStatsResultApi.data= "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     dashboardStatsResultApi.getData().then((value) {
@@ -124,7 +125,7 @@ update();
   @override
   void onReady() {
     super.onReady();
-    getDashboardStats();
+   getDashboardStats();
     _logindata = secureStorage.readSecureJsonData(AllStringConst.LogInData);
     data = LoginModel.fromJson(_logindata!);
     // getFindRecipientData();

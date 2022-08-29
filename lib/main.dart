@@ -32,7 +32,7 @@ void main() async {
   // print(data.customActions );
   // print("000000");
   //var bb=json.decode(a.toString());
-   //  secureStorage.deleteSecureData(AllStringConst.Token);
+     secureStorage.deleteSecureData(AllStringConst.Token);
 String? appLan=secureStorage.readSecureData(AllStringConst.AppLan);
 if(appLan==null){
   print("theeeeeeeeeeeeeeeeeeeee=>  appLan");

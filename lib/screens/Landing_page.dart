@@ -2234,33 +2234,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                   },
                                 ),
                               ),
-                              SizedBox(
-                                width: 2,
-                              ),
-                              CustomButtonWithIcon(
-                                icon: Icons.person,
-                                onClick: () {
-                                  controller.listOfUser(0);
-                                },
-                              ),
-                              SizedBox(
-                                width: 2,
-                              ),
-                              CustomButtonWithIcon(
-                                icon: Icons.account_balance,
-                                onClick: () {
-                                  controller.listOfUser(2);
-                                },
-                              ),
-                              SizedBox(
-                                width: 2,
-                              ),
-                              CustomButtonWithIcon(
-                                icon: Icons.clear,
-                                onClick: () {
-                                  controller.listOfUser(0);
-                                },
-                              )
+
                             ],
                           ),
                           Text("start".tr),
@@ -2591,7 +2565,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                     height: 50,
                   ),
                   Text(
-                    "user Guide".tr,
+                    "userGuide".tr,
                     textAlign: TextAlign.center,
                     style: Theme
                         .of(context)

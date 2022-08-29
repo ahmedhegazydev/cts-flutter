@@ -8,7 +8,7 @@ import '../../json_model/inopendocModel/is_already_exported_as_transfer_model.da
 class IsAlreadyExportedAsTransferAPI extends ApiManager{
   String data="";
 
-  IsAlreadyExportedAsTransferAPI(BuildContext context) : super(context);
+  IsAlreadyExportedAsTransferAPI(BuildContext context) : super(context: context);
   @override
   String apiUrl() {
 return SettingsApp.GetIsAlreadyExportedAsTransferUrl+data;

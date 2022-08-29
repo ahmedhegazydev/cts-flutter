@@ -8,7 +8,7 @@ import '../../json_model/inopendocModel/get_attachment_item_model.dart';
 class GetAttachmentItemAPI extends ApiManager{
   String data="";
 
-  GetAttachmentItemAPI(BuildContext context) : super(context);
+  GetAttachmentItemAPI(BuildContext context) : super(context: context);
   @override
   String apiUrl() {
     return SettingsApp. GetAttachmentItemUrl+data;

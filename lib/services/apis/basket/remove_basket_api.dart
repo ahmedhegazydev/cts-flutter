@@ -12,7 +12,7 @@ import '../../json_model/basket/remove_basket_request_model.dart';
 class PostRemoveBasketApi  extends ApiManager{
   String data="";
 
-  PostRemoveBasketApi(BuildContext context) : super(context);
+  PostRemoveBasketApi(BuildContext context) : super(context: context);
   @override
   String apiUrl() {
     return SettingsApp.PostRemoveBasketUrl ;

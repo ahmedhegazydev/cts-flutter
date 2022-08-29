@@ -7,7 +7,7 @@ import '../json_model/my_transfer_routing_dto_model.dart';
 import '../json_model/my_transfer_routing_dto_result.dart';
 
 class SaveMyRoutingSettingsApi extends ApiManager{
-  SaveMyRoutingSettingsApi(BuildContext context) : super(context);
+  SaveMyRoutingSettingsApi(BuildContext context) : super(context: context);
 
   @override
   String apiUrl() {

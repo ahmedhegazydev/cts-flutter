@@ -6,7 +6,7 @@ import '../../api_manager.dart';
 import '../../json_model/basket/fetch_basket_list_model.dart';
 
 class ReOrderBasketsApi  extends ApiManager{
-  ReOrderBasketsApi(BuildContext context) : super(context);
+  ReOrderBasketsApi(BuildContext context) : super(context: context);
 
   // String data="";
   @override

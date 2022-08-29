@@ -11,7 +11,7 @@ import '../json_model/get_lookups_model.dart';
 class GetLookupsApi extends ApiManager{
   String data="";
 
-  GetLookupsApi(BuildContext context) : super(context);
+  GetLookupsApi(BuildContext context) : super(context: context);
   @override
   String apiUrl() {
          return SettingsApp.GetLookupsUrl +data;

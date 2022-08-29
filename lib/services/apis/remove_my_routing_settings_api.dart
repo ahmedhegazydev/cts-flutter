@@ -6,7 +6,7 @@ import '../api_manager.dart';
 import '../json_model/my_transfer_routing_dto_result.dart';
 
 class RemoveMyRoutingSettingsApi extends ApiManager{
-  RemoveMyRoutingSettingsApi(BuildContext context) : super(context);
+  RemoveMyRoutingSettingsApi(BuildContext context) : super(context:context );
 
   @override
   String apiUrl() {

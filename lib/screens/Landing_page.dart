@@ -41,7 +41,7 @@ class _BasketListTileState extends State<BasketListTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: null,
+      child: LandingPage(),
     );
   }
 }
@@ -55,6 +55,7 @@ class LandingPage extends GetWidget<LandingPageController> {
   @override
   Widget build(BuildContext context) {
     controller.context = context;
+
     inboxController.context = context;
     Orientation orientation = MediaQuery
         .of(context)
@@ -64,12 +65,16 @@ class LandingPage extends GetWidget<LandingPageController> {
         "the Token Is => ${secureStorage.readSecureData(
             AllStringConst.Token)}");
     return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: orientation == Orientation.landscape
-            ? landscapeBody(context)
-            : portraitBody(context),
-      ),
+      child: GetBuilder<LandingPageController>(builder: (logic) {
+        return Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: logic.dashboardStatsResultModel == null ? Center(
+            child: CircularProgressIndicator(),) : orientation ==
+              Orientation.landscape
+              ? landscapeBody(context)
+              : portraitBody(context),
+        );
+      }),
     );
   }
 
@@ -1211,10 +1216,16 @@ class LandingPage extends GetWidget<LandingPageController> {
                                     const BorderRadius.all(Radius.circular(6))),
                                 child: ElevatedButton(
                                   onPressed: () {
-
+                                    print("token=>    ${controller.secureStorage
+                                        .token()}");
+                                    controller.removeMyRoutingSettings(data: {
+                                      "Token": controller.secureStorage.token(),
+                                      "Language": Get.locale?.languageCode ==
+                                          "en" ? "en" : "ar"
+                                    }, context: context);
                                   },
                                   child: Text(
-                                    "حذف القديم".tr,
+                                    "حذف".tr,
                                     style: Theme
                                         .of(context)
                                         .textTheme
@@ -1350,7 +1361,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                 Flexible(
                   flex: 1,
                   child: Text(
-                    "user Guide".tr,
+                    "userGuide".tr,
                     textAlign: TextAlign.center,
                     style: Theme
                         .of(context)
@@ -2509,7 +2520,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                             onPressed: () async {
                               //هنا هنكريت الباسكت
                             },
-                            child: Text("new Basket"),
+                            child: Text("newBasket".tr),
                           ),
                         ],
                       ),
@@ -3112,7 +3123,11 @@ class LandingPage extends GetWidget<LandingPageController> {
                             Flexible(
                               flex: 1,
                               child: Text(
-                                controller.data?.inbox.toString() ?? "",
+                                Get
+                                    .find<LandingPageController>()
+                                    .dashboardStatsResultModel!
+                                    .unreadCount
+                                    .toString(),
                                 style: Theme
                                     .of(context)
                                     .textTheme
@@ -3173,7 +3188,11 @@ class LandingPage extends GetWidget<LandingPageController> {
                             Flexible(
                               flex: 1,
                               child: Text(
-                                "pendingCorrespondences".tr
+                                Get
+                                    .find<LandingPageController>()
+                                    .dashboardStatsResultModel!
+                                    .forActionCount
+                                    .toString()
                                 //controller.data?.transferData.sections[].destination
                                 // controller.data?.transferData.priorities
                                 //   controller.data?.transferData.privacies.
@@ -3260,7 +3279,11 @@ class LandingPage extends GetWidget<LandingPageController> {
                             Flexible(
                               flex: 1,
                               child: Text(
-                                "20",
+                                Get
+                                    .find<LandingPageController>()
+                                    .dashboardStatsResultModel!
+                                    .transferredFromMeCount!
+                                    .toString(),
                                 style: Theme
                                     .of(context)
                                     .textTheme
@@ -3323,7 +3346,10 @@ class LandingPage extends GetWidget<LandingPageController> {
                             Flexible(
                               flex: 1,
                               child: Text(
-                                "نورا الجيدا",
+                                Get
+                                    .find<LandingPageController>()
+                                    .dashboardStatsResultModel!
+                                    .mostTransfersWentTo!,
                                 style: Theme
                                     .of(context)
                                     .textTheme
@@ -3595,7 +3621,11 @@ class LandingPage extends GetWidget<LandingPageController> {
                               Flexible(
                                 flex: 1,
                                 child: Text(
-                                  "5",
+                                  Get
+                                      .find<LandingPageController>()
+                                      .dashboardStatsResultModel!
+                                      .unreadCount
+                                      .toString(),
                                   style: Theme
                                       .of(context)
                                       .textTheme
@@ -3667,7 +3697,11 @@ class LandingPage extends GetWidget<LandingPageController> {
                               Flexible(
                                 flex: 1,
                                 child: Text(
-                                  "19",
+                                  Get
+                                      .find<LandingPageController>()
+                                      .dashboardStatsResultModel!
+                                      .forActionCount
+                                      .toString(),
                                   style: Theme
                                       .of(context)
                                       .textTheme
@@ -3700,339 +3734,345 @@ class LandingPage extends GetWidget<LandingPageController> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Flexible(
-                    flex: 1,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          left: 0, right: 10, top: 0, bottom: 0),
-                      child: Container(
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(6),
-                              topRight: Radius.circular(6),
-                              bottomLeft: Radius.circular(6),
-                              bottomRight: Radius.circular(6)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.25),
-                              spreadRadius: 6,
-                              blurRadius: 6,
-                              offset: Offset(0, 0),
-                            ),
-                          ],
-                        ),
-                        child: Container(
-                          color: Colors.transparent,
-                          width: double.infinity,
-                          height: double.infinity,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Flexible(
-                                flex: 1,
-                                child: Text(
-                                  "myTransfersInMonth".tr +
-                                      " " +
-                                      calculateDate(
-                                          'MMMM', getLocaleCode(context)),
-                                  style: Theme
-                                      .of(context)
-                                      .textTheme
-                                      .headline2!
-                                      .copyWith(
-                                    color: Colors.grey,
-                                    fontSize:
-                                    calculateFontSize(30, context),
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              Flexible(
-                                flex: 1,
-                                child: Text(
-                                  "20",
-                                  style: Theme
-                                      .of(context)
-                                      .textTheme
-                                      .headline3!
-                                      .copyWith(
-                                    fontSize:
-                                    calculateFontSize(80, context),
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          left: 10, right: 0, top: 0, bottom: 0),
-                      child: Container(
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(6),
-                              topRight: Radius.circular(6),
-                              bottomLeft: Radius.circular(6),
-                              bottomRight: Radius.circular(6)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.25),
-                              spreadRadius: 6,
-                              blurRadius: 6,
-                              offset: Offset(0, 0),
-                            ),
-                          ],
-                        ),
-                        child: Container(
-                          color: Colors.transparent,
-                          width: double.infinity,
-                          height: double.infinity,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Flexible(
-                                flex: 1,
-                                child: Text(
-                                  "mostMyTransferWentTo".tr,
-                                  style: Theme
-                                      .of(context)
-                                      .textTheme
-                                      .headline2!
-                                      .copyWith(
-                                    color: Colors.grey,
-                                    fontSize:
-                                    calculateFontSize(38, context),
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              Flexible(
-                                flex: 1,
-                                child: Text(
-                                  "نورا الجيدا",
-                                  style: Theme
-                                      .of(context)
-                                      .textTheme
-                                      .headline3!
-                                      .copyWith(
-                                    fontSize:
-                                    calculateFontSize(47, context),
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Flexible(
-            flex: 2,
-            child: Container(
-              color: Colors.transparent,
-              padding: EdgeInsets.all(10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Flexible(
-                    flex: 1,
-                    child: Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(6)
-                          // topLeft: Radius.circular(6),
-                          // topRight: Radius.circular(6),
-                          // bottomLeft: Radius.circular(6),
-                          // bottomRight: Radius.circular(6)
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.25),
-                            spreadRadius: 6,
-                            blurRadius: 6,
-                            offset: Offset(0, 0),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Spacer(flex: 2),
-                          const Flexible(
-                            flex: 2,
-                            child: Image(
-                              image: AssetImage(
-                                'assets/images/flagged.png',
-                              ),
-                              fit: BoxFit.contain,
-                              width: double.infinity,
-                              height: double.infinity,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          const Spacer(flex: 1),
-                          Flexible(
-                            flex: 10,
-                            child: Container(
-                              width: double.infinity,
-                              child: Text(
-                                "flagged".tr,
-                                style: Theme
-                                    .of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .copyWith(
-                                    color: Colors.grey,
-                                    fontSize:
-                                    calculateFontSize(16, context)),
-                                textAlign: TextAlign.start,
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            flex: 3,
-                            child: Container(
-                              width: double.infinity,
-                              child: Text(
-                                "5",
-                                style: Theme
-                                    .of(context)
-                                    .textTheme
-                                    .headline3!
-                                    .copyWith(
-                                  fontSize: 22,
-                                  color: createMaterialColor(
-                                    Color.fromRGBO(247, 148, 29, 1),
-                                  ),
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                          Spacer(flex: 2)
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
+                Flexible(
+                flex: 1,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      left: 0, right: 10, top: 0, bottom: 0),
+                  child: Container(
+                    height: 150,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(6),
                           topRight: Radius.circular(6),
                           bottomLeft: Radius.circular(6),
-                          bottomRight: Radius.circular(6),
+                          bottomRight: Radius.circular(6)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.25),
+                          spreadRadius: 6,
+                          blurRadius: 6,
+                          offset: Offset(0, 0),
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.25),
-                            spreadRadius: 6,
-                            blurRadius: 6,
-                            offset: Offset(0, 0),
-                          ),
-                        ],
-                      ),
-                      child: Row(
+                      ],
+                    ),
+                    child: Container(
+                      color: Colors.transparent,
+                      width: double.infinity,
+                      height: double.infinity,
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Spacer(flex: 2),
-                          Flexible(
-                            flex: 2,
-                            child: Image(
-                              image: AssetImage(
-                                'assets/images/notification.png',
-                              ),
-                              fit: BoxFit.contain,
-                              width: double.infinity,
-                              height: double.infinity,
-                              color: Colors.grey,
-                            ),
+                        Flexible(
+                        flex: 1,
+                        child: Text(
+                          "myTransfersInMonth".tr +
+                              " " +
+                              calculateDate(
+                                  'MMMM', getLocaleCode(context)),
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .headline2!
+                              .copyWith(
+                            color: Colors.grey,
+                            fontSize:
+                            calculateFontSize(30, context),
                           ),
-                          Spacer(flex: 1),
-                          Flexible(
-                            flex: 10,
-                            child: Container(
-                              width: double.infinity,
-                              child: Text(
-                                "notifications".tr,
-                                style: Theme
-                                    .of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .copyWith(
-                                    color: Colors.grey,
-                                    fontSize:
-                                    calculateFontSize(16, context)),
-                                textAlign: TextAlign.start,
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            flex: 3,
-                            child: Container(
-                              width: double.infinity,
-                              child: Text(
-                                "9",
-                                style: Theme
-                                    .of(context)
-                                    .textTheme
-                                    .headline3!
-                                    .copyWith(
-                                  fontSize: 22,
-                                  color: createMaterialColor(
-                                    Color.fromRGBO(247, 148, 29, 1),
-                                  ),
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                          Spacer(flex: 2)
-                        ],
+                          textAlign: TextAlign.center,
+                        ),
                       ),
-                    ),
+                      Flexible(
+                        flex: 1,
+                        child: Text(
+                            Get
+                                .find<LandingPageController>()
+                                .dashboardStatsResultModel!
+                                .transferredFromMeCount!
+                                .toString(),
+                            style: Theme
+                            .of(context)
+                            .textTheme
+                            .headline3!
+                            .copyWith(
+                          fontSize:
+                          calculateFontSize(80, context),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    )
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
-          )
+          ),
+          SizedBox(
+            width: 20,
+          ),
+          Flexible(
+            flex: 1,
+            child: Padding(
+              padding: EdgeInsets.only(
+                  left: 10, right: 0, top: 0, bottom: 0),
+              child: Container(
+                height: 150,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(6),
+                      topRight: Radius.circular(6),
+                      bottomLeft: Radius.circular(6),
+                      bottomRight: Radius.circular(6)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.25),
+                      spreadRadius: 6,
+                      blurRadius: 6,
+                      offset: Offset(0, 0),
+                    ),
+                  ],
+                ),
+                child: Container(
+                  color: Colors.transparent,
+                  width: double.infinity,
+                  height: double.infinity,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Flexible(
+                        flex: 1,
+                        child: Text(
+                          "mostMyTransferWentTo".tr,
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .headline2!
+                              .copyWith(
+                            color: Colors.grey,
+                            fontSize:
+                            calculateFontSize(38, context),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      Flexible(
+                        flex: 1,
+                        child: Text(
+                          Get.find<LandingPageController>()!
+                              .dashboardStatsResultModel!.mostTransfersWentTo!,
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .headline3!
+                              .copyWith(
+                            fontSize:
+                            calculateFontSize(47, context),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
+    ),
+    ),
+    Flexible(
+    flex: 2,
+    child: Container(
+    color: Colors.transparent,
+    padding: EdgeInsets.all(10),
+    child: Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    mainAxisSize: MainAxisSize.max,
+    children: [
+    Flexible(
+    flex: 1,
+    child: Container(
+    height: 60,
+    decoration: BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.all(Radius.circular(6)
+    // topLeft: Radius.circular(6),
+    // topRight: Radius.circular(6),
+    // bottomLeft: Radius.circular(6),
+    // bottomRight: Radius.circular(6)
+    ),
+    boxShadow: [
+    BoxShadow(
+    color: Colors.grey.withOpacity(0.25),
+    spreadRadius: 6,
+    blurRadius: 6,
+    offset: Offset(0, 0),
+    ),
+    ],
+    ),
+    child: Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    mainAxisSize: MainAxisSize.max,
+    children: [
+    Spacer(flex: 2),
+    const Flexible(
+    flex: 2,
+    child: Image(
+    image: AssetImage(
+    'assets/images/flagged.png',
+    ),
+    fit: BoxFit.contain,
+    width: double.infinity,
+    height: double.infinity,
+    color: Colors.grey,
+    ),
+    ),
+    const Spacer(flex: 1),
+    Flexible(
+    flex: 10,
+    child: Container(
+    width: double.infinity,
+    child: Text(
+    "flagged".tr,
+    style: Theme
+        .of(context)
+        .textTheme
+        .headline2!
+        .copyWith(
+    color: Colors.grey,
+    fontSize:
+    calculateFontSize(16, context)),
+    textAlign: TextAlign.start,
+    ),
+    ),
+    ),
+    Flexible(
+    flex: 3,
+    child: Container(
+    width: double.infinity,
+    child: Text(
+    "5",
+    style: Theme
+        .of(context)
+        .textTheme
+        .headline3!
+        .copyWith(
+    fontSize: 22,
+    color: createMaterialColor(
+    Color.fromRGBO(247, 148, 29, 1),
+    ),
+    ),
+    textAlign: TextAlign.center,
+    ),
+    ),
+    ),
+    Spacer(flex: 2)
+    ],
+    ),
+    ),
+    ),
+    SizedBox(
+    height: 20,
+    ),
+    Flexible(
+    flex: 1,
+    child: Container(
+    height: 60,
+    decoration: BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.only(
+    topLeft: Radius.circular(6),
+    topRight: Radius.circular(6),
+    bottomLeft: Radius.circular(6),
+    bottomRight: Radius.circular(6),
+    ),
+    boxShadow: [
+    BoxShadow(
+    color: Colors.grey.withOpacity(0.25),
+    spreadRadius: 6,
+    blurRadius: 6,
+    offset: Offset(0, 0),
+    ),
+    ],
+    ),
+    child: Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    mainAxisSize: MainAxisSize.max,
+    children: [
+    Spacer(flex: 2),
+    Flexible(
+    flex: 2,
+    child: Image(
+    image: AssetImage(
+    'assets/images/notification.png',
+    ),
+    fit: BoxFit.contain,
+    width: double.infinity,
+    height: double.infinity,
+    color: Colors.grey,
+    ),
+    ),
+    Spacer(flex: 1),
+    Flexible(
+    flex: 10,
+    child: Container(
+    width: double.infinity,
+    child: Text(
+    "notifications".tr,
+    style: Theme
+        .of(context)
+        .textTheme
+        .headline2!
+        .copyWith(
+    color: Colors.grey,
+    fontSize:
+    calculateFontSize(16, context)),
+    textAlign: TextAlign.start,
+    ),
+    ),
+    ),
+    Flexible(
+    flex: 3,
+    child: Container(
+    width: double.infinity,
+    child: Text(
+    "9",
+    style: Theme
+        .of(context)
+        .textTheme
+        .headline3!
+        .copyWith(
+    fontSize: 22,
+    color: createMaterialColor(
+    Color.fromRGBO(247, 148, 29, 1),
+    ),
+    ),
+    textAlign: TextAlign.center,
+    ),
+    ),
+    ),
+    Spacer(flex: 2)
+    ],
+    ),
+    ),
+    ),
+    ],
+    ),
+    ),
+    )
+    ],
+    )
+    ,
     );
   }
 
@@ -4069,7 +4109,11 @@ class LandingPage extends GetWidget<LandingPageController> {
                     color: Colors.grey.shade300,
                     style: BorderStyle.solid),
               ),
-              children: [
+              children: Get.find<LandingPageController>()!
+                  .dashboardStatsResultModel!.inboxCategories!.map((e) =>
+
+
+
                 TableRow(
                   children: [
                     TableRowInkWell(
@@ -4078,56 +4122,35 @@ class LandingPage extends GetWidget<LandingPageController> {
                       },
                       child: _buildInboxesRow(
                         context,
-                        "forAction".tr,
-                        5,
+                        e.key!,
+                        e.value!.count!,
                       ),
                     ),
                   ],
                 ),
-                TableRow(
-                  children: [
-                    TableRowInkWell(
-                      onTap: () {
-                        openInbox(context);
-                      },
-                      child: _buildInboxesRow(
-                        context,
-                        "forSignature".tr,
-                        07,
-                      ),
-                    ),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    TableRowInkWell(
-                      onTap: () {
-                        openInbox(context);
-                      },
-                      child: _buildInboxesRow(
-                        context,
-                        "forInfo".tr,
-                        09,
-                      ),
-                    ),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    TableRowInkWell(
-                      onTap: () {
-                        openInbox(context);
-                      },
-                      child: _buildInboxesRow(
-                        context,
-                        "all".tr,
-                        2,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+
+              )
+                  .toList(),
             ),
+
+
+            //
+            // TableRow(
+            //   children: [
+            //     TableRowInkWell(
+            //       onTap: () {
+            //         openInbox(context);
+            //       },
+            //       child: _buildInboxesRow(
+            //         context,
+            //         "all".tr,
+            //         2,
+            //       ),
+            //     ),
+            //   ],
+            // ),
+
+
             _buildDataLabelTitleLabel(context, "folders".tr),
             Table(
               border: TableBorder(
@@ -4305,64 +4328,28 @@ class LandingPage extends GetWidget<LandingPageController> {
                     color: Colors.grey.shade300,
                     style: BorderStyle.solid),
               ),
-              children: [
-                TableRow(
-                  children: [
-                    TableRowInkWell(
-                      onTap: () {
-                        openInbox(context);
-                      },
-                      child: _buildInboxesRow(
-                        context,
-                        "forAction".tr,
-                        5,
+              children:Get.find<LandingPageController>()!
+                  .dashboardStatsResultModel!.inboxCategories!.map((e) =>
+
+
+
+                  TableRow(
+                    children: [
+                      TableRowInkWell(
+                        onTap: () {
+                          openInbox(context);
+                        },
+                        child: _buildInboxesRow(
+                          context,
+                          e.key!,
+                          e.value!.count!,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    TableRowInkWell(
-                      onTap: () {
-                        openInbox(context);
-                      },
-                      child: _buildInboxesRow(
-                        context,
-                        "forSignature".tr,
-                        07,
-                      ),
-                    ),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    TableRowInkWell(
-                      onTap: () {
-                        openInbox(context);
-                      },
-                      child: _buildInboxesRow(
-                        context,
-                        "forInfo".tr,
-                        09,
-                      ),
-                    ),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    TableRowInkWell(
-                      onTap: () {
-                        openInbox(context);
-                      },
-                      child: _buildInboxesRow(
-                        context,
-                        "all".tr,
-                        2,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+
+              )
+                  .toList(),
             ),
 
             //  Container(color: Colors.red, height: 100,width: MediaQuery.of(context).size.width, child: _buildSideMenuPort(  context),),

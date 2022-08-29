@@ -8,7 +8,7 @@ import '../api_manager.dart';
 import '../json_model/inopendocModel/multiple_transfers_model.dart';
 
 class MultipleTransfersAPI extends ApiManager{
-  MultipleTransfersAPI(BuildContext context) : super(context);
+  MultipleTransfersAPI(BuildContext context) : super(context: context);
 
   @override
   String apiUrl() {

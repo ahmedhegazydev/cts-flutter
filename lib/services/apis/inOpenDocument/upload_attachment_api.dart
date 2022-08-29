@@ -6,7 +6,7 @@ import '../../../utility/settings_app.dart';
 import '../../json_model/inopendocModel/attachment_Info_model.dart';
 
 class UploadAttachmentApi extends ApiManager{
-  UploadAttachmentApi(BuildContext context) : super(context);
+  UploadAttachmentApi(BuildContext context) : super(context: context);
 
 
 

@@ -120,5 +120,8 @@ const Map<String, String> en = {
   ,
   "defaultsignature":"Default Signature"
   ,
-  "multisignature":"multi-signature"
+  "multisignature":"multi-signature",
+  "Basket":"Basket",
+  "userGuide":"User Guide",
+  "newBasket":"New Basket",
 };

@@ -8,7 +8,7 @@ import '../../json_model/basket/fetch_basket_list_model.dart';
 class GetFetchBasketListApi  extends ApiManager{
   String data="";
 
-  GetFetchBasketListApi(BuildContext context) : super(context);
+  GetFetchBasketListApi(BuildContext context) : super(context: context);
   @override
   String apiUrl() {
     return SettingsApp.GetFetchBasketListUrl+data;

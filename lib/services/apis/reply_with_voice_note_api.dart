@@ -8,7 +8,7 @@ import '../api_manager.dart';
 import '../json_model/reply_with_voicenote_model.dart';
 
 class ReplyWithVoiceNoteApi extends ApiManager{
-  ReplyWithVoiceNoteApi(BuildContext context) : super(context);
+  ReplyWithVoiceNoteApi(BuildContext context) : super(context: context);
 
   @override
   String apiUrl() {

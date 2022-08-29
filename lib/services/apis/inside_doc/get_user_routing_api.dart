@@ -8,7 +8,7 @@ import '../../json_model/inopendocModel/get_user_routing_model.dart';
 class GetUserRoutingAPI extends ApiManager{
   String data="";
 
-  GetUserRoutingAPI(BuildContext context) : super(context);
+  GetUserRoutingAPI(BuildContext context) : super(context: context);
   @override
   String apiUrl() {
    return SettingsApp.GetGetUserRoutingUrl;

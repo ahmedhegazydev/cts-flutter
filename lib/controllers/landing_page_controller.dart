@@ -14,13 +14,17 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../services/apis/basket/add_edit_basket_result _api.dart';
 import '../services/apis/basket/remove_basket_api.dart';
 import '../services/apis/basket/reorder_baskets_result _api.dart';
+import '../services/apis/dashboard_stats_result_api.dart';
 import '../services/apis/find_recipient_api.dart';
 import '../services/apis/get_correspondences_api.dart';
 import '../services/apis/get_my_routing_settings_api.dart';
+import '../services/apis/remove_my_routing_settings_api.dart';
+import '../services/apis/remove_my_routing_settings_api.dart';
 import '../services/apis/save_my_routing_settings_api.dart';
 import '../services/json_model/basket/add_edit_basket_flag_model.dart';
 import '../services/json_model/basket/remove_basket_request_model.dart';
 import '../services/json_model/basket/reorder_baskets_request_model.dart';
+import '../services/json_model/dashboard_stats_result_model.dart';
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_correspondences_model.dart';
 
@@ -101,8 +105,18 @@ class LandingPageController extends GetxController {
     update();
   }
 
+  DashboardStatsResultModel? dashboardStatsResultModel;
+  getDashboardStats({context}){
+    DashboardStatsResultApi  dashboardStatsResultApi=DashboardStatsResultApi( );
+    dashboardStatsResultApi.data= "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+    dashboardStatsResultApi.getData().then((value) {
 
+      dashboardStatsResultModel =value as DashboardStatsResultModel;
 
+print("dashboardStatsResultModel.toJson()   =>    ${dashboardStatsResultModel!.toJson()}");
+
+    });
+  }
 
 
 
@@ -110,6 +124,7 @@ class LandingPageController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+    getDashboardStats();
     _logindata = secureStorage.readSecureJsonData(AllStringConst.LogInData);
     data = LoginModel.fromJson(_logindata!);
     // getFindRecipientData();
@@ -277,16 +292,15 @@ print("*"*50);
       print("ljknjsjcnsancsancnsancijoasncoisacs");
     });
   }
-  RemoveMyRoutingSettingsApi({ context}){
-    SaveMyRoutingSettingsApi getMyRoutingsettingsApi=SaveMyRoutingSettingsApi(context);
-    print("data.toMap()  =>${getMyRoutingSettingsModel?.routing?.toJson()}");
+  removeMyRoutingSettings({  data,context}){
+    RemoveMyRoutingSettingsApi removeMyRoutingSettingsApi=RemoveMyRoutingSettingsApi(context);
+
+print(jsonEncode(data));
 
 
 
 
-
-
-    getMyRoutingsettingsApi.post(getMyRoutingSettingsModel?.routing?.toJson()).then((value) {
+    removeMyRoutingSettingsApi.post(data ).then((value) {
       print("ljknjsjcnsancsancnsancijoasncoisacs");
     });
   }

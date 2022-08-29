@@ -10,7 +10,7 @@ import '../json_model/my_transfer_routing_dto_result.dart';
 class GetMyRoutingsettingsApi extends ApiManager {
   String data="";
 
-  GetMyRoutingsettingsApi(BuildContext context) : super(context);
+  GetMyRoutingsettingsApi(BuildContext context) : super(context: context);
 
   @override
   String apiUrl() {

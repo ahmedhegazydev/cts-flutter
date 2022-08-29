@@ -11,7 +11,7 @@ import '../json_model/get_correspondences_all_model.dart';
 class GetCorrespondencesAllAPI extends ApiManager{
   String data="";
 
-  GetCorrespondencesAllAPI(BuildContext context) : super(context);
+  GetCorrespondencesAllAPI(BuildContext context) : super(context: context);
   @override
   String apiUrl() {
    return SettingsApp.GetCorrespondencesAllUrl+data;

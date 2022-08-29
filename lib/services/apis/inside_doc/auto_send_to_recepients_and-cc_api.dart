@@ -8,7 +8,7 @@ import '../../json_model/inopendocModel/auto_send_to_recepients_and_cc_model.dar
 class AutoSendToRecepientsAndCCAPI extends ApiManager{
   String data="";
 
-  AutoSendToRecepientsAndCCAPI(BuildContext context) : super(context);
+  AutoSendToRecepientsAndCCAPI(BuildContext context) : super(context: context);
   @override
   String apiUrl() {
  return SettingsApp.GetAutoSendToRecepientsAndCCUrl+data;

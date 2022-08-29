@@ -6,7 +6,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import '../../../json_model/inopendocModel/g2g/g2g_receive_or_reject_dto.dart';
 
 class CanReceiveG2GDocumentAPI extends ApiManager{
-  CanReceiveG2GDocumentAPI(BuildContext context) : super(context);
+  CanReceiveG2GDocumentAPI(BuildContext context) : super(context: context);
 
   @override
   String apiUrl() {

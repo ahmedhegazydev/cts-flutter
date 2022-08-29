@@ -8,7 +8,7 @@ import '../../../json_model/inopendocModel/g2g/g2g_Info_for_export_model.dart';
 class G2GInfoForExportAPI extends ApiManager{
   String data="";
 
-  G2GInfoForExportAPI(BuildContext context) : super(context);
+  G2GInfoForExportAPI(BuildContext context) : super(context: context);
   @override
   String apiUrl() {
     return SettingsApp.GetG2GInfoForExportUrl+data;

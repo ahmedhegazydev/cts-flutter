@@ -15,7 +15,7 @@ import 'dio_singleton.dart';
 abstract class ApiManager {
   BuildContext? context;
 
-  ApiManager(BuildContext context) {
+  ApiManager({BuildContext? context}) {
     this.context = context;
   }
 
@@ -34,7 +34,11 @@ abstract class ApiManager {
     AbstractJsonResource? json;
     var data;
     print("checkIfSavedSettingsBasUrl = $checkIfSavedSettingsBasUrl");
-    showLoaderDialog(context!);
+
+    if(context!=null){
+      showLoaderDialog(context!);
+    }
+
     await dioSingleton.dio
         .get(checkIfSavedSettingsBasUrl(), queryParameters: data)
         .then((value) {
@@ -67,7 +71,7 @@ abstract class ApiManager {
         'Content-Type': 'application/json',
       },
     );
-    showLoaderDialog(context!);
+    //showLoaderDialog(context!);
     await dioSingleton.dio
         .post(checkIfSavedSettingsBasUrl(), data: jsonEncode(dataToPost), options: options
             // Options(

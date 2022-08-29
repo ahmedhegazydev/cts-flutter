@@ -101,4 +101,7 @@ class SettingsApp {
   static const String RemoveMyRoutingSettingsUrl =
       baseUrl + "/RemoveMyRoutingSettings"; //Token={Token}&GctId={GctId}")
 
+  static const String DashboardHomeUrl =
+      baseUrl + "/DashboardHome?"; //Token={Token}&GctId={GctId}")
+
 }

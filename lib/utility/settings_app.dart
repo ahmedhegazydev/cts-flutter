@@ -86,4 +86,10 @@ class SettingsApp {
 
   static const String PostUpdateSignatureUrl = baseUrl + "/UpdateSignature";
   static const String PostUploadAttachmentUrl = baseUrl + "/UploadAttachment";
+
+  //mofa-favorite-recipients-api
+  static const String ListFavoriteRecipientsUrl = baseUrl + "/ListFavoriteRecipients?"; //
+  static const String RemoveFavoriteRecipientsUrl = baseUrl + "/RemoveFavoriteRecipients?"; //
+  static const String AddFavoriteRecipientsUrl = baseUrl + "/AddFavoriteRecipients?"; //
+
 }

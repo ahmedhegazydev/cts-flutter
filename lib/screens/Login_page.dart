@@ -457,24 +457,29 @@ class LoginPage extends GetWidget<LoginController> {
               child: IntrinsicHeight(
                 child: Column(
                   children: [
-                    Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "appTitle".tr,
-                        style:
-                            Theme.of(context).textTheme.headline1!.copyWith(),
-                      ),
-                    ),
+                    // Spacer(),
                     Padding(
                         padding: const EdgeInsets.all(60),
                         child: Column(
                           children: [
+                            Container(
+                              // color: Colors.red,
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(0),
+                              child: Text(
+                                "appTitle".tr,
+                                textDirection: TextDirection.rtl,
+                                style:
+                                Theme.of(context).textTheme.headline1!.copyWith(),
+                              ),
+                            ),
+                            SizedBox(height: 60,),
                             CustomInputTextFiled(
                                 validator:
                                     controller.validators.userNameValidator,
                                 textEditingController: controller.userName,
                                 label: "name".tr),
+                            SizedBox(height: 20,),
                             CustomInputTextFiled(
                                 validator:
                                     controller.validators.passWordValidator,
@@ -482,34 +487,34 @@ class LoginPage extends GetWidget<LoginController> {
                                 label: "password".tr),
                             Padding(
                               padding: const EdgeInsets.only(
-                                  top: 50.0, left: 8, right: 8),
+                                  top: 50.0, left: 0, right: 0),
                               child: Container(
                                 width: double.infinity,
                                 height: 50,
                                 color: Colors.transparent,
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  // mainAxisAlignment: MainAxisAlignment.end,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     const Spacer(),
                                     Flexible(
-                                        flex: 8,
-                                        child: CustomImageButton(
-                                          imagePath: 'assets/images/faceid.png',
-                                          onClick:
-                                              controller.faceIdButtonOnClick,
-                                        )),
+                                        flex: 20,
+                                        child: CustomButton(
+                                            onPressed: controller.logIngRequst,
+                                            name: "login".tr)),
                                     Flexible(
                                       //space
                                       flex: 1,
                                       child: Container(),
                                     ),
                                     Flexible(
-                                        flex: 20,
-                                        child: CustomButton(
-                                            onPressed: controller.logIngRequst,
-                                            name: "login".tr)),
+                                        flex: 8,
+                                        child: CustomImageButton(
+                                          imagePath: 'assets/images/faceid.png',
+                                          onClick:
+                                          controller.faceIdButtonOnClick,
+                                        )),
                                   ],
                                 ),
                               ),

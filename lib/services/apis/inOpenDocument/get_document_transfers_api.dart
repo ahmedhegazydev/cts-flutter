@@ -8,7 +8,7 @@ import '../../json_model/get_document_transfers_model.dart';
 class GetDocumentTransfersApi extends ApiManager{
   String data="";
 
-  GetDocumentTransfersApi(BuildContext context) : super(context);//"GetDocumentTransfers?Token={Token}&correspondenceId={correspondenceId}&transferId={transferId}&language={language}"
+  GetDocumentTransfersApi(BuildContext context) : super(context: context);//"GetDocumentTransfers?Token={Token}&correspondenceId={correspondenceId}&transferId={transferId}&language={language}"
   @override
   String apiUrl() {
     return SettingsApp.GetDocumentTransfersUrl+data;

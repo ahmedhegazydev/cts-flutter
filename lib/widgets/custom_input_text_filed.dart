@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CustomInputTextFiled extends StatelessWidget {
   final TextEditingController textEditingController;
 
   String? Function(String?)? validator;
   final String label;
+  bool obscureText;
 
   CustomInputTextFiled(
       {required this.textEditingController,
@@ -13,6 +15,8 @@ class CustomInputTextFiled extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+     print("Get.deviceLocale==>   ${Get.deviceLocale?.languageCode=="en"}");
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -36,7 +40,7 @@ class CustomInputTextFiled extends StatelessWidget {
               ),
             ),
             width: double.infinity,
-            child: TextFormField(
+            child: TextFormField(obscureText: obscureText,
               textAlign: TextAlign.start,
               validator: validator,
               decoration: const InputDecoration(

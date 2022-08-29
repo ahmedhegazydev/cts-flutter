@@ -10,7 +10,7 @@ import '../json_model/can_open_document_model.dart';
 class CanOpenDocumentApi  extends ApiManager{
   String data="";
 
-  CanOpenDocumentApi(BuildContext context) : super(context);
+  CanOpenDocumentApi(BuildContext context) : super(context: context);
 
   @override
   String apiUrl() {

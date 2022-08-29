@@ -232,6 +232,11 @@ class LoginPage extends GetWidget<LoginController> {
                         ),
                         FloatingActionButton(
                             onPressed: () {
+
+
+
+                  String? link =           controller.secureStorage.readSecureData(   AllStringConst.BaseUrl)??"";
+                  controller.baseUrl.text=link;
                               showDialog(
                                   context: context,
                                   builder: (context) => AlertDialog(

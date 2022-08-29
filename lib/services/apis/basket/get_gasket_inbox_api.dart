@@ -11,7 +11,7 @@ import '../../json_model/basket/get_basket_inbox_model.dart';
 class GetBasketInboxApi  extends ApiManager{
   String data="";
 
-  GetBasketInboxApi(BuildContext context) : super(context);
+  GetBasketInboxApi(BuildContext context) : super(context: context);
   @override
   String apiUrl() {
     return SettingsApp.GetBasketInboxUrl+data;

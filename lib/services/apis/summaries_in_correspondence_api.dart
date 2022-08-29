@@ -6,7 +6,7 @@ import '../api_manager.dart';
 import '../json_model/search_correspondences_model.dart';
 
 class SummariesInCorrespondenceAPI extends ApiManager{
-  SummariesInCorrespondenceAPI(BuildContext context) : super(context);
+  SummariesInCorrespondenceAPI(BuildContext context) : super(context: context);
 
   @override
   String apiUrl() {

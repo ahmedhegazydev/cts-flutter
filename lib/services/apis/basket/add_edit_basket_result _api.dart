@@ -9,7 +9,7 @@ import '../../api_manager.dart';
 import '../../json_model/basket/fetch_basket_list_model.dart';
 
 class AddEditBasketFlagApi  extends ApiManager{
-  AddEditBasketFlagApi(BuildContext context) : super(context);
+  AddEditBasketFlagApi(BuildContext context) : super(context: context);
 
   // String data="";
   @override

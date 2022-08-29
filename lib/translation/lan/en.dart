@@ -123,4 +123,12 @@ const Map<String, String> en = {
   "reason":"Reason",
 "Loading...":"  Loading .... ",
 
+  "reason":"Reason"
+  ,
+  "defaultsignature":"Default Signature"
+  ,
+  "multisignature":"multi-signature",
+  "Basket":"Basket",
+  "userGuide":"User Guide",
+  "newBasket":"New Basket",
 };

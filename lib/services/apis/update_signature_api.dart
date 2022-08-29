@@ -6,7 +6,7 @@ import '../api_manager.dart';
 import '../json_model/signature_Info_model.dart';
 
 class UpdateSignatureApi extends ApiManager{
-  UpdateSignatureApi(BuildContext context) : super(context);
+  UpdateSignatureApi(BuildContext context) : super(context: context);
 
   @override
   String apiUrl() {

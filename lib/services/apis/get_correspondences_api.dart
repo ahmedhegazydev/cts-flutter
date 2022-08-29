@@ -12,7 +12,7 @@ import '../api_manager.dart';
 class GetCorrespondencesApi extends ApiManager{
   String data="";
 
-  GetCorrespondencesApi(BuildContext context) : super(context);
+  GetCorrespondencesApi(BuildContext context) : super(context: context);
   @override
   String apiUrl() {
   return SettingsApp.GetCorrespondencesUrl+data;

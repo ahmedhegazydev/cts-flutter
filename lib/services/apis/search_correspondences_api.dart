@@ -8,7 +8,7 @@ import '../api_manager.dart';
 import '../json_model/search_correspondences_model.dart';
 
 class SearchCorrespondencesApi extends ApiManager{
-  SearchCorrespondencesApi(BuildContext context) : super(context);
+  SearchCorrespondencesApi(BuildContext context) : super(context: context);
 
   @override
   String apiUrl() {

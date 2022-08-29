@@ -8,7 +8,7 @@ import '../../json_model/inopendocModel/check_for_empty_structure_recipients_mod
 class CheckForEmptyStructureRecipientsAPI extends ApiManager{
   String data="";
 
-  CheckForEmptyStructureRecipientsAPI(BuildContext context) : super(context);
+  CheckForEmptyStructureRecipientsAPI(BuildContext context) : super(context: context);
   @override
   String apiUrl() {
   return SettingsApp.GetCheckForEmptyStructureRecipientsUrl+data;

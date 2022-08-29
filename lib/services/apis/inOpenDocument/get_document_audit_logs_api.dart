@@ -8,7 +8,7 @@ import '../../json_model/get_document_logs_model.dart';
 class GetDocumentAuditLogsApi extends ApiManager{
   String data="";
 
-  GetDocumentAuditLogsApi(BuildContext context) : super(context);//Token={Token}&correspondenceId={correspondenceId}&transferId={transferId}&language={language}"
+  GetDocumentAuditLogsApi(BuildContext context) : super(context: context);//Token={Token}&correspondenceId={correspondenceId}&transferId={transferId}&language={language}"
   @override
   String apiUrl() {
     return SettingsApp.GetDocumentLogsUrl+data;

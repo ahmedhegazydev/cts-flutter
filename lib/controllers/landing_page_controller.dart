@@ -11,14 +11,20 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../services/apis/basket/add_edit_basket_result _api.dart';
 import '../services/apis/basket/remove_basket_api.dart';
 import '../services/apis/basket/reorder_baskets_result _api.dart';
+import '../services/apis/dashboard_stats_result_api.dart';
 import '../services/apis/favorites/AddFavoriteRecipients_api.dart';
 import '../services/apis/favorites/ListFavoriteRecipients_api.dart';
 import '../services/apis/favorites/RemoveFavoriteRecipients_api.dart';
 import '../services/apis/find_recipient_api.dart';
 import '../services/apis/get_correspondences_api.dart';
+import '../services/apis/get_my_routing_settings_api.dart';
+import '../services/apis/remove_my_routing_settings_api.dart';
+import '../services/apis/remove_my_routing_settings_api.dart';
+import '../services/apis/save_my_routing_settings_api.dart';
 import '../services/json_model/basket/add_edit_basket_flag_model.dart';
 import '../services/json_model/basket/remove_basket_request_model.dart';
 import '../services/json_model/basket/reorder_baskets_request_model.dart';
+import '../services/json_model/dashboard_stats_result_model.dart';
 import '../services/json_model/favorites/add/AddFavoriteRecipients_request.dart';
 import '../services/json_model/favorites/list_all/ListFavoriteRecipients_request.dart';
 import '../services/json_model/favorites/list_all/ListFavoriteRecipients_response.dart';
@@ -26,14 +32,18 @@ import '../services/json_model/favorites/remove/RemoveFavoriteRecipients_request
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_correspondences_model.dart';
 
+
+import '../services/json_model/get_my_routing_settings_model.dart';
 import '../services/json_model/login_model.dart';
+import '../services/json_model/my_transfer_routing_dto_model.dart';
+import '../services/json_model/my_transfer_routing_dto_result.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
 import 'document_controller.dart';
-
+import 'package:flutter/services.dart' as rootBundel;
 class LandingPageController extends GetxController {
   // final SecureStorage _secureStorage = Get.find<SecureStorage>();
-  SecureStorage _secureStorage = SecureStorage();
+  SecureStorage secureStorage = SecureStorage();
   bool isSavingOrder = false;
 
   TextEditingController textEditingControllerEnglishName =
@@ -41,9 +51,17 @@ class LandingPageController extends GetxController {
   TextEditingController textEditingControllerArabicName =
       TextEditingController();
   TextEditingController textEditingControllerTo = TextEditingController();
+  TextEditingController textEditingControllerTorouting = TextEditingController();
+  TextEditingController textEditingControllerToroutingReson = TextEditingController();
   List<Destination> users = [];
   List<Destination> selectFavusers = [];
+  Destination? toSaveMyRoutingSettings;
+
+
   Destination? to;
+
+
+
   FindRecipientModel? findRecipientModel;
   final SecureStorage secureStorage = SecureStorage();
 
@@ -69,7 +87,7 @@ class LandingPageController extends GetxController {
   getFindRecipientData({required context}) async {
     final FindRecipient _findRecipient = FindRecipient(context);
     _findRecipient.data =
-        "Token=${_secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&typeId=&criteria=//*";
+    "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     await _findRecipient.getData().then((value) {
       findRecipientModel = value as FindRecipientModel;
       listOfUser(0);
@@ -95,10 +113,36 @@ class LandingPageController extends GetxController {
     update();
   }
 
+
+
+  SaveMyRoutingSettingsusers(Destination destination){
+    selectFavusers.remove(destination);
+    update();
+  }
+
+  DashboardStatsResultModel? dashboardStatsResultModel;
+  getDashboardStats({context}){
+
+    DashboardStatsResultApi  dashboardStatsResultApi=DashboardStatsResultApi( );
+    dashboardStatsResultApi.data= "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+    dashboardStatsResultApi.getData().then((value) {
+
+      dashboardStatsResultModel =value as DashboardStatsResultModel;
+
+print("dashboardStatsResultModel.toJson()   =>    ${dashboardStatsResultModel!.toJson()}");
+update();
+    });
+  }
+
+
+
+
   @override
   void onReady() {
     super.onReady();
-    _logindata = _secureStorage.readSecureJsonData(AllStringConst.LogInData);
+   //getDashboardStats();
+    getDashboardStatsLocalJson();
+    _logindata = secureStorage.readSecureJsonData(AllStringConst.LogInData);
     data = LoginModel.fromJson(_logindata!);
     // getFindRecipientData();
     getFindRecipientData(context: context);
@@ -107,7 +151,7 @@ class LandingPageController extends GetxController {
   }
 
   String userName() {
-    String? name = _secureStorage.readSecureData(AllStringConst.FirstName);
+    String? name = secureStorage.readSecureData(AllStringConst.FirstName);
     return name ?? "";
   }
 
@@ -126,7 +170,7 @@ class LandingPageController extends GetxController {
         isDeleted: false,
         UserGctId: 0);
     AddEditBasketFlagModel addEditBasketFlagModel = AddEditBasketFlagModel(
-      token: _secureStorage.token(),
+      token: secureStorage.token(),
       language: Get.locale?.languageCode == "en" ? "en" : "ar",
       basketFlag: basketDto,
     );
@@ -144,7 +188,7 @@ class LandingPageController extends GetxController {
     ReorderBasketsRequest reorderBasketsRequest = ReorderBasketsRequest(
       baskets: baskets,
       language: Get.locale?.languageCode == "en" ? "en" : "ar",
-      token: _secureStorage.token()!,
+      token: secureStorage.token()!,
     );
     await _postReorderBasketsApi
         .post(reorderBasketsRequest.toMap())
@@ -161,7 +205,7 @@ class LandingPageController extends GetxController {
     RemoveBasketRequest removeBasketRequest = RemoveBasketRequest(
       basketId: basketId,
       language: Get.locale?.languageCode == "en" ? "en" : "ar",
-      token: _secureStorage.token(),
+      token: secureStorage.token(),
     );
     await _postRemoveBasketApi.post(removeBasketRequest.toMap()).then((value) {
       print(value);
@@ -180,9 +224,8 @@ class LandingPageController extends GetxController {
     update();
   }
 
-  TextEditingController textEditingControllerFromDocDate =
+  TextEditingController textEditingControllerFromDate =
       TextEditingController();
-
   Future<void> selectFromDocDate({required BuildContext context}) async {
     final DateTime? pickedDate = await showDatePicker(
         context: context,
@@ -190,19 +233,18 @@ class LandingPageController extends GetxController {
         firstDate: DateTime(2000),
         lastDate: DateTime(2050));
     if (pickedDate != null) {
-      textEditingControllerFromDocDate.text =
-          pickedDate.toString().substring(0, 10);
+
 
       var outputFormat = DateFormat('dd/MM/yyyy');
       var outputDate = outputFormat.format(pickedDate);
-
+      textEditingControllerFromDate.text =
+          outputDate.toString().substring(0, 10);
       update();
     }
   }
 
-  TextEditingController textEditingControllerToDocDate =
+  TextEditingController textEditingControllerToDate =
       TextEditingController();
-
   Future<void> selectToDocDate({required BuildContext context}) async {
     final DateTime? pickedDate = await showDatePicker(
         context: context,
@@ -210,13 +252,84 @@ class LandingPageController extends GetxController {
         firstDate: DateTime(2000),
         lastDate: DateTime(2050));
     if (pickedDate != null) {
-      textEditingControllerToDocDate.text =
-          pickedDate.toString().substring(0, 10);
+
       var outputFormat = DateFormat('dd/MM/yyyy');
       var outputDate = outputFormat.format(pickedDate);
+      textEditingControllerToDate.text =
+          outputDate.toString().substring(0, 10);
 
       update();
     }
+  }
+
+
+
+
+
+
+
+  MyTransferRoutingDto? getMyRoutingSettingsModel;
+  getMyRoutingsettings(context){
+    GetMyRoutingsettingsApi getMyRoutingsettingsApi=GetMyRoutingsettingsApi(context);
+    getMyRoutingsettingsApi.data="Token=${secureStorage.token()}";
+    getMyRoutingsettingsApi.getData().then((value) {
+
+      getMyRoutingSettingsModel=value as MyTransferRoutingDto;
+
+
+
+      textEditingControllerToDate.text=getMyRoutingSettingsModel?.routing?.crtToDate??"";
+      textEditingControllerFromDate.text=getMyRoutingSettingsModel?.routing?.crtFromDate??"";
+    textEditingControllerTorouting.text=getMyRoutingSettingsModel?.routing?.name??"";
+      textEditingControllerToroutingReson.text=getMyRoutingSettingsModel?.routing?.crtComments??"";
+
+
+
+      update();
+      print ("00000000000000000000000000000000000");
+    });
+  }
+
+  postSaveMyRoutingSettingsApi({required MyTransferRoutingRequestDto  data,context}){
+    SaveMyRoutingSettingsApi getMyRoutingsettingsApi=SaveMyRoutingSettingsApi(context);
+print("data.toMap()  =>${data.toMap()}");
+
+
+
+
+
+    print("*"*50);
+
+    print(jsonEncode(data.toMap()));
+print("*"*50);
+
+
+
+    getMyRoutingsettingsApi.post(data.toMap()).then((value) {
+      print("ljknjsjcnsancsancnsancijoasncoisacs");
+    });
+  }
+  removeMyRoutingSettings({  data,context}){
+    RemoveMyRoutingSettingsApi removeMyRoutingSettingsApi=RemoveMyRoutingSettingsApi(context);
+
+print(jsonEncode(data));
+
+
+
+
+    removeMyRoutingSettingsApi.post(data ).then((value) {
+      print("ljknjsjcnsancsancnsancijoasncoisacs");
+    });
+  }
+
+
+  getDashboardStatsLocalJson() async {
+    final jsondata = await rootBundel.rootBundle
+        .loadString("assets/json/dashboard.json");
+    dashboardStatsResultModel =
+        DashboardStatsResultModel.fromJson(json.decode(jsondata));
+
+    update();
   }
 
   /**

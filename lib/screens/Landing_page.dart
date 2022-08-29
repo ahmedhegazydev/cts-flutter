@@ -16,6 +16,7 @@ import '../controllers/search_controller.dart';
 import '../controllers/web_view_controller.dart';
 import '../services/json_model/basket/fetch_basket_list_model.dart';
 import '../services/json_model/find_recipient_model.dart';
+import '../services/json_model/my_transfer_routing_dto_model.dart';
 import '../utility/all_const.dart';
 import '../utility/all_string_const.dart';
 import '../utility/device_size.dart';
@@ -40,7 +41,7 @@ class _BasketListTileState extends State<BasketListTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: null,
+      child: LandingPage(),
     );
   }
 }
@@ -54,29 +55,45 @@ class LandingPage extends GetWidget<LandingPageController> {
   @override
   Widget build(BuildContext context) {
     controller.context = context;
+
     inboxController.context = context;
-    Orientation orientation = MediaQuery.of(context).orientation;
+    Orientation orientation = MediaQuery
+        .of(context)
+        .orientation;
 
     print(
-        "the Token Is => ${secureStorage.readSecureData(AllStringConst.Token)}");
+        "the Token Is => ${secureStorage.readSecureData(
+            AllStringConst.Token)}");
     return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: orientation == Orientation.landscape
-            ? landscapeBody(context)
-            : portraitBody(context),
-      ),
+      child: GetBuilder<LandingPageController>(builder: (logic) {
+        return Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: logic.dashboardStatsResultModel == null ? Center(
+            child: CircularProgressIndicator(),) : orientation ==
+              Orientation.landscape
+              ? landscapeBody(context)
+              : portraitBody(context),
+        );
+      }),
     );
   }
 
   portraitBody(BuildContext context) {
-    var appLocale = Localizations.localeOf(context).languageCode;
+    var appLocale = Localizations
+        .localeOf(context)
+        .languageCode;
 
     return Stack(
       children: [
         Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
+          width: MediaQuery
+              .of(context)
+              .size
+              .width,
+          height: MediaQuery
+              .of(context)
+              .size
+              .height,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -190,240 +207,253 @@ class LandingPage extends GetWidget<LandingPageController> {
     await inboxController.getFetchBasketList(context: context);
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(" "),
-        content: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-              width: MediaQuery.of(context).size.width * .3,
-              color: Colors.grey[200],
-              child: Column(
-                children: [
-                  Row(
+      builder: (ctx) =>
+          AlertDialog(
+            title: Text(" "),
+            content: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width * .3,
+                  color: Colors.grey[200],
+                  child: Column(
                     children: [
-                      Spacer(),
-                      // controller.isSavingOrder
-                      //     ? IconButton(
-                      //         icon: Icon(Icons.check), onPressed: () {})
-                      //     : Container(),
-                    ],
-                  ),
-                  Expanded(
-                      child: ReorderableListView(
-                    buildDefaultDragHandles: true,
-                    // buildDefaultDragHandles: false,
-                    padding: const EdgeInsets.symmetric(horizontal: 40),
-                    children: <Widget>[
-                      // for (int index = 0;
-                      //     index <
-                      //         inboxController
-                      //             .fetchBasketListModel!
-                      //             .baskets!
-                      //             .length;
-                      //     // 4;
-                      //     index += 1)
-                      for (final basket
-                          in inboxController.fetchBasketListModel!.baskets!)
-                        ListTile(
-                          // key: Key('$index'),
-                          key: ValueKey(basket),
-                          // tileColor: _items[index].isOdd ? oddItemColor : evenItemColor,
-                          onLongPress:
-                              !(basket.canBeReOrder ?? false) ? () {} : null,
-                          onTap: !(basket.canBeReOrder ?? false) ? () {} : null,
-                          enabled: !(basket.canBeReOrder ?? false),
-                          enableFeedback: !(basket.canBeReOrder ?? false),
-                          title: Card(
-                            elevation: 10,
-                            color: basket.color?.toColor(),
-                            child: Column(children: [
-                              Text(basket.name ?? ""),
-                              Text(basket.nameAr ?? ""),
-                              // Text( "color :${inboxController
-                              //     .fetchBasketListModel
-                              //     ?.baskets?[pos].color}",style: TextStyle( color:  HexColor(inboxController
-                              //     .fetchBasketListModel
-                              //     ?.baskets?[pos].color??"#000000"))),
+                      Row(
+                        children: [
+                          Spacer(),
+                          // controller.isSavingOrder
+                          //     ? IconButton(
+                          //         icon: Icon(Icons.check), onPressed: () {})
+                          //     : Container(),
+                        ],
+                      ),
+                      Expanded(
+                          child: ReorderableListView(
+                            buildDefaultDragHandles: true,
+                            // buildDefaultDragHandles: false,
+                            padding: const EdgeInsets.symmetric(horizontal: 40),
+                            children: <Widget>[
+                              // for (int index = 0;
+                              //     index <
+                              //         inboxController
+                              //             .fetchBasketListModel!
+                              //             .baskets!
+                              //             .length;
+                              //     // 4;
+                              //     index += 1)
+                              for (final basket
+                              in inboxController.fetchBasketListModel!.baskets!)
+                                ListTile(
+                                  // key: Key('$index'),
+                                  key: ValueKey(basket),
+                                  // tileColor: _items[index].isOdd ? oddItemColor : evenItemColor,
+                                  onLongPress:
+                                  !(basket.canBeReOrder ?? false)
+                                      ? () {}
+                                      : null,
+                                  onTap: !(basket.canBeReOrder ?? false)
+                                      ? () {}
+                                      : null,
+                                  enabled: !(basket.canBeReOrder ?? false),
+                                  enableFeedback: !(basket.canBeReOrder ??
+                                      false),
+                                  title: Card(
+                                    elevation: 10,
+                                    color: basket.color?.toColor(),
+                                    child: Column(children: [
+                                      Text(basket.name ?? ""),
+                                      Text(basket.nameAr ?? ""),
+                                      // Text( "color :${inboxController
+                                      //     .fetchBasketListModel
+                                      //     ?.baskets?[pos].color}",style: TextStyle( color:  HexColor(inboxController
+                                      //     .fetchBasketListModel
+                                      //     ?.baskets?[pos].color??"#000000"))),
 
-                              GestureDetector(
-                                onTap: () {
-                                  //هنا هنعمل دليت
-                                  controller.removeBasket(
-                                    context: context,
-                                    basketId: basket.iD,
-                                    onSuccess: (String message) {
-                                      // Navigator.pop(context);
-                                      // Get.back();
-                                      return null;
-                                    },
-                                  );
-                                  // showTopSnackBar(
-                                  //   context,
-                                  //   CustomSnackBar.success(
-                                  //     message:
-                                  //     "Good job, basket have been deleted",
-                                  //   ),
-                                  // );
-                                },
-                                // child:  Icon(Icons.delete, color: (basket.canBeReOrder ?? false) ? Colors.black: Colors.transparent,) ,
-                                child: (basket.canBeReOrder ?? false)
-                                    ? Icon(Icons.delete)
-                                    : Container(),
-                              ),
-                            ]),
-                          ),
-                        )
+                                      GestureDetector(
+                                        onTap: () {
+                                          //هنا هنعمل دليت
+                                          controller.removeBasket(
+                                            context: context,
+                                            basketId: basket.iD,
+                                            onSuccess: (String message) {
+                                              // Navigator.pop(context);
+                                              // Get.back();
+                                              // showAllBasketsDialog(context);
+                                              return null;
+                                            },
+                                          );
+                                          // showTopSnackBar(
+                                          //   context,
+                                          //   CustomSnackBar.success(
+                                          //     message:
+                                          //     "Good job, basket have been deleted",
+                                          //   ),
+                                          // );
+                                        },
+                                        // child:  Icon(Icons.delete, color: (basket.canBeReOrder ?? false) ? Colors.black: Colors.transparent,) ,
+                                        child: (basket.canBeReOrder ?? false)
+                                            ? Icon(Icons.delete)
+                                            : Container(),
+                                      ),
+                                    ]),
+                                  ),
+                                )
+                            ],
+                            onReorder: (int oldIndex, int newIndex) {
+                              print("onReorder = $oldIndex - $newIndex");
+                              if (oldIndex < newIndex) {
+                                newIndex -= 1;
+                              }
+                              final Baskets item = inboxController
+                                  .fetchBasketListModel!.baskets!
+                                  .removeAt(oldIndex);
+                              inboxController.fetchBasketListModel!.baskets!
+                                  .insert(newIndex, item);
+                            },
+                            onReorderStart: (int index) {
+                              //0-1-2-....
+                              print("onReorderStart = $index");
+                              inboxController.setOldIndex(index);
+                              // print("onReorderStart = ${inboxController.fetchBasketListModel!.baskets![index].canBeReOrder}");
+                              // if (inboxController
+                              //         .fetchBasketListModel!.baskets![index].canBeReOrder ==
+                              //     false) {
+                              //
+                              // }else{
+                              //
+                              // }
+                            },
+                            onReorderEnd: (int index) {
+                              controller.setSavingOrder(true);
+                              //get the item that will be replaced
+                              //check if ite canBeReorder or not
+                              //2-3-4-...
+                              print("onReorderEnd = $index");
+                              if (inboxController.fetchBasketListModel!
+                                  .baskets![index]
+                                  .canBeReOrder ==
+                                  false) {
+                                showTopSnackBar(
+                                  context,
+                                  CustomSnackBar.error(
+                                    message:
+                                    "${inboxController.fetchBasketListModel!
+                                        .baskets![index]
+                                        .name} canBeReOrder = false",
+                                  ),
+                                );
+                              } else {
+                                // print("fetchBasketListModel__ = ${inboxController.fetchBasketListModel?.baskets.toString()}");
+                                // inboxController.fetchBasketListModel?.baskets?.forEach((element) {
+                                //   print(element.orderBy);
+                                // });
+                                if (inboxController.oldIndex != index) {
+                                  controller.reOrderBaskets(
+                                      context: context,
+                                      baskets: inboxController
+                                          .fetchBasketListModel!.baskets);
+                                }
+                              }
+                            },
+                          ))
                     ],
-                    onReorder: (int oldIndex, int newIndex) {
-                      print("onReorder = $oldIndex - $newIndex");
-                      if (oldIndex < newIndex) {
-                        newIndex -= 1;
-                      }
-                      final Baskets item = inboxController
-                          .fetchBasketListModel!.baskets!
-                          .removeAt(oldIndex);
-                      inboxController.fetchBasketListModel!.baskets!
-                          .insert(newIndex, item);
-                    },
-                    onReorderStart: (int index) {
-                      //0-1-2-....
-                      print("onReorderStart = $index");
-                      inboxController.setOldIndex(index);
-                      // print("onReorderStart = ${inboxController.fetchBasketListModel!.baskets![index].canBeReOrder}");
-                      // if (inboxController
-                      //         .fetchBasketListModel!.baskets![index].canBeReOrder ==
-                      //     false) {
-                      //
-                      // }else{
-                      //
-                      // }
-                    },
-                    onReorderEnd: (int index) {
-                      controller.setSavingOrder(true);
-                      //get the item that will be replaced
-                      //check if ite canBeReorder or not
-                      //2-3-4-...
-                      print("onReorderEnd = $index");
-                      if (inboxController.fetchBasketListModel!.baskets![index]
-                              .canBeReOrder ==
-                          false) {
-                        showTopSnackBar(
-                          context,
-                          CustomSnackBar.error(
-                            message:
-                                "${inboxController.fetchBasketListModel!.baskets![index].name} canBeReOrder = false",
-                          ),
-                        );
-                      } else {
-                        // print("fetchBasketListModel__ = ${inboxController.fetchBasketListModel?.baskets.toString()}");
-                        // inboxController.fetchBasketListModel?.baskets?.forEach((element) {
-                        //   print(element.orderBy);
-                        // });
-                        if (inboxController.oldIndex != index) {
-                          controller.reOrderBaskets(
-                              context: context,
-                              baskets: inboxController
-                                  .fetchBasketListModel!.baskets);
-                        }
-                      }
-                    },
-                  ))
-                ],
-              )
+                  )
 
-              // child: ListView.builder(
-              //     // itemCount: inboxController
-              //     //     .fetchBasketListModel
-              //     //     ?.baskets
-              //     //     ?.length,
-              //     itemCount: 5,
-              //     itemBuilder: (context, pos) {
-              //       return InkWell(
-              //         onTap: () async {
-              //           print(
-              //               "${inboxController.fetchBasketListModel?.baskets?[pos].iD}");
-              //
-              //           Get.find<BasketController>().getBasketInbox(
-              //               id: inboxController
-              //                   .fetchBasketListModel!
-              //                   .baskets![pos]
-              //                   .iD!,
-              //               pageSize: 20,
-              //               pageNumber: 0);
-              //
-              //           Get.back();
-              //
-              //           Get.toNamed("MyPocketsScreen");
-              //         },
-              //         child: Card(
-              //           elevation: 10,
-              //           child: Column(children: [
-              //             Text(inboxController
-              //                 .fetchBasketListModel
-              //                 ?.baskets?[pos]
-              //                 .name ??
-              //                 ""),
-              //             Text(inboxController
-              //                 .fetchBasketListModel
-              //                 ?.baskets?[pos]
-              //                 .nameAr ??
-              //                 ""),
-              //             // Text( "color :${inboxController
-              //             //     .fetchBasketListModel
-              //             //     ?.baskets?[pos].color}",style: TextStyle( color:  HexColor(inboxController
-              //             //     .fetchBasketListModel
-              //             //     ?.baskets?[pos].color??"#000000"))),
-              //
-              //             GestureDetector(
-              //                 onTap: () {
-              //                   //هنا هنعمل دليت
-              //                   controller.removeBasket(
-              //                       basketId:
-              //                       inboxController
-              //                           .fetchBasketListModel
-              //                           ?.baskets?[pos]
-              //                           .iD);
-              //                 },
-              //                 child: Icon(Icons.delete)),
-              //           ]),
-              //         ),
-              //       );
-              //     })
+                // child: ListView.builder(
+                //     // itemCount: inboxController
+                //     //     .fetchBasketListModel
+                //     //     ?.baskets
+                //     //     ?.length,
+                //     itemCount: 5,
+                //     itemBuilder: (context, pos) {
+                //       return InkWell(
+                //         onTap: () async {
+                //           print(
+                //               "${inboxController.fetchBasketListModel?.baskets?[pos].iD}");
+                //
+                //           Get.find<BasketController>().getBasketInbox(
+                //               id: inboxController
+                //                   .fetchBasketListModel!
+                //                   .baskets![pos]
+                //                   .iD!,
+                //               pageSize: 20,
+                //               pageNumber: 0);
+                //
+                //           Get.back();
+                //
+                //           Get.toNamed("MyPocketsScreen");
+                //         },
+                //         child: Card(
+                //           elevation: 10,
+                //           child: Column(children: [
+                //             Text(inboxController
+                //                 .fetchBasketListModel
+                //                 ?.baskets?[pos]
+                //                 .name ??
+                //                 ""),
+                //             Text(inboxController
+                //                 .fetchBasketListModel
+                //                 ?.baskets?[pos]
+                //                 .nameAr ??
+                //                 ""),
+                //             // Text( "color :${inboxController
+                //             //     .fetchBasketListModel
+                //             //     ?.baskets?[pos].color}",style: TextStyle( color:  HexColor(inboxController
+                //             //     .fetchBasketListModel
+                //             //     ?.baskets?[pos].color??"#000000"))),
+                //
+                //             GestureDetector(
+                //                 onTap: () {
+                //                   //هنا هنعمل دليت
+                //                   controller.removeBasket(
+                //                       basketId:
+                //                       inboxController
+                //                           .fetchBasketListModel
+                //                           ?.baskets?[pos]
+                //                           .iD);
+                //                 },
+                //                 child: Icon(Icons.delete)),
+                //           ]),
+                //         ),
+                //       );
+                //     })
 
               ),
-        ),
-        actions: <Widget>[
-          FlatButton(
-            onPressed: () async {
-              Navigator.of(ctx).pop();
-            },
-            child: Text("Ok"),
-          ),
-          // Visibility(
-          //     visible: controller.isSavingOrder,
-          //     child: FlatButton(
-          //       onPressed: () async {
-          //         // Navigator.of(ctx).pop();
-          //         // Get.to(BasketPage());
-          //       },
-          //       child: Text("Save Order"),
-          //     )),
-          FlatButton(
-            onPressed: () async {
-              //هنا هنكريت الباسكت
+            ),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: () async {
+                  Navigator.of(ctx).pop();
+                },
+                child: Text("Ok"),
+              ),
+              // Visibility(
+              //     visible: controller.isSavingOrder,
+              //     child: FlatButton(
+              //       onPressed: () async {
+              //         // Navigator.of(ctx).pop();
+              //         // Get.to(BasketPage());
+              //       },
+              //       child: Text("Save Order"),
+              //     )),
+              FlatButton(
+                onPressed: () async {
+                  //هنا هنكريت الباسكت
 
-              showInputDialog(
-                  context, 'CreateNewBasket', 'default inpit', 'message');
-            },
-            child: Text("new Basket"),
+                  showInputDialog(
+                      context, 'CreateNewBasket', 'default inpit', 'message');
+                },
+                child: Text("new Basket"),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 
-  Future<String?> showInputDialog(
-      BuildContext context, String title, String defaultInput, String message) {
+  Future<String?> showInputDialog(BuildContext context, String title,
+      String defaultInput, String message) {
     var textController = TextEditingController(text: defaultInput);
     var content = Column(
       mainAxisSize: MainAxisSize.min,
@@ -432,153 +462,180 @@ class LandingPage extends GetWidget<LandingPageController> {
         // CreateNewBasket(),
 
         Form(
-            // key: controller.createBasketFormKey,
-            // child: LayoutBuilder(builder: (context, constraint) {
-            //   return Container(
+          // key: controller.createBasketFormKey,
+          // child: LayoutBuilder(builder: (context, constraint) {
+          //   return Container(
             child: Column(
-          children: [
-            // Spacer(),
-            // CustomInputTextFiled(
-            //     validator: controller.validators.nameValidator,
-            //     textEditingController: controller.englishName,
-            //     label: "english_name".tr),
-            // CustomInputTextFiled(
-            //     validator: controller.validators.nameValidator,
-            //     textEditingController: controller.arabicName,
-            //     label: "arabic_name".tr),
+              children: [
+                // Spacer(),
+                // CustomInputTextFiled(
+                //     validator: controller.validators.nameValidator,
+                //     textEditingController: controller.englishName,
+                //     label: "english_name".tr),
+                // CustomInputTextFiled(
+                //     validator: controller.validators.nameValidator,
+                //     textEditingController: controller.arabicName,
+                //     label: "arabic_name".tr),
 
-            Container(
-              // padding: EdgeInsets.only(right: 10, left: 10),
-              padding: EdgeInsets.all(10),
-              child: Container(
-                  padding: EdgeInsets.only(right: 8, left: 8),
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                          color: Theme.of(context).colorScheme.primary),
-                      borderRadius: const BorderRadius.all(Radius.circular(6))),
-                  child: TextField(
-                    controller: controller.textEditingControllerEnglishName,
-                    decoration: InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: "english_name".tr,
-                    ),
-                  )),
-            ),
+                Container(
+                  // padding: EdgeInsets.only(right: 10, left: 10),
+                  padding: EdgeInsets.all(10),
+                  child: Container(
+                      padding: EdgeInsets.only(right: 8, left: 8),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Theme
+                                  .of(context)
+                                  .colorScheme
+                                  .primary),
+                          borderRadius: const BorderRadius.all(
+                              Radius.circular(6))),
+                      child: TextField(
+                        controller: controller.textEditingControllerEnglishName,
+                        decoration: InputDecoration(
+                          border: UnderlineInputBorder(),
+                          labelText: "english_name".tr,
+                        ),
+                      )),
+                ),
 
-            Container(
-              // padding: EdgeInsets.only(right: 10, left: 10),
-              padding: EdgeInsets.all(10),
-              child: Container(
-                  padding: EdgeInsets.only(right: 8, left: 8),
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                          color: Theme.of(context).colorScheme.primary),
-                      borderRadius: const BorderRadius.all(Radius.circular(6))),
-                  child: TextField(
-                    controller: controller.textEditingControllerArabicName,
-                    decoration: InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: "arabic_name".tr,
-                    ),
-                  )),
-            ),
+                Container(
+                  // padding: EdgeInsets.only(right: 10, left: 10),
+                  padding: EdgeInsets.all(10),
+                  child: Container(
+                      padding: EdgeInsets.only(right: 8, left: 8),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Theme
+                                  .of(context)
+                                  .colorScheme
+                                  .primary),
+                          borderRadius: const BorderRadius.all(
+                              Radius.circular(6))),
+                      child: TextField(
+                        controller: controller.textEditingControllerArabicName,
+                        decoration: InputDecoration(
+                          border: UnderlineInputBorder(),
+                          labelText: "arabic_name".tr,
+                        ),
+                      )),
+                ),
 
-            Container(
-              padding: EdgeInsets.only(right: 10, left: 10),
-              width: MediaQuery.of(context).size.width * .3,
-              child: RaisedButton(
-                  onPressed: () {
-                    // inboxController.applyFilter();
-                    // Navigator.pop(context);
-                    showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                              title: Text(
-                                "pick your Color",
-                              ),
-                              content: Column(children: [
-                                ColorPicker(
-                                  pickerColor:
-                                      Get.find<CreateBasketController>()
+                Container(
+                  padding: EdgeInsets.only(right: 10, left: 10),
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width * .3,
+                  child: RaisedButton(
+                      onPressed: () {
+                        // inboxController.applyFilter();
+                        // Navigator.pop(context);
+                        showDialog(
+                            context: context,
+                            builder: (context) =>
+                                AlertDialog(
+                                  title: Text(
+                                    "pick your Color",
+                                  ),
+                                  content: Column(children: [
+                                    ColorPicker(
+                                      pickerColor:
+                                      Get
+                                          .find<CreateBasketController>()
                                           .pickerColor,
-                                  onColorChanged: (Color color) {
-                                    // Get.find<MController>().setAppColor(color);
-                                    // print(color);
-                                    // controller.setPickerColor(color);
-                                    Get.find<CreateBasketController>()
-                                        .setPickerColor(color);
-                                    // setState(() {
-                                    //   controller.setPickerColor(color);
-                                    // });
-                                  },
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 8.0, bottom: 8, right: 20, left: 20),
-                                  child: Row(children: []),
-                                ),
-                                Container(
-                                  width: MediaQuery.of(context).size.width * .7,
-                                  padding: const EdgeInsets.only(
-                                      left: 0, right: 0, top: 0, bottom: 0),
-                                  height: 60,
-                                  decoration: BoxDecoration(
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(6))),
-                                  child: ElevatedButton(
-                                      onPressed: () {
-                                        // Get.find<SecureStorage>().writeSecureData(
-                                        //     AllStringConst.AppColor,
-                                        //     Get.find<MController>().appcolor.value);
-                                        Navigator.of(context).pop();
+                                      onColorChanged: (Color color) {
+                                        // Get.find<MController>().setAppColor(color);
+                                        // print(color);
+                                        // controller.setPickerColor(color);
+                                        Get.find<CreateBasketController>()
+                                            .setPickerColor(color);
+                                        // setState(() {
+                                        //   controller.setPickerColor(color);
+                                        // });
                                       },
-                                      child: GestureDetector(
-                                        onTap: () {},
-                                        child: Text(
-                                          "save",
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      )),
-                                )
-                              ]),
-                            ));
-                  },
-                  child: GetBuilder<CreateBasketController>(
-                    init: CreateBasketController(),
-                    builder: (_) {
-                      return Text("pick your Color",
-                          style: TextStyle(
-                              // backgroundColor: _.pickerColor,
-                              color: _.pickerColor));
-                    },
-                  )),
-            ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 8.0,
+                                          bottom: 8,
+                                          right: 20,
+                                          left: 20),
+                                      child: Row(children: []),
+                                    ),
+                                    Container(
+                                      width: MediaQuery
+                                          .of(context)
+                                          .size
+                                          .width * .7,
+                                      padding: const EdgeInsets.only(
+                                          left: 0, right: 0, top: 0, bottom: 0),
+                                      height: 60,
+                                      decoration: BoxDecoration(
+                                          color:
+                                          Theme
+                                              .of(context)
+                                              .colorScheme
+                                              .primary,
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(6))),
+                                      child: ElevatedButton(
+                                          onPressed: () {
+                                            // Get.find<SecureStorage>().writeSecureData(
+                                            //     AllStringConst.AppColor,
+                                            //     Get.find<MController>().appcolor.value);
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: GestureDetector(
+                                            onTap: () {},
+                                            child: Text(
+                                              "save",
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          )),
+                                    )
+                                  ]),
+                                ));
+                      },
+                      child: GetBuilder<CreateBasketController>(
+                        init: CreateBasketController(),
+                        builder: (_) {
+                          return Text("pick your Color",
+                              style: TextStyle(
+                                // backgroundColor: _.pickerColor,
+                                  color: _.pickerColor));
+                        },
+                      )),
+                ),
 
-            Container(
-              height: 40,
-              padding: EdgeInsets.only(right: 10, left: 10),
-              width: MediaQuery.of(context).size.width * .3,
-              child: CustomButton(
-                  name: 'register'.tr,
-                  onPressed: () {
-                    // controller.createNewBasket();
-                    controller.addEditBasket(
-                        context: context,
-                        color: Get.find<CreateBasketController>()
-                            .pickerColor
-                            .toHex(),
-                        nameAr: controller.textEditingControllerArabicName.text,
-                        nameEn:
+                Container(
+                  height: 40,
+                  padding: EdgeInsets.only(right: 10, left: 10),
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width * .3,
+                  child: CustomButton(
+                      name: 'register'.tr,
+                      onPressed: () {
+                        // controller.createNewBasket();
+                        controller.addEditBasket(
+                            context: context,
+                            color: Get
+                                .find<CreateBasketController>()
+                                .pickerColor
+                                .toHex(),
+                            nameAr: controller.textEditingControllerArabicName
+                                .text,
+                            nameEn:
                             controller.textEditingControllerEnglishName.text);
-                  }),
-            ),
-          ],
-          // ),
-          // );
-          // }
-        ))
+                      }),
+                ),
+              ],
+              // ),
+              // );
+              // }
+            ))
       ],
     );
     // var content = CreateNewBasket();
@@ -632,9 +689,13 @@ class LandingPage extends GetWidget<LandingPageController> {
                   width: double.infinity,
                   child: Text(
                     "appTitle".tr,
-                    style: Theme.of(contex).textTheme.headline1!.copyWith(
-                          fontSize: calculateFontSize(60, contex),
-                        ),
+                    style: Theme
+                        .of(contex)
+                        .textTheme
+                        .headline1!
+                        .copyWith(
+                      fontSize: calculateFontSize(60, contex),
+                    ),
                     textAlign: TextAlign.start,
                   ),
                 ),
@@ -645,11 +706,17 @@ class LandingPage extends GetWidget<LandingPageController> {
                     width: double.infinity,
                     child: Text(
                       "hello".tr +
-                          "  ${secureStorage.readSecureData(AllStringConst.FirstName)} ${secureStorage.readSecureData(AllStringConst.LastName)}",
-                      style: Theme.of(contex).textTheme.headline2!.copyWith(
-                            color: Colors.grey,
-                            fontSize: calculateFontSize(40, contex),
-                          ),
+                          "  ${secureStorage.readSecureData(
+                              AllStringConst.FirstName)} ${secureStorage
+                              .readSecureData(AllStringConst.LastName)}",
+                      style: Theme
+                          .of(contex)
+                          .textTheme
+                          .headline2!
+                          .copyWith(
+                        color: Colors.grey,
+                        fontSize: calculateFontSize(40, contex),
+                      ),
                       textAlign: TextAlign.start,
                     ),
                   ),
@@ -701,7 +768,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                   child: Text(
                     "mySignatures".tr,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context)
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .headline3!
                         .copyWith(color: Colors.grey.shade600),
@@ -712,12 +780,10 @@ class LandingPage extends GetWidget<LandingPageController> {
           ),
         ),
         InkWell(
-          onTap: () async {
-            await Get.find<LandingPageController>()
-                .listFavoriteRecipients(context: context);
+          onTap: () {
             Get.bottomSheet(
               Container(
-                  //height: 100,
+                //height: 100,
                   margin: EdgeInsets.all(20),
                   padding: EdgeInsets.all(20),
                   decoration: const BoxDecoration(
@@ -757,9 +823,9 @@ class LandingPage extends GetWidget<LandingPageController> {
 
                                 return // Te(v.originalName!);
 
-                                    ListTile(
-                                  title: FilterText(v.value!),
-                                );
+                                  ListTile(
+                                    title: FilterText(v.value!),
+                                  );
                               },
                               onSuggestionSelected: (suggestion) {
                                 Destination v = suggestion;
@@ -819,10 +885,10 @@ class LandingPage extends GetWidget<LandingPageController> {
                                       padding: const EdgeInsets.all(8.0),
                                       child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(controller
-                                                  .selectFavusers[pos].value ??
+                                              .selectFavusers[pos].value ??
                                               ""),
                                           GestureDetector(
                                               onTap: () {
@@ -871,7 +937,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                   child: Text(
                     "favoritesUsers".tr,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context)
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .headline3!
                         .copyWith(color: Colors.grey.shade600),
@@ -883,215 +950,303 @@ class LandingPage extends GetWidget<LandingPageController> {
         ),
         InkWell(
           onTap: () {
+            // Get  getMyRoutingsettings;
+
             Get.bottomSheet(
-              Container(
+              GetBuilder<LandingPageController>(builder: (logic) {
+                return Container(
                   //height: 100,
-                  margin: EdgeInsets.all(20),
-                  padding: EdgeInsets.all(20),
-                  decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20))),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text("myDelegations".tr,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 14)),
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TypeAheadField<Destination>(
-                                textFieldConfiguration: TextFieldConfiguration(
-                                  controller:
-                                      controller.textEditingControllerTo,
-                                  // autofocus: true,
-                                  // style: DefaultTextStyle.of(context)
-                                  //     .style
-                                  //     .copyWith(fontStyle: FontStyle.italic),
-                                  decoration: InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      labelText: 'To'.tr),
-                                ),
-                                suggestionsCallback: (pattern) async {
-                                  return controller.users.where((element) =>
-                                      element.value!
-                                          .toLowerCase()
-                                          .contains(pattern.toLowerCase()));
+                    margin: EdgeInsets.all(20),
+                    padding: EdgeInsets.all(20),
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20))),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text("myDelegations".tr,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 14)),
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TypeAheadField<Destination>(
+                                  textFieldConfiguration: TextFieldConfiguration(
+                                    controller:
+                                    controller.textEditingControllerTorouting,
+                                    // autofocus: true,
+                                    // style: DefaultTextStyle.of(context)
+                                    //     .style
+                                    //     .copyWith(fontStyle: FontStyle.italic),
+                                    decoration: InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        labelText: 'To'.tr),
+                                  ),
+                                  suggestionsCallback: (pattern) async {
+                                    return controller.users.where((element) =>
+                                        element.value!
+                                            .toLowerCase()
+                                            .contains(pattern.toLowerCase()));
 
-                                  //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
-                                },
-                                itemBuilder: (context, suggestion) {
-                                  Destination v = suggestion;
+                                    //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
+                                  },
+                                  itemBuilder: (context, suggestion) {
+                                    Destination v = suggestion;
 
-                                  return // Te(v.originalName!);
+                                    return // Te(v.originalName!);
 
                                       ListTile(
-                                    title: FilterText(v.value!),
-                                  );
-                                },
-                                onSuggestionSelected: (suggestion) {
-                                  Destination v = suggestion;
-                                  controller.textEditingControllerTo.text =
-                                      v.value ?? "";
-                                  controller.to = v;
+                                        title: FilterText(v.value!),
+                                      );
+                                  },
+                                  onSuggestionSelected: (suggestion) {
+                                    Destination v = suggestion;
+                                    controller.textEditingControllerTorouting
+                                        .text =
+                                        v.value ?? "";
+                                    controller.toSaveMyRoutingSettings = v;
 
-                                  controller.updateselectFavusers(v);
-                                  controller.textEditingControllerTo.clear();
-                                  // v
-                                  // .cLASNAMEDISPLAY;
-                                  // Navigator.of(context).push(MaterialPageRoute(
-                                  //     builder: (context) => ProductPage(product: suggestion)
-                                  // ));
+                                    controller.updateselectFavusers(v);
+
+                                    // v
+                                    // .cLASNAMEDISPLAY;
+                                    // Navigator.of(context).push(MaterialPageRoute(
+                                    //     builder: (context) => ProductPage(product: suggestion)
+                                    // ));
+                                  },
+                                ),
+                              ),
+                              SizedBox(
+                                width: 2,
+                              ),
+                              CustomButtonWithIcon(
+                                icon: Icons.person,
+                                onClick: () {
+                                  controller.listOfUser(0);
                                 },
                               ),
-                            ),
-                            SizedBox(
-                              width: 2,
-                            ),
-                            CustomButtonWithIcon(
-                              icon: Icons.person,
-                              onClick: () {
-                                controller.listOfUser(0);
-                              },
-                            ),
-                            SizedBox(
-                              width: 2,
-                            ),
-                            CustomButtonWithIcon(
-                              icon: Icons.account_balance,
-                              onClick: () {
-                                controller.listOfUser(2);
-                              },
-                            ),
-                            SizedBox(
-                              width: 2,
-                            ),
-                            CustomButtonWithIcon(
-                              icon: Icons.clear,
-                              onClick: () {
-                                controller.listOfUser(0);
-                              },
-                            )
-                          ],
-                        ),
-                        Text("start".tr),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: InkWell(
-                            onTap: () {
-                              controller.selectFromDocDate(context: context);
-                            },
-                            child: Container(
-                                height: 60,
-                                padding: EdgeInsets.only(right: 8, left: 8),
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(6))),
-                                child: TextField(
-                                  enabled: false,
-                                  controller: controller
-                                      .textEditingControllerFromDocDate,
-                                  decoration: InputDecoration(
-                                    border: UnderlineInputBorder(),
-                                    labelText: 'From'.tr,
-                                  ),
-                                )),
+                              SizedBox(
+                                width: 2,
+                              ),
+                              CustomButtonWithIcon(
+                                icon: Icons.account_balance,
+                                onClick: () {
+                                  controller.listOfUser(2);
+                                },
+                              ),
+                              SizedBox(
+                                width: 2,
+                              ),
+                              CustomButtonWithIcon(
+                                icon: Icons.clear,
+                                onClick: () {
+                                  controller.listOfUser(0);
+                                },
+                              )
+                            ],
                           ),
-                        ),
-                        Text("end".tr),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: InkWell(
-                            onTap: () {
-                              controller.selectToDocDate(context: context);
-                            },
-                            child: Container(
-                                height: 60,
-                                padding: EdgeInsets.only(right: 8, left: 8),
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(6))),
-                                child: TextField(
-                                  enabled: false,
-                                  controller:
-                                      controller.textEditingControllerToDocDate,
-                                  decoration: InputDecoration(
-                                    border: UnderlineInputBorder(),
-                                    labelText: 'To'.tr,
-                                  ),
-                                )
+                          Text("start".tr),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: InkWell(
+                              onTap: () {
+                                controller.selectFromDocDate(context: context);
+                              },
+                              child: Container(
+                                  height: 60,
+                                  padding: EdgeInsets.only(right: 8, left: 8),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Theme
+                                              .of(context)
+                                              .colorScheme
+                                              .primary),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(6))),
+                                  child: TextField(
+                                    enabled: false,
+                                    controller:
+                                    controller.textEditingControllerFromDate,
+                                    decoration: InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'From'.tr,
+                                    ),
+                                  )),
+                            ),
+                          ),
+                          Text("end".tr),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: InkWell(
+                              onTap: () {
+                                controller.selectToDocDate(context: context);
+                              },
+                              child: Container(
+                                  height: 60,
+                                  padding: EdgeInsets.only(right: 8, left: 8),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Theme
+                                              .of(context)
+                                              .colorScheme
+                                              .primary),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(6))),
+                                  child: TextField(
+                                    enabled: false,
+                                    maxLines: 5,
+                                    controller:
+                                    controller.textEditingControllerToDate,
+                                    decoration: InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'To'.tr,
+                                    ),
+                                  )
                                 //   Center(child: Text(controller.toDocDate))
+                              ),
+                            ),
+                          ),
+                          Text("reason".tr),
+                          Container(
+                              height: 60,
+                              padding: EdgeInsets.only(right: 8, left: 8),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color:
+                                      Theme
+                                          .of(context)
+                                          .colorScheme
+                                          .primary),
+                                  borderRadius:
+                                  const BorderRadius.all(Radius.circular(6))),
+                              child: TextField(
+                                controller:
+                                controller.textEditingControllerToroutingReson,
+                                decoration: InputDecoration(
+                                  border: UnderlineInputBorder(),
+                                  labelText: "",
                                 ),
-                          ),
-                        ),
-                        Text("reason".tr),
-                        Container(
-                            height: 60,
-                            padding: EdgeInsets.only(right: 8, left: 8),
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color:
-                                        Theme.of(context).colorScheme.primary),
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(6))),
-                            child: TextField(
-                              enabled: false,
-                              decoration: InputDecoration(
-                                border: UnderlineInputBorder(),
-                                labelText: 'To'.tr,
-                              ),
-                            )
+                              )
                             //   Center(child: Text(controller.toDocDate))
-                            ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Center(
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * .5,
-                            padding: const EdgeInsets.only(
-                                left: 0, right: 0, top: 0, bottom: 0),
-                            height: 60,
-                            decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.primary,
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(6))),
-                            child: ElevatedButton(
-                              onPressed: () {},
-                              child: Text(
-                                "Save".tr,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .copyWith(color: Colors.white),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
                           ),
-                        )
-                      ],
-                    ),
-                  )),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Container(
+                                width: MediaQuery
+                                    .of(context)
+                                    .size
+                                    .width * .4,
+                                padding: const EdgeInsets.only(
+                                    left: 0, right: 0, top: 0, bottom: 0),
+                                height: 60,
+                                decoration: BoxDecoration(
+                                    color: Theme
+                                        .of(context)
+                                        .colorScheme
+                                        .primary,
+                                    borderRadius:
+                                    const BorderRadius.all(Radius.circular(6))),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    MyTransferRoutingDtoSend mytr =
+                                    MyTransferRoutingDtoSend(Name: controller
+                                        .toSaveMyRoutingSettings!.value!,
+                                        GctId: controller
+                                            .toSaveMyRoutingSettings!.id,
+                                        NameAr: controller
+                                            .toSaveMyRoutingSettings!.value,
+                                        CrtComments: controller
+                                            .textEditingControllerToroutingReson
+                                            .text,
+                                        CrtFromDate: controller
+                                            .textEditingControllerFromDate.text
+                                            .replaceAll("-", "/"),
+                                        CrtId: 0,
+                                        // controller.getMyRoutingSettingsModel.routing,
+                                        CrtToDate: controller
+                                            .textEditingControllerToDate.text
+                                            .replaceAll("-", "/"),
+                                        CrtToGctid: controller
+                                            .toSaveMyRoutingSettings!.id,
+                                        DoRouting: true);
+
+                                    MyTransferRoutingRequestDto d =
+                                    MyTransferRoutingRequestDto(
+                                        Token:
+                                        controller.secureStorage.token()!,
+                                        routing: mytr);
+                                    controller.postSaveMyRoutingSettingsApi(
+                                        data: d, context: context);
+                                  },
+                                  child: Text(
+                                    "Save".tr,
+                                    style: Theme
+                                        .of(context)
+                                        .textTheme
+                                        .headline2!
+                                        .copyWith(color: Colors.white),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: MediaQuery
+                                    .of(context)
+                                    .size
+                                    .width * .4,
+                                padding: const EdgeInsets.only(
+                                    left: 0, right: 0, top: 0, bottom: 0),
+                                height: 60,
+                                decoration: BoxDecoration(
+                                    color: Theme
+                                        .of(context)
+                                        .colorScheme
+                                        .primary,
+                                    borderRadius:
+                                    const BorderRadius.all(Radius.circular(6))),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    print("token=>    ${controller.secureStorage
+                                        .token()}");
+                                    controller.removeMyRoutingSettings(data: {
+                                      "Token": controller.secureStorage.token(),
+                                      "Language": Get.locale?.languageCode ==
+                                          "en" ? "en" : "ar"
+                                    }, context: context);
+                                  },
+                                  child: Text(
+                                    "حذف".tr,
+                                    style: Theme
+                                        .of(context)
+                                        .textTheme
+                                        .headline2!
+                                        .copyWith(color: Colors.white),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ));
+              }),
               enterBottomSheetDuration: const Duration(seconds: 1),
             );
+            Get.find<LandingPageController>().getMyRoutingsettings(context);
           },
           child: Container(
-            height: 140,
+            height: 120,
             color: Colors.transparent,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -1101,8 +1256,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                 Spacer(
                   flex: 1,
                 ),
-                Flexible(
-                  flex: 4,
+                Expanded(
                   child: Image(
                     image: AssetImage(
                       'assets/images/delegation.png',
@@ -1112,17 +1266,14 @@ class LandingPage extends GetWidget<LandingPageController> {
                     height: double.infinity,
                   ),
                 ),
-                Flexible(
-                  flex: 2,
-                  child: Text(
-                    "myDelegations".tr,
-                    // "اعادة توجيه\n المراسلات",
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline3!
-                        .copyWith(color: Colors.grey.shade600),
-                  ),
+                Text(
+                  "myDelegations".tr,
+                  textAlign: TextAlign.center,
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .headline3!
+                      .copyWith(color: Colors.grey.shade600),
                 ),
               ],
             ),
@@ -1160,7 +1311,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                   child: Text(
                     "Basket".tr,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context)
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .headline3!
                         .copyWith(color: Colors.grey.shade600),
@@ -1176,7 +1328,9 @@ class LandingPage extends GetWidget<LandingPageController> {
             ///open url and go to userGuideUrl
             //  controller.data.userGuideUrl
 
-            Get.find<WebViewPageController>().url =
+            Get
+                .find<WebViewPageController>()
+                .url =
                 controller.data?.userGuideUrl;
             Get.toNamed(
               "WebViewPage",
@@ -1207,9 +1361,10 @@ class LandingPage extends GetWidget<LandingPageController> {
                 Flexible(
                   flex: 1,
                   child: Text(
-                    "user Guide".tr,
+                    "userGuide".tr,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context)
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .headline3!
                         .copyWith(color: Colors.grey.shade600),
@@ -1223,8 +1378,9 @@ class LandingPage extends GetWidget<LandingPageController> {
           onTap: () {
             showDialog(
                 context: context,
-                builder: (context) => AlertDialog(
-                      title: Text("pick your Color".tr),
+                builder: (context) =>
+                    AlertDialog(
+                      title: const Text("pick your Color"),
                       content: Column(children: [
                         buildColorPicker(),
                         Padding(
@@ -1238,7 +1394,10 @@ class LandingPage extends GetWidget<LandingPageController> {
                                 height: 60,
                                 decoration: BoxDecoration(
                                     color:
-                                        Theme.of(context).colorScheme.primary,
+                                    Theme
+                                        .of(context)
+                                        .colorScheme
+                                        .primary,
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(6))),
                                 child: ElevatedButton(
@@ -1246,7 +1405,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                     var locale = const Locale('ar', 'AR');
                                     Get.updateLocale(locale);
                                     SecureStorage secureStorage =
-                                        SecureStorage();
+                                    SecureStorage();
 
                                     secureStorage.writeSecureData(
                                         AllStringConst.AppLan, "ar");
@@ -1254,7 +1413,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                                   },
                                   child: Text(
                                     "عربي",
-                                    style: Theme.of(context)
+                                    style: Theme
+                                        .of(context)
                                         .textTheme
                                         .headline2!
                                         .copyWith(color: Colors.white),
@@ -1273,14 +1433,17 @@ class LandingPage extends GetWidget<LandingPageController> {
                                 height: 60,
                                 decoration: BoxDecoration(
                                     color:
-                                        Theme.of(context).colorScheme.primary,
+                                    Theme
+                                        .of(context)
+                                        .colorScheme
+                                        .primary,
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(6))),
                                 child: ElevatedButton(
                                   onPressed: () {
                                     var locale = const Locale('en', 'US');
                                     SecureStorage secureStorage =
-                                        SecureStorage();
+                                    SecureStorage();
 
                                     secureStorage.writeSecureData(
                                         AllStringConst.AppLan, "en");
@@ -1289,7 +1452,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                                   },
                                   child: Text(
                                     "En",
-                                    style: Theme.of(context)
+                                    style: Theme
+                                        .of(context)
                                         .textTheme
                                         .headline2!
                                         .copyWith(color: Colors.white),
@@ -1301,24 +1465,34 @@ class LandingPage extends GetWidget<LandingPageController> {
                           ]),
                         ),
                         Container(
-                          width: MediaQuery.of(context).size.width * .7,
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width * .7,
                           padding: const EdgeInsets.only(
                               left: 0, right: 0, top: 0, bottom: 0),
                           height: 60,
                           decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.primary,
+                              color: Theme
+                                  .of(context)
+                                  .colorScheme
+                                  .primary,
                               borderRadius:
-                                  const BorderRadius.all(Radius.circular(6))),
+                              const BorderRadius.all(Radius.circular(6))),
                           child: ElevatedButton(
                             onPressed: () {
                               Get.find<SecureStorage>().writeSecureData(
                                   AllStringConst.AppColor,
-                                  Get.find<MController>().appcolor.value);
+                                  Get
+                                      .find<MController>()
+                                      .appcolor
+                                      .value);
                               Navigator.of(context).pop();
                             },
                             child: Text(
                               "save",
-                              style: Theme.of(context)
+                              style: Theme
+                                  .of(context)
                                   .textTheme
                                   .headline2!
                                   .copyWith(color: Colors.white),
@@ -1356,7 +1530,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                   child: Text(
                     "appTheme".tr,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context)
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .headline3!
                         .copyWith(color: Colors.grey.shade600),
@@ -1403,7 +1578,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                   child: Text(
                     "logout".tr,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context)
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .headline3!
                         .copyWith(color: Colors.grey.shade600),
@@ -1815,7 +1991,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                   child: Text(
                     "mySignatures".tr,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context)
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .headline3!
                         .copyWith(color: Colors.grey.shade600),
@@ -1828,7 +2005,7 @@ class LandingPage extends GetWidget<LandingPageController> {
             onTap: () {
               Get.bottomSheet(
                 Container(
-                    //height: 100,
+                  //height: 100,
                     margin: EdgeInsets.all(20),
                     padding: EdgeInsets.all(20),
                     decoration: const BoxDecoration(
@@ -1847,7 +2024,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                               child: TypeAheadField<Destination>(
                                 textFieldConfiguration: TextFieldConfiguration(
                                   controller:
-                                      controller.textEditingControllerTo,
+                                  controller.textEditingControllerTo,
                                   // autofocus: true,
                                   // style: DefaultTextStyle.of(context)
                                   //     .style
@@ -1869,9 +2046,9 @@ class LandingPage extends GetWidget<LandingPageController> {
 
                                   return // Te(v.originalName!);
 
-                                      ListTile(
-                                    title: FilterText(v.value!),
-                                  );
+                                    ListTile(
+                                      title: FilterText(v.value!),
+                                    );
                                 },
                                 onSuggestionSelected: (suggestion) {
                                   Destination v = suggestion;
@@ -1931,14 +2108,15 @@ class LandingPage extends GetWidget<LandingPageController> {
                                         padding: const EdgeInsets.all(8.0),
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(controller.selectFavusers[pos]
-                                                    .value ??
+                                                .value ??
                                                 ""),
                                             GestureDetector(
                                                 onTap: () {
-                                                  controller.deletselectFavusers(
+                                                  controller
+                                                      .deletselectFavusers(
                                                       controller
                                                           .selectFavusers[pos]);
                                                 },
@@ -1963,18 +2141,19 @@ class LandingPage extends GetWidget<LandingPageController> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Expanded(
-                    child: Image(
-                      image: AssetImage(
-                        'assets/images/fav_users.png',
-                      ),
-                      fit: BoxFit.contain,
+                  Image(
+                    image: AssetImage(
+                      'assets/images/fav_users.png',
                     ),
+                    fit: BoxFit.contain,
+                    width: 50,
+                    height: 50,
                   ),
                   Text(
                     "favoritesUsers".tr,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context)
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .headline3!
                         .copyWith(color: Colors.grey.shade600),
@@ -1987,7 +2166,7 @@ class LandingPage extends GetWidget<LandingPageController> {
             onTap: () {
               Get.bottomSheet(
                 Container(
-                    //height: 100,
+                  //height: 100,
                     margin: EdgeInsets.all(20),
                     padding: EdgeInsets.all(20),
                     decoration: const BoxDecoration(
@@ -2011,9 +2190,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                               Expanded(
                                 child: TypeAheadField<Destination>(
                                   textFieldConfiguration:
-                                      TextFieldConfiguration(
+                                  TextFieldConfiguration(
                                     controller:
-                                        controller.textEditingControllerTo,
+                                    controller.textEditingControllerTo,
                                     // autofocus: true,
                                     // style: DefaultTextStyle.of(context)
                                     //     .style
@@ -2035,9 +2214,9 @@ class LandingPage extends GetWidget<LandingPageController> {
 
                                     return // Te(v.originalName!);
 
-                                        ListTile(
-                                      title: FilterText(v.value!),
-                                    );
+                                      ListTile(
+                                        title: FilterText(v.value!),
+                                      );
                                   },
                                   onSuggestionSelected: (suggestion) {
                                     Destination v = suggestion;
@@ -2055,33 +2234,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                   },
                                 ),
                               ),
-                              SizedBox(
-                                width: 2,
-                              ),
-                              CustomButtonWithIcon(
-                                icon: Icons.person,
-                                onClick: () {
-                                  controller.listOfUser(0);
-                                },
-                              ),
-                              SizedBox(
-                                width: 2,
-                              ),
-                              CustomButtonWithIcon(
-                                icon: Icons.account_balance,
-                                onClick: () {
-                                  controller.listOfUser(2);
-                                },
-                              ),
-                              SizedBox(
-                                width: 2,
-                              ),
-                              CustomButtonWithIcon(
-                                icon: Icons.clear,
-                                onClick: () {
-                                  controller.listOfUser(0);
-                                },
-                              )
+
                             ],
                           ),
                           Text("start".tr),
@@ -2096,7 +2249,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                                   padding: EdgeInsets.only(right: 8, left: 8),
                                   decoration: BoxDecoration(
                                       border: Border.all(
-                                          color: Theme.of(context)
+                                          color: Theme
+                                              .of(context)
                                               .colorScheme
                                               .primary),
                                       borderRadius: const BorderRadius.all(
@@ -2104,7 +2258,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                   child: TextField(
                                     enabled: false,
                                     controller: controller
-                                        .textEditingControllerFromDocDate,
+                                        .textEditingControllerFromDate,
                                     decoration: InputDecoration(
                                       border: UnderlineInputBorder(),
                                       labelText: 'From'.tr,
@@ -2124,22 +2278,23 @@ class LandingPage extends GetWidget<LandingPageController> {
                                   padding: EdgeInsets.only(right: 8, left: 8),
                                   decoration: BoxDecoration(
                                       border: Border.all(
-                                          color: Theme.of(context)
+                                          color: Theme
+                                              .of(context)
                                               .colorScheme
                                               .primary),
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(6))),
                                   child: TextField(
                                     enabled: false,
-                                    controller: controller
-                                        .textEditingControllerToDocDate,
+                                    controller:
+                                    controller.textEditingControllerToDate,
                                     decoration: InputDecoration(
                                       border: UnderlineInputBorder(),
                                       labelText: 'To'.tr,
                                     ),
                                   )
-                                  //   Center(child: Text(controller.toDocDate))
-                                  ),
+                                //   Center(child: Text(controller.toDocDate))
+                              ),
                             ),
                           ),
                           Text("reason".tr),
@@ -2148,7 +2303,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                               padding: EdgeInsets.only(right: 8, left: 8),
                               decoration: BoxDecoration(
                                   border: Border.all(
-                                      color: Theme.of(context)
+                                      color: Theme
+                                          .of(context)
                                           .colorScheme
                                           .primary),
                                   borderRadius: const BorderRadius.all(
@@ -2161,26 +2317,33 @@ class LandingPage extends GetWidget<LandingPageController> {
                                   labelText: ' ',
                                 ),
                               )
-                              //   Center(child: Text(controller.toDocDate))
-                              ),
+                            //   Center(child: Text(controller.toDocDate))
+                          ),
                           SizedBox(
                             height: 10,
                           ),
                           Center(
                             child: Container(
-                              width: MediaQuery.of(context).size.width * .5,
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width * .5,
                               padding: const EdgeInsets.only(
                                   left: 0, right: 0, top: 0, bottom: 0),
                               height: 60,
                               decoration: BoxDecoration(
-                                  color: Theme.of(context).colorScheme.primary,
+                                  color: Theme
+                                      .of(context)
+                                      .colorScheme
+                                      .primary,
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(6))),
                               child: ElevatedButton(
                                 onPressed: () {},
                                 child: Text(
                                   "Save".tr,
-                                  style: Theme.of(context)
+                                  style: Theme
+                                      .of(context)
                                       .textTheme
                                       .headline2!
                                       .copyWith(color: Colors.white),
@@ -2212,7 +2375,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                   Text(
                     "myDelegations".tr,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context)
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .headline3!
                         .copyWith(color: Colors.grey.shade600),
@@ -2229,99 +2393,111 @@ class LandingPage extends GetWidget<LandingPageController> {
                 await Get.find<InboxController>().getFetchBasketList();
                 showDialog(
                   context: context,
-                  builder: (ctx) => AlertDialog(
-                    title: Text(" "),
-                    content: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                          width: MediaQuery.of(context).size.width * .3,
-                          color: Colors.grey[200],
-                          child: ListView.builder(
-                              itemCount: Get.find<InboxController>()
-                                  .fetchBasketListModel
-                                  ?.baskets
-                                  ?.length,
-                              itemBuilder: (context, pos) {
-                                return InkWell(
-                                  onTap: () async {
-                                    print(
-                                        "${Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].iD}");
+                  builder: (ctx) =>
+                      AlertDialog(
+                        title: Text(" "),
+                        content: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width * .3,
+                              color: Colors.grey[200],
+                              child: ListView.builder(
+                                  itemCount: Get
+                                      .find<InboxController>()
+                                      .fetchBasketListModel
+                                      ?.baskets
+                                      ?.length,
+                                  itemBuilder: (context, pos) {
+                                    return InkWell(
+                                      onTap: () async {
+                                        print(
+                                            "${Get
+                                                .find<InboxController>()
+                                                .fetchBasketListModel
+                                                ?.baskets?[pos].iD}");
 
-                                    Get.find<BasketController>().getBasketInbox(
-                                        context: context,
-                                        id: Get.find<InboxController>()
-                                            .fetchBasketListModel!
-                                            .baskets![pos]
-                                            .iD!,
-                                        pageSize: 20,
-                                        pageNumber: 0);
+                                        Get.find<BasketController>()
+                                            .getBasketInbox(
+                                            context: context,
+                                            id: Get
+                                                .find<InboxController>()
+                                                .fetchBasketListModel!
+                                                .baskets![pos]
+                                                .iD!,
+                                            pageSize: 20,
+                                            pageNumber: 0);
 
-                                    Get.back();
+                                        Get.back();
 
-                                    Get.toNamed("MyPocketsScreen");
-                                  },
-                                  child: Card(
-                                    elevation: 10,
-                                    child: Column(children: [
-                                      Text(Get.find<InboxController>()
+                                        Get.toNamed("MyPocketsScreen");
+                                      },
+                                      child: Card(
+                                        elevation: 10,
+                                        child: Column(children: [
+                                          Text(Get
+                                              .find<InboxController>()
                                               .fetchBasketListModel
                                               ?.baskets?[pos]
                                               .name ??
-                                          ""),
-                                      Text(Get.find<InboxController>()
+                                              ""),
+                                          Text(Get
+                                              .find<InboxController>()
                                               .fetchBasketListModel
                                               ?.baskets?[pos]
                                               .nameAr ??
-                                          ""),
-                                      // Text( "color :${Get.find<InboxController>()
-                                      //     .fetchBasketListModel
-                                      //     ?.baskets?[pos].color}",style: TextStyle( color: HexColor(Get.find<InboxController>()
-                                      //     .fetchBasketListModel
-                                      //     ?.baskets?[pos].color??"#000000"))),
+                                              ""),
+                                          // Text( "color :${Get.find<InboxController>()
+                                          //     .fetchBasketListModel
+                                          //     ?.baskets?[pos].color}",style: TextStyle( color: HexColor(Get.find<InboxController>()
+                                          //     .fetchBasketListModel
+                                          //     ?.baskets?[pos].color??"#000000"))),
 
-                                      GestureDetector(
-                                          onTap: () {
-                                            //هنا هنعمل دليت
-                                          },
-                                          child: Icon(Icons.delete)),
-                                    ]),
-                                  ),
-                                );
-                              })),
-                    ),
-                    actions: <Widget>[
-                      FlatButton(
-                        onPressed: () async {
-                          /// ToDo send Replay
+                                          GestureDetector(
+                                              onTap: () {
+                                                //هنا هنعمل دليت
+                                              },
+                                              child: Icon(Icons.delete)),
+                                        ]),
+                                      ),
+                                    );
+                                  })),
+                        ),
+                        actions: <Widget>[
+                          FlatButton(
+                            onPressed: () async {
+                              /// ToDo send Replay
 
-                          Navigator.of(ctx).pop();
-                        },
-                        child: Text("Ok"),
+                              Navigator.of(ctx).pop();
+                            },
+                            child: Text("Ok"),
+                          ),
+                          // FlatButton(
+                          //   onPressed:
+                          //       () async {
+                          //
+                          //     /// ToDo send Replay
+                          //         ///  Navigator.of(
+                          //         //                         ctx)
+                          //         //                         .pop();
+                          //         Navigator.of(
+                          //             ctx)
+                          //             .pop();
+                          //         Get.to(BasketPage());
+                          //
+                          //   },
+                          //   child: Text("go to Basket"),
+                          // ),
+                          FlatButton(
+                            onPressed: () async {
+                              //هنا هنكريت الباسكت
+                            },
+                            child: Text("newBasket".tr),
+                          ),
+                        ],
                       ),
-                      // FlatButton(
-                      //   onPressed:
-                      //       () async {
-                      //
-                      //     /// ToDo send Replay
-                      //         ///  Navigator.of(
-                      //         //                         ctx)
-                      //         //                         .pop();
-                      //         Navigator.of(
-                      //             ctx)
-                      //             .pop();
-                      //         Get.to(BasketPage());
-                      //
-                      //   },
-                      //   child: Text("go to Basket"),
-                      // ),
-                      FlatButton(
-                        onPressed: () async {
-                          //هنا هنكريت الباسكت
-                        },
-                        child: Text("new Basket"),
-                      ),
-                    ],
-                  ),
                 );
                 // Get.toNamed( "MyPocketsScreen",);//MyPocketsScreen
               },
@@ -2346,7 +2522,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                       child: Text(
                         "Basket".tr,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context)
+                        style: Theme
+                            .of(context)
                             .textTheme
                             .headline3!
                             .copyWith(color: Colors.grey.shade600),
@@ -2363,7 +2540,9 @@ class LandingPage extends GetWidget<LandingPageController> {
               ///open url and go to userGuideUrl
               //  controller.data.userGuideUrl
 
-              Get.find<WebViewPageController>().url =
+              Get
+                  .find<WebViewPageController>()
+                  .url =
                   controller.data?.userGuideUrl;
               Get.toNamed(
                 "WebViewPage",
@@ -2386,9 +2565,10 @@ class LandingPage extends GetWidget<LandingPageController> {
                     height: 50,
                   ),
                   Text(
-                    "user Guide".tr,
+                    "userGuide".tr,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context)
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .headline3!
                         .copyWith(color: Colors.grey.shade600),
@@ -2404,29 +2584,115 @@ class LandingPage extends GetWidget<LandingPageController> {
               onTap: () {
                 showDialog(
                     context: context,
-                    builder: (context) => AlertDialog(
-                          title: Text("pick your Color".tr),
+                    builder: (context) =>
+                        AlertDialog(
+                          title: const Text("pick your Color"),
                           content: Column(children: [
                             buildColorPicker(),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 8.0, bottom: 8, right: 20, left: 20),
+                              child: Row(children: [
+                                Container(
+                                  padding: const EdgeInsets.only(
+                                      left: 0, right: 0, top: 0, bottom: 0),
+                                  height: 60,
+                                  decoration: BoxDecoration(
+                                      color:
+                                      Theme
+                                          .of(context)
+                                          .colorScheme
+                                          .primary,
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(6))),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      var locale = const Locale('ar', 'AR');
+                                      SecureStorage secureStorage =
+                                      SecureStorage();
+
+                                      secureStorage.writeSecureData(
+                                          AllStringConst.AppLan, "ar");
+                                      Get.updateLocale(locale);
+                                    },
+                                    child: Text(
+                                      "عربي",
+                                      style: Theme
+                                          .of(context)
+                                          .textTheme
+                                          .headline2!
+                                          .copyWith(color: Colors.white),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.only(
+                                      left: 0, right: 0, top: 0, bottom: 0),
+                                  height: 60,
+                                  decoration: BoxDecoration(
+                                      color:
+                                      Theme
+                                          .of(context)
+                                          .colorScheme
+                                          .primary,
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(6))),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      var locale = const Locale('en', 'US');
+                                      SecureStorage secureStorage =
+                                      SecureStorage();
+
+                                      secureStorage.writeSecureData(
+                                          AllStringConst.AppLan, "en");
+                                      Get.updateLocale(locale);
+                                    },
+                                    child: Text(
+                                      "En",
+                                      style: Theme
+                                          .of(context)
+                                          .textTheme
+                                          .headline2!
+                                          .copyWith(color: Colors.white),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                )
+                              ]),
+                            ),
                             Container(
-                              width: MediaQuery.of(context).size.width * .7,
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width * .7,
                               padding: const EdgeInsets.only(
                                   left: 0, right: 0, top: 0, bottom: 0),
                               height: 60,
                               decoration: BoxDecoration(
-                                  color: Theme.of(context).colorScheme.primary,
+                                  color: Theme
+                                      .of(context)
+                                      .colorScheme
+                                      .primary,
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(6))),
                               child: ElevatedButton(
                                 onPressed: () {
                                   Get.find<SecureStorage>().writeSecureData(
                                       AllStringConst.AppColor,
-                                      Get.find<MController>().appcolor.value);
+                                      Get
+                                          .find<MController>()
+                                          .appcolor
+                                          .value);
                                   Navigator.of(context).pop();
                                 },
                                 child: Text(
                                   "save",
-                                  style: Theme.of(context)
+                                  style: Theme
+                                      .of(context)
                                       .textTheme
                                       .headline2!
                                       .copyWith(color: Colors.white),
@@ -2455,7 +2721,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                     Text(
                       "appTheme".tr,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context)
+                      style: Theme
+                          .of(context)
                           .textTheme
                           .headline3!
                           .copyWith(color: Colors.grey.shade600),
@@ -2493,7 +2760,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                   Text(
                     "logout".tr,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context)
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .headline3!
                         .copyWith(color: Colors.grey.shade600),
@@ -2528,7 +2796,10 @@ class LandingPage extends GetWidget<LandingPageController> {
                     height: 60,
                     child: Text(
                       "appTitle".tr,
-                      style: Theme.of(contex).textTheme.headline1,
+                      style: Theme
+                          .of(contex)
+                          .textTheme
+                          .headline1,
                       textAlign: TextAlign.start,
                     ),
                   ),
@@ -2541,8 +2812,11 @@ class LandingPage extends GetWidget<LandingPageController> {
                     height: 30,
                     child: Text(
                       "hello".tr +
-                          "  ${secureStorage.readSecureData(AllStringConst.FirstName)} ${secureStorage.readSecureData(AllStringConst.LastName)}",
-                      style: Theme.of(contex)
+                          "  ${secureStorage.readSecureData(
+                              AllStringConst.FirstName)} ${secureStorage
+                              .readSecureData(AllStringConst.LastName)}",
+                      style: Theme
+                          .of(contex)
                           .textTheme
                           .headline2!
                           .copyWith(color: Colors.grey),
@@ -2570,7 +2844,7 @@ class LandingPage extends GetWidget<LandingPageController> {
               children: [
                 Container(
                   padding:
-                      EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 0),
+                  EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 0),
                   child: FractionallySizedBox(
                     widthFactor: 0.5,
                     child: Container(
@@ -2587,7 +2861,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                 Spacer(),
                 Container(
                   padding:
-                      EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 0),
+                  EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 0),
                   height: 35,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -2606,7 +2880,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                       Text(
                         controller.data?.departmentName ?? "",
                         // "sharedServicesAdministration".tr,
-                        style: Theme.of(contex)
+                        style: Theme
+                            .of(contex)
                             .textTheme
                             .headline2!
                             .copyWith(color: Colors.grey),
@@ -2638,7 +2913,7 @@ class LandingPage extends GetWidget<LandingPageController> {
             child: Container(
               color: Colors.transparent,
               padding:
-                  EdgeInsets.only(left: 80, right: 80, top: 10, bottom: 10),
+              EdgeInsets.only(left: 80, right: 80, top: 10, bottom: 10),
               child: Container(
                 // width: double.infinity,
                 // height: double.infinity,
@@ -2676,12 +2951,13 @@ class LandingPage extends GetWidget<LandingPageController> {
                               flex: 3,
                               child: Text(
                                 calculateDate("dd", 'en'),
-                                style: Theme.of(context)
+                                style: Theme
+                                    .of(context)
                                     .textTheme
                                     .headline3!
                                     .copyWith(
-                                        fontSize:
-                                            calculateFontSize(65, context)),
+                                    fontSize:
+                                    calculateFontSize(65, context)),
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -2691,12 +2967,13 @@ class LandingPage extends GetWidget<LandingPageController> {
                                 calculateDate("MMMM", getLocaleCode(context)) +
                                     " " +
                                     calculateDate("yyyy", 'en'),
-                                style: Theme.of(context)
+                                style: Theme
+                                    .of(context)
                                     .textTheme
                                     .headline2!
                                     .copyWith(
-                                        color: Colors.grey.shade400,
-                                        fontSize: 15),
+                                    color: Colors.grey.shade400,
+                                    fontSize: 15),
                                 textAlign: TextAlign.center,
                               ),
                             )
@@ -2731,7 +3008,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                               flex: 3,
                               child: Text(
                                 calculateDate("hh:mm", 'en'),
-                                style: Theme.of(context)
+                                style: Theme
+                                    .of(context)
                                     .textTheme
                                     .headline3!
                                     .copyWith(color: Colors.grey, fontSize: 24),
@@ -2742,12 +3020,13 @@ class LandingPage extends GetWidget<LandingPageController> {
                               flex: 2,
                               child: Text(
                                 " " + calculateDate("a", 'en'),
-                                style: Theme.of(context)
+                                style: Theme
+                                    .of(context)
                                     .textTheme
                                     .headline3!
                                     .copyWith(
-                                        color: Colors.grey.shade400,
-                                        fontSize: 24),
+                                    color: Colors.grey.shade400,
+                                    fontSize: 24),
                               ),
                             )
                           ],
@@ -2804,25 +3083,30 @@ class LandingPage extends GetWidget<LandingPageController> {
                               flex: 1,
                               child: Text(
                                 "unreadCorrespondences".tr,
-                                style: Theme.of(context)
+                                style: Theme
+                                    .of(context)
                                     .textTheme
                                     .headline2!
                                     .copyWith(
-                                        color: Colors.grey,
-                                        fontSize:
-                                            calculateFontSize(25, context)),
+                                    color: Colors.grey,
+                                    fontSize:
+                                    calculateFontSize(16, context)),
                                 textAlign: TextAlign.center,
                               ),
                             ),
                             Flexible(
                               flex: 1,
                               child: Text(
-                                // controller.data?.inbox.toString() ?? "",
-                                "20",
-                                style: Theme.of(context)
+                                Get
+                                    .find<LandingPageController>()
+                                    .dashboardStatsResultModel!
+                                    .unreadCount
+                                    .toString(),
+                                style: Theme
+                                    .of(context)
                                     .textTheme
                                     .headline3!
-                                    .copyWith(fontSize: 20),
+                                    .copyWith(fontSize: 24),
                                 textAlign: TextAlign.center,
                               ),
                             )
@@ -2864,20 +3148,25 @@ class LandingPage extends GetWidget<LandingPageController> {
                               flex: 1,
                               child: Text(
                                 "pendingCorrespondences".tr,
-                                style: Theme.of(context)
+                                style: Theme
+                                    .of(context)
                                     .textTheme
                                     .headline2!
                                     .copyWith(
-                                        color: Colors.grey,
-                                        fontSize:
-                                            calculateFontSize(25, context)),
+                                    color: Colors.grey,
+                                    fontSize:
+                                    calculateFontSize(16, context)),
                                 textAlign: TextAlign.center,
                               ),
                             ),
                             Flexible(
                               flex: 1,
                               child: Text(
-                                "20".tr
+                                Get
+                                    .find<LandingPageController>()
+                                    .dashboardStatsResultModel!
+                                    .forActionCount
+                                    .toString()
                                 //controller.data?.transferData.sections[].destination
                                 // controller.data?.transferData.priorities
                                 //   controller.data?.transferData.privacies.
@@ -2885,10 +3174,11 @@ class LandingPage extends GetWidget<LandingPageController> {
                                 //  controller.data?.signature
 
                                 ,
-                                style: Theme.of(context)
+                                style: Theme
+                                    .of(context)
                                     .textTheme
                                     .headline3!
-                                    .copyWith(fontSize: 20),
+                                    .copyWith(fontSize: 24),
                                 textAlign: TextAlign.center,
                               ),
                             )
@@ -2906,7 +3196,7 @@ class LandingPage extends GetWidget<LandingPageController> {
             child: Container(
               color: Colors.transparent,
               padding:
-                  EdgeInsets.only(left: 80, right: 80, top: 10, bottom: 10),
+              EdgeInsets.only(left: 80, right: 80, top: 10, bottom: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -2947,30 +3237,32 @@ class LandingPage extends GetWidget<LandingPageController> {
                               child: Text(
                                 "myTransfersInMonth".tr +
                                     " " +
-                                    // calculateDate('MMMM', getLocaleCode(context)),
                                     calculateDate(
-                                        'MMMM',
-                                        Get.locale?.languageCode == "en"
-                                            ? "en"
-                                            : "ar"),
-                                style: Theme.of(context)
+                                        'MMMM', getLocaleCode(context)),
+                                style: Theme
+                                    .of(context)
                                     .textTheme
                                     .headline2!
                                     .copyWith(
-                                        color: Colors.grey,
-                                        fontSize:
-                                            calculateFontSize(25, context)),
+                                    color: Colors.grey,
+                                    fontSize:
+                                    calculateFontSize(16, context)),
                                 textAlign: TextAlign.center,
                               ),
                             ),
                             Flexible(
                               flex: 1,
                               child: Text(
-                                "20",
-                                style: Theme.of(context)
+                                Get
+                                    .find<LandingPageController>()
+                                    .dashboardStatsResultModel!
+                                    .transferredFromMeCount!
+                                    .toString(),
+                                style: Theme
+                                    .of(context)
                                     .textTheme
                                     .headline3!
-                                    .copyWith(fontSize: 20),
+                                    .copyWith(fontSize: 24),
                                 textAlign: TextAlign.center,
                               ),
                             )
@@ -3014,24 +3306,29 @@ class LandingPage extends GetWidget<LandingPageController> {
                               flex: 1,
                               child: Text(
                                 "mostMyTransferWentTo".tr,
-                                style: Theme.of(context)
+                                style: Theme
+                                    .of(context)
                                     .textTheme
                                     .headline2!
                                     .copyWith(
-                                        color: Colors.grey,
-                                        fontSize:
-                                            calculateFontSize(25, context)),
+                                    color: Colors.grey,
+                                    fontSize:
+                                    calculateFontSize(16, context)),
                                 textAlign: TextAlign.center,
                               ),
                             ),
                             Flexible(
                               flex: 1,
                               child: Text(
-                                "نورا الجيدا",
-                                style: Theme.of(context)
+                                Get
+                                    .find<LandingPageController>()
+                                    .dashboardStatsResultModel!
+                                    .mostTransfersWentTo!,
+                                style: Theme
+                                    .of(context)
                                     .textTheme
                                     .headline3!
-                                    .copyWith(fontSize: 20),
+                                    .copyWith(fontSize: 24),
                                 textAlign: TextAlign.center,
                               ),
                             )
@@ -3283,30 +3580,34 @@ class LandingPage extends GetWidget<LandingPageController> {
                                 flex: 1,
                                 child: Text(
                                   "unreadCorrespondences".tr,
-                                  style: Theme.of(context)
+                                  style: Theme
+                                      .of(context)
                                       .textTheme
                                       .headline2!
                                       .copyWith(
-                                        color: Colors.grey,
-                                        fontSize:
-                                            // 25
-                                            calculateFontSize(25, context),
-                                      ),
+                                    color: Colors.grey,
+                                    fontSize:
+                                    calculateFontSize(30, context),
+                                  ),
                                   textAlign: TextAlign.center,
                                 ),
                               ),
                               Flexible(
                                 flex: 1,
                                 child: Text(
-                                  "5",
-                                  style: Theme.of(context)
+                                  Get
+                                      .find<LandingPageController>()
+                                      .dashboardStatsResultModel!
+                                      .unreadCount
+                                      .toString(),
+                                  style: Theme
+                                      .of(context)
                                       .textTheme
                                       .headline3!
                                       .copyWith(
-                                        fontSize:
-                                            // 20
-                                            calculateFontSize(20, context),
-                                      ),
+                                    fontSize:
+                                    calculateFontSize(80, context),
+                                  ),
                                   textAlign: TextAlign.center,
                                 ),
                               )
@@ -3355,28 +3656,34 @@ class LandingPage extends GetWidget<LandingPageController> {
                                 flex: 1,
                                 child: Text(
                                   "pendingCorrespondences".tr,
-                                  style: Theme.of(context)
+                                  style: Theme
+                                      .of(context)
                                       .textTheme
                                       .headline2!
                                       .copyWith(
-                                        color: Colors.grey,
-                                        fontSize:
-                                            calculateFontSize(25, context),
-                                      ),
+                                    color: Colors.grey,
+                                    fontSize:
+                                    calculateFontSize(30, context),
+                                  ),
                                   textAlign: TextAlign.center,
                                 ),
                               ),
                               Flexible(
                                 flex: 1,
                                 child: Text(
-                                  "19",
-                                  style: Theme.of(context)
+                                  Get
+                                      .find<LandingPageController>()
+                                      .dashboardStatsResultModel!
+                                      .forActionCount
+                                      .toString(),
+                                  style: Theme
+                                      .of(context)
                                       .textTheme
                                       .headline3!
                                       .copyWith(
-                                        fontSize:
-                                            calculateFontSize(20, context),
-                                      ),
+                                    fontSize:
+                                    calculateFontSize(80, context),
+                                  ),
                                   textAlign: TextAlign.center,
                                 ),
                               )
@@ -3395,348 +3702,364 @@ class LandingPage extends GetWidget<LandingPageController> {
             child: Container(
               color: Colors.transparent,
               padding:
-                  EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+              EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Flexible(
-                    flex: 1,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          left: 0, right: 10, top: 0, bottom: 0),
-                      child: Container(
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(6),
-                              topRight: Radius.circular(6),
-                              bottomLeft: Radius.circular(6),
-                              bottomRight: Radius.circular(6)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.25),
-                              spreadRadius: 6,
-                              blurRadius: 6,
-                              offset: Offset(0, 0),
-                            ),
-                          ],
-                        ),
-                        child: Container(
-                          color: Colors.transparent,
-                          width: double.infinity,
-                          height: double.infinity,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Flexible(
-                                flex: 1,
-                                child: Text(
-                                  "myTransfersInMonth".tr +
-                                      " " +
-                                      calculateDate(
-                                          'MMMM', getLocaleCode(context)),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline2!
-                                      .copyWith(
-                                        color: Colors.grey,
-                                        fontSize:
-                                            calculateFontSize(25, context),
-                                      ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              Flexible(
-                                flex: 1,
-                                child: Text(
-                                  "20",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline3!
-                                      .copyWith(
-                                        fontSize:
-                                            calculateFontSize(20, context),
-                                      ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          left: 10, right: 0, top: 0, bottom: 0),
-                      child: Container(
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(6),
-                              topRight: Radius.circular(6),
-                              bottomLeft: Radius.circular(6),
-                              bottomRight: Radius.circular(6)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.25),
-                              spreadRadius: 6,
-                              blurRadius: 6,
-                              offset: Offset(0, 0),
-                            ),
-                          ],
-                        ),
-                        child: Container(
-                          color: Colors.transparent,
-                          width: double.infinity,
-                          height: double.infinity,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Flexible(
-                                flex: 1,
-                                child: Text(
-                                  "mostMyTransferWentTo".tr,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline2!
-                                      .copyWith(
-                                        color: Colors.grey,
-                                        fontSize:
-                                            calculateFontSize(25, context),
-                                      ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              Flexible(
-                                flex: 1,
-                                child: Text(
-                                  "نورا الجيدا",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline3!
-                                      .copyWith(
-                                        fontSize:
-                                            calculateFontSize(20, context),
-                                      ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Flexible(
-            flex: 2,
-            child: Container(
-              color: Colors.transparent,
-              padding: EdgeInsets.all(10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Flexible(
-                    flex: 1,
-                    child: Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(6)
-                            // topLeft: Radius.circular(6),
-                            // topRight: Radius.circular(6),
-                            // bottomLeft: Radius.circular(6),
-                            // bottomRight: Radius.circular(6)
-                            ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.25),
-                            spreadRadius: 6,
-                            blurRadius: 6,
-                            offset: Offset(0, 0),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Spacer(flex: 2),
-                          const Flexible(
-                            flex: 2,
-                            child: Image(
-                              image: AssetImage(
-                                // 'assets/images/flagged.png',
-                                'assets/images/incoming.png',
-                              ),
-                              fit: BoxFit.contain,
-                              width: double.infinity,
-                              height: double.infinity,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          const Spacer(flex: 1),
-                          Flexible(
-                            flex: 10,
-                            child: Container(
-                              width: double.infinity,
-                              child: Text(
-                                // "flagged".tr,
-                                "وارد للكل".tr,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .copyWith(
-                                        color: Colors.grey,
-                                        fontSize:
-                                            calculateFontSize(16, context)),
-                                textAlign: TextAlign.start,
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            flex: 3,
-                            child: Container(
-                              width: double.infinity,
-                              child: Text(
-                                "5",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline3!
-                                    .copyWith(
-                                      fontSize: 22,
-                                      color: createMaterialColor(
-                                        Color.fromRGBO(247, 148, 29, 1),
-                                      ),
-                                    ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                          Spacer(flex: 2)
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
+                Flexible(
+                flex: 1,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      left: 0, right: 10, top: 0, bottom: 0),
+                  child: Container(
+                    height: 150,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(6),
                           topRight: Radius.circular(6),
                           bottomLeft: Radius.circular(6),
-                          bottomRight: Radius.circular(6),
+                          bottomRight: Radius.circular(6)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.25),
+                          spreadRadius: 6,
+                          blurRadius: 6,
+                          offset: Offset(0, 0),
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.25),
-                            spreadRadius: 6,
-                            blurRadius: 6,
-                            offset: Offset(0, 0),
-                          ),
-                        ],
-                      ),
-                      child: Row(
+                      ],
+                    ),
+                    child: Container(
+                      color: Colors.transparent,
+                      width: double.infinity,
+                      height: double.infinity,
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Spacer(flex: 2),
-                          Flexible(
-                            flex: 2,
-                            child: Image(
-                              image: AssetImage(
-                                // 'assets/images/notification.png',
-                                'assets/images/outgoing.png',
-                              ),
-                              fit: BoxFit.contain,
-                              width: double.infinity,
-                              height: double.infinity,
-                              color: Colors.grey,
-                            ),
+                        Flexible(
+                        flex: 1,
+                        child: Text(
+                          "myTransfersInMonth".tr +
+                              " " +
+                              calculateDate(
+                                  'MMMM', getLocaleCode(context)),
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .headline2!
+                              .copyWith(
+                            color: Colors.grey,
+                            fontSize:
+                            calculateFontSize(30, context),
                           ),
-                          Spacer(flex: 1),
-                          Flexible(
-                            flex: 10,
-                            child: Container(
-                              width: double.infinity,
-                              child: Text(
-                                // "notifications".tr,
-                                "صادر للكل".tr,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .copyWith(
-                                        color: Colors.grey,
-                                        fontSize:
-                                            calculateFontSize(16, context)),
-                                textAlign: TextAlign.start,
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            flex: 3,
-                            child: Container(
-                              width: double.infinity,
-                              child: Text(
-                                "9",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline3!
-                                    .copyWith(
-                                      fontSize: 22,
-                                      color: createMaterialColor(
-                                        Color.fromRGBO(247, 148, 29, 1),
-                                      ),
-                                    ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                          Spacer(flex: 2)
-                        ],
+                          textAlign: TextAlign.center,
+                        ),
                       ),
-                    ),
+                      Flexible(
+                        flex: 1,
+                        child: Text(
+                            Get
+                                .find<LandingPageController>()
+                                .dashboardStatsResultModel!
+                                .transferredFromMeCount!
+                                .toString(),
+                            style: Theme
+                            .of(context)
+                            .textTheme
+                            .headline3!
+                            .copyWith(
+                          fontSize:
+                          calculateFontSize(80, context),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    )
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
-          )
+          ),
+          SizedBox(
+            width: 20,
+          ),
+          Flexible(
+            flex: 1,
+            child: Padding(
+              padding: EdgeInsets.only(
+                  left: 10, right: 0, top: 0, bottom: 0),
+              child: Container(
+                height: 150,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(6),
+                      topRight: Radius.circular(6),
+                      bottomLeft: Radius.circular(6),
+                      bottomRight: Radius.circular(6)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.25),
+                      spreadRadius: 6,
+                      blurRadius: 6,
+                      offset: Offset(0, 0),
+                    ),
+                  ],
+                ),
+                child: Container(
+                  color: Colors.transparent,
+                  width: double.infinity,
+                  height: double.infinity,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Flexible(
+                        flex: 1,
+                        child: Text(
+                          "mostMyTransferWentTo".tr,
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .headline2!
+                              .copyWith(
+                            color: Colors.grey,
+                            fontSize:
+                            calculateFontSize(38, context),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      Flexible(
+                        flex: 1,
+                        child: Text(
+                          Get.find<LandingPageController>()!
+                              .dashboardStatsResultModel!.mostTransfersWentTo!,
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .headline3!
+                              .copyWith(
+                            fontSize:
+                            calculateFontSize(47, context),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
+    ),
+    ),
+    Flexible(
+    flex: 2,
+    child: Container(
+    color: Colors.transparent,
+    padding: EdgeInsets.all(10),
+    child: Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    mainAxisSize: MainAxisSize.max,
+    children: [
+    Flexible(
+    flex: 1,
+    child: Container(
+    height: 60,
+    decoration: BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.all(Radius.circular(6)
+    // topLeft: Radius.circular(6),
+    // topRight: Radius.circular(6),
+    // bottomLeft: Radius.circular(6),
+    // bottomRight: Radius.circular(6)
+    ),
+    boxShadow: [
+    BoxShadow(
+    color: Colors.grey.withOpacity(0.25),
+    spreadRadius: 6,
+    blurRadius: 6,
+    offset: Offset(0, 0),
+    ),
+    ],
+    ),
+    child: Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    mainAxisSize: MainAxisSize.max,
+    children: [
+    Spacer(flex: 2),
+    const Flexible(
+    flex: 2,
+    child: Image(
+    image: AssetImage(
+    'assets/images/flagged.png',
+    ),
+    fit: BoxFit.contain,
+    width: double.infinity,
+    height: double.infinity,
+    color: Colors.grey,
+    ),
+    ),
+    const Spacer(flex: 1),
+    Flexible(
+    flex: 10,
+    child: Container(
+    width: double.infinity,
+    child: Text(
+    "flagged".tr,
+    style: Theme
+        .of(context)
+        .textTheme
+        .headline2!
+        .copyWith(
+    color: Colors.grey,
+    fontSize:
+    calculateFontSize(16, context)),
+    textAlign: TextAlign.start,
+    ),
+    ),
+    ),
+    Flexible(
+    flex: 3,
+    child: Container(
+    width: double.infinity,
+    child: Text(
+    "5",
+    style: Theme
+        .of(context)
+        .textTheme
+        .headline3!
+        .copyWith(
+    fontSize: 22,
+    color: createMaterialColor(
+    Color.fromRGBO(247, 148, 29, 1),
+    ),
+    ),
+    textAlign: TextAlign.center,
+    ),
+    ),
+    ),
+    Spacer(flex: 2)
+    ],
+    ),
+    ),
+    ),
+    SizedBox(
+    height: 20,
+    ),
+    Flexible(
+    flex: 1,
+    child: Container(
+    height: 60,
+    decoration: BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.only(
+    topLeft: Radius.circular(6),
+    topRight: Radius.circular(6),
+    bottomLeft: Radius.circular(6),
+    bottomRight: Radius.circular(6),
+    ),
+    boxShadow: [
+    BoxShadow(
+    color: Colors.grey.withOpacity(0.25),
+    spreadRadius: 6,
+    blurRadius: 6,
+    offset: Offset(0, 0),
+    ),
+    ],
+    ),
+    child: Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    mainAxisSize: MainAxisSize.max,
+    children: [
+    Spacer(flex: 2),
+    Flexible(
+    flex: 2,
+    child: Image(
+    image: AssetImage(
+    'assets/images/notification.png',
+    ),
+    fit: BoxFit.contain,
+    width: double.infinity,
+    height: double.infinity,
+    color: Colors.grey,
+    ),
+    ),
+    Spacer(flex: 1),
+    Flexible(
+    flex: 10,
+    child: Container(
+    width: double.infinity,
+    child: Text(
+    "notifications".tr,
+    style: Theme
+        .of(context)
+        .textTheme
+        .headline2!
+        .copyWith(
+    color: Colors.grey,
+    fontSize:
+    calculateFontSize(16, context)),
+    textAlign: TextAlign.start,
+    ),
+    ),
+    ),
+    Flexible(
+    flex: 3,
+    child: Container(
+    width: double.infinity,
+    child: Text(
+    "9",
+    style: Theme
+        .of(context)
+        .textTheme
+        .headline3!
+        .copyWith(
+    fontSize: 22,
+    color: createMaterialColor(
+    Color.fromRGBO(247, 148, 29, 1),
+    ),
+    ),
+    textAlign: TextAlign.center,
+    ),
+    ),
+    ),
+    Spacer(flex: 2)
+    ],
+    ),
+    ),
+    ),
+    ],
+    ),
+    ),
+    )
+    ],
+    )
+    ,
     );
   }
 
   portiraitDataTable(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
+      width: MediaQuery
+          .of(context)
+          .size
+          .width,
+      height: MediaQuery
+          .of(context)
+          .size
+          .height,
       alignment: Alignment.centerRight,
       decoration: BoxDecoration(
         color: createMaterialColor(Color.fromRGBO(255, 255, 255, 0.8)),
@@ -3760,7 +4083,11 @@ class LandingPage extends GetWidget<LandingPageController> {
                     color: Colors.grey.shade300,
                     style: BorderStyle.solid),
               ),
-              children: [
+              children: Get.find<LandingPageController>()!
+                  .dashboardStatsResultModel!.inboxCategories!.map((e) =>
+
+
+
                 TableRow(
                   children: [
                     TableRowInkWell(
@@ -3769,56 +4096,35 @@ class LandingPage extends GetWidget<LandingPageController> {
                       },
                       child: _buildInboxesRow(
                         context,
-                        "forAction".tr,
-                        5.toString(),
+                        e.key!,
+                        e.value!.count!,
                       ),
                     ),
                   ],
                 ),
-                TableRow(
-                  children: [
-                    TableRowInkWell(
-                      onTap: () {
-                        openInbox(context);
-                      },
-                      child: _buildInboxesRow(
-                        context,
-                        "forSignature".tr,
-                        07.toString(),
-                      ),
-                    ),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    TableRowInkWell(
-                      onTap: () {
-                        openInbox(context);
-                      },
-                      child: _buildInboxesRow(
-                        context,
-                        "forInfo".tr,
-                        09.toString(),
-                      ),
-                    ),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    TableRowInkWell(
-                      onTap: () {
-                        openInbox(context);
-                      },
-                      child: _buildInboxesRow(
-                        context,
-                        "all".tr,
-                        25.toString(),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+
+              )
+                  .toList(),
             ),
+
+
+            //
+            // TableRow(
+            //   children: [
+            //     TableRowInkWell(
+            //       onTap: () {
+            //         openInbox(context);
+            //       },
+            //       child: _buildInboxesRow(
+            //         context,
+            //         "all".tr,
+            //         2,
+            //       ),
+            //     ),
+            //   ],
+            // ),
+
+
             _buildDataLabelTitleLabel(context, "folders".tr),
             Table(
               border: TableBorder(
@@ -3840,11 +4146,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                       },
                       child: _buildOtherFoldersRows(
                         context,
-                        // "flagged".tr,
-                        // "assets/images/flagged.png",
-                        "وارد للكل".tr,
-                        "assets/images/incoming.png",
-                        false,
+                        "flagged".tr,
+                        "assets/images/flagged.png",
+                        true,
                         5,
                       ),
                     ),
@@ -3858,11 +4162,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                       },
                       child: _buildOtherFoldersRows(
                         context,
-                        // "notifications".tr,
-                        // "assets/images/notification.png",
-                        "صادر للكل".tr,
-                        "assets/images/outgoing.png",
-                        false,
+                        "notifications".tr,
+                        "assets/images/notification.png",
+                        true,
                         9,
                       ),
                     ),
@@ -3902,7 +4204,10 @@ class LandingPage extends GetWidget<LandingPageController> {
             ),
             Container(
               height: 100,
-              width: MediaQuery.of(context).size.width,
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width,
               child: _buildSideMenuPort(context),
             ),
             Align(
@@ -3933,7 +4238,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                         Text(
                           controller.data?.departmentName ?? "",
                           //        "sharedServicesAdministration".tr,
-                          style: Theme.of(context)
+                          style: Theme
+                              .of(context)
                               .textTheme
                               .headline2!
                               .copyWith(color: Colors.grey),
@@ -3996,64 +4302,28 @@ class LandingPage extends GetWidget<LandingPageController> {
                     color: Colors.grey.shade300,
                     style: BorderStyle.solid),
               ),
-              children: [
-                TableRow(
-                  children: [
-                    TableRowInkWell(
-                      onTap: () {
-                        openInbox(context);
-                      },
-                      child: _buildInboxesRow(
-                        context,
-                        "forAction".tr,
-                        5.toString(),
+              children:Get.find<LandingPageController>()!
+                  .dashboardStatsResultModel!.inboxCategories!.map((e) =>
+
+
+
+                  TableRow(
+                    children: [
+                      TableRowInkWell(
+                        onTap: () {
+                          openInbox(context);
+                        },
+                        child: _buildInboxesRow(
+                          context,
+                          e.key!,
+                          e.value!.count!,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    TableRowInkWell(
-                      onTap: () {
-                        openInbox(context);
-                      },
-                      child: _buildInboxesRow(
-                        context,
-                        "forSignature".tr,
-                        07.toString(),
-                      ),
-                    ),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    TableRowInkWell(
-                      onTap: () {
-                        openInbox(context);
-                      },
-                      child: _buildInboxesRow(
-                        context,
-                        "forInfo".tr,
-                        09.toString(),
-                      ),
-                    ),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    TableRowInkWell(
-                      onTap: () {
-                        openInbox(context);
-                      },
-                      child: _buildInboxesRow(
-                        context,
-                        "all".tr,
-                        "18",
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+
+              )
+                  .toList(),
             ),
 
             //  Container(color: Colors.red, height: 100,width: MediaQuery.of(context).size.width, child: _buildSideMenuPort(  context),),
@@ -4082,10 +4352,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                       },
                       child: _buildOtherFoldersRows(
                         context,
-                        // "flagged".tr,
-                        "وارد للكل".tr,
-                        "assets/images/incoming.png",
-                        false,
+                        "flagged".tr,
+                        "assets/images/flagged.png",
+                        true,
                         5,
                       ),
                     ),
@@ -4099,10 +4368,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                       },
                       child: _buildOtherFoldersRows(
                         context,
-                        // "notifications".tr,
-                        "صادر للكل".tr,
-                        "assets/images/outgoing.png",
-                        false,
+                        "notifications".tr,
+                        "assets/images/notification.png",
+                        true,
                         9,
                       ),
                     ),
@@ -4150,7 +4418,9 @@ class LandingPage extends GetWidget<LandingPageController> {
   }
 
   _buildDataLabelTitleLabel(BuildContext context, String title) {
-    Orientation orientation = MediaQuery.of(context).orientation;
+    Orientation orientation = MediaQuery
+        .of(context)
+        .orientation;
     return Container(
       padding: EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 0),
       color: Colors.transparent,
@@ -4159,7 +4429,8 @@ class LandingPage extends GetWidget<LandingPageController> {
           orientation == Orientation.landscape ? 50 : 40, context),
       child: Text(
         title,
-        style: Theme.of(context)
+        style: Theme
+            .of(context)
             .textTheme
             .headline2!
             .copyWith(color: Colors.grey.shade400, fontSize: 12),
@@ -4168,7 +4439,7 @@ class LandingPage extends GetWidget<LandingPageController> {
     );
   }
 
-  _buildInboxesRow(BuildContext content, String title, String count) {
+  _buildInboxesRow(BuildContext content, String title, int count) {
     return Container(
       padding: EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 0),
       width: double.infinity,
@@ -4183,7 +4454,10 @@ class LandingPage extends GetWidget<LandingPageController> {
             flex: 1,
             child: Container(
               decoration: BoxDecoration(
-                color: Theme.of(content).colorScheme.primary,
+                color: Theme
+                    .of(content)
+                    .colorScheme
+                    .primary,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(6),
                   topRight: Radius.circular(6),
@@ -4203,27 +4477,27 @@ class LandingPage extends GetWidget<LandingPageController> {
               width: double.infinity,
               child: Text(
                 title,
-                style: Theme.of(content)
+                style: Theme
+                    .of(content)
                     .textTheme
                     .headline1!
-                    .copyWith(color: Colors.grey, fontSize: 17,
-                fontFamily: "Bahij_bold"),
+                    .copyWith(color: Colors.grey, fontSize: 17),
                 textAlign: TextAlign.start,
               ),
             ),
           ),
           Spacer(flex: 1),
           Flexible(
-            flex: 2,
             child: Container(
               color: Colors.transparent,
-              width: 60,
+              width: 40,
               child: Text(
                 count.toString(),
-                style: Theme.of(content)
+                style: Theme
+                    .of(content)
                     .textTheme
                     .headline2!
-                    .copyWith(fontSize: 19),
+                    .copyWith(fontSize: 17),
                 textAlign: TextAlign.end,
               ),
             ),
@@ -4247,7 +4521,9 @@ class LandingPage extends GetWidget<LandingPageController> {
 
   _buildOtherFoldersRows(BuildContext context, String title, String iconTitle,
       bool showCount, int count) {
-    Orientation orientation = MediaQuery.of(context).orientation;
+    Orientation orientation = MediaQuery
+        .of(context)
+        .orientation;
     return Container(
       padding: EdgeInsets.only(
           left: 30,
@@ -4285,7 +4561,8 @@ class LandingPage extends GetWidget<LandingPageController> {
               width: double.infinity,
               child: Text(
                 title,
-                style: Theme.of(context)
+                style: Theme
+                    .of(context)
                     .textTheme
                     .headline1!
                     .copyWith(color: Colors.grey, fontSize: 17),
@@ -4302,7 +4579,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                 width: 40,
                 child: Text(
                   count.toString(),
-                  style: Theme.of(context)
+                  style: Theme
+                      .of(context)
                       .textTheme
                       .headline2!
                       .copyWith(fontSize: 17),

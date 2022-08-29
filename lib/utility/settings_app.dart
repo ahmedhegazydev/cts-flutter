@@ -92,4 +92,21 @@ class SettingsApp {
   static const String RemoveFavoriteRecipientsUrl = baseUrl + "/RemoveFavoriteRecipients?"; //
   static const String AddFavoriteRecipientsUrl = baseUrl + "/AddFavoriteRecipients?"; //
 
+
+  //==========================================
+
+
+
+  static const String GetMyRoutingSettingsUrl =
+      baseUrl + "/GetMyRoutingSettings?"; //Token={Token}&GctId={GctId}")
+
+  static const String SaveMyRoutingSettingsUrl =
+      baseUrl + "/SaveMyRoutingSettings"; //Token={Token}&GctId={GctId}")
+
+  static const String RemoveMyRoutingSettingsUrl =
+      baseUrl + "/RemoveMyRoutingSettings"; //Token={Token}&GctId={GctId}")
+
+  static const String DashboardHomeUrl =
+      baseUrl + "/DashboardHome?"; //Token={Token}&GctId={GctId}")
+
 }

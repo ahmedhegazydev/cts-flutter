@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:signature/signature.dart';
@@ -12,7 +15,7 @@ class SignaturePageController extends GetxController {
   Map<String, dynamic>? logindata;
   List<MultiSignatures> multiSignatures = [];
   final SecureStorage secureStorage = SecureStorage();
-  bool haveNewSing=false;
+
 List newSing=[];
   final SignatureController controller = SignatureController(
     penStrokeWidth: 5,
@@ -20,9 +23,9 @@ List newSing=[];
     exportBackgroundColor: Colors.white,
   );
 replaceSing(sin){
-  newSing.clear();
-  newSing.add(sin);
-  haveNewSing=true;
+  // newSing.clear();
+  // newSing.add(sin);
+
   update();
 }
   updateSignature({
@@ -43,6 +46,30 @@ replaceSing(sin){
       LoginModel data = LoginModel.fromJson(logindata!);
       multiSignatures = data.multiSignatures ?? [];
       update();
+      //multiSignatures.add(secureStorage.readSecureData(AllStringConst.Signature))
+      
     }
+    
   }
+
+  saveSign(context)async {
+  print("9999999999999999999999999999999");
+  final Uint8List? data =await  controller.toPngBytes();
+  SignatureInfoModel _signatureInfoModel = SignatureInfoModel(
+      signature:   base64.encode(data!), Token:  secureStorage.token()!,
+      SignatureId: multiSignatures[0].cNTGctId.toString());
+
+   updateSignature(
+  context: context,
+  signatureInfoModel: _signatureInfoModel);
+
+
+
+
+
+  secureStorage.writeSecureData(AllStringConst.Signature,base64.encode(data!));
+
+
+ replaceSing(base64.encode(data!));
+}
 }

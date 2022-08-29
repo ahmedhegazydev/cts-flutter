@@ -6,7 +6,7 @@ import '../../../../utility/settings_app.dart';
 import '../../../json_model/inopendocModel/g2g/g2g_receive_or_reject_dto.dart';
 
 class ReturnDocumentUsingG2GAPI extends ApiManager{
-  ReturnDocumentUsingG2GAPI(BuildContext context) : super(context);
+  ReturnDocumentUsingG2GAPI(BuildContext context) : super(context: context);
 
   @override
   String apiUrl() {

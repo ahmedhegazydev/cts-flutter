@@ -7,6 +7,7 @@ import 'package:signature/signature.dart';
 
 import '../controllers/signature_Controller.dart';
 import '../services/json_model/signature_Info_model.dart';
+import '../utility/all_string_const.dart';
 import '../utility/utilitie.dart';
 
 class SignaturePage extends GetView<SignaturePageController> {
@@ -14,7 +15,7 @@ class SignaturePage extends GetView<SignaturePageController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Column(
+    return Scaffold(body: Column(crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(height: 300,
             width: double.infinity,
@@ -23,28 +24,23 @@ class SignaturePage extends GetView<SignaturePageController> {
           InkWell(onTap: () {
             controller.controller.clear();
           }, child: Icon(Icons.clear, size: 50,)),
-          InkWell(onTap: ()async {
-            print("9999999999999999999999999999999");
-            final Uint8List? data =await controller.controller.toPngBytes();
-            SignatureInfoModel _signatureInfoModel = SignatureInfoModel(
-                signature:   base64.encode(data!), Token: controller.secureStorage.token()!,
-                SignatureId: controller.multiSignatures[0].cNTGctId.toString());
-
-               controller.updateSignature(
-                   context: context,
-                   signatureInfoModel: _signatureInfoModel);
-
-controller.replaceSing(base64.encode(data!));
+          InkWell(onTap: (){
+          controller.  saveSign(context);
           }, child: Icon(Icons.save, size: 50,)),
         ],),
-        Divider(color: Colors.grey)
+        Divider(color: Colors.grey),
+        
+        Text("defaultsignature".tr),
+        Image.memory(dataFromBase64String(controller.secureStorage.readSecureData(AllStringConst.Signature)) ,height: 100,),
+        Divider(color: Colors.grey),
+        Text("multisignature".tr)
         , Expanded(
           child: GetBuilder<SignaturePageController>(
             assignId: true,
             builder: (logic) {
               return
                 GridView.builder(
-                  itemCount: logic.haveNewSing?logic.newSing.length: controller
+                  itemCount:  controller
                       .multiSignatures.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
@@ -52,8 +48,7 @@ controller.replaceSing(base64.encode(data!));
                       mainAxisSpacing: 4.0
                   ),
                   itemBuilder: (BuildContext context, int index) {
-                    return logic.haveNewSing?  Image.memory(dataFromBase64String(controller
-                        .newSing[index])):   Image.memory(dataFromBase64String(controller
+                    return    Image.memory(dataFromBase64String(controller
                         .multiSignatures[index].signature));
                   },
                 );

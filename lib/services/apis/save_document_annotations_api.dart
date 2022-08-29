@@ -8,7 +8,7 @@ import '../api_manager.dart';
 import '../json_model/inopendocModel/getatt_achments_model.dart';
 
 class SaveDocumentAnnotationsAPI extends ApiManager{
-  SaveDocumentAnnotationsAPI(BuildContext context) : super(context);
+  SaveDocumentAnnotationsAPI(BuildContext context) : super(context: context);
 
 
   @override

@@ -13,7 +13,7 @@ class LogInApi extends ApiManager {
 
   String loginData = "";
 
-  LogInApi(BuildContext context) : super(context);
+  LogInApi(BuildContext context) : super(context: context);
 
   @override
   String apiUrl() {

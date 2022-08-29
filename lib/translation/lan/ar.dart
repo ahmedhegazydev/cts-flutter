@@ -102,7 +102,7 @@ const Map<String, String> ar = {
   , "pick your Color": "اختر اللون المناسب"
   ,"addtoBasket":"اضف الي السلة",
   "Summary":"معلومات",
-
+  "Basket":"سلة",
 "Complete":"انهاء",
    "صادر للكل": "صادر الكل"
   , "وارد للكل": "وارد الكل"
@@ -120,6 +120,13 @@ const Map<String, String> ar = {
   ,
   "end":"تاريخ الانتهاء"
   ,
+  "reason":"السبب",
+"defaultsignature":"الامضاء الافتراضية"
+  ,
+  "multisignature":"جميع الامضاءات",
+  "userGuide":"دليل الاستخدام",
+  "newBasket":"سلة جديدة",
+
   "reason":"السبب",
   "Loading...":"  تحميل .... ",
 };

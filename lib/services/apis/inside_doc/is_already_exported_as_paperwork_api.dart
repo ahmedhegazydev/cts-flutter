@@ -8,7 +8,7 @@ import '../../json_model/inopendocModel/is_already_exported_as_paperwork_model.d
 class IsAlreadyExportedAsPaperworkAPI extends ApiManager{
   String data="";
 
-  IsAlreadyExportedAsPaperworkAPI(BuildContext context) : super(context);
+  IsAlreadyExportedAsPaperworkAPI(BuildContext context) : super(context: context);
   @override
   String apiUrl() {
 return SettingsApp.GetIsAlreadyExportedAsPaperworkUrl+data;

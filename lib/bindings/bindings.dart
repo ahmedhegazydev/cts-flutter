@@ -16,12 +16,14 @@ class AllBindings extends Bindings {
   @override
   void dependencies() async {
     Get.lazyPut(() => SecureStorage());
+    Get.lazyPut(() => LandingPageController());
+    Get.put(DocumentController(), permanent: true);
+
     Get.put(LoginController());
     Get.put(InboxController(), permanent: true);
     Get.put(CreateBasketController());
-    Get.lazyPut(() => LandingPageController());
+
     Get.lazyPut(() => SearchController(),fenix: true );
-    Get.put(DocumentController(), permanent: true);
 
     Get.lazyPut(()=>  SignaturePageController(),fenix: true  );
     Get.lazyPut(()=>  WebViewPageController() ,fenix: true  );

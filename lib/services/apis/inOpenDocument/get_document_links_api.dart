@@ -8,7 +8,7 @@ import '../../json_model/get_document_links_model.dart';
 class GetDocumentLinksApi extends ApiManager{
   String data="";
 
-  GetDocumentLinksApi(BuildContext context) : super(context);//?Token={Token}&correspondenceId={correspondenceId}&transferId={transferId}&language={language}"
+  GetDocumentLinksApi(BuildContext context) : super(context: context);//?Token={Token}&correspondenceId={correspondenceId}&transferId={transferId}&language={language}"
   @override
   String apiUrl() {
     return SettingsApp.GetDocumentLinksUrl+data;

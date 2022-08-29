@@ -3,20 +3,20 @@ import 'package:cts/services/api_manager.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 import '../../utility/settings_app.dart';
-import '../json_model/complete_in_correspondence_model.dart';
+import '../json_model/dashboard_stats_result_model.dart';
 
-class CompleteInCorrespondenceAPI extends ApiManager{
+class DashboardStatsResultApi extends ApiManager{
   String data="";
 
-  CompleteInCorrespondenceAPI(BuildContext context) : super(context: context);
+  DashboardStatsResultApi({BuildContext? context}) : super(context: context);
   @override
   String apiUrl() {
-   return  SettingsApp.ExecuteCustomActionsUrl+data;
+    return SettingsApp.DashboardHomeUrl+data;
   }
 
   @override
   AbstractJsonResource fromJson(data) {
- return   CompleteInCorrespondenceModel.fromJson(data);
+ return DashboardStatsResultModel.fromJson(data);
   }
-  
+
 }

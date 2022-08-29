@@ -8,7 +8,7 @@ import '../../json_model/inopendocModel/can_export_as_paperwork_model.dart';
 class CanExportAsPaperworkAPI extends ApiManager{
   String data="";
 
-  CanExportAsPaperworkAPI(BuildContext context) : super(context);
+  CanExportAsPaperworkAPI(BuildContext context) : super(context: context);
   @override
   String apiUrl() {
    return SettingsApp.GetCanExportAsPaperworkUrl+data;

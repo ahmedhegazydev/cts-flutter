@@ -8,7 +8,7 @@ import '../../json_model/get_document_receivers_model.dart';
 class GetDocumentReceiversApi extends ApiManager{
   String data="";
 
-  GetDocumentReceiversApi(BuildContext context) : super(context);//"GetDocumentReceivers?Token={Token}&correspondenceId={correspondenceId}&transferId={transferId}&language={language}"
+  GetDocumentReceiversApi(BuildContext context) : super(context: context);//"GetDocumentReceivers?Token={Token}&correspondenceId={correspondenceId}&transferId={transferId}&language={language}"
   @override
   String apiUrl() {
     return SettingsApp.GetDocumentReceiversUrl+data;

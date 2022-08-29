@@ -9,7 +9,7 @@ import '../../api_manager.dart';
 import '../../json_model/basket/fetch_basket_list_model.dart';
 
 class GetFetchBasketListApi  extends ApiManager{
-  GetFetchBasketListApi(BuildContext context) : super(context);
+  GetFetchBasketListApi(BuildContext context) : super(context: context);
 
 
   @override

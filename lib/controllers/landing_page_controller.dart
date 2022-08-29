@@ -114,7 +114,7 @@ class LandingPageController extends GetxController {
       dashboardStatsResultModel =value as DashboardStatsResultModel;
 
 print("dashboardStatsResultModel.toJson()   =>    ${dashboardStatsResultModel!.toJson()}");
-
+update();
     });
   }
 

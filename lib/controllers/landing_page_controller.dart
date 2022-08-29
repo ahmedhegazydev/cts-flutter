@@ -36,7 +36,7 @@ import '../services/json_model/my_transfer_routing_dto_result.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
 import 'document_controller.dart';
-
+import 'package:flutter/services.dart' as rootBundel;
 class LandingPageController extends GetxController {
   // final SecureStorage _secureStorage = Get.find<SecureStorage>();
   SecureStorage secureStorage = SecureStorage();
@@ -125,7 +125,8 @@ update();
   @override
   void onReady() {
     super.onReady();
-   getDashboardStats();
+   //getDashboardStats();
+    getDashboardStatsLocalJson();
     _logindata = secureStorage.readSecureJsonData(AllStringConst.LogInData);
     data = LoginModel.fromJson(_logindata!);
     // getFindRecipientData();
@@ -307,5 +308,13 @@ print(jsonEncode(data));
   }
 
 
+  getDashboardStatsLocalJson() async {
+    final jsondata = await rootBundel.rootBundle
+        .loadString("assets/json/dashboard.json");
+    dashboardStatsResultModel =
+        DashboardStatsResultModel.fromJson(json.decode(jsondata));
+
+    update();
+  }
 
 }

@@ -1,0 +1,42 @@
+{
+  "ErrorMessage": "",
+  "Status": 1,
+  "ForActionCount": 8,
+  "InboxCategories": [
+    {
+      "Key": "لاجراء اللازم",
+      "Value": {
+        "Count": 8,
+        "Name": "لاجراء اللازم",
+        "NodeId": 10087
+      }
+    },
+    {
+      "Key": "للتوقيع",
+      "Value": {
+        "Count": 0,
+        "Name": "للتوقيع",
+        "NodeId": 10088
+      }
+    },
+    {
+      "Key": "للعلم",
+      "Value": {
+        "Count": 19,
+        "Name": "للعلم",
+        "NodeId": 10089
+      }
+    },
+    {
+      "Key": "الكل",
+      "Value": {
+        "Count": 27,
+        "Name": "الكل",
+        "NodeId": 10090
+      }
+    }
+  ],
+  "MostTransfersWentTo": "مستخدم 115 مستخدم 115",
+  "TransferredFromMeCount": 5,
+  "UnreadCount": 17
+}

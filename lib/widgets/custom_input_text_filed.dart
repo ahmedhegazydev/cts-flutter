@@ -1,21 +1,26 @@
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CustomInputTextFiled extends StatelessWidget {
   final TextEditingController textEditingController;
 
     String? Function(String?)? validator;
+    bool obscureText;
 final String label;
-     CustomInputTextFiled({required this.textEditingController,required this.validator,required this.label });
+     CustomInputTextFiled({required this.textEditingController,required this.validator,required this.label ,this.obscureText=false});
 
    @override
   Widget build(BuildContext context) {
+
+     print("Get.deviceLocale==>   ${Get.deviceLocale?.languageCode=="en"}");
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(    crossAxisAlignment :CrossAxisAlignment.start,
+      //  mainAxisAlignment:  Get.deviceLocale?.languageCode=="en"?MainAxisAlignment.end:MainAxisAlignment.start,
         children: [Padding(
           padding: const EdgeInsets.all(4.0),
-          child: Text(label),
+          child: Container(width: double.infinity,color: Colors.red,child: Text(label,textAlign: TextAlign.start)),
         ),
           Container(
             decoration: BoxDecoration(
@@ -26,7 +31,7 @@ final String label;
             ),
             width: double.infinity,
 
-            child: TextFormField(
+            child: TextFormField(obscureText: obscureText,
               textAlign: TextAlign.start,validator:validator ,
               decoration: const InputDecoration(
                 border: InputBorder.none,

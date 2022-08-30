@@ -3097,6 +3097,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                     .headline2!
                                     .copyWith(
                                     color: Colors.grey,
+                                    // fontFamily: "Bahij_light",
                                     fontSize:
                                     calculateFontSize(16, context)),
                                 textAlign: TextAlign.center,
@@ -3114,7 +3115,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                                     .of(context)
                                     .textTheme
                                     .headline3!
-                                    .copyWith(fontSize: 24),
+                                    .copyWith(fontSize: 24,
+                                  fontFamily: "Bahij_bold",
+                                ),
                                 textAlign: TextAlign.center,
                               ),
                             )
@@ -3186,7 +3189,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                                     .of(context)
                                     .textTheme
                                     .headline3!
-                                    .copyWith(fontSize: 24),
+                                    .copyWith(fontSize: 24,
+                                  fontFamily: "Bahij_bold",
+                                ),
                                 textAlign: TextAlign.center,
                               ),
                             )
@@ -3270,7 +3275,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                                     .of(context)
                                     .textTheme
                                     .headline3!
-                                    .copyWith(fontSize: 24),
+                                    .copyWith(fontSize: 24,
+                                  fontFamily: "Bahij_bold",
+                                ),
                                 textAlign: TextAlign.center,
                               ),
                             )
@@ -3336,7 +3343,10 @@ class LandingPage extends GetWidget<LandingPageController> {
                                     .of(context)
                                     .textTheme
                                     .headline3!
-                                    .copyWith(fontSize: 24),
+                                    .copyWith(fontSize: 24,
+                                  fontFamily: "Bahij_bold",
+                                    height: 1.2 // the height between text, default is null
+                                ),
                                 textAlign: TextAlign.center,
                               ),
                             )
@@ -3594,6 +3604,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                       .headline2!
                                       .copyWith(
                                     color: Colors.grey,
+                                    // fontFamily: "Bahij_light",
                                     fontSize:
                                     calculateFontSize(30, context),
                                   ),
@@ -3613,6 +3624,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                       .textTheme
                                       .headline3!
                                       .copyWith(
+                                    fontFamily: "Bahij_bold",
                                     fontSize:
                                     calculateFontSize(80, context),
                                   ),
@@ -3689,6 +3701,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                                       .textTheme
                                       .headline3!
                                       .copyWith(
+                                    fontFamily: "Bahij_bold",
+
                                     fontSize:
                                     calculateFontSize(80, context),
                                   ),
@@ -3780,7 +3794,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                             .textTheme
                             .headline3!
                             .copyWith(
-                          fontSize:
+                              fontFamily: "Bahij_bold",
+
+                              fontSize:
                           calculateFontSize(80, context),
                         ),
                         textAlign: TextAlign.center,
@@ -3853,6 +3869,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                               .textTheme
                               .headline3!
                               .copyWith(
+                            fontFamily: "Bahij_bold",
+
                             fontSize:
                             calculateFontSize(47, context),
                           ),

@@ -28,7 +28,7 @@ const Map<String, String> ar = {
   "outgoing": "الصادر",
   "internal": "الداخلي",
   "unread": "غير مقروء",
-  "sender": "المرسل : ",
+  "sender": "المرسل ",
   "secret": "سري",
   "urgent": "عاجل",
   "allInbox": "كل البريد",

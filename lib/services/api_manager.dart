@@ -42,7 +42,8 @@ abstract class ApiManager {
     await dioSingleton.dio
         .get(checkIfSavedSettingsBasUrl(), queryParameters: data)
         .then((value) {
-      Navigator.pop(context!);
+      // Navigator.pop(context!);
+      // Get.back();
       if (value.data["Status"] == 0) {
         a.Get.snackbar("Error".tr, "${value.data["ErrorMessage"]}");
       } else {
@@ -81,7 +82,8 @@ abstract class ApiManager {
             //     }),
             )
         .then((value) {
-      Navigator.pop(context!);
+      // Navigator.pop(context!);
+      // Get.back();
       if (value.data["Status"] == 0) {
         a.Get.snackbar("Error".tr, "${value.data["ErrorMessage"]}");
       } else {

@@ -128,15 +128,15 @@ class MyApp extends StatelessWidget {
                 Get.find<MController>().appcolor //      AppColor
                 ),
           ),
-          fontFamily: "Bahij",
+          fontFamily: "Bahij_light",
           primarySwatch:
               createMaterialColor(Get.find<MController>().appcolor //  AppColor
                   ),
         ),
         getPages: [
           GetPage(name: "/", page: () =>
-              LoginPage(),
-              // LandingPage(),
+              // LoginPage(),
+              LandingPage(),
               // InboxPage(),
               middlewares: [AuthMiddleWare()]), //SearchPage
           GetPage(

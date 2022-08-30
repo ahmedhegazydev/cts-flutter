@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:cts/controllers/search_controller.dart';
@@ -15,6 +14,9 @@ import '../services/apis/basket/add_edit_basket_result _api.dart';
 import '../services/apis/basket/remove_basket_api.dart';
 import '../services/apis/basket/reorder_baskets_result _api.dart';
 import '../services/apis/dashboard_stats_result_api.dart';
+import '../services/apis/favorites/AddFavoriteRecipients_api.dart';
+import '../services/apis/favorites/ListFavoriteRecipients_api.dart';
+import '../services/apis/favorites/RemoveFavoriteRecipients_api.dart';
 import '../services/apis/find_recipient_api.dart';
 import '../services/apis/get_correspondences_api.dart';
 import '../services/apis/get_my_routing_settings_api.dart';
@@ -25,6 +27,10 @@ import '../services/json_model/basket/add_edit_basket_flag_model.dart';
 import '../services/json_model/basket/remove_basket_request_model.dart';
 import '../services/json_model/basket/reorder_baskets_request_model.dart';
 import '../services/json_model/dashboard_stats_result_model.dart';
+import '../services/json_model/favorites/add/AddFavoriteRecipients_request.dart';
+import '../services/json_model/favorites/list_all/ListFavoriteRecipients_request.dart';
+import '../services/json_model/favorites/list_all/ListFavoriteRecipients_response.dart';
+import '../services/json_model/favorites/remove/RemoveFavoriteRecipients_request.dart';
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_correspondences_model.dart';
 
@@ -39,7 +45,6 @@ import 'document_controller.dart';
 import 'package:flutter/services.dart' as rootBundel;
 class LandingPageController extends GetxController {
   // final SecureStorage _secureStorage = Get.find<SecureStorage>();
-  SecureStorage secureStorage = SecureStorage();
   bool isSavingOrder = false;
 
   TextEditingController textEditingControllerEnglishName =
@@ -59,6 +64,8 @@ class LandingPageController extends GetxController {
 
 
   FindRecipientModel? findRecipientModel;
+  final SecureStorage secureStorage = SecureStorage();
+
   // AddEditBasketFlagModel? addEditBasketFlagModel;
 
   // RemoveBasketRequest? removeBasketRequest;
@@ -67,10 +74,17 @@ class LandingPageController extends GetxController {
   LoginModel? data;
   BuildContext? context;
 
-  setSavingOrder(bool saving){
+
+  //Favorites
+  ListFavoriteRecipientsResponse? favoriteRecipientsResponse;
+
+
+
+  setSavingOrder(bool saving) {
     this.isSavingOrder = saving;
     update();
   }
+
   getFindRecipientData({required context}) async {
     final FindRecipient _findRecipient = FindRecipient(context);
     _findRecipient.data =
@@ -82,18 +96,20 @@ class LandingPageController extends GetxController {
     });
     update();
   }
+
   listOfUser(int pos) {
     users = findRecipientModel?.sections?[pos].destination ?? [];
     update();
   }
-  updateselectFavusers(Destination destination){
-    if(!selectFavusers.contains(destination)){
+
+  updateselectFavusers(Destination destination) {
+    if (!selectFavusers.contains(destination)) {
       selectFavusers.add(destination);
       update();
     }
-
   }
- deletselectFavusers(Destination destination){
+
+  deletselectFavusers(Destination destination) {
     selectFavusers.remove(destination);
     update();
   }
@@ -131,9 +147,8 @@ update();
     data = LoginModel.fromJson(_logindata!);
     // getFindRecipientData();
     getFindRecipientData(context: context);
-     //Get.find<SearchController>().getAllData();
+    //Get.find<SearchController>().getAllData();
     Get.find<DocumentController>().getFindRecipientData(context: context);
-
   }
 
   String userName() {
@@ -182,6 +197,7 @@ update();
       print(value);
       print("_postReorderBasketsApi");
     });
+    update();
   }
 
   Future removeBasket(
@@ -206,10 +222,11 @@ update();
       // );
       print("_postRemoveBasketApi");
     });
+    update();
   }
 
   TextEditingController textEditingControllerFromDate =
-  TextEditingController();
+      TextEditingController();
   Future<void> selectFromDocDate({required BuildContext context}) async {
     final DateTime? pickedDate = await showDatePicker(
         context: context,
@@ -227,9 +244,8 @@ update();
     }
   }
 
-
   TextEditingController textEditingControllerToDate =
-  TextEditingController();
+      TextEditingController();
   Future<void> selectToDocDate({required BuildContext context}) async {
     final DateTime? pickedDate = await showDatePicker(
         context: context,
@@ -317,4 +333,60 @@ print(jsonEncode(data));
     update();
   }
 
+  /**
+   * mofa-favorite-recipients-api (1)
+   */
+  Future listFavoriteRecipients({context}) async {
+    ListFavoriteRecipientsApi listFavoriteRecipientsApi =
+        ListFavoriteRecipientsApi(context);
+    // ListFavoriteRecipientsRequest reorderBasketsRequest =
+    //     ListFavoriteRecipientsRequest(
+    //   language: Get.locale?.languageCode == "en" ? "en" : "ar",
+    //   token: _secureStorage.token()!,
+    // );
+    listFavoriteRecipientsApi.data =
+    "Token=${secureStorage.token()}&Language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+
+    await listFavoriteRecipientsApi
+        .getData()
+        .then((value) {
+      favoriteRecipientsResponse = value as ListFavoriteRecipientsResponse;
+      print(value);
+      print("listFavoriteRecipientsApi");
+    });
+  }
+
+  Future removeFavoriteRecipients({context, baskets}) async {
+    RemoveFavoriteRecipientsApi removeFavoriteRecipientsApi =
+        RemoveFavoriteRecipientsApi(context);
+    RemoveFavoriteRecipientsRequest reorderBasketsRequest =
+        RemoveFavoriteRecipientsRequest(
+      ids: [],
+      language: Get.locale?.languageCode == "en" ? "en" : "ar",
+      token: secureStorage.token()!,
+    );
+    await removeFavoriteRecipientsApi
+        .post(reorderBasketsRequest.toMap())
+        .then((value) {
+      print(value);
+      print("removeFavoriteRecipientsApi");
+    });
+  }
+
+  Future addFavoriteRecipients({context, baskets}) async {
+    AddFavoriteRecipientsApi addFavoriteRecipientsApi =
+        AddFavoriteRecipientsApi(context);
+    AddFavoriteRecipientsRequest reorderBasketsRequest =
+        AddFavoriteRecipientsRequest(
+      language: Get.locale?.languageCode == "en" ? "en" : "ar",
+      token: secureStorage.token()!,
+      TargetGctId: 0,
+    );
+    await addFavoriteRecipientsApi
+        .post(reorderBasketsRequest.toMap())
+        .then((value) {
+      print(value);
+      print("addFavoriteRecipientsApi");
+    });
+  }
 }

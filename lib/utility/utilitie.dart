@@ -15,6 +15,8 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import 'package:intl/intl.dart';
@@ -51,8 +53,20 @@ String getLocaleCode(BuildContext context) {
   return Localizations.localeOf(context).languageCode;
 }
 
+bool isDirectionRTLForBackArrow(BuildContext context) {
+  return Bidi.isRtlLanguage(
+      // Localizations.localeOf(context).languageCode
+    Get.locale?.languageCode == "en" ? "ar" : "en"
+    // Get.locale?.languageCode
+  );
+}
+
 bool isDirectionRTL(BuildContext context) {
-  return Bidi.isRtlLanguage(Localizations.localeOf(context).languageCode);
+  return Bidi.isRtlLanguage(
+      Localizations.localeOf(context).languageCode
+      // Get.locale?.languageCode == "en" ? "ar" : "en"
+      // Get.locale?.languageCode
+  );
 }
 
 String returnImageNameBasedOnDirection(
@@ -66,7 +80,7 @@ String returnImageNameBasedOnDirection(
 
 String returnImageNameBasedOnOppositeDirection(
     String imageName, BuildContext context, String extension) {
-  if (isDirectionRTL(context)) {
+  if (isDirectionRTLForBackArrow(context)) {
     return imageName + "_R." + extension;
   }
   return imageName + "_L." + extension;
@@ -156,7 +170,7 @@ showLoaderDialog(BuildContext context) {
     content: new Row(
       children: [
         CircularProgressIndicator(),
-        Container(margin: EdgeInsets.only(left: 7), child: Text("Loading...")),
+        Container(margin: EdgeInsets.only(left: 7), child: Text("Loading...".tr)),
       ],
     ),
   );

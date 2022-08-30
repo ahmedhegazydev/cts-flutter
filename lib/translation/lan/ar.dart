@@ -6,12 +6,12 @@ const Map<String, String> ar = {
   "login": "تسجيل الدخول",
   "mySignatures": "تواقيعي",
   "favoritesUsers": "المستخدمين المفضلين",
-  "myDelegations": "اعادة توجيه المراسلات",
+  "myDelegations": "اعادة توجيه\n المراسلات",
   "appTheme": "سمات التطبيق",
   "logout": "تسجيل الخروج",
   "hello": "مرحبًا",
-  "unreadCorrespondences": "مراسلات غير مقروءة",
-  "pendingCorrespondences": "مراسلات تنتظر الإجراء",
+  "unreadCorrespondences": "مراسلات \nغير مقروءة",
+  "pendingCorrespondences": "مراسلات\n تنتظر الإجراء",
   "myTransfersInMonth": "إحالاتي في شهر",
   "mostMyTransferWentTo": "أغلب أحالاتي ذهبت ل",
   "flagged": "المحفوظات",
@@ -102,9 +102,12 @@ const Map<String, String> ar = {
   , "pick your Color": "اختر اللون المناسب"
   ,"addtoBasket":"اضف الي السلة",
   "Summary":"معلومات",
-  "Basket":"سلة",
 "Complete":"انهاء",
-
+   "صادر للكل": "صادر الكل"
+  , "وارد للكل": "وارد الكل"
+  , "Basket": "محفظتي",
+"user Guide": "دليل المستخدم"
+,
 "Transfer":"تحويل"
 ,"Reply":"رد",
 
@@ -123,4 +126,5 @@ const Map<String, String> ar = {
   "userGuide":"دليل الاستخدام",
   "newBasket":"سلة جديدة",
 
+  "Loading...":"  تحميل .... ",
 };

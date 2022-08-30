@@ -105,6 +105,10 @@ const Map<String, String> en = {
 , "Settings": "Settings"
   , "Save Settings": "Save Settings"
   , "pick your Color": "Pick your color"
+  , "صادر للكل": "Outgoing all"
+  , "وارد للكل": "Incoming all"
+  , "Basket": "My Basket",
+"user Guide": "user Guide"
   ,"addtoBasket":"add to Basket",
   "Summary":"Summary",
   "Complete":"Complete",
@@ -116,12 +120,13 @@ const Map<String, String> en = {
 "start":"Start date"
   ,
   "end":"End date"  ,
+"Loading...":"  Loading .... ",
+
   "reason":"Reason"
   ,
   "defaultsignature":"Default Signature"
   ,
   "multisignature":"multi-signature",
-  "Basket":"Basket",
   "userGuide":"User Guide",
   "newBasket":"New Basket",
 };

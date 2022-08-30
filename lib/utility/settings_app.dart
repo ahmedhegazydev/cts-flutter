@@ -6,13 +6,12 @@ class SettingsApp {
 
   // static const String baseUrl = 'http://192.168.1.2:9091/Mobility/CMS.svc';
   // static const String baseUrl = 'http://win-7pnh2kgornc:9091/Mobility/CMS.svc';
-  static const String baseUrl = 'http://192.168.1.191:9091/Mobility/CMS.svc';
+  static const String baseUrl = 'http://192.168.1.7:9091/Mobility/CMS.svc';
 
   SettingsApp() {}
 
   static const String loginUrl = baseUrl + "/Login?";
-  static const String FindRecipientUrl = baseUrl +
-      "/FindRecipient?typeId=&criteria=*&"; //Token=oeXQq9ZIRfxAu8ixipXg&language=en";
+  static const String FindRecipientUrl = baseUrl + "/FindRecipient?";
 
   static const String GetCorrespondencesUrl = baseUrl +
       "/GetCorrespondences?"; //http://192.168.1.4:9091/Mobility/CMS.svc/GetCorrespondences?Token=oeXQq9ZIRfxAu8ixipXg&inboxId=1&index=0&pageSize=20&language=ar&showThumbnails=false
@@ -87,6 +86,12 @@ class SettingsApp {
 
   static const String PostUpdateSignatureUrl = baseUrl + "/UpdateSignature";
   static const String PostUploadAttachmentUrl = baseUrl + "/UploadAttachment";
+
+  //mofa-favorite-recipients-api
+  static const String ListFavoriteRecipientsUrl = baseUrl + "/ListFavoriteRecipients?"; //
+  static const String RemoveFavoriteRecipientsUrl = baseUrl + "/RemoveFavoriteRecipients?"; //
+  static const String AddFavoriteRecipientsUrl = baseUrl + "/AddFavoriteRecipients?"; //
+
 
   //==========================================
 

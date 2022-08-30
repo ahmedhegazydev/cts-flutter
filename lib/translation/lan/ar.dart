@@ -41,12 +41,12 @@ const Map<String, String> ar = {
   "signature": "توقيع",
   "marking": "وسم",
   "save": "حفظ",
-  "refer": "احاله",
+  "refer": "احالة",
   "export": "تصدير",
   "ending": "انهاء",
   "tracking": "تتبع",
   "referrals": "الاحالات",
-  "referTo": "احاله الى",
+  "referTo": "احالة الى",
   "action": "الاجراء",
   "audioNotes": "ملاحظات صوتية",
   "writtenNote": "ملاحظة مكتوبة",
@@ -63,7 +63,7 @@ const Map<String, String> ar = {
   "medium": "متوسط",
   "topUrgent": "عاجل للغاية",
   "emptyInboxList": "قائمة البريد فارغة",
-  "referDate": "تاريخ الاحاله",
+  "referDate": "تاريخ الاحالة",
   "emptylist": " لا يوجد نتيجه للبحث",
 
 
@@ -125,6 +125,6 @@ const Map<String, String> ar = {
   "multisignature":"جميع الامضاءات",
   "userGuide":"دليل الاستخدام",
   "newBasket":"سلة جديدة",
-
+  "title":"عنوان الرسالة",
   "Loading...":"  تحميل .... ",
 };

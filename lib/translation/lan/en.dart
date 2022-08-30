@@ -129,4 +129,5 @@ const Map<String, String> en = {
   "multisignature":"multi-signature",
   "userGuide":"User Guide",
   "newBasket":"New Basket",
+  "title":"Title",
 };

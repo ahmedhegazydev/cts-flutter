@@ -431,7 +431,7 @@ class InboxPage extends GetWidget<InboxController> {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       child: DefaultTabController(
-        length: 4,
+        length: 3,
         child: ContainedTabBarView(
           tabs: [
             Text(
@@ -455,13 +455,15 @@ class InboxPage extends GetWidget<InboxController> {
                   .headline1!
                   .copyWith(color: Colors.grey, fontSize: 21),
             ),
-            Text(
-              "internal".tr,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline1!
-                  .copyWith(color: Colors.grey, fontSize: 21),
-            ), ],
+            // Text(
+            //   "internal".tr,
+            //   style: Theme.of(context)
+            //       .textTheme
+            //       .headline1!
+            //       .copyWith(color: Colors.grey, fontSize: 21),
+            // ),
+
+          ],
           tabBarProperties: TabBarProperties(
             width: MediaQuery.of(context).size.width*.3,
             height: 70.0,
@@ -579,33 +581,33 @@ class InboxPage extends GetWidget<InboxController> {
                         ),
                       ],
                     )),
-            Center(
-                child: controller.getData
-                    ? const Center(child: CircularProgressIndicator())
-                    : Column(
-                  children: [
-
-                    Visibility(visible: true,child: _filterMail(context)),
-
-
-
-
-
-
-
-                    Expanded(
-                      child: CustomListView(
-                        function: controller.onRefresh(),
-                        correspondences: controller.correspondences ,
-                        scrollController: controller.scrollController,
-                        haveMoreData: controller.haveMoreData,
-                        onClickItem: () {
-                          Get.toNamed("/DocumentPage");
-                        }, functionSummary: () {  }, allCorrespondences: [], customActions: [], functionReply: () {  }, functionTrunsfer: () {  }, functionComplet: () {  },
-                      ),
-                    ),
-                  ],
-                )),
+            // Center(
+            //     child: controller.getData
+            //         ? const Center(child: CircularProgressIndicator())
+            //         : Column(
+            //       children: [
+            //
+            //         Visibility(visible: true,child: _filterMail(context)),
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //         Expanded(
+            //           child: CustomListView(
+            //             function: controller.onRefresh(),
+            //             correspondences: controller.correspondences ,
+            //             scrollController: controller.scrollController,
+            //             haveMoreData: controller.haveMoreData,
+            //             onClickItem: () {
+            //               Get.toNamed("/DocumentPage");
+            //             }, functionSummary: () {  }, allCorrespondences: [], customActions: [], functionReply: () {  }, functionTrunsfer: () {  }, functionComplet: () {  },
+            //           ),
+            //         ),
+            //       ],
+            //     )),
           ],
           onChange: (value) {
             controller.getData = true;

@@ -590,6 +590,7 @@ class DocumentController extends GetxController {
 
     canOpenDocumentModel = data;
     canOpenDocumentModel?.attachments?.attachments?.forEach((element) {
+
       if (element.isOriginalMail!) {
         oragnalFileDocpdfUrlFile = element.uRL!;
         isOriginalMailAttachmentsList = element;
@@ -1487,6 +1488,7 @@ showDilog(
           ],
         );
       });
+
 }
 
 extension UtilListExtension on List {

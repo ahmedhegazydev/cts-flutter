@@ -24,18 +24,18 @@ class CustomButtonWithImage extends StatelessWidget {
             image
             //
             ,
-            height: 20,
-            width: 20,color: Theme.of(context)
+            height: 30,
+            width: 30,color: Theme.of(context)
               .colorScheme
               .primary,
-          ),SizedBox(width: 4,),
+          ),SizedBox(width: 16,),
           Text(
             label,
             style: Theme.of(context).textTheme.headline3!.copyWith(
               color: createMaterialColor(
                 const Color.fromRGBO(77, 77, 77, 1),
               ),
-              fontSize: 15,
+              fontSize: 20,fontWeight: FontWeight.bold
             ),
             textAlign: TextAlign.center,
 

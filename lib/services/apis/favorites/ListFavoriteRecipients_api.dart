@@ -10,7 +10,7 @@ import '../../json_model/favorites/list_all/ListFavoriteRecipients_response.dart
 class ListFavoriteRecipientsApi  extends ApiManager{
   String data="";
 
-  ListFavoriteRecipientsApi(BuildContext context) : super(context);
+  ListFavoriteRecipientsApi(BuildContext context) : super();
   @override
   String apiUrl() {
     return SettingsApp.ListFavoriteRecipientsUrl+data;

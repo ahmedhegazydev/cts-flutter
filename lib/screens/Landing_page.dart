@@ -684,9 +684,11 @@ class LandingPage extends GetWidget<LandingPageController> {
             color: Colors.transparent,
             child: Column(
               children: [
+                SizedBox(height: 30,),
                 Container(
                   color: Colors.transparent,
                   width: double.infinity,
+                  // height: 100,
                   child: Text(
                     "appTitle".tr,
                     style: Theme
@@ -699,11 +701,13 @@ class LandingPage extends GetWidget<LandingPageController> {
                     textAlign: TextAlign.start,
                   ),
                 ),
+                SizedBox(height: 15,),
                 Flexible(
                   flex: 1,
                   child: Container(
                     color: Colors.transparent,
                     width: double.infinity,
+                    // height: 50,
                     child: Text(
                       "hello".tr +
                           "  ${secureStorage.readSecureData(
@@ -2782,18 +2786,19 @@ class LandingPage extends GetWidget<LandingPageController> {
       // mainAxisSize: MainAxisSize.max,
       children: [
         Flexible(
-          flex: 2,
+          flex: 3,
           child: Container(
             padding: EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 0),
-            color: Colors.transparent,
+            // color: Colors.green,
             child: Column(
               children: [
+                SizedBox(height: 30,),
                 Flexible(
-                  flex: 1,
+                  flex: 3,
                   child: Container(
                     color: Colors.transparent,
                     width: double.infinity,
-                    height: 60,
+                    // height: 100,
                     child: Text(
                       "appTitle".tr,
                       style: Theme
@@ -2804,12 +2809,13 @@ class LandingPage extends GetWidget<LandingPageController> {
                     ),
                   ),
                 ),
+                SizedBox(height: 15,),
                 Flexible(
                   flex: 1,
                   child: Container(
                     color: Colors.transparent,
                     width: double.infinity,
-                    height: 30,
+                    // height: 50,
                     child: Text(
                       "hello".tr +
                           "  ${secureStorage.readSecureData(
@@ -3902,7 +3908,7 @@ class LandingPage extends GetWidget<LandingPageController> {
     flex: 2,
     child: Image(
     image: AssetImage(
-    'assets/images/flagged.png',
+    'assets/images/incoming.png',
     ),
     fit: BoxFit.contain,
     width: double.infinity,
@@ -3916,7 +3922,8 @@ class LandingPage extends GetWidget<LandingPageController> {
     child: Container(
     width: double.infinity,
     child: Text(
-    "flagged".tr,
+    // "flagged".tr,
+      "وارد للكل".tr,
     style: Theme
         .of(context)
         .textTheme
@@ -3988,7 +3995,8 @@ class LandingPage extends GetWidget<LandingPageController> {
     flex: 2,
     child: Image(
     image: AssetImage(
-    'assets/images/notification.png',
+    // 'assets/images/notification.png',
+    'assets/images/outgoing.png',
     ),
     fit: BoxFit.contain,
     width: double.infinity,
@@ -4002,7 +4010,7 @@ class LandingPage extends GetWidget<LandingPageController> {
     child: Container(
     width: double.infinity,
     child: Text(
-    "notifications".tr,
+      "صادر للكل".tr,
     style: Theme
         .of(context)
         .textTheme
@@ -4146,8 +4154,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                       },
                       child: _buildOtherFoldersRows(
                         context,
-                        "flagged".tr,
-                        "assets/images/flagged.png",
+                        "وارد للكل".tr,
+                        "assets/images/incoming.png",
                         true,
                         5,
                       ),
@@ -4162,8 +4170,10 @@ class LandingPage extends GetWidget<LandingPageController> {
                       },
                       child: _buildOtherFoldersRows(
                         context,
-                        "notifications".tr,
-                        "assets/images/notification.png",
+                        // "notifications".tr,
+                        "صادر للكل".tr,
+                        // "assets/images/notification.png",
+                        "assets/images/outgoing.png",
                         true,
                         9,
                       ),
@@ -4237,7 +4247,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                         ),
                         Text(
                           controller.data?.departmentName ?? "",
-                          //        "sharedServicesAdministration".tr,
+                                 // "sharedServicesAdministration".tr,
                           style: Theme
                               .of(context)
                               .textTheme
@@ -4352,8 +4362,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                       },
                       child: _buildOtherFoldersRows(
                         context,
-                        "flagged".tr,
-                        "assets/images/flagged.png",
+                        "وارد للكل".tr,
+                        "assets/images/incoming.png",
                         true,
                         5,
                       ),
@@ -4368,8 +4378,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                       },
                       child: _buildOtherFoldersRows(
                         context,
-                        "notifications".tr,
-                        "assets/images/notification.png",
+                        "صادر للكل".tr,
+                        // "assets/images/notification.png",
+                        "assets/images/outgoing.png",
                         true,
                         9,
                       ),

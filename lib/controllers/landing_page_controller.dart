@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cts/controllers/search_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +45,6 @@ import 'document_controller.dart';
 import 'package:flutter/services.dart' as rootBundel;
 class LandingPageController extends GetxController {
   // final SecureStorage _secureStorage = Get.find<SecureStorage>();
-  SecureStorage secureStorage = SecureStorage();
   bool isSavingOrder = false;
 
   TextEditingController textEditingControllerEnglishName =
@@ -362,7 +363,7 @@ print(jsonEncode(data));
         RemoveFavoriteRecipientsRequest(
       ids: [],
       language: Get.locale?.languageCode == "en" ? "en" : "ar",
-      token: _secureStorage.token()!,
+      token: secureStorage.token()!,
     );
     await removeFavoriteRecipientsApi
         .post(reorderBasketsRequest.toMap())
@@ -378,7 +379,7 @@ print(jsonEncode(data));
     AddFavoriteRecipientsRequest reorderBasketsRequest =
         AddFavoriteRecipientsRequest(
       language: Get.locale?.languageCode == "en" ? "en" : "ar",
-      token: _secureStorage.token()!,
+      token: secureStorage.token()!,
       TargetGctId: 0,
     );
     await addFavoriteRecipientsApi

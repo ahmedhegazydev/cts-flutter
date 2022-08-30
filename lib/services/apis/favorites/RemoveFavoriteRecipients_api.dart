@@ -10,7 +10,8 @@ import '../../json_model/favorites/remove/RemoveFavoriteRecipientsResponse_respo
 class RemoveFavoriteRecipientsApi  extends ApiManager{
   String data="";
 
-  RemoveFavoriteRecipientsApi(BuildContext context) : super(context);
+  RemoveFavoriteRecipientsApi(BuildContext context) : super();
+
   @override
   String apiUrl() {
     return SettingsApp.RemoveFavoriteRecipientsUrl+data;

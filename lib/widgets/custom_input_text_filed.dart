@@ -11,7 +11,8 @@ class CustomInputTextFiled extends StatelessWidget {
   CustomInputTextFiled(
       {required this.textEditingController,
       required this.validator,
-      required this.label});
+        this.obscureText=false,
+        required this.label});
 
   @override
   Widget build(BuildContext context) {
@@ -25,22 +26,28 @@ class CustomInputTextFiled extends StatelessWidget {
           Container(
             width: double.infinity,
             // color: Colors.red,
-            padding: const EdgeInsets.only(right: 15),
+            padding: const EdgeInsets.only(
+              right: 20,
+              left: 20,
+            ),
             child: Text(
               label,
-              textDirection: TextDirection.rtl,
+              textDirection: Get.locale?.languageCode=="en"?
+              TextDirection.ltr: TextDirection.rtl ,
             ),
           ),
           SizedBox(height: 5,),
           Container(
             decoration: BoxDecoration(
               color: Colors.grey.shade300,
+              // color: Colors.grey.shade200,
               borderRadius: const BorderRadius.all(
                 Radius.circular(6),
               ),
             ),
             width: double.infinity,
-            child: TextFormField(obscureText: obscureText,
+            child: TextFormField(
+              obscureText: obscureText,
               textAlign: TextAlign.start,
               validator: validator,
               decoration: const InputDecoration(

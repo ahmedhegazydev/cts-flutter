@@ -120,7 +120,6 @@ const Map<String, String> en = {
 "start":"Start date"
   ,
   "end":"End date"  ,
-  "reason":"Reason",
 "Loading...":"  Loading .... ",
 
   "reason":"Reason"
@@ -128,7 +127,6 @@ const Map<String, String> en = {
   "defaultsignature":"Default Signature"
   ,
   "multisignature":"multi-signature",
-  "Basket":"Basket",
   "userGuide":"User Guide",
   "newBasket":"New Basket",
 };

@@ -2884,7 +2884,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                         height: double.infinity,
                       ),
                       Text(
-                        controller.data?.departmentName ?? "",
+                        controller.data?.departmentName ?? "sharedServicesAdministration".tr,
                         // "sharedServicesAdministration".tr,
                         style: Theme
                             .of(contex)
@@ -2978,8 +2978,10 @@ class LandingPage extends GetWidget<LandingPageController> {
                                     .textTheme
                                     .headline2!
                                     .copyWith(
-                                    color: Colors.grey.shade400,
-                                    fontSize: 15),
+                                    color: Colors.grey.shade600,
+                                    fontSize: 15,
+                                  fontFamily: "Bahij_light",
+                                ),
                                 textAlign: TextAlign.center,
                               ),
                             )
@@ -4246,7 +4248,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                           ),
                         ),
                         Text(
-                          controller.data?.departmentName ?? "",
+                          controller.data?.departmentName ?? "sharedServicesAdministration".tr,
                                  // "sharedServicesAdministration".tr,
                           style: Theme
                               .of(context)
@@ -4492,7 +4494,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                     .of(content)
                     .textTheme
                     .headline1!
-                    .copyWith(color: Colors.grey, fontSize: 17),
+                    .copyWith(color: Colors.grey,
+                    fontFamily: "Bahij_bold",
+                    fontSize: 17),
                 textAlign: TextAlign.start,
               ),
             ),

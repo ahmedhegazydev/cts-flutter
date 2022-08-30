@@ -49,7 +49,7 @@ abstract class ApiManager {
       } else {
         if (value.data["Status"] == 2) {
           // Get.to(LoginPage());
-          Get.offAll(LoginPage());
+          // Get.offAll(LoginPage());
         } else {
           print(value);
           data = value.data;
@@ -89,7 +89,7 @@ abstract class ApiManager {
       } else {
         if (value.data["Status"] == 2) {
           // Get.to(LoginPage());
-          Get.offAll(LoginPage());
+          // Get.offAll(LoginPage());
         } else {
           data = value.data;
           jsonList = fromJson(data);

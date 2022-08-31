@@ -38,7 +38,7 @@ class InboxPage extends GetWidget<InboxController> {
           //side bar
           orientation == Orientation.landscape
               ? Container(
-                  width: 260,
+                  width: 200,
                   height: size.height,
                   color: Colors.grey.shade300,
                   child: _buildSideMenu(context),
@@ -57,7 +57,7 @@ class InboxPage extends GetWidget<InboxController> {
                   //top bar
                   Container(
                     width: double.infinity,
-                    height: 110,
+                    height: 100,
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.primary,
                     ),
@@ -77,6 +77,7 @@ class InboxPage extends GetWidget<InboxController> {
                         Expanded(
                           child: _buildTopInboxMenu(context),
                         ),
+
                         //line separator
                         Container(
                           decoration: BoxDecoration(
@@ -117,19 +118,25 @@ class InboxPage extends GetWidget<InboxController> {
                       value: controller.unread,
                       onChanged: controller.updateUnread);
                 }),
-                Text("unread".tr)
+                Text("unread".tr,style: TextStyle(fontSize: 16,color: Colors.black.withOpacity(.7)))
               ],
             ),
           ),
-        ),
+        ),SizedBox(
+    width: 16,
+    ),
         Container(
           padding: EdgeInsets.only(right: 8, left: 8),
           height: size.height * .03,
           width: 1,
           color: Colors.grey,
-        ),
+        ),SizedBox(
+    width: 16,
+    ),
         Container(
-          child: Center(child: Text("sender".tr)),
+          child: Center(child: Text("sender".tr,style: TextStyle(fontSize: 16,color: Colors.black.withOpacity(.7)),)),
+        ),SizedBox(
+          width: 16,
         ),
         Expanded(
           child: Container(
@@ -157,61 +164,64 @@ class InboxPage extends GetWidget<InboxController> {
           height: size.height * .03,
           width: 1,
           color: Colors.grey,
+        ),SizedBox(
+          width: 16,
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 8.0, right: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                    color: AppColor, borderRadius: BorderRadius.circular(8)),
-                // margin: EdgeInsets.only(right: 8, left: 8),
-                //   height: size.height * .03,
-                ////width: 1,
-                child: Row(
-                  children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(width:160,padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                  color: AppColor, borderRadius: BorderRadius.circular(8)),
+              // margin: EdgeInsets.only(right: 8, left: 8),
+              //   height: size.height * .03,
+              ////width: 1,
+              child: IntrinsicHeight(
+                child: Row(mainAxisAlignment:
+                  MainAxisAlignment.center,
+                  children: [SizedBox(width: 8,),
                     Icon(
                       Icons.warning,
                       color: Colors.white,
-                    ),
+                    ),SizedBox(width: 10,),
                     Text(
                       "urgent".tr,
                       style: Theme.of(context)
                           .textTheme
                           .headline1!
-                          .copyWith(color: Colors.white, fontSize: 21),
+                          .copyWith(color: Colors.white, fontSize: 16),
                     ),
                   ],
                 ),
               ),
-              SizedBox(
-                width: 16,
+            ),
+            SizedBox(
+              width: 16,
+            ),
+            Container(width:160,padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(8)),
+              //  padding: EdgeInsets.only(right: 8, left: 8),
+              child: Row(mainAxisAlignment:
+              MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.lock,color: Colors.black.withOpacity(.6)),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "secret".tr,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline1!
+                        .copyWith(color:  Colors.black.withOpacity(.6), fontSize: 16),
+                  ),
+                ],
               ),
-              Container(
-                decoration: BoxDecoration(
-                    color: Colors.grey[400],
-                    borderRadius: BorderRadius.circular(8)),
-                //  padding: EdgeInsets.only(right: 8, left: 8),
-                child: Row(
-                  children: [
-                    Icon(Icons.lock),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Text(
-                      "secret".tr,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline1!
-                          .copyWith(color: Colors.black, fontSize: 21),
-                    ),
-                  ],
-                ),
-                ////width: 1,
-              ),
-            ],
-          ),
+              ////width: 1,
+            ),
+          ],
         ),SizedBox(
           width: 16,
         ),
@@ -221,14 +231,16 @@ class InboxPage extends GetWidget<InboxController> {
           width: 1,
           color: Colors.grey,
         ),SizedBox(
-          width: 8,
+          width: 16,
         ),
         Icon(
           Icons.clear,color: Theme.of(context)
             .colorScheme
-            .primary,
+            .primary,size: 30,
         ),
-    SizedBox(width: 4,)  ],
+        SizedBox(
+          width: 16,
+        ),  ],
     );
   }
 
@@ -419,7 +431,7 @@ class InboxPage extends GetWidget<InboxController> {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       child: DefaultTabController(
-        length: 2,
+        length: 3,
         child: ContainedTabBarView(
           tabs: [
             Text(
@@ -443,14 +455,22 @@ class InboxPage extends GetWidget<InboxController> {
                   .headline1!
                   .copyWith(color: Colors.grey, fontSize: 21),
             ),
+            // Text(
+            //   "internal".tr,
+            //   style: Theme.of(context)
+            //       .textTheme
+            //       .headline1!
+            //       .copyWith(color: Colors.grey, fontSize: 21),
+            // ),
+
           ],
           tabBarProperties: TabBarProperties(
-            width: MediaQuery.of(context).size.width*.4,
+            width: MediaQuery.of(context).size.width*.3,
             height: 70.0,
             indicatorColor: Theme.of(context).colorScheme.primary,
             indicatorWeight: 5.0,
-            labelColor: Colors.black,
-            unselectedLabelColor: Colors.black87,
+            labelColor: Colors.black.withOpacity(.7),
+            unselectedLabelColor:  Colors.black.withOpacity(.5),
             alignment: TabBarAlignment.start,
           ),
 
@@ -561,6 +581,33 @@ class InboxPage extends GetWidget<InboxController> {
                         ),
                       ],
                     )),
+            // Center(
+            //     child: controller.getData
+            //         ? const Center(child: CircularProgressIndicator())
+            //         : Column(
+            //       children: [
+            //
+            //         Visibility(visible: true,child: _filterMail(context)),
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //         Expanded(
+            //           child: CustomListView(
+            //             function: controller.onRefresh(),
+            //             correspondences: controller.correspondences ,
+            //             scrollController: controller.scrollController,
+            //             haveMoreData: controller.haveMoreData,
+            //             onClickItem: () {
+            //               Get.toNamed("/DocumentPage");
+            //             }, functionSummary: () {  }, allCorrespondences: [], customActions: [], functionReply: () {  }, functionTrunsfer: () {  }, functionComplet: () {  },
+            //           ),
+            //         ),
+            //       ],
+            //     )),
           ],
           onChange: (value) {
             controller.getData = true;

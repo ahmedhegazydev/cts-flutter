@@ -29,7 +29,7 @@ const Map<String, String> en = {
   "outgoing": "Outgoing",
   "internal": "Internal",
   "unread": "Unread",
-  "sender": "Sender  : ",
+  "sender": "Sender ",
   "secret": "Secret",
   "urgent": "Urgent",
   "allInbox": "All inbox",
@@ -129,4 +129,5 @@ const Map<String, String> en = {
   "multisignature":"multi-signature",
   "userGuide":"User Guide",
   "newBasket":"New Basket",
+  "title":"Title",
 };

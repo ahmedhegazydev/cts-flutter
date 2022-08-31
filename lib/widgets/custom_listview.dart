@@ -9,6 +9,7 @@ import '../services/apis/reply_with_voice_note_api.dart';
 import '../services/json_model/login_model.dart';
 import '../services/json_model/reply_with_voicenote_model.dart';
 import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
+import '../utility/all_const.dart';
 import '../utility/utilitie.dart';
 import 'custom_button_with_icon.dart';
 
@@ -4150,281 +4151,281 @@ class CustomListView extends StatelessWidget {
 
 
 
-            Container(
-                color: Colors.grey,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    SizedBox(
-                      width: 4,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (ctx) =>
-                              AlertDialog(
-                                title: Text(" "),
-                                content: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                      width: MediaQuery
-                                          .of(context)
-                                          .size
-                                          .width *
-                                          .3,
-                                      color: Colors.grey[200],
-                                      child: GetBuilder<
-                                          InboxController>(
-                                          builder: (logic) {
-                                            return SingleChildScrollView(
-                                              child: Column(
-                                                children: [
-                                                  Text("الغاية"),
-                                                  ListTile(
-                                                    title: Text(
-                                                        logic.texts1[0]
-                                                            .tr),
-                                                    leading: Radio(
-                                                      value: logic
-                                                          .texts1[0],
-                                                      groupValue:
-                                                      logic
-                                                          .selectTexts1pos,
-                                                      onChanged:
-                                                      logic
-                                                          .updateTexts1,
-                                                    ),
-                                                  ),
-                                                  ListTile(
-                                                    title: Text(
-                                                        logic.texts1[1]
-                                                            .tr),
-                                                    leading: Radio(
-                                                      value: logic
-                                                          .texts1[1],
-                                                      groupValue:
-                                                      logic
-                                                          .selectTexts1pos,
-                                                      onChanged:
-                                                      logic
-                                                          .updateTexts1,
-                                                    ),
-                                                  ),
-                                                  ListTile(
-                                                    title: Text(
-                                                        logic.texts1[2]
-                                                            .tr),
-                                                    leading: Radio(
-                                                      value: logic
-                                                          .texts1[2],
-                                                      groupValue:
-                                                      logic
-                                                          .selectTexts1pos,
-                                                      onChanged:
-                                                      logic
-                                                          .updateTexts1,
-                                                    ),
-                                                  ),
-                                                  ListTile(
-                                                    title: Text(
-                                                        logic.texts1[3]
-                                                            .tr),
-                                                    leading: Radio(
-                                                      value: logic
-                                                          .texts1[3],
-                                                      groupValue:
-                                                      logic
-                                                          .selectTexts1pos,
-                                                      onChanged:
-                                                      logic
-                                                          .updateTexts1,
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                    const EdgeInsets
-                                                        .all(
-                                                        8.0),
-                                                    child: TextField(
-                                                      controller: logic
-                                                          .textEditingControllerFilter,
-                                                      decoration:
-                                                      InputDecoration(
-                                                        hintText: "اخري",
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 30,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                    const EdgeInsets
-                                                        .all(
-                                                        8.0),
-                                                    child: Divider(
-                                                        height: 2,
-                                                        thickness: 2),
-                                                  ),
-                                                  Text("النوع"),
-                                                  ListTile(
-                                                    title: Text(
-                                                        logic.texts2[0]
-                                                            .tr),
-                                                    leading: Radio(
-                                                      value: logic
-                                                          .texts2[0],
-                                                      groupValue:
-                                                      logic
-                                                          .selectTexts2pos,
-                                                      onChanged:
-                                                      logic
-                                                          .updateTexts2,
-                                                    ),
-                                                  ),
-                                                  ListTile(
-                                                    title: Text(
-                                                        logic.texts2[1]
-                                                            .tr),
-                                                    leading: Radio(
-                                                      value: logic
-                                                          .texts2[1],
-                                                      groupValue:
-                                                      logic
-                                                          .selectTexts2pos,
-                                                      onChanged:
-                                                      logic
-                                                          .updateTexts2,
-                                                    ),
-                                                  ),
-                                                  ListTile(
-                                                    title: Text(
-                                                        logic.texts2[2]
-                                                            .tr),
-                                                    leading: Radio(
-                                                      value: logic
-                                                          .texts2[2],
-                                                      groupValue:
-                                                      logic
-                                                          .selectTexts2pos,
-                                                      onChanged:
-                                                      logic
-                                                          .updateTexts2,
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                    const EdgeInsets
-                                                        .all(
-                                                        8.0),
-                                                    child: Divider(
-                                                        height: 2,
-                                                        thickness: 2),
-                                                  ),
-                                                  Text("الاولوية"),
-                                                  ListTile(
-                                                    title: Text(
-                                                        logic.texts3[0]
-                                                            .tr),
-                                                    leading: Radio(
-                                                      value: logic
-                                                          .texts3[0],
-                                                      groupValue:
-                                                      logic
-                                                          .selectTexts3pos,
-                                                      onChanged:
-                                                      logic
-                                                          .updateTexts3,
-                                                    ),
-                                                  ),
-                                                  ListTile(
-                                                    title: Text(
-                                                        logic.texts3[1]
-                                                            .tr),
-                                                    leading: Radio(
-                                                      value: logic
-                                                          .texts3[1],
-                                                      groupValue:
-                                                      logic
-                                                          .selectTexts3pos,
-                                                      onChanged:
-                                                      logic
-                                                          .updateTexts3,
-                                                    ),
-                                                  ),
-                                                  ListTile(
-                                                    title: Text(
-                                                        logic.texts3[2]
-                                                            .tr),
-                                                    leading: Radio(
-                                                      value: logic
-                                                          .texts3[2],
-                                                      groupValue:
-                                                      logic
-                                                          .selectTexts3pos,
-                                                      onChanged:
-                                                      logic
-                                                          .updateTexts3,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            );
-                                          })),
-                                ),
-                                actions: <Widget>[
-                                  FlatButton(
-                                    onPressed: () async {
-                                      /// ToDo send Replay
-
-                                      Navigator.of(ctx).pop();
-                                    },
-                                    child: Text("تطبيق"),
-                                  ),
-                                  FlatButton(
-                                    onPressed: () async {
-                                      /// ToDo send Replay
-                                      ///  Navigator.of(
-                                      //                         ctx)
-                                      //                         .pop();
-                                      //    Navigator.of(ctx).pop();
-                                      Get.find<InboxController>()
-                                          .canceldata();
-                                    },
-                                    child: Text("الغاء"),
-                                  ),
-                                ],
-                              ),
-                        );
-                      },
-                      child: Text("filter".tr,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20)),
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Get.find<InboxController>().setEdit();
-                      },
-                      child: Text(
-                          Get
-                              .find<InboxController>()
-                              .edit
-                              ? "back".tr
-                              : "Modify".tr,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20)),
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                  ],
-                )),
+            // Container(
+            //     color: Colors.grey,
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.end,
+            //       children: [
+            //         SizedBox(
+            //           width: 4,
+            //         ),
+            //         GestureDetector(
+            //           onTap: () {
+            //             showDialog(
+            //               context: context,
+            //               builder: (ctx) =>
+            //                   AlertDialog(
+            //                     title: Text(" "),
+            //                     content: Padding(
+            //                       padding: const EdgeInsets.all(8.0),
+            //                       child: Container(
+            //                           width: MediaQuery
+            //                               .of(context)
+            //                               .size
+            //                               .width *
+            //                               .3,
+            //                           color: Colors.grey[200],
+            //                           child: GetBuilder<
+            //                               InboxController>(
+            //                               builder: (logic) {
+            //                                 return SingleChildScrollView(
+            //                                   child: Column(
+            //                                     children: [
+            //                                       Text("الغاية"),
+            //                                       ListTile(
+            //                                         title: Text(
+            //                                             logic.texts1[0]
+            //                                                 .tr),
+            //                                         leading: Radio(
+            //                                           value: logic
+            //                                               .texts1[0],
+            //                                           groupValue:
+            //                                           logic
+            //                                               .selectTexts1pos,
+            //                                           onChanged:
+            //                                           logic
+            //                                               .updateTexts1,
+            //                                         ),
+            //                                       ),
+            //                                       ListTile(
+            //                                         title: Text(
+            //                                             logic.texts1[1]
+            //                                                 .tr),
+            //                                         leading: Radio(
+            //                                           value: logic
+            //                                               .texts1[1],
+            //                                           groupValue:
+            //                                           logic
+            //                                               .selectTexts1pos,
+            //                                           onChanged:
+            //                                           logic
+            //                                               .updateTexts1,
+            //                                         ),
+            //                                       ),
+            //                                       ListTile(
+            //                                         title: Text(
+            //                                             logic.texts1[2]
+            //                                                 .tr),
+            //                                         leading: Radio(
+            //                                           value: logic
+            //                                               .texts1[2],
+            //                                           groupValue:
+            //                                           logic
+            //                                               .selectTexts1pos,
+            //                                           onChanged:
+            //                                           logic
+            //                                               .updateTexts1,
+            //                                         ),
+            //                                       ),
+            //                                       ListTile(
+            //                                         title: Text(
+            //                                             logic.texts1[3]
+            //                                                 .tr),
+            //                                         leading: Radio(
+            //                                           value: logic
+            //                                               .texts1[3],
+            //                                           groupValue:
+            //                                           logic
+            //                                               .selectTexts1pos,
+            //                                           onChanged:
+            //                                           logic
+            //                                               .updateTexts1,
+            //                                         ),
+            //                                       ),
+            //                                       Padding(
+            //                                         padding:
+            //                                         const EdgeInsets
+            //                                             .all(
+            //                                             8.0),
+            //                                         child: TextField(
+            //                                           controller: logic
+            //                                               .textEditingControllerFilter,
+            //                                           decoration:
+            //                                           InputDecoration(
+            //                                             hintText: "اخري",
+            //                                           ),
+            //                                         ),
+            //                                       ),
+            //                                       SizedBox(
+            //                                         height: 30,
+            //                                       ),
+            //                                       Padding(
+            //                                         padding:
+            //                                         const EdgeInsets
+            //                                             .all(
+            //                                             8.0),
+            //                                         child: Divider(
+            //                                             height: 2,
+            //                                             thickness: 2),
+            //                                       ),
+            //                                       Text("النوع"),
+            //                                       ListTile(
+            //                                         title: Text(
+            //                                             logic.texts2[0]
+            //                                                 .tr),
+            //                                         leading: Radio(
+            //                                           value: logic
+            //                                               .texts2[0],
+            //                                           groupValue:
+            //                                           logic
+            //                                               .selectTexts2pos,
+            //                                           onChanged:
+            //                                           logic
+            //                                               .updateTexts2,
+            //                                         ),
+            //                                       ),
+            //                                       ListTile(
+            //                                         title: Text(
+            //                                             logic.texts2[1]
+            //                                                 .tr),
+            //                                         leading: Radio(
+            //                                           value: logic
+            //                                               .texts2[1],
+            //                                           groupValue:
+            //                                           logic
+            //                                               .selectTexts2pos,
+            //                                           onChanged:
+            //                                           logic
+            //                                               .updateTexts2,
+            //                                         ),
+            //                                       ),
+            //                                       ListTile(
+            //                                         title: Text(
+            //                                             logic.texts2[2]
+            //                                                 .tr),
+            //                                         leading: Radio(
+            //                                           value: logic
+            //                                               .texts2[2],
+            //                                           groupValue:
+            //                                           logic
+            //                                               .selectTexts2pos,
+            //                                           onChanged:
+            //                                           logic
+            //                                               .updateTexts2,
+            //                                         ),
+            //                                       ),
+            //                                       Padding(
+            //                                         padding:
+            //                                         const EdgeInsets
+            //                                             .all(
+            //                                             8.0),
+            //                                         child: Divider(
+            //                                             height: 2,
+            //                                             thickness: 2),
+            //                                       ),
+            //                                       Text("الاولوية"),
+            //                                       ListTile(
+            //                                         title: Text(
+            //                                             logic.texts3[0]
+            //                                                 .tr),
+            //                                         leading: Radio(
+            //                                           value: logic
+            //                                               .texts3[0],
+            //                                           groupValue:
+            //                                           logic
+            //                                               .selectTexts3pos,
+            //                                           onChanged:
+            //                                           logic
+            //                                               .updateTexts3,
+            //                                         ),
+            //                                       ),
+            //                                       ListTile(
+            //                                         title: Text(
+            //                                             logic.texts3[1]
+            //                                                 .tr),
+            //                                         leading: Radio(
+            //                                           value: logic
+            //                                               .texts3[1],
+            //                                           groupValue:
+            //                                           logic
+            //                                               .selectTexts3pos,
+            //                                           onChanged:
+            //                                           logic
+            //                                               .updateTexts3,
+            //                                         ),
+            //                                       ),
+            //                                       ListTile(
+            //                                         title: Text(
+            //                                             logic.texts3[2]
+            //                                                 .tr),
+            //                                         leading: Radio(
+            //                                           value: logic
+            //                                               .texts3[2],
+            //                                           groupValue:
+            //                                           logic
+            //                                               .selectTexts3pos,
+            //                                           onChanged:
+            //                                           logic
+            //                                               .updateTexts3,
+            //                                         ),
+            //                                       ),
+            //                                     ],
+            //                                   ),
+            //                                 );
+            //                               })),
+            //                     ),
+            //                     actions: <Widget>[
+            //                       FlatButton(
+            //                         onPressed: () async {
+            //                           /// ToDo send Replay
+            //
+            //                           Navigator.of(ctx).pop();
+            //                         },
+            //                         child: Text("تطبيق"),
+            //                       ),
+            //                       FlatButton(
+            //                         onPressed: () async {
+            //                           /// ToDo send Replay
+            //                           ///  Navigator.of(
+            //                           //                         ctx)
+            //                           //                         .pop();
+            //                           //    Navigator.of(ctx).pop();
+            //                           Get.find<InboxController>()
+            //                               .canceldata();
+            //                         },
+            //                         child: Text("الغاء"),
+            //                       ),
+            //                     ],
+            //                   ),
+            //             );
+            //           },
+            //           child: Text("filter".tr,
+            //               style: TextStyle(
+            //                   fontWeight: FontWeight.bold,
+            //                   fontSize: 20)),
+            //         ),
+            //         SizedBox(
+            //           width: 8,
+            //         ),
+            //         InkWell(
+            //           onTap: () {
+            //             Get.find<InboxController>().setEdit();
+            //           },
+            //           child: Text(
+            //               Get
+            //                   .find<InboxController>()
+            //                   .edit
+            //                   ? "back".tr
+            //                   : "Modify".tr,
+            //               style: TextStyle(
+            //                   fontWeight: FontWeight.bold,
+            //                   fontSize: 20)),
+            //         ),
+            //         SizedBox(
+            //           width: 8,
+            //         ),
+            //       ],
+            //     )),
             Expanded(
               child: ListView.separated(
                   controller: scrollController,
@@ -4645,16 +4646,19 @@ class CustomListView extends StatelessWidget {
                                               .start,
                                             mainAxisAlignment:
                                             MainAxisAlignment
-                                                .start,children: [ Container(height: 20,width: 20,
-                                                decoration: BoxDecoration(
-                                                    color: Theme
-                                                        .of(
-                                                        context)
-                                                        .colorScheme
-                                                        .primary,shape: BoxShape.circle)),
+                                                .start,children: [ Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Container(height: 20,width: 20,
+                                                  decoration: BoxDecoration(
+                                                      color: Theme
+                                                          .of(
+                                                          context)
+                                                          .colorScheme
+                                                          .primary,shape: BoxShape.circle)),
+                                                ),
 
 
-                                              SizedBox(width: 8,),
+
                                               Flexible(
                                                 child: Text(
                                                   correspondences[
@@ -4666,7 +4670,7 @@ class CustomListView extends StatelessWidget {
                                                   softWrap:
                                                   true,
                                                   maxLines: 3,
-                                                ),
+                                                    style: TextStyle(color: Colors.black.withOpacity(.7),fontSize: 20,fontWeight: FontWeight.bold)   ),
                                               ),],)    ,
                                           SizedBox(height: 8,),
                                           Row(                  crossAxisAlignment:
@@ -4682,14 +4686,14 @@ class CustomListView extends StatelessWidget {
                                               SizedBox(width: 8,),
 
 
-                                              Text("sender".tr),
+                                              Text("sender".tr,style: TextStyle(color: Colors.black.withOpacity(.5),fontWeight: FontWeight.bold)),
                                               SizedBox(
                                                 width: 4,
                                               ),
                                               Text(
                                                   correspondences[pos]
                                                       .fromUser ??
-                                                      ""),
+                                                      "",style: TextStyle(color: Colors.black.withOpacity(.5),fontWeight: FontWeight.bold)),
                                               Spacer()
                                               // Flexible(
                                               //   child: Text(
@@ -4714,7 +4718,7 @@ class CustomListView extends StatelessWidget {
                                                 softWrap:
                                                 true,
                                                 maxLines: 3,
-                                                style: TextStyle(fontSize: 16),  ),],)    ,
+                                                  style: TextStyle(color: Colors.black.withOpacity(.4),fontWeight: FontWeight.bold)  ),],)    ,
                                           Padding(
                                             padding:
                                             const EdgeInsets.all(8.0),
@@ -4723,41 +4727,9 @@ class CustomListView extends StatelessWidget {
                                               //     MainAxisAlignment
                                               //         .spaceAround,
                                               children: [
-                                                Spacer(),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Icon(
-                                                    correspondences[pos]
-                                                        .isLocked!
-                                                        ? Icons.lock
-                                                        : Icons
-                                                        .lock_open,
-                                                    color: Theme
-                                                        .of(context)
-                                                        .colorScheme
-                                                        .primary),
-                                                if (correspondences[pos]
-                                                    .isLocked ??
-                                                    false)
-                                                  Text("closed".tr,
-                                                      style: TextStyle(
-                                                          color: Theme
-                                                              .of(
-                                                              context)
-                                                              .colorScheme
-                                                              .primary)),
-                                                Spacer(),
-                                                if (correspondences[pos]
-                                                    .showLock ??
-                                                    false)
-                                                  Icon(Icons.lock),
-                                                if (correspondences[pos]
-                                                    .showLock ??
-                                                    false)
-                                                  Text("secret".tr),
 
-                                                Spacer(),
+                                                SizedBox(width: 50,),
+
                                                 // Container(
                                                 //   height: 20,
                                                 //   width: 20,
@@ -4776,9 +4748,8 @@ class CustomListView extends StatelessWidget {
                                                     "1")
                                                   Icon(
                                                       Icons
-                                                          .warning_amber,
-                                                      color: Colors
-                                                          .red),
+                                                          .warning,
+                                                      color: RedColor),
                                                 SizedBox(
                                                   width: 4,
                                                 ),
@@ -4789,17 +4760,45 @@ class CustomListView extends StatelessWidget {
                                                     "veryimportant".tr,
                                                     style: TextStyle(
                                                         color:
-                                                        Colors.red),
-                                                  )
+                                                        RedColor),
+                                                  ),
+                                                SizedBox(width: 50,) ,
+                                                if (correspondences[pos]
+                                                    .showLock ??
+                                                    false)
+                                                  Icon(Icons.lock),
+                                                if (correspondences[pos]
+                                                    .showLock ??
+                                                    false)
+                                                  Text("secret".tr),
 
+                                                SizedBox(width: 50,)
+                   ,
+                    Icon(
+                    correspondences[pos]
+                        .isLocked!
+                    ? Icons.lock
+                        : Icons
+                        .lock_open,
+                    color: Theme
+                        .of(context)
+                        .colorScheme
+                        .primary),
+                    if (correspondences[pos]
+                        .isLocked ??
+                    false)
+                    Text("closed".tr,
+                    style: TextStyle(
+                    color: Theme
+                        .of(
+                    context)
+                        .colorScheme
+                        .primary)),
                                                 //   correspondences[pos].priorityId
                                                 //  correspondences[pos].purposeId
 
-                                                ,
-                                                SizedBox(
-                                                  width: 8,
-                                                ),
-                                                Spacer(),
+
+                                                SizedBox(width: 50,)
                                                 // Text("sender".tr),
                                                 // SizedBox(
                                                 //   width: 4,
@@ -4809,7 +4808,7 @@ class CustomListView extends StatelessWidget {
                                                 //         .fromUser ??
                                                 //         ""),
 
-                                                if (correspondences[pos]
+                                                ,if (correspondences[pos]
                                                     .hasAttachments ??
                                                     false)
                                                   Icon(

@@ -3875,7 +3875,6 @@ class LandingPage extends GetWidget<LandingPageController> {
                                 color: Colors.grey,
                               ),
                             ),
-                          ),
                           Spacer(flex: 1),
                           Flexible(
                             flex: 10,
@@ -3917,6 +3916,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                         ],
                       ),
                     ),
+                  ),
                   ),
                 ],
               ),

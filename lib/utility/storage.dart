@@ -27,8 +27,12 @@ class SecureStorage {
     return readData;
   }
 
-  String? readSecureData(String key) {
-    var readData = box.read(key);
+  // String? readSecureData(String key) {
+  //   var readData = box.read(key);
+  //   return readData;
+  // }
+  Future readSecureData(String key) async {
+    var readData = await box.read(key);
     return readData;
   }
 

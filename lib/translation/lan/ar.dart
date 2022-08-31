@@ -96,7 +96,7 @@ const Map<String, String> ar = {
   "Modify":"تحرير"
   ,
   "back":"الغاء تحرير",
-  "Base Url":"اللينك الاساسي"
+  "Base Url":"الرابط الاساسي"
   , "Settings": "الاعدادات"
   , "Save Settings": "حفظ الاعدادات"
   , "pick your Color": "اختر اللون المناسب"

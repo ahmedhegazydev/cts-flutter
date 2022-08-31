@@ -4189,6 +4189,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                     TableRowInkWell(
                       onTap: () {
                         //openInbox(context);
+                        Get.find<InboxController>().nodeId=0;
                         Get.find<InboxController>().isAllOrNot=true;
                         Get.find<InboxController>().getAllCorrespondencesData(context: context, inboxId: 1);
 
@@ -4209,7 +4210,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                     TableRowInkWell(
                       onTap: () {
                         //openInbox(context);
-
+                        Get.find<InboxController>().nodeId=0;
                         Get.find<InboxController>().isAllOrNot=true;
                         Get.find<InboxController>().getAllCorrespondencesData(context: context, inboxId: 5);
                         Get.toNamed("/InboxPage");

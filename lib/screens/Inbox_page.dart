@@ -2386,17 +2386,29 @@ class InboxPage extends GetWidget<InboxController> {
             _buildSideMenuFolders(
                 context,
                 // "flagged".tr,
-                "وارد للكل".tr,
+                "allincom".tr,
                 "assets/images/incoming.png",
                 true,
-                05),
+                05,() {
+              controller.nodeId=0;
+              Get.find<InboxController>().isAllOrNot=true;
+              Get.find<InboxController>().getAllCorrespondencesData(context: context, inboxId: 1);
+              controller.update();
+                }),
             _buildSideMenuFolders(
                 context,
                 // "notifications".tr,
-                "صادر للكل".tr,
+                "allout".tr,
                 "assets/images/outgoing.png",
                 false,
-                19)
+                19
+              ,() {
+             controller.nodeId=0;
+              Get.find<InboxController>().isAllOrNot=true;
+              Get.find<InboxController>().getAllCorrespondencesData(context: context, inboxId: 5);
+              controller.update();
+              }
+                ,)
           ],
         ),
       ),
@@ -2445,9 +2457,10 @@ class InboxPage extends GetWidget<InboxController> {
                           .inboxCategories![pos]
                           .value!
                           .nodeId;
-
+controller.isAllOrNot=false;
                       controller.getCorrespondencesData(
                           context: context, inboxId: controller.inboxId);
+                      controller.update();
                     },
                     // onTap:,
                     child: SizedBox(
@@ -2742,47 +2755,49 @@ class InboxPage extends GetWidget<InboxController> {
   }
 
   _buildSideMenuFolders(BuildContext context, String title, String iconTitle,
-      bool showCount, int count) {
-    return Container(
-      padding: const EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 0),
-      width: double.infinity,
-      height: calculateHeight(80, context),
-      color: Colors.transparent,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Container(
-            color: Colors.transparent,
-            child: Image(
-              image: AssetImage(
-                iconTitle,
+      bool showCount, int count, VoidCallback function) {
+    return InkWell(onTap:function ,
+      child: Container(
+        padding: const EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 0),
+        width: double.infinity,
+        height: calculateHeight(80, context),
+        color: Colors.transparent,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Container(
+              color: Colors.transparent,
+              child: Image(
+                image: AssetImage(
+                  iconTitle,
+                ),
+                fit: BoxFit.contain,
+                width: 30,
+                height: double.infinity,
               ),
-              fit: BoxFit.contain,
-              width: 30,
+            ),
+            Container(
+              width: 15,
               height: double.infinity,
             ),
-          ),
-          Container(
-            width: 15,
-            height: double.infinity,
-          ),
-          Expanded(
-            child: Container(
-              color: Colors.transparent,
-              width: double.infinity,
-              child: Text(
-                title,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline1!
-                    .copyWith(color: Colors.grey, fontSize: 20),
-                textAlign: TextAlign.start,
+            Expanded(
+              child: Container(
+                color: Colors.transparent,
+                width: double.infinity,
+                child: Text(
+                  title,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline1!
+                      .copyWith(color: Colors.grey, fontSize: 20),
+                  textAlign: TextAlign.start,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

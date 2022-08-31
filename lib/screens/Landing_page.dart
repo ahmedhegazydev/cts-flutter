@@ -3927,7 +3927,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       children: [
                         TableRowInkWell(
                           onTap: () {
-
+                            openInbox(boxid: 0  ,context: context,nodeId:  e.value!.nodeId! );
                          //   openInbox(context);
                           },
                           child: _buildInboxesRow(

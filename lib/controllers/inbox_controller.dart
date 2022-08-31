@@ -48,7 +48,7 @@ class InboxController extends GetxController {
   List<int> listSelectCorrespondences = [];
   int? oldIndex = 0;
   int? newIndex = 0;
-
+int?nodeId=0;
   setOldIndex(int oldIndex){
     this.oldIndex = oldIndex;
     update();
@@ -146,7 +146,7 @@ class InboxController extends GetxController {
   String filterWord = "";
   ScrollController scrollController = ScrollController();
   int index = 0;
-  int inboxId = 5;
+  int inboxId = 0;
   bool haveMoreData = true;
   bool addToList = true;
 
@@ -242,18 +242,18 @@ class InboxController extends GetxController {
         inboxId: inboxId,
         pageSize: 20,
         showThumbnails: false);
-    getAllCorrespondencesData(
-        context: context,
-        inboxId: inboxId,
-        pageSize: 20,
-        showThumbnails: false);
+    // getAllCorrespondencesData(
+    //     context: context,
+    //     inboxId: inboxId,
+    //     pageSize: 20,
+    //     showThumbnails: false);
 
     //getFindRecipientData();
     getFetchBasketList(context: context);
   }
 
   Future<void> onRefresh() async {
-    //  getCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false );
+    //  getCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false,context: context );
 
     //  getAllCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false );
     print("onRefresh");
@@ -316,8 +316,13 @@ class InboxController extends GetxController {
     getData = true;
     haveMoreData = true;
     update();
+    this.inboxId=inboxId;
+
     _correspondencesApi.data =
-        "Token=${secureStorage.token()}&inboxId=$inboxId&index=$index&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&showThumbnails=$showThumbnails";
+       // "Token=${secureStorage.token()}&inboxId=$inboxId&index=$index&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&showThumbnails=$showThumbnails";
+"Token=${secureStorage.token()}&inboxId=$inboxId&nodeId=$nodeId&index=$index&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&showThumbnails=$showThumbnails";
+
+print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
     _correspondencesApi.getData().then((value) {
       correspondencesModel = value as CorrespondencesModel;
       if (addToList) {
@@ -342,43 +347,43 @@ class InboxController extends GetxController {
     });
   }
 
-  getAllCorrespondencesData(
-      {required context,
-      required int inboxId,
-      int pageSize = 20,
-      bool showThumbnails = false}) {
-    final GetCorrespondencesAllAPI _getCorrespondencesAllAPI =
-        GetCorrespondencesAllAPI(context);
-    correspondences.clear();
-    getData = true;
-    haveMoreData = true;
-    update();
-    _getCorrespondencesAllAPI.data =
-        "Token=${secureStorage.token()}&inboxId=$inboxId&index=$index&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&showThumbnails=$showThumbnails";
-    _getCorrespondencesAllAPI.getData().then((value) {
-      getCorrespondencesAllModel = value as GetCorrespondencesAllModel;
-      if (addToList) {
-        allCorrespondences
-            .addAll(correspondencesModel?.inbox?.correspondences ?? []);
-      } else {
-        allCorrespondences = correspondencesModel?.inbox?.correspondences ?? [];
-      }
-
-      int listLength =
-          correspondencesModel?.inbox?.correspondences?.length ?? 0;
-      var v = correspondencesModel?.toJson();
-      if (listLength < pageSize) {
-        haveMoreData = false;
-      }
-      update();
-      // log(v.length);
-      print(correspondencesModel?.inbox?.correspondences?.length);
-      getData = false;
-      update();
-    }).onError((error, stackTrace) {
-      print(error);
-    });
-  }
+  // getAllCorrespondencesData(
+  //     {required context,
+  //     required int inboxId,
+  //     int pageSize = 20,
+  //     bool showThumbnails = false}) {
+  //   final GetCorrespondencesAllAPI _getCorrespondencesAllAPI =
+  //       GetCorrespondencesAllAPI(context);
+  //   correspondences.clear();
+  //   getData = true;
+  //   haveMoreData = true;
+  //   update();
+  //   _getCorrespondencesAllAPI.data =
+  //       "Token=${secureStorage.token()}&inboxId=$inboxId&index=$index&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&showThumbnails=$showThumbnails";
+  //   _getCorrespondencesAllAPI.getData().then((value) {
+  //     getCorrespondencesAllModel = value as GetCorrespondencesAllModel;
+  //     if (addToList) {
+  //       allCorrespondences
+  //           .addAll(correspondencesModel?.inbox?.correspondences ?? []);
+  //     } else {
+  //       allCorrespondences = correspondencesModel?.inbox?.correspondences ?? [];
+  //     }
+  //
+  //     int listLength =
+  //         correspondencesModel?.inbox?.correspondences?.length ?? 0;
+  //     var v = correspondencesModel?.toJson();
+  //     if (listLength < pageSize) {
+  //       haveMoreData = false;
+  //     }
+  //     update();
+  //     // log(v.length);
+  //     print(correspondencesModel?.inbox?.correspondences?.length);
+  //     getData = false;
+  //     update();
+  //   }).onError((error, stackTrace) {
+  //     print(error);
+  //   });
+  // }
 
   //
   //  openfilee({required docId,required correspondenceId, required transferId})async{

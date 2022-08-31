@@ -1023,28 +1023,331 @@ class DocumentPage extends GetWidget<DocumentController> {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("referTo".tr),
+                    Text("referTo".tr, style: Theme
+                        .of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(
+                        color: Colors.black.withOpacity(.5),
+                        fontSize: 18, fontWeight: FontWeight.bold
+                    )),
 
                     Container(height: 100, width: MediaQuery
                         .of(context)
                         .size
                         .width * .8,
-                      child: ListView.builder(scrollDirection: Axis.horizontal,
-                          itemCount: 10,
-                          itemBuilder: (context, pos) {
-                            return
+                      child: GetBuilder<DocumentController>(builder: (logic) {
+                        return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: controller.users.length+1,
+                            itemBuilder: (context, pos) {
+                              if (pos == controller.users.length) {
+                                return
 
 
-                              Container(padding: EdgeInsets.all(8),
-                                decoration: BoxDecoration(shape: BoxShape
-                                    .circle, color: Theme
-                                    .of(context)
-                                    .colorScheme
-                                    .primary,image: DecorationImage(image: AssetImage("assets/images/pr.jpg",),fit: BoxFit.cover)), height: 75, width: 75,);
-                            //  CircleAvatar(backgroundColor: Colors.red,backgroundImage: AssetImage("assets/images/pr.jpg",),,radius: 30,);
+                                  Container(padding: EdgeInsets.all(8),
+                                    child: Icon(Icons.add),
+                                    decoration: BoxDecoration(shape: BoxShape
+                                        .circle, color: Theme
+                                        .of(context)
+                                        .colorScheme
+                                        .primary,),
+                                    height: 75,
+                                    width: 75,);
+                              } else {
+                                return
 
-                          }),
+
+                                  InkWell(onTap: () {
+                                    if (!controller.usersWillSendTo
+                                        .contains(logic.users[pos])) {
+                                      controller.addTousersWillSendTo(
+                                          user: logic.users[pos]);
+                                      controller
+                                          .SetMultipleReplyWithVoiceNoteRequestModel(
+                                          correspondencesId:
+                                          controller
+                                              .correspondences
+                                              .correspondenceId!,
+                                          transferId: controller
+                                              .correspondences
+                                              .transferId!,
+                                          id: 55);
+                                    }
+                                  },
+                                    child: Container(padding: EdgeInsets.all(8),
+                                      decoration: BoxDecoration(shape: BoxShape
+                                          .circle,
+                                          color: Theme
+                                              .of(context)
+                                              .colorScheme
+                                              .primary,
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                "assets/images/pr.jpg",),
+                                              fit: BoxFit.cover)),
+                                      height: 75,
+                                      width: 75,),
+                                  );
+                              }
+
+                              //  CircleAvatar(backgroundColor: Colors.red,backgroundImage: AssetImage("assets/images/pr.jpg",),,radius: 30,);
+
+                            });
+                      }),
                     )
+
+
+                    , const Divider(
+                      color: Colors.grey,
+                    ),
+                    SizedBox(
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width * .8,
+                        height: 300, // MediaQuery.of(context).size.height * .5,
+                        child: GetBuilder<DocumentController>(
+                          //   assignId: true,//tag: "user",
+                          builder: (logic) {
+                            return //Text(logic.filterWord);
+
+                              ListView.builder(
+                                  scrollDirection: Axis.vertical,
+                                  itemCount:
+                                  controller.usersWillSendTo.length,
+                                  itemBuilder: (context, pos) {
+                                    return //Text(controller.filterWord);
+
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          color: Colors.grey[200],
+                                          child: Column(children: [
+                                            Row(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                    const EdgeInsets.all(
+                                                        8.0),
+                                                    child: Text(logic
+                                                        .usersWillSendTo[
+                                                    pos]
+                                                        .value ??
+                                                        ""),
+                                                    // child: Container(
+                                                    //   height: 50,
+                                                    //   width: 50,
+                                                    //   // decoration: const BoxDecoration(
+                                                    //   //   shape: BoxShape.circle,
+                                                    //   //   color: Colors.grey,
+                                                    //   // ),
+                                                    // ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 8,
+                                                  ),
+                                                  Text(
+                                                    "name",
+                                                    style: Theme
+                                                        .of(context)
+                                                        .textTheme
+                                                        .headline3!
+                                                        .copyWith(
+                                                      color:
+                                                      createMaterialColor(
+                                                        const Color
+                                                            .fromRGBO(
+                                                            77, 77, 77, 1),
+                                                      ),
+                                                      fontSize: 15,
+                                                    ),
+                                                    textAlign: TextAlign.center,
+                                                    overflow:
+                                                    TextOverflow.ellipsis,
+                                                  ),
+                                                  Spacer(),
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      print(
+                                                          "i deeeeeeeeeeeeeeeeeeeeeeee");
+                                                      controller.transfarForMany
+                                                          .remove(logic
+                                                          .usersWillSendTo[
+                                                      pos]
+                                                          .id);
+                                                      logic
+                                                          .delTousersWillSendTo(
+                                                          user: logic
+                                                              .usersWillSendTo[
+                                                          pos]);
+                                                    },
+                                                    child: Image.asset(
+                                                      'assets/images/close_button.png',
+                                                      width: 20,
+                                                      height: 20,
+                                                    ),
+                                                  ),
+                                                ]),
+                                            SizedBox(
+                                              height: 4,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Text("action".tr),
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Expanded(
+                                                  child: Text("audioNotes".tr),
+                                                )
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Container(
+                                                    height: 40,
+                                                    color: Colors.grey[300],
+                                                    child: DropdownButton<
+                                                        CustomActions>(
+                                                      alignment:
+                                                      Alignment.topRight,
+                                                      value: logic.getactions(
+                                                          logic
+                                                              .usersWillSendTo[
+                                                          pos]
+                                                              .id),
+                                                      icon: const Icon(
+                                                          Icons.arrow_downward),
+                                                      elevation: 16,
+                                                      style: const TextStyle(
+                                                          color: Colors
+                                                              .deepPurple),
+                                                      underline: Container(
+                                                        height: 2,
+                                                        color: Colors
+                                                            .deepPurpleAccent,
+                                                      ),
+                                                      hint: Text("اختار"),
+                                                      onChanged: (CustomActions?
+                                                      newValue) {
+                                                        controller.setactions(
+                                                            logic
+                                                                .usersWillSendTo[
+                                                            pos]
+                                                                .id,
+                                                            newValue!);
+                                                        //  dropdownValue = newValue!;
+                                                      },
+                                                      items: controller
+                                                          .customActions
+                                                          ?.map<
+                                                          DropdownMenuItem<
+                                                              CustomActions>>(
+                                                              (CustomActions
+                                                          value) {
+                                                            return DropdownMenuItem<
+                                                                CustomActions>(
+                                                              value: value,
+                                                              child:
+                                                              Text(value.name!),
+                                                            );
+                                                          }).toList(),
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Expanded(
+                                                  child: Container(
+                                                      height: 40,
+                                                      color: Colors.grey[300],
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                        children: [
+                                                          GestureDetector(
+                                                            onTap: () async {
+                                                              ///To Do Start and stop rec
+                                                              controller
+                                                                  .recording
+                                                                  ? controller
+                                                                  .stopForMany(
+                                                                  id: logic
+                                                                      .usersWillSendTo[
+                                                                  pos]
+                                                                      .id!)
+                                                                  : controller
+                                                                  .recordForMany();
+                                                            },
+                                                            child: Padding(
+                                                              padding:
+                                                              const EdgeInsets
+                                                                  .all(8.0),
+                                                              child: GetBuilder<
+                                                                  DocumentController>(
+                                                                  builder:
+                                                                      (logic) {
+                                                                    return Icon(
+                                                                        controller
+                                                                            .recording
+                                                                            ? Icons
+                                                                            .stop
+                                                                            : Icons
+                                                                            .mic);
+                                                                  }),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                            child: InkWell(
+                                                              onTap: () {
+                                                                controller
+                                                                    .playRec();
+                                                              },
+                                                              child: Icon(Icons
+                                                                  .play_arrow),
+                                                            ),
+                                                          )
+                                                        ],
+                                                      )),
+                                                )
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 8,
+                                            ),
+                                            Container(
+                                              child: TextFormField(
+                                                onChanged: (v) {
+                                                  controller.setNots(
+                                                      id: logic
+                                                          .usersWillSendTo[pos]
+                                                          .id!,
+                                                      not: v);
+                                                },
+                                                maxLines: 4,
+                                              ),
+                                              color: Colors.grey[300],
+                                            ),
+                                            SizedBox(
+                                              height: 8,
+                                            ),
+                                          ]),
+                                        ),
+                                      );
+                                  });
+                          },
+                        ))
 
                   ]),
             ),

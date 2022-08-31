@@ -193,7 +193,7 @@ class SearchController extends GetxController {
   }
 
   getAllData() {
-    getFindRecipientData(context: context);
+    getFindRecipientData(context  );
     getData(context: context);
   }
 
@@ -204,8 +204,8 @@ class SearchController extends GetxController {
   }
 
 //الحصور علي جميع الافراد
-  getFindRecipientData({required context}) async {
-    final FindRecipient _findRecipient = FindRecipient(context);
+  getFindRecipientData(context ) async {
+    final FindRecipient _findRecipient = FindRecipient(context!);
     _findRecipient.data =
         "Token=${_secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     await _findRecipient.getData().then((value) {

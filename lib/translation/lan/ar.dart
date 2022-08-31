@@ -103,8 +103,8 @@ const Map<String, String> ar = {
   ,"addtoBasket":"اضف الي السلة",
   "Summary":"معلومات",
 "Complete":"انهاء",
-   "صادر للكل": "صادر الكل"
-  , "وارد للكل": "وارد الكل"
+   "allout": "صادر الكل"
+  , "allincom": "وارد الكل"
   , "Basket": "محفظتي",
 "user Guide": "دليل المستخدم"
 ,
@@ -127,4 +127,9 @@ const Map<String, String> ar = {
   "newBasket":"سلة جديدة",
   "title":"عنوان الرسالة",
   "Loading...":"  تحميل .... ",
+
+
+  "relogin":"برجاء اعاده تسجيل الدخول",
+
+
 };

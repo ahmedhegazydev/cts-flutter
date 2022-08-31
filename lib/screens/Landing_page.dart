@@ -1192,8 +1192,11 @@ class LandingPage extends GetWidget<LandingPageController> {
                       'assets/images/delegation.png',
                     ),
                     fit: BoxFit.contain,
+                    width: double.infinity,
+                    height: double.infinity,
                   ),
                 ),
+
                 Container(
                   height: 40,
                   width: double.infinity,
@@ -3949,7 +3952,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                       children: [
                         TableRowInkWell(
                           onTap: () {
-                            openInbox(context);
+                            openInbox(boxid: 0  ,context: context,nodeId:  e.value!.nodeId! );
+                         //   openInbox(context);
                           },
                           child: _buildInboxesRow(
                             context,
@@ -3996,7 +4000,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                   children: [
                     TableRowInkWell(
                       onTap: () {
-                        openInbox(context);
+                    //    openInbox(context);
                       },
                       child: _buildOtherFoldersRows(
                         context,
@@ -4012,12 +4016,12 @@ class LandingPage extends GetWidget<LandingPageController> {
                   children: [
                     TableRowInkWell(
                       onTap: () {
-                        openInbox(context);
+                        //openInbox(context);
                       },
                       child: _buildOtherFoldersRows(
                         context,
                         // "notifications".tr,
-                        "صادر للكل".tr,
+                        "allout".tr,
                         // "assets/images/notification.png",
                         "assets/images/outgoing.png",
                         true,
@@ -4163,7 +4167,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                       children: [
                         TableRowInkWell(
                           onTap: () {
-                            openInbox(context);
+
+                        openInbox(boxid: 0  ,context: context,nodeId:  e.value!.nodeId! );
                           },
                           child: _buildInboxesRow(
                             context,
@@ -4199,11 +4204,11 @@ class LandingPage extends GetWidget<LandingPageController> {
                   children: [
                     TableRowInkWell(
                       onTap: () {
-                        openInbox(context);
+                        //openInbox(context);
                       },
                       child: _buildOtherFoldersRows(
                         context,
-                        "وارد للكل".tr,
+                        "allincom".tr,
                         "assets/images/incoming.png",
                         true,
                         5,
@@ -4215,11 +4220,11 @@ class LandingPage extends GetWidget<LandingPageController> {
                   children: [
                     TableRowInkWell(
                       onTap: () {
-                        openInbox(context);
+                        //openInbox(context);
                       },
                       child: _buildOtherFoldersRows(
                         context,
-                        "صادر للكل".tr,
+                        "allout".tr,
                         // "assets/images/notification.png",
                         "assets/images/outgoing.png",
                         true,
@@ -4444,8 +4449,11 @@ class LandingPage extends GetWidget<LandingPageController> {
     );
   }
 
-  openInbox(context) {
+  openInbox({required BuildContext context, required int boxid, required int nodeId}) {
+    Get.find<InboxController>().inboxId = boxid;
+    Get.find<InboxController>().nodeId = nodeId;
     Get.find<InboxController>().getAllData(context: context);
+
     Get.toNamed("/InboxPage");
     // Navigator.push(
     //   context,

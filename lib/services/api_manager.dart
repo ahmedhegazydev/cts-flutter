@@ -48,8 +48,10 @@ abstract class ApiManager {
         a.Get.snackbar("Error".tr, "${value.data["ErrorMessage"]}");
       } else {
         if (value.data["Status"] == 2) {
-          // Get.to(LoginPage());
-          // Get.offAll(LoginPage());
+          a.Get.snackbar("Error".tr, "LogIn ");
+          secureStorage.deleteSecureData(AllStringConst.Token);
+
+          Get.offAll(LoginPage());
         } else {
           print(value);
           data = value.data;

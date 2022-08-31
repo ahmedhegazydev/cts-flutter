@@ -16,7 +16,7 @@ class AllBindings extends Bindings {
   @override
   void dependencies() async {
     Get.lazyPut(() => SecureStorage());
-    Get.lazyPut(() => LandingPageController());
+    Get.put(  LandingPageController());
     Get.put(DocumentController(), permanent: true);
 
     Get.put(LoginController());

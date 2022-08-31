@@ -756,7 +756,9 @@ class InboxPage extends GetWidget<InboxController> {
                       color: createMaterialColor(
                        Get.find<LandingPageController>()
                             .dashboardStatsResultModel!
-                            .inboxCategories![pos].value!.nodeId==controller.nodeId?AppColor:     gray,
+                            .inboxCategories![pos].value!.nodeId==controller.nodeId?Theme.of(context)
+                           .colorScheme
+                           .primary:     gray,
                       ),
                       fontSize: 20,
                     ),

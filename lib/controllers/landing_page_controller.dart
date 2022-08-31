@@ -142,13 +142,14 @@ update();
   void onReady() {
     super.onReady();
    //getDashboardStats();
-    getDashboardStatsLocalJson();
+
     _logindata = secureStorage.readSecureJsonData(AllStringConst.LogInData);
     data = LoginModel.fromJson(_logindata!);
     // getFindRecipientData();
     getFindRecipientData(context: context);
     //Get.find<SearchController>().getAllData();
     Get.find<DocumentController>().getFindRecipientData(context: context);
+    getDashboardStatsLocalJson();
   }
 
   String userName() {

@@ -10,6 +10,7 @@ import '../services/json_model/login_model.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
 import '../utility/validator.dart';
+import 'landing_page_controller.dart';
 
 class LoginController extends GetxController {
   TextEditingController userName = TextEditingController();
@@ -94,6 +95,11 @@ class LoginController extends GetxController {
               AllStringConst.UserDetails, loginModel.userDetails);
           await secureStorage.writeSecureData(
               AllStringConst.ServiceType, loginModel.serviceType);
+
+
+          Get.put(  LandingPageController());
+
+
           Get.offNamed("/Landing");
         }
       });

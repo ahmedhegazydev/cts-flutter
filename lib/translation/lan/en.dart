@@ -130,4 +130,9 @@ const Map<String, String> en = {
   "userGuide":"User Guide",
   "newBasket":"New Basket",
   "title":"Title",
+  "allout": "All Out"
+  , "allincom": "All in",
+
+
+  "relogin":"Please re-login",
 };

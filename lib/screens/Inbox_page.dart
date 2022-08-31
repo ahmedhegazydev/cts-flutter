@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/inbox_controller.dart';
+import '../controllers/landing_page_controller.dart';
 import '../utility/all_const.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
@@ -616,8 +617,8 @@ class InboxPage extends GetWidget<InboxController> {
             if (value == 0) {
               //  Globals.inboxIdForCorrespondencesList = 5;
 
-              controller.inboxId = 5;
-              controller.getCorrespondencesData(context: context, inboxId: 5);
+              controller.inboxId = 0;
+              controller.getCorrespondencesData(context: context, inboxId: 0);
             } else if (value == 1) {
               controller.inboxId = 1;
               controller.getCorrespondencesData(context: context, inboxId: 1);
@@ -627,11 +628,12 @@ class InboxPage extends GetWidget<InboxController> {
               controller.inboxId = 5;
               controller.getCorrespondencesData(context: context, inboxId: 5);
               //  Globals.inboxIdForCorrespondencesList = 5;
-            } else if (value == 3) {
-              controller.inboxId = 3;
-              controller.getCorrespondencesData(context: context, inboxId: 3);
-              //   Globals.inboxIdForCorrespondencesList = 3;
             }
+            // else if (value == 3) {
+            //   controller.inboxId = 3;
+            //   controller.getCorrespondencesData(context: context, inboxId: 3);
+            //   //   Globals.inboxIdForCorrespondencesList = 3;
+            // }
             //  else {
             //    controller.     getCorrespondencesData(index: 5);
             // //   Globals.inboxIdForCorrespondencesList = 5;
@@ -719,91 +721,165 @@ class InboxPage extends GetWidget<InboxController> {
   _buildSideMenuInboxes(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 0),
-      width: double.infinity,
+      width:double.infinity,
+
       color: Colors.transparent,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          GestureDetector(
-            // onTap:,
-            child: SizedBox(
-              //   width: double.infinity,
-              height: calculateHeight(80, context),
-              child: Align(
-                alignment: isDirectionRTL(context)
-                    ? FractionalOffset.centerLeft
-                    : FractionalOffset.centerRight,
-                child: Text(
-                  "allInbox".tr,
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
-                        color: createMaterialColor(
-                          Color.fromRGBO(100, 100, 100, 1),
-                        ),
-                        fontSize: 20,
+      child: ListView.builder(shrinkWrap: true,itemCount:  Get.find<LandingPageController>()
+          .dashboardStatsResultModel!
+          .inboxCategories?.length,itemBuilder: (context,pos){
+
+  return      Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Container(
+      // decoration: BoxDecoration(color:  Get.find<LandingPageController>()
+      //   .dashboardStatsResultModel!
+      //   .inboxCategories![pos].value!.nodeId==controller.nodeId?Colors.red:Colors.orange),
+      child: GestureDetector(onTap: (){
+
+
+
+
+      },
+              // onTap:,
+              child: SizedBox(
+                //   width: double.infinity,
+                height: calculateHeight(80, context),
+                child: Align(
+                  alignment: isDirectionRTL(context)
+                      ? FractionalOffset.centerLeft
+                      : FractionalOffset.centerRight,
+                  child: Text(
+                    Get.find<LandingPageController>()
+                        .dashboardStatsResultModel!
+                        .inboxCategories![pos].key!,
+                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                      color: createMaterialColor(
+                       Get.find<LandingPageController>()
+                            .dashboardStatsResultModel!
+                            .inboxCategories![pos].value!.nodeId==controller.nodeId?AppColor:     gray,
                       ),
-                  textAlign: TextAlign.start,
+                      fontSize: 20,
+                    ),
+                    textAlign: TextAlign.start,
+                  ),
                 ),
               ),
             ),
-          ),
-          SizedBox(
-            //width: double.infinity,
-            height: 80,
-            child: Align(
-              alignment: isDirectionRTL(context)
-                  ? FractionalOffset.centerLeft
-                  : FractionalOffset.centerRight,
-              child: Text(
-                "forAction".tr,
-                style: Theme.of(context).textTheme.headline1!.copyWith(
-                    color: createMaterialColor(
-                      const Color.fromRGBO(100, 100, 100, 1),
-                    ),
-                    fontSize: 20),
-                textAlign: TextAlign.start,
-              ),
-            ),
-          ),
-          SizedBox(
-            height: calculateHeight(80, context),
-            child: Align(
-              alignment: isDirectionRTL(context)
-                  ? FractionalOffset.centerLeft
-                  : FractionalOffset.centerRight,
-              child: Text(
-                "forSignature".tr,
-                style: Theme.of(context).textTheme.headline1!.copyWith(
-                      color: createMaterialColor(
-                        const Color.fromRGBO(100, 100, 100, 1),
-                      ),
-                      fontSize: 20,
-                    ),
-                textAlign: TextAlign.start,
-              ),
-            ),
-          ),
-          SizedBox(
-            width: double.infinity,
-            height: 80,
-            child: Align(
-              alignment: isDirectionRTL(context)
-                  ? FractionalOffset.centerLeft
-                  : FractionalOffset.centerRight,
-              child: Text(
-                "forInfo".tr,
-                style: Theme.of(context).textTheme.headline1!.copyWith(
-                      color: createMaterialColor(
-                        Color.fromRGBO(100, 100, 100, 1),
-                      ),
-                      fontSize: 20,
-                    ),
-                textAlign: TextAlign.start,
-              ),
-            ),
-          )
-        ],
-      ),
+    ),
+  );
+
+      })
+
+    //     Get.find<LandingPageController>()!
+    //     .dashboardStatsResultModel!
+    //     .inboxCategories!
+    //     .map(
+    //       (e) => TableRow(
+    //     children: [
+    //       TableRowInkWell(
+    //         onTap: () {
+    //
+    //           //   openInbox(context);
+    //         },
+    //         child: _buildInboxesRow(
+    //           context,
+    //           e.key!,
+    //           e.value!.count!,
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    // )
+    //     .toList(),
+      //
+      // Column(
+      //   crossAxisAlignment: CrossAxisAlignment.start,
+      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //   children: [
+      //     GestureDetector(
+      //       // onTap:,
+      //       child: SizedBox(
+      //         //   width: double.infinity,
+      //         height: calculateHeight(80, context),
+      //         child: Align(
+      //           alignment: isDirectionRTL(context)
+      //               ? FractionalOffset.centerLeft
+      //               : FractionalOffset.centerRight,
+      //           child: Text(
+      //             "allInbox".tr,
+      //             style: Theme.of(context).textTheme.headline1!.copyWith(
+      //                   color: createMaterialColor(
+      //                     Color.fromRGBO(100, 100, 100, 1),
+      //                   ),
+      //                   fontSize: 20,
+      //                 ),
+      //             textAlign: TextAlign.start,
+      //           ),
+      //         ),
+      //       ),
+      //     ),
+      //     // SizedBox(
+      //     //   //width: double.infinity,
+      //     //   height: 80,
+      //     //   child: Align(
+      //     //     alignment: isDirectionRTL(context)
+      //     //         ? FractionalOffset.centerLeft
+      //     //         : FractionalOffset.centerRight,
+      //     //     child: Text(
+      //     //       "forAction".tr,
+      //     //       style: Theme.of(context).textTheme.headline1!.copyWith(
+      //     //           color: createMaterialColor(
+      //     //             const Color.fromRGBO(100, 100, 100, 1),
+      //     //           ),
+      //     //           fontSize: 20),
+      //     //       textAlign: TextAlign.start,
+      //     //     ),
+      //     //   ),
+      //     // ),
+      //     // SizedBox(
+      //     //   height: calculateHeight(80, context),
+      //     //   child: Align(
+      //     //     alignment: isDirectionRTL(context)
+      //     //         ? FractionalOffset.centerLeft
+      //     //         : FractionalOffset.centerRight,
+      //     //     child: Text(
+      //     //       "forSignature".tr,
+      //     //       style: Theme.of(context).textTheme.headline1!.copyWith(
+      //     //             color: createMaterialColor(
+      //     //               const Color.fromRGBO(100, 100, 100, 1),
+      //     //             ),
+      //     //             fontSize: 20,
+      //     //           ),
+      //     //       textAlign: TextAlign.start,
+      //     //     ),
+      //     //   ),
+      //     // ),
+      //     // SizedBox(
+      //     //   width: double.infinity,
+      //     //   height: 80,
+      //     //   child: Align(
+      //     //     alignment: isDirectionRTL(context)
+      //     //         ? FractionalOffset.centerLeft
+      //     //         : FractionalOffset.centerRight,
+      //     //     child: Text(
+      //     //       "forInfo".tr,
+      //     //       style: Theme.of(context).textTheme.headline1!.copyWith(
+      //     //             color: createMaterialColor(
+      //     //               Color.fromRGBO(100, 100, 100, 1),
+      //     //             ),
+      //     //             fontSize: 20,
+      //     //           ),
+      //     //       textAlign: TextAlign.start,
+      //     //     ),
+      //     //   ),
+      //     // )
+      //   ],
+      // ),
+      //
+      //
+
+
+
     );
   }
 

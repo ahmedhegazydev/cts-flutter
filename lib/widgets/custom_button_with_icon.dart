@@ -5,6 +5,7 @@ class CustomButtonWithIcon extends StatelessWidget {
 
 final IconData icon;
 final VoidCallback onClick;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(onTap: onClick,

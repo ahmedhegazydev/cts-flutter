@@ -736,9 +736,11 @@ class InboxPage extends GetWidget<InboxController> {
       //   .inboxCategories![pos].value!.nodeId==controller.nodeId?Colors.red:Colors.orange),
       child: GestureDetector(onTap: (){
 
+        controller.nodeId=  Get.find<LandingPageController>()
+            .dashboardStatsResultModel!
+            .inboxCategories![pos].value!.nodeId;
 
-
-
+controller.getCorrespondencesData(context: context, inboxId: controller.inboxId);
       },
               // onTap:,
               child: SizedBox(
@@ -891,94 +893,134 @@ class InboxPage extends GetWidget<InboxController> {
       padding: const EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 0),
       // width: double.infinity,
       // color: Colors.transparent,
-      child: Row(
-        children: [
-          Expanded(
-            child: GestureDetector(
-              // onTap:,
-              child: SizedBox(
-                width: size.width * .2,
-                height: calculateHeight(80, context),
-                child: Align(
-                  alignment: isDirectionRTL(context)
-                      ? FractionalOffset.centerRight
-                      : FractionalOffset.centerLeft,
-                  child: Text(
-                    "allInbox".tr,
-                    style: Theme.of(context).textTheme.headline1!.copyWith(
-                          color: createMaterialColor(
-                            Color.fromRGBO(100, 100, 100, 1),
-                          ),
-                          fontSize: 20,
-                        ),
-                    textAlign: TextAlign.start,
+      child:
+      
+      
+      Row(
+        children:Get.find<LandingPageController>()
+            .dashboardStatsResultModel!
+            .inboxCategories!.map((e) =>          Expanded(
+          child: GestureDetector(onTap: (){
+controller.nodeId=e.value!.nodeId;
+            controller.getCorrespondencesData(context: context, inboxId: controller.inboxId);
+          },
+            // onTap:,
+            child: SizedBox(
+              width: size.width * .2,
+              height: calculateHeight(80, context),
+              child: Align(
+                alignment: isDirectionRTL(context)
+                    ? FractionalOffset.centerRight
+                    : FractionalOffset.centerLeft,
+                child: Text(
+                 e.key!,
+                  style: Theme.of(context).textTheme.headline1!.copyWith(
+
+                    color: createMaterialColor(
+                    e.value!.nodeId==controller.nodeId?Theme.of(context)
+                          .colorScheme
+                          .primary:     gray,
+                    ),
+                    fontSize: 20,
                   ),
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: SizedBox(
-              //  width: size.width*.2,
-              height: calculateHeight(80, context),
-              child: Align(
-                alignment: isDirectionRTL(context)
-                    ? FractionalOffset.centerRight
-                    : FractionalOffset.centerLeft,
-                child: Text(
-                  "forAction".tr,
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
-                      color: createMaterialColor(
-                        const Color.fromRGBO(100, 100, 100, 1),
-                      ),
-                      fontSize: 20),
                   textAlign: TextAlign.start,
                 ),
               ),
             ),
           ),
-          Expanded(
-            child: SizedBox(
-              height: calculateHeight(80, context),
-              child: Align(
-                alignment: isDirectionRTL(context)
-                    ? FractionalOffset.centerRight
-                    : FractionalOffset.centerLeft,
-                child: Text(
-                  "forSignature".tr,
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
-                        color: createMaterialColor(
-                          const Color.fromRGBO(100, 100, 100, 1),
-                        ),
-                        fontSize: 20,
-                      ),
-                  textAlign: TextAlign.start,
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: SizedBox(
-              //  width: size.width*.2,
-              height: calculateHeight(80, context),
-              child: Align(
-                alignment: isDirectionRTL(context)
-                    ? FractionalOffset.centerRight
-                    : FractionalOffset.centerLeft,
-                child: Text(
-                  "forInfo".tr,
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
-                        color: createMaterialColor(
-                          Color.fromRGBO(100, 100, 100, 1),
-                        ),
-                        fontSize: 20,
-                      ),
-                  textAlign: TextAlign.start,
-                ),
-              ),
-            ),
-          )
-        ],
+        ),).toList()
+
+        // [
+        //
+        //
+        //
+        //
+        //   Expanded(
+        //     child: GestureDetector(
+        //       // onTap:,
+        //       child: SizedBox(
+        //         width: size.width * .2,
+        //         height: calculateHeight(80, context),
+        //         child: Align(
+        //           alignment: isDirectionRTL(context)
+        //               ? FractionalOffset.centerRight
+        //               : FractionalOffset.centerLeft,
+        //           child: Text(
+        //             "allInbox".tr,
+        //             style: Theme.of(context).textTheme.headline1!.copyWith(
+        //                   color: createMaterialColor(
+        //                     Color.fromRGBO(100, 100, 100, 1),
+        //                   ),
+        //                   fontSize: 20,
+        //                 ),
+        //             textAlign: TextAlign.start,
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        //   // Expanded(
+        //   //   child: SizedBox(
+        //   //     //  width: size.width*.2,
+        //   //     height: calculateHeight(80, context),
+        //   //     child: Align(
+        //   //       alignment: isDirectionRTL(context)
+        //   //           ? FractionalOffset.centerRight
+        //   //           : FractionalOffset.centerLeft,
+        //   //       child: Text(
+        //   //         "forAction".tr,
+        //   //         style: Theme.of(context).textTheme.headline1!.copyWith(
+        //   //             color: createMaterialColor(
+        //   //               const Color.fromRGBO(100, 100, 100, 1),
+        //   //             ),
+        //   //             fontSize: 20),
+        //   //         textAlign: TextAlign.start,
+        //   //       ),
+        //   //     ),
+        //   //   ),
+        //   // ),
+        //   // Expanded(
+        //   //   child: SizedBox(
+        //   //     height: calculateHeight(80, context),
+        //   //     child: Align(
+        //   //       alignment: isDirectionRTL(context)
+        //   //           ? FractionalOffset.centerRight
+        //   //           : FractionalOffset.centerLeft,
+        //   //       child: Text(
+        //   //         "forSignature".tr,
+        //   //         style: Theme.of(context).textTheme.headline1!.copyWith(
+        //   //               color: createMaterialColor(
+        //   //                 const Color.fromRGBO(100, 100, 100, 1),
+        //   //               ),
+        //   //               fontSize: 20,
+        //   //             ),
+        //   //         textAlign: TextAlign.start,
+        //   //       ),
+        //   //     ),
+        //   //   ),
+        //   // ),
+        //   // Expanded(
+        //   //   child: SizedBox(
+        //   //     //  width: size.width*.2,
+        //   //     height: calculateHeight(80, context),
+        //   //     child: Align(
+        //   //       alignment: isDirectionRTL(context)
+        //   //           ? FractionalOffset.centerRight
+        //   //           : FractionalOffset.centerLeft,
+        //   //       child: Text(
+        //   //         "forInfo".tr,
+        //   //         style: Theme.of(context).textTheme.headline1!.copyWith(
+        //   //               color: createMaterialColor(
+        //   //                 Color.fromRGBO(100, 100, 100, 1),
+        //   //               ),
+        //   //               fontSize: 20,
+        //   //             ),
+        //   //         textAlign: TextAlign.start,
+        //   //       ),
+        //   //     ),
+        //   //   ),
+        //   // )
+        // ],
       ),
     );
   }

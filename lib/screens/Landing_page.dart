@@ -3730,7 +3730,10 @@ class LandingPage extends GetWidget<LandingPageController> {
                         ],
                       ),
                       child: GestureDetector(onTap: (){
-                      //  openInbox( context: context,boxid: 1);
+                        Get.find<InboxController>().isAllOrNot=true;
+                        Get.find<InboxController>().getAllCorrespondencesData(context: context, inboxId: 1);
+
+                        Get.toNamed("/InboxPage");
                       },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -3819,6 +3822,12 @@ class LandingPage extends GetWidget<LandingPageController> {
                         ],
                       ),
                       child: GestureDetector(onTap: (){
+                        Get.find<InboxController>().isAllOrNot=true;
+                        Get.find<InboxController>().getAllCorrespondencesData(context: context, inboxId: 5);
+
+
+
+                        Get.toNamed("/InboxPage");
                     //    openInbox( context: context,boxid: 5);
                       },
                         child: Row(
@@ -4180,6 +4189,10 @@ class LandingPage extends GetWidget<LandingPageController> {
                     TableRowInkWell(
                       onTap: () {
                         //openInbox(context);
+                        Get.find<InboxController>().isAllOrNot=true;
+                        Get.find<InboxController>().getAllCorrespondencesData(context: context, inboxId: 1);
+
+                        Get.toNamed("/InboxPage");
                       },
                       child: _buildOtherFoldersRows(
                         context,
@@ -4196,6 +4209,10 @@ class LandingPage extends GetWidget<LandingPageController> {
                     TableRowInkWell(
                       onTap: () {
                         //openInbox(context);
+
+                        Get.find<InboxController>().isAllOrNot=true;
+                        Get.find<InboxController>().getAllCorrespondencesData(context: context, inboxId: 5);
+                        Get.toNamed("/InboxPage");
                       },
                       child: _buildOtherFoldersRows(
                         context,
@@ -4425,6 +4442,7 @@ class LandingPage extends GetWidget<LandingPageController> {
   }
 
   openInbox({required BuildContext context, required int boxid, required int nodeId}) {
+    Get.find<InboxController>().isAllOrNot=false;
     Get.find<InboxController>().inboxId = boxid;
     Get.find<InboxController>().nodeId = nodeId;
     Get.find<InboxController>().getAllData(context: context);

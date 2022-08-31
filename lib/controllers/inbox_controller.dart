@@ -42,6 +42,11 @@ import 'document_controller.dart';
 import 'package:flutter/services.dart' as rootBundel;
 
 class InboxController extends GetxController {
+  //ده عشان لو اختار من الشاشه بره كل الصادر و الوارد نخفي شاشاه التاب الي فيها صادر ووارد
+  bool isAllOrNot=false;
+
+
+
   TextEditingController textEditingControllerFilter = TextEditingController();
   BuildContext? context;
   FetchBasketListModel? fetchBasketListModel;
@@ -232,6 +237,7 @@ int?nodeId=0;
       LoginModel data = LoginModel.fromJson(logindata!);
       customActions = data.customActions;
     }
+    _scrollListener(context: context);
   }
 
   getAllData({required context}) {
@@ -347,43 +353,53 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
     });
   }
 
-  // getAllCorrespondencesData(
-  //     {required context,
-  //     required int inboxId,
-  //     int pageSize = 20,
-  //     bool showThumbnails = false}) {
-  //   final GetCorrespondencesAllAPI _getCorrespondencesAllAPI =
-  //       GetCorrespondencesAllAPI(context);
-  //   correspondences.clear();
-  //   getData = true;
-  //   haveMoreData = true;
-  //   update();
-  //   _getCorrespondencesAllAPI.data =
-  //       "Token=${secureStorage.token()}&inboxId=$inboxId&index=$index&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&showThumbnails=$showThumbnails";
-  //   _getCorrespondencesAllAPI.getData().then((value) {
-  //     getCorrespondencesAllModel = value as GetCorrespondencesAllModel;
-  //     if (addToList) {
-  //       allCorrespondences
-  //           .addAll(correspondencesModel?.inbox?.correspondences ?? []);
-  //     } else {
-  //       allCorrespondences = correspondencesModel?.inbox?.correspondences ?? [];
-  //     }
-  //
-  //     int listLength =
-  //         correspondencesModel?.inbox?.correspondences?.length ?? 0;
-  //     var v = correspondencesModel?.toJson();
-  //     if (listLength < pageSize) {
-  //       haveMoreData = false;
-  //     }
-  //     update();
-  //     // log(v.length);
-  //     print(correspondencesModel?.inbox?.correspondences?.length);
-  //     getData = false;
-  //     update();
-  //   }).onError((error, stackTrace) {
-  //     print(error);
-  //   });
-  // }
+  getAllCorrespondencesData(
+      {required context,
+      required int inboxId,
+      int pageSize = 20,
+      bool showThumbnails = false}) {
+
+
+
+
+
+
+
+
+
+    final GetCorrespondencesAllAPI _getCorrespondencesAllAPI =
+        GetCorrespondencesAllAPI(context);
+    correspondences.clear();
+    getData = true;
+    haveMoreData = true;
+    update();
+    _getCorrespondencesAllAPI.data =
+        "Token=${secureStorage.token()}&inboxId=$inboxId&index=$index&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&showThumbnails=$showThumbnails";
+    _getCorrespondencesAllAPI.getData().then((value) {
+      print("i get alll _getCorrespondencesAllAPI");
+      getCorrespondencesAllModel = value as GetCorrespondencesAllModel;
+      if (addToList) {
+        allCorrespondences
+            .addAll(correspondencesModel?.inbox?.correspondences ?? []);
+      } else {
+        allCorrespondences = correspondencesModel?.inbox?.correspondences ?? [];
+      }
+
+      int listLength =
+          correspondencesModel?.inbox?.correspondences?.length ?? 0;
+      var v = correspondencesModel?.toJson();
+      if (listLength < pageSize) {
+        haveMoreData = false;
+      }
+      update();
+      // log(v.length);
+      print(correspondencesModel?.inbox?.correspondences?.length);
+      getData = false;
+      update();
+    }).onError((error, stackTrace) {
+      print(error);
+    });
+  }
 
   //
   //  openfilee({required docId,required correspondenceId, required transferId})async{

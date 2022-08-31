@@ -1,11 +1,13 @@
 import 'dart:convert';
 
+import 'package:cts/db/cts_database.dart';
 import 'package:cts/utility/utilitie.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' as a;
 import 'package:get/get_core/src/get_main.dart';
 
+import '../data/SettingsFields.dart';
 import '../screens/Login_page.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
@@ -14,6 +16,10 @@ import 'dio_singleton.dart';
 
 abstract class ApiManager {
   BuildContext? context;
+
+  // late Future<String> baseUrl;
+  // late SettingItem settingItem;
+  late List<SettingItem> settingItems;
 
   ApiManager({BuildContext? context}) {
     this.context = context;
@@ -28,19 +34,33 @@ abstract class ApiManager {
 
   AbstractJsonResource fromJson(data);
 
-  Future<AbstractJsonResource?> getData({
-    // context,
-    data}) async {
+  Future<AbstractJsonResource?> getData(
+      {
+      // context,
+      data}) async {
     AbstractJsonResource? json;
     var data;
-    print("checkIfSavedSettingsBasUrl = $checkIfSavedSettingsBasUrl");
+    // print("checkIfSavedSettingsBasUrl = $checkIfSavedSettingsBasUrl");
 
-    if(context!=null){
+    if (context != null) {
       showLoaderDialog(context!);
     }
 
+    // final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+    // final SharedPreferences prefs = await _prefs;
+    // var baseUrl = await prefs.getString(AllStringConst.BaseUrl) ?? "";
+    // baseUrl = _prefs.then((SharedPreferences prefs) {
+    //   return prefs.getString(AllStringConst.BaseUrl) ?? "";
+    // });
+    // print("storageBaseUrl = " + baseUrl);
+
+    // this.settingItem = await CtsSettingsDatabase.instance.readNote(0);
+    this.settingItems = await CtsSettingsDatabase.instance.readAllNotes();
+    var storageBaseUrl = settingItems[0].baseUrl;
+    print("storageBaseUrl = " + storageBaseUrl);
+
     await dioSingleton.dio
-        .get(checkIfSavedSettingsBasUrl(), queryParameters: data)
+        .get(checkIfSavedSettingsBasUrl(storageBaseUrl), queryParameters: data)
         .then((value) {
       // Navigator.pop(context!);
       // Get.back();
@@ -50,8 +70,7 @@ abstract class ApiManager {
         if (value.data["Status"] == 2) {
           a.Get.snackbar("Error".tr, "LogIn ");
           secureStorage.deleteSecureData(AllStringConst.Token);
-
-          Get.offAll(LoginPage());
+          // Get.offAll(LoginPage());
         } else {
           print(value);
           data = value.data;
@@ -74,9 +93,16 @@ abstract class ApiManager {
         'Content-Type': 'application/json',
       },
     );
+
+    this.settingItems = await CtsSettingsDatabase.instance.readAllNotes();
+    var storageBaseUrl = settingItems[0].baseUrl;
+    print("storageBaseUrl = " + storageBaseUrl);
+
+
     //showLoaderDialog(context!);
     await dioSingleton.dio
-        .post(checkIfSavedSettingsBasUrl(), data: jsonEncode(dataToPost), options: options
+        .post(checkIfSavedSettingsBasUrl(storageBaseUrl),
+            data: jsonEncode(dataToPost), options: options
             // Options(
             //     followRedirects: false,
             //     validateStatus: (status) {
@@ -101,19 +127,20 @@ abstract class ApiManager {
     return jsonList;
   }
 
-  String checkIfSavedSettingsBasUrl() {
-    var storageBaseUrl =
-        secureStorage.readSecureData(AllStringConst.BaseUrl) ?? "";
+  String checkIfSavedSettingsBasUrl(String storageBaseUrl) {
     print("apiUrl = " + apiUrl());
     print("storageBaseUrl = " + storageBaseUrl);
     var fullPath = apiUrl();
     const start = "CMS.svc";
     var pos = fullPath.indexOf(start);
-    String endPoint = (pos != -1)? fullPath.substring(pos + start.length, fullPath.length): fullPath;
-    print("fullPath__ = " + storageBaseUrl + endPoint);
+    String endPoint = (pos != -1)
+        ? fullPath.substring(pos + start.length, fullPath.length)
+        : fullPath;
     if (storageBaseUrl.isNotEmpty) {
+      print("fullPath__ = " + storageBaseUrl + endPoint);
       return storageBaseUrl + endPoint;
+    } else {
+      return apiUrl();
     }
-    return apiUrl();
   }
 }

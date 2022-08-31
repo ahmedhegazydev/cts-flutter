@@ -14,7 +14,13 @@ dependencies:
 
 
   cupertino_icons: ^1.0.2
+
+#  storage
   get_storage: ^2.0.3
+#  localstorage: ^3.0.6
+#  shared_preferences: ^2.0.15
+  sqflite: ^2.0.3+1
+
   get: ^4.6.1
   dio: ^4.0.4
   encrypt: ^5.0.1

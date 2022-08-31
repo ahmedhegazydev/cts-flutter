@@ -6,19 +6,12 @@ class SecureStorage {
   //String  user_id = 'user_id';
   final box = GetStorage();
 
-  String? token() {
-    var readData = box.read(AllStringConst.Token);
-    return readData;
-  }
 
-  Future writeSecureData(String key, value) async {
-    var writeData = await box.write(key, value);
-    return writeData;
-  }
-
-  Future writeBoolData(String key, bool value) async {
-    var writeData = await box.write(key, value);
-    return writeData;
+  /**
+   * read
+   */
+  int? readAppColor() {
+    return box.read(AllStringConst.AppColor);
   }
 
   bool readBoolData(String key) {
@@ -31,10 +24,11 @@ class SecureStorage {
     var readData = box.read(key);
     return readData;
   }
-  // Future readSecureData(String key) async {
-  //   var readData = await box.read(key);
-  //   return readData;
-  // }
+
+  Future<String> readSecureDataAsync(String key) async {
+    var readData = await box.read(key);
+    return readData;
+  }
 
   int? readIntSecureData(String key) {
     var readData = box.read(key);
@@ -46,7 +40,20 @@ class SecureStorage {
     return readData;
   }
 
+  /**
+   * write
+   */
   Future writeSecureJsonData(String key, value) async {
+    var writeData = await box.write(key, value);
+    return writeData;
+  }
+
+  Future writeSecureData(String key, value) async {
+    var writeData = await box.write(key, value);
+    return writeData;
+  }
+
+  Future writeBoolData(String key, bool value) async {
     var writeData = await box.write(key, value);
     return writeData;
   }
@@ -56,7 +63,10 @@ class SecureStorage {
     return deleteData;
   }
 
-  int? readAppColor() {
-    return box.read(AllStringConst.AppColor);
+  String? token() {
+    var readData = box.read(AllStringConst.Token);
+    return readData;
   }
+
+
 }

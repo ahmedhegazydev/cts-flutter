@@ -32,38 +32,38 @@ void main() async {
   // print(data.customActions );
   // print("000000");
   //var bb=json.decode(a.toString());
-    // secureStorage.deleteSecureData(AllStringConst.Token);
-String? appLan=secureStorage.readSecureData(AllStringConst.AppLan);
-if(appLan==null){
-  print("theeeeeeeeeeeeeeeeeeeee=>  appLan");
-  Get.updateLocale(Locale('ar', 'AR'));
-}else{
-
-
-  if(appLan=="ar"){
-    print("================================>  arrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+  // secureStorage.deleteSecureData(AllStringConst.Token);
+  String? appLan = secureStorage.readSecureData(AllStringConst.AppLan);
+  if (appLan == null) {
+    print("theeeeeeeeeeeeeeeeeeeee=>  appLan");
     Get.updateLocale(Locale('ar', 'AR'));
-  }else{
-    print("================================>  ennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
-    Get.updateLocale(Locale('en', 'US'));
-
+  } else {
+    if (appLan == "ar") {
+      print(
+          "================================>  arrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+      Get.updateLocale(Locale('ar', 'AR'));
+    } else {
+      print(
+          "================================>  ennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
+      Get.updateLocale(Locale('en', 'US'));
+    }
   }
-}
 
   //Get.put(SecureStorage());
   Get.put(MController());
+  // SharedPreferences.setMockInitialValues({});
 
+  // runApp(
+  //   RestartWidget(
+  //     child: MyApp(),
+  //   ),
+  // );
   // runApp(
   //   Phoenix(
   //     child: MyApp(),
   //   ),
   // );
-
-  runApp(
-    RestartWidget(
-      child: MyApp(),
-    ),
-  );
+  runApp(MyApp());
 }
 
 class RestartWidget extends StatefulWidget {
@@ -134,9 +134,8 @@ class MyApp extends StatelessWidget {
                   ),
         ),
         getPages: [
-          GetPage(name: "/", page: () =>
-              LoginPage(),
-             // LandingPage(),
+          GetPage(name: "/", page: () => LoginPage(),
+              // LandingPage(),
               // InboxPage(),
               middlewares: [AuthMiddleWare()]), //SearchPage
           GetPage(

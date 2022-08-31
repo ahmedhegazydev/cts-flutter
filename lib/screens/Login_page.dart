@@ -1,3 +1,4 @@
+import 'package:cts/data/SettingsFields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
@@ -5,6 +6,7 @@ import 'package:get/get.dart';
 
 import '../controllers/login_controller.dart';
 import '../controllers/main_controller.dart';
+import '../db/cts_database.dart';
 import '../main.dart';
 import '../utility/all_const.dart';
 import '../utility/all_string_const.dart';
@@ -22,7 +24,9 @@ class LoginPage extends GetWidget<LoginController> {
 
   @override
   Widget build(BuildContext context) {
+
     controller.context = context;
+
     Size size = MediaQuery.of(context).size;
     // Orientation orientation = MediaQuery.of(context).orientation;
     final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
@@ -329,22 +333,40 @@ class LoginPage extends GetWidget<LoginController> {
                                             .colorScheme
                                             .primary,
                                         borderRadius:
-                                        const BorderRadius.all(
+                                         BorderRadius.all(
                                             Radius.circular(6))),
                                     child: ElevatedButton(
-                                      onPressed: () {
-                                        controller.secureStorage
-                                            .writeSecureData(
-                                            AllStringConst
-                                                .BaseUrl,
-                                            controller
-                                                .baseUrl.text);
+                                      onPressed: ()  async {
+                                        // controller.secureStorage
+                                        //     .writeSecureData(
+                                        //     AllStringConst
+                                        //         .BaseUrl,
+                                        //     controller
+                                        //         .baseUrl.text);
+
+                                        // final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+                                        // final SharedPreferences prefs = await _prefs;
+                                        // prefs.setString(AllStringConst.BaseUrl, controller.baseUrl.text);
+
+                                        List<SettingItem> settingItems = await CtsSettingsDatabase.instance.readAllNotes();
+                                        if(settingItems.isEmpty){
+                                          final settings = SettingItem(
+                                            baseUrl: controller.baseUrl.text,
+                                          );
+                                          await CtsSettingsDatabase.instance.create(settings);
+
+                                        }else{
+                                          var settingItem = settingItems[0];
+                                          settingItem.copy(baseUrl:  controller.baseUrl.text);
+                                          await CtsSettingsDatabase.instance.update(settingItem);
+                                        }
 
                                         // Restart.restartApp();
                                         // Phoenix.rebirth(context);
                                         Navigator.of(context).pop();
                                         // RestartWidget.restartApp(
                                         //     context);
+
                                       },
                                       child: Text(
                                         "Save Settings".tr,

@@ -13,7 +13,7 @@ const Map<String, String> ar = {
   "unreadCorrespondences": "مراسلات \nغير مقروءة",
   "pendingCorrespondences": "مراسلات\n تنتظر الإجراء",
   "myTransfersInMonth": "إحالاتي في شهر",
-  "mostMyTransferWentTo": "أغلب أحالاتي ذهبت ل",
+  "mostMyTransferWentTo": "أغلب إحالاتي ذهبت ل",
   "flagged": "المحفوظات",
   "notifications": "التنبيهات",
   "forAction": "لإجراء اللازم",

@@ -100,9 +100,9 @@ class LandingPage extends GetWidget<LandingPageController> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Flexible(
-                flex: 1,
+                flex: 2,
                 child: FractionallySizedBox(
-                  heightFactor: 0.88,
+                  heightFactor: 1,
                   child: Container(
                     width: double.infinity,
                     color: Colors.grey[200],
@@ -113,7 +113,7 @@ class LandingPage extends GetWidget<LandingPageController> {
               Flexible(
                 flex: DeviceSize.isMobile(context) == true ? 3 : 2,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 44),
+                  padding: const EdgeInsets.only(top: 0),
                   child: Container(
                     width: double.infinity,
                     height: double.infinity,
@@ -151,6 +151,7 @@ class LandingPage extends GetWidget<LandingPageController> {
         mainAxisSize: MainAxisSize.max,
         children: [
           Container(
+              alignment: Alignment.center,
             width: 120,
             height: double.infinity,
             color: Colors.grey.shade300,
@@ -674,12 +675,7 @@ class LandingPage extends GetWidget<LandingPageController> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
       children: [
-        Spacer(
-          flex: 2,
-        ),
-        Flexible(
-          flex: 4,
-          child: Container(
+       Container(
             padding: EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 0),
             color: Colors.transparent,
             child: Column(
@@ -702,9 +698,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                   ),
                 ),
                 SizedBox(height: 15,),
-                Flexible(
-                  flex: 1,
-                  child: Container(
+               Container(
                     color: Colors.transparent,
                     width: double.infinity,
                     // height: 50,
@@ -724,21 +718,28 @@ class LandingPage extends GetWidget<LandingPageController> {
                       textAlign: TextAlign.start,
                     ),
                   ),
-                )
               ],
             ),
           ),
-        ),
-        Flexible(
-          flex: 9,
-          child: portiraitDashboard(contex),
-        ),
+        Container(
+          // height: 120,
+          child:  Flexible(
+            flex: 1,
+            child: portiraitDashboard(contex),
+          ),
+        )
+
       ],
     );
   }
 
   _buildSideMenu(BuildContext context) {
-    return ListView(
+    return
+      SingleChildScrollView(
+        child:
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         InkWell(
           onTap: () {
@@ -746,30 +747,26 @@ class LandingPage extends GetWidget<LandingPageController> {
             Get.toNamed("SignaturePage");
           },
           child: Container(
-            height: calculateWidth(120, context),
-            color: Colors.transparent,
+            height: 90,
+            // color: Colors.green,
             child: Column(
-              //    mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-                Spacer(
-                  flex: 1,
-                ),
-                Flexible(
-                  flex: 3,
+                Container(
+                  width: 50,
+                  height: 50,
                   child: Image(
                     image: AssetImage(
                       'assets/images/signature.png',
                     ),
                     fit: BoxFit.contain,
-                    width: double.infinity,
-                    height: double.infinity,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
+            Container(
+              width: double.infinity,
+              height: 40,
+                child:  Text(
                     "mySignatures".tr,
                     textAlign: TextAlign.center,
                     style: Theme
@@ -915,29 +912,26 @@ class LandingPage extends GetWidget<LandingPageController> {
             );
           },
           child: Container(
-            height: 140,
+            height: 100,
             color: Colors.transparent,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-                Spacer(
-                  flex: 1,
-                ),
-                Flexible(
-                  flex: 3,
+                Container(
+                  height: 50,
+                  width: 50,
                   child: Image(
                     image: AssetImage(
                       'assets/images/fav_users.png',
                     ),
                     fit: BoxFit.contain,
-                    width: double.infinity,
-                    height: double.infinity,
                   ),
                 ),
-                Flexible(
-                  flex: 2,
+                Container(
+                  height: 50,
+                  width: double.infinity,
                   child: Text(
                     "favoritesUsers".tr,
                     textAlign: TextAlign.center,
@@ -955,7 +949,6 @@ class LandingPage extends GetWidget<LandingPageController> {
         InkWell(
           onTap: () {
             // Get  getMyRoutingsettings;
-
             Get.bottomSheet(
               GetBuilder<LandingPageController>(builder: (logic) {
                 return Container(
@@ -1250,26 +1243,27 @@ class LandingPage extends GetWidget<LandingPageController> {
             Get.find<LandingPageController>().getMyRoutingsettings(context);
           },
           child: Container(
-            height: 120,
+            height: 90,
             color: Colors.transparent,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-                Spacer(
-                  flex: 1,
-                ),
-                Expanded(
+                Container(
+                  height: 50,
+                  width: 50,
                   child: Image(
                     image: AssetImage(
                       'assets/images/delegation.png',
                     ),
                     fit: BoxFit.contain,
-                    width: double.infinity,
-                    height: double.infinity,
                   ),
                 ),
+            Container(
+              height: 40,
+              width: double.infinity,
+              child:
                 Text(
                   "myDelegations".tr,
                   textAlign: TextAlign.center,
@@ -1278,6 +1272,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       .textTheme
                       .headline3!
                       .copyWith(color: Colors.grey.shade600),
+                ),
                 ),
               ],
             ),
@@ -1289,18 +1284,16 @@ class LandingPage extends GetWidget<LandingPageController> {
             // Get.toNamed( "MyPocketsScreen",);//MyPocketsScreen
           },
           child: Container(
-            height: 120,
+            height: 100,
             color: Colors.transparent,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-                Spacer(
-                  flex: 1,
-                ),
-                Flexible(
-                  flex: 3,
+                Container(
+                  height: 50,
+                  width: 50,
                   child: Image(
                     image: AssetImage(
                       'assets/images/delegation.png',
@@ -1310,8 +1303,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                     height: double.infinity,
                   ),
                 ),
-                Flexible(
-                  flex: 1,
+                Container(
+                  height: 50,
+                  width: double.infinity,
                   child: Text(
                     "Basket".tr,
                     textAlign: TextAlign.center,
@@ -1341,29 +1335,26 @@ class LandingPage extends GetWidget<LandingPageController> {
             );
           },
           child: Container(
-            height: 120,
+            height: 100,
             color: Colors.transparent,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-                Spacer(
-                  flex: 1,
-                ),
-                Flexible(
-                  flex: 3,
+                Container(
+                  height: 50,
+                  width: 50,
                   child: Image(
                     image: AssetImage(
                       'assets/images/delegation.png',
                     ),
                     fit: BoxFit.contain,
-                    width: double.infinity,
-                    height: double.infinity,
                   ),
                 ),
-                Flexible(
-                  flex: 1,
+                Container(
+                  height: 50,
+                  width: double.infinity,
                   child: Text(
                     "userGuide".tr,
                     textAlign: TextAlign.center,
@@ -1508,18 +1499,16 @@ class LandingPage extends GetWidget<LandingPageController> {
                     ));
           },
           child: Container(
-            height: 120,
+            height: 100,
             color: Colors.transparent,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-                Spacer(
-                  flex: 1,
-                ),
-                Flexible(
-                  flex: 3,
+                Container(
+                  width: 50,
+                  height: 50,
                   child: Image(
                     image: AssetImage(
                       'assets/images/palette_dark.png',
@@ -1529,8 +1518,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                     height: double.infinity,
                   ),
                 ),
-                Flexible(
-                  flex: 1,
+                Container(
+                  width: double.infinity,
+                  height: 50,
                   child: Text(
                     "appTheme".tr,
                     textAlign: TextAlign.center,
@@ -1556,29 +1546,27 @@ class LandingPage extends GetWidget<LandingPageController> {
             //   Globals.navigatorKey.currentState?.pushNamed(LoginPageRoute);
           },
           child: Container(
-            height: 120,
+            height: 90,
             color: Colors.transparent,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-                Spacer(
-                  flex: 1,
-                ),
-                Flexible(
-                  flex: 3,
-                  child: Image(
+
+                Container(
+                  width: 50,
+                  height: 50,
+              child: Image(
                     image: AssetImage(
                       'assets/images/logout.png',
                     ),
                     fit: BoxFit.contain,
-                    width: double.infinity,
-                    height: double.infinity,
                   ),
                 ),
-                Flexible(
-                  flex: 1,
+                Container(
+                  width: double.infinity,
+                  height: 40,
                   child: Text(
                     "logout".tr,
                     textAlign: TextAlign.center,
@@ -1592,8 +1580,9 @@ class LandingPage extends GetWidget<LandingPageController> {
               ],
             ),
           ),
-        )
+        ),
       ],
+    )
     );
     // return Column(
     //   mainAxisAlignment: MainAxisAlignment.center,
@@ -2363,19 +2352,24 @@ class LandingPage extends GetWidget<LandingPageController> {
               );
             },
             child: Container(
-              height: 100,
-              width: 100,
+              height: 120,
               color: Colors.transparent,
               child: Column(
                 children: [
-                  Image(
+                Container(
+                width: 50,
+                height: 50,
+                child: Image(
                     image: AssetImage(
                       'assets/images/delegation.png',
                     ),
                     fit: BoxFit.contain,
-                    width: 50,
-                    height: 50,
                   ),
+                  ),
+              Container(
+                // width: double.infinity,
+                height: 50,
+                child:
                   Text(
                     "myDelegations".tr,
                     textAlign: TextAlign.center,
@@ -2385,14 +2379,12 @@ class LandingPage extends GetWidget<LandingPageController> {
                         .headline3!
                         .copyWith(color: Colors.grey.shade600),
                   ),
+                  ),
                 ],
               ),
             ),
           ),
-          Container(
-            height: 50,
-            width: 50,
-            child: InkWell(
+          InkWell(
               onTap: () async {
                 await Get.find<InboxController>().getFetchBasketList();
                 showDialog(
@@ -2510,19 +2502,19 @@ class LandingPage extends GetWidget<LandingPageController> {
                 color: Colors.transparent,
                 child: Column(
                   children: [
-                    Flexible(
-                      flex: 2,
+                    Container(
+                      height: 50,
+                      width: 50,
                       child: Image(
                         image: AssetImage(
                           'assets/images/delegation.png',
                         ),
                         fit: BoxFit.contain,
-                        width: double.infinity,
-                        height: double.infinity,
                       ),
                     ),
-                    Flexible(
-                      flex: 1,
+                    Container(
+                      height: 50,
+                      // width: double.infinity,
                       child: Text(
                         "Basket".tr,
                         textAlign: TextAlign.center,
@@ -2537,7 +2529,6 @@ class LandingPage extends GetWidget<LandingPageController> {
                 ),
               ),
             ),
-          ),
           InkWell(
             onTap: () {
               ///ToDo
@@ -2553,21 +2544,28 @@ class LandingPage extends GetWidget<LandingPageController> {
               );
             },
             child: Container(
-              width: 50,
+              // width: 50,
               height: 120,
               color: Colors.transparent,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                Container(
+                height: 50,
+                width: 50,
+                child:
                   Image(
                     image: AssetImage(
                       'assets/images/delegation.png',
                     ),
                     fit: BoxFit.contain,
-                    width: 50,
-                    height: 50,
                   ),
+                  ),
+              Container(
+                height: 50,
+                // width: 50,
+                child:
                   Text(
                     "userGuide".tr,
                     textAlign: TextAlign.center,
@@ -2577,14 +2575,12 @@ class LandingPage extends GetWidget<LandingPageController> {
                         .headline3!
                         .copyWith(color: Colors.grey.shade600),
                   ),
+                  ),
                 ],
               ),
             ),
           ),
-          Container(
-            height: 100,
-            width: 50,
-            child: InkWell(
+          InkWell(
               onTap: () {
                 showDialog(
                     context: context,
@@ -2708,21 +2704,28 @@ class LandingPage extends GetWidget<LandingPageController> {
                         ));
               },
               child: Container(
-                height: 120,
+                height: 100,
                 color: Colors.transparent,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  // crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                  Container(
+                  height: 50,
+                  width: 50,
+                    child:
                     Image(
                       image: AssetImage(
                         'assets/images/palette_dark.png',
                       ),
                       fit: BoxFit.contain,
-                      width: 50,
-                      height: 50,
+
                     ),
-                    Text(
+                    ),
+                Container(
+                  height: 50,
+                  // width: double.infinity,
+                    child: Text(
                       "appTheme".tr,
                       textAlign: TextAlign.center,
                       style: Theme
@@ -2731,11 +2734,11 @@ class LandingPage extends GetWidget<LandingPageController> {
                           .headline3!
                           .copyWith(color: Colors.grey.shade600),
                     ),
+                    ),
                   ],
                 ),
               ),
             ),
-          ),
           InkWell(
             onTap: () {
               secureStorage.deleteSecureData(AllStringConst.Token);
@@ -2753,14 +2756,21 @@ class LandingPage extends GetWidget<LandingPageController> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                Container(
+                height: 50,
+                width: 50,
+                child:
                   Image(
                     image: AssetImage(
                       'assets/images/logout.png',
                     ),
                     fit: BoxFit.contain,
-                    width: 50,
-                    height: 50,
                   ),
+                  ),
+              Container(
+                height: 50,
+                // width: 50,
+                child:
                   Text(
                     "logout".tr,
                     textAlign: TextAlign.center,
@@ -2769,6 +2779,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                         .textTheme
                         .headline3!
                         .copyWith(color: Colors.grey.shade600),
+                  ),
                   ),
                 ],
               ),
@@ -3644,7 +3655,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                     flex: 1,
                     child: Padding(
                       padding: EdgeInsets.only(
-                          left: 10, right: 0, top: 0, bottom: 0),
+                          left: 0, right: 0, top: 0, bottom: 0),
                       child: Container(
                         height: 150,
                         decoration: BoxDecoration(
@@ -3734,7 +3745,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                 flex: 1,
                 child: Padding(
                   padding: EdgeInsets.only(
-                      left: 0, right: 10, top: 0, bottom: 0),
+                      left: 0, right: 0, top: 0, bottom: 0),
                   child: Container(
                     height: 150,
                     decoration: BoxDecoration(
@@ -3815,7 +3826,7 @@ class LandingPage extends GetWidget<LandingPageController> {
             flex: 1,
             child: Padding(
               padding: EdgeInsets.only(
-                  left: 10, right: 0, top: 0, bottom: 0),
+                  left: 0, right: 0, top: 0, bottom: 0),
               child: Container(
                 height: 150,
                 decoration: BoxDecoration(
@@ -3900,7 +3911,7 @@ class LandingPage extends GetWidget<LandingPageController> {
     Flexible(
     flex: 1,
     child: Container(
-    height: 60,
+    height: 65,
     decoration: BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.all(Radius.circular(6)
@@ -3951,7 +3962,7 @@ class LandingPage extends GetWidget<LandingPageController> {
         .copyWith(
     color: Colors.grey,
     fontSize:
-    calculateFontSize(16, context)),
+    calculateFontSize(20, context)),
     textAlign: TextAlign.start,
     ),
     ),
@@ -3987,7 +3998,7 @@ class LandingPage extends GetWidget<LandingPageController> {
     Flexible(
     flex: 1,
     child: Container(
-    height: 60,
+    height: 65,
     decoration: BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.only(
@@ -4013,15 +4024,20 @@ class LandingPage extends GetWidget<LandingPageController> {
     Spacer(flex: 2),
     Flexible(
     flex: 2,
-    child: Image(
+    child:
+    Container(
+      width: 50,
+      height: 50,
+      child: Image(
     image: AssetImage(
     // 'assets/images/notification.png',
     'assets/images/outgoing.png',
     ),
     fit: BoxFit.contain,
-    width: double.infinity,
-    height: double.infinity,
+    // width: double.infinity,
+    // height: double.infinity,
     color: Colors.grey,
+    ),
     ),
     ),
     Spacer(flex: 1),
@@ -4038,7 +4054,7 @@ class LandingPage extends GetWidget<LandingPageController> {
         .copyWith(
     color: Colors.grey,
     fontSize:
-    calculateFontSize(16, context)),
+    calculateFontSize(20, context)),
     textAlign: TextAlign.start,
     ),
     ),
@@ -4543,7 +4559,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                     "assets/images/arrow", content, "png"),
               ),
               fit: BoxFit.contain,
-              width: 50,
+              width: 35,
               height: double.infinity,
             ),
           ),
@@ -4630,7 +4646,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                     "assets/images/arrow", context, "png"),
               ),
               fit: BoxFit.contain,
-              width: 50,
+              width: 35,
               height: double.infinity,
             ),
           ),

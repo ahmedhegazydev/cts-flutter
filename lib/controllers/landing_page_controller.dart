@@ -339,14 +339,8 @@ print(jsonEncode(data));
   Future listFavoriteRecipients({context}) async {
     ListFavoriteRecipientsApi listFavoriteRecipientsApi =
         ListFavoriteRecipientsApi(context);
-    // ListFavoriteRecipientsRequest reorderBasketsRequest =
-    //     ListFavoriteRecipientsRequest(
-    //   language: Get.locale?.languageCode == "en" ? "en" : "ar",
-    //   token: _secureStorage.token()!,
-    // );
     listFavoriteRecipientsApi.data =
     "Token=${secureStorage.token()}&Language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
-
     await listFavoriteRecipientsApi
         .getData()
         .then((value) {

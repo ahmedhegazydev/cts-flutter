@@ -724,7 +724,8 @@ class LandingPage extends GetWidget<LandingPageController> {
           ),
         ),
         InkWell(
-          onTap: () {
+          onTap: () async {
+            await controller.listFavoriteRecipients(context: context);
             Get.bottomSheet(
               Container(
                   //height: 100,

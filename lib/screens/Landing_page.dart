@@ -3755,64 +3755,71 @@ class LandingPage extends GetWidget<LandingPageController> {
                           ),
                         ],
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Spacer(flex: 2),
-                          const Flexible(
-                            flex: 2,
-                            child: Image(
-                              image: AssetImage(
-                                'assets/images/incoming.png',
-                              ),
-                              fit: BoxFit.contain,
-                              width: double.infinity,
-                              height: double.infinity,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          const Spacer(flex: 1),
-                          Flexible(
-                            flex: 10,
-                            child: Container(
-                              width: double.infinity,
-                              child: Text(
-                                // "flagged".tr,
-                                "وارد للكل".tr,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .copyWith(
-                                        color: Colors.grey,
-                                        fontSize:
-                                            calculateFontSize(20, context)),
-                                textAlign: TextAlign.start,
+                      child: GestureDetector(onTap: (){
+                        Get.find<InboxController>().isAllOrNot=true;
+                        Get.find<InboxController>().getAllCorrespondencesData(context: context, inboxId: 1);
+
+                        Get.toNamed("/InboxPage");
+                      },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Spacer(flex: 2),
+                            const Flexible(
+                              flex: 2,
+                              child: Image(
+                                image: AssetImage(
+                                  'assets/images/incoming.png',
+                                ),
+                                fit: BoxFit.contain,
+                                width: double.infinity,
+                                height: double.infinity,
+                                color: Colors.grey,
                               ),
                             ),
-                          ),
-                          Flexible(
-                            flex: 3,
-                            child: Container(
-                              width: double.infinity,
-                              child: Text(
-                                "5",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline3!
-                                    .copyWith(
-                                      fontSize: 22,
-                                      color: createMaterialColor(
-                                        Color.fromRGBO(247, 148, 29, 1),
+                            const Spacer(flex: 1),
+                            Flexible(
+                              flex: 10,
+                              child: Container(
+                                width: double.infinity,
+                                child: Text(
+                                  // "flagged".tr,
+                                  "allincom".tr,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline2!
+                                      .copyWith(
+                                          color: Colors.grey,
+                                          fontSize:
+                                              calculateFontSize(16, context)),
+                                  textAlign: TextAlign.start,
+                                ),
+                              ),
+                            ),
+                            Flexible(
+                              flex: 3,
+                              child: Container(
+                                width: double.infinity,
+                                child: Text(
+                                  "5",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline3!
+                                      .copyWith(
+                                        fontSize: 22,
+                                        color: createMaterialColor(
+                                          Color.fromRGBO(247, 148, 29, 1),
+                                        ),
                                       ),
-                                    ),
-                                textAlign: TextAlign.center,
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
                             ),
-                          ),
-                          Spacer(flex: 2)
-                        ],
+                            Spacer(flex: 2)
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -3840,17 +3847,23 @@ class LandingPage extends GetWidget<LandingPageController> {
                           ),
                         ],
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Spacer(flex: 2),
-                          Flexible(
-                            flex: 2,
-                            child: Container(
-                              width: 50,
-                              height: 50,
+                      child: GestureDetector(onTap: (){
+                        Get.find<InboxController>().isAllOrNot=true;
+                        Get.find<InboxController>().getAllCorrespondencesData(context: context, inboxId: 5);
+
+
+
+                        Get.toNamed("/InboxPage");
+                    //    openInbox( context: context,boxid: 5);
+                      },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Spacer(flex: 2),
+                            Flexible(
+                              flex: 2,
                               child: Image(
                                 image: AssetImage(
                                   // 'assets/images/notification.png',
@@ -4205,6 +4218,11 @@ class LandingPage extends GetWidget<LandingPageController> {
                     TableRowInkWell(
                       onTap: () {
                         //openInbox(context);
+                        Get.find<InboxController>().nodeId=0;
+                        Get.find<InboxController>().isAllOrNot=true;
+                        Get.find<InboxController>().getAllCorrespondencesData(context: context, inboxId: 1);
+
+                        Get.toNamed("/InboxPage");
                       },
                       child: _buildOtherFoldersRows(
                         context,
@@ -4221,6 +4239,10 @@ class LandingPage extends GetWidget<LandingPageController> {
                     TableRowInkWell(
                       onTap: () {
                         //openInbox(context);
+                        Get.find<InboxController>().nodeId=0;
+                        Get.find<InboxController>().isAllOrNot=true;
+                        Get.find<InboxController>().getAllCorrespondencesData(context: context, inboxId: 5);
+                        Get.toNamed("/InboxPage");
                       },
                       child: _buildOtherFoldersRows(
                         context,
@@ -4450,6 +4472,7 @@ class LandingPage extends GetWidget<LandingPageController> {
   }
 
   openInbox({required BuildContext context, required int boxid, required int nodeId}) {
+    Get.find<InboxController>().isAllOrNot=false;
     Get.find<InboxController>().inboxId = boxid;
     Get.find<InboxController>().nodeId = nodeId;
     Get.find<InboxController>().getAllData(context: context);

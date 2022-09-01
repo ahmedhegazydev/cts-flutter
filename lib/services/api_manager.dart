@@ -28,7 +28,6 @@ abstract class ApiManager {
   final DioSingleton dioSingleton = DioSingleton();
   static SecureStorage secureStorage = new SecureStorage();
 
-  //final _storge= a.Get.find<SecureStorage>();
   /// Returns the API URL of current API ressource
   String apiUrl();
 

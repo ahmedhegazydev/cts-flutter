@@ -15,13 +15,13 @@ import '../utility/storage.dart';
 class AllBindings extends Bindings {
   @override
   void dependencies() async {
-    Get.lazyPut(() => SecureStorage());
-    Get.put(  LandingPageController());
-    Get.put(DocumentController(), permanent: true);
+   // Get.lazyPut(() => SecureStorage());
+   // Get.put(  LandingPageController());
+   // Get.put(DocumentController(), permanent: true);
 
-    Get.put(LoginController());
-    Get.put(InboxController(), permanent: true);
-    Get.put(CreateBasketController());
+    //Get.put(LoginController());
+   // Get.put(InboxController(), permanent: true);
+    //Get.put(CreateBasketController());
 
     Get.lazyPut(() => SearchController(),fenix: true );
 

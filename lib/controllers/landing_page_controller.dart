@@ -44,7 +44,7 @@ import '../utility/storage.dart';
 import 'document_controller.dart';
 import 'package:flutter/services.dart' as rootBundel;
 class LandingPageController extends GetxController {
-  // final SecureStorage _secureStorage = Get.find<SecureStorage>();
+
   bool isSavingOrder = false;
 
   TextEditingController textEditingControllerEnglishName =
@@ -148,7 +148,7 @@ update();
     // getFindRecipientData();
     getFindRecipientData(context: context);
     //Get.find<SearchController>().getAllData();
-    Get.find<DocumentController>().getFindRecipientData(context: context);
+    Get.put<DocumentController>(DocumentController()).getFindRecipientData(context: context);
     getDashboardStatsLocalJson();
   }
 

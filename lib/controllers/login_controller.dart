@@ -23,7 +23,7 @@ class LoginController extends GetxController {
   Validators validators = Validators();
   final loginFormKey = GlobalKey<FormState>();
   bool islogin = false;
-  SecureStorage secureStorage = Get.find<SecureStorage>();
+  SecureStorage secureStorage = SecureStorage();
 
   logIngRequst(
   // { required context}

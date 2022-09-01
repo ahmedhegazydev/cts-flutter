@@ -10,6 +10,9 @@ import 'package:get_storage/get_storage.dart';
 
 import 'Translation/Trans.dart';
 import 'bindings/bindings.dart';
+import 'bindings/inbox_bindings.dart';
+import 'bindings/landing_page_bindings.dart';
+import 'bindings/login_bindings.dart';
 import 'controllers/main_controller.dart';
 import 'middleware/auth_middleware.dart';
 import 'screens/Inbox_page.dart';
@@ -32,7 +35,7 @@ void main() async {
   // print(data.customActions );
   // print("000000");
   //var bb=json.decode(a.toString());
-  // secureStorage.deleteSecureData(AllStringConst.Token);
+ secureStorage.deleteSecureData(AllStringConst.Token);
   String? appLan = secureStorage.readSecureData(AllStringConst.AppLan);
   if (appLan == null) {
     print("theeeeeeeeeeeeeeeeeeeee=>  appLan");
@@ -107,7 +110,7 @@ class MyApp extends StatelessWidget {
       return GetMaterialApp(
         title: 'CTS',
         locale: LocalizationService.locale,
-        initialBinding: AllBindings(),
+      //  initialBinding: AllBindings(),
         translations: LocalizationService(),
         fallbackLocale: LocalizationService.fallbackLocale,
         debugShowCheckedModeBanner: false,
@@ -132,24 +135,38 @@ class MyApp extends StatelessWidget {
           primarySwatch:
               createMaterialColor(Get.find<MController>().appcolor //  AppColor
                   ),
-        ),
+        ), initialRoute: "/LoginPage",
         getPages: [
-          GetPage(name: "/", page: () => LoginPage(),
+
+
+
+          GetPage(name: "/LoginPage",
+            page: () => LoginPage(),
+              binding: LoginBinding(),
               // LandingPage(),
               // InboxPage(),
-              middlewares: [AuthMiddleWare()]), //SearchPage
+     //   middlewares: [AuthMiddleWare()],
+          ),
+
+        //  binding: DetailsChallengesSubscriptionBinding()), //SearchPage
           GetPage(
               name: "/Landing", //SearchPage(),// LandingPage()
               page: () => LandingPage(),
-              transition: Transition.rightToLeft),
+              transition: Transition.rightToLeft,
+          binding: LandingPageBinding()
+          )
+          ,
 
           GetPage(
               name: "/Filter", //
               page: () => FilterSlidePage(),
-              transition: Transition.rightToLeft),
+              transition: Transition.rightToLeft)
+
+
+          ,
           GetPage(
               name: "/InboxPage",
-              page: () => InboxPage(),
+              page: () => InboxPage(),binding: InboxBinding(),
               transition: Transition.rightToLeft),
           GetPage(
               name: "/DocumentPage",

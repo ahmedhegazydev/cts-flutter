@@ -19,7 +19,7 @@ import 'AllAvailablePockets.dart';
 import 'MyFavListView.dart';
 
 class MyPocketsScreen extends GetWidget<InboxController> {
-  SecureStorage secureStorage = Get.find<SecureStorage>();
+  SecureStorage secureStorage = SecureStorage();
 
   @override
   Widget build(BuildContext context) {

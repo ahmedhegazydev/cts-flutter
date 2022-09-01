@@ -1324,8 +1324,6 @@ class DocumentController extends GetxController {
         documentId: int.parse(correspondences.correspondenceId ?? "2020"),
         recipients: [g2gRecipient]);
 
-    print("this the map=> ${jsonEncode(g2gRecipient?.toMap())}");
-    print("this the map=> ${jsonEncode(g2gExportDto?.toMap())}");
 
     var allRecipients = <G2GRecipient>[];
     var mergedList = new List<DepartmentList>.from(toDepartmentList)

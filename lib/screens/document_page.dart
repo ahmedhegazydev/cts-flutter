@@ -823,13 +823,13 @@ class DocumentPage extends GetWidget<DocumentController> {
                                 context: context,
                                 title: "assignedFrom".tr,
                                 data:
-                                controller!.correspondences!.metadata![3]
+                                controller.correspondences.metadata![3]
                                     .value!),
                             SizedBox(height: 8,),
                             _itemSideMenu(
                                 context: context,
                                 title: "referDate".tr,
-                                data: controller!.correspondences!.gridInfo![3]
+                                data: controller.correspondences.gridInfo![3]
                                     .value!
                             ),
                             SizedBox(height: 8,),

@@ -47,10 +47,10 @@ class _BasketListTileState extends State<BasketListTile> {
 }
 
 class LandingPage extends GetWidget<LandingPageController> {
-  SecureStorage secureStorage = Get.find<SecureStorage>();
+  SecureStorage secureStorage = SecureStorage();
   Color pickerColor = Color(0xff443a49);
   Color currentColor = Color(0xff443a49);
-  InboxController inboxController = Get.find<InboxController>();
+  InboxController inboxController = Get.put<InboxController>(InboxController());
 
   @override
   Widget build(BuildContext context) {
@@ -1146,8 +1146,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                         Radius.circular(6))),
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    print(
-                                        "token=>    ${controller.secureStorage.token()}");
+
                                     controller.removeMyRoutingSettings(data: {
                                       "Token": controller.secureStorage.token(),
                                       "Language":
@@ -1392,7 +1391,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                                   const BorderRadius.all(Radius.circular(6))),
                           child: ElevatedButton(
                             onPressed: () {
-                              Get.find<SecureStorage>().writeSecureData(
+                              SecureStorage   secureStorage=SecureStorage();
+                              secureStorage.writeSecureData(
                                   AllStringConst.AppColor,
                                   Get.find<MController>().appcolor.value);
                               Navigator.of(context).pop();
@@ -2540,7 +2540,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                                     const BorderRadius.all(Radius.circular(6))),
                             child: ElevatedButton(
                               onPressed: () {
-                                Get.find<SecureStorage>().writeSecureData(
+                                SecureStorage secureStorage=SecureStorage();
+                                secureStorage.writeSecureData(
                                     AllStringConst.AppColor,
                                     Get.find<MController>().appcolor.value);
                                 Navigator.of(context).pop();
@@ -3700,7 +3701,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                               Flexible(
                                 flex: 1,
                                 child: Text(
-                                  Get.find<LandingPageController>()!
+                                  Get.find<LandingPageController>()
                                       .dashboardStatsResultModel!
                                       .mostTransfersWentTo!,
                                   style: Theme.of(context)
@@ -3957,7 +3958,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                     color: Colors.grey.shade300,
                     style: BorderStyle.solid),
               ),
-              children: Get.find<LandingPageController>()!
+              children: Get.find<LandingPageController>()
                   .dashboardStatsResultModel!
                   .inboxCategories!
                   .map(
@@ -4172,7 +4173,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                     color: Colors.grey.shade300,
                     style: BorderStyle.solid),
               ),
-              children: Get.find<LandingPageController>()!
+              children: Get.find<LandingPageController>()
                   .dashboardStatsResultModel!
                   .inboxCategories!
                   .map(

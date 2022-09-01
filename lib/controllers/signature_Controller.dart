@@ -67,9 +67,9 @@ replaceSing(sin){
 
 
 
-  secureStorage.writeSecureData(AllStringConst.Signature,base64.encode(data!));
+  secureStorage.writeSecureData(AllStringConst.Signature,base64.encode(data));
 
 
- replaceSing(base64.encode(data!));
+ replaceSing(base64.encode(data));
 }
 }

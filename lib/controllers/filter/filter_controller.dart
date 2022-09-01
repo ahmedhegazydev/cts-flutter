@@ -64,7 +64,7 @@ class FilterController extends GetxController {
 
     try {
       await logInApi.getData().then((value) async {
-        SecureStorage secureStorage = Get.find<SecureStorage>();
+        SecureStorage secureStorage =SecureStorage();// Get.find<SecureStorage>();
         if (value != null) {
           LoginModel loginModel = value as LoginModel;
 

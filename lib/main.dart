@@ -13,6 +13,7 @@ import 'bindings/bindings.dart';
 import 'bindings/inbox_bindings.dart';
 import 'bindings/landing_page_bindings.dart';
 import 'bindings/login_bindings.dart';
+import 'bindings/search_bindings.dart';
 import 'controllers/main_controller.dart';
 import 'middleware/auth_middleware.dart';
 import 'screens/Inbox_page.dart';
@@ -145,7 +146,7 @@ class MyApp extends StatelessWidget {
               binding: LoginBinding(),
               // LandingPage(),
               // InboxPage(),
-     //   middlewares: [AuthMiddleWare()],
+      middlewares: [AuthMiddleWare()],
           ),
 
         //  binding: DetailsChallengesSubscriptionBinding()), //SearchPage
@@ -183,6 +184,7 @@ class MyApp extends StatelessWidget {
           GetPage(
               name: "/SearchPageResult",
               page: () => SearchPageResult(),
+
               transition: Transition.rightToLeft),
           GetPage(
               name: "/WebViewPage",
@@ -191,6 +193,7 @@ class MyApp extends StatelessWidget {
           GetPage(
               name: "/SearchPage",
               page: () => SearchPage(),
+              binding: SearchBinding(),
               transition: Transition.rightToLeft),
           GetPage(
               name: "/MyPocketsScreen",

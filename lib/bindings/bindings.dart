@@ -23,7 +23,7 @@ class AllBindings extends Bindings {
    // Get.put(InboxController(), permanent: true);
     //Get.put(CreateBasketController());
 
-    Get.lazyPut(() => SearchController(),fenix: true );
+   // Get.lazyPut(() => SearchController(),fenix: true );
 
     Get.lazyPut(()=>  SignaturePageController(),fenix: true  );
     Get.lazyPut(()=>  WebViewPageController() ,fenix: true  );

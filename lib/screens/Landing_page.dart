@@ -4278,6 +4278,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                   children: [
                     TableRowInkWell(
                       onTap: () {
+                 Get.put(SearchController()).       getAllData(context);
                         Get.toNamed("SearchPage");
                       },
                       child: _buildOtherFoldersRows(

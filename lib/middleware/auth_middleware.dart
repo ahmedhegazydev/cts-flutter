@@ -5,21 +5,18 @@ import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
 
 class AuthMiddleWare extends GetMiddleware {
-  final SecureStorage _secureStorage = SecureStorage();
+    SecureStorage _secureStorage = SecureStorage();
 
   @override
   RouteSettings? redirect(String? route) {
-    print(_secureStorage.readSecureData(AllStringConst.Token));
-    if (_secureStorage.readSecureData(AllStringConst.Token) == null) {
-
-   print(   _secureStorage.readSecureData(AllStringConst.Token));
-      return RouteSettings(name: "/LoginPage");
-     // return const RouteSettings(name: "/InboxPage");
-      // return const RouteSettings(name: "/Filter");
-    }else{
-      print(   "/Landing");
+bool log=_secureStorage.readBoolData(AllStringConst.Token);
+    if (log )
       return   RouteSettings(name: "/Landing");
-    }
+
+    else
+      return RouteSettings(name: "/LoginPage");
+
+
 
   }
 }

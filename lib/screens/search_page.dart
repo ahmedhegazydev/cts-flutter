@@ -17,6 +17,7 @@ class SearchPage extends GetWidget<SearchController> {
 
     String year = DateTime.now().toString().substring(0, 4);
     controller.context = context;
+    controller.getFindRecipientData(context) ;
     return Scaffold(
       appBar: AppBar(title: Text("appTitle".tr), centerTitle: true),
       body: Padding(

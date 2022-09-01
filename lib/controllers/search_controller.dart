@@ -174,6 +174,7 @@ class SearchController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+  //  getAllData(context);
   }
 
   @override
@@ -189,10 +190,10 @@ class SearchController extends GetxController {
     statuses = data.transferData?.statuses;
     privacies = data.transferData?.privacies;
     priorities = data.transferData?.priorities;
-    getAllData();
+
   }
 
-  getAllData() {
+  getAllData(context) {
     getFindRecipientData(context  );
     getData(context: context);
   }

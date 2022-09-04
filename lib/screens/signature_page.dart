@@ -24,14 +24,18 @@ class SignaturePage extends GetView<SignaturePageController> {
           InkWell(onTap: () {
             controller.controller.clear();
           }, child: Icon(Icons.clear, size: 50,)),
-          InkWell(onTap: (){
-          controller.  saveSign(context);
+          InkWell(onTap: () {
+            controller.saveSign(context);
           }, child: Icon(Icons.save, size: 50,)),
         ],),
         Divider(color: Colors.grey),
-        
+
         Text("defaultsignature".tr),
-        Image.memory(dataFromBase64String(controller.secureStorage.readSecureData(AllStringConst.Signature)) ,height: 100,),
+        GetBuilder<SignaturePageController>(builder: (logic) {
+          return Image.memory(dataFromBase64String(
+              controller.secureStorage.readSecureData(
+                  AllStringConst.Signature)), height: 100,);
+        }),
         Divider(color: Colors.grey),
         Text("multisignature".tr)
         , Expanded(
@@ -40,7 +44,7 @@ class SignaturePage extends GetView<SignaturePageController> {
             builder: (logic) {
               return
                 GridView.builder(
-                  itemCount:  controller
+                  itemCount: controller
                       .multiSignatures.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
@@ -48,7 +52,7 @@ class SignaturePage extends GetView<SignaturePageController> {
                       mainAxisSpacing: 4.0
                   ),
                   itemBuilder: (BuildContext context, int index) {
-                    return    Image.memory(dataFromBase64String(controller
+                    return Image.memory(dataFromBase64String(controller
                         .multiSignatures[index].signature));
                   },
                 );

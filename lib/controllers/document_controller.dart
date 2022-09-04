@@ -578,15 +578,6 @@ class DocumentController extends GetxController {
 
   //تحديث كان ابن فيل وجلب جميع البيانات الخاصه بلملف
   updatecanOpenDocumentModel(CanOpenDocumentModel data) {
-    pdfViewerkey = GlobalKey();
-    pdfAndSing.clear();
-    pdfAndSing.add(SfPdfViewer.network(
-      pdfUrlFile
-      // oragnalFileDoc??""
-      ,
-      controller: pdfViewerController,
-      //  key: pdfViewerkey,
-    ));
 
     canOpenDocumentModel = data;
     canOpenDocumentModel?.attachments?.attachments?.forEach((element) {
@@ -613,6 +604,17 @@ class DocumentController extends GetxController {
     //
     //
     // }
+    pdfViewerkey = GlobalKey();
+    pdfAndSing.clear();
+    pdfAndSing.add(SfPdfViewer.network(
+      oragnalFileDocpdfUrlFile
+      // oragnalFileDoc??""
+      ,
+      controller: pdfViewerController,
+      //  key: pdfViewerkey,
+    ));
+
+    update();
   }
 
   IsAlreadyExportedAsPaperworkModel? isAlreadyExportedAsPaperworkModel;

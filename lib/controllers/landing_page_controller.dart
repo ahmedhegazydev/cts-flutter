@@ -92,7 +92,7 @@ class LandingPageController extends GetxController {
     await _findRecipient.getData().then((value) {
       findRecipientModel = value as FindRecipientModel;
       listOfUser(0);
-      //print(findRecipientModel?.toJson() );
+
     });
     update();
   }
@@ -130,7 +130,6 @@ class LandingPageController extends GetxController {
 
       dashboardStatsResultModel =value as DashboardStatsResultModel;
 
-print("dashboardStatsResultModel.toJson()   =>    ${dashboardStatsResultModel!.toJson()}");
 update();
     });
   }
@@ -150,6 +149,9 @@ update();
     //Get.find<SearchController>().getAllData();
     Get.put<DocumentController>(DocumentController()).getFindRecipientData(context: context);
     getDashboardStatsLocalJson();
+
+
+    listFavoriteRecipients(context: context);
   }
 
   String userName() {
@@ -180,8 +182,7 @@ update();
         .post(addEditBasketFlagModel.toMap())
         .then((value) {
       Navigator.pop(context);
-      print(value);
-      print("_addEditBasketFlagApi");
+
     });
   }
 
@@ -195,8 +196,7 @@ update();
     await _postReorderBasketsApi
         .post(reorderBasketsRequest.toMap())
         .then((value) {
-      print(value);
-      print("_postReorderBasketsApi");
+
     });
     update();
   }
@@ -210,7 +210,7 @@ update();
       token: secureStorage.token(),
     );
     await _postRemoveBasketApi.post(removeBasketRequest.toMap()).then((value) {
-      print(value);
+
       // Navigator.pop(context);
       // Get.back();
       onSuccess(value.toString());
@@ -221,7 +221,7 @@ update();
       //     "Good job, basket have been deleted",
       //   ),
       // );
-      print("_postRemoveBasketApi");
+
     });
     update();
   }
@@ -288,39 +288,27 @@ update();
 
 
       update();
-      print ("00000000000000000000000000000000000");
+
     });
   }
 
   postSaveMyRoutingSettingsApi({required MyTransferRoutingRequestDto  data,context}){
     SaveMyRoutingSettingsApi getMyRoutingsettingsApi=SaveMyRoutingSettingsApi(context);
-print("data.toMap()  =>${data.toMap()}");
-
-
-
-
-
-    print("*"*50);
-
-    print(jsonEncode(data.toMap()));
-print("*"*50);
 
 
 
     getMyRoutingsettingsApi.post(data.toMap()).then((value) {
-      print("ljknjsjcnsancsancnsancijoasncoisacs");
+
     });
   }
   removeMyRoutingSettings({  data,context}){
     RemoveMyRoutingSettingsApi removeMyRoutingSettingsApi=RemoveMyRoutingSettingsApi(context);
 
-print(jsonEncode(data));
-
 
 
 
     removeMyRoutingSettingsApi.post(data ).then((value) {
-      print("ljknjsjcnsancsancnsancijoasncoisacs");
+
     });
   }
 
@@ -338,6 +326,7 @@ print(jsonEncode(data));
    * mofa-favorite-recipients-api (1)
    */
   Future listFavoriteRecipients({context}) async {
+
     ListFavoriteRecipientsApi listFavoriteRecipientsApi =
         ListFavoriteRecipientsApi(context);
     listFavoriteRecipientsApi.data =
@@ -346,8 +335,8 @@ print(jsonEncode(data));
         .getData()
         .then((value) {
       favoriteRecipientsResponse = value as ListFavoriteRecipientsResponse;
-      print(value);
-      print("listFavoriteRecipientsApi");
+
+      print("listFavoriteRecipientsApi  =>${favoriteRecipientsResponse?.Recipients?[0]}");
     });
   }
 

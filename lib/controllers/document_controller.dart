@@ -370,7 +370,7 @@ class DocumentController extends GetxController {
                   saveAttAchmentItemAnnotationsData!.attachments![i].uRL!;
             });
           }
-          log(saveAttAchmentItemAnnotationsData.toString());
+         // log(saveAttAchmentItemAnnotationsData.toString());
           // // String d=saveAttAchmentItemAnnotationsresalt!.annotations!..replaceAll(new RegExp(r'[^\w\s]+'),'');
           // print("ddddddddddddddddddddddd=>  ${saveAttAchmentItemAnnotationsresalt?.annotations}");
           //
@@ -584,6 +584,7 @@ class DocumentController extends GetxController {
       if (element.isOriginalMail!) {
         oragnalFileDocpdfUrlFile = element.uRL!;
         isOriginalMailAttachmentsList = element;
+
       }
 
       if (element.isOriginalMail == false) {

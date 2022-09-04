@@ -125,7 +125,7 @@ class LoginPage extends GetWidget<LoginController> {
                   FloatingActionButton(
                       onPressed: () {
 
-
+                        getSavedBaseUrlFormDatabase();
 
                         // String? link =           controller.secureStorage.readSecureData(   AllStringConst.BaseUrl)??"";
                         // controller.baseUrl.text=link;
@@ -160,9 +160,9 @@ class LoginPage extends GetWidget<LoginController> {
                                               validator: controller
                                                   .validators
                                                   .userNameValidator,
-                                              textEditingController:
-                                              controller.baseUrl,
+                                              textEditingController: controller.baseUrl,
                                               label: "Base Url".tr,
+
                                             ),
 
                                             ),
@@ -207,7 +207,7 @@ class LoginPage extends GetWidget<LoginController> {
                                                                 Radius.circular(
                                                                     6))),
                                                     child: ElevatedButton(
-                                                      onPressed: () {
+                                                      onPressed: () async {
                                                         var locale =
                                                             const Locale(
                                                                 'ar', 'AR');
@@ -220,6 +220,13 @@ class LoginPage extends GetWidget<LoginController> {
                                                                 AllStringConst
                                                                     .AppLan,
                                                                 "ar");
+
+                                                        // final settings = SettingItem(
+                                                        //   baseUrl: controller.baseUrl.text,
+                                                        //   language: "ar",
+                                                        // );
+                                                        // await saveSettingsIntoDatabase(settings);
+
                                                         Get.updateLocale(
                                                             locale);
                                                       },
@@ -259,7 +266,7 @@ class LoginPage extends GetWidget<LoginController> {
                                                                 Radius.circular(
                                                                     6))),
                                                     child: ElevatedButton(
-                                                      onPressed: () {
+                                                      onPressed: () async {
                                                         SecureStorage
                                                             secureStorage =
                                                             SecureStorage();
@@ -271,6 +278,13 @@ class LoginPage extends GetWidget<LoginController> {
                                                                 AllStringConst
                                                                     .AppLan,
                                                                 "en");
+
+                                                        // final settings = SettingItem(
+                                                        //   baseUrl: controller.baseUrl.text,
+                                                        //   language: "en",
+                                                        // );
+                                                        // await saveSettingsIntoDatabase(settings);
+
                                                         Get.updateLocale(
                                                             locale);
                                                       },
@@ -322,19 +336,11 @@ class LoginPage extends GetWidget<LoginController> {
                                                   // final SharedPreferences prefs = await _prefs;
                                                   // prefs.setString(AllStringConst.BaseUrl, controller.baseUrl.text);
 
-                                        List<SettingItem> settingItems = await CtsSettingsDatabase.instance.readAllNotes();
-                                        if(settingItems.isEmpty){
-                                          final settings = SettingItem(
-                                            baseUrl: controller.baseUrl.text,
-                                          );
-                                          await CtsSettingsDatabase.instance.create(settings);
-
-                                        }else{
-                                          var settingItem = settingItems[0];
-                                          settingItem = settingItem.copy(baseUrl:  controller.baseUrl.text);
-                                          // settingItem.setBaseUrl = controller.baseUrl.text;
-                                          await CtsSettingsDatabase.instance.update(settingItem);
-                                        }
+                                                  final settings = SettingItem(
+                                                    baseUrl: controller.baseUrl.text,
+                                                    language: "ar",
+                                                  );
+                                        await saveSettingsIntoDatabase(settings);
 
                                                   // Restart.restartApp();
                                                   // Phoenix.rebirth(context);
@@ -463,6 +469,25 @@ class LoginPage extends GetWidget<LoginController> {
         floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       ),
     );
+  }
+
+  Future<void> saveSettingsIntoDatabase(SettingItem settingObj) async {
+    List<SettingItem> settingItems = await CtsSettingsDatabase.instance.readAllNotes();
+    if(settingItems.isEmpty){
+      // final settings = SettingItem(
+      //   baseUrl: controller.baseUrl.text,
+      //   language: controller.baseUrl.text,
+      // );
+      await CtsSettingsDatabase.instance.create(settingObj);
+
+    }else{
+      var settingItem = settingItems[0];
+      settingItem = settingItem.copy(
+        baseUrl:  settingObj.baseUrl,
+      language: settingObj.language,
+      );
+      await CtsSettingsDatabase.instance.update(settingItem);
+    }
   }
 
   Widget logForm(BuildContext context1) {
@@ -599,4 +624,13 @@ class LoginPage extends GetWidget<LoginController> {
       },
     );
   }
+
+  void getSavedBaseUrlFormDatabase() async {
+    List<SettingItem> settingItems = await CtsSettingsDatabase.instance.readAllNotes();
+    if(settingItems.isNotEmpty){
+      controller.baseUrl.text = settingItems[0].baseUrl;
+    }else{
+    }
+  }
+
 }

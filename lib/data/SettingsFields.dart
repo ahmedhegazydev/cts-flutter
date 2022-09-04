@@ -8,7 +8,7 @@ class SettingsFields {
     // isImportant,
     // number,
     baseUrl,
-    // description,
+    language,
     // time
   ];
 
@@ -16,7 +16,7 @@ class SettingsFields {
   // static final String isImportant = 'isImportant';
   // static final String number = 'number';
   static final String baseUrl = 'baseUrl';
-  // static final String description = 'description';
+  static final String language = 'language';
   // static final String time = 'time';
 }
 
@@ -25,7 +25,7 @@ class SettingItem {
   // final bool isImportant;
   // final int number;
   final String baseUrl;
-  // final String description;
+  final String language;
   // final DateTime createdTime;
 
   const SettingItem({
@@ -33,7 +33,7 @@ class SettingItem {
     // required this.isImportant,
     // required this.number,
     required this.baseUrl,
-    // required this.description,
+    required this.language,
     // required this.createdTime,
   });
 
@@ -42,7 +42,7 @@ class SettingItem {
     // bool? isImportant,
     // int? number,
     String? baseUrl,
-    // String? description,
+    String? language,
     // DateTime? createdTime,
   }) =>
       SettingItem(
@@ -50,7 +50,7 @@ class SettingItem {
         // isImportant: isImportant ?? this.isImportant,
         // number: number ?? this.number,
         baseUrl: baseUrl ?? this.baseUrl,
-        // description: description ?? this.description,
+        language: language ?? this.language,
         // createdTime: createdTime ?? this.createdTime,
       );
 
@@ -59,7 +59,7 @@ class SettingItem {
         // isImportant: json[NoteFields.isImportant] == 1,
         // number: json[NoteFields.number] as int,
     baseUrl: json[SettingsFields.baseUrl] as String,
-        // description: json[NoteFields.description] as String,
+    language: json[SettingsFields.language] as String,
         // createdTime: DateTime.parse(json[NoteFields.time] as String),
       );
 
@@ -68,7 +68,7 @@ class SettingItem {
         SettingsFields.baseUrl: baseUrl,
         // NoteFields.isImportant: isImportant ? 1 : 0,
         // NoteFields.number: number,
-        // NoteFields.description: description,
+    SettingsFields.language: language,
         // NoteFields.time: createdTime.toIso8601String(),
       };
 }

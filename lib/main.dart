@@ -41,21 +41,21 @@ void main() async {
 
 
   print("secureStorage.deleteSecureData(AllStringConst.Token)   =>     ${secureStorage.deleteSecureData(AllStringConst.Token)}");
-  String? appLan = secureStorage.readSecureData(AllStringConst.AppLan);
-  if (appLan == null) {
-    print("theeeeeeeeeeeeeeeeeeeee=>  appLan");
-    Get.updateLocale(Locale('ar', 'AR'));
-  } else {
-    if (appLan == "ar") {
-      print(
-          "================================>  arrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-      Get.updateLocale(Locale('ar', 'AR'));
-    } else {
-      print(
-          "================================>  ennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
-      Get.updateLocale(Locale('en', 'US'));
-    }
-  }
+  // String? appLan = secureStorage.readSecureData(AllStringConst.AppLan);
+  // if (appLan == null) {
+  //   print("theeeeeeeeeeeeeeeeeeeee=>  appLan");
+  //   Get.updateLocale(Locale('ar', 'AR'));
+  // } else {
+  //   if (appLan == "ar") {
+  //     print(
+  //         "================================>  arrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+  //     Get.updateLocale(Locale('ar', 'AR'));
+  //   } else {
+  //     print(
+  //         "================================>  ennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
+  //     Get.updateLocale(Locale('en', 'US'));
+  //   }
+  // }
 
   //Get.put(SecureStorage());
   Get.put(MController());
@@ -114,10 +114,9 @@ class MyApp extends StatelessWidget {
     return GetBuilder<MController>(builder: (logic) {
       return GetMaterialApp(
         title: 'CTS',
-        locale: LocalizationService.locale,
-      //  initialBinding: AllBindings(),
+        locale: getSavedLocale(),
         translations: LocalizationService(),
-        fallbackLocale: LocalizationService.fallbackLocale,
+       // initialBinding: AllBindings(),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           textTheme: const TextTheme(
@@ -142,9 +141,6 @@ class MyApp extends StatelessWidget {
                   ),
         ), initialRoute: "/LoginPage",
         getPages: [
-
-
-
           GetPage(name: "/LoginPage",
             page: () => LoginPage(),
               binding: LoginBinding(),
@@ -161,13 +157,10 @@ class MyApp extends StatelessWidget {
           binding: LandingPageBinding()
           )
           ,
-
           GetPage(
               name: "/Filter", //
               page: () => FilterSlidePage(),
               transition: Transition.rightToLeft)
-
-
           ,
           GetPage(
               name: "/InboxPage",
@@ -209,5 +202,19 @@ class MyApp extends StatelessWidget {
         // home: const MyHomePage(title: 'Flutter Demo Home Page'),
       );
     });
+  }
+
+  getSavedLocale() {
+    SecureStorage secureStorage = SecureStorage();
+    String? appLan = secureStorage.readSecureData(AllStringConst.AppLan);
+    if (appLan == null) {
+      return LocalizationService.locale;
+    }else{
+      if (appLan == "ar") {
+        return Locale('ar');
+      }else{
+        return Locale('en');
+      }
+    }
   }
 }

@@ -33,7 +33,8 @@ class CtsSettingsDatabase {
     await db.execute('''
 CREATE TABLE $tableNotes ( 
   ${SettingsFields.id} $idType, 
-  ${SettingsFields.baseUrl} $textType
+  ${SettingsFields.baseUrl} $textType,
+  ${SettingsFields.language} $textType
   )
 ''');
   }

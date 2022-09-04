@@ -30,8 +30,8 @@ class CustomInputTextFiled extends StatelessWidget {
               right: 20,
               left: 20,
             ),
-            child: Text(
-              label,
+            child: Text(  label,style: TextStyle(fontSize: 14),
+
               textDirection: Get.locale?.languageCode=="en"?
               TextDirection.ltr: TextDirection.rtl ,
             ),
@@ -48,7 +48,7 @@ class CustomInputTextFiled extends StatelessWidget {
             width: double.infinity,
             child: TextFormField(
               obscureText: obscureText,
-              textAlign: TextAlign.start,
+              textAlign: TextAlign.center,
               validator: validator,
               decoration: const InputDecoration(
                 border: InputBorder.none,

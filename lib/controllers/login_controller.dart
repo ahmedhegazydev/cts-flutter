@@ -69,19 +69,21 @@ class LoginController extends GetxController {
             print(element.inboxId);
             print("0000000000000000000000000000000000000000000000000000000");
           });
+          secureStorage.writeSecureData(
+              AllStringConst.Token, loginModel.token!);
           await secureStorage.writeSecureJsonData(
               AllStringConst.LogInData, loginModel.toJson());
           print("oooooooooooooooooo  ${loginModel.customActions?[0].name}");
           //    print("signature  ${loginModel}");
           print(
               "loginModel.tokenloginModel.tokenloginModel.token      ${loginModel.token}");
-          await secureStorage.writeSecureData(
+            secureStorage.writeSecureData(
               AllStringConst.Token, loginModel.token!);
-          await secureStorage.writeSecureData(
+            secureStorage.writeSecureData(
               AllStringConst.UserId, loginModel.userId);
-          await secureStorage.writeSecureData(
+            secureStorage.writeSecureData(
               AllStringConst.FirstName, loginModel.firstName);
-          await secureStorage.writeSecureData(
+         secureStorage.writeSecureData(
               AllStringConst.LastName, loginModel.lastName);
           await secureStorage.writeSecureData(
               AllStringConst.DepartmentName, loginModel.departmentName);

@@ -1,20 +1,20 @@
-import 'package:cts/services/abstract_json_resource.dart';
+import '../../../abstract_json_resource.dart';
 
-class ListFavoriteRecipientsResponse extends AbstractJsonResource {
+class ListFavoriteRecipientsResponse extends AbstractJsonResource{
   String? errorMessage;
   int? status;
-  List<FavoriteRecipientsDto>? Recipients;
+  List<Recipients>? recipients;
 
   ListFavoriteRecipientsResponse(
-      {this.errorMessage, this.status, this.Recipients});
+      {this.errorMessage, this.status, this.recipients});
 
   ListFavoriteRecipientsResponse.fromJson(Map<String, dynamic> json) {
     errorMessage = json['ErrorMessage'];
     status = json['Status'];
     if (json['Recipients'] != null) {
-      Recipients = <FavoriteRecipientsDto>[];
+      recipients = <Recipients>[];
       json['Recipients'].forEach((v) {
-        Recipients!.add(new FavoriteRecipientsDto.fromJson(v));
+        recipients!.add(new Recipients.fromJson(v));
       });
     }
   }
@@ -23,51 +23,54 @@ class ListFavoriteRecipientsResponse extends AbstractJsonResource {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['ErrorMessage'] = this.errorMessage;
     data['Status'] = this.status;
-    if (this.Recipients != null) {
-      data['Recipients'] = this.Recipients!.map((v) => v.toJson()).toList();
+    if (this.recipients != null) {
+      data['Recipients'] = this.recipients!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class FavoriteRecipientsDto extends AbstractJsonResource {
-  int? UfrId;
-  // public DateTime? UfrDate { get; set; }
-  int? UfrAddedBy;
-  String? AddedByName;
-  String? TargetType;
-  int? TargetGctid;
-  String? TargetName;
+class Recipients {
+  String? addedByName;
+  int? targetGctid;
+  String? targetName;
+  String? targetPhotoBs64;
+  String? targetType;
+  int? ufrAddedBy;
+  String? ufrDate;
+  int? ufrId;
 
-  FavoriteRecipientsDto({
-    this.UfrId,
-    // this.color,
-    this.UfrAddedBy,
-    this.AddedByName,
-    this.TargetType,
-    this.TargetGctid,
-    this.TargetName,
-  });
+  Recipients(
+      {this.addedByName,
+        this.targetGctid,
+        this.targetName,
+        this.targetPhotoBs64,
+        this.targetType,
+        this.ufrAddedBy,
+        this.ufrDate,
+        this.ufrId});
 
-  FavoriteRecipientsDto.fromJson(Map<String, dynamic> json) {
-    UfrId = json['UfrId'];
-    // color = json['Color'];
-    UfrAddedBy = json['UfrAddedBy'];
-    AddedByName = json['AddedByName'];
-    TargetType = json['TargetType'];
-    TargetGctid = json['TargetGctid'];
-    TargetName = json['TargetName'];
+  Recipients.fromJson(Map<String, dynamic> json) {
+    addedByName = json['AddedByName'];
+    targetGctid = json['TargetGctid'];
+    targetName = json['TargetName'];
+    targetPhotoBs64 = json['TargetPhotoBs64'];
+    targetType = json['TargetType'];
+    ufrAddedBy = json['UfrAddedBy'];
+    ufrDate = json['UfrDate'];
+    ufrId = json['UfrId'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['UfrId'] = this.UfrId;
-    // data['Color'] = this.color;
-    data['UfrAddedBy'] = this.UfrAddedBy;
-    data['AddedByName'] = this.AddedByName;
-    data['TargetType'] = this.TargetType;
-    data['TargetGctid'] = this.TargetGctid;
-    data['TargetName'] = this.TargetName;
+    data['AddedByName'] = this.addedByName;
+    data['TargetGctid'] = this.targetGctid;
+    data['TargetName'] = this.targetName;
+    data['TargetPhotoBs64'] = this.targetPhotoBs64;
+    data['TargetType'] = this.targetType;
+    data['UfrAddedBy'] = this.ufrAddedBy;
+    data['UfrDate'] = this.ufrDate;
+    data['UfrId'] = this.ufrId;
     return data;
   }
 }

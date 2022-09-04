@@ -78,10 +78,10 @@ class DocumentController extends GetxController {
 //Map<int,String>folder={};
   bool notoragnalFileDoc = false;
 
-  String oragnalFileDocpdfUrlFile =
-      'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
-  String pdfUrlFile =
-      'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
+  String oragnalFileDocpdfUrlFile ="";
+    //  'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
+  String pdfUrlFile ="";
+     // 'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
   bool openAttachment = false;
   AttachmentsList? isOriginalMailAttachmentsList;
   Map<String, List<AttachmentsList>> folder2 = {};
@@ -306,8 +306,7 @@ class DocumentController extends GetxController {
           pdfUrlFile = saveAttAchmentItemAnnotationsData!.attachments![i].uRL!;
           //   pdfUrlFile = 'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
           pdfAndSing.add(SfPdfViewer.network(
-            'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf',
-            // pdfUrlFile,
+            pdfUrlFile,
             controller: pdfViewerController,
             onPageChanged: (v) {
               print(
@@ -371,7 +370,7 @@ class DocumentController extends GetxController {
                   saveAttAchmentItemAnnotationsData!.attachments![i].uRL!;
             });
           }
-          log(saveAttAchmentItemAnnotationsData.toString());
+         // log(saveAttAchmentItemAnnotationsData.toString());
           // // String d=saveAttAchmentItemAnnotationsresalt!.annotations!..replaceAll(new RegExp(r'[^\w\s]+'),'');
           // print("ddddddddddddddddddddddd=>  ${saveAttAchmentItemAnnotationsresalt?.annotations}");
           //
@@ -585,6 +584,7 @@ class DocumentController extends GetxController {
       if (element.isOriginalMail!) {
         oragnalFileDocpdfUrlFile = element.uRL!;
         isOriginalMailAttachmentsList = element;
+
       }
 
       if (element.isOriginalMail == false) {

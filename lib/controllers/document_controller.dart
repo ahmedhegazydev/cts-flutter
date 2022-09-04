@@ -78,10 +78,10 @@ class DocumentController extends GetxController {
 //Map<int,String>folder={};
   bool notoragnalFileDoc = false;
 
-  String oragnalFileDocpdfUrlFile =
-      'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
-  String pdfUrlFile =
-      'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
+  String oragnalFileDocpdfUrlFile ="";
+    //  'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
+  String pdfUrlFile ="";
+     // 'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
   bool openAttachment = false;
   AttachmentsList? isOriginalMailAttachmentsList;
   Map<String, List<AttachmentsList>> folder2 = {};

@@ -306,8 +306,7 @@ class DocumentController extends GetxController {
           pdfUrlFile = saveAttAchmentItemAnnotationsData!.attachments![i].uRL!;
           //   pdfUrlFile = 'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
           pdfAndSing.add(SfPdfViewer.network(
-            'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf',
-            // pdfUrlFile,
+            pdfUrlFile,
             controller: pdfViewerController,
             onPageChanged: (v) {
               print(

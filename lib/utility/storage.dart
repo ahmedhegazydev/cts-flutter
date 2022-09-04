@@ -44,16 +44,22 @@ class SecureStorage {
    * write
    */
   Future writeSecureJsonData(String key, value) async {
+    print("i save the $value");
+    print("i save the $key");
     var writeData = await box.write(key, value);
     return writeData;
   }
 
   Future writeSecureData(String key, value) async {
+    print("i save the $value");
+    print("i save the $key");
     var writeData = await box.write(key, value);
     return writeData;
   }
 
   Future writeBoolData(String key, bool value) async {
+    print("i save the $value");
+    print("i save the $key");
     var writeData = await box.write(key, value);
     return writeData;
   }

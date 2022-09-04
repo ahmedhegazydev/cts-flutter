@@ -14,6 +14,7 @@ import 'bindings/inbox_bindings.dart';
 import 'bindings/landing_page_bindings.dart';
 import 'bindings/login_bindings.dart';
 import 'bindings/search_bindings.dart';
+import 'bindings/signatuer_bindings.dart';
 import 'controllers/main_controller.dart';
 import 'middleware/auth_middleware.dart';
 import 'screens/Inbox_page.dart';
@@ -39,7 +40,7 @@ void main() async {
 // secureStorage.deleteSecureData(AllStringConst.Token);
 
 
-  print(secureStorage.deleteSecureData(AllStringConst.Token));
+  print("secureStorage.deleteSecureData(AllStringConst.Token)   =>     ${secureStorage.deleteSecureData(AllStringConst.Token)}");
   String? appLan = secureStorage.readSecureData(AllStringConst.AppLan);
   if (appLan == null) {
     print("theeeeeeeeeeeeeeeeeeeee=>  appLan");
@@ -183,7 +184,9 @@ class MyApp extends StatelessWidget {
           GetPage(
               name: "/SignaturePage",
               page: () => SignaturePage(),
+              binding: SignaturePageBinding(),
               transition: Transition.rightToLeft),
+
           GetPage(
               name: "/SearchPageResult",
               page: () => SearchPageResult(),

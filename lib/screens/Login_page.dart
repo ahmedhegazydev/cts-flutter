@@ -450,6 +450,7 @@ class LoginPage extends GetWidget<LoginController> {
 
   Widget logForm(BuildContext context1) {
     Orientation orientation = MediaQuery.of(context1).orientation;
+    Size size = MediaQuery.of(context1).size;
     return Form(
         key: controller.loginFormKey,
         child: LayoutBuilder(builder: (context, constraint) {
@@ -463,12 +464,12 @@ class LoginPage extends GetWidget<LoginController> {
                     Padding(
                         padding: EdgeInsets.only(right: 60, left: 60),
 
-                        child: Column(
+                        child: Column(mainAxisAlignment: MainAxisAlignment.center,crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             SizedBox(height: 30,),
                             Container(
                               // color: Colors.red,
-                              width: double.infinity,
+                            //  width: double.infinity,
                               padding: const EdgeInsets.all(0),
                               child: Text(
                                 "appTitle".tr,
@@ -489,24 +490,28 @@ class LoginPage extends GetWidget<LoginController> {
                                 : SizedBox(
                                     height: 10,
                                   ),
-                            CustomInputTextFiled(
-                                validator:
-                                    controller.validators.userNameValidator,
-                                textEditingController: controller.userName,
-                                label: "name".tr),
+                            SizedBox(width: size.width*.3,
+                              child: CustomInputTextFiled(
+                                  validator:
+                                      controller.validators.userNameValidator,
+                                  textEditingController: controller.userName,
+                                  label: "name".tr),
+                            ),
                             orientation == Orientation.landscape
                                 ? SizedBox(
-                                    height: 8,
+                                    height: 20,
                                   )
                                 : SizedBox(
                                     height: 8,
                                   ),
-                            CustomInputTextFiled(
-                                validator:
-                                    controller.validators.passWordValidator,
-                                textEditingController: controller.passWord,
-                                obscureText: true,
-                                label: "password".tr),
+                            SizedBox(width: size.width*.3,
+                              child: CustomInputTextFiled(
+                                  validator:
+                                      controller.validators.passWordValidator,
+                                  textEditingController: controller.passWord,
+                                  obscureText: true,
+                                  label: "password".tr),
+                            ),
                             Padding(
                               padding: orientation == Orientation.landscape
                                   ? EdgeInsets.only(
@@ -518,33 +523,29 @@ class LoginPage extends GetWidget<LoginController> {
                                 height: 50,
                                 color: Colors.transparent,
                                 child: Row(
-                                  mainAxisAlignment:
-                                      Get.locale?.languageCode == "en"
-                                          ? MainAxisAlignment.end
-                                          : MainAxisAlignment.start,
-                                  // mainAxisAlignment: MainAxisAlignment.center,
+                                  // mainAxisAlignment:
+                                  //     Get.locale?.languageCode == "en"
+                                  //         ? MainAxisAlignment.end
+                                  //         : MainAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.max,
+
                                   children: [
-                                    const Spacer(),
-                                    Flexible(
-                                        flex: 20,
-                                        child: CustomButton(
-                                            onPressed: controller.logIngRequst,
-                                            name: "login".tr)),
-                                    Flexible(
-                                      //space
-                                      flex: 1,
-                                      child: Container(),
+
+                                    SizedBox(width: size.width*.2,
+                                      child: CustomButton(
+                                          onPressed: controller.logIngRequst,
+                                          name: "login".tr),
                                     ),
-                                    Flexible(
-                                        flex: 8,
+                                   SizedBox(width: 8,),
+                                    SizedBox(
+                                         width: 50,height: 50,
                                         child: CustomImageButton(
                                           imagePath: 'assets/images/faceid.png',
                                           onClick:
                                               controller.faceIdButtonOnClick,
                                         )),
-                                  ],
+                             ],
                                 ),
                               ),
                             ),

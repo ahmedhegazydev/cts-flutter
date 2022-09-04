@@ -193,14 +193,39 @@ class LoginPage extends GetWidget<LoginController> {
                                         right: 0,
                                         left: 0),
                                     child: Column(children: [
-                                      CustomInputTextFiled(
-                                        validator: controller
-                                            .validators
-                                            .userNameValidator,
-                                        textEditingController:
-                                        controller.baseUrl,
-                                        label: "Base Url".tr,
+
+                                    Container(
+                                    decoration: BoxDecoration(
+                                    color: Colors.grey.shade300,
+                                      // color: Colors.grey.shade200,
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(6),
                                       ),
+                                    ),
+                                  width: double.infinity,
+                                      child:  Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            Expanded(child:   CustomInputTextFiled(
+                                              validator: controller
+                                                  .validators
+                                                  .userNameValidator,
+                                              textEditingController:
+                                              controller.baseUrl,
+                                              label: "Base Url".tr,
+                                            ),
+
+                                            ),
+
+                                            new FlatButton(
+                                                onPressed: () {
+                                                  controller.clear();
+                                                },
+                                                child: new Icon(Icons.clear))
+                                          ]
+                                      )
+                                    )
                                     ]),
                                   ),
                                   // SizedBox(
@@ -357,7 +382,8 @@ class LoginPage extends GetWidget<LoginController> {
 
                                         }else{
                                           var settingItem = settingItems[0];
-                                          settingItem.copy(baseUrl:  controller.baseUrl.text);
+                                          settingItem = settingItem.copy(baseUrl:  controller.baseUrl.text);
+                                          // settingItem.setBaseUrl = controller.baseUrl.text;
                                           await CtsSettingsDatabase.instance.update(settingItem);
                                         }
 

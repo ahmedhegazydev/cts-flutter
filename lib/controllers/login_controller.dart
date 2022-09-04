@@ -25,6 +25,10 @@ class LoginController extends GetxController {
   bool islogin = false;
   SecureStorage secureStorage = SecureStorage();
 
+  clear(){
+    baseUrl.clear();
+    update();
+  }
   logIngRequst(
   // { required context}
   ) {

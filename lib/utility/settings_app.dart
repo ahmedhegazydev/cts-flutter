@@ -4,9 +4,8 @@ import 'package:cts/utility/storage.dart';
 class SettingsApp {
   static SecureStorage secureStorage = new SecureStorage();
 
-  // static const String baseUrl = 'http://192.168.1.2:9091/Mobility/CMS.svc';
-  // static const String baseUrl = 'http://win-7pnh2kgornc:9091/Mobility/CMS.svc';
-  static const String baseUrl = 'http://192.168.1.7:9091/Mobility/CMS.svc';
+  static const String baseUrl = 'http://139.99.149.12:9091/EverSuite.CTS.Mobile/CMS.svc';
+  // static const String baseUrl = 'http://192.168.1.7:9091/Mobility/CMS.svc';
 
   SettingsApp() {}
 

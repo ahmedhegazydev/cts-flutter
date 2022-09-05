@@ -31,7 +31,7 @@ class AddFavoriteRecipientsResponse extends AbstractJsonResource {
 }
 
 class FavoriteRecipientsDto extends AbstractJsonResource {
-  bool? UfrId;
+  int? UfrId;
 
   // public DateTime? UfrDate { get; set; }
   int? UfrAddedBy;

@@ -140,15 +140,15 @@ update();
   @override
   void onReady() {
     super.onReady();
-   //getDashboardStats();
+   getDashboardStats();
 
     _logindata = secureStorage.readSecureJsonData(AllStringConst.LogInData);
     data = LoginModel.fromJson(_logindata!);
-    // getFindRecipientData();
+
     getFindRecipientData(context: context);
     //Get.find<SearchController>().getAllData();
     Get.put<DocumentController>(DocumentController()).getFindRecipientData(context: context);
-    getDashboardStatsLocalJson();
+   // getDashboardStatsLocalJson();
 
 
     listFavoriteRecipients(context: context);
@@ -313,14 +313,14 @@ update();
   }
 
 
-  getDashboardStatsLocalJson() async {
-    final jsondata = await rootBundel.rootBundle
-        .loadString("assets/json/dashboard.json");
-    dashboardStatsResultModel =
-        DashboardStatsResultModel.fromJson(json.decode(jsondata));
-
-    update();
-  }
+  // getDashboardStatsLocalJson() async {
+  //   final jsondata = await rootBundel.rootBundle
+  //       .loadString("assets/json/dashboard.json");
+  //   dashboardStatsResultModel =
+  //       DashboardStatsResultModel.fromJson(json.decode(jsondata));
+  //
+  //   update();
+  // }
 
   /**
    * mofa-favorite-recipients-api (1)
@@ -336,39 +336,44 @@ update();
         .then((value) {
       favoriteRecipientsResponse = value as ListFavoriteRecipientsResponse;
 
-      print("listFavoriteRecipientsApi  =>${favoriteRecipientsResponse?.recipients?[0]}");
+     // print("listFavoriteRecipientsApi  =>${favoriteRecipientsResponse?.recipients[0].targetPhotoBs64.isEmpty}");
     });
-  }
+ update(); }
 
-  Future removeFavoriteRecipients({context, baskets}) async {
+  Future removeFavoriteRecipients({context, favoriteRecipients}) async {
     RemoveFavoriteRecipientsApi removeFavoriteRecipientsApi =
         RemoveFavoriteRecipientsApi(context);
     RemoveFavoriteRecipientsRequest reorderBasketsRequest =
         RemoveFavoriteRecipientsRequest(
-      ids: [],
+      ids: [favoriteRecipients],
       language: Get.locale?.languageCode == "en" ? "en" : "ar",
       token: secureStorage.token()!,
     );
     await removeFavoriteRecipientsApi
         .post(reorderBasketsRequest.toMap())
         .then((value) {
+      listFavoriteRecipients( context: context);
+
       print(value);
       print("removeFavoriteRecipientsApi");
     });
   }
 
-  Future addFavoriteRecipients({context, baskets}) async {
+  Future addFavoriteRecipients({context,required int addFavorite}) async {
     AddFavoriteRecipientsApi addFavoriteRecipientsApi =
         AddFavoriteRecipientsApi(context);
-    AddFavoriteRecipientsRequest reorderBasketsRequest =
+    AddFavoriteRecipientsRequest addFavoriteRequest =
         AddFavoriteRecipientsRequest(
       language: Get.locale?.languageCode == "en" ? "en" : "ar",
       token: secureStorage.token()!,
-      TargetGctId: 0,
+      TargetGctId: addFavorite,
     );
     await addFavoriteRecipientsApi
-        .post(reorderBasketsRequest.toMap())
+        .post(addFavoriteRequest.toMap())
         .then((value) {
+
+      listFavoriteRecipients( context: context);
+
       print(value);
       print("addFavoriteRecipientsApi");
     });

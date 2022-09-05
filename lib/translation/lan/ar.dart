@@ -130,6 +130,7 @@ const Map<String, String> ar = {
 
 
   "relogin":"برجاء اعاده تسجيل الدخول",
+  "canotopen":"غير مسموح لك فتح الملف",
 
 
 };

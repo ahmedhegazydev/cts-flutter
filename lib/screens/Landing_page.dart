@@ -680,6 +680,7 @@ class LandingPage extends GetWidget<LandingPageController> {
   }
 
   _buildSideMenu(BuildContext context) {
+    Size size=MediaQuery.of(context).size;
     return SingleChildScrollView(
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -726,132 +727,132 @@ class LandingPage extends GetWidget<LandingPageController> {
         InkWell(
           onTap: () async {
             await controller.listFavoriteRecipients(context: context);
+            controller.textEditingControllerTo.clear();
             Get.bottomSheet(
-              Container(
-                  //height: 100,
-                  margin: EdgeInsets.all(20),
-                  padding: EdgeInsets.all(20),
-                  decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20))),
-                  child: Column(
-                    children: [
-                      Text("favoritesUsers".tr,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 14)),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TypeAheadField<Destination>(
-                              textFieldConfiguration: TextFieldConfiguration(
-                                controller: controller.textEditingControllerTo,
-                                // autofocus: true,
-                                // style: DefaultTextStyle.of(context)
-                                //     .style
-                                //     .copyWith(fontStyle: FontStyle.italic),
-                                decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    labelText: ""),
+              Padding(
+                padding:   EdgeInsets.only(right: size.width*.2,left: size.width*.2),
+                child: Container(
+                    //height: 100,
+                    margin: EdgeInsets.all(20),
+                    padding: EdgeInsets.all(20),
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20))),
+                    child: Column(
+                      children: [
+                        Text("favoritesUsers".tr,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24,
+                            )),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TypeAheadField<Destination>(
+                                textFieldConfiguration: TextFieldConfiguration(
+                                  controller: controller.textEditingControllerTo,
+                                  // autofocus: true,
+                                  // style: DefaultTextStyle.of(context)
+                                  //     .style
+                                  //     .copyWith(fontStyle: FontStyle.italic),
+                                  decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      labelText: ""),
+                                ),
+                                suggestionsCallback: (pattern) async {
+                                  return controller.users.where((element) =>
+                                      element.value!
+                                          .toLowerCase()
+                                          .contains(pattern.toLowerCase()));
+
+                                  //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
+                                },
+                                itemBuilder: (context, suggestion) {
+                                  Destination v = suggestion;
+
+                                  return // Te(v.originalName!);
+
+                                      ListTile(
+                                    title: FilterText(v.value!),
+                                  );
+                                },
+                                onSuggestionSelected: (suggestion) {
+                                  Destination v = suggestion;
+                                  controller.textEditingControllerTo.text =
+                                      v.value ?? "";
+                                  controller.to = v;
+
+                                  controller.updateselectFavusers(v);
+                                  controller.addFavoriteRecipients(addFavorite:v.id! ,context: context);
+                               //   controller.textEditingControllerTo.clear();
+                                  // v
+                                  // .cLASNAMEDISPLAY;
+                                  // Navigator.of(context).push(MaterialPageRoute(
+                                  //     builder: (context) => ProductPage(product: suggestion)
+                                  // ));
+                                },
                               ),
-                              suggestionsCallback: (pattern) async {
-                                return controller.users.where((element) =>
-                                    element.value!
-                                        .toLowerCase()
-                                        .contains(pattern.toLowerCase()));
-
-                                //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
-                              },
-                              itemBuilder: (context, suggestion) {
-                                Destination v = suggestion;
-
-                                return // Te(v.originalName!);
-
-                                    ListTile(
-                                  title: FilterText(v.value!),
-                                );
-                              },
-                              onSuggestionSelected: (suggestion) {
-                                Destination v = suggestion;
-                                controller.textEditingControllerTo.text =
-                                    v.value ?? "";
-                                controller.to = v;
-
-                                controller.updateselectFavusers(v);
-                                controller.textEditingControllerTo.clear();
-                                // v
-                                // .cLASNAMEDISPLAY;
-                                // Navigator.of(context).push(MaterialPageRoute(
-                                //     builder: (context) => ProductPage(product: suggestion)
-                                // ));
-                              },
                             ),
-                          ),
-                          SizedBox(
-                            width: 2,
-                          ),
-                          CustomButtonWithIcon(
-                            icon: Icons.person,
-                            onClick: () {
-                              controller.listOfUser(0);
-                            },
-                          ),
-                          SizedBox(
-                            width: 2,
-                          ),
-                          CustomButtonWithIcon(
-                            icon: Icons.account_balance,
-                            onClick: () {
-                              controller.listOfUser(2);
-                            },
-                          ),
-                          SizedBox(
-                            width: 2,
-                          ),
-                          CustomButtonWithIcon(
-                            icon: Icons.clear,
-                            onClick: () {
-                              controller.listOfUser(0);
-                            },
-                          )
-                        ],
-                      ),
-                      GetBuilder<LandingPageController>(builder: (logic) {
-                        return Expanded(
-                          child: ListView.builder(
-                              itemCount: controller.selectFavusers.length,
-                              itemBuilder: (context, pos) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Card(
-                                    elevation: 5,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(controller
-                                                  .selectFavusers[pos].value ??
-                                              ""),
-                                          GestureDetector(
-                                              onTap: () {
-                                                controller.deletselectFavusers(
-                                                    controller
-                                                        .selectFavusers[pos]);
-                                              },
-                                              child: Icon(Icons.delete))
-                                        ],
+                            SizedBox(
+                              width: 2,
+                            ),
+                          ],
+                        ),
+                        GetBuilder<LandingPageController>(builder: (logic) {
+                          return Expanded(
+                            child: ListView.builder(
+                                itemCount: controller.favoriteRecipientsResponse
+                                    ?.recipients?.length,
+                                itemBuilder: (context, pos) {
+                                  return Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Container(
+                                          width: 30,
+                                          height: 30,
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              image: controller
+                                                      .favoriteRecipientsResponse!
+                                                      .recipients![pos]
+                                                      .targetPhotoBs64!
+                                                      .isNotEmpty
+                                                  ? DecorationImage(
+                                                      image: MemoryImage(
+                                                          dataFromBase64String(controller
+                                                              .favoriteRecipientsResponse!
+                                                              .recipients![pos]
+                                                              .targetPhotoBs64!)))
+                                                  : DecorationImage(
+                                                      image: AssetImage(
+                                                          "assets/images/pr.jpg"))),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                );
-                              }),
-                        );
-                      }),
-                    ],
-                  )),
+                                Expanded(
+                                  child: Text(controller
+                                      .favoriteRecipientsResponse!
+                                      .recipients![pos]
+                                      .targetName??"",maxLines: 3),
+                                )   ,Spacer(),InkWell(onTap: (){
+controller.removeFavoriteRecipients(context: context,favoriteRecipients:controller
+    .favoriteRecipientsResponse!
+    .recipients![pos].ufrId );
+
+                                      print(" i removeeeeeeeeeeeeeeeeeeeeee");
+                                      },child: Icon(Icons.delete)) ],
+                                  );
+                                }),
+                          );
+                        }),
+                      ],
+                    )),
+              ),
               enterBottomSheetDuration: const Duration(seconds: 1),
             );
           },
@@ -1146,7 +1147,6 @@ class LandingPage extends GetWidget<LandingPageController> {
                                         Radius.circular(6))),
                                 child: ElevatedButton(
                                   onPressed: () {
-
                                     controller.removeMyRoutingSettings(data: {
                                       "Token": controller.secureStorage.token(),
                                       "Language":
@@ -1195,7 +1195,6 @@ class LandingPage extends GetWidget<LandingPageController> {
                     height: double.infinity,
                   ),
                 ),
-
                 Container(
                   height: 40,
                   width: double.infinity,
@@ -1391,7 +1390,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                   const BorderRadius.all(Radius.circular(6))),
                           child: ElevatedButton(
                             onPressed: () {
-                              SecureStorage   secureStorage=SecureStorage();
+                              SecureStorage secureStorage = SecureStorage();
                               secureStorage.writeSecureData(
                                   AllStringConst.AppColor,
                                   Get.find<MController>().appcolor.value);
@@ -1864,6 +1863,7 @@ class LandingPage extends GetWidget<LandingPageController> {
   }
 
   _buildSideMenuPort(BuildContext context) {
+    Size size=MediaQuery.of(context).size;
     return Container(
       height: 150,
       child: Row(
@@ -1902,134 +1902,135 @@ class LandingPage extends GetWidget<LandingPageController> {
             ),
           ),
           InkWell(
-            onTap: () {
+            onTap: ()async {
+              await controller.listFavoriteRecipients(context: context);
+              controller.textEditingControllerTo.clear();
               Get.bottomSheet(
-                Container(
+                Padding(
+                  padding:   EdgeInsets.only(right: size.width*.2,left: size.width*.2),
+                  child: Container(
                     //height: 100,
-                    margin: EdgeInsets.all(20),
-                    padding: EdgeInsets.all(20),
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20))),
-                    child: Column(
-                      children: [
-                        Text("favoritesUsers".tr,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14)),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TypeAheadField<Destination>(
-                                textFieldConfiguration: TextFieldConfiguration(
-                                  controller:
-                                      controller.textEditingControllerTo,
-                                  // autofocus: true,
-                                  // style: DefaultTextStyle.of(context)
-                                  //     .style
-                                  //     .copyWith(fontStyle: FontStyle.italic),
-                                  decoration: InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      labelText: ""),
-                                ),
-                                suggestionsCallback: (pattern) async {
-                                  return controller.users.where((element) =>
-                                      element.value!
-                                          .toLowerCase()
-                                          .contains(pattern.toLowerCase()));
+                      margin: EdgeInsets.all(20),
+                      padding: EdgeInsets.all(20),
+                      decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20))),
+                      child: Column(
+                        children: [
+                          Text("favoritesUsers".tr,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24,
+                              )),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TypeAheadField<Destination>(
+                                  textFieldConfiguration: TextFieldConfiguration(
+                                    controller: controller.textEditingControllerTo,
+                                    // autofocus: true,
+                                    // style: DefaultTextStyle.of(context)
+                                    //     .style
+                                    //     .copyWith(fontStyle: FontStyle.italic),
+                                    decoration: InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        labelText: ""),
+                                  ),
+                                  suggestionsCallback: (pattern) async {
+                                    return controller.users.where((element) =>
+                                        element.value!
+                                            .toLowerCase()
+                                            .contains(pattern.toLowerCase()));
 
-                                  //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
-                                },
-                                itemBuilder: (context, suggestion) {
-                                  Destination v = suggestion;
+                                    //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
+                                  },
+                                  itemBuilder: (context, suggestion) {
+                                    Destination v = suggestion;
 
-                                  return // Te(v.originalName!);
+                                    return // Te(v.originalName!);
 
                                       ListTile(
-                                    title: FilterText(v.value!),
-                                  );
-                                },
-                                onSuggestionSelected: (suggestion) {
-                                  Destination v = suggestion;
-                                  controller.textEditingControllerTo.text =
-                                      v.value ?? "";
-                                  controller.to = v;
+                                        title: FilterText(v.value!),
+                                      );
+                                  },
+                                  onSuggestionSelected: (suggestion) {
+                                    Destination v = suggestion;
+                                    controller.textEditingControllerTo.text =
+                                        v.value ?? "";
+                                    controller.to = v;
 
-                                  controller.updateselectFavusers(v);
-                                  controller.textEditingControllerTo.clear();
-                                  // v
-                                  // .cLASNAMEDISPLAY;
-                                  // Navigator.of(context).push(MaterialPageRoute(
-                                  //     builder: (context) => ProductPage(product: suggestion)
-                                  // ));
-                                },
+                                    controller.updateselectFavusers(v);
+
+                                    controller.addFavoriteRecipients(addFavorite:v.id! ,context: context);
+                                   // controller.textEditingControllerTo.clear();
+                                    // v
+                                    // .cLASNAMEDISPLAY;
+                                    // Navigator.of(context).push(MaterialPageRoute(
+                                    //     builder: (context) => ProductPage(product: suggestion)
+                                    // ));
+                                  },
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 2,
-                            ),
-                            CustomButtonWithIcon(
-                              icon: Icons.person,
-                              onClick: () {
-                                controller.listOfUser(0);
-                              },
-                            ),
-                            SizedBox(
-                              width: 2,
-                            ),
-                            CustomButtonWithIcon(
-                              icon: Icons.account_balance,
-                              onClick: () {
-                                controller.listOfUser(2);
-                              },
-                            ),
-                            SizedBox(
-                              width: 2,
-                            ),
-                            CustomButtonWithIcon(
-                              icon: Icons.clear,
-                              onClick: () {
-                                controller.listOfUser(0);
-                              },
-                            )
-                          ],
-                        ),
-                        GetBuilder<LandingPageController>(builder: (logic) {
-                          return Expanded(
-                            child: ListView.builder(
-                                itemCount: controller.selectFavusers.length,
-                                itemBuilder: (context, pos) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Card(
-                                      elevation: 5,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(controller.selectFavusers[pos]
-                                                    .value ??
-                                                ""),
-                                            GestureDetector(
-                                                onTap: () {
-                                                  controller.deletselectFavusers(
-                                                      controller
-                                                          .selectFavusers[pos]);
-                                                },
-                                                child: Icon(Icons.delete))
-                                          ],
+                              SizedBox(
+                                width: 2,
+                              ),
+                            ],
+                          ),
+                          GetBuilder<LandingPageController>(builder: (logic) {
+                            return Expanded(
+                              child: ListView.builder(
+                                  itemCount: controller.favoriteRecipientsResponse
+                                      ?.recipients?.length,
+                                  itemBuilder: (context, pos) {
+                                    return Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: Container(
+                                            width: 30,
+                                            height: 30,
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                image: controller
+                                                    .favoriteRecipientsResponse!
+                                                    .recipients![pos]
+                                                    .targetPhotoBs64!
+                                                    .isNotEmpty
+                                                    ? DecorationImage(
+                                                    image: MemoryImage(
+                                                        dataFromBase64String(controller
+                                                            .favoriteRecipientsResponse!
+                                                            .recipients![pos]
+                                                            .targetPhotoBs64!)))
+                                                    : DecorationImage(
+                                                    image: AssetImage(
+                                                        "assets/images/pr.jpg"))),
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                  );
-                                }),
-                          );
-                        }),
-                      ],
-                    )),
+                                        Expanded(
+                                          child: Text(controller
+                                              .favoriteRecipientsResponse!
+                                              .recipients![pos]
+                                              .targetName??"",maxLines: 3),
+                                        )   ,Spacer(),InkWell(onTap: (){
+                                          controller.removeFavoriteRecipients(context: context,favoriteRecipients:controller
+                                              .favoriteRecipientsResponse!
+                                              .recipients![pos].ufrId );
+
+                                          print(" i removeeeeeeeeeeeeeeeeeeeeee");
+                                        },child: Icon(Icons.delete)) ],
+                                    );
+                                  }),
+                            );
+                          }),
+                        ],
+                      )),
+                ),
                 enterBottomSheetDuration: const Duration(seconds: 1),
               );
             },
@@ -2540,7 +2541,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                     const BorderRadius.all(Radius.circular(6))),
                             child: ElevatedButton(
                               onPressed: () {
-                                SecureStorage secureStorage=SecureStorage();
+                                SecureStorage secureStorage = SecureStorage();
                                 secureStorage.writeSecureData(
                                     AllStringConst.AppColor,
                                     Get.find<MController>().appcolor.value);
@@ -3756,12 +3757,14 @@ class LandingPage extends GetWidget<LandingPageController> {
                           ),
                         ],
                       ),
-                      child: GestureDetector(onTap: (){
-                        Get.find<InboxController>().isAllOrNot=true;
-                        Get.find<InboxController>().getAllCorrespondencesData(context: context, inboxId: 1);
+                      child: GestureDetector(
+                        onTap: () {
+                          Get.find<InboxController>().isAllOrNot = true;
+                          Get.find<InboxController>().getAllCorrespondencesData(
+                              context: context, inboxId: 1);
 
-                        Get.toNamed("/InboxPage");
-                      },
+                          Get.toNamed("/InboxPage");
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -3848,15 +3851,15 @@ class LandingPage extends GetWidget<LandingPageController> {
                           ),
                         ],
                       ),
-                      child: GestureDetector(onTap: (){
-                        Get.find<InboxController>().isAllOrNot=true;
-                        Get.find<InboxController>().getAllCorrespondencesData(context: context, inboxId: 5);
+                      child: GestureDetector(
+                        onTap: () {
+                          Get.find<InboxController>().isAllOrNot = true;
+                          Get.find<InboxController>().getAllCorrespondencesData(
+                              context: context, inboxId: 5);
 
-
-
-                        Get.toNamed("/InboxPage");
-                    //    openInbox( context: context,boxid: 5);
-                      },
+                          Get.toNamed("/InboxPage");
+                          //    openInbox( context: context,boxid: 5);
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -3876,48 +3879,48 @@ class LandingPage extends GetWidget<LandingPageController> {
                                 color: Colors.grey,
                               ),
                             ),
-                          Spacer(flex: 1),
-                          Flexible(
-                            flex: 10,
-                            child: Container(
-                              width: double.infinity,
-                              child: Text(
-                                "صادر للكل".tr,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .copyWith(
-                                        color: Colors.grey,
-                                        fontSize:
-                                            calculateFontSize(20, context)),
-                                textAlign: TextAlign.start,
+                            Spacer(flex: 1),
+                            Flexible(
+                              flex: 10,
+                              child: Container(
+                                width: double.infinity,
+                                child: Text(
+                                  "صادر للكل".tr,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline2!
+                                      .copyWith(
+                                          color: Colors.grey,
+                                          fontSize:
+                                              calculateFontSize(20, context)),
+                                  textAlign: TextAlign.start,
+                                ),
                               ),
                             ),
-                          ),
-                          Flexible(
-                            flex: 3,
-                            child: Container(
-                              width: double.infinity,
-                              child: Text(
-                                "9",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline3!
-                                    .copyWith(
-                                      fontSize: 22,
-                                      color: createMaterialColor(
-                                        Color.fromRGBO(247, 148, 29, 1),
+                            Flexible(
+                              flex: 3,
+                              child: Container(
+                                width: double.infinity,
+                                child: Text(
+                                  "9",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline3!
+                                      .copyWith(
+                                        fontSize: 22,
+                                        color: createMaterialColor(
+                                          Color.fromRGBO(247, 148, 29, 1),
+                                        ),
                                       ),
-                                    ),
-                                textAlign: TextAlign.center,
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
                             ),
-                          ),
-                          Spacer(flex: 2)
-                        ],
+                            Spacer(flex: 2)
+                          ],
+                        ),
                       ),
                     ),
-                  ),
                   ),
                 ],
               ),
@@ -3966,8 +3969,11 @@ class LandingPage extends GetWidget<LandingPageController> {
                       children: [
                         TableRowInkWell(
                           onTap: () {
-                            openInbox(boxid: 0  ,context: context,nodeId:  e.value!.nodeId! );
-                         //   openInbox(context);
+                            openInbox(
+                                boxid: 0,
+                                context: context,
+                                nodeId: e.value!.nodeId!);
+                            //   openInbox(context);
                           },
                           child: _buildInboxesRow(
                             context,
@@ -4014,7 +4020,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                   children: [
                     TableRowInkWell(
                       onTap: () {
-                    //    openInbox(context);
+                        //    openInbox(context);
                       },
                       child: _buildOtherFoldersRows(
                         context,
@@ -4181,8 +4187,10 @@ class LandingPage extends GetWidget<LandingPageController> {
                       children: [
                         TableRowInkWell(
                           onTap: () {
-
-                        openInbox(boxid: 0  ,context: context,nodeId:  e.value!.nodeId! );
+                            openInbox(
+                                boxid: 0,
+                                context: context,
+                                nodeId: e.value!.nodeId!);
                           },
                           child: _buildInboxesRow(
                             context,
@@ -4219,9 +4227,10 @@ class LandingPage extends GetWidget<LandingPageController> {
                     TableRowInkWell(
                       onTap: () {
                         //openInbox(context);
-                        Get.find<InboxController>().nodeId=0;
-                        Get.find<InboxController>().isAllOrNot=true;
-                        Get.find<InboxController>().getAllCorrespondencesData(context: context, inboxId: 1);
+                        Get.find<InboxController>().nodeId = 0;
+                        Get.find<InboxController>().isAllOrNot = true;
+                        Get.find<InboxController>().getAllCorrespondencesData(
+                            context: context, inboxId: 1);
 
                         Get.toNamed("/InboxPage");
                       },
@@ -4240,9 +4249,10 @@ class LandingPage extends GetWidget<LandingPageController> {
                     TableRowInkWell(
                       onTap: () {
                         //openInbox(context);
-                        Get.find<InboxController>().nodeId=0;
-                        Get.find<InboxController>().isAllOrNot=true;
-                        Get.find<InboxController>().getAllCorrespondencesData(context: context, inboxId: 5);
+                        Get.find<InboxController>().nodeId = 0;
+                        Get.find<InboxController>().isAllOrNot = true;
+                        Get.find<InboxController>().getAllCorrespondencesData(
+                            context: context, inboxId: 5);
                         Get.toNamed("/InboxPage");
                       },
                       child: _buildOtherFoldersRows(
@@ -4278,7 +4288,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                   children: [
                     TableRowInkWell(
                       onTap: () {
-                 Get.put(SearchController()).       getAllData(context);
+                        Get.put(SearchController()).getAllData(context);
                         Get.toNamed("SearchPage");
                       },
                       child: _buildOtherFoldersRows(
@@ -4473,8 +4483,11 @@ class LandingPage extends GetWidget<LandingPageController> {
     );
   }
 
-  openInbox({required BuildContext context, required int boxid, required int nodeId}) {
-    Get.find<InboxController>().isAllOrNot=false;
+  openInbox(
+      {required BuildContext context,
+      required int boxid,
+      required int nodeId}) {
+    Get.find<InboxController>().isAllOrNot = false;
     Get.find<InboxController>().inboxId = boxid;
     Get.find<InboxController>().nodeId = nodeId;
     Get.find<InboxController>().getAllData(context: context);

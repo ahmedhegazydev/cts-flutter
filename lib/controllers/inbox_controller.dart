@@ -444,16 +444,25 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
 
       //   FindRecipientModel findRecipientModel = value as FindRecipientModel;
       if (canOpenDocumentModel!.allow!) {
-        Get.find<DocumentController>().canOpenDocumentModel =
-            canOpenDocumentModel;
+        Get.find<DocumentController>().updatecanOpenDocumentModel(canOpenDocumentModel!) ;
 
-        Get.find<DocumentController>().gatAllDataAboutDOC(
-            context: context,
-            docId: docId,
-            transferId: transferId,
-            correspondenceId: correspondenceId);
-        Get.find<DocumentController>().loadPdf();
-        Get.toNamed("/DocumentPage");
+
+        // Get.find<DocumentController>().gatAllDataAboutDOC(
+        //     context: context,
+        //     docId: docId,
+        //     transferId: transferId,
+        //     correspondenceId: correspondenceId);
+
+        if(canOpenDocumentModel!.allow!){
+          Get.find<DocumentController>().loadPdf();
+          Get.toNamed("/DocumentPage");
+
+        }else{
+          Get.snackbar("", "canotopen".tr);
+        }
+
+
+
       }
     }).catchError((e) {
       print("eeeeeeeeeeeeeeee=>  $e");

@@ -34,39 +34,44 @@ class LoginPage extends GetWidget<LoginController> {
     Orientation orientation = MediaQuery.of(context).orientation;
     final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
     landscapeBody(BuildContext context) {
-      return Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              returnImageNameBasedOnDirection(
-                  "assets/images/background", context, "png"),
+      return GestureDetector(
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                returnImageNameBasedOnDirection(
+                    "assets/images/background", context, "png"),
+              ),
+              fit: BoxFit.fill,
             ),
-            fit: BoxFit.fill,
+          ),
+          child: Directionality(
+            textDirection: TextDirection.ltr,
+            child: Row(
+              children: [
+                Flexible(
+                  flex: 1,
+                  child: Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    color: Colors.transparent,
+                  ),
+                ),
+                Flexible(
+                  flex: 1,
+                  child: Container(
+                    child: logForm(context),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-        child: Directionality(
-          textDirection: TextDirection.ltr,
-          child: Row(
-            children: [
-              Flexible(
-                flex: 1,
-                child: Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  color: Colors.transparent,
-                ),
-              ),
-              Flexible(
-                flex: 1,
-                child: Container(
-                  child: logForm(context),
-                ),
-              ),
-            ],
-          ),
-        ),
+        onTap: () => {
+        FocusScope.of(context).requestFocus(FocusNode())
+      },
       );
     }
 

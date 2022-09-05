@@ -161,7 +161,7 @@ update();
     listFavoriteRecipients(context: null);
     Get.put<DocumentController>(DocumentController()).getFindRecipientData(context: null);
 
-    getDashboardStatsLocalJson();
+    // getDashboardStatsLocalJson();
 
   }
 

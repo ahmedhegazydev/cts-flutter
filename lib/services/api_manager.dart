@@ -71,7 +71,7 @@ abstract class ApiManager {
         if (value.data["Status"] == 2) {
           a.Get.snackbar("Error".tr, "LogIn ");
           secureStorage.deleteSecureData(AllStringConst.Token);
-          Get.offAll(LoginPage());
+          // Get.offAll(LoginPage());
         } else {
           print(value);
           data = value.data;
@@ -119,7 +119,7 @@ abstract class ApiManager {
       } else {
         if (value.data["Status"] == 2) {
           // Get.to(LoginPage());
-          Get.offAll(LoginPage());
+          // Get.offAll(LoginPage());
         } else {
           data = value.data;
           jsonList = fromJson(data);

@@ -92,17 +92,7 @@ class LandingPage extends GetWidget<LandingPageController> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Flexible(
-                flex: 2,
-                child: FractionallySizedBox(
-                  heightFactor: 1,
-                  child: Container(
-                    width: double.infinity,
-                    color: Colors.grey[200],
-                    child: portiraitDashboardContainer(context),
-                  ),
-                ),
-              ),
+              portiraitDashboardContainer(context),
               Flexible(
                 flex: DeviceSize.isMobile(context) == true ? 3 : 2,
                 child: Padding(
@@ -629,14 +619,13 @@ class LandingPage extends GetWidget<LandingPageController> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
       children: [
+        SizedBox(height: 20,),
         Container(
           padding: EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 0),
           color: Colors.transparent,
           child: Column(
             children: [
-              SizedBox(
-                height: 30,
-              ),
+
               Container(
                 color: Colors.transparent,
                 width: double.infinity,
@@ -671,11 +660,8 @@ class LandingPage extends GetWidget<LandingPageController> {
         ),
         Container(
           // height: 120,
-          // padding: EdgeInsets.only(left: 20, right: 20),
-          child: Flexible(
-            flex: 1,
-            child: portiraitDashboard(contex),
-          ),
+         padding: EdgeInsets.only(top: 20, bottom: 20),
+          child: portiraitDashboard(contex),
         )
       ],
     );
@@ -2837,6 +2823,9 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
   }
 
   landscapeDashboard(BuildContext context) {
+
+
+
     return AnimatedSwitcher(
       duration: Duration(milliseconds: 600),
       // color: Colors.transparent,
@@ -4104,7 +4093,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                         "allincom".tr,
                         "assets/images/incoming.png",
                         true,
-                        5,
+                       "",
                       ),
                     ),
                   ],
@@ -4126,7 +4115,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                         // "assets/images/notification.png",
                         "assets/images/outgoing.png",
                         true,
-                        9,
+                         "",
                       ),
                     ),
                   ],
@@ -4320,7 +4309,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                         "allincom".tr,
                         "assets/images/incoming.png",
                         true,
-                        5,
+                        "",
                       ),
                     ),
                   ],
@@ -4342,7 +4331,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                         // "assets/images/notification.png",
                         "assets/images/outgoing.png",
                         true,
-                        9,
+                        "",
                       ),
                     ),
                   ],
@@ -4482,7 +4471,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
   }
 
   _buildOtherFoldersRows(BuildContext context, String title, String iconTitle,
-      bool showCount, int count) {
+      bool showCount,   count) {
     Orientation orientation = MediaQuery.of(context).orientation;
     return Container(
       padding: EdgeInsets.only(

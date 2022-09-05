@@ -582,8 +582,68 @@ class DocumentController extends GetxController {
     canOpenDocumentModel?.attachments?.attachments?.forEach((element) {
 
       if (element.isOriginalMail!) {
+        print("element.uRL=>      ${element.uRL}");
         oragnalFileDocpdfUrlFile = element.uRL!;
         isOriginalMailAttachmentsList = element;
+
+        pdfViewerkey = GlobalKey();
+        pdfAndSing.clear();
+        pdfAndSing.add(SfPdfViewer.network(
+            oragnalFileDocpdfUrlFile
+            // oragnalFileDoc??""
+            ,
+            controller: pdfViewerController,
+            // onPageChanged: (v) {
+            //   print(
+            //       "ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+            //   for (int i = 0; i < pdfAndSingannotation.length; i++) {
+            //     if (int.parse(pdfAndSingannotation[i].page!) ==
+            //         v.newPageNumber) {
+            //       List<int> list = pdfAndSingannotation[i].imageByte!.codeUnits;
+            //       final Uint8List? data = Uint8List.fromList(list);
+            //       pdfAndSingannotationShowOrHide.add(
+            //         Positioned(
+            //           top: double.tryParse(pdfAndSingannotation[i].y!),
+            //           left: double.tryParse(pdfAndSingannotation[i].x!),
+            //           child: Image.memory(
+            //             data!,
+            //             fit: BoxFit.fill,
+            //             width: double.tryParse(pdfAndSingannotation[i].width!),
+            //             height:
+            //             double.tryParse(pdfAndSingannotation[i].height!),
+            //           ),
+            //         ),
+            //       );
+            //     }
+            //   }
+            //   // pdfAndSingannotation
+            //   //   v.newPageNumber
+            // }
+          //  key: pdfViewerkey,
+
+
+
+
+
+        ));
+
+
+        Map<dynamic, dynamic> dat = jsonDecode(
+           element.annotations!);
+        print("77777777777777777=>     ${dat["ImageByte"]}");
+        Positioned(
+          top: double.tryParse(dat["Y"]),
+          left: double.tryParse(dat["X"]),
+          child: Image.memory(
+            dat["ImageByte"],
+            fit: BoxFit.fill,
+            width: double.tryParse(dat["Width"]),
+            height:
+            double.tryParse(dat["Height"]),
+          ),
+        );
+        //
+
 
       }
 
@@ -604,16 +664,27 @@ class DocumentController extends GetxController {
     //
     //
     // }
-    pdfViewerkey = GlobalKey();
-    pdfAndSing.clear();
-    pdfAndSing.add(SfPdfViewer.network(
-      oragnalFileDocpdfUrlFile
-      // oragnalFileDoc??""
-      ,
-      controller: pdfViewerController,
-      //  key: pdfViewerkey,
-    ));
 
+
+    for (int i = 0; i < pdfAndSingannotation.length; i++) {
+
+        List<int> list = pdfAndSingannotation[i].imageByte!.codeUnits;
+        final Uint8List? data = Uint8List.fromList(list);
+        pdfAndSingannotationShowOrHide.add(
+          Positioned(
+            top: double.tryParse(pdfAndSingannotation[i].y!),
+            left: double.tryParse(pdfAndSingannotation[i].x!),
+            child: Image.memory(
+              data!,
+              fit: BoxFit.fill,
+              width: double.tryParse(pdfAndSingannotation[i].width!),
+              height:
+              double.tryParse(pdfAndSingannotation[i].height!),
+            ),
+          ),
+        );
+
+    }
     update();
   }
 
@@ -1291,6 +1362,26 @@ class DocumentController extends GetxController {
     print(
         "g2gInfoForExportModel?.toJson()=>  ${g2gInfoForExportModel?.toJson()}");
   }
+//-----------------------------------------------------------------------------
+
+//الي جم من الانبوكس عشان يتنادو لما ندخل الفيل
+//   Get.find<DocumentController>()
+//       .gatAllDataAboutDOC(
+//   context: context,
+//   docId:
+//   correspondences[pos].purposeId!,
+//   correspondenceId: correspondences[pos]
+//       .correspondenceId!,
+//   transferId:
+//   correspondences[pos].transferId!);
+//   Get.find<DocumentController>()
+//       .g2gInfoForExport(
+//   context: context,
+//   documentId: correspondences[pos]
+//       .correspondenceId!);
+
+
+
 
   //-----------------------------------------------------------------------
   genratG2GExportDto() {
@@ -1489,6 +1580,13 @@ showDilog(
         );
       });
 
+
+
+
+
+
+
+
 }
 
 extension UtilListExtension on List {
@@ -1509,6 +1607,24 @@ extension UtilListExtension on List {
       return this;
     }
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 //
 // String _fileName = 'Recording_';

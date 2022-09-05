@@ -11,6 +11,8 @@ import 'package:top_snackbar_flutter/safe_area_values.dart';
 import 'package:top_snackbar_flutter/tap_bounce_container.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../services/apis/basket/add_edit_basket_result _api.dart';
+import '../services/apis/basket/getFetchBasketList_api.dart';
+import '../services/apis/basket/get_gasket_inbox_api.dart';
 import '../services/apis/basket/remove_basket_api.dart';
 import '../services/apis/basket/reorder_baskets_result _api.dart';
 import '../services/apis/dashboard_stats_result_api.dart';
@@ -24,6 +26,8 @@ import '../services/apis/remove_my_routing_settings_api.dart';
 import '../services/apis/remove_my_routing_settings_api.dart';
 import '../services/apis/save_my_routing_settings_api.dart';
 import '../services/json_model/basket/add_edit_basket_flag_model.dart';
+import '../services/json_model/basket/fetch_basket_list_model.dart';
+import '../services/json_model/basket/get_basket_inbox_model.dart';
 import '../services/json_model/basket/remove_basket_request_model.dart';
 import '../services/json_model/basket/reorder_baskets_request_model.dart';
 import '../services/json_model/dashboard_stats_result_model.dart';
@@ -85,7 +89,7 @@ class LandingPageController extends GetxController {
     update();
   }
 
-  getFindRecipientData({required context}) async {
+Future  getFindRecipientData({required context}) async {
     final FindRecipient _findRecipient = FindRecipient(context);
     _findRecipient.data =
     "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
@@ -378,4 +382,55 @@ update();
       print("addFavoriteRecipientsApi");
     });
   }
+
+
+
+
+  FetchBasketListModel? fetchBasketListModel;
+  GetBasketInboxModel? getBasketInboxModel;
+  Future getFetchBasketList({context}) async {
+    print(
+        "getFetchBasketListgetFetchBasketListgetFetchBasketListgetFetchBasketList");
+    GetFetchBasketListApi getFetchBasketListApi =
+    GetFetchBasketListApi(context);
+    getFetchBasketListApi.data =
+    "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+    await getFetchBasketListApi.getData().then((value) {
+      fetchBasketListModel = value as FetchBasketListModel;
+      // fetchBasketListModel?.baskets?.forEach((element) {
+      //   element.orderBy = Random().nextInt(100);
+      // });
+      fetchBasketListModel?.baskets?.sort();
+
+      update();
+      print(fetchBasketListModel?.toJson());
+      print("getFetchBasketList i getit");
+    });
+  }
+
+
+
+  getBasketInbox( {
+    required context, required int id,int pageSize=20,int pageNumber=0}){
+    GetBasketInboxApi getBasketInboxApi=GetBasketInboxApi(context);
+
+
+
+    getBasketInboxApi.data="token=${secureStorage.token()}&basketId=$id&pageNumber=$pageNumber&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+
+
+    getBasketInboxApi.getData().then((value) {
+
+      getBasketInboxModel=value as GetBasketInboxModel;
+
+      if((getBasketInboxModel?.correspondences?.length??0)<pageSize){
+       // haveMoreData=false;
+      }
+
+      update();
+      // print(a.toJson());
+    });
+  }
+
+
 }

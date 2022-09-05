@@ -21,7 +21,7 @@ import '../utility/all_const.dart';
 import '../utility/all_string_const.dart';
 import '../utility/device_size.dart';
 import '../utility/storage.dart';
-import '../utility/utilitie.dart';
+import '../utility/utilitie.dart'as u;
 import '../widgets/custom_button.dart';
 import '../widgets/custom_button_with_icon.dart';
 import '../widgets/custom_inboxes_row.dart';
@@ -146,7 +146,7 @@ class LandingPage extends GetWidget<LandingPageController> {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
-                    returnImageNameBasedOnDirection(
+                    u.returnImageNameBasedOnDirection(
                       "assets/images/landing_background",
                       context,
                       "png",
@@ -631,7 +631,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                 child: Text(
                   "appTitle".tr,
                   style: Theme.of(contex).textTheme.headline1!.copyWith(
-                        fontSize: calculateFontSize(60, contex),
+                        fontSize: u.calculateFontSize(60, contex),
                       ),
                   textAlign: TextAlign.start,
                 ),
@@ -648,7 +648,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       "  ${secureStorage.readSecureData(AllStringConst.FirstName)} ${secureStorage.readSecureData(AllStringConst.LastName)}",
                   style: Theme.of(contex).textTheme.headline2!.copyWith(
                         color: Colors.grey,
-                        fontSize: calculateFontSize(30, contex),
+                        fontSize: u.calculateFontSize(30, contex),
                       ),
                   textAlign: TextAlign.start,
                 ),
@@ -811,7 +811,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                                       .isNotEmpty
                                                   ? DecorationImage(
                                                       image: MemoryImage(
-                                                          dataFromBase64String(controller
+                                                          u.dataFromBase64String(controller
                                                               .favoriteRecipientsResponse!
                                                               .recipients![pos]
                                                               .targetPhotoBs64!)))
@@ -1878,6 +1878,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
           InkWell(
             onTap: ()async {
               await controller.listFavoriteRecipients(context: context);
+              controller.  getFindRecipientData(context: context);
               controller.textEditingControllerTo.clear();
               Get.bottomSheet(
                 Padding(
@@ -1893,6 +1894,11 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                               topRight: Radius.circular(20))),
                       child: Column(
                         children: [
+                          
+                          
+                          Row(children: [InkWell(onTap: (){
+                            Get.back();
+                          },child: Icon(Icons.clear))]),
                           Text("favoritesUsers".tr,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -1977,7 +1983,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                                                     .isNotEmpty
                                                     ? DecorationImage(
                                                     image: MemoryImage(
-                                                        dataFromBase64String(controller
+                                                        u.dataFromBase64String(controller
                                                             .favoriteRecipientsResponse!
                                                             .recipients![pos]
                                                             .targetPhotoBs64!)))
@@ -2334,7 +2340,8 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
           ),
           InkWell(
             onTap: () async {
-              await Get.find<InboxController>().getFetchBasketList();
+           //   await Get.find<InboxController>().getFetchBasketList();
+              await    controller.getFetchBasketList(context: context);
               showDialog(
                 context: context,
                 builder: (ctx) => AlertDialog(
@@ -2345,19 +2352,18 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                         width: MediaQuery.of(context).size.width * .3,
                         color: Colors.grey[200],
                         child: ListView.builder(
-                            itemCount: Get.find<InboxController>()
+                            itemCount: controller
                                 .fetchBasketListModel
                                 ?.baskets
                                 ?.length,
                             itemBuilder: (context, pos) {
                               return InkWell(
                                 onTap: () async {
-                                  print(
-                                      "${Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].iD}");
 
-                                  Get.find<BasketController>().getBasketInbox(
+
+                               controller.getBasketInbox(
                                       context: context,
-                                      id: Get.find<InboxController>()
+                                      id:controller
                                           .fetchBasketListModel!
                                           .baskets![pos]
                                           .iD!,
@@ -2366,26 +2372,26 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
 
                                   Get.back();
 
-                                  Get.toNamed("MyPocketsScreen");
+                                //  Get.toNamed("MyPocketsScreen");
                                 },
                                 child: Card(
                                   elevation: 10,
                                   child: Column(children: [
-                                    Text(Get.find<InboxController>()
+                                    Text(controller
                                             .fetchBasketListModel
                                             ?.baskets?[pos]
                                             .name ??
                                         ""),
-                                    Text(Get.find<InboxController>()
+                                    Text(controller
                                             .fetchBasketListModel
                                             ?.baskets?[pos]
                                             .nameAr ??
                                         ""),
-                                    // Text( "color :${Get.find<InboxController>()
-                                    //     .fetchBasketListModel
-                                    //     ?.baskets?[pos].color}",style: TextStyle( color: HexColor(Get.find<InboxController>()
-                                    //     .fetchBasketListModel
-                                    //     ?.baskets?[pos].color??"#000000"))),
+                                    Text( "color :${Get.find<InboxController>()
+                                        .fetchBasketListModel
+                                        ?.baskets?[pos].color}",style: TextStyle( color: u.HexColor(controller
+                                        .fetchBasketListModel
+                                        ?.baskets?[pos].color??"#000000"))),
 
                                     GestureDetector(
                                         onTap: () {
@@ -2791,7 +2797,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                     children: [
                       Image(
                         image: AssetImage(
-                          returnImageNameBasedOnOppositeDirection(
+                          u.returnImageNameBasedOnOppositeDirection(
                               "assets/images/arrow", contex, "png"),
                         ),
                         fit: BoxFit.contain,
@@ -2874,22 +2880,22 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                             Flexible(
                               flex: 3,
                               child: Text(
-                                calculateDate("dd", 'en'),
+                               u. calculateDate("dd", 'en'),
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline3!
                                     .copyWith(
                                         fontSize:
-                                            calculateFontSize(65, context)),
+                                            u.calculateFontSize(65, context)),
                                 textAlign: TextAlign.center,
                               ),
                             ),
                             Flexible(
                               flex: 2,
                               child: Text(
-                                calculateDate("MMMM", getLocaleCode(context)) +
+                                u.calculateDate("MMMM", u.getLocaleCode(context)) +
                                     " " +
-                                    calculateDate("yyyy", 'en'),
+                                   u. calculateDate("yyyy", 'en'),
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline2!
@@ -2931,7 +2937,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                             Flexible(
                               flex: 3,
                               child: Text(
-                                calculateDate("hh:mm", 'en'),
+                                u.calculateDate("hh:mm", 'en'),
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline3!
@@ -2942,7 +2948,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                             Flexible(
                               flex: 2,
                               child: Text(
-                                " " + calculateDate("a", 'en'),
+                                " " + u.calculateDate("a", 'en'),
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline3!
@@ -3012,7 +3018,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                                         color: Colors.grey,
                                         // fontFamily: "Bahij_light",
                                         fontSize:
-                                            calculateFontSize(16, context)),
+                                            u.calculateFontSize(16, context)),
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -3077,7 +3083,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                                     .copyWith(
                                         color: Colors.grey,
                                         fontSize:
-                                            calculateFontSize(16, context)),
+                                            u.calculateFontSize(16, context)),
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -3160,15 +3166,15 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                               child: Text(
                                 "myTransfersInMonth".tr +
                                     " " +
-                                    calculateDate(
-                                        'MMMM', getLocaleCode(context)),
+                                    u.calculateDate(
+                                        'MMMM', u.getLocaleCode(context)),
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline2!
                                     .copyWith(
                                         color: Colors.grey,
                                         fontSize:
-                                            calculateFontSize(16, context)),
+                                            u.calculateFontSize(16, context)),
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -3235,7 +3241,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                                     .copyWith(
                                         color: Colors.grey,
                                         fontSize:
-                                            calculateFontSize(16, context)),
+                                          u.  calculateFontSize(16, context)),
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -3515,7 +3521,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                                         color: Colors.grey,
                                         // fontFamily: "Bahij_light",
                                         fontSize:
-                                            calculateFontSize(30, context),
+                                            u.calculateFontSize(30, context),
                                       ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -3533,7 +3539,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                                       .copyWith(
                                         fontFamily: "Bahij_bold",
                                         fontSize:
-                                            calculateFontSize(80, context),
+                                            u.calculateFontSize(80, context),
                                       ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -3589,7 +3595,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                                       .copyWith(
                                         color: Colors.grey,
                                         fontSize:
-                                            calculateFontSize(30, context),
+                                            u.calculateFontSize(30, context),
                                       ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -3607,7 +3613,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                                       .copyWith(
                                         fontFamily: "Bahij_bold",
                                         fontSize:
-                                            calculateFontSize(80, context),
+                                            u.calculateFontSize(80, context),
                                       ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -3670,15 +3676,15 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                                 child: Text(
                                   "myTransfersInMonth".tr +
                                       " " +
-                                      calculateDate(
-                                          'MMMM', getLocaleCode(context)),
+                                   u.   calculateDate(
+                                          'MMMM', u.getLocaleCode(context)),
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline2!
                                       .copyWith(
                                         color: Colors.grey,
                                         fontSize:
-                                            calculateFontSize(30, context),
+                                           u. calculateFontSize(30, context),
                                       ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -3696,7 +3702,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                                       .copyWith(
                                         fontFamily: "Bahij_bold",
                                         fontSize:
-                                            calculateFontSize(80, context),
+                                            u.calculateFontSize(80, context),
                                       ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -3752,7 +3758,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                                       .copyWith(
                                         color: Colors.grey,
                                         fontSize:
-                                            calculateFontSize(30, context),
+                                            u.calculateFontSize(30, context),
                                       ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -3769,7 +3775,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                                       .copyWith(
                                         fontFamily: "Bahij_bold",
                                         fontSize:
-                                            calculateFontSize(40, context),
+                                            u.calculateFontSize(40, context),
                                       ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -3999,7 +4005,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
       height: MediaQuery.of(context).size.height,
       alignment: Alignment.centerRight,
       decoration: BoxDecoration(
-        color: createMaterialColor(Color.fromRGBO(255, 255, 255, 0.8)),
+        color: u.createMaterialColor(Color.fromRGBO(255, 255, 255, 0.8)),
       ),
       child: SingleChildScrollView(
         child: Column(
@@ -4175,7 +4181,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                           padding: const EdgeInsets.only(bottom: 20),
                           child: Image(
                             image: AssetImage(
-                              returnImageNameBasedOnOppositeDirection(
+                              u.returnImageNameBasedOnOppositeDirection(
                                   "assets/images/arrow", context, "png"),
                             ),
                           ),
@@ -4207,12 +4213,12 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
       padding: EdgeInsets.only(
           left: 60,
           right: 60,
-          top: calculateHeight(100, context),
-          bottom: calculateHeight(80, context)),
+          top: u.calculateHeight(100, context),
+          bottom: u.calculateHeight(80, context)),
       child: Container(
         alignment: Alignment.centerRight,
         decoration: BoxDecoration(
-          color: createMaterialColor(Color.fromRGBO(255, 255, 255, 0.8)),
+          color: u.createMaterialColor(Color.fromRGBO(255, 255, 255, 0.8)),
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(6),
             topRight: Radius.circular(6),
@@ -4382,7 +4388,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
       padding: EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 0),
       color: Colors.transparent,
       width: double.infinity,
-      height: calculateHeight(
+      height: u.calculateHeight(
           orientation == Orientation.landscape ? 50 : 40, context),
       child: Text(
         title,
@@ -4399,7 +4405,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
     return Container(
       padding: EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 0),
       width: double.infinity,
-      height: calculateHeight(80, content),
+      height: u.calculateHeight(80, content),
       color: Colors.transparent,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -4455,7 +4461,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
             flex: 2,
             child: Image(
               image: AssetImage(
-                returnImageNameBasedOnOppositeDirection(
+                u.returnImageNameBasedOnOppositeDirection(
                     "assets/images/arrow", content, "png"),
               ),
               fit: BoxFit.contain,
@@ -4478,7 +4484,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
           top: orientation == Orientation.landscape ? 20 : 0,
           bottom: 0),
       width: double.infinity,
-      height: calculateHeight(
+      height: u.calculateHeight(
           orientation == Orientation.landscape ? 80 : 60, context),
       color: Colors.transparent,
       child: Row(
@@ -4538,7 +4544,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
             flex: 2,
             child: Image(
               image: AssetImage(
-                returnImageNameBasedOnOppositeDirection(
+                u.returnImageNameBasedOnOppositeDirection(
                     "assets/images/arrow", context, "png"),
               ),
               fit: BoxFit.contain,

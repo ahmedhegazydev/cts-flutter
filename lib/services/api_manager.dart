@@ -15,7 +15,7 @@ import 'abstract_json_resource.dart';
 import 'dio_singleton.dart';
 
 abstract class ApiManager {
-  BuildContext? context;
+  late BuildContext? context;
 
   // late Future<String> baseUrl;
   // late SettingItem settingItem;
@@ -61,7 +61,9 @@ abstract class ApiManager {
     await dioSingleton.dio
         .get(checkIfSavedSettingsBasUrl(storageBaseUrl), queryParameters: data)
         .then((value) {
-      // Navigator.pop(context!);
+      if (context != null) {
+        Navigator.pop(context!);
+      }
       // Get.back();
       if (value.data["Status"] == 0) {
         a.Get.snackbar("Error".tr, "${value.data["ErrorMessage"]}");
@@ -109,8 +111,9 @@ abstract class ApiManager {
             //     }),
             )
         .then((value) {
-      // Navigator.pop(context!);
-      // Get.back();
+      if (context != null) {
+        Navigator.pop(context!);
+      }      // Get.back();
       if (value.data["Status"] == 0) {
         a.Get.snackbar("Error".tr, "${value.data["ErrorMessage"]}");
       } else {

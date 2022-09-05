@@ -105,6 +105,11 @@ class _RestartWidgetState extends State<RestartWidget> {
   }
 }
 
+class NavigationService {
+  static GlobalKey<NavigatorState> navigatorKey =
+  GlobalKey<NavigatorState>();
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -113,6 +118,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<MController>(builder: (logic) {
       return GetMaterialApp(
+        // navigatorKey: NavigationService.navigatorKey, // set property
         title: 'CTS',
         locale: getSavedLocale(),
         translations: LocalizationService(),
@@ -142,10 +148,10 @@ class MyApp extends StatelessWidget {
         ), initialRoute: "/LoginPage",
         getPages: [
           GetPage(name: "/LoginPage",
+            binding: LoginBinding(),
             page: () => LoginPage(),
-              binding: LoginBinding(),
-              // LandingPage(),
-              // InboxPage(),
+            // page: () =>  LandingPage(),
+            // page: () =>  InboxPage(),
       middlewares: [AuthMiddleWare()],
           ),
 

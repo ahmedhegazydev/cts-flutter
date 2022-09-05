@@ -798,7 +798,7 @@ class DocumentController extends GetxController {
     update();
   }
 
-  getFindRecipientData({required context}) {
+  Future getFindRecipientData({context}) async {
     final FindRecipient _findRecipient = FindRecipient(context);
     _findRecipient.data =
         "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";

@@ -10,6 +10,7 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/safe_area_values.dart';
 import 'package:top_snackbar_flutter/tap_bounce_container.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import '../main.dart';
 import '../services/apis/basket/add_edit_basket_result _api.dart';
 import '../services/apis/basket/remove_basket_api.dart';
 import '../services/apis/basket/reorder_baskets_result _api.dart';
@@ -58,7 +59,6 @@ class LandingPageController extends GetxController {
   List<Destination> selectFavusers = [];
   Destination? toSaveMyRoutingSettings;
 
-
   Destination? to;
 
 
@@ -85,7 +85,7 @@ class LandingPageController extends GetxController {
     update();
   }
 
-  getFindRecipientData({required context}) async {
+  Future getFindRecipientData({required context}) async {
     final FindRecipient _findRecipient = FindRecipient(context);
     _findRecipient.data =
     "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
@@ -135,23 +135,32 @@ update();
   }
 
 
+  @override
+  void onInit() {
+    super.onInit();
+
+  }
 
 
   @override
   void onReady() {
     super.onReady();
-   //getDashboardStats();
+    // if(context == null){
+    //   context = NavigationService.navigatorKey.currentContext;
+    // }
+      //getDashboardStats();
+      _logindata = secureStorage.readSecureJsonData(AllStringConst.LogInData);
+      data = LoginModel.fromJson(_logindata!);
 
-    _logindata = secureStorage.readSecureJsonData(AllStringConst.LogInData);
-    data = LoginModel.fromJson(_logindata!);
-    // getFindRecipientData();
-    getFindRecipientData(context: context);
-    //Get.find<SearchController>().getAllData();
-    Get.put<DocumentController>(DocumentController()).getFindRecipientData(context: context);
+      //Get.find<SearchController>().getAllData();
+      // getFindRecipientData();
+
+    //context: null && not required ->  for not showing progress dialog
+    getFindRecipientData(context: null);
+    listFavoriteRecipients(context: null);
+    Get.put<DocumentController>(DocumentController()).getFindRecipientData(context: null);
+
     getDashboardStatsLocalJson();
-
-
-    listFavoriteRecipients(context: context);
   }
 
   String userName() {

@@ -1,10 +1,12 @@
+import 'package:cts/controllers/landing_page_controller.dart';
 import 'package:get/get.dart';
- 
+
 import '../controllers/login_controller.dart';
 
 class LoginBinding extends Bindings {
   @override
   void dependencies() {
-     Get.put(  LoginController()) ;
+    Get.put(LoginController()) ;
+    // Get.put(LandingPageController());
   }
 }

@@ -53,11 +53,13 @@ class LandingPage extends GetWidget<LandingPageController> {
   InboxController inboxController = Get.put<InboxController>(InboxController());
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     controller.context = context;
 
     inboxController.context = context;
     Orientation orientation = MediaQuery.of(context).orientation;
+
+     // controller.getFindRecipientData(context: context);
 
     print(
         "the Token Is => ${secureStorage.readSecureData(AllStringConst.Token)}");
@@ -4477,6 +4479,7 @@ class LandingPage extends GetWidget<LandingPageController> {
     Get.find<InboxController>().isAllOrNot=false;
     Get.find<InboxController>().inboxId = boxid;
     Get.find<InboxController>().nodeId = nodeId;
+    Get.find<InboxController>().context = context;
     Get.find<InboxController>().getAllData(context: context);
 
     Get.toNamed("/InboxPage");

@@ -241,8 +241,8 @@ int?nodeId=0;
   }
 
   getAllData({required context}) {
-    final GetCorrespondencesApi _correspondencesApi =
-        GetCorrespondencesApi(context);
+    context = null;
+    // final GetCorrespondencesApi _correspondencesApi = GetCorrespondencesApi(context);
     getCorrespondencesData(
         context: context,
         inboxId: inboxId,
@@ -313,7 +313,7 @@ int?nodeId=0;
   }
 
   void getCorrespondencesData(
-      {required context,
+      {context,
       required int inboxId,
       int pageSize = 20,
       bool showThumbnails = false}) {

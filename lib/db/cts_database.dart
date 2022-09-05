@@ -34,7 +34,8 @@ class CtsSettingsDatabase {
 CREATE TABLE $tableNotes ( 
   ${SettingsFields.id} $idType, 
   ${SettingsFields.baseUrl} $textType,
-  ${SettingsFields.language} $textType
+  ${SettingsFields.language} $textType, 
+  ${SettingsFields.color} $textType
   )
 ''');
   }

@@ -1,4 +1,5 @@
 import 'package:cts/data/SettingsFields.dart';
+import 'package:cts/utility/Extenstions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
@@ -344,6 +345,7 @@ class LoginPage extends GetWidget<LoginController> {
                                                   final settings = SettingItem(
                                                     baseUrl: controller.baseUrl.text,
                                                     language: "ar",
+                                                    color: ""
                                                   );
                                         await saveSettingsIntoDatabase(settings);
 
@@ -426,13 +428,36 @@ class LoginPage extends GetWidget<LoginController> {
                                                 const BorderRadius.all(
                                                     Radius.circular(6))),
                                         child: ElevatedButton(
-                                          onPressed: () {
+                                          onPressed: () async {
                                             controller.secureStorage
                                                 .writeSecureData(
                                                     AllStringConst.AppColor,
                                                     Get.find<MController>()
                                                         .appcolor
                                                         .value);
+
+                                            final settingObj = SettingItem(
+                                                baseUrl: controller.baseUrl.text,
+                                                language: "ar",
+                                                color: pickerColor.toHex()
+                                            );
+                                            List<SettingItem> settingItems = await CtsSettingsDatabase.instance.readAllNotes();
+                                            if(settingItems.isEmpty){
+                                              // final settings = SettingItem(
+                                              //   baseUrl: controller.baseUrl.text,
+                                              //   language: controller.baseUrl.text,
+                                              // );
+                                              await CtsSettingsDatabase.instance.create(settingObj);
+
+                                            }else{
+                                              var settingItem = settingItems[0];
+                                              settingItem = settingItem.copy(
+                                                // baseUrl:  settingObj.baseUrl,
+                                                // language: settingObj.language,
+                                                color: settingObj.color,
+                                              );
+                                              await CtsSettingsDatabase.instance.update(settingItem);
+                                            }
                                             Navigator.of(context).pop();
                                           },
                                           child: Text(
@@ -490,6 +515,7 @@ class LoginPage extends GetWidget<LoginController> {
       settingItem = settingItem.copy(
         baseUrl:  settingObj.baseUrl,
       language: settingObj.language,
+      color: settingObj.color,
       );
       await CtsSettingsDatabase.instance.update(settingItem);
     }
@@ -622,8 +648,9 @@ class LoginPage extends GetWidget<LoginController> {
   Widget buildColorPicker() {
     return ColorPicker(
       pickerColor: pickerColor,
-      onColorChanged: (Color color) {
+      onColorChanged: (Color color) async {
         Get.find<MController>().setAppColor(color);
+        Get.find<MController>().setChangeColorImmediately(false);
         print(color);
         pickerColor = color;
       },

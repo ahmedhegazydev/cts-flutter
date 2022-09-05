@@ -2389,7 +2389,7 @@ class InboxPage extends GetWidget<InboxController> {
                 "allincom".tr,
                 "assets/images/incoming.png",
                 true,
-                05,() {
+                "",() {
               controller.nodeId=0;
               Get.find<InboxController>().isAllOrNot=true;
               Get.find<InboxController>().getAllCorrespondencesData(context: context, inboxId: 1);
@@ -2401,7 +2401,7 @@ class InboxPage extends GetWidget<InboxController> {
                 "allout".tr,
                 "assets/images/outgoing.png",
                 false,
-                19
+                 ""
               ,() {
              controller.nodeId=0;
               Get.find<InboxController>().isAllOrNot=true;
@@ -2452,6 +2452,7 @@ class InboxPage extends GetWidget<InboxController> {
                   //   .inboxCategories![pos].value!.nodeId==controller.nodeId?Colors.red:Colors.orange),
                   child: GestureDetector(
                     onTap: () {
+
                       controller.nodeId = Get.find<LandingPageController>()
                           .dashboardStatsResultModel!
                           .inboxCategories![pos]
@@ -2628,6 +2629,18 @@ controller.isAllOrNot=false;
                       controller.nodeId = e.value!.nodeId;
                       controller.getCorrespondencesData(
                           context: context, inboxId: controller.inboxId);
+
+
+
+                      // controller.nodeId = Get.find<LandingPageController>()
+                      //     .dashboardStatsResultModel!
+                      //     .inboxCategories![pos]
+                      //     .value!
+                      //     .nodeId;
+                      controller.isAllOrNot=false;
+                      // controller.getCorrespondencesData(
+                      //     context: context, inboxId: controller.inboxId);
+                      controller.update();
                     },
                     // onTap:,
                     child: SizedBox(
@@ -2755,7 +2768,7 @@ controller.isAllOrNot=false;
   }
 
   _buildSideMenuFolders(BuildContext context, String title, String iconTitle,
-      bool showCount, int count, VoidCallback function) {
+      bool showCount,   count, VoidCallback function) {
     return InkWell(onTap:function ,
       child: Container(
         padding: const EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 0),

@@ -3763,7 +3763,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                                       .copyWith(
                                         color: Colors.grey,
                                         fontSize:
-                                            calculateFontSize(38, context),
+                                            calculateFontSize(30, context),
                                       ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -3780,7 +3780,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                                       .copyWith(
                                         fontFamily: "Bahij_bold",
                                         fontSize:
-                                            calculateFontSize(47, context),
+                                            calculateFontSize(40, context),
                                       ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -3795,206 +3795,206 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
               ),
             ),
           ),
-          Flexible(
-            flex: 2,
-            child: Container(
-              color: Colors.transparent,
-              padding: EdgeInsets.all(10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Flexible(
-                    flex: 1,
-                    child: Container(
-                      height: 65,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(6)
-                            // topLeft: Radius.circular(6),
-                            // topRight: Radius.circular(6),
-                            // bottomLeft: Radius.circular(6),
-                            // bottomRight: Radius.circular(6)
-                            ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.25),
-                            spreadRadius: 6,
-                            blurRadius: 6,
-                            offset: Offset(0, 0),
-                          ),
-                        ],
-                      ),
-                      child: GestureDetector(
-                        onTap: () {
-                          Get.find<InboxController>().isAllOrNot = true;
-                          Get.find<InboxController>().getAllCorrespondencesData(
-                              context: context, inboxId: 1);
-
-                          Get.toNamed("/InboxPage");
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Spacer(flex: 2),
-                            const Flexible(
-                              flex: 2,
-                              child: Image(
-                                image: AssetImage(
-                                  'assets/images/incoming.png',
-                                ),
-                                fit: BoxFit.contain,
-                                width: double.infinity,
-                                height: double.infinity,
-                                color: Colors.grey,
-                              ),
-                            ),
-                            const Spacer(flex: 1),
-                            Flexible(
-                              flex: 10,
-                              child: Container(
-                                width: double.infinity,
-                                child: Text(
-                                  // "flagged".tr,
-                                  "allincom".tr,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline2!
-                                      .copyWith(
-                                          color: Colors.grey,
-                                          fontSize:
-                                              calculateFontSize(16, context)),
-                                  textAlign: TextAlign.start,
-                                ),
-                              ),
-                            ),
-                            Flexible(
-                              flex: 3,
-                              child: Container(
-                                width: double.infinity,
-                                child: Text(
-                                  "5",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline3!
-                                      .copyWith(
-                                        fontSize: 22,
-                                        color: createMaterialColor(
-                                          Color.fromRGBO(247, 148, 29, 1),
-                                        ),
-                                      ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ),
-                            Spacer(flex: 2)
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: Container(
-                      height: 65,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(6),
-                          topRight: Radius.circular(6),
-                          bottomLeft: Radius.circular(6),
-                          bottomRight: Radius.circular(6),
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.25),
-                            spreadRadius: 6,
-                            blurRadius: 6,
-                            offset: Offset(0, 0),
-                          ),
-                        ],
-                      ),
-                      child: GestureDetector(
-                        onTap: () {
-                          Get.find<InboxController>().isAllOrNot = true;
-                          Get.find<InboxController>().getAllCorrespondencesData(
-                              context: context, inboxId: 5);
-
-                          Get.toNamed("/InboxPage");
-                          //    openInbox( context: context,boxid: 5);
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Spacer(flex: 2),
-                            Flexible(
-                              flex: 2,
-                              child: Image(
-                                image: AssetImage(
-                                  // 'assets/images/notification.png',
-                                  'assets/images/outgoing.png',
-                                ),
-                                fit: BoxFit.contain,
-                                // width: double.infinity,
-                                // height: double.infinity,
-                                color: Colors.grey,
-                              ),
-                            ),
-                            Spacer(flex: 1),
-                            Flexible(
-                              flex: 10,
-                              child: Container(
-                                width: double.infinity,
-                                child: Text(
-                                  "صادر للكل".tr,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline2!
-                                      .copyWith(
-                                          color: Colors.grey,
-                                          fontSize:
-                                              calculateFontSize(20, context)),
-                                  textAlign: TextAlign.start,
-                                ),
-                              ),
-                            ),
-                            Flexible(
-                              flex: 3,
-                              child: Container(
-                                width: double.infinity,
-                                child: Text(
-                                  "9",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline3!
-                                      .copyWith(
-                                        fontSize: 22,
-                                        color: createMaterialColor(
-                                          Color.fromRGBO(247, 148, 29, 1),
-                                        ),
-                                      ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ),
-                            Spacer(flex: 2)
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          // Flexible(
+          //   flex: 2,
+          //   child: Container(
+          //     color: Colors.transparent,
+          //     padding: EdgeInsets.all(10),
+          //     child: Column(
+          //       mainAxisAlignment: MainAxisAlignment.center,
+          //       crossAxisAlignment: CrossAxisAlignment.center,
+          //       mainAxisSize: MainAxisSize.max,
+          //       children: [
+          //         Flexible(
+          //           flex: 1,
+          //           child: Container(
+          //             height: 65,
+          //             decoration: BoxDecoration(
+          //               color: Colors.white,
+          //               borderRadius: BorderRadius.all(Radius.circular(6)
+          //                   // topLeft: Radius.circular(6),
+          //                   // topRight: Radius.circular(6),
+          //                   // bottomLeft: Radius.circular(6),
+          //                   // bottomRight: Radius.circular(6)
+          //                   ),
+          //               boxShadow: [
+          //                 BoxShadow(
+          //                   color: Colors.grey.withOpacity(0.25),
+          //                   spreadRadius: 6,
+          //                   blurRadius: 6,
+          //                   offset: Offset(0, 0),
+          //                 ),
+          //               ],
+          //             ),
+          //             child: GestureDetector(
+          //               onTap: () {
+          //                 Get.find<InboxController>().isAllOrNot = true;
+          //                 Get.find<InboxController>().getAllCorrespondencesData(
+          //                     context: context, inboxId: 1);
+          //
+          //                 Get.toNamed("/InboxPage");
+          //               },
+          //               child: Row(
+          //                 mainAxisAlignment: MainAxisAlignment.center,
+          //                 crossAxisAlignment: CrossAxisAlignment.center,
+          //                 mainAxisSize: MainAxisSize.max,
+          //                 children: [
+          //                   Spacer(flex: 2),
+          //                   const Flexible(
+          //                     flex: 2,
+          //                     child: Image(
+          //                       image: AssetImage(
+          //                         'assets/images/incoming.png',
+          //                       ),
+          //                       fit: BoxFit.contain,
+          //                       width: double.infinity,
+          //                       height: double.infinity,
+          //                       color: Colors.grey,
+          //                     ),
+          //                   ),
+          //                   const Spacer(flex: 1),
+          //                   // Flexible(
+          //                   //   flex: 10,
+          //                   //   child: Container(
+          //                   //     width: double.infinity,
+          //                   //     child: Text(
+          //                   //       // "flagged".tr,
+          //                   //       "allincom".tr,
+          //                   //       style: Theme.of(context)
+          //                   //           .textTheme
+          //                   //           .headline2!
+          //                   //           .copyWith(
+          //                   //               color: Colors.grey,
+          //                   //               fontSize:
+          //                   //                   calculateFontSize(16, context)),
+          //                   //       textAlign: TextAlign.start,
+          //                   //     ),
+          //                   //   ),
+          //                   // ),
+          //                   Flexible(
+          //                     flex: 3,
+          //                     child: Container(
+          //                       width: double.infinity,
+          //                       child: Text(
+          //                         "5",
+          //                         style: Theme.of(context)
+          //                             .textTheme
+          //                             .headline3!
+          //                             .copyWith(
+          //                               fontSize: 22,
+          //                               color: createMaterialColor(
+          //                                 Color.fromRGBO(247, 148, 29, 1),
+          //                               ),
+          //                             ),
+          //                         textAlign: TextAlign.center,
+          //                       ),
+          //                     ),
+          //                   ),
+          //                   Spacer(flex: 2)
+          //                 ],
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          //         SizedBox(
+          //           height: 20,
+          //         ),
+          //         Flexible(
+          //           flex: 1,
+          //           child: Container(
+          //             height: 65,
+          //             decoration: BoxDecoration(
+          //               color: Colors.white,
+          //               borderRadius: BorderRadius.only(
+          //                 topLeft: Radius.circular(6),
+          //                 topRight: Radius.circular(6),
+          //                 bottomLeft: Radius.circular(6),
+          //                 bottomRight: Radius.circular(6),
+          //               ),
+          //               boxShadow: [
+          //                 BoxShadow(
+          //                   color: Colors.grey.withOpacity(0.25),
+          //                   spreadRadius: 6,
+          //                   blurRadius: 6,
+          //                   offset: Offset(0, 0),
+          //                 ),
+          //               ],
+          //             ),
+          //             child: GestureDetector(
+          //               onTap: () {
+          //                 Get.find<InboxController>().isAllOrNot = true;
+          //                 Get.find<InboxController>().getAllCorrespondencesData(
+          //                     context: context, inboxId: 5);
+          //
+          //                 Get.toNamed("/InboxPage");
+          //                 //    openInbox( context: context,boxid: 5);
+          //               },
+          //               child: Row(
+          //                 mainAxisAlignment: MainAxisAlignment.center,
+          //                 crossAxisAlignment: CrossAxisAlignment.center,
+          //                 mainAxisSize: MainAxisSize.max,
+          //                 children: [
+          //                   Spacer(flex: 2),
+          //                   Flexible(
+          //                     flex: 2,
+          //                     child: Image(
+          //                       image: AssetImage(
+          //                         // 'assets/images/notification.png',
+          //                         'assets/images/outgoing.png',
+          //                       ),
+          //                       fit: BoxFit.contain,
+          //                       // width: double.infinity,
+          //                       // height: double.infinity,
+          //                       color: Colors.grey,
+          //                     ),
+          //                   ),
+          //                   Spacer(flex: 1),
+          //                   Flexible(
+          //                     flex: 10,
+          //                     child: Container(
+          //                       width: double.infinity,
+          //                       child: Text(
+          //                         "allout".tr,
+          //                         style: Theme.of(context)
+          //                             .textTheme
+          //                             .headline2!
+          //                             .copyWith(
+          //                                 color: Colors.grey,
+          //                                 fontSize:
+          //                                     calculateFontSize(20, context)),
+          //                         textAlign: TextAlign.start,
+          //                       ),
+          //                     ),
+          //                   ),
+          //                   Flexible(
+          //                     flex: 3,
+          //                     child: Container(
+          //                       width: double.infinity,
+          //                       child: Text(
+          //                         "9",
+          //                         style: Theme.of(context)
+          //                             .textTheme
+          //                             .headline3!
+          //                             .copyWith(
+          //                               fontSize: 22,
+          //                               color: createMaterialColor(
+          //                                 Color.fromRGBO(247, 148, 29, 1),
+          //                               ),
+          //                             ),
+          //                         textAlign: TextAlign.center,
+          //                       ),
+          //                     ),
+          //                   ),
+          //                   Spacer(flex: 2)
+          //                 ],
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
           SizedBox(
             width: 10,
           ),
@@ -4004,6 +4004,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
   }
 
   portiraitDataTable(BuildContext context) {
+
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
@@ -4089,11 +4090,16 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                   children: [
                     TableRowInkWell(
                       onTap: () {
-                        //    openInbox(context);
+                        Get.find<InboxController>().nodeId = 0;
+                        Get.find<InboxController>().isAllOrNot = true;
+                        Get.find<InboxController>().getAllCorrespondencesData(
+                            context: context, inboxId: 1);
+
+                        Get.toNamed("/InboxPage");
                       },
                       child: _buildOtherFoldersRows(
                         context,
-                        "وارد للكل".tr,
+                        "allincom".tr,
                         "assets/images/incoming.png",
                         true,
                         5,
@@ -4105,7 +4111,11 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                   children: [
                     TableRowInkWell(
                       onTap: () {
-                        //openInbox(context);
+                        Get.find<InboxController>().nodeId = 0;
+                        Get.find<InboxController>().isAllOrNot = true;
+                        Get.find<InboxController>().getAllCorrespondencesData(
+                            context: context, inboxId: 5);
+                        Get.toNamed("/InboxPage");
                       },
                       child: _buildOtherFoldersRows(
                         context,

@@ -289,7 +289,7 @@ int?nodeId=0;
     recording = true;
     update(["id"]);
 
-    await record?.startRecorder(codec: _codec, toFile: _directoryPath);
+    await record.startRecorder(codec: _codec, toFile: _directoryPath);
   }
   Future stopMathod()async{
     recording = false;

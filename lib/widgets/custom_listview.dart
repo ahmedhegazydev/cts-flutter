@@ -5203,7 +5203,7 @@ class CustomListView extends StatelessWidget {
                                                               voiceNoteExt:
                                                                   null,
                                                               voiceNotePrivate:
-                                                                  null);
+                                                                  false);
                                                         }
 
                                                         print(v.toMap());

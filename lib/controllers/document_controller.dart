@@ -617,7 +617,7 @@ class DocumentController extends GetxController {
 
         log(element.annotations!);
         Map<String, dynamic> dat = jsonDecode(element.annotations!);
-        print("77777777777777777=>     ${dat.values}");
+        print("77777777777777777=>     ${dat.values.toList()[0]}");
 
         ViewerAnnotation daa=      ViewerAnnotation.fromMap(dat)      ;
          print("88888888=>     ${daa.toMap()}");

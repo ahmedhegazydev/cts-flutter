@@ -2771,9 +2771,9 @@ controller.isAllOrNot=false;
       bool showCount,   count, VoidCallback function) {
     return InkWell(onTap:function ,
       child: Container(
-        padding: const EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 0),
+        padding: const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 0),
         width: double.infinity,
-        height: calculateHeight(80, context),
+        height: calculateHeight(55, context),
         color: Colors.transparent,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -2782,13 +2782,13 @@ controller.isAllOrNot=false;
           children: [
             Container(
               color: Colors.transparent,
+              width: 25,
+              height: 25,
               child: Image(
                 image: AssetImage(
                   iconTitle,
                 ),
                 fit: BoxFit.contain,
-                width: 30,
-                height: double.infinity,
               ),
             ),
             Container(

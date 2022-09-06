@@ -4973,7 +4973,23 @@ class CustomListView extends StatelessWidget {
                                               showDialog(
                                                 context: context,
                                                 builder: (ctx) => AlertDialog(
-                                                  title: Text(" "),
+                                                  title: Row(
+                                                    children: [ Image.asset(
+                                                      'assets/images/refer.png'
+                                                      //
+                                                      ,
+                                                      height:
+                                                      20,
+                                                      width: 20,
+                                                    ),SizedBox(width: 16,),
+                                                      Text("Reply".tr,style: TextStyle(fontSize: 30,color: Theme.of(context).colorScheme.primary)),
+                                                   Spacer(), InkWell(onTap: (){
+
+                                                        Navigator.of(ctx).pop();
+
+                                                      },child: Image.asset("assets/images/close_button.png",height:24,width: 24,))
+                                                    ],
+                                                  ),
                                                   content: Padding(
                                                     padding:
                                                         const EdgeInsets.all(
@@ -4983,7 +4999,7 @@ class CustomListView extends StatelessWidget {
                                                           MediaQuery.of(context)
                                                                   .size
                                                                   .width *
-                                                              .8,
+                                                              .5,
                                                       color: Colors.grey[200],
                                                       child:
                                                           SingleChildScrollView(
@@ -4993,7 +5009,29 @@ class CustomListView extends StatelessWidget {
                                                                   crossAxisAlignment:
                                                                       CrossAxisAlignment
                                                                           .center,
-                                                                  children: [
+                                                                  children: [    Text(
+                                                                    "name".tr,
+                                                                    style: Theme.of(
+                                                                        context)
+                                                                        .textTheme
+                                                                        .headline3!
+                                                                        .copyWith(
+                                                                      color:
+                                                                      createMaterialColor(
+                                                                        const Color.fromRGBO(77, 77, 77, 1),
+                                                                      ),
+                                                                      fontSize:
+                                                                      15,
+                                                                    ),
+                                                                    textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                    overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                  ),  SizedBox(
+                                                                    width: 8,
+                                                                  ),
                                                                     Padding(
                                                                       padding:
                                                                           const EdgeInsets.all(
@@ -5001,31 +5039,14 @@ class CustomListView extends StatelessWidget {
                                                                       child: Text(
                                                                           correspondences[pos].fromUser ??
                                                                               ""),
+                                                                    ),Spacer(),
+                                                                    CircleAvatar(
+                                                                      backgroundImage: AssetImage("assets/images/pr.jpg"),
+                                                                      backgroundColor: Colors.cyan,
+                                                                      maxRadius: 30,
+                                                                      minRadius: 30,
                                                                     ),
-                                                                    SizedBox(
-                                                                      width: 8,
-                                                                    ),
-                                                                    Text(
-                                                                      "name".tr,
-                                                                      style: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .headline3!
-                                                                          .copyWith(
-                                                                            color:
-                                                                                createMaterialColor(
-                                                                              const Color.fromRGBO(77, 77, 77, 1),
-                                                                            ),
-                                                                            fontSize:
-                                                                                15,
-                                                                          ),
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .center,
-                                                                      overflow:
-                                                                          TextOverflow
-                                                                              .ellipsis,
-                                                                    ),
+SizedBox(width: 8,)
                                                                   ]),
                                                               SizedBox(
                                                                 height: 4,
@@ -5046,8 +5067,7 @@ class CustomListView extends StatelessWidget {
                                                                         height: 40,
                                                                         color: Colors.grey[300],
                                                                         child: Row(
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.spaceBetween,
+                                                                         
                                                                           children: [
                                                                             GestureDetector(
                                                                               onTap: () async {
@@ -5088,14 +5108,14 @@ class CustomListView extends StatelessWidget {
                                                                                       return Icon(Get.find<InboxController>().recording ? Icons.stop : Icons.mic);
                                                                                     }),
                                                                               ),
-                                                                            ),
+                                                                            ),Expanded(child: Container(color:  Theme.of(context).colorScheme.primary,height: 1,)),
                                                                             Padding(
                                                                               padding: const EdgeInsets.all(8.0),
                                                                               child: InkWell(
                                                                                 onTap: () {
                                                                                   Get.find<InboxController>().playMathod();
                                                                                 },
-                                                                                child: Icon(Icons.play_arrow),
+                                                                                child: Icon(Icons.play_arrow,color:  Theme.of(context).colorScheme.primary),
                                                                               ),
                                                                             )
                                                                           ],
@@ -5108,7 +5128,7 @@ class CustomListView extends StatelessWidget {
                                                               ),
                                                               Container(
                                                                 child:
-                                                                    TextFormField(
+                                                                    TextFormField(decoration: InputDecoration(hintText: " ادخل الرد",contentPadding: EdgeInsets.all(16)),
                                                                   onChanged:
                                                                       (v) {
                                                                     Get.find<
@@ -5129,8 +5149,11 @@ class CustomListView extends StatelessWidget {
                                                   ),
                                                   actions: <Widget>[
                                                     FlatButton(
-                                                      onPressed: () async {
-                                                        ReplyWithVoiceNoteRequestModel
+                                                      onPressed:() async {
+
+
+
+                                                            ReplyWithVoiceNoteRequestModel
                                                             v;
                                                         String? audioFileBes64 =
                                                             await audiobase64String(
@@ -5210,11 +5233,16 @@ class CustomListView extends StatelessWidget {
                                                         await replayAPI
                                                             .post(v.toMap())
                                                             .then((value) {
-                                                          print("1" * 50);
-                                                          //   ReplyWithVoiceNoteModel
-                                                          //   v = value
-                                                          // //  as ReplyWithVoiceNoteModel;
-                                                          print(v);
+
+
+                                                            ReplyWithVoiceNoteModel
+                                                            v = value
+                                                            as ReplyWithVoiceNoteModel;
+                                                            if( v.status==1){
+                                                              Get.snackbar("", "تمت العمليه بنجاح");
+
+                                                            }
+
 
                                                           print("1" * 50);
                                                         });
@@ -5223,14 +5251,24 @@ class CustomListView extends StatelessWidget {
                                                         Get.find<
                                                                 InboxController>()
                                                             .recordFile = null;
-                                                        Navigator.of(ctx).pop();
+                                                        Get.find<
+                                                            InboxController>()
+                                                            .replyNote="";
+                                                   Navigator.of(ctx).pop();
                                                       },
                                                       child: Text("Ok"),
                                                     ),
                                                   ],
                                                 ),
                                               );
-                                            } else if (v == 2) {
+                                            }
+
+
+
+
+
+
+                                            else if (v == 2) {
                                               showDialog(
                                                   context: context,
                                                   builder:

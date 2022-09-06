@@ -738,10 +738,20 @@ class LandingPage extends GetWidget<LandingPageController> {
                             topRight: Radius.circular(20))),
                     child: Column(
                       children: [
+                        Row(children: [     InkWell(onTap: (){
+                          Navigator.pop(
+                              context);
+                        },
+                          child: Image.asset(
+                            'assets/images/close_button.png',
+                            width: 20,
+                            height: 20,
+                          ),
+                        ),]),
                         Text("favoritesUsers".tr,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 24,
+                              fontSize: 24,color:  Theme.of(context).colorScheme.primary
                             )),
                         SizedBox(
                           height: 10,
@@ -785,7 +795,7 @@ class LandingPage extends GetWidget<LandingPageController> {
 
                                   controller.updateselectFavusers(v);
                                   controller.addFavoriteRecipients(addFavorite:v.id! ,context: context);
-                               //   controller.textEditingControllerTo.clear();
+                                  controller.textEditingControllerTo.clear();
                                   // v
                                   // .cLASNAMEDISPLAY;
                                   // Navigator.of(context).push(MaterialPageRoute(
@@ -801,47 +811,52 @@ class LandingPage extends GetWidget<LandingPageController> {
                         ),
                         GetBuilder<LandingPageController>(builder: (logic) {
                           return Expanded(
-                            child: ListView.builder(
+                            child: ListView.separated(    separatorBuilder: (context, index) => const Divider(),
                                 itemCount: controller.favoriteRecipientsResponse
-                                    ?.recipients?.length,
+                                    ?.recipients?.length??0,
                                 itemBuilder: (context, pos) {
-                                  return Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Container(
-                                          width: 30,
-                                          height: 30,
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              image: controller
-                                                      .favoriteRecipientsResponse!
-                                                      .recipients![pos]
-                                                      .targetPhotoBs64!
-                                                      .isNotEmpty
-                                                  ? DecorationImage(
-                                                      image: MemoryImage(
-                                                          u.dataFromBase64String(controller
-                                                              .favoriteRecipientsResponse!
-                                                              .recipients![pos]
-                                                              .targetPhotoBs64!)))
-                                                  : DecorationImage(
-                                                      image: AssetImage(
-                                                          "assets/images/pr.jpg"))),
-                                        ),
-                                      ),
+                                  return Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Card(elevation: 5,
+                                      child: Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(4.0),
+                                            child: Container(
+                                              width: 30,
+                                              height: 30,
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  image: controller
+                                                          .favoriteRecipientsResponse!
+                                                          .recipients![pos]
+                                                          .targetPhotoBs64!
+                                                          .isNotEmpty
+                                                      ? DecorationImage(
+                                                          image: MemoryImage(
+                                                              u.dataFromBase64String(controller
+                                                                  .favoriteRecipientsResponse!
+                                                                  .recipients![pos]
+                                                                  .targetPhotoBs64!)))
+                                                      : DecorationImage(
+                                                          image: AssetImage(
+                                                              "assets/images/pr.jpg"))),
+                                            ),
+                                          ),
                                 Expanded(
-                                  child: Text(controller
-                                      .favoriteRecipientsResponse!
-                                      .recipients![pos]
-                                      .targetName??"",maxLines: 3),
+                                      child: Text(controller
+                                          .favoriteRecipientsResponse!
+                                          .recipients![pos]
+                                          .targetName??"",maxLines: 3),
                                 )   ,Spacer(),InkWell(onTap: (){
 controller.removeFavoriteRecipients(context: context,favoriteRecipients:controller
     .favoriteRecipientsResponse!
     .recipients![pos].ufrId );
 
-                                      print(" i removeeeeeeeeeeeeeeeeeeeeee");
-                                      },child: Icon(Icons.delete)) ],
+                                          print(" i removeeeeeeeeeeeeeeeeeeeeee");
+                                          },child: Icon(Icons.delete)) ],
+                                      ),
+                                    ),
                                   );
                                 }),
                           );

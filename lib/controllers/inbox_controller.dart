@@ -294,6 +294,7 @@ int?nodeId=0;
   Future stopMathod()async{
     recording = false;
     update(["id"]);
+    recordFile = File(_directoryPath);
     await record.stopRecorder();
   }
 

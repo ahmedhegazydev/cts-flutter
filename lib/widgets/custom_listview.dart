@@ -5261,7 +5261,7 @@ class CustomListView extends StatelessWidget {
                                                               "m4a",
                                                               voiceNotePrivate:
                                                               false);
-
+print(v.toMap());
                                                           replayAPI
                                                               .post(v
                                                               .toMap())
@@ -5271,14 +5271,12 @@ class CustomListView extends StatelessWidget {
                                                                 print(
                                                                     "1" *
                                                                         50);
-                                                                ReplyWithVoiceNoteModel
-                                                                v = value
-                                                                as ReplyWithVoiceNoteModel;
+                                                              //   ReplyWithVoiceNoteModel
+                                                              //   v = value
+                                                              // //  as ReplyWithVoiceNoteModel;
                                                                 print(v
-                                                                    .errorMessage);
-                                                                print(
-                                                                    v
-                                                                        .status);
+                                                                    );
+
                                                                 print(
                                                                     "1" *
                                                                         50);

@@ -530,7 +530,7 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
         //     transferId: transferId,
         //     correspondenceId: correspondenceId);
 
-        if(canOpenDocumentModel!.allow!){
+
           Get.find<DocumentController>().loadPdf();
           Get.toNamed("/DocumentPage");
 
@@ -540,7 +540,7 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
 
 
 
-      }
+
     }).catchError((e) {
       print("eeeeeeeeeeeeeeee=>  $e");
     });

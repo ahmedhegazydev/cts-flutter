@@ -5097,25 +5097,45 @@ class CustomListView extends StatelessWidget {
                                                                             children: [
                                                                               GestureDetector(
                                                                                 onTap: () async {
-                                                                                  Get
+
+
+                                                                                  if(  Get
                                                                                       .find<
-                                                                                      InboxController>()
-                                                                                      .recording
-                                                                                      ? Get
-                                                                                      .find<
-                                                                                      InboxController>()
-                                                                                      .stop2()
-                                                                                      : Get
-                                                                                      .find<
-                                                                                      InboxController>()
-                                                                                      .record2();
-                                                                                  Get
-                                                                                      .find<
-                                                                                      InboxController>()
-                                                                                      .update(
-                                                                                      [
-                                                                                        "id"
-                                                                                      ]);
+                                                                                      InboxController>().record.isRecording){
+                                                                                    print(" ايقاف التشغيل");
+                                                                                    Get
+                                                                                        .find<
+                                                                                        InboxController>().stopMathod();
+
+                                                                                  }else{
+
+                                                                                    print(" بداء  التشغيل");
+                                                                                    Get
+                                                                                        .find<
+                                                                                        InboxController>().        recordMathod();
+
+
+                                                                                  }
+                                                                                  //دي القديم الي كنت بستخدمه في الرد
+                                                                                  // Get
+                                                                                  //     .find<
+                                                                                  //     InboxController>()
+                                                                                  //     .recording
+                                                                                  //     ? Get
+                                                                                  //     .find<
+                                                                                  //     InboxController>()
+                                                                                  //     .stop2()
+                                                                                  //     : Get
+                                                                                  //     .find<
+                                                                                  //     InboxController>()
+                                                                                  //     .record2();
+                                                                                  // Get
+                                                                                  //     .find<
+                                                                                  //     InboxController>()
+                                                                                  //     .update(
+                                                                                  //     [
+                                                                                  //       "id"
+                                                                                  //     ]);
                                                                                 },
                                                                                 child: Padding(
                                                                                   padding: const EdgeInsets
@@ -5146,8 +5166,11 @@ class CustomListView extends StatelessWidget {
                                                                                     8.0),
                                                                                 child: InkWell(
                                                                                   onTap: () {
-                                                                                    // controller
-                                                                                    //     .playRec();
+
+                                                                                    Get
+                                                                                        .find<
+                                                                                        InboxController>().playMathod();
+
                                                                                   },
                                                                                   child: Icon(
                                                                                       Icons

@@ -67,17 +67,23 @@ abstract class ApiManager {
       // Get.back();
       if (value.data["Status"] == 0) {
         a.Get.snackbar("Error".tr, "${value.data["ErrorMessage"]}");
-      } else {
-        if (value.data["Status"] == 2) {
+      } else if (value.data["Status"] == 2){
+
           a.Get.snackbar("Error".tr, "LogIn ");
           secureStorage.deleteSecureData(AllStringConst.Token);
           Get.offAll(LoginPage());
-        } else {
+        } else if (value.data["Status"] == 1) {
           print(value);
           data = value.data;
           json = fromJson(data);
         }
-      }
+
+    }).catchError((err){
+
+      a.Get.snackbar("", "$err");
+
+
+
     });
 
     return json;

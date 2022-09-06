@@ -265,11 +265,87 @@ int?nodeId=0;
     print("onRefresh");
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+  final record=FlutterSoundRecorder();
+  Future recordMathod()async{
+  //  await record.startRecorder(toFile: "audio");
+    appDocDir = await getApplicationDocumentsDirectory();
+    _directoryPath = appDocDir!.path +
+        '/' +
+        DateTime.now().millisecondsSinceEpoch.toString() +
+        '.mp4';
+    recording = true;
+    update(["id"]);
+
+    await record?.startRecorder(codec: _codec, toFile: _directoryPath);
+  }
+  Future stopMathod()async{
+    recording = false;
+    update(["id"]);
+    await record.stopRecorder();
+  }
+
+  Future playMathod()async{
+    audioPlayer = FlutterSoundPlayer();
+    audioPlayer!.openPlayer();
+  await audioPlayer!.startPlayer(fromURI: _directoryPath);
+  }
+
+
+
   @override
   void onInit() {
     super.onInit();
     // scrollController.addListener(_scrollListener(context: context));
+
+    initRecorder();
   }
+
+
+  Future initRecorder() async{
+
+
+
+
+    final status =await Permission.microphone.request();
+    if(status!=PermissionStatus.granted){
+      throw "Microphone permission not granted";
+    }
+    await record.openRecorder();
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   _scrollListener({required context}) {
     if (scrollController.offset >= scrollController.position.maxScrollExtent &&
@@ -728,4 +804,13 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
     Get.back();
     update();
   }
+
+
+
+
+
+
+
+
+
 }

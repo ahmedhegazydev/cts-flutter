@@ -78,10 +78,12 @@ class DocumentController extends GetxController {
 //Map<int,String>folder={};
   bool notoragnalFileDoc = false;
 
-  String oragnalFileDocpdfUrlFile ="";
-    //  'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
-  String pdfUrlFile ="";
-     // 'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
+  String oragnalFileDocpdfUrlFile = "";
+
+  //  'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
+  String pdfUrlFile = "";
+
+  // 'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
   bool openAttachment = false;
   AttachmentsList? isOriginalMailAttachmentsList;
   Map<String, List<AttachmentsList>> folder2 = {};
@@ -142,18 +144,14 @@ class DocumentController extends GetxController {
     update();
   }
 
-
   GetAttAchmentItem? getAttAchmentItem;
 
   //دي الرد بتاع السيف للاتاتشمنت
   getatt_achments_model.Attachments? saveAttAchmentItemAnnotationsresalt;
   GetattAchmentsModel? saveAttAchmentItemAnnotationsData;
 
-  getAttachmentItem({
-    context,
-    documentId, transferId, attachmentId}) {
-    GetAttachmentItemAPI getAttachmentItemAPI =
-    GetAttachmentItemAPI(context);
+  getAttachmentItem({context, documentId, transferId, attachmentId}) {
+    GetAttachmentItemAPI getAttachmentItemAPI = GetAttachmentItemAPI(context);
     getAttachmentItemAPI.data =
         "Token=${secureStorage.token()}&documentId=$documentId&transferId=$transferId&attachmentId=$attachmentId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     getAttachmentItemAPI.getData().then((value) {
@@ -218,11 +216,9 @@ class DocumentController extends GetxController {
 
 //=============================================================================================
 
-  multipleTransferspost({
-    context, correspondenceId, transferId}) {
+  multipleTransferspost({context, correspondenceId, transferId}) {
     List<TransferNode> transfers = [];
-    MultipleTransfersAPI _multipleTransfersAPI =
-    MultipleTransfersAPI(context);
+    MultipleTransfersAPI _multipleTransfersAPI = MultipleTransfersAPI(context);
     transfarForMany.forEach((key, value) {
       TransferNode transferNode = TransferNode(
           destinationId: key.toString(),
@@ -257,9 +253,8 @@ class DocumentController extends GetxController {
   SaveDocumentAnnotationModel? postSaveDocumentAnnotationsModel;
 
   Future getSaveDocAnnotationsData(
-      {
-        context,
-        userId,
+      {context,
+      userId,
       correspondenceId,
       transferId,
       attachmentId,
@@ -270,7 +265,7 @@ class DocumentController extends GetxController {
 
       }) async {
     final SaveDocumentAnnotationsAPI _saveDocumentAnnotationsApi =
-    SaveDocumentAnnotationsAPI(context);
+        SaveDocumentAnnotationsAPI(context);
     // pdfViewerkey=null;
     postSaveDocumentAnnotationsModel = SaveDocumentAnnotationModel(
         AttachmentId: attachmentId.toString(),
@@ -370,7 +365,7 @@ class DocumentController extends GetxController {
                   saveAttAchmentItemAnnotationsData!.attachments![i].uRL!;
             });
           }
-         // log(saveAttAchmentItemAnnotationsData.toString());
+          // log(saveAttAchmentItemAnnotationsData.toString());
           // // String d=saveAttAchmentItemAnnotationsresalt!.annotations!..replaceAll(new RegExp(r'[^\w\s]+'),'');
           // print("ddddddddddddddddddddddd=>  ${saveAttAchmentItemAnnotationsresalt?.annotations}");
           //
@@ -577,10 +572,8 @@ class DocumentController extends GetxController {
 
   //تحديث كان ابن فيل وجلب جميع البيانات الخاصه بلملف
   updatecanOpenDocumentModel(CanOpenDocumentModel data) {
-
     canOpenDocumentModel = data;
     canOpenDocumentModel?.attachments?.attachments?.forEach((element) {
-
       if (element.isOriginalMail!) {
         print("element.uRL=>      ${element.uRL}");
         oragnalFileDocpdfUrlFile = element.uRL!;
@@ -589,48 +582,45 @@ class DocumentController extends GetxController {
         pdfViewerkey = GlobalKey();
         pdfAndSing.clear();
         pdfAndSing.add(SfPdfViewer.network(
-            oragnalFileDocpdfUrlFile
-            // oragnalFileDoc??""
-            ,
-            controller: pdfViewerController,
-            // onPageChanged: (v) {
-            //   print(
-            //       "ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
-            //   for (int i = 0; i < pdfAndSingannotation.length; i++) {
-            //     if (int.parse(pdfAndSingannotation[i].page!) ==
-            //         v.newPageNumber) {
-            //       List<int> list = pdfAndSingannotation[i].imageByte!.codeUnits;
-            //       final Uint8List? data = Uint8List.fromList(list);
-            //       pdfAndSingannotationShowOrHide.add(
-            //         Positioned(
-            //           top: double.tryParse(pdfAndSingannotation[i].y!),
-            //           left: double.tryParse(pdfAndSingannotation[i].x!),
-            //           child: Image.memory(
-            //             data!,
-            //             fit: BoxFit.fill,
-            //             width: double.tryParse(pdfAndSingannotation[i].width!),
-            //             height:
-            //             double.tryParse(pdfAndSingannotation[i].height!),
-            //           ),
-            //         ),
-            //       );
-            //     }
-            //   }
-            //   // pdfAndSingannotation
-            //   //   v.newPageNumber
-            // }
+          oragnalFileDocpdfUrlFile
+          // oragnalFileDoc??""
+          ,
+          controller: pdfViewerController,
+          // onPageChanged: (v) {
+          //   print(
+          //       "ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+          //   for (int i = 0; i < pdfAndSingannotation.length; i++) {
+          //     if (int.parse(pdfAndSingannotation[i].page!) ==
+          //         v.newPageNumber) {
+          //       List<int> list = pdfAndSingannotation[i].imageByte!.codeUnits;
+          //       final Uint8List? data = Uint8List.fromList(list);
+          //       pdfAndSingannotationShowOrHide.add(
+          //         Positioned(
+          //           top: double.tryParse(pdfAndSingannotation[i].y!),
+          //           left: double.tryParse(pdfAndSingannotation[i].x!),
+          //           child: Image.memory(
+          //             data!,
+          //             fit: BoxFit.fill,
+          //             width: double.tryParse(pdfAndSingannotation[i].width!),
+          //             height:
+          //             double.tryParse(pdfAndSingannotation[i].height!),
+          //           ),
+          //         ),
+          //       );
+          //     }
+          //   }
+          //   // pdfAndSingannotation
+          //   //   v.newPageNumber
+          // }
           //  key: pdfViewerkey,
-
-
-
-
-
         ));
 
-log(element.annotations!);
-        // Map<dynamic, dynamic> dat = jsonDecode(
-        //    element.annotations!);
-        // print("77777777777777777=>     ${dat["ImageByte"]}");
+        log(element.annotations!);
+        Map<String, dynamic> dat = jsonDecode(element.annotations!);
+        print("77777777777777777=>     ${dat.values}");
+
+        ViewerAnnotation daa=      ViewerAnnotation.fromMap(dat)      ;
+         print("88888888=>     ${daa.toMap()}");
         // Positioned(
         //   top: double.tryParse(dat["Y"]),
         //   left: double.tryParse(dat["X"]),
@@ -644,7 +634,7 @@ log(element.annotations!);
         // );
         //
 
-update();
+        update();
       }
 
       if (element.isOriginalMail == false) {
@@ -665,41 +655,32 @@ update();
     //
     // }
 
-
     for (int i = 0; i < pdfAndSingannotation.length; i++) {
-
-        List<int> list = pdfAndSingannotation[i].imageByte!.codeUnits;
-        final Uint8List? data = Uint8List.fromList(list);
-        pdfAndSingannotationShowOrHide.add(
-          Positioned(
-            top: double.tryParse(pdfAndSingannotation[i].y!),
-            left: double.tryParse(pdfAndSingannotation[i].x!),
-            child: Image.memory(
-              data!,
-              fit: BoxFit.fill,
-              width: double.tryParse(pdfAndSingannotation[i].width!),
-              height:
-              double.tryParse(pdfAndSingannotation[i].height!),
-            ),
+      List<int> list = pdfAndSingannotation[i].imageByte!.codeUnits;
+      final Uint8List? data = Uint8List.fromList(list);
+      pdfAndSingannotationShowOrHide.add(
+        Positioned(
+          top: double.tryParse(pdfAndSingannotation[i].y!),
+          left: double.tryParse(pdfAndSingannotation[i].x!),
+          child: Image.memory(
+            data!,
+            fit: BoxFit.fill,
+            width: double.tryParse(pdfAndSingannotation[i].width!),
+            height: double.tryParse(pdfAndSingannotation[i].height!),
           ),
-        );
-
+        ),
+      );
     }
     update();
   }
 
   IsAlreadyExportedAsPaperworkModel? isAlreadyExportedAsPaperworkModel;
 
-
-
   CanExportAsPaperworkModel? canExportAsPaperworkModel;
-
 
   AutoSendToRecepientsAndCCModel? autoSendToRecepientsAndCCModel;
 
-
   CheckForEmptyStructureRecipientsModel? checkForEmptyStructureRecipientsModel;
-
 
   IsAlreadyExportedAsTransferModel? isAlreadyExportedAsTransferModel;
 
@@ -712,9 +693,6 @@ update();
   // G2GExportDto? g2gExportDto;
   // G2GRecipient? g2gRecipient;
   ExportUsingG2gModel? exportUsingG2gModel;
-
-
-
 
   Map<String, dynamic>? logindata;
   Map<GlobalKey, String> singpic = {};
@@ -758,7 +736,6 @@ update();
 
   FindRecipientModel? findRecipientModel;
 
-
 //===============================================
 
   GetDocumentLogsModel? getDocumentLogsModel;
@@ -769,11 +746,9 @@ update();
 
   GetDocumentTransfersModel? getDocumentTransfersModel;
 
-  getDocumentAuditLogsdata({
-    required context,
-    required String docId}) {
+  getDocumentAuditLogsdata({required context, required String docId}) {
     final GetDocumentAuditLogsApi _getDocumentAuditLogsApi =
-    GetDocumentAuditLogsApi(context);
+        GetDocumentAuditLogsApi(context);
     _getDocumentAuditLogsApi.data =
         "Token=${secureStorage.token()}&docId=$docId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
 
@@ -782,11 +757,9 @@ update();
     });
   }
 
-  getDocumentLinksdata({
-    required context,
-    correspondenceId, transferId}) {
+  getDocumentLinksdata({required context, correspondenceId, transferId}) {
     final GetDocumentLinksApi _getDocumentLinksApi =
-    GetDocumentLinksApi(context);
+        GetDocumentLinksApi(context);
     _getDocumentLinksApi.data =
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
 
@@ -795,11 +768,9 @@ update();
     });
   }
 
-  getDocumentReceiversdata({
-    required context,
-    correspondenceId, transferId}) {
+  getDocumentReceiversdata({required context, correspondenceId, transferId}) {
     final GetDocumentReceiversApi _getDocumentReceiversApi =
-    GetDocumentReceiversApi(context);
+        GetDocumentReceiversApi(context);
     _getDocumentReceiversApi.data =
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
 
@@ -808,11 +779,9 @@ update();
     });
   }
 
-  getDocumentTransfersdata({
-    required context,
-    correspondenceId, transferId}) {
+  getDocumentTransfersdata({required context, correspondenceId, transferId}) {
     final GetDocumentTransfersApi _getDocumentTransfersApi =
-    GetDocumentTransfersApi(context);
+        GetDocumentTransfersApi(context);
     _getDocumentTransfersApi.data =
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
 
@@ -822,24 +791,24 @@ update();
   }
 
   gatAllDataAboutDOC(
-      {
-        required context,
-        required String docId,
+      {required context,
+      required String docId,
       required String transferId,
       required String correspondenceId}) {
     print("gatAllDataAboutDOC");
-    getDocumentAuditLogsdata(
-        context: context,
-        docId: docId);
+    getDocumentAuditLogsdata(context: context, docId: docId);
     getDocumentTransfersdata(
         context: context,
-        transferId: transferId, correspondenceId: correspondenceId);
+        transferId: transferId,
+        correspondenceId: correspondenceId);
     getDocumentReceiversdata(
         context: context,
-        correspondenceId: correspondenceId, transferId: transferId);
+        correspondenceId: correspondenceId,
+        transferId: transferId);
     getDocumentLinksdata(
-      context: context,
-        transferId: transferId, correspondenceId: correspondenceId);
+        context: context,
+        transferId: transferId,
+        correspondenceId: correspondenceId);
     print("*" * 10);
   }
 
@@ -876,7 +845,7 @@ update();
     _findRecipient.getData().then((value) {
       findRecipientModel = value as FindRecipientModel;
 
-      Get.find<InboxController>().context =  context;
+      Get.find<InboxController>().context = context;
       Get.find<InboxController>().setFindRecipientData(findRecipientModel!);
       // listOfUser(0);
       print(
@@ -1175,7 +1144,7 @@ update();
       required exportAction,
       required context}) async {
     IsAlreadyExportedAsPaperworkAPI _alreadyExportedAsPaperworkAPI =
-    IsAlreadyExportedAsPaperworkAPI(context);
+        IsAlreadyExportedAsPaperworkAPI(context);
     print("in  getIsAlreadyExportedAsPaperwork");
     _alreadyExportedAsPaperworkAPI.data =
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
@@ -1228,7 +1197,7 @@ update();
       required exportAction,
       required context}) {
     CanExportAsPaperworkAPI _canExportAsPaperworkAPI =
-    CanExportAsPaperworkAPI(context);
+        CanExportAsPaperworkAPI(context);
     _canExportAsPaperworkAPI.data =
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
     _canExportAsPaperworkAPI.getData().then((value) {
@@ -1267,11 +1236,12 @@ update();
   }
 
   autoSendToRecepientsAndCC(
-      {
-        required context,
-        required correspondenceId, required transferId, required exportAction}) {
+      {required context,
+      required correspondenceId,
+      required transferId,
+      required exportAction}) {
     AutoSendToRecepientsAndCCAPI _autoSendToRecepientsAndCCAPI =
-    AutoSendToRecepientsAndCCAPI(context);
+        AutoSendToRecepientsAndCCAPI(context);
     _autoSendToRecepientsAndCCAPI.data =
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
     _autoSendToRecepientsAndCCAPI.getData().then((value) {
@@ -1286,11 +1256,12 @@ update();
   }
 
   checkForEmptyStructureRecipients(
-      {
-        required context,
-        required correspondenceId, required transferId, required exportAction}) {
+      {required context,
+      required correspondenceId,
+      required transferId,
+      required exportAction}) {
     CheckForEmptyStructureRecipientsAPI _checkForEmptyStructureRecipientsAPI =
-    CheckForEmptyStructureRecipientsAPI(context);
+        CheckForEmptyStructureRecipientsAPI(context);
     _checkForEmptyStructureRecipientsAPI.data =
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
     _checkForEmptyStructureRecipientsAPI.getData().then((value) {
@@ -1306,11 +1277,12 @@ update();
   }
 
   isAlreadyExportedAsTransfer(
-      {
-        required context,
-        required correspondenceId, required transferId, required exportAction}) {
+      {required context,
+      required correspondenceId,
+      required transferId,
+      required exportAction}) {
     IsAlreadyExportedAsTransferAPI _isAlreadyExportedAsTransferAPI =
-    IsAlreadyExportedAsTransferAPI(context);
+        IsAlreadyExportedAsTransferAPI(context);
     _isAlreadyExportedAsTransferAPI.data =
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
     _isAlreadyExportedAsTransferAPI.getData().then((value) {
@@ -1326,9 +1298,7 @@ update();
   }
 
   //-----------------------------------------------------------------------
-  getUserRouting({
-    required context,
-    required gctId}) {
+  getUserRouting({required context, required gctId}) {
     GetUserRoutingAPI _getUserRoutingAPI = GetUserRoutingAPI(context);
     _getUserRoutingAPI.data = "Token=${secureStorage.token()}&GctId=$gctId";
     _getUserRoutingAPI.getData().then((value) {
@@ -1362,6 +1332,7 @@ update();
     print(
         "g2gInfoForExportModel?.toJson()=>  ${g2gInfoForExportModel?.toJson()}");
   }
+
 //-----------------------------------------------------------------------------
 
 //الي جم من الانبوكس عشان يتنادو لما ندخل الفيل
@@ -1380,9 +1351,6 @@ update();
 //   documentId: correspondences[pos]
 //       .correspondenceId!);
 
-
-
-
   //-----------------------------------------------------------------------
   genratG2GExportDto() {
     // g2gRecipient =
@@ -1399,9 +1367,7 @@ update();
     // print("this the map=> ${jsonEncode(g2gExportDto?.toMap())}");
   }
 
-  exportUsingG2g({
-    required context,
-    notes}) {
+  exportUsingG2g({required context, notes}) {
     G2GExportDto? g2gExportDto;
     G2GRecipient? g2gRecipient;
     List<int>? attachmentsIds = <int>[];
@@ -1416,7 +1382,6 @@ update();
         attachments: attachmentsIds,
         documentId: int.parse(correspondences.correspondenceId ?? "2020"),
         recipients: [g2gRecipient]);
-
 
     var allRecipients = <G2GRecipient>[];
     var mergedList = new List<DepartmentList>.from(toDepartmentList)
@@ -1436,11 +1401,9 @@ update();
   }
 
   //Not used
-  canReceiveG2GDocument({
-    required context,
-    required correspondenceId}) {
+  canReceiveG2GDocument({required context, required correspondenceId}) {
     CanReceiveG2GDocumentAPI _canReceiveG2GDocumentAPI =
-    CanReceiveG2GDocumentAPI(context);
+        CanReceiveG2GDocumentAPI(context);
     G2GReceiveOrRejectDto g2gReceiveOrRejectDto = G2GReceiveOrRejectDto(
         documentId: correspondenceId,
         language: Get.locale?.languageCode == "en" ? "en" : "ar",
@@ -1452,11 +1415,9 @@ update();
   }
 
   //Not used
-  receiveDocumentUsingG2G({
-    required context,
-    required correspondenceId}) {
+  receiveDocumentUsingG2G({required context, required correspondenceId}) {
     ReceiveDocumentUsingG2GApi _receiveDocumentUsingG2GApi =
-    ReceiveDocumentUsingG2GApi(context);
+        ReceiveDocumentUsingG2GApi(context);
     G2GReceiveOrRejectDto g2gReceiveOrRejectDto = G2GReceiveOrRejectDto(
         documentId: correspondenceId,
         language: Get.locale?.languageCode == "en" ? "en" : "ar",
@@ -1579,14 +1540,6 @@ showDilog(
           ],
         );
       });
-
-
-
-
-
-
-
-
 }
 
 extension UtilListExtension on List {
@@ -1607,24 +1560,6 @@ extension UtilListExtension on List {
       return this;
     }
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 //
 // String _fileName = 'Recording_';
@@ -1722,3 +1657,69 @@ extension UtilListExtension on List {
 //     _createFile();
 //   }
 // }
+class ViewerAnnotation {
+  String? id;
+  String? page;
+  String? X;
+  String? Y;
+  String? type;
+  String? width;
+  String? height;
+  String? imageByte;
+  String? imageName;
+  String? text;
+  bool? readonly;
+  String? userId;
+  bool? hidden;
+
+  ViewerAnnotation({
+    this.id,
+    this.page,
+    this.X,
+    this.Y,
+    this.type,
+    this.width,
+    this.height,
+    this.imageByte,
+    this.imageName,
+    this.text,
+    this.readonly,
+    this.userId,
+    this.hidden,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': this.id,
+      'page': this.page,
+      'X': this.X,
+      'Y': this.Y,
+      'type': this.type,
+      'width': this.width,
+      'height': this.height,
+      'imageByte': this.imageByte,
+      'imageName': this.imageName,
+      'text': this.text,
+      'readonly': this.readonly,
+      'userId': this.userId,
+      'hidden': this.hidden,
+    };
+  }
+
+  factory ViewerAnnotation.fromMap(Map<String, dynamic> map) {
+    return ViewerAnnotation(id: map['id'] ,
+      page: map['page'] ,
+      X: map['X']  ,
+      Y: map['Y'] ,
+      type: map['type']  ,
+      width: map['width']  ,
+      height: map['height']  ,
+      imageByte: map['imageByte'] ,
+      imageName: map['imageName']  ,
+      text: map['text'] ,
+      readonly: map['readonly'] ,
+      userId: map['userId'] ,
+      hidden: map['hidden']  ,
+    );
+  }
+}

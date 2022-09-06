@@ -15,8 +15,8 @@ import 'landing_page_controller.dart';
 class LoginController extends GetxController {
   TextEditingController userName = TextEditingController();
   TextEditingController baseUrl = TextEditingController(
-      text: 'http://192.168.1.6:9091/Mobility/CMS.svc'
-      // text: 'http://139.99.149.12:9091/EverSuite.CTS.Mobile/CMS.svc'
+      // text: 'http://192.168.1.6:9091/Mobility/CMS.svc'
+      text: 'http://139.99.149.12:9091/EverSuite.CTS.Mobile/CMS.svc'
       );
   BuildContext? context;
   TextEditingController passWord = TextEditingController();

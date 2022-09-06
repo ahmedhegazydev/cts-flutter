@@ -1284,7 +1284,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                         buildColorPicker(),
                         Padding(
                           padding: const EdgeInsets.only(
-                              top: 8.0, bottom: 8, right: 20, left: 20),
+                              top: 8.0, bottom: 8, right: 0, left: 0),
                           child: Row(children: [
                             Expanded(
                               child: Container(
@@ -3028,9 +3028,9 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                               flex: 1,
                               child: Text(
                                 Get.find<LandingPageController>()
-                                    .dashboardStatsResultModel!
-                                    .unreadCount
-                                    .toString(),
+                                    .dashboardStatsResultModel
+                                    ?.unreadCount
+                                    ?.toString() ?? "",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline3!
@@ -3093,9 +3093,9 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                               flex: 1,
                               child: Text(
                                 Get.find<LandingPageController>()
-                                    .dashboardStatsResultModel!
-                                    .forActionCount
-                                    .toString()
+                                    .dashboardStatsResultModel
+                                    ?.forActionCount
+                                    ?.toString() ?? ""
                                 //controller.data?.transferData.sections[].destination
                                 // controller.data?.transferData.priorities
                                 //   controller.data?.transferData.privacies.
@@ -3168,8 +3168,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                               child: Text(
                                 "myTransfersInMonth".tr +
                                     " " +
-                                    u.calculateDate(
-                                        'MMMM', u.getLocaleCode(context)),
+                                    u.calculateDate('MMMM', Get.locale?.languageCode ?? "en"),
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline2!
@@ -3184,9 +3183,9 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                               flex: 1,
                               child: Text(
                                 Get.find<LandingPageController>()
-                                    .dashboardStatsResultModel!
-                                    .transferredFromMeCount!
-                                    .toString(),
+                                    .dashboardStatsResultModel
+                                    ?.transferredFromMeCount
+                                    ?.toString() ?? "",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline3!
@@ -3251,8 +3250,8 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                               flex: 1,
                               child: Text(
                                 Get.find<LandingPageController>()
-                                    .dashboardStatsResultModel!
-                                    .mostTransfersWentTo!,
+                                    .dashboardStatsResultModel
+                                    ?.mostTransfersWentTo ?? "",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline3!

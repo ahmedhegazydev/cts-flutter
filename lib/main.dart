@@ -148,13 +148,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: createMaterialColor(Get.find<MController>().changeColorImmediately ? savedColor_ : Get.find<MController>().appcolor),
       ),
       initialRoute: "/LoginPage",
+      // initialRoute: "/Landing",
       getPages: [
         GetPage(
           name: "/LoginPage",
           binding: LoginBinding(),
           page: () => LoginPage(),
-          // page: () =>  LandingPage(),
-          // page: () =>  InboxPage(),
           middlewares: [AuthMiddleWare()],
         ),
 

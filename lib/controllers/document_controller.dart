@@ -627,7 +627,7 @@ class DocumentController extends GetxController {
 
         ));
 
-
+log(element.annotations!);
         // Map<dynamic, dynamic> dat = jsonDecode(
         //    element.annotations!);
         // print("77777777777777777=>     ${dat["ImageByte"]}");

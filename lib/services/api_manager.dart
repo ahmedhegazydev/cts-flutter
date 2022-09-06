@@ -19,6 +19,8 @@ abstract class ApiManager {
 
   // late Future<String> baseUrl;
   // late SettingItem settingItem;
+  late String storageBaseUrl =
+      "http://139.99.149.12:9091/EverSuite.CTS.Mobile/CMS.svc";
   late List<SettingItem> settingItems;
 
   ApiManager({BuildContext? context}) {
@@ -55,8 +57,10 @@ abstract class ApiManager {
 
     // this.settingItem = await CtsSettingsDatabase.instance.readNote(0);
     this.settingItems = await CtsSettingsDatabase.instance.readAllNotes();
-    var storageBaseUrl = settingItems[0].baseUrl;
-    print("storageBaseUrl = " + storageBaseUrl);
+    if (settingItems.isNotEmpty) {
+      storageBaseUrl = settingItems[0].baseUrl;
+      print("storageBaseUrl = " + storageBaseUrl);
+    }
 
     await dioSingleton.dio
         .get(checkIfSavedSettingsBasUrl(storageBaseUrl), queryParameters: data)
@@ -105,7 +109,6 @@ abstract class ApiManager {
     var storageBaseUrl = settingItems[0].baseUrl;
     print("storageBaseUrl = " + storageBaseUrl);
 
-
     //showLoaderDialog(context!);
     await dioSingleton.dio
         .post(checkIfSavedSettingsBasUrl(storageBaseUrl),
@@ -119,12 +122,11 @@ abstract class ApiManager {
         .then((value) {
       if (context != null) {
         // Navigator.pop(context!);
-      }      // Get.back();
+      } // Get.back();
       if (value.data["Status"] == 0) {
         a.Get.snackbar("Error".tr, "${value.data["ErrorMessage"]}");
       } else {
         if (value.data["Status"] == 2) {
-          // Get.to(LoginPage());
           Get.offAll(LoginPage());
         } else {
           data = value.data;

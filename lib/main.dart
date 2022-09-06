@@ -2,6 +2,7 @@ import 'package:cts/screens/Login_page.dart';
 import 'package:cts/screens/my_cart/MyPocketsScreen.dart';
 import 'package:cts/screens/web_view_page.dart';
 import 'package:cts/screens/filter/FilterSideScreen.dart';
+import 'package:cts/utility/Extenstions.dart';
 import 'package:cts/utility/all_string_const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
@@ -16,6 +17,8 @@ import 'bindings/login_bindings.dart';
 import 'bindings/search_bindings.dart';
 import 'bindings/signatuer_bindings.dart';
 import 'controllers/main_controller.dart';
+import 'data/SettingsFields.dart';
+import 'db/cts_database.dart';
 import 'middleware/auth_middleware.dart';
 import 'screens/Inbox_page.dart';
 import 'screens/Landing_page.dart';
@@ -39,8 +42,8 @@ void main() async {
   //var bb=json.decode(a.toString());
 // secureStorage.deleteSecureData(AllStringConst.Token);
 
-
-  print("secureStorage.deleteSecureData(AllStringConst.Token)   =>     ${secureStorage.deleteSecureData(AllStringConst.Token)}");
+  print(
+      "secureStorage.deleteSecureData(AllStringConst.Token)   =>     ${secureStorage.deleteSecureData(AllStringConst.Token)}");
   // String? appLan = secureStorage.readSecureData(AllStringConst.AppLan);
   // if (appLan == null) {
   //   print("theeeeeeeeeeeeeeeeeeeee=>  appLan");
@@ -106,8 +109,7 @@ class _RestartWidgetState extends State<RestartWidget> {
 }
 
 class NavigationService {
-  static GlobalKey<NavigatorState> navigatorKey =
-  GlobalKey<NavigatorState>();
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 }
 
 class MyApp extends StatelessWidget {
@@ -116,97 +118,94 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Color savedColor_ = Get.find<MController>().appcolor;
+    getSavedColorFromDatabase()
+        .then((savedColor) => {savedColor_ = savedColor});
     return GetBuilder<MController>(builder: (logic) {
-      return GetMaterialApp(
-        // navigatorKey: NavigationService.navigatorKey, // set property
-        title: 'CTS',
-        locale: getSavedLocale(),
-        translations: LocalizationService(),
-       // initialBinding: AllBindings(),
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          textTheme: const TextTheme(
-            headline1: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-            headline2: TextStyle(
-                fontSize: 16,
-                fontStyle: FontStyle.normal,
-                fontWeight: FontWeight.bold),
-            headline3: TextStyle(fontSize: 14, fontStyle: FontStyle.normal),
-          ).apply(
-            bodyColor:
-                createMaterialColor(Get.find<MController>().appcolor // AppColor
-                    //Color.fromRGBO(96, 175, 189, 1),
-                    ),
-            displayColor: createMaterialColor(
-                Get.find<MController>().appcolor //      AppColor
-                ),
-          ),
-          fontFamily: "Bahij_light",
-          primarySwatch:
-              createMaterialColor(Get.find<MController>().appcolor //  AppColor
-                  ),
-        ), initialRoute: "/LoginPage",
-        getPages: [
-          GetPage(name: "/LoginPage",
-            binding: LoginBinding(),
-            page: () => LoginPage(),
-            // page: () =>  LandingPage(),
-            // page: () =>  InboxPage(),
-      middlewares: [AuthMiddleWare()],
-          ),
+    return GetMaterialApp(
+      // navigatorKey: NavigationService.navigatorKey, // set property
+      title: 'CTS',
+      locale: getSavedLocale(),
+      translations: LocalizationService(),
+      // initialBinding: AllBindings(),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        textTheme: const TextTheme(
+          headline1: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+          headline2: TextStyle(
+              fontSize: 16,
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.bold),
+          headline3: TextStyle(fontSize: 14, fontStyle: FontStyle.normal),
+        ).apply(
+          // bodyColor: createMaterialColor(Get.find<MController>().appcolor) ,
+          // displayColor: createMaterialColor(Get.find<MController>().appcolor) ,
+        bodyColor: createMaterialColor(Get.find<MController>().changeColorImmediately ? savedColor_ : Get.find<MController>().appcolor),
+          displayColor: createMaterialColor(Get.find<MController>().changeColorImmediately ? savedColor_ : Get.find<MController>().appcolor),
+        ),
+        fontFamily: "Bahij_light",
+        // primarySwatch: createMaterialColor(Get.find<MController>().appcolor) ,
+        primarySwatch: createMaterialColor(Get.find<MController>().changeColorImmediately ? savedColor_ : Get.find<MController>().appcolor),
+      ),
+      initialRoute: "/LoginPage",
+      // initialRoute: "/Landing",
+      getPages: [
+        GetPage(
+          name: "/LoginPage",
+          binding: LoginBinding(),
+          page: () => LoginPage(),
+          middlewares: [AuthMiddleWare()],
+        ),
 
         //  binding: DetailsChallengesSubscriptionBinding()), //SearchPage
-          GetPage(
-              name: "/Landing", //SearchPage(),// LandingPage()
-              page: () => LandingPage(),
-              transition: Transition.rightToLeft,
-          binding: LandingPageBinding()
-          )
-          ,
-          GetPage(
-              name: "/Filter", //
-              page: () => FilterSlidePage(),
-              transition: Transition.rightToLeft)
-          ,
-          GetPage(
-              name: "/InboxPage",
-              page: () => InboxPage(),binding: InboxBinding(),
-              transition: Transition.rightToLeft),
-          GetPage(
-              name: "/DocumentPage",
-              page: () => DocumentPage(),
-              transition: Transition.rightToLeft),
-          GetPage(
-              name: "/OpenPDFFile",
-              page: () => OpenPDFFile(),
-              transition: Transition.rightToLeft),
-          GetPage(
-              name: "/SignaturePage",
-              page: () => SignaturePage(),
-              binding: SignaturePageBinding(),
-              transition: Transition.rightToLeft),
+        GetPage(
+            name: "/Landing", //SearchPage(),// LandingPage()
+            page: () => LandingPage(),
+            transition: Transition.rightToLeft,
+            binding: LandingPageBinding()),
+        GetPage(
+            name: "/Filter", //
+            page: () => FilterSlidePage(),
+            transition: Transition.rightToLeft),
+        GetPage(
+            name: "/InboxPage",
+            page: () => InboxPage(),
+            binding: InboxBinding(),
+            transition: Transition.rightToLeft),
+        GetPage(
+            name: "/DocumentPage",
+            page: () => DocumentPage(),
+            transition: Transition.rightToLeft),
+        GetPage(
+            name: "/OpenPDFFile",
+            page: () => OpenPDFFile(),
+            transition: Transition.rightToLeft),
+        GetPage(
+            name: "/SignaturePage",
+            page: () => SignaturePage(),
+            binding: SignaturePageBinding(),
+            transition: Transition.rightToLeft),
 
-          GetPage(
-              name: "/SearchPageResult",
-              page: () => SearchPageResult(),
-
-              transition: Transition.rightToLeft),
-          GetPage(
-              name: "/WebViewPage",
-              page: () => WebViewPage(),
-              transition: Transition.rightToLeft),
-          GetPage(
-              name: "/SearchPage",
-              page: () => SearchPage(),
-              binding: SearchBinding(),
-              transition: Transition.rightToLeft),
-          GetPage(
-              name: "/MyPocketsScreen",
-              page: () => MyPocketsScreen(),
-              transition: Transition.rightToLeft)
-        ], //initialRoute:"/" ,
-        // home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      );
+        GetPage(
+            name: "/SearchPageResult",
+            page: () => SearchPageResult(),
+            transition: Transition.rightToLeft),
+        GetPage(
+            name: "/WebViewPage",
+            page: () => WebViewPage(),
+            transition: Transition.rightToLeft),
+        GetPage(
+            name: "/SearchPage",
+            page: () => SearchPage(),
+            binding: SearchBinding(),
+            transition: Transition.rightToLeft),
+        GetPage(
+            name: "/MyPocketsScreen",
+            page: () => MyPocketsScreen(),
+            transition: Transition.rightToLeft)
+      ], //initialRoute:"/" ,
+      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    );
     });
   }
 
@@ -215,12 +214,26 @@ class MyApp extends StatelessWidget {
     String? appLan = secureStorage.readSecureData(AllStringConst.AppLan);
     if (appLan == null) {
       return LocalizationService.locale;
-    }else{
+    } else {
       if (appLan == "ar") {
         return Locale('ar');
-      }else{
+      } else {
         return Locale('en');
       }
     }
+  }
+
+  Future<Color> getSavedColorFromDatabase() async {
+    List<SettingItem> settingItems =
+        await CtsSettingsDatabase.instance.readAllNotes();
+    Color? color;
+    if (settingItems.isNotEmpty) {
+      color = settingItems[0].color.toColor();
+      Get.find<MController>().setChangeColorImmediately(true);
+    } else {
+      color = Get.find<MController>().appcolor;
+    }
+    // return createMaterialColor(color!);
+    return color!;
   }
 }

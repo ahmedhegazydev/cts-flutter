@@ -155,7 +155,9 @@ update();
    getDashboardStats();
 
     _logindata = secureStorage.readSecureJsonData(AllStringConst.LogInData);
-    data = LoginModel.fromJson(_logindata!);
+    if(_logindata != null){
+      data = LoginModel.fromJson(_logindata!);
+    }
 
     //Get.find<SearchController>().getAllData();
     // getFindRecipientData();

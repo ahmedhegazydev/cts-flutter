@@ -10,7 +10,7 @@ import '../json_model/find_recipient_model.dart';
 class FindRecipient extends ApiManager{
   String data="";
 
-  FindRecipient(BuildContext context) : super(context: context);
+  FindRecipient(BuildContext? context) : super();
   @override
   String apiUrl() {
     return SettingsApp.FindRecipientUrl+data;

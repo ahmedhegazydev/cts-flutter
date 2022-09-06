@@ -9,7 +9,7 @@ class SettingsFields {
     // number,
     baseUrl,
     language,
-    // time
+    color
   ];
 
   static final String id = '_id';
@@ -17,7 +17,7 @@ class SettingsFields {
   // static final String number = 'number';
   static final String baseUrl = 'baseUrl';
   static final String language = 'language';
-  // static final String time = 'time';
+  static final String color = 'color';
 }
 
 class SettingItem {
@@ -25,15 +25,16 @@ class SettingItem {
   // final bool isImportant;
   // final int number;
   final String baseUrl;
+  final String color;
   final String language;
   // final DateTime createdTime;
 
   const SettingItem({
     this.id,
-    // required this.isImportant,
     // required this.number,
     required this.baseUrl,
     required this.language,
+    required this.color,
     // required this.createdTime,
   });
 
@@ -43,6 +44,7 @@ class SettingItem {
     // int? number,
     String? baseUrl,
     String? language,
+    String? color,
     // DateTime? createdTime,
   }) =>
       SettingItem(
@@ -51,6 +53,7 @@ class SettingItem {
         // number: number ?? this.number,
         baseUrl: baseUrl ?? this.baseUrl,
         language: language ?? this.language,
+        color: color ?? this.color,
         // createdTime: createdTime ?? this.createdTime,
       );
 
@@ -60,6 +63,7 @@ class SettingItem {
         // number: json[NoteFields.number] as int,
     baseUrl: json[SettingsFields.baseUrl] as String,
     language: json[SettingsFields.language] as String,
+    color: json[SettingsFields.color] as String,
         // createdTime: DateTime.parse(json[NoteFields.time] as String),
       );
 
@@ -69,6 +73,7 @@ class SettingItem {
         // NoteFields.isImportant: isImportant ? 1 : 0,
         // NoteFields.number: number,
     SettingsFields.language: language,
+    SettingsFields.color: color,
         // NoteFields.time: createdTime.toIso8601String(),
       };
 }

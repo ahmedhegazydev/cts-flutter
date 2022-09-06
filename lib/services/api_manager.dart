@@ -121,7 +121,6 @@ abstract class ApiManager {
         a.Get.snackbar("Error".tr, "${value.data["ErrorMessage"]}");
       } else {
         if (value.data["Status"] == 2) {
-          // Get.to(LoginPage());
           Get.offAll(LoginPage());
         } else {
           data = value.data;

@@ -627,24 +627,24 @@ class DocumentController extends GetxController {
 
         ));
 
-
-        Map<dynamic, dynamic> dat = jsonDecode(
-           element.annotations!);
-        print("77777777777777777=>     ${dat["ImageByte"]}");
-        Positioned(
-          top: double.tryParse(dat["Y"]),
-          left: double.tryParse(dat["X"]),
-          child: Image.memory(
-            dat["ImageByte"],
-            fit: BoxFit.fill,
-            width: double.tryParse(dat["Width"]),
-            height:
-            double.tryParse(dat["Height"]),
-          ),
-        );
+log(element.annotations!);
+        // Map<dynamic, dynamic> dat = jsonDecode(
+        //    element.annotations!);
+        // print("77777777777777777=>     ${dat["ImageByte"]}");
+        // Positioned(
+        //   top: double.tryParse(dat["Y"]),
+        //   left: double.tryParse(dat["X"]),
+        //   child: Image.memory(
+        //     dat["ImageByte"],
+        //     fit: BoxFit.fill,
+        //     width: double.tryParse(dat["Width"]),
+        //     height:
+        //     double.tryParse(dat["Height"]),
+        //   ),
+        // );
         //
 
-
+update();
       }
 
       if (element.isOriginalMail == false) {

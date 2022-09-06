@@ -30,7 +30,7 @@ class LoginController extends GetxController {
     update();
   }
   logIngRequst(
-  // { required context}
+ //  { required context}
   ) {
     if (loginFormKey.currentState!.validate()) {
       islogin = true;
@@ -62,7 +62,7 @@ class LoginController extends GetxController {
 
     try {
       await logInApi.getData(
-          // context: context
+         // context: context
       ).then((value) async {
         if (value != null) {
           LoginModel loginModel = value as LoginModel;
@@ -108,10 +108,16 @@ class LoginController extends GetxController {
 
           Get.offNamed("/Landing");
         }
+      }).catchError((err){
+        islogin = false;
+        update();
+
       });
       islogin = false;
       update();
     } catch (error) {
+      islogin = false;
+      update();
       print(error.toString());
     }
   }

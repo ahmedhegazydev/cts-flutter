@@ -231,7 +231,15 @@ class LandingPage extends GetWidget<LandingPageController> {
                           // tileColor: _items[index].isOdd ? oddItemColor : evenItemColor,
                           onLongPress:
                               !(basket.canBeReOrder ?? false) ? () {} : null,
-                          onTap: !(basket.canBeReOrder ?? false) ? () {} : null,
+                          onTap: !(basket.canBeReOrder ?? false) ? () {
+                            // Get.find<BasketController>().getBasketInbox(
+                            //     id: inboxController
+                            //         .fetchBasketListModel!
+                            //         .baskets![pos]
+                            //         .iD!,
+                            //     pageSize: 20,
+                            //     pageNumber: 0, context: null);
+                          } : null,
                           enabled: !(basket.canBeReOrder ?? false),
                           enableFeedback: !(basket.canBeReOrder ?? false),
                           title: Card(

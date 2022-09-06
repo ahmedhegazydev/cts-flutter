@@ -33,7 +33,10 @@ class ReplyWithVoiceNoteRequestModel  {
     data['VoiceNote']   = this.voiceNote;
     data['VoiceNoteExt']   = this.voiceNoteExt;
     data[ 'VoiceNotePrivate']  = this.voiceNotePrivate;
-    data[ 'actionType']  = this.actionType;
+    if(this.actionType!=null){
+      data[ 'actionType']  = this.actionType;
+    }
+
      return data;
   }
 

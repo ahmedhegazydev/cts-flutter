@@ -535,7 +535,7 @@ class LoginPage extends GetWidget<LoginController> {
                   children: [
                     // Spacer(),
                     Padding(
-                        padding: EdgeInsets.only(right: 60, left: 60),
+                        padding:  orientation == Orientation.landscape? EdgeInsets.only(right: 60, left: 60): EdgeInsets.only(right: 20, left: 20),
 
                         child: Column(mainAxisAlignment: MainAxisAlignment.center,crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -563,7 +563,7 @@ class LoginPage extends GetWidget<LoginController> {
                                 : SizedBox(
                                     height: 10,
                                   ),
-                            SizedBox(width: size.width*.3,
+                            SizedBox(width: size.width*.6,
                               child: CustomInputTextFiled(
                                   validator:
                                       controller.validators.userNameValidator,
@@ -577,7 +577,7 @@ class LoginPage extends GetWidget<LoginController> {
                                 : SizedBox(
                                     height: 8,
                                   ),
-                            SizedBox(width: size.width*.3,
+                            SizedBox(width:     size.width*.6 ,
                               child: CustomInputTextFiled(
                                   validator:
                                       controller.validators.passWordValidator,
@@ -588,9 +588,9 @@ class LoginPage extends GetWidget<LoginController> {
                             Padding(
                               padding: orientation == Orientation.landscape
                                   ? EdgeInsets.only(
-                                      top: 50.0, left: 0, right: 0)
+                                      top: 25.0, left: 0, right: 0)
                                   : EdgeInsets.only(
-                                      top: 30.0, left: 0, right: 0),
+                                      top: 15.0, left: 0, right: 0),
                               child: Container(
                                 width: double.infinity,
                                 height: 50,
@@ -605,7 +605,7 @@ class LoginPage extends GetWidget<LoginController> {
 
                                   children: [
 
-                                    SizedBox(width: size.width*.2,
+                                    SizedBox(width: orientation == Orientation.landscape? size.width*.2:size.width*.4,
                                       child: CustomButton(
                                           onPressed: controller.logIngRequst,
                                           name: "login".tr),

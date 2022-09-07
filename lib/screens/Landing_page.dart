@@ -738,11 +738,21 @@ class LandingPage extends GetWidget<LandingPageController> {
                             topRight: Radius.circular(20))),
                     child: Column(
                       children: [
-                        Text("favoritesUsers".tr,
+                        Row(children: [   Text("favoritesUsers".tr,
                             style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24,
-                            )),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24,color:  Theme.of(context).colorScheme.primary
+                            )),Spacer(),  InkWell(onTap: (){
+                          Navigator.pop(
+                              context);
+                        },
+                          child: Image.asset(
+                            'assets/images/close_button.png',
+                            width: 20,
+                            height: 20,
+                          ),
+                        ),]),
+
                         SizedBox(
                           height: 10,
                         ),
@@ -785,7 +795,7 @@ class LandingPage extends GetWidget<LandingPageController> {
 
                                   controller.updateselectFavusers(v);
                                   controller.addFavoriteRecipients(addFavorite:v.id! ,context: context);
-                               //   controller.textEditingControllerTo.clear();
+                                  controller.textEditingControllerTo.clear();
                                   // v
                                   // .cLASNAMEDISPLAY;
                                   // Navigator.of(context).push(MaterialPageRoute(
@@ -801,47 +811,52 @@ class LandingPage extends GetWidget<LandingPageController> {
                         ),
                         GetBuilder<LandingPageController>(builder: (logic) {
                           return Expanded(
-                            child: ListView.builder(
+                            child: ListView.separated(    separatorBuilder: (context, index) => const Divider(),
                                 itemCount: controller.favoriteRecipientsResponse
-                                    ?.recipients?.length,
+                                    ?.recipients?.length??0,
                                 itemBuilder: (context, pos) {
-                                  return Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Container(
-                                          width: 30,
-                                          height: 30,
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              image: controller
-                                                      .favoriteRecipientsResponse!
-                                                      .recipients![pos]
-                                                      .targetPhotoBs64!
-                                                      .isNotEmpty
-                                                  ? DecorationImage(
-                                                      image: MemoryImage(
-                                                          u.dataFromBase64String(controller
-                                                              .favoriteRecipientsResponse!
-                                                              .recipients![pos]
-                                                              .targetPhotoBs64!)))
-                                                  : DecorationImage(
-                                                      image: AssetImage(
-                                                          "assets/images/pr.jpg"))),
-                                        ),
-                                      ),
+                                  return Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Card(elevation: 5,
+                                      child: Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(4.0),
+                                            child: Container(
+                                              width: 30,
+                                              height: 30,
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  image: controller
+                                                          .favoriteRecipientsResponse!
+                                                          .recipients![pos]
+                                                          .targetPhotoBs64!
+                                                          .isNotEmpty
+                                                      ? DecorationImage(
+                                                          image: MemoryImage(
+                                                              u.dataFromBase64String(controller
+                                                                  .favoriteRecipientsResponse!
+                                                                  .recipients![pos]
+                                                                  .targetPhotoBs64!)))
+                                                      : DecorationImage(
+                                                          image: AssetImage(
+                                                              "assets/images/pr.jpg"))),
+                                            ),
+                                          ),
                                 Expanded(
-                                  child: Text(controller
-                                      .favoriteRecipientsResponse!
-                                      .recipients![pos]
-                                      .targetName??"",maxLines: 3),
+                                      child: Text(controller
+                                          .favoriteRecipientsResponse!
+                                          .recipients![pos]
+                                          .targetName??"",),
                                 )   ,Spacer(),InkWell(onTap: (){
 controller.removeFavoriteRecipients(context: context,favoriteRecipients:controller
     .favoriteRecipientsResponse!
     .recipients![pos].ufrId );
 
-                                      print(" i removeeeeeeeeeeeeeeeeeeeeee");
-                                      },child: Icon(Icons.delete)) ],
+                                          print(" i removeeeeeeeeeeeeeeeeeeeeee");
+                                          },child: Icon(Icons.delete)) ],
+                                      ),
+                                    ),
                                   );
                                 }),
                           );
@@ -907,17 +922,22 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Center(
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 8.0,bottom: 8),
-                                child: Text("myDelegations".tr,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold, fontSize: 24,color: Theme.of(context)
-                                        .colorScheme
-                                        .primary)),
-                              ),
-                            ),
                             Row(
+                              children: [
+                                Text("myDelegations".tr,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold, fontSize: 20,color: Theme.of(context)
+                                        .colorScheme
+                                        .primary)),Spacer(),
+                                InkWell(onTap: (){
+                                  Get.back();
+                                },child: Image.asset(
+                                  'assets/images/close_button.png',
+                                  width: 20,
+                                  height: 20,
+                                ),)    ],
+                            ),
+                         SizedBox(height: 10,),   Row(
                               children: [
                                 Expanded(
                                   child: TypeAheadField<Destination>(
@@ -1906,14 +1926,20 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                         children: [
                           
                           
-                          Row(children: [InkWell(onTap: (){
+                          Row(children: [ Text("favoritesUsers".tr,
+                              style:TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 24,color:  Theme.of(context).colorScheme.primary
+                              )),Spacer(),
+
+                            InkWell(onTap: (){
                             Get.back();
-                          },child: Icon(Icons.clear))]),
-                          Text("favoritesUsers".tr,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 24,
-                              )),
+                          },child: Image.asset(
+                              'assets/images/close_button.png',
+                              width: 20,
+                              height: 20,
+                            ),)]),
+
                           SizedBox(
                             height: 10,
                           ),
@@ -1973,47 +1999,52 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                           ),
                           GetBuilder<LandingPageController>(builder: (logic) {
                             return Expanded(
-                              child: ListView.builder(
+                              child: ListView.separated(  separatorBuilder: (context, index) => const Divider(),
                                   itemCount: controller.favoriteRecipientsResponse
-                                      ?.recipients?.length,
+                                      ?.recipients?.length??0,
                                   itemBuilder: (context, pos) {
-                                    return Row(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(4.0),
-                                          child: Container(
-                                            width: 30,
-                                            height: 30,
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                image: controller
-                                                    .favoriteRecipientsResponse!
-                                                    .recipients![pos]
-                                                    .targetPhotoBs64!
-                                                    .isNotEmpty
-                                                    ? DecorationImage(
-                                                    image: MemoryImage(
-                                                        u.dataFromBase64String(controller
-                                                            .favoriteRecipientsResponse!
-                                                            .recipients![pos]
-                                                            .targetPhotoBs64!)))
-                                                    : DecorationImage(
-                                                    image: AssetImage(
-                                                        "assets/images/pr.jpg"))),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Text(controller
-                                              .favoriteRecipientsResponse!
-                                              .recipients![pos]
-                                              .targetName??"",maxLines: 3),
-                                        )   ,Spacer(),InkWell(onTap: (){
-                                          controller.removeFavoriteRecipients(context: context,favoriteRecipients:controller
-                                              .favoriteRecipientsResponse!
-                                              .recipients![pos].ufrId );
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Card(elevation:8 ,
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.all(4.0),
+                                              child: Container(
+                                                width: 30,
+                                                height: 30,
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    image: controller
+                                                        .favoriteRecipientsResponse!
+                                                        .recipients![pos]
+                                                        .targetPhotoBs64!
+                                                        .isNotEmpty
+                                                        ? DecorationImage(
+                                                        image: MemoryImage(
+                                                            u.dataFromBase64String(controller
+                                                                .favoriteRecipientsResponse!
+                                                                .recipients![pos]
+                                                                .targetPhotoBs64!)))
+                                                        : DecorationImage(
+                                                        image: AssetImage(
+                                                            "assets/images/pr.jpg"))),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Text(controller
+                                                  .favoriteRecipientsResponse!
+                                                  .recipients![pos]
+                                                  .targetName??"",maxLines: 3),
+                                            )   ,Spacer(),InkWell(onTap: (){
+                                              controller.removeFavoriteRecipients(context: context,favoriteRecipients:controller
+                                                  .favoriteRecipientsResponse!
+                                                  .recipients![pos].ufrId );
 
-                                          print(" i removeeeeeeeeeeeeeeeeeeeeee");
-                                        },child: Icon(Icons.delete)) ],
+                                              print(" i removeeeeeeeeeeeeeeeeeeeeee");
+                                            },child: Icon(Icons.delete)) ],
+                                        ),
+                                      ),
                                     );
                                   }),
                             );
@@ -2070,17 +2101,20 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8.0,bottom: 8),
-                              child: Container( width: double.infinity,
-                                child: Expanded(
-                                  child: Text("myDelegations".tr,maxLines: 2,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold, fontSize: 24,color: Theme.of(context)
-                                          .colorScheme
-                                          .primary)),
-                                ),
-                              ),
+                            Row(
+                              children: [
+                                Text("myDelegations".tr,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold, fontSize: 20,color: Theme.of(context)
+                                        .colorScheme
+                                        .primary)),Spacer(),
+                                InkWell(onTap: (){
+                                  Get.back();
+                                },child: Image.asset(
+                                  'assets/images/close_button.png',
+                                  width: 20,
+                                  height: 20,
+                                ),)    ],
                             ),
                             Row(
                               children: [

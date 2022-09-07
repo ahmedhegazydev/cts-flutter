@@ -7,8 +7,8 @@ import '../controllers/web_view_controller.dart';
 class LandingPageBinding extends Bindings {
   @override
   void dependencies() {
-     Get.put( LandingPageController()) ;
-     Get.put(CreateBasketController());
+     Get.put( LandingPageController(),permanent: true) ;
+     Get.put(CreateBasketController(),permanent: true);
 
      Get.put(WebViewPageController());
 

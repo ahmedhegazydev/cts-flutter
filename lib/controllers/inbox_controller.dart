@@ -115,6 +115,15 @@ int?nodeId=0;
 
   String completeNote = "";
   String replyNote = "";
+  bool isPrivate=true;
+
+  updateISPrivate(v){
+    isPrivate =v;
+    update( ["pr"]);
+  }
+
+
+
   CustomActions? completeCustomActions;
 
   int? valueOfRadio = 1;
@@ -644,13 +653,23 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
   File? recordFile;
 
   Future record2() async {
-    await Permission.storage.request();
-    await Permission.manageExternalStorage.request();
-    final stats = await Permission.microphone.request();
+    final statsstorage = await Permission.storage.request();
+    final statsmanageExternalStorage= await Permission.manageExternalStorage.request();
+    final statsmicrophone = await Permission.microphone.request();
 
-    if (stats != PermissionStatus.granted) {
+    if (statsmicrophone != PermissionStatus.granted) {
       throw RecordingPermissionException("Microphone Permission");
     }
+    if (statsstorage != PermissionStatus.granted) {
+      throw RecordingPermissionException("storage Permission");
+    }
+    if (statsmanageExternalStorage != PermissionStatus.granted) {
+      throw RecordingPermissionException("manageExternalStorage Permission");
+    }
+
+
+
+
     audioRecorder = FlutterSoundRecorder();
     audioPlayer = FlutterSoundPlayer();
     // audioRecorder!.openAudioSession();

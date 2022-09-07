@@ -6,6 +6,6 @@ import '../controllers/inbox_controller.dart';
 class InboxBinding extends Bindings {
   @override
   void dependencies() {
-     Get.put(  InboxController(),permanent: true) ;
+     Get.lazyPut(()=>  InboxController(),fenix: true) ;
   }
 }

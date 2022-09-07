@@ -6,12 +6,12 @@ const Map<String, String> ar = {
   "login": "تسجيل الدخول",
   "mySignatures": "تواقيعي",
   "favoritesUsers": "المستخدمين المفضلين",
-  "myDelegations": "اعادة توجيه\n المراسلات",
+  "myDelegations": "اعادة توجيه المراسلات",
   "appTheme": "سمات التطبيق",
   "logout": "تسجيل الخروج",
   "hello": "مرحبًا",
-  "unreadCorrespondences": "مراسلات \nغير مقروءة",
-  "pendingCorrespondences": "مراسلات\n تنتظر الإجراء",
+  "unreadCorrespondences": "مراسلات  غير مقروءة",
+  "pendingCorrespondences": "مراسلات تنتظر الإجراء",
   "myTransfersInMonth": "إحالاتي في شهر",
   "mostMyTransferWentTo": "أغلب إحالاتي ذهبت ل",
   "flagged": "المحفوظات",
@@ -132,5 +132,7 @@ const Map<String, String> ar = {
   "relogin":"برجاء اعاده تسجيل الدخول",
   "canotopen":"غير مسموح لك فتح الملف",
 
-
+"err":"حدث خطأ في الاتصال برجاء المحاولة مره اخري",
+"private":"خاص",
+  "send":"ارسال"
 };

@@ -61,8 +61,8 @@ abstract class ApiManager {
       }
       // Get.back();
       if (value.data["Status"] == 0) {
-        // a.Get.snackbar("Error".tr, "${value.data["ErrorMessage"]}");
-        a.Get.snackbar("Error".tr, "tryAgain".tr);
+        a.Get.snackbar("Error".tr, "${value.data["ErrorMessage"]}");
+        // a.Get.snackbar("Error".tr, "tryAgain".tr);
       } else if (value.data["Status"] == 2){
           a.Get.snackbar("Error".tr, "SessionExpired".tr);
           secureStorage.deleteSecureData(AllStringConst.Token);
@@ -117,8 +117,8 @@ abstract class ApiManager {
         // Navigator.pop(context!);
       } // Get.back();
       if (value.data["Status"] == 0) {
-        // a.Get.snackbar("Error".tr, "${value.data["ErrorMessage"]}");
-        a.Get.snackbar("Error".tr, "tryAgain".tr);
+        a.Get.snackbar("Error".tr, "${value.data["ErrorMessage"]}");
+        // a.Get.snackbar("Error".tr, "tryAgain".tr);
       } else {
         if (value.data["Status"] == 2) {
           a.Get.snackbar("Error".tr, "SessionExpired".tr);

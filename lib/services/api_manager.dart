@@ -106,8 +106,10 @@ abstract class ApiManager {
     );
 
     this.settingItems = await CtsSettingsDatabase.instance.readAllNotes();
-    var storageBaseUrl = settingItems[0].baseUrl;
-    print("storageBaseUrl = " + storageBaseUrl);
+    if (settingItems.isNotEmpty) {
+      storageBaseUrl = settingItems[0].baseUrl;
+      print("storageBaseUrl = " + storageBaseUrl);
+    }
 
     //showLoaderDialog(context!);
     await dioSingleton.dio

@@ -228,12 +228,16 @@ class DocumentController extends GetxController {
   multipleTransferspost({context, correspondenceId, transferId}) {
     List<TransferNode> transfers = [];
     MultipleTransfersAPI _multipleTransfersAPI = MultipleTransfersAPI(context);
-    transfarForMany.forEach((key, value) {
+    recordingMap.forEach((key, value)async {
+
+      String? audioFileBes64 =
+          await audiobase64String(
+          file: value);
       TransferNode transferNode = TransferNode(
           destinationId: key.toString(),
           purposeId: value.correspondencesId!,
           dueDate: canOpenDocumentModel!.correspondence!.docDueDate!,
-          voiceNote: value.voiceNote!,
+          voiceNote: audioFileBes64!,
           voiceNoteExt: "m4a");
       print("transferNode=>  ${transferNode.toMap()}");
 

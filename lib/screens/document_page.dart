@@ -1391,7 +1391,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                   print("i click ok");
                   print(
                       "Get.find<InboxController>().   =>   ${controller
-                          .transfarForMany.length}");
+                          .recordingMap.length}");
                   controller.multipleTransferspost(
                       context: context,
                       transferId: controller

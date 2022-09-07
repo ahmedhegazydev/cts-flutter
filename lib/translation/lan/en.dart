@@ -1,5 +1,6 @@
 const Map<String, String> en = {
-  "Error": "Error",
+  "Error": "Error occurred",
+  "tryAgain": "Please try again later",
   "appTitle": "Correspondence Tracking System",
   "name": "Name",
   "password": "Password",
@@ -140,4 +141,6 @@ const Map<String, String> en = {
   ,
   "private":"private"
   , "send":"Send"
+  , "WrongUsername":"Wrong username or password"
+  ,   "SessionExpired": "Your session has been expired",
 };

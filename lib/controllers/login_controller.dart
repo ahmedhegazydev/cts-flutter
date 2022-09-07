@@ -9,6 +9,7 @@ import '../services/apis/log_api.dart';
 import '../services/json_model/login_model.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
+import '../utility/utilitie.dart';
 import '../utility/validator.dart';
 import 'landing_page_controller.dart';
 
@@ -61,6 +62,7 @@ class LoginController extends GetxController {
         'userCode=${userName.text}&password=$encryptedPassword&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&includeIcons=true';
 
     try {
+      showLoaderDialog(context!);
       await logInApi.getData(
          // context: context
       ).then((value) async {
@@ -107,11 +109,13 @@ class LoginController extends GetxController {
 
 
           Get.offNamed("/Landing");
+        }else{
+          Get.snackbar("Error".tr, "WrongUsername".tr);
+          Navigator.pop(context!);
         }
       }).catchError((err){
         islogin = false;
         update();
-
       });
       islogin = false;
       update();

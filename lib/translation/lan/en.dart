@@ -140,4 +140,6 @@ const Map<String, String> en = {
   ,
   "private":"private"
   , "send":"Send"
+  ,
+  "nofiletoopen":"there's no file to play"
 };

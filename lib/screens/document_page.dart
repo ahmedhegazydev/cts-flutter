@@ -17,6 +17,7 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import '../controllers/document_controller.dart';
 import '../controllers/main_controller.dart';
 import '../controllers/web_view_controller.dart';
+import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/inopendocModel/g2g/g2g_Info_for_export_model.dart';
 import '../services/json_model/inopendocModel/g2g/g2g_export_dto.dart';
 import '../services/json_model/inopendocModel/save_document_annotation_model.dart';
@@ -976,7 +977,8 @@ class DocumentPage extends GetWidget<DocumentController> {
   }
 
 
-  _popUpMenu(context) {
+  _popUpMenu(context) async {
+    await controller.listFavoriteRecipients(context: context);
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -998,7 +1000,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                     style: Theme
                         .of(context)
                         .textTheme
-                        .headline3!
+                        .headlineMedium!
                         .copyWith(
                         color: Colors.black.withOpacity(.5),
                         fontSize: 18, fontWeight: FontWeight.bold
@@ -1039,9 +1041,11 @@ class DocumentPage extends GetWidget<DocumentController> {
                       child: GetBuilder<DocumentController>(builder: (logic) {
                         return ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: controller.users.length+1,
+                            itemCount: (controller.favoriteRecipientsResponse
+                                ?.recipients?.length ?? 0) + 1,
                             itemBuilder: (context, pos) {
-                              if (pos == controller.users.length) {
+                              if (pos == (controller.favoriteRecipientsResponse
+                                  ?.recipients?.length ?? 0)) {
                                 return
 
 
@@ -1058,36 +1062,66 @@ class DocumentPage extends GetWidget<DocumentController> {
                                 return
 
 
-                                  InkWell(onTap: () {
-                                    if (!controller.usersWillSendTo
-                                        .contains(logic.users[pos])) {
-                                      controller.addTousersWillSendTo(
-                                          user: logic.users[pos]);
-                                      controller
-                                          .SetMultipleReplyWithVoiceNoteRequestModel(
-                                          correspondencesId:
-                                          controller
-                                              .correspondences
-                                              .correspondenceId!,
-                                          transferId: controller
-                                              .correspondences
-                                              .transferId!,
-                                          id: 55);
-                                    }
-                                  },
-                                    child: Container(padding: EdgeInsets.all(8),
-                                      decoration: BoxDecoration(shape: BoxShape
-                                          .circle,
-                                          color: Theme
-                                              .of(context)
-                                              .colorScheme
-                                              .primary,
-                                          image: DecorationImage(
-                                              image: AssetImage(
-                                                "assets/images/pr.jpg",),
-                                              fit: BoxFit.cover)),
-                                      height: 75,
-                                      width: 75,),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: InkWell(onTap: () {
+                                      Destination user = Destination(
+                                          value: controller
+                                              .favoriteRecipientsResponse!
+                                              .recipients![pos].targetName, id
+                                          :controller
+                                          .favoriteRecipientsResponse!
+                                          .recipients![pos].ufrId);
+                                      controller.addTousersWillSendTo(user:user);
+                                    },
+                                      child: Card(elevation: 8,
+                                        child: Row(
+                                          children: [
+                                            controller
+                                                .favoriteRecipientsResponse!
+                                                .recipients![pos]
+                                                .targetPhotoBs64!.trim()
+                                                .isEmpty ? Container(
+                                              padding: EdgeInsets.all(8),
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape
+                                                      .circle,
+                                                  color: Theme
+                                                      .of(context)
+                                                      .colorScheme
+                                                      .primary,
+                                                  image: DecorationImage(
+                                                      image: AssetImage(
+                                                        "assets/images/pr.jpg",),
+                                                      fit: BoxFit.cover)),
+                                              height: 75,
+                                              width: 75,) :
+                                            Container(
+                                              padding: EdgeInsets.all(8),
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape
+                                                      .circle,
+                                                  color: Theme
+                                                      .of(context)
+                                                      .colorScheme
+                                                      .primary,
+                                                  image: DecorationImage(
+                                                      image: MemoryImage(
+                                                          dataFromBase64String(
+                                                              controller
+                                                                  .favoriteRecipientsResponse!
+                                                                  .recipients![pos]
+                                                                  .targetPhotoBs64!)),
+                                                      fit: BoxFit.cover)),
+                                              height: 75,
+                                              width: 75,),
+                                            Text(controller
+                                                .favoriteRecipientsResponse!
+                                                .recipients![pos].targetName!)
+                                          ],
+                                        ),
+                                      ),
+                                    ),
                                   );
                               }
 
@@ -1222,17 +1256,11 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                               .usersWillSendTo[
                                                           pos]
                                                               .id),
-                                                      icon: const Icon(
-                                                          Icons.arrow_downward),
+                                                      // icon: const Icon(
+                                                      //     Icons.arrow_downward),
                                                       elevation: 16,
-                                                      style: const TextStyle(
-                                                          color: Colors
-                                                              .deepPurple),
-                                                      underline: Container(
-                                                        height: 2,
-                                                        color: Colors
-                                                            .deepPurpleAccent,
-                                                      ),
+
+                                                      underline: SizedBox(),
                                                       hint: Text("اختار"),
                                                       onChanged: (CustomActions?
                                                       newValue) {
@@ -1277,15 +1305,15 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                             onTap: () async {
                                                               ///To Do Start and stop rec
                                                               controller
-                                                                  .recording
+                                                                  .record.isRecording
                                                                   ? controller
-                                                                  .stopForMany(
-                                                                  id: logic
-                                                                      .usersWillSendTo[
-                                                                  pos]
-                                                                      .id!)
+                                                                  .stopMathod(
+                                                                 )
                                                                   : controller
-                                                                  .recordForMany();
+                                                                  .recordMathod( id:logic
+                                                                  .usersWillSendTo[
+                                                              pos]
+                                                                  .id );
                                                             },
                                                             child: Padding(
                                                               padding:
@@ -1297,7 +1325,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                                       (logic) {
                                                                     return Icon(
                                                                         controller
-                                                                            .recording
+                                                                            .record.isRecording
                                                                             ? Icons
                                                                             .stop
                                                                             : Icons
@@ -1312,7 +1340,10 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                             child: InkWell(
                                                               onTap: () {
                                                                 controller
-                                                                    .playRec();
+                                                                    .playMathod(id:logic
+                                                                    .usersWillSendTo[
+                                                                pos]
+                                                                    .id  );
                                                               },
                                                               child: Icon(Icons
                                                                   .play_arrow),

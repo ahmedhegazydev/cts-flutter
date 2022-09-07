@@ -329,9 +329,21 @@ int?nodeId=0;
 
 
 
-    final status =await Permission.microphone.request();
-    if(status!=PermissionStatus.granted){
+    final statusmicrophone =await Permission.microphone.request();
+    final statusstorage =await Permission.storage.request();
+    final statusmanageExternalStorage =await Permission.manageExternalStorage.request();
+
+    await Permission.storage.request();
+    await Permission.manageExternalStorage.request();
+
+    if(statusmicrophone!=PermissionStatus.granted){
       throw "Microphone permission not granted";
+    }
+    if(statusstorage!=PermissionStatus.granted){
+      throw "storage permission not granted";
+    }
+    if(statusmanageExternalStorage!=PermissionStatus.granted){
+      throw " manageExternalStorage permission not granted";
     }
     await record.openRecorder();
   }

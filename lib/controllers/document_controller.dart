@@ -20,6 +20,7 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import '../models/CorrespondencesModel.dart';
 import '../models/DocumentModel.dart';
 import '../screens/resize_sing.dart';
+import '../services/apis/favorites/ListFavoriteRecipients_api.dart';
 import '../services/apis/find_recipient_api.dart';
 import '../services/apis/inOpenDocument/GetAttachmentItem_api.dart';
 import '../services/apis/inOpenDocument/get_document_audit_logs_api.dart';
@@ -39,6 +40,7 @@ import '../services/apis/inside_doc/is_already_exported_as_transfer_api.dart';
 import '../services/apis/multiple_transfers_api.dart';
 import '../services/apis/save_document_annotations_api.dart';
 import '../services/json_model/can_open_document_model.dart';
+import '../services/json_model/favorites/list_all/ListFavoriteRecipients_response.dart';
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_correspondences_model.dart';
 import '../services/json_model/get_document_links_model.dart';
@@ -960,7 +962,7 @@ class DocumentController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    print(" i get startonInitonInitonInitonInit ");
+    initRecorder();
 
     genratG2GExportDto();
     g2GInfoForExport();
@@ -1485,6 +1487,101 @@ class DocumentController extends GetxController {
         break;
     }
   }
+
+
+
+
+
+
+
+
+
+
+  //الجديد في الارسال الي الكل
+
+
+  //Favorites user
+  ListFavoriteRecipientsResponse? favoriteRecipientsResponse;
+  Future listFavoriteRecipients({context}) async {
+
+    ListFavoriteRecipientsApi listFavoriteRecipientsApi =
+    ListFavoriteRecipientsApi(context);
+    listFavoriteRecipientsApi.data =
+    "Token=${secureStorage.token()}&Language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+    await listFavoriteRecipientsApi
+        .getData()
+        .then((value) {
+      if(value!=null){
+        favoriteRecipientsResponse = value as ListFavoriteRecipientsResponse;
+      }else{
+        Get.snackbar("", "err".tr);
+      }
+
+
+      // print("listFavoriteRecipientsApi  =>${favoriteRecipientsResponse?.recipients[0].targetPhotoBs64.isEmpty}");
+    });
+    update(); }
+
+//التسجيل الجديد
+
+
+Map<int,dynamic>recordingMap={};
+
+
+  Future initRecorder() async{
+
+
+
+
+    final statusmicrophone =await Permission.microphone.request();
+    final statusstorage =await Permission.storage.request();
+    final statusmanageExternalStorage =await Permission.manageExternalStorage.request();
+
+    await Permission.storage.request();
+    await Permission.manageExternalStorage.request();
+
+    if(statusmicrophone!=PermissionStatus.granted){
+      throw "Microphone permission not granted";
+    }
+    if(statusstorage!=PermissionStatus.granted){
+      throw "storage permission not granted";
+    }
+    if(statusmanageExternalStorage!=PermissionStatus.granted){
+      throw " manageExternalStorage permission not granted";
+    }
+    await record.openRecorder();
+  }
+  final record=FlutterSoundRecorder();
+  Future recordMathod({required id})async{
+    //  await record.startRecorder(toFile: "audio");
+    appDocDir = await getApplicationDocumentsDirectory();
+    _directoryPath = appDocDir!.path +
+        '/' +
+        DateTime.now().millisecondsSinceEpoch.toString() +
+        '.mp4';
+    recording = true;
+    update(["id"]);
+recordingMap[id]=_directoryPath;
+    await record.startRecorder(codec: _codec, toFile: _directoryPath);
+  }
+  Future stopMathod()async{
+    recording = false;
+    update(["id"]);
+    recordFile = File(_directoryPath);
+    await record.stopRecorder();
+  }
+
+  Future playMathod({required id})async{
+    audioPlayer = FlutterSoundPlayer();
+    audioPlayer!.openPlayer();
+    if(recordingMap[id]!=null){
+      await audioPlayer!.startPlayer(fromURI: recordingMap[id]);
+    }else{
+      Get.snackbar("", "nofiletoopen".tr);
+    }
+
+  }
+
 }
 
 showDilog(

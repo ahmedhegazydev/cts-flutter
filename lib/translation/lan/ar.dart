@@ -134,5 +134,6 @@ const Map<String, String> ar = {
 
 "err":"حدث خطأ في الاتصال برجاء المحاولة مره اخري",
 "private":"خاص",
-  "send":"ارسال"
+  "send":"ارسال",
+  "nofiletoopen":"لا يوجد ملف للتشغيل"
 };

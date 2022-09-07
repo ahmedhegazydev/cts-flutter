@@ -44,18 +44,9 @@ abstract class ApiManager {
     // print("checkIfSavedSettingsBasUrl = $checkIfSavedSettingsBasUrl");
 
     if (context != null) {
-      showLoaderDialog(context!);
+      // showLoaderDialog(context!);
     }
 
-    // final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-    // final SharedPreferences prefs = await _prefs;
-    // var baseUrl = await prefs.getString(AllStringConst.BaseUrl) ?? "";
-    // baseUrl = _prefs.then((SharedPreferences prefs) {
-    //   return prefs.getString(AllStringConst.BaseUrl) ?? "";
-    // });
-    // print("storageBaseUrl = " + baseUrl);
-
-    // this.settingItem = await CtsSettingsDatabase.instance.readNote(0);
     this.settingItems = await CtsSettingsDatabase.instance.readAllNotes();
     if (settingItems.isNotEmpty) {
       storageBaseUrl = settingItems[0].baseUrl;
@@ -70,10 +61,10 @@ abstract class ApiManager {
       }
       // Get.back();
       if (value.data["Status"] == 0) {
-        a.Get.snackbar("Error".tr, "${value.data["ErrorMessage"]}");
+        // a.Get.snackbar("Error".tr, "${value.data["ErrorMessage"]}");
+        a.Get.snackbar("Error".tr, "tryAgain".tr);
       } else if (value.data["Status"] == 2){
-
-          a.Get.snackbar("Error".tr, "LogIn ");
+          a.Get.snackbar("Error".tr, "SessionExpired".tr);
           secureStorage.deleteSecureData(AllStringConst.Token);
           Get.offAll(LoginPage());
         } else if (value.data["Status"] == 1) {
@@ -106,8 +97,10 @@ abstract class ApiManager {
     );
 
     this.settingItems = await CtsSettingsDatabase.instance.readAllNotes();
-    var storageBaseUrl = settingItems[0].baseUrl;
-    print("storageBaseUrl = " + storageBaseUrl);
+    if (settingItems.isNotEmpty) {
+      storageBaseUrl = settingItems[0].baseUrl;
+      print("storageBaseUrl = " + storageBaseUrl);
+    }
 
     //showLoaderDialog(context!);
     await dioSingleton.dio
@@ -124,9 +117,11 @@ abstract class ApiManager {
         // Navigator.pop(context!);
       } // Get.back();
       if (value.data["Status"] == 0) {
-        a.Get.snackbar("Error".tr, "${value.data["ErrorMessage"]}");
+        // a.Get.snackbar("Error".tr, "${value.data["ErrorMessage"]}");
+        a.Get.snackbar("Error".tr, "tryAgain".tr);
       } else {
         if (value.data["Status"] == 2) {
+          a.Get.snackbar("Error".tr, "SessionExpired".tr);
           Get.offAll(LoginPage());
         } else {
           data = value.data;

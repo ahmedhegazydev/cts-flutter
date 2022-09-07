@@ -135,5 +135,11 @@ const Map<String, String> ar = {
 "err":"حدث خطأ في الاتصال برجاء المحاولة مره اخري",
 "private":"خاص",
   "send":"ارسال",
+  "Error": "حدث خطأ ما",
+  "tryAgain": "رجاء المحاوله ف وقت لاحق",
+  "SessionExpired": "لقد انتهت جلستك",
+ "WrongUsername":"مستخدم او كلمه المرور خاطئه"
+
+  "send":"ارسال",
   "nofiletoopen":"لا يوجد ملف للتشغيل"
 };

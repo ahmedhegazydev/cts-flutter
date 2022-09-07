@@ -351,7 +351,12 @@ update();
     await listFavoriteRecipientsApi
         .getData()
         .then((value) {
-      favoriteRecipientsResponse = value as ListFavoriteRecipientsResponse;
+          if(value!=null){
+            favoriteRecipientsResponse = value as ListFavoriteRecipientsResponse;
+          }else{
+            Get.snackbar("", "err".tr);
+          }
+
 
      // print("listFavoriteRecipientsApi  =>${favoriteRecipientsResponse?.recipients[0].targetPhotoBs64.isEmpty}");
     });
@@ -409,11 +414,18 @@ update();
     getFetchBasketListApi.data =
     "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     await getFetchBasketListApi.getData().then((value) {
-      fetchBasketListModel = value as FetchBasketListModel;
-      // fetchBasketListModel?.baskets?.forEach((element) {
-      //   element.orderBy = Random().nextInt(100);
-      // });
-      fetchBasketListModel?.baskets?.sort();
+
+
+      if(value!=null){
+        fetchBasketListModel = value as FetchBasketListModel;
+        // fetchBasketListModel?.baskets?.forEach((element) {
+        //   element.orderBy = Random().nextInt(100);
+        // });
+        fetchBasketListModel?.baskets?.sort();
+      }else{
+        Get.snackbar("", "err".tr);
+      }
+
 
       update();
       print(fetchBasketListModel?.toJson());
@@ -433,12 +445,17 @@ update();
 
 
     getBasketInboxApi.getData().then((value) {
+if(value!=null){
 
-      getBasketInboxModel=value as GetBasketInboxModel;
+  getBasketInboxModel=value as GetBasketInboxModel;
 
-      if((getBasketInboxModel?.correspondences?.length??0)<pageSize){
-       // haveMoreData=false;
-      }
+  if((getBasketInboxModel?.correspondences?.length??0)<pageSize){
+    // haveMoreData=false;
+  }
+
+}else{
+  Get.snackbar("", "err".tr);
+}
 
       update();
       // print(a.toJson());

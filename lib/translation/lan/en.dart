@@ -136,4 +136,7 @@ const Map<String, String> en = {
 
   "relogin":"Please re-login",
   "canotopen":"You are not allowed to open ",
+  "err":"An error occurred in connection, please try again"
+  ,
+  "private":"private"
 };

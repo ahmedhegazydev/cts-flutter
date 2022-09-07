@@ -115,6 +115,15 @@ int?nodeId=0;
 
   String completeNote = "";
   String replyNote = "";
+  bool isPrivate=true;
+
+  updateISPrivate(v){
+    isPrivate =v;
+    update( ["pr"]);
+  }
+
+
+
   CustomActions? completeCustomActions;
 
   int? valueOfRadio = 1;

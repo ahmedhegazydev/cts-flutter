@@ -139,7 +139,7 @@ const Map<String, String> ar = {
   "tryAgain": "رجاء المحاوله ف وقت لاحق",
   "SessionExpired": "لقد انتهت جلستك",
  "WrongUsername":"مستخدم او كلمه المرور خاطئه"
+,
 
-  "send":"ارسال",
   "nofiletoopen":"لا يوجد ملف للتشغيل"
 };

@@ -77,6 +77,13 @@ import 'inbox_controller.dart';
 import 'package:flutter/services.dart' as rootBundel;
 
 class DocumentController extends GetxController {
+
+
+  final record=FlutterSoundRecorder();
+
+
+
+
 //Map<int,String>folder={};
   bool notoragnalFileDoc = false;
 
@@ -1537,22 +1544,20 @@ Map<int,dynamic>recordingMap={};
     final statusstorage =await Permission.storage.request();
     final statusmanageExternalStorage =await Permission.manageExternalStorage.request();
 
-    await Permission.storage.request();
-    await Permission.manageExternalStorage.request();
-
     if(statusmicrophone!=PermissionStatus.granted){
-      throw "Microphone permission not granted";
+      Permission.microphone.request();
     }
     if(statusstorage!=PermissionStatus.granted){
-      throw "storage permission not granted";
+      await Permission.storage.request();
     }
     if(statusmanageExternalStorage!=PermissionStatus.granted){
-      throw " manageExternalStorage permission not granted";
+      Permission.manageExternalStorage.request();
     }
     await record.openRecorder();
   }
-  final record=FlutterSoundRecorder();
+
   Future recordMathod({required id})async{
+    await record.openRecorder();
     //  await record.startRecorder(toFile: "audio");
     appDocDir = await getApplicationDocumentsDirectory();
     _directoryPath = appDocDir!.path +

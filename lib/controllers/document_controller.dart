@@ -241,6 +241,7 @@ class DocumentController extends GetxController {
           voiceNoteExt: "m4a");
       print("transferNode=>  ${transferNode.toMap()}");
 
+
       transfers.add(transferNode);
     });
 

@@ -139,4 +139,5 @@ const Map<String, String> en = {
   "err":"An error occurred in connection, please try again"
   ,
   "private":"private"
+  , "send":"Send"
 };

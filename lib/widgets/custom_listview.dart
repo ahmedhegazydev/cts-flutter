@@ -13,7 +13,7 @@ import '../utility/all_const.dart';
 import '../utility/utilitie.dart';
 import 'custom_button_with_icon.dart';
 
-class CustomListView extends StatelessWidget {
+class CustomListView extends GetView<InboxController> {
   CustomListView({required this.function,
     required this.allCorrespondences,
     required this.correspondences,
@@ -4987,6 +4987,7 @@ class CustomListView extends StatelessWidget {
                                           // print("*" * 50);
 
                                           if (v == 1) {
+                                          controller.isPrivate=true;
                                             showDialog(
                                               context: context,
                                               builder: (ctx) =>
@@ -5110,7 +5111,7 @@ class CustomListView extends StatelessWidget {
                                                                             .tr),
                                                                     GetBuilder<
                                                                         InboxController>(id: "pr",
-                                                                      assignId: true,
+                                                                      assignId: true,autoRemove: false,
                                                                       builder: (
                                                                           logic) {
                                                                         return Checkbox(
@@ -5379,7 +5380,8 @@ class CustomListView extends StatelessWidget {
                                                           Navigator.of(ctx)
                                                               .pop();
                                                         },
-                                                        child: Text("Ok"),
+                                                        child: Text("send".tr,style:
+                                                        TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
                                                       ),
                                                     ],
                                                   ),

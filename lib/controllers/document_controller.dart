@@ -1064,10 +1064,10 @@ class DocumentController extends GetxController {
     update();
   }
 
-  setNots({required int id, String? not}) {
-    transfarForMany[id]?.notes = not;
-    update();
-  }
+  // setNots({required int id, String? not}) {
+  //   transfarForMany[id]?.notes = not;
+  //   update();
+  // }
 
   deltransfarForMany({required int id}) {
     transfarForMany.remove(id);
@@ -1531,6 +1531,10 @@ class DocumentController extends GetxController {
 
 //التسجيل الجديد
 
+  setNots({required int id, String? not}) {
+    transfarForMany[id]?.notes = not;
+    update();
+  }
 
 Map<int,dynamic>recordingMap={};
 

@@ -67,80 +67,66 @@ const Map<String, String> en = {
   "emptyInboxList": "empty mail list",
   "referDate": "Refer Date",
   "emptylist": "There is no search result",
-
-
   "english_name": "English name",
   "arabic_name": "Arabic name",
-  "to":"To",
-  "copyto":"copyto",
-  "backtooriginalfile":"back to original file",
-  "AddAttachments":"Add Attachments"
-  ,
-  "Attachments":"Attachments"
-  ,
-  "ReferenceNumber":"Reference Number"
-  ,
-  "Subject":"Subject"
-  ,
-  "From":"From"
-  ,
-  "To":"To"
-  ,
-  "PrivacyLevel":"Privacy Level"
-  ,
-  "Status":"Status"
-  ,
-  "DocumentData":"Document Data"
-  ,
-  "Reset":"Reset"
-  ,
-  "filter":"filter"  ,
-  "Modify":"Modify"
-  ,
-  "back":"back"
+  "to": "To",
+  "copyto": "copyto",
+  "backtooriginalfile": "back to original file",
+  "AddAttachments": "Add Attachments",
+  "Attachments": "Attachments",
+  "ReferenceNumber": "Reference Number",
+  "Subject": "Subject",
+  "From": "From",
+  "To": "To",
+  "PrivacyLevel": "Privacy Level",
+  "Status": "Status",
+  "DocumentData": "Document Data",
+  "Reset": "Reset",
+  "filter": "filter",
+  "Modify": "Modify",
+  "back": "back",
+  "Priority": "Priority",
+  "high": "high",
+  "Base Url": "Base Url",
+  "Settings": "Settings",
+  "Save Settings": "Save Settings",
+  "pick your Color": "Pick your color",
+  "صادر للكل": "Outgoing all",
+  "وارد للكل": "Incoming all",
+  "Basket": "My Basket",
+  "user Guide": "user Guide",
+  "addtoBasket": "add to Basket",
+  "Summary": "Summary",
+  "Complete": "Complete",
+  "Transfer": "Transfer",
+  "Reply": "Reply",
+  "All": "All",
+  "new": "new",
+  "veryimportant": "very important",
+  "start": "Start date",
+  "end": "End date",
+  "Loading...": "  Loading .... ",
+  "reason": "Reason",
+  "defaultsignature": "Default Signature",
+  "multisignature": "multi-signature",
+  "userGuide": "User Guide",
+  "newBasket": "New Basket",
+  "title": "Title",
+  "allout": "All Out",
+  "allincom": "All in",
+  "relogin": "Please re-login",
+  "canotopen": "You are not allowed to open ",
+  "err": "An error occurred in connection, please try again",
+  "private": "private",
+  "send": "Send",
+  "WrongUsername": "Wrong username or password",
+  "SessionExpired": "Your session has been expired",
+  "Confirm": "Confirm",
+  "Cancel": "Cancel",
+  "SureToDelete": "Are you sure to delete the basket?",
+  "new Basket": "New Basket",
+  "Ok": "Ok",
+  "CreateNewBasket": "Create a new basket",
+  "register": "Register",
 
-  ,
-  "Priority":"Priority",
-  "high":"high"
-, "Base Url": "Base Url"
-, "Settings": "Settings"
-  , "Save Settings": "Save Settings"
-  , "pick your Color": "Pick your color"
-  , "صادر للكل": "Outgoing all"
-  , "وارد للكل": "Incoming all"
-  , "Basket": "My Basket",
-"user Guide": "user Guide"
-  ,"addtoBasket":"add to Basket",
-  "Summary":"Summary",
-  "Complete":"Complete",
-  "Transfer":"Transfer"
-,"Reply":"Reply",
-  "All":"All",
-  "new":"new",
-  "veryimportant":  "very important",
-"start":"Start date"
-  ,
-  "end":"End date"  ,
-"Loading...":"  Loading .... ",
-
-  "reason":"Reason"
-  ,
-  "defaultsignature":"Default Signature"
-  ,
-  "multisignature":"multi-signature",
-  "userGuide":"User Guide",
-  "newBasket":"New Basket",
-  "title":"Title",
-  "allout": "All Out"
-  , "allincom": "All in",
-
-
-  "relogin":"Please re-login",
-  "canotopen":"You are not allowed to open ",
-  "err":"An error occurred in connection, please try again"
-  ,
-  "private":"private"
-  , "send":"Send"
-  , "WrongUsername":"Wrong username or password"
-  ,   "SessionExpired": "Your session has been expired",
 };

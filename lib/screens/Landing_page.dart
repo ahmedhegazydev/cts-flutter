@@ -257,16 +257,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                               GestureDetector(
                                 onTap: () {
                                   //هنا هنعمل دليت
-                                  controller.removeBasket(
-                                    context: context,
-                                    basketId: basket.iD,
-                                    onSuccess: (String message) {
-                                      // Navigator.pop(context);
-                                      // Get.back();
-                                      // showAllBasketsDialog(context);
-                                      return null;
-                                    },
-                                  );
+                                  _showMyDialogDeleteConfirm(context, basket);
+
                                   // showTopSnackBar(
                                   //   context,
                                   //   CustomSnackBar.success(
@@ -407,7 +399,7 @@ class LandingPage extends GetWidget<LandingPageController> {
             onPressed: () async {
               Navigator.of(ctx).pop();
             },
-            child: Text("Ok"),
+            child: Text("Ok".tr),
           ),
           // Visibility(
           //     visible: controller.isSavingOrder,
@@ -423,12 +415,57 @@ class LandingPage extends GetWidget<LandingPageController> {
               //هنا هنكريت الباسكت
 
               showInputDialog(
-                  context, 'CreateNewBasket', 'default inpit', 'message');
+                  context, 'CreateNewBasket'.tr, 'default inpit', 'message');
             },
-            child: Text("new Basket"),
+            child: Text("new Basket".tr),
           ),
         ],
       ),
+    );
+  }
+
+  Future<void> _showMyDialogDeleteConfirm(BuildContext context, Baskets basket) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          // title: Text('AlertDialog Title'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Text('SureToDelete'.tr),
+                // Text('Would you like to confirm this message?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Confirm'.tr),
+              onPressed: () {
+                controller.removeBasket(
+                  context: context,
+                  basketId: basket.iD,
+                  onSuccess: (String message) {
+                    // Navigator.pop(context);
+                    // Get.back();
+                    // showAllBasketsDialog(context);
+                    return null;
+                  },
+                );
+                print('Confirmed');
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Cancel'.tr),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -504,7 +541,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                         context: context,
                         builder: (context) => AlertDialog(
                               title: Text(
-                                "pick your Color",
+                                "pick your Color".tr,
                               ),
                               content: Column(children: [
                                 ColorPicker(
@@ -547,7 +584,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                       child: GestureDetector(
                                         onTap: () {},
                                         child: Text(
-                                          "save",
+                                          "save".tr,
                                           textAlign: TextAlign.center,
                                         ),
                                       )),
@@ -558,7 +595,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                   child: GetBuilder<CreateBasketController>(
                     init: CreateBasketController(),
                     builder: (_) {
-                      return Text("pick your Color",
+                      return Text("pick your Color".tr,
                           style: TextStyle(
                               // backgroundColor: _.pickerColor,
                               color: _.pickerColor));

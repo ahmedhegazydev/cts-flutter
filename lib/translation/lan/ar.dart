@@ -126,4 +126,5 @@ const Map<String, String> ar = {
   "register": "انشاء محفظه",
 
 
+  "nofiletoopen":"لا يوجد ملف للتشغيل"
 };

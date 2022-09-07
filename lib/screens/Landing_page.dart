@@ -939,8 +939,9 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
           ),
         ),
         InkWell(
-          onTap: () {
+          onTap: ()async {
             // Get  getMyRoutingsettings;
+            await controller.listFavoriteRecipients(context: context);
             Get.bottomSheet(
               GetBuilder<LandingPageController>(builder: (logic) {
                 return Padding(
@@ -974,7 +975,53 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                                   height: 20,
                                 ),)    ],
                             ),
-                         SizedBox(height: 10,),   Row(
+
+
+                            GetBuilder<LandingPageController>(builder: (logic) {
+                              return SizedBox(height: 100,
+                                child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: controller.favoriteRecipientsResponse?.recipients?.length??0,
+                                    itemBuilder: (context, pos) {
+
+return
+                                          InkWell(onTap: () {
+                                            Destination d=Destination(id:controller.favoriteRecipientsResponse!.recipients![pos].ufrId ,value:controller.favoriteRecipientsResponse!.recipients![pos].targetName );
+                                            controller.toSaveMyRoutingSettings = d;
+                                            controller.textEditingControllerTorouting
+                                                .text=d.value!;
+                                            logic.update();
+
+                                          },
+                                            child: Row(
+                                              children: [
+                                                Container(padding: EdgeInsets.only(right: 8,left: 8),
+                                                  decoration: BoxDecoration(shape: BoxShape
+                                                      .circle,
+                                                      color: Theme
+                                                          .of(context)
+                                                          .colorScheme
+                                                          .primary,
+                                                      image: DecorationImage(
+                                                          image: AssetImage(
+                                                            "assets/images/pr.jpg",),
+                                                          fit: BoxFit.cover)),
+                                                  height: 75,
+                                                  width: 75,),SizedBox(width: 4,),
+                                             Text(controller.favoriteRecipientsResponse!.recipients![pos].targetName!) ],
+                                            ),
+                                          );
+
+
+                                      //  CircleAvatar(backgroundColor: Colors.red,backgroundImage: AssetImage("assets/images/pr.jpg",),,radius: 30,);
+
+                                    }),
+                              );
+                            })
+                    ,
+
+SizedBox(height: 3,),
+                            Row(
                               children: [
                                 Expanded(
                                   child: TypeAheadField<Destination>(
@@ -1117,7 +1164,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                               children: [
                                 Expanded(
                                   child: Container(
-                                  
+
                                     padding: const EdgeInsets.only(
                                         left: 0, right: 0, top: 0, bottom: 0),
                                     height: 60,
@@ -1175,7 +1222,7 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
                                 ),SizedBox(width: 8,),
                                 Expanded(
                                   child: Container(
-                                   
+
                                     padding: const EdgeInsets.only(
                                         left: 0, right: 0, top: 0, bottom: 0),
                                     height: 60,
@@ -1215,6 +1262,14 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
               enterBottomSheetDuration: const Duration(seconds: 1),
             );
             Get.find<LandingPageController>().getMyRoutingsettings(context);
+
+
+
+
+
+
+
+
           },
           child: Container(
             height: 90,

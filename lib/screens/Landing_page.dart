@@ -2240,6 +2240,9 @@ SizedBox(height: 3,),
           ),
           InkWell(
             onTap: () {
+
+
+              //اعاده توجيه المرسلات وضع افقي
               Get.bottomSheet(
                 Padding(
                   padding: EdgeInsets.only(right: size.width*.2,left: size.width*.2),

@@ -40,6 +40,7 @@ import '../services/apis/inside_doc/is_already_exported_as_transfer_api.dart';
 import '../services/apis/multiple_transfers_api.dart';
 import '../services/apis/save_document_annotations_api.dart';
 import '../services/json_model/can_open_document_model.dart';
+import '../services/json_model/default_on_success_result.dart';
 import '../services/json_model/favorites/list_all/ListFavoriteRecipients_response.dart';
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_correspondences_model.dart';
@@ -68,6 +69,8 @@ import '../services/json_model/inopendocModel/multiple_transfers_model.dart';
 import '../services/json_model/inopendocModel/save_document_annotation_model.dart';
 import '../services/json_model/login_model.dart';
 import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
+import '../services/models/multiple_transfers_model_send.dart'
+    as multipletransfersSend;
 import '../services/models/signature_info.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
@@ -77,12 +80,9 @@ import 'inbox_controller.dart';
 import 'package:flutter/services.dart' as rootBundel;
 
 class DocumentController extends GetxController {
-
-
-  final record=FlutterSoundRecorder();
-
-
-
+  SecureStorage secureStorage = SecureStorage();
+  CanOpenDocumentModel? canOpenDocumentModel;
+  final record = FlutterSoundRecorder();
 
 //Map<int,String>folder={};
   bool notoragnalFileDoc = false;
@@ -226,39 +226,64 @@ class DocumentController extends GetxController {
 //=============================================================================================
 
   multipleTransferspost({context, correspondenceId, transferId}) {
-    List<TransferNode> transfers = [];
+    //
     MultipleTransfersAPI _multipleTransfersAPI = MultipleTransfersAPI(context);
-    recordingMap.forEach((key, value)async {
+    recordingMap.forEach((key, value) async {
+      print("key====>$key");
+      print("key====>${value}");
 
-      String? audioFileBes64 =
-          await audiobase64String(
-          file: value);
-      TransferNode transferNode = TransferNode(
-          destinationId: key.toString(),
-          purposeId: value.correspondencesId!,
-          dueDate: canOpenDocumentModel!.correspondence!.docDueDate!,
-          voiceNote: audioFileBes64!,
-          voiceNoteExt: "m4a");
-      print("transferNode=>  ${transferNode.toMap()}");
+      String? audioFileBes64 = await audiobase64String(file: File(value));
 
+      multiTransferNode[key]?.voiceNote = audioFileBes64;
+      multiTransferNode[key]?.voiceNoteExt = "m4a";
+      multiTransferNode[key]?.voiceNotePrivate = false;
+      multiTransferNode[key]?.destinationId = key.toString();
+      multiTransferNode[key]?.purposeId =
+          canOpenDocumentModel!.correspondence!.purposeId;
+      multiTransferNode[key]?.voiceNotePrivate = false;
 
-      transfers.add(transferNode);
+      // multipletransfersSend.TransferNode transferNode =
+      // multipletransfersSend.TransferNode(
+      //     destinationId: key.toString(),note: ,voiceNotePrivate: ,
+      //     purposeId:
+      //         canOpenDocumentModel!.correspondence!.correspondenceId!,
+      //     //value.correspondencesId!,
+      //     dueDate: canOpenDocumentModel!.correspondence!.docDueDate!,
+      //     //canOpenDocumentModel!.correspondence!.docDueDate!,
+      //     voiceNote: audioFileBes64!,
+      //     voiceNoteExt: "m4a");
+      print(
+          "multiTransferNode[key]=>    ${jsonEncode(multiTransferNode[key]?.toMap())}");
+      print("key====>${jsonEncode(value)}");
     });
 
-    print("transferNode=>  ${transfers.length}");
+    List<multipletransfersSend.TransferNode> transfers = [];
+    multiTransferNode.forEach((key, value) {
+      transfers.add(value);
+    });
 
-    MultipleTransfersModel multipleTransfersModel = MultipleTransfersModel(
-        token: secureStorage.token()!,
-        correspondenceId: correspondenceId,
-        transferId: transferId,
-        transfers: transfers);
+    multipletransfersSend.MultipleTransfers multipleTransfers =
+        multipletransfersSend.MultipleTransfers(
+            transfers: transfers,
+            correspondenceId: correspondenceId,
+            token: secureStorage.token()!,
+            transferId: transferId);
 
-    print(multipleTransfersModel.toMap());
+    // MultipleTransfersModel multipleTransfersModel = MultipleTransfersModel(
+    //     token: secureStorage.token()!,
+    //     correspondenceId: correspondenceId,
+    //     transferId: transferId,
+    //     transfers: transfers);
+
+    print(
+        "multipleTransfersModel.toMap()   =>${jsonEncode(multipleTransfers.toMap())}");
     transfarForMany.clear();
     usersWillSendTo.clear();
-    _multipleTransfersAPI.post(multipleTransfersModel.toMap()).then((value) {
-      print(" _multipleTransfersAPI end");
-      print(value);
+    _multipleTransfersAPI.post(multipleTransfers.toMap()).then((value) {
+      DefaultOnSuccessResult defaultOnSuccessResult=value as DefaultOnSuccessResult;
+
+      Get.snackbar("", "تم التنفيذ بنجاح");
+
     });
   }
 
@@ -562,9 +587,6 @@ class DocumentController extends GetxController {
 //     update();
 //   }
 
-  SecureStorage secureStorage = SecureStorage();
-  CanOpenDocumentModel? canOpenDocumentModel;
-
   backTooragnalFileDocpdf() {
     notoragnalFileDoc = false;
     // pdfViewerkey=null;
@@ -633,8 +655,8 @@ class DocumentController extends GetxController {
         Map<String, dynamic> dat = jsonDecode(element.annotations!);
         print("77777777777777777=>     ${dat.values.toList()}");
 
-        ViewerAnnotation daa=      ViewerAnnotation.fromMap(dat)      ;
-         print("88888888=>     ${daa.toMap()}");
+        ViewerAnnotation daa = ViewerAnnotation.fromMap(dat);
+        print("88888888=>     ${daa.toMap()}");
         // Positioned(
         //   top: double.tryParse(dat["Y"]),
         //   left: double.tryParse(dat["X"]),
@@ -760,6 +782,9 @@ class DocumentController extends GetxController {
 
   GetDocumentTransfersModel? getDocumentTransfersModel;
 
+  //9/7/2022
+  // ظظ الشغل الي اتكلم فيه حسين//
+//==================================================================================================
   getDocumentAuditLogsdata({required context, required String docId}) {
     final GetDocumentAuditLogsApi _getDocumentAuditLogsApi =
         GetDocumentAuditLogsApi(context);
@@ -826,6 +851,7 @@ class DocumentController extends GetxController {
     print("*" * 10);
   }
 
+//==================================================================================================
 //===============================================
   List<Destination> users = [];
   List<Destination> usersWillSendTo = [];
@@ -839,11 +865,16 @@ class DocumentController extends GetxController {
 
   addTousersWillSendTo({required Destination user}) {
     usersWillSendTo.add(user);
+    multipletransfersSend.TransferNode transferNode =
+        multipletransfersSend.TransferNode(
+            purposeId: canOpenDocumentModel!.correspondence!.purposeId,destinationId: user.id.toString(),voiceNotePrivate: false);
+    multiTransferNode[user.id!] = transferNode;
     update(); // update(["user"]);
   }
 
   delTousersWillSendTo({required Destination user}) {
     usersWillSendTo.remove(user);
+    multiTransferNode.remove(user.id);
     update(); // update(["alluser"]);
   }
 
@@ -1135,9 +1166,7 @@ class DocumentController extends GetxController {
 
       String img64 = base64Encode(bytes);
       String name = file.path.split("/").last.split(".").first;
-      print("filke path isss  =>${file.path}");
-      print("name =>$name");
-      print("img64 =>  $img64");
+
       attachmentInfoModel = AttachmentInfoModel(
           token: secureStorage.token()!,
           correspondenceId:
@@ -1147,7 +1176,7 @@ class DocumentController extends GetxController {
           language: Get.locale?.languageCode == "en" ? "en" : "ar");
 
       _uploadAttachmentApi.post(attachmentInfoModel?.toMap()).then((value) {
-        print("object  $value");
+
       });
     } else {}
   }
@@ -1157,96 +1186,171 @@ class DocumentController extends GetxController {
       required transferId,
       required exportAction,
       required context}) async {
+    print("hhhhhhhhhhhhgetIsAlreadyExportedAsPaperwork");
     IsAlreadyExportedAsPaperworkAPI _alreadyExportedAsPaperworkAPI =
-        IsAlreadyExportedAsPaperworkAPI(context);
-    print("in  getIsAlreadyExportedAsPaperwork");
+        IsAlreadyExportedAsPaperworkAPI(null);
+
     _alreadyExportedAsPaperworkAPI.data =
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
-    _alreadyExportedAsPaperworkAPI.getData().then((value) {
-      isAlreadyExportedAsPaperworkModel =
-          value as IsAlreadyExportedAsPaperworkModel;
-      print(
-          "canExportAsPaperworkModel =>  ${isAlreadyExportedAsPaperworkModel?.isConfirm}");
+    isAlreadyExportedAsPaperworkModel=await   _alreadyExportedAsPaperworkAPI.getData() as  IsAlreadyExportedAsPaperworkModel;
 
-      if (isAlreadyExportedAsPaperworkModel?.isConfirm ?? false) {
-        showDilog(
-            context: context,
-            massge: isAlreadyExportedAsPaperworkModel!.message!,
-            no: () {
-              Navigator.of(context).pop();
-            },
-            yes: () {
-              // getCanExportAsPaperwork(
-              //     exportAction: exportAction,
-              //     transferId: transferId,
-              //     correspondenceId: correspondenceId,
-              //     context: context);
-              print("oooooooooooooooooooooooooooooooooo");
-              getSwitchMethod(
-                  exportAction: exportAction,
-                  transferId: transferId,
-                  correspondenceId: correspondenceId,
-                  context: context,
-                  name: isAlreadyExportedAsPaperworkModel!.yesMethod!);
-              Get.back();
-              // Navigator.of(context).pop();
-            });
-      } else {
-        getSwitchMethod(
-            exportAction: exportAction,
-            transferId: transferId,
-            correspondenceId: correspondenceId,
-            context: context,
-            name: isAlreadyExportedAsPaperworkModel!.request!);
-        Get.back();
-        //  Navigator.of(context).pop();
-      }
-      // print("_alreadyExportedAsPaperworkAPI =>  ${isAlreadyExportedAsPaperworkModel!.toJson()}");
-    });
+
+
+
+    if (isAlreadyExportedAsPaperworkModel?.isConfirm ?? false) {
+      showDilog(
+          context: context,
+          massge: isAlreadyExportedAsPaperworkModel!.message!,
+          no: () {
+            //  Navigator.of(context).pop();
+            getSwitchMethod(
+                exportAction: exportAction,
+                transferId: transferId,
+                correspondenceId: correspondenceId,
+                context: context,
+                name: isAlreadyExportedAsPaperworkModel?.noMethod??isAlreadyExportedAsPaperworkModel!.noMethod2!);
+          },
+          yes: () {
+            // getCanExportAsPaperwork(
+            //     exportAction: exportAction,
+            //     transferId: transferId,
+            //     correspondenceId: correspondenceId,
+            //     context: context);
+
+            getSwitchMethod(
+                exportAction: exportAction,
+                transferId: transferId,
+                correspondenceId: correspondenceId,
+                context: context,
+                name: isAlreadyExportedAsPaperworkModel?.yesMethod??isAlreadyExportedAsPaperworkModel!.yesMethod2!);
+         //   Get.back();
+            // Navigator.of(context).pop();
+          });
+    }
+    else if(isAlreadyExportedAsPaperworkModel?.request!=null ){
+      getSwitchMethod(
+          exportAction: exportAction,
+          transferId: transferId,
+          correspondenceId: correspondenceId,
+          context: context,
+          name: isAlreadyExportedAsPaperworkModel!.request!);
+
+      print(isAlreadyExportedAsPaperworkModel?.request);
+    //  Get.back();
+
+    }
+
+    else {
+
+
+      Get.snackbar("", isAlreadyExportedAsPaperworkModel!.message!);
+
+
+      // getSwitchMethod(
+      //     exportAction: exportAction,
+      //     transferId: transferId,
+      //     correspondenceId: correspondenceId,
+      //     context: context,
+      //     name: isAlreadyExportedAsPaperworkModel!.request!);
+      // Get.back();
+      //
+
+
+      //  Navigator.of(context).pop();
+    }
   }
 
-  getCanExportAsPaperwork(
+Future  getCanExportAsPaperwork(
       {required correspondenceId,
       required transferId,
       required exportAction,
-      required context}) {
+      required context}) async{
+  print("getCanExportAsPaperwork");
     CanExportAsPaperworkAPI _canExportAsPaperworkAPI =
-        CanExportAsPaperworkAPI(context);
+        CanExportAsPaperworkAPI(null);
     _canExportAsPaperworkAPI.data =
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
-    _canExportAsPaperworkAPI.getData().then((value) {
+  await  _canExportAsPaperworkAPI.getData().then((value) {
       canExportAsPaperworkModel = value as CanExportAsPaperworkModel;
       print(
           "canExportAsPaperworkModel =>  ${canExportAsPaperworkModel?.isConfirm}");
+
+
+
+
+
       // if(canExportAsPaperworkModel?.isConfirm??false){
       //   Get.snackbar("", canExportAsPaperworkModel!.message!);
       // }
       // print("_alreadyExportedAsPaperworkAPI =>  ${canExportAsPaperworkModel!.toJson()}");
-
-      if (canExportAsPaperworkModel?.isConfirm ?? false) {
-        showDilog(
-            context: context,
-            massge: canExportAsPaperworkModel!.message!,
-            no: () {
-              Navigator.of(context).pop();
-            },
-            yes: isAlreadyExportedAsTransferModel!.yesMethod2 != null ||
-                    isAlreadyExportedAsTransferModel!.yesMethod != null
-                ? () {
-                    print("oooooooooooooooooooooooooooooooooo");
-                    //  Navigator.of(context).pop();
-                    getCanExportAsPaperwork(
-                        exportAction: exportAction,
-                        transferId: transferId,
-                        correspondenceId: correspondenceId,
-                        context: context);
-                    Get.back();
-                  }
-                : () {
-                    Get.back();
-                  });
-      }
+//الي كان شغال
+//       if (canExportAsPaperworkModel?.isConfirm ?? false) {
+//         showDilog(
+//             context: context,
+//             massge: canExportAsPaperworkModel?.message??"",
+//             no: () {
+//             //  Navigator.of(context).pop();
+//             },
+//             yes:
+//             // isAlreadyExportedAsTransferModel?.yesMethod2 != null ||
+//             //         isAlreadyExportedAsTransferModel?.yesMethod != null
+//             //     ?
+//          ()
+//
+//             {
+//                     print("oooooooooooooooooooooooooooooooooo");
+//                     //  Navigator.of(context).pop();
+//                     // getCanExportAsPaperwork(
+//                     //     exportAction: exportAction,
+//                     //     transferId: transferId,
+//                     //     correspondenceId: correspondenceId,
+//                     //     context: context);
+//                  //   Get.back();
+//                   }
+//                 // : () {
+//                 //    // Get.back();
+//                 //   }
+//
+//
+//                   );
+//       }
     });
+
+
+    canExportAsPaperworkModel=   await  _canExportAsPaperworkAPI.getData() as CanExportAsPaperworkModel;
+
+    // if (canExportAsPaperworkModel?.isConfirm ?? false) {
+    //   showDilog(
+    //       context: context,
+    //       massge: canExportAsPaperworkModel?.message??"",
+    //       no: () {
+    //          Navigator.of(context).pop();
+    //       },
+    //       yes:
+    //       // isAlreadyExportedAsTransferModel?.yesMethod2 != null ||
+    //       //         isAlreadyExportedAsTransferModel?.yesMethod != null
+    //       //     ?
+    //           ()
+    //
+    //       {
+    //         print("oooooooooooooooooooooooooooooooooo");
+    //         //  Navigator.of(context).pop();
+    //         // getCanExportAsPaperwork(
+    //         //     exportAction: exportAction,
+    //         //     transferId: transferId,
+    //         //     correspondenceId: correspondenceId,
+    //         //     context: context);
+    //         //   Get.back();
+    //       }
+    //     // : () {
+    //     //    // Get.back();
+    //     //   }
+    //
+    //
+    //   );
+    // }
+
+
   }
 
   autoSendToRecepientsAndCC(
@@ -1447,18 +1551,85 @@ class DocumentController extends GetxController {
       required correspondenceId,
       required exportAction,
       required transferId,
-      required context}) {
+      required context})async {
     switch (name) {
       case "CanExportAsPaperwork":
         // do something
-        getCanExportAsPaperwork(
+
+
+    // _alreadyExportedAsPaperworkAPI.getData() as  IsAlreadyExportedAsPaperworkModel;
+     isAlreadyExportedAsPaperworkModel=await        getCanExportAsPaperwork(
             exportAction: exportAction,
             transferId: transferId,
             correspondenceId: correspondenceId,
             context: context);
+
+
+     if (isAlreadyExportedAsPaperworkModel?.isConfirm ?? false) {
+       showDilog(
+           context: context,
+           massge: isAlreadyExportedAsPaperworkModel!.message!,
+           no: () {
+             //  Navigator.of(context).pop();
+             getSwitchMethod(
+                 exportAction: exportAction,
+                 transferId: transferId,
+                 correspondenceId: correspondenceId,
+                 context: context,
+                 name: isAlreadyExportedAsPaperworkModel?.noMethod??isAlreadyExportedAsPaperworkModel!.noMethod2!);
+           },
+           yes: () {
+             // getCanExportAsPaperwork(
+             //     exportAction: exportAction,
+             //     transferId: transferId,
+             //     correspondenceId: correspondenceId,
+             //     context: context);
+
+             getSwitchMethod(
+                 exportAction: exportAction,
+                 transferId: transferId,
+                 correspondenceId: correspondenceId,
+                 context: context,
+                 name: isAlreadyExportedAsPaperworkModel?.yesMethod??isAlreadyExportedAsPaperworkModel!.yesMethod2!);
+             //   Get.back();
+             // Navigator.of(context).pop();
+           });
+     }
+     else if(isAlreadyExportedAsPaperworkModel?.request!=null ){
+       getSwitchMethod(
+           exportAction: exportAction,
+           transferId: transferId,
+           correspondenceId: correspondenceId,
+           context: context,
+           name: isAlreadyExportedAsPaperworkModel!.request!);
+
+       print(isAlreadyExportedAsPaperworkModel?.request);
+       //  Get.back();
+
+     }
+
+     else {
+
+
+       Get.snackbar("", isAlreadyExportedAsPaperworkModel!.message!);
+
+
+       // getSwitchMethod(
+       //     exportAction: exportAction,
+       //     transferId: transferId,
+       //     correspondenceId: correspondenceId,
+       //     context: context,
+       //     name: isAlreadyExportedAsPaperworkModel!.request!);
+       // Get.back();
+       //
+
+
+       //  Navigator.of(context).pop();
+     }
         break;
       case "OpenTransferWindow":
         // do something else
+
         break;
       case "IsAlreadyExportedAsTransfer":
         isAlreadyExportedAsTransfer(
@@ -1500,72 +1671,56 @@ class DocumentController extends GetxController {
     }
   }
 
-
-
-
-
-
-
-
-
-
   //الجديد في الارسال الي الكل
-
 
   //Favorites user
   ListFavoriteRecipientsResponse? favoriteRecipientsResponse;
-  Future listFavoriteRecipients({context}) async {
 
+  Future listFavoriteRecipients({context}) async {
     ListFavoriteRecipientsApi listFavoriteRecipientsApi =
-    ListFavoriteRecipientsApi(context);
+        ListFavoriteRecipientsApi(context);
     listFavoriteRecipientsApi.data =
-    "Token=${secureStorage.token()}&Language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
-    await listFavoriteRecipientsApi
-        .getData()
-        .then((value) {
-      if(value!=null){
+        "Token=${secureStorage.token()}&Language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+    await listFavoriteRecipientsApi.getData().then((value) {
+      if (value != null) {
         favoriteRecipientsResponse = value as ListFavoriteRecipientsResponse;
-      }else{
+      } else {
         Get.snackbar("", "err".tr);
       }
 
-
       // print("listFavoriteRecipientsApi  =>${favoriteRecipientsResponse?.recipients[0].targetPhotoBs64.isEmpty}");
     });
-    update(); }
+    update();
+  }
 
 //التسجيل الجديد
 
   setNots({required int id, String? not}) {
-    transfarForMany[id]?.notes = not;
-    update();
+    multiTransferNode[id]?.note = not;
   }
 
-Map<int,dynamic>recordingMap={};
+  Map<int, multipletransfersSend.TransferNode> multiTransferNode = {};
+  Map<int, dynamic> recordingMap = {};
 
+  Future initRecorder() async {
+    final statusmicrophone = await Permission.microphone.request();
+    final statusstorage = await Permission.storage.request();
+    final statusmanageExternalStorage =
+        await Permission.manageExternalStorage.request();
 
-  Future initRecorder() async{
-
-
-
-
-    final statusmicrophone =await Permission.microphone.request();
-    final statusstorage =await Permission.storage.request();
-    final statusmanageExternalStorage =await Permission.manageExternalStorage.request();
-
-    if(statusmicrophone!=PermissionStatus.granted){
+    if (statusmicrophone != PermissionStatus.granted) {
       Permission.microphone.request();
     }
-    if(statusstorage!=PermissionStatus.granted){
+    if (statusstorage != PermissionStatus.granted) {
       await Permission.storage.request();
     }
-    if(statusmanageExternalStorage!=PermissionStatus.granted){
+    if (statusmanageExternalStorage != PermissionStatus.granted) {
       Permission.manageExternalStorage.request();
     }
     await record.openRecorder();
   }
 
-  Future recordMathod({required id})async{
+  Future recordMathod({required id}) async {
     await record.openRecorder();
     //  await record.startRecorder(toFile: "audio");
     appDocDir = await getApplicationDocumentsDirectory();
@@ -1575,27 +1730,28 @@ Map<int,dynamic>recordingMap={};
         '.mp4';
     recording = true;
     update(["id"]);
-recordingMap[id]=_directoryPath;
+    recordingMap[id] = _directoryPath;
     await record.startRecorder(codec: _codec, toFile: _directoryPath);
+    update(["record"]);
   }
-  Future stopMathod()async{
+
+  Future stopMathod() async {
     recording = false;
     update(["id"]);
     recordFile = File(_directoryPath);
     await record.stopRecorder();
+    update(["record"]);
   }
 
-  Future playMathod({required id})async{
+  Future playMathod({required id}) async {
     audioPlayer = FlutterSoundPlayer();
     audioPlayer!.openPlayer();
-    if(recordingMap[id]!=null){
+    if (recordingMap[id] != null) {
       await audioPlayer!.startPlayer(fromURI: recordingMap[id]);
-    }else{
+    } else {
       Get.snackbar("", "nofiletoopen".tr);
     }
-
   }
-
 }
 
 showDilog(
@@ -1818,19 +1974,20 @@ class ViewerAnnotation {
   }
 
   factory ViewerAnnotation.fromMap(Map<String, dynamic> map) {
-    return ViewerAnnotation(id: map['id'] ,
-      page: map['page'] ,
-      X: map['X']  ,
-      Y: map['Y'] ,
-      type: map['type']  ,
-      width: map['width']  ,
-      height: map['height']  ,
-      imageByte: map['imageByte'] ,
-      imageName: map['imageName']  ,
-      text: map['text'] ,
-      readonly: map['readonly'] ,
-      userId: map['userId'] ,
-      hidden: map['hidden']  ,
+    return ViewerAnnotation(
+      id: map['id'],
+      page: map['page'],
+      X: map['X'],
+      Y: map['Y'],
+      type: map['type'],
+      width: map['width'],
+      height: map['height'],
+      imageByte: map['imageByte'],
+      imageName: map['imageName'],
+      text: map['text'],
+      readonly: map['readonly'],
+      userId: map['userId'],
+      hidden: map['hidden'],
     );
   }
 }

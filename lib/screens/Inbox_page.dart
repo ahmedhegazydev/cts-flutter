@@ -22,7 +22,7 @@ class InboxPage extends GetWidget<InboxController> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: GetBuilder<InboxController>(builder: (logic) {
+      child: GetBuilder<InboxController>(autoRemove: false,builder: (logic) {
         return Scaffold(
           body: _buildBody(context),
         );
@@ -619,7 +619,7 @@ class InboxPage extends GetWidget<InboxController> {
                                                                                                 .all(
                                                                                                 8.0),
                                                                                             child: GetBuilder<
-                                                                                                InboxController>(
+                                                                                                InboxController>(autoRemove: false,
                                                                                                 id: "id",
                                                                                                 builder: (
                                                                                                     logic) {
@@ -944,7 +944,7 @@ class InboxPage extends GetWidget<InboxController> {
                                                                             children: [
                                                                               Expanded(
                                                                                   child: GetBuilder<
-                                                                                      InboxController>(
+                                                                                      InboxController>(autoRemove: false,
                                                                                     assignId: true,
                                                                                     //tag: "alluser",
                                                                                     builder: (
@@ -1119,7 +1119,7 @@ class InboxPage extends GetWidget<InboxController> {
                                                                           // MediaQuery.of(context).size.height * .5,
                                                                           child:
                                                                           GetBuilder<
-                                                                              InboxController>(
+                                                                              InboxController>(autoRemove: false,
                                                                             //   assignId: true,//tag: "user",
                                                                             builder:
                                                                                 (
@@ -1340,7 +1340,7 @@ class InboxPage extends GetWidget<InboxController> {
                                                                                                                         .all(
                                                                                                                         8.0),
                                                                                                                     child: GetBuilder<
-                                                                                                                        DocumentController>(
+                                                                                                                        DocumentController>(autoRemove: false,
                                                                                                                         builder: (
                                                                                                                             logic) {
                                                                                                                           return Icon(
@@ -1800,7 +1800,7 @@ class InboxPage extends GetWidget<InboxController> {
           child: Center(
             child: Row(
               children: [
-                GetBuilder<InboxController>(builder: (logic) {
+                GetBuilder<InboxController>(autoRemove: false,builder: (logic) {
                   return Checkbox(
                       value: controller.unread,
                       onChanged: controller.updateUnread);

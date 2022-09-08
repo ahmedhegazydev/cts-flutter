@@ -122,6 +122,12 @@ class LandingPageController extends GetxController {
   updateselectFavusers(Destination destination) {
     if (!selectFavusers.contains(destination)) {
       selectFavusers.add(destination);
+
+
+
+
+
+
       update();
     }
   }

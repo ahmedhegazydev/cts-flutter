@@ -59,10 +59,6 @@ int?nodeId=0;
     update();
   }
 
-  setNewIndex(int newIndex){
-    this.newIndex = newIndex;
-    update();
-  }
 
   Future addDocumentsToBasket({context, basketId}) async {
     AddDocumentsToBasketRequest addDocumentsToBasketRequest =
@@ -99,6 +95,7 @@ int?nodeId=0;
     getFetchBasketListApi.data =
         "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     await getFetchBasketListApi.getData().then((value) {
+      Navigator.pop(context);
       fetchBasketListModel = value as FetchBasketListModel;
       // fetchBasketListModel?.baskets?.forEach((element) {
       //   element.orderBy = Random().nextInt(100);

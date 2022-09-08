@@ -188,6 +188,7 @@ class LandingPage extends GetWidget<LandingPageController> {
   }
 
   Future<void> showAllBasketsDialog(BuildContext context) async {
+    u.showLoaderDialog(context);
     await inboxController.getFetchBasketList(context: context);
     showDialog(
       context: context,
@@ -209,8 +210,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                       //     : Container(),
                     ],
                   ),
-                  Expanded(
-                      child: ReorderableListView(
+            GetBuilder<LandingPageController>(builder: (logic) {
+              return Expanded(
+                  child: ReorderableListView(
                     buildDefaultDragHandles: true,
                     // buildDefaultDragHandles: false,
                     padding: const EdgeInsets.symmetric(horizontal: 40),
@@ -224,13 +226,13 @@ class LandingPage extends GetWidget<LandingPageController> {
                       //     // 4;
                       //     index += 1)
                       for (final basket
-                          in inboxController.fetchBasketListModel!.baskets!)
+                      in inboxController.fetchBasketListModel!.baskets!)
                         ListTile(
                           // key: Key('$index'),
                           key: ValueKey(basket),
                           // tileColor: _items[index].isOdd ? oddItemColor : evenItemColor,
                           onLongPress:
-                              !(basket.canBeReOrder ?? false) ? () {} : null,
+                          !(basket.canBeReOrder ?? false) ? () {} : null,
                           onTap: !(basket.canBeReOrder ?? false) ? () {
                             // Get.find<BasketController>().getBasketInbox(
                             //     id: inboxController
@@ -307,13 +309,14 @@ class LandingPage extends GetWidget<LandingPageController> {
                       //2-3-4-...
                       print("onReorderEnd = $index");
                       if (inboxController.fetchBasketListModel!.baskets![index]
-                              .canBeReOrder ==
+                          .canBeReOrder ==
                           false) {
                         showTopSnackBar(
                           context,
                           CustomSnackBar.error(
                             message:
-                                "${inboxController.fetchBasketListModel!.baskets![index].name} canBeReOrder = false",
+                            "${inboxController.fetchBasketListModel!
+                                .baskets![index].name} canBeReOrder = false",
                           ),
                         );
                       } else {
@@ -322,6 +325,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                         //   print(element.orderBy);
                         // });
                         if (inboxController.oldIndex != index) {
+                          u.showLoaderDialog(context);
                           controller.reOrderBaskets(
                               context: context,
                               baskets: inboxController
@@ -329,7 +333,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                         }
                       }
                     },
-                  ))
+                  )
+              );
+            }),
                 ],
               )
 
@@ -424,6 +430,46 @@ class LandingPage extends GetWidget<LandingPageController> {
     );
   }
 
+  Future<void> _showMyDialogDelFavUserConfirm(BuildContext context, int pos) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          // title: Text('AlertDialog Title'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Text('SureDelFavUser'.tr),
+                // Text('Would you like to confirm this message?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Confirm'.tr),
+              onPressed: () {
+                u.showLoaderDialog(context);
+                controller.removeFavoriteRecipients(context: context,favoriteRecipients:controller
+                    .favoriteRecipientsResponse!
+                    .recipients![pos].ufrId );
+
+                print(" i removeeeeeeeeeeeeeeeeeeeeee");
+                print('Confirmed');
+              },
+            ),
+            TextButton(
+              child: Text('Cancel'.tr),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future<void> _showMyDialogDeleteConfirm(BuildContext context, Baskets basket) async {
     return showDialog<void>(
       context: context,
@@ -443,6 +489,7 @@ class LandingPage extends GetWidget<LandingPageController> {
             TextButton(
               child: Text('Confirm'.tr),
               onPressed: () {
+                u.showLoaderDialog(context);
                 controller.removeBasket(
                   context: context,
                   basketId: basket.iD,
@@ -610,6 +657,7 @@ class LandingPage extends GetWidget<LandingPageController> {
               child: CustomButton(
                   name: 'register'.tr,
                   onPressed: () {
+                    u.showLoaderDialog(context);
                     // controller.createNewBasket();
                     controller.addEditBasket(
                         context: context,
@@ -759,6 +807,9 @@ class LandingPage extends GetWidget<LandingPageController> {
         ),
         InkWell(
           onTap: () async {
+            //roro
+            u.showLoaderDialog(context);
+            controller.setSelectSuggest(true);
             await controller.listFavoriteRecipients(context: context);
             controller.textEditingControllerTo.clear();
             Get.bottomSheet(
@@ -825,12 +876,13 @@ class LandingPage extends GetWidget<LandingPageController> {
                                   );
                                 },
                                 onSuggestionSelected: (suggestion) {
+                                  u.showLoaderDialog(context);
                                   Destination v = suggestion;
                                   controller.textEditingControllerTo.text =
                                       v.value ?? "";
                                   controller.to = v;
-
                                   controller.updateselectFavusers(v);
+                                  controller.setSelectSuggest(false);
                                   controller.addFavoriteRecipients(addFavorite:v.id! ,context: context);
                                   controller.textEditingControllerTo.clear();
                                   // v
@@ -846,7 +898,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                             ),
                           ],
                         ),
-                        GetBuilder<LandingPageController>(builder: (logic) {
+                        GetBuilder<LandingPageController>(builder: (logic_) {
                           return Expanded(
                             child: ListView.separated(    separatorBuilder: (context, index) => const Divider(),
                                 itemCount: controller.favoriteRecipientsResponse
@@ -886,11 +938,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                                           .recipients![pos]
                                           .targetName??"",),
                                 )   ,Spacer(),InkWell(onTap: (){
-controller.removeFavoriteRecipients(context: context,favoriteRecipients:controller
-    .favoriteRecipientsResponse!
-    .recipients![pos].ufrId );
-
-                                          print(" i removeeeeeeeeeeeeeeeeeeeeee");
+                                            controller.setSelectSuggest(true);
+                                            _showMyDialogDelFavUserConfirm(context, pos);
                                           },child: Icon(Icons.delete)) ],
                                       ),
                                     ),
@@ -941,6 +990,8 @@ controller.removeFavoriteRecipients(context: context,favoriteRecipients:controll
         InkWell(
           onTap: ()async {
             // Get  getMyRoutingsettings;
+            u.showLoaderDialog(context);
+            controller.setSelectSuggest(true);
             await controller.listFavoriteRecipients(context: context);
             Get.bottomSheet(
               GetBuilder<LandingPageController>(builder: (logic) {
@@ -1206,6 +1257,7 @@ SizedBox(height: 3,),
                                                 Token: controller.secureStorage
                                                     .token()!,
                                                 routing: mytr);
+                                        u.showLoaderDialog(context);
                                         controller.postSaveMyRoutingSettingsApi(
                                             data: d, context: context);
                                       },
@@ -1233,6 +1285,7 @@ SizedBox(height: 3,),
                                             Radius.circular(6))),
                                     child: ElevatedButton(
                                       onPressed: () {
+                                        u.showLoaderDialog(context);
                                         controller.removeMyRoutingSettings(data: {
                                           "Token": controller.secureStorage.token(),
                                           "Language":
@@ -1999,6 +2052,8 @@ SizedBox(height: 3,),
           ),
           InkWell(
             onTap: ()async {
+              u.showLoaderDialog(context);
+              controller.setSelectSuggest(true);
               await controller.listFavoriteRecipients(context: context);
               controller.  getFindRecipientData(context: context);
               controller.textEditingControllerTo.clear();
@@ -2388,6 +2443,7 @@ SizedBox(height: 3,),
                                             Token: controller.secureStorage
                                                 .token()!,
                                             routing: mytr);
+                                        u.showLoaderDialog(context);
                                         controller.postSaveMyRoutingSettingsApi(
                                             data: d, context: context);
                                       },
@@ -2415,6 +2471,7 @@ SizedBox(height: 3,),
                                             Radius.circular(6))),
                                     child: ElevatedButton(
                                       onPressed: () {
+                                        u.showLoaderDialog(context);
                                         controller.removeMyRoutingSettings(data: {
                                           "Token": controller.secureStorage.token(),
                                           "Language":
@@ -2745,7 +2802,7 @@ SizedBox(height: 3,),
                                 Navigator.of(context).pop();
                               },
                               child: Text(
-                                "save",
+                                "save".tr,
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline2!

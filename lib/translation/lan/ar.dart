@@ -124,7 +124,10 @@ const Map<String, String> ar = {
   "Ok": "تمام",
   "CreateNewBasket": "انشاء محفظه جديده",
   "register": "انشاء محفظه",
+  "nofiletoopen":"لا يوجد ملف للتشغيل",
+  "SureDelFavUser":"هل انت متاكد من مسح هذا العميل المفضل؟",
+  "DeletedSuccess":"تم مسح العميل المفضل بنجاح",
+  "BasketAddedSuccess":"تم انشاء محفظه جديده بنجاح",
 
 
-  "nofiletoopen":"لا يوجد ملف للتشغيل"
 };

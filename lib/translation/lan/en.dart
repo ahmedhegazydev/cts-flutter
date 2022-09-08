@@ -128,6 +128,9 @@ const Map<String, String> en = {
   "Ok": "Ok",
   "CreateNewBasket": "Create a new basket",
   "register": "Register",
-  "nofiletoopen":"there's no file to play"
+  "nofiletoopen":"there's no file to play",
+"SureDelFavUser":"Are u sure to delete this favorite user?",
+  "DeletedSuccess":"The favorite user deleted successfully",
+"BasketAddedSuccess":"A new basket created successfully",
 
 };

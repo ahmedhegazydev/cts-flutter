@@ -1166,9 +1166,7 @@ class DocumentController extends GetxController {
 
       String img64 = base64Encode(bytes);
       String name = file.path.split("/").last.split(".").first;
-      print("filke path isss  =>${file.path}");
-      print("name =>$name");
-      print("img64 =>  $img64");
+
       attachmentInfoModel = AttachmentInfoModel(
           token: secureStorage.token()!,
           correspondenceId:
@@ -1178,7 +1176,7 @@ class DocumentController extends GetxController {
           language: Get.locale?.languageCode == "en" ? "en" : "ar");
 
       _uploadAttachmentApi.post(attachmentInfoModel?.toMap()).then((value) {
-        print("object  $value");
+
       });
     } else {}
   }
@@ -1188,77 +1186,76 @@ class DocumentController extends GetxController {
       required transferId,
       required exportAction,
       required context}) async {
+    print("hhhhhhhhhhhhgetIsAlreadyExportedAsPaperwork");
     IsAlreadyExportedAsPaperworkAPI _alreadyExportedAsPaperworkAPI =
-        IsAlreadyExportedAsPaperworkAPI(context);
-    print("in  getIsAlreadyExportedAsPaperwork");
+        IsAlreadyExportedAsPaperworkAPI(null);
+
     _alreadyExportedAsPaperworkAPI.data =
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
-    _alreadyExportedAsPaperworkAPI.getData().then((value) {
-      isAlreadyExportedAsPaperworkModel =
-          value as IsAlreadyExportedAsPaperworkModel;
-      print(
-          "canExportAsPaperworkModel =>  ${isAlreadyExportedAsPaperworkModel?.isConfirm}");
+    isAlreadyExportedAsPaperworkModel=await   _alreadyExportedAsPaperworkAPI.getData() as  IsAlreadyExportedAsPaperworkModel;
 
-      if (isAlreadyExportedAsPaperworkModel?.isConfirm ?? false) {
-        showDilog(
-            context: context,
-            massge: isAlreadyExportedAsPaperworkModel!.message!,
-            no: () {
+
+
+
+    if (isAlreadyExportedAsPaperworkModel?.isConfirm ?? false) {
+      showDilog(
+          context: context,
+          massge: isAlreadyExportedAsPaperworkModel!.message!,
+          no: () {
             //  Navigator.of(context).pop();
-              getSwitchMethod(
-                  exportAction: exportAction,
-                  transferId: transferId,
-                  correspondenceId: correspondenceId,
-                  context: context,
-                  name: isAlreadyExportedAsPaperworkModel?.noMethod??isAlreadyExportedAsPaperworkModel!.noMethod2!);
-            },
-            yes: () {
-              // getCanExportAsPaperwork(
-              //     exportAction: exportAction,
-              //     transferId: transferId,
-              //     correspondenceId: correspondenceId,
-              //     context: context);
-              print("oooooooooooooooooooooooooooooooooo");
-              getSwitchMethod(
-                  exportAction: exportAction,
-                  transferId: transferId,
-                  correspondenceId: correspondenceId,
-                  context: context,
-                  name: isAlreadyExportedAsPaperworkModel?.yesMethod??isAlreadyExportedAsPaperworkModel!.yesMethod2!);
-              Get.back();
-              // Navigator.of(context).pop();
-            });
-      }else if(isAlreadyExportedAsPaperworkModel?.request!=null ){
-        getSwitchMethod(
-            exportAction: exportAction,
-            transferId: transferId,
-            correspondenceId: correspondenceId,
-            context: context,
-            name: isAlreadyExportedAsPaperworkModel!.request!);
-        Get.back();
+            getSwitchMethod(
+                exportAction: exportAction,
+                transferId: transferId,
+                correspondenceId: correspondenceId,
+                context: context,
+                name: isAlreadyExportedAsPaperworkModel?.noMethod??isAlreadyExportedAsPaperworkModel!.noMethod2!);
+          },
+          yes: () {
+            // getCanExportAsPaperwork(
+            //     exportAction: exportAction,
+            //     transferId: transferId,
+            //     correspondenceId: correspondenceId,
+            //     context: context);
 
-      }
+            getSwitchMethod(
+                exportAction: exportAction,
+                transferId: transferId,
+                correspondenceId: correspondenceId,
+                context: context,
+                name: isAlreadyExportedAsPaperworkModel?.yesMethod??isAlreadyExportedAsPaperworkModel!.yesMethod2!);
+         //   Get.back();
+            // Navigator.of(context).pop();
+          });
+    }
+    else if(isAlreadyExportedAsPaperworkModel?.request!=null ){
+      getSwitchMethod(
+          exportAction: exportAction,
+          transferId: transferId,
+          correspondenceId: correspondenceId,
+          context: context,
+          name: isAlreadyExportedAsPaperworkModel!.request!);
+    //  Get.back();
 
-      else {
+    }
 
-
-    Get.snackbar("", isAlreadyExportedAsPaperworkModel!.message!);
+    else {
 
 
-        // getSwitchMethod(
-        //     exportAction: exportAction,
-        //     transferId: transferId,
-        //     correspondenceId: correspondenceId,
-        //     context: context,
-        //     name: isAlreadyExportedAsPaperworkModel!.request!);
-        // Get.back();
-        //
+      Get.snackbar("", isAlreadyExportedAsPaperworkModel!.message!);
 
 
-        //  Navigator.of(context).pop();
-      }
-      // print("_alreadyExportedAsPaperworkAPI =>  ${isAlreadyExportedAsPaperworkModel!.toJson()}");
-    });
+      // getSwitchMethod(
+      //     exportAction: exportAction,
+      //     transferId: transferId,
+      //     correspondenceId: correspondenceId,
+      //     context: context,
+      //     name: isAlreadyExportedAsPaperworkModel!.request!);
+      // Get.back();
+      //
+
+
+      //  Navigator.of(context).pop();
+    }
   }
 
 Future  getCanExportAsPaperwork(
@@ -1266,6 +1263,7 @@ Future  getCanExportAsPaperwork(
       required transferId,
       required exportAction,
       required context}) async{
+  print("getCanExportAsPaperwork");
     CanExportAsPaperworkAPI _canExportAsPaperworkAPI =
         CanExportAsPaperworkAPI(null);
     _canExportAsPaperworkAPI.data =

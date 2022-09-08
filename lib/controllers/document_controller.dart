@@ -1234,6 +1234,8 @@ class DocumentController extends GetxController {
           correspondenceId: correspondenceId,
           context: context,
           name: isAlreadyExportedAsPaperworkModel!.request!);
+
+      print(isAlreadyExportedAsPaperworkModel?.request);
     //  Get.back();
 
     }
@@ -1549,18 +1551,87 @@ Future  getCanExportAsPaperwork(
       required correspondenceId,
       required exportAction,
       required transferId,
-      required context}) {
+      required context})async {
     switch (name) {
       case "CanExportAsPaperwork":
         // do something
-        getCanExportAsPaperwork(
+
+
+    // _alreadyExportedAsPaperworkAPI.getData() as  IsAlreadyExportedAsPaperworkModel;
+     isAlreadyExportedAsPaperworkModel=await        getCanExportAsPaperwork(
             exportAction: exportAction,
             transferId: transferId,
             correspondenceId: correspondenceId,
             context: context);
+
+
+     if (isAlreadyExportedAsPaperworkModel?.isConfirm ?? false) {
+       showDilog(
+           context: context,
+           massge: isAlreadyExportedAsPaperworkModel!.message!,
+           no: () {
+             //  Navigator.of(context).pop();
+             getSwitchMethod(
+                 exportAction: exportAction,
+                 transferId: transferId,
+                 correspondenceId: correspondenceId,
+                 context: context,
+                 name: isAlreadyExportedAsPaperworkModel?.noMethod??isAlreadyExportedAsPaperworkModel!.noMethod2!);
+           },
+           yes: () {
+             // getCanExportAsPaperwork(
+             //     exportAction: exportAction,
+             //     transferId: transferId,
+             //     correspondenceId: correspondenceId,
+             //     context: context);
+
+             getSwitchMethod(
+                 exportAction: exportAction,
+                 transferId: transferId,
+                 correspondenceId: correspondenceId,
+                 context: context,
+                 name: isAlreadyExportedAsPaperworkModel?.yesMethod??isAlreadyExportedAsPaperworkModel!.yesMethod2!);
+             //   Get.back();
+             // Navigator.of(context).pop();
+           });
+     }
+     else if(isAlreadyExportedAsPaperworkModel?.request!=null ){
+       getSwitchMethod(
+           exportAction: exportAction,
+           transferId: transferId,
+           correspondenceId: correspondenceId,
+           context: context,
+           name: isAlreadyExportedAsPaperworkModel!.request!);
+
+       print(isAlreadyExportedAsPaperworkModel?.request);
+       //  Get.back();
+
+     }
+
+     else {
+
+
+       Get.snackbar("", isAlreadyExportedAsPaperworkModel!.message!);
+
+
+       // getSwitchMethod(
+       //     exportAction: exportAction,
+       //     transferId: transferId,
+       //     correspondenceId: correspondenceId,
+       //     context: context,
+       //     name: isAlreadyExportedAsPaperworkModel!.request!);
+       // Get.back();
+       //
+
+
+       //  Navigator.of(context).pop();
+     }
         break;
       case "OpenTransferWindow":
         // do something else
+
+
+
         break;
       case "IsAlreadyExportedAsTransfer":
         isAlreadyExportedAsTransfer(

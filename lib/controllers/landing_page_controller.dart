@@ -222,6 +222,7 @@ update();
       showTopSnackBar(
         context,
         CustomSnackBar.success(
+          backgroundColor: Colors.lightGreen,
           icon: Container(),
           message:
           "BasketAddedSuccess".tr,
@@ -267,6 +268,7 @@ update();
       showTopSnackBar(
         context,
         CustomSnackBar.success(
+          backgroundColor: Colors.lightGreen,
           icon: Container(),
           message:
           "BasketDeletedSuccess".tr,
@@ -353,6 +355,7 @@ Navigator.pop(context);
 showTopSnackBar(
   context,
   CustomSnackBar.success(
+    backgroundColor: Colors.lightGreen,
     icon: Container(),
     message:
     "DoneDelegation".tr,
@@ -371,6 +374,7 @@ showTopSnackBar(
       showTopSnackBar(
         context,
         CustomSnackBar.success(
+          backgroundColor: Colors.lightGreen,
           icon: Container(),
           message:
           "DeletedDelegation".tr,
@@ -428,13 +432,13 @@ showTopSnackBar(
       showTopSnackBar(
         context,
         CustomSnackBar.success(
+          backgroundColor: Colors.lightGreen,
           // icon: const Icon(
           //   Icons.check,
           //   color: const Color(0x15000000),
           //   size: 50,
           // ),
           // backgroundColor: "#94C973".toColor(),
-          backgroundColor: Colors.lightGreen,
           icon: Container(),
           message:
           "DeletedSuccess".tr,

@@ -268,6 +268,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                   // icon: Container(),
                                   //   context,
                                   //   CustomSnackBar.success(
+                                  // backgroundColor: Colors.lightGreen,
                                   //     message:
                                   //     "Good job, basket have been deleted",
                                   //   ),

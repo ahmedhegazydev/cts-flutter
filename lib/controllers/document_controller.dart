@@ -68,6 +68,8 @@ import '../services/json_model/inopendocModel/multiple_transfers_model.dart';
 import '../services/json_model/inopendocModel/save_document_annotation_model.dart';
 import '../services/json_model/login_model.dart';
 import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
+import '../services/models/multiple_transfers_model_send.dart'
+    as multipletransfersSend;
 import '../services/models/signature_info.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
@@ -77,12 +79,9 @@ import 'inbox_controller.dart';
 import 'package:flutter/services.dart' as rootBundel;
 
 class DocumentController extends GetxController {
-
-
-  final record=FlutterSoundRecorder();
-
-
-
+  SecureStorage secureStorage = SecureStorage();
+  CanOpenDocumentModel? canOpenDocumentModel;
+  final record = FlutterSoundRecorder();
 
 //Map<int,String>folder={};
   bool notoragnalFileDoc = false;
@@ -226,37 +225,60 @@ class DocumentController extends GetxController {
 //=============================================================================================
 
   multipleTransferspost({context, correspondenceId, transferId}) {
-    List<TransferNode> transfers = [];
+    //
     MultipleTransfersAPI _multipleTransfersAPI = MultipleTransfersAPI(context);
-    recordingMap.forEach((key, value)async {
+    recordingMap.forEach((key, value) async {
+      print("key====>$key");
+      print("key====>${value}");
 
-      String? audioFileBes64 =
-          await audiobase64String(
-          file: value);
-      TransferNode transferNode = TransferNode(
-          destinationId: key.toString(),
-          purposeId: value.correspondencesId!,
-          dueDate: canOpenDocumentModel!.correspondence!.docDueDate!,
-          voiceNote: audioFileBes64!,
-          voiceNoteExt: "m4a");
-      print("transferNode=>  ${transferNode.toMap()}");
+      String? audioFileBes64 = await audiobase64String(file: File(value));
 
+      multiTransferNode[key]?.voiceNote = audioFileBes64;
+      multiTransferNode[key]?.voiceNoteExt = "m4a";
+      multiTransferNode[key]?.voiceNotePrivate = false;
+      multiTransferNode[key]?.destinationId = key.toString();
+      multiTransferNode[key]?.purposeId =
+          canOpenDocumentModel!.correspondence!.purposeId;
+      multiTransferNode[key]?.voiceNotePrivate = false;
 
-      transfers.add(transferNode);
+      // multipletransfersSend.TransferNode transferNode =
+      // multipletransfersSend.TransferNode(
+      //     destinationId: key.toString(),note: ,voiceNotePrivate: ,
+      //     purposeId:
+      //         canOpenDocumentModel!.correspondence!.correspondenceId!,
+      //     //value.correspondencesId!,
+      //     dueDate: canOpenDocumentModel!.correspondence!.docDueDate!,
+      //     //canOpenDocumentModel!.correspondence!.docDueDate!,
+      //     voiceNote: audioFileBes64!,
+      //     voiceNoteExt: "m4a");
+      print(
+          "multiTransferNode[key]=>    ${jsonEncode(multiTransferNode[key]?.toMap())}");
+      print("key====>${jsonEncode(value)}");
     });
 
-    print("transferNode=>  ${transfers.length}");
+    List<multipletransfersSend.TransferNode> transfers = [];
+    multiTransferNode.forEach((key, value) {
+      transfers.add(value);
+    });
 
-    MultipleTransfersModel multipleTransfersModel = MultipleTransfersModel(
-        token: secureStorage.token()!,
-        correspondenceId: correspondenceId,
-        transferId: transferId,
-        transfers: transfers);
+    multipletransfersSend.MultipleTransfers multipleTransfers =
+        multipletransfersSend.MultipleTransfers(
+            transfers: transfers,
+            correspondenceId: correspondenceId,
+            token: secureStorage.token()!,
+            transferId: transferId);
 
-    print(multipleTransfersModel.toMap());
-    transfarForMany.clear();
-    usersWillSendTo.clear();
-    _multipleTransfersAPI.post(multipleTransfersModel.toMap()).then((value) {
+    // MultipleTransfersModel multipleTransfersModel = MultipleTransfersModel(
+    //     token: secureStorage.token()!,
+    //     correspondenceId: correspondenceId,
+    //     transferId: transferId,
+    //     transfers: transfers);
+
+    print(
+        "multipleTransfersModel.toMap()   =>${jsonEncode(multipleTransfers.toMap())}");
+    // transfarForMany.clear();
+    // usersWillSendTo.clear();
+    _multipleTransfersAPI.post(multipleTransfers.toMap()).then((value) {
       print(" _multipleTransfersAPI end");
       print(value);
     });
@@ -562,9 +584,6 @@ class DocumentController extends GetxController {
 //     update();
 //   }
 
-  SecureStorage secureStorage = SecureStorage();
-  CanOpenDocumentModel? canOpenDocumentModel;
-
   backTooragnalFileDocpdf() {
     notoragnalFileDoc = false;
     // pdfViewerkey=null;
@@ -633,8 +652,8 @@ class DocumentController extends GetxController {
         Map<String, dynamic> dat = jsonDecode(element.annotations!);
         print("77777777777777777=>     ${dat.values.toList()}");
 
-        ViewerAnnotation daa=      ViewerAnnotation.fromMap(dat)      ;
-         print("88888888=>     ${daa.toMap()}");
+        ViewerAnnotation daa = ViewerAnnotation.fromMap(dat);
+        print("88888888=>     ${daa.toMap()}");
         // Positioned(
         //   top: double.tryParse(dat["Y"]),
         //   left: double.tryParse(dat["X"]),
@@ -760,6 +779,9 @@ class DocumentController extends GetxController {
 
   GetDocumentTransfersModel? getDocumentTransfersModel;
 
+  //9/7/2022
+  // ظظ الشغل الي اتكلم فيه حسين//
+//==================================================================================================
   getDocumentAuditLogsdata({required context, required String docId}) {
     final GetDocumentAuditLogsApi _getDocumentAuditLogsApi =
         GetDocumentAuditLogsApi(context);
@@ -826,6 +848,7 @@ class DocumentController extends GetxController {
     print("*" * 10);
   }
 
+//==================================================================================================
 //===============================================
   List<Destination> users = [];
   List<Destination> usersWillSendTo = [];
@@ -839,11 +862,16 @@ class DocumentController extends GetxController {
 
   addTousersWillSendTo({required Destination user}) {
     usersWillSendTo.add(user);
+    multipletransfersSend.TransferNode transferNode =
+        multipletransfersSend.TransferNode(
+            purposeId: canOpenDocumentModel!.correspondence!.purposeId,destinationId: user!.id.toString(),voiceNotePrivate: false);
+    multiTransferNode[user.id!] = transferNode;
     update(); // update(["user"]);
   }
 
   delTousersWillSendTo({required Destination user}) {
     usersWillSendTo.remove(user);
+    multiTransferNode.remove(user.id);
     update(); // update(["alluser"]);
   }
 
@@ -1500,72 +1528,56 @@ class DocumentController extends GetxController {
     }
   }
 
-
-
-
-
-
-
-
-
-
   //الجديد في الارسال الي الكل
-
 
   //Favorites user
   ListFavoriteRecipientsResponse? favoriteRecipientsResponse;
-  Future listFavoriteRecipients({context}) async {
 
+  Future listFavoriteRecipients({context}) async {
     ListFavoriteRecipientsApi listFavoriteRecipientsApi =
-    ListFavoriteRecipientsApi(context);
+        ListFavoriteRecipientsApi(context);
     listFavoriteRecipientsApi.data =
-    "Token=${secureStorage.token()}&Language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
-    await listFavoriteRecipientsApi
-        .getData()
-        .then((value) {
-      if(value!=null){
+        "Token=${secureStorage.token()}&Language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+    await listFavoriteRecipientsApi.getData().then((value) {
+      if (value != null) {
         favoriteRecipientsResponse = value as ListFavoriteRecipientsResponse;
-      }else{
+      } else {
         Get.snackbar("", "err".tr);
       }
 
-
       // print("listFavoriteRecipientsApi  =>${favoriteRecipientsResponse?.recipients[0].targetPhotoBs64.isEmpty}");
     });
-    update(); }
+    update();
+  }
 
 //التسجيل الجديد
 
   setNots({required int id, String? not}) {
-    transfarForMany[id]?.notes = not;
-    update();
+    multiTransferNode[id]?.note = not;
   }
 
-Map<int,dynamic>recordingMap={};
+  Map<int, multipletransfersSend.TransferNode> multiTransferNode = {};
+  Map<int, dynamic> recordingMap = {};
 
+  Future initRecorder() async {
+    final statusmicrophone = await Permission.microphone.request();
+    final statusstorage = await Permission.storage.request();
+    final statusmanageExternalStorage =
+        await Permission.manageExternalStorage.request();
 
-  Future initRecorder() async{
-
-
-
-
-    final statusmicrophone =await Permission.microphone.request();
-    final statusstorage =await Permission.storage.request();
-    final statusmanageExternalStorage =await Permission.manageExternalStorage.request();
-
-    if(statusmicrophone!=PermissionStatus.granted){
+    if (statusmicrophone != PermissionStatus.granted) {
       Permission.microphone.request();
     }
-    if(statusstorage!=PermissionStatus.granted){
+    if (statusstorage != PermissionStatus.granted) {
       await Permission.storage.request();
     }
-    if(statusmanageExternalStorage!=PermissionStatus.granted){
+    if (statusmanageExternalStorage != PermissionStatus.granted) {
       Permission.manageExternalStorage.request();
     }
     await record.openRecorder();
   }
 
-  Future recordMathod({required id})async{
+  Future recordMathod({required id}) async {
     await record.openRecorder();
     //  await record.startRecorder(toFile: "audio");
     appDocDir = await getApplicationDocumentsDirectory();
@@ -1575,27 +1587,28 @@ Map<int,dynamic>recordingMap={};
         '.mp4';
     recording = true;
     update(["id"]);
-recordingMap[id]=_directoryPath;
+    recordingMap[id] = _directoryPath;
     await record.startRecorder(codec: _codec, toFile: _directoryPath);
+    update(["record"]);
   }
-  Future stopMathod()async{
+
+  Future stopMathod() async {
     recording = false;
     update(["id"]);
     recordFile = File(_directoryPath);
     await record.stopRecorder();
+    update(["record"]);
   }
 
-  Future playMathod({required id})async{
+  Future playMathod({required id}) async {
     audioPlayer = FlutterSoundPlayer();
     audioPlayer!.openPlayer();
-    if(recordingMap[id]!=null){
+    if (recordingMap[id] != null) {
       await audioPlayer!.startPlayer(fromURI: recordingMap[id]);
-    }else{
+    } else {
       Get.snackbar("", "nofiletoopen".tr);
     }
-
   }
-
 }
 
 showDilog(
@@ -1818,19 +1831,20 @@ class ViewerAnnotation {
   }
 
   factory ViewerAnnotation.fromMap(Map<String, dynamic> map) {
-    return ViewerAnnotation(id: map['id'] ,
-      page: map['page'] ,
-      X: map['X']  ,
-      Y: map['Y'] ,
-      type: map['type']  ,
-      width: map['width']  ,
-      height: map['height']  ,
-      imageByte: map['imageByte'] ,
-      imageName: map['imageName']  ,
-      text: map['text'] ,
-      readonly: map['readonly'] ,
-      userId: map['userId'] ,
-      hidden: map['hidden']  ,
+    return ViewerAnnotation(
+      id: map['id'],
+      page: map['page'],
+      X: map['X'],
+      Y: map['Y'],
+      type: map['type'],
+      width: map['width'],
+      height: map['height'],
+      imageByte: map['imageByte'],
+      imageName: map['imageName'],
+      text: map['text'],
+      readonly: map['readonly'],
+      userId: map['userId'],
+      hidden: map['hidden'],
     );
   }
 }

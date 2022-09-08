@@ -60,7 +60,10 @@ class DocumentPage extends GetWidget<DocumentController> {
       //  mainAxisSize: MainAxisSize.max,
       children: [
         _buildTopBar(context),
-        GetBuilder<DocumentController>(builder: (logic) {
+        GetBuilder<DocumentController>(//autoRemove: false,
+
+
+            builder: (logic) {
           return SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
@@ -258,7 +261,11 @@ class DocumentPage extends GetWidget<DocumentController> {
                 GestureDetector(
                   onTap: () {
                     Get
+                        .find<WebViewPageController>().isPdf=false;
+
+                    Get
                         .find<WebViewPageController>()
+
                         .url = controller
                         .canOpenDocumentModel
                         ?.correspondence!
@@ -439,7 +446,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                 Divider(color: Colors.grey),
                                                 Expanded(
                                                   child: GetBuilder<
-                                                      DocumentController>(
+                                                      DocumentController>(//autoRemove: false,
                                                     assignId: true,
                                                     builder: (logic) {
                                                       return GridView.builder(
@@ -634,7 +641,8 @@ class DocumentPage extends GetWidget<DocumentController> {
                   width: 1,
                   color: Colors.grey,
                 ),
-                GetBuilder<DocumentController>(builder: (logic) {
+                GetBuilder<DocumentController>(//autoRemove: false,
+                    builder: (logic) {
                   return Expanded(
                       flex: 4,
                       child: Container(
@@ -1038,7 +1046,10 @@ class DocumentPage extends GetWidget<DocumentController> {
                         .of(context)
                         .size
                         .width * .8,
-                      child: GetBuilder<DocumentController>(builder: (logic) {
+                      child: GetBuilder<DocumentController>(//autoRemove: false,
+
+
+                          builder: (logic) {
                         return ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: (controller.favoriteRecipientsResponse
@@ -1141,7 +1152,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                             .size
                             .width * .8,
                         height: 300, // MediaQuery.of(context).size.height * .5,
-                        child: GetBuilder<DocumentController>(
+                        child: GetBuilder<DocumentController>(//autoRemove: false,
                           //   assignId: true,//tag: "user",
                           builder: (logic) {
                             return //Text(logic.filterWord);
@@ -1304,6 +1315,10 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                           GestureDetector(
                                                             onTap: () async {
                                                               ///To Do Start and stop rec
+                                                              ///
+                                                              ///
+                                                              ///
+                                                              // controller.canOpenDocumentModel.correspondence.docDueDate
                                                               controller
                                                                   .record.isRecording
                                                                   ? controller
@@ -1313,16 +1328,17 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                                   .recordMathod( id:logic
                                                                   .usersWillSendTo[
                                                               pos]
-                                                                  .id );
+                                                                  .id, );
                                                             },
                                                             child: Padding(
                                                               padding:
                                                               const EdgeInsets
                                                                   .all(8.0),
                                                               child: GetBuilder<
-                                                                  DocumentController>(
+                                                                  DocumentController>(id: "record",//autoRemove: false,
                                                                   builder:
                                                                       (logic) {
+
                                                                     return Icon(
                                                                         controller
                                                                             .record.isRecording
@@ -1330,7 +1346,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                                             .stop
                                                                             : Icons
                                                                             .mic);
-                                                                  }),
+                                                                 }),
                                                             ),
                                                           ),
                                                           Padding(
@@ -1360,6 +1376,11 @@ class DocumentPage extends GetWidget<DocumentController> {
                                             Container(
                                               child: TextFormField(
                                                 onChanged: (v) {
+
+
+                                                 controller. multiTransferNode[logic
+                                                     .usersWillSendTo[pos]
+                                                     .id]?.note=v;
                                                   controller.setNots(
                                                       id: logic
                                                           .usersWillSendTo[pos]
@@ -1388,21 +1409,14 @@ class DocumentPage extends GetWidget<DocumentController> {
                   ///ToDo
                   ///send to many
 
-                  print("i click ok");
-                  print(
-                      "Get.find<InboxController>().   =>   ${controller
-                          .recordingMap.length}");
+
                   controller.multipleTransferspost(
                       context: context,
                       transferId: controller
                           .canOpenDocumentModel!.correspondence!.transferId!,
                       correspondenceId: controller.canOpenDocumentModel!
                           .correspondence!.correspondenceId);
-                  // controller.transfarForMany.forEach((key, value) {
-                  //
-                  //   print("$key      ${value.toMap()}");
-                  // });
-                  //  Navigator.of(context).pop();
+
                 },
                 child: Text("Ok"),
               ),

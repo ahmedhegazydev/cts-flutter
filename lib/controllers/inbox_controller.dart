@@ -343,7 +343,7 @@ int?nodeId=0;
       throw "storage permission not granted";
     }
     if(statusmanageExternalStorage!=PermissionStatus.granted){
-      throw " manageExternalStorage permission not granted";
+      Permission.manageExternalStorage.request();
     }
     await record.openRecorder();
   }

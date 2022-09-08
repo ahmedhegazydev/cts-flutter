@@ -1317,6 +1317,8 @@ SizedBox(height: 3,),
             ///open url and go to userGuideUrl
             //  controller.data.userGuideUrl
 
+            print( "controller.data?.userGuideUrl=>${controller.data?.userGuideUrl}");
+            Get.find<WebViewPageController>().isPdf=true;
             Get.find<WebViewPageController>().url =
                 controller.data?.userGuideUrl;
             Get.toNamed(
@@ -2574,9 +2576,10 @@ SizedBox(height: 3,),
               ///ToDo
               ///open url and go to userGuideUrl
               //  controller.data.userGuideUrl
-
+              Get.find<WebViewPageController>().isPdf=true;
               Get.find<WebViewPageController>().url =
                   controller.data?.userGuideUrl;
+              print( "controller.data?.userGuideUrl=>${controller.data?.userGuideUrl}");
               Get.toNamed(
                 "WebViewPage",
               );

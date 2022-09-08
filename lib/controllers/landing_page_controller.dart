@@ -343,6 +343,14 @@ update();
 
     getMyRoutingsettingsApi.post(data.toMap()).then((value) {
 Navigator.pop(context);
+showTopSnackBar(
+  context,
+  CustomSnackBar.success(
+    icon: Container(),
+    message:
+    "DoneDelegation".tr,
+  ),
+);
     });
   }
   removeMyRoutingSettings({  data,context}){
@@ -353,7 +361,14 @@ Navigator.pop(context);
 
     removeMyRoutingSettingsApi.post(data ).then((value) {
       Navigator.pop(context);
-
+      showTopSnackBar(
+        context,
+        CustomSnackBar.success(
+          icon: Container(),
+          message:
+          "DeletedDelegation".tr,
+        ),
+      );
     });
   }
 

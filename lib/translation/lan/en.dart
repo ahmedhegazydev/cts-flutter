@@ -133,5 +133,7 @@ const Map<String, String> en = {
   "DeletedSuccess":"The favorite user deleted successfully",
   "BasketDeletedSuccess":"The basket deleted successfully",
 "BasketAddedSuccess":"A new basket created successfully",
+  "DoneDelegation":"Done saving delegation successfully",
+  "DeletedDelegation":"Delegation deleted successfully",
 
 };

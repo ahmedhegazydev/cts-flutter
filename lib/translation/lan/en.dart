@@ -131,6 +131,9 @@ const Map<String, String> en = {
   "nofiletoopen":"there's no file to play",
 "SureDelFavUser":"Are u sure to delete this favorite user?",
   "DeletedSuccess":"The favorite user deleted successfully",
+  "BasketDeletedSuccess":"The basket deleted successfully",
 "BasketAddedSuccess":"A new basket created successfully",
+  "DoneDelegation":"Done saving delegation successfully",
+  "DeletedDelegation":"Delegation deleted successfully",
 
 };

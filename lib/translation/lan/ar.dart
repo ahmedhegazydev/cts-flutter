@@ -128,6 +128,9 @@ const Map<String, String> ar = {
   "SureDelFavUser":"هل انت متاكد من مسح هذا العميل المفضل؟",
   "DeletedSuccess":"تم مسح العميل المفضل بنجاح",
   "BasketAddedSuccess":"تم انشاء محفظه جديده بنجاح",
+  "BasketDeletedSuccess":"تم مسح المحفظه بنجاح",
+  "DoneDelegation":"تم اعاده توجيه المراسله بنجاح",
+  "DeletedDelegation":"تم حذف المراسله بنجاح",
 
 
 };

@@ -263,14 +263,14 @@ update();
       Navigator.pop(context);
       // Get.back();
       // onSuccess(value.toString());
-      // showTopSnackBar(
-      // icon: Container(),
-      //   context,
-      //   CustomSnackBar.success(
-      //     message:
-      //     "Good job, basket have been deleted",
-      //   ),
-      // );
+      showTopSnackBar(
+        context,
+        CustomSnackBar.success(
+          icon: Container(),
+          message:
+          "BasketDeletedSuccess".tr,
+        ),
+      );
 
     });
     update();
@@ -349,6 +349,14 @@ update();
 
     getMyRoutingsettingsApi.post(data.toMap()).then((value) {
 Navigator.pop(context);
+showTopSnackBar(
+  context,
+  CustomSnackBar.success(
+    icon: Container(),
+    message:
+    "DoneDelegation".tr,
+  ),
+);
     });
   }
   removeMyRoutingSettings({  data,context}){
@@ -359,7 +367,14 @@ Navigator.pop(context);
 
     removeMyRoutingSettingsApi.post(data ).then((value) {
       Navigator.pop(context);
-
+      showTopSnackBar(
+        context,
+        CustomSnackBar.success(
+          icon: Container(),
+          message:
+          "DeletedDelegation".tr,
+        ),
+      );
     });
   }
 

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cts/controllers/search_controller.dart';
+import 'package:cts/utility/utilitie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -51,6 +52,7 @@ import 'package:flutter/services.dart' as rootBundel;
 class LandingPageController extends GetxController {
 
   bool isSavingOrder = false;
+  bool setSelectSuggestion = false;
 
   TextEditingController textEditingControllerEnglishName =
       TextEditingController();
@@ -65,7 +67,17 @@ class LandingPageController extends GetxController {
 
   Destination? to;
 
+  int? oldIndex = 0;
+  int? newIndex = 0;
+  setOldIndex(int oldIndex){
+    this.oldIndex = oldIndex;
+    update();
+  }
 
+  setNewIndex(int newIndex){
+    this.newIndex = newIndex;
+    update();
+  }
 
   FindRecipientModel? findRecipientModel;
   final SecureStorage secureStorage = SecureStorage();
@@ -182,7 +194,7 @@ update();
     return name ?? "";
   }
 
-  Future addEditBasket({context, color, nameEn, nameAr}) async {
+  Future addEditBasket({context, color, nameEn, nameAr,OrderBy}) async {
     AddEditBasketFlagApi _addEditBasketFlagApi = AddEditBasketFlagApi(context);
 
     BasketDto basketDto = new BasketDto(
@@ -192,7 +204,7 @@ update();
         ID: 0,
         //=========
         CanBeReOrder: false,
-        OrderBy: 0,
+        OrderBy: OrderBy,
         AdminIsDeleted: false,
         isDeleted: false,
         UserGctId: 0);
@@ -205,8 +217,22 @@ update();
         .post(addEditBasketFlagModel.toMap())
         .then((value) {
       Navigator.pop(context);
+      Navigator.pop(context);
+      showTopSnackBar(
+        context,
+        CustomSnackBar.success(
+          icon: Container(),
+          message:
+          "BasketAddedSuccess".tr,
+        ),
+      );
+
+      showLoaderDialog(context);
+       getFetchBasketList(context: context);
 
     });
+    update();
+
   }
 
   Future reOrderBaskets({context, baskets}) async {
@@ -219,7 +245,8 @@ update();
     await _postReorderBasketsApi
         .post(reorderBasketsRequest.toMap())
         .then((value) {
-
+          print(value);
+          Navigator.pop(context);
     });
     update();
   }
@@ -233,11 +260,11 @@ update();
       token: secureStorage.token(),
     );
     await _postRemoveBasketApi.post(removeBasketRequest.toMap()).then((value) {
-
-      // Navigator.pop(context);
+      Navigator.pop(context);
       // Get.back();
-      onSuccess(value.toString());
+      // onSuccess(value.toString());
       // showTopSnackBar(
+      // icon: Container(),
       //   context,
       //   CustomSnackBar.success(
       //     message:
@@ -321,7 +348,7 @@ update();
 
 
     getMyRoutingsettingsApi.post(data.toMap()).then((value) {
-
+Navigator.pop(context);
     });
   }
   removeMyRoutingSettings({  data,context}){
@@ -331,6 +358,7 @@ update();
 
 
     removeMyRoutingSettingsApi.post(data ).then((value) {
+      Navigator.pop(context);
 
     });
   }
@@ -349,7 +377,6 @@ update();
    * mofa-favorite-recipients-api (1)
    */
   Future listFavoriteRecipients({context}) async {
-
     ListFavoriteRecipientsApi listFavoriteRecipientsApi =
         ListFavoriteRecipientsApi(context);
     listFavoriteRecipientsApi.data =
@@ -357,13 +384,14 @@ update();
     await listFavoriteRecipientsApi
         .getData()
         .then((value) {
+          if(setSelectSuggestion){
+            Navigator.pop(context);
+          }
           if(value!=null){
             favoriteRecipientsResponse = value as ListFavoriteRecipientsResponse;
           }else{
             Get.snackbar("", "err".tr);
           }
-
-
      // print("listFavoriteRecipientsApi  =>${favoriteRecipientsResponse?.recipients[0].targetPhotoBs64.isEmpty}");
     });
  update(); }
@@ -380,6 +408,20 @@ update();
     await removeFavoriteRecipientsApi
         .post(reorderBasketsRequest.toMap())
         .then((value) {
+          Navigator.pop(context);
+      showTopSnackBar(
+        context,
+        CustomSnackBar.success(
+          // icon: const Icon(
+          //   Icons.check,
+          //   color: const Color(0x15000000),
+          //   size: 50,
+          // ),
+          icon: Container(),
+          message:
+          "DeletedSuccess".tr,
+        ),
+      );
       listFavoriteRecipients( context: context);
 
       print(value);
@@ -399,7 +441,10 @@ update();
     await addFavoriteRecipientsApi
         .post(addFavoriteRequest.toMap())
         .then((value) {
+          Navigator.pop(context);
 
+          showLoaderDialog(context);
+          setSelectSuggestion = true;
       listFavoriteRecipients( context: context);
 
       print(value);
@@ -412,7 +457,7 @@ update();
 
   FetchBasketListModel? fetchBasketListModel;
   GetBasketInboxModel? getBasketInboxModel;
-  Future getFetchBasketList({context}) async {
+  Future getFetchBasketList({required BuildContext? context}) async {
     print(
         "getFetchBasketListgetFetchBasketListgetFetchBasketListgetFetchBasketList");
     GetFetchBasketListApi getFetchBasketListApi =
@@ -421,6 +466,7 @@ update();
     "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     await getFetchBasketListApi.getData().then((value) {
 
+      Navigator.pop(context!);
 
       if(value!=null){
         fetchBasketListModel = value as FetchBasketListModel;
@@ -429,7 +475,7 @@ update();
         // });
         fetchBasketListModel?.baskets?.sort();
       }else{
-        Get.snackbar("", "err".tr);
+        // Get.snackbar("", "err".tr);
       }
 
 
@@ -437,6 +483,7 @@ update();
       print(fetchBasketListModel?.toJson());
       print("getFetchBasketList i getit");
     });
+    update();
   }
 
 
@@ -466,6 +513,11 @@ if(value!=null){
       update();
       // print(a.toJson());
     });
+  }
+
+  void setSelectSuggest(bool setSelectSuggestion) {
+    this.setSelectSuggestion =  setSelectSuggestion;
+    update();
   }
 
 

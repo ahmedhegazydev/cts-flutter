@@ -5353,9 +5353,11 @@ class CustomListView extends GetView<InboxController> {
                                                           }
 
                                                           print(v.toMap());
+                                                          showLoaderDialog(context);
                                                           await replayAPI
                                                               .post(v.toMap())
                                                               .then((value) {
+                                                                Navigator.pop(context);
                                                             ReplyWithVoiceNoteModel
                                                             v = value
                                                             as ReplyWithVoiceNoteModel;
@@ -5363,8 +5365,6 @@ class CustomListView extends GetView<InboxController> {
                                                               Get.snackbar("",
                                                                   "تمت العمليه بنجاح");
                                                             }
-
-
                                                             print("1" * 50);
                                                           });
 

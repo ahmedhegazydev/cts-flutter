@@ -18,9 +18,9 @@ class RemoveBasketRequest extends AbstractJsonResource {
 
   factory RemoveBasketRequest.fromMap(Map<String, dynamic> map) {
     return RemoveBasketRequest(
-      token: map['token'] as String,
-      basketId: map['basketId'] as int,
-      language: map['language'] as String,
+      token: map['token'] as String?,
+      basketId: map['basketId'] as int?,
+      language: map['language'] as String?,
     );
   }
 }

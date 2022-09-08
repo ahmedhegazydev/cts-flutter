@@ -23,10 +23,10 @@ return data;
 
   factory MultipleTransfersModel.fromMap(Map<String, dynamic> map) {
     return MultipleTransfersModel(
-      token: map['token'] as String,
-      correspondenceId: map['correspondenceId'] as String,
-      transferId: map['transferId'] as String,
-      transfers: map['transfers'] as List<TransferNode>,
+      token: map['token']  ,
+      correspondenceId: map['correspondenceId']  ,
+      transferId: map['transferId'] ,
+      transfers: map['transfers']  ,
     );
   }
 }

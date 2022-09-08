@@ -1630,8 +1630,6 @@ Future  getCanExportAsPaperwork(
       case "OpenTransferWindow":
         // do something else
 
-
-
         break;
       case "IsAlreadyExportedAsTransfer":
         isAlreadyExportedAsTransfer(

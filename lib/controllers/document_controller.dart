@@ -40,6 +40,7 @@ import '../services/apis/inside_doc/is_already_exported_as_transfer_api.dart';
 import '../services/apis/multiple_transfers_api.dart';
 import '../services/apis/save_document_annotations_api.dart';
 import '../services/json_model/can_open_document_model.dart';
+import '../services/json_model/default_on_success_result.dart';
 import '../services/json_model/favorites/list_all/ListFavoriteRecipients_response.dart';
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_correspondences_model.dart';
@@ -276,11 +277,13 @@ class DocumentController extends GetxController {
 
     print(
         "multipleTransfersModel.toMap()   =>${jsonEncode(multipleTransfers.toMap())}");
-    // transfarForMany.clear();
-    // usersWillSendTo.clear();
+    transfarForMany.clear();
+    usersWillSendTo.clear();
     _multipleTransfersAPI.post(multipleTransfers.toMap()).then((value) {
-      print(" _multipleTransfersAPI end");
-      print(value);
+      DefaultOnSuccessResult defaultOnSuccessResult=value as DefaultOnSuccessResult;
+
+      Get.snackbar("", "تم التنفيذ بنجاح");
+
     });
   }
 

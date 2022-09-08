@@ -110,7 +110,7 @@ class LoginController extends GetxController {
 
           Get.offNamed("/Landing");
         }else{
-          Get.snackbar("Error".tr, "WrongUsername".tr);
+          // Get.snackbar("Error".tr, "WrongUsername".tr);
           Navigator.pop(context!);
         }
       }).catchError((err){

@@ -175,8 +175,8 @@ showLoaderDialog(BuildContext context) {
     ),
   );
   showDialog(
-    barrierDismissible: true,
-    // barrierDismissible: false,
+    // barrierDismissible: true,
+    barrierDismissible: false,
     context: context,
     builder: (BuildContext context) {
       return alert;

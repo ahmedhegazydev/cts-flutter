@@ -65,81 +65,66 @@ const Map<String, String> ar = {
   "emptyInboxList": "قائمة البريد فارغة",
   "referDate": "تاريخ الاحالة",
   "emptylist": " لا يوجد نتيجه للبحث",
-
-
   "english_name": "الاسم بالانجليزي",
   "arabic_name": "الاسم بالعربي",
-  "to":"الي",
-  "copyto":"نسخة الي",
-
-"backtooriginalfile":"الرجوع للملف الاصلي",
-"AddAttachments":"اضف مرفق"
-  ,
-  "Attachments":"المرفقات"
-  ,
-  "ReferenceNumber":"الرقم المرجعي"
-  ,
-  "Subject":"الموضوع"
-  ,
-  "From":"من"
-  ,
-  "To":"الي",
-  "PrivacyLevel":"درجة الخصوصية"
-  ,
-  "Status":"الحالة",
-"DocumentData":"معلومات الملف"
-  ,
-  "Reset":"مسح"
-  ,
-  "filter":"تصفية"
-  ,
-  "Modify":"تحرير"
-  ,
-  "back":"الغاء تحرير",
-  "Base Url":"الرابط الاساسي"
-  , "Settings": "الاعدادات"
-  , "Save Settings": "حفظ الاعدادات"
-  , "pick your Color": "اختر اللون المناسب"
-  ,"addtoBasket":"اضف الي السلة",
-  "Summary":"معلومات",
-"Complete":"انهاء",
-   "allout": "صادر الكل"
-  , "allincom": "وارد الكل"
-  , "Basket": "محفظتي",
-"user Guide": "دليل المستخدم"
-,
-"Transfer":"تحويل"
-,"Reply":"رد",
-
-"All":"الكل",
-  "new":"جديد",
-  "veryimportant":  "عاجل"
-  ,
-  "start":"تاريخ البدء"
-  ,
-  "end":"تاريخ الانتهاء"
-  ,
-  "reason":"السبب",
-"defaultsignature":"الامضاء الافتراضية"
-  ,
-  "multisignature":"جميع الامضاءات",
-  "userGuide":"دليل الاستخدام",
-  "newBasket":"سلة جديدة",
-  "title":"عنوان الرسالة",
-  "Loading...":"  تحميل .... ",
-
-
-  "relogin":"برجاء اعاده تسجيل الدخول",
-  "canotopen":"غير مسموح لك فتح الملف",
-
-"err":"حدث خطأ في الاتصال برجاء المحاولة مره اخري",
-"private":"خاص",
-  "send":"ارسال",
+  "to": "الي",
+  "copyto": "نسخة الي",
+  "backtooriginalfile": "الرجوع للملف الاصلي",
+  "AddAttachments": "اضف مرفق",
+  "Attachments": "المرفقات",
+  "ReferenceNumber": "الرقم المرجعي",
+  "Subject": "الموضوع",
+  "From": "من",
+  "To": "الي",
+  "PrivacyLevel": "درجة الخصوصية",
+  "Status": "الحالة",
+  "DocumentData": "معلومات الملف",
+  "Reset": "مسح",
+  "filter": "تصفية",
+  "Modify": "تحرير",
+  "back": "الغاء تحرير",
+  "Base Url": "الرابط الاساسي",
+  "Settings": "الاعدادات",
+  "Save Settings": "حفظ الاعدادات",
+  "pick your Color": "اختر اللون المناسب",
+  "addtoBasket": "اضف الي السلة",
+  "Summary": "معلومات",
+  "Complete": "انهاء",
+  "allout": "صادر الكل",
+  "allincom": "وارد الكل",
+  "Basket": "محفظتي",
+  "user Guide": "دليل المستخدم",
+  "Transfer": "تحويل",
+  "Reply": "رد",
+  "All": "الكل",
+  "new": "جديد",
+  "veryimportant": "عاجل",
+  "start": "تاريخ البدء",
+  "end": "تاريخ الانتهاء",
+  "reason": "السبب",
+  "defaultsignature": "الامضاء الافتراضية",
+  "multisignature": "جميع الامضاءات",
+  "userGuide": "دليل الاستخدام",
+  "newBasket": "سلة جديدة",
+  "title": "عنوان الرسالة",
+  "Loading...": "  تحميل .... ",
+  "relogin": "برجاء اعاده تسجيل الدخول",
+  "canotopen": "غير مسموح لك فتح الملف",
+  "err": "حدث خطأ في الاتصال برجاء المحاولة مره اخري",
+  "private": "خاص",
+  "send": "ارسال",
   "Error": "حدث خطأ ما",
   "tryAgain": "رجاء المحاوله ف وقت لاحق",
   "SessionExpired": "لقد انتهت جلستك",
- "WrongUsername":"مستخدم او كلمه المرور خاطئه"
-,
+  "WrongUsername": "مستخدم او كلمه المرور خاطئه",
+  "Confirm": "مسح",
+  "Cancel": "الغاء",
+  "SureToDelete": "هل انت متاكد من مسح المحفظه؟",
+  "new Basket": "محفظه جديده",
+  "Ok": "تمام",
+  "CreateNewBasket": "انشاء محفظه جديده",
+  "register": "انشاء محفظه",
+
 
   "nofiletoopen":"لا يوجد ملف للتشغيل"
 };

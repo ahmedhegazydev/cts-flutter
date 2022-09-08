@@ -4642,7 +4642,8 @@ class CustomListView extends GetView<InboxController> {
                                                         .value ??
                                                         "",
                                                     softWrap: true,
-                                                    maxLines: 3,
+                                                    maxLines: 2,
+                                                    overflow: TextOverflow.ellipsis,
                                                     style: TextStyle(
                                                         color: Colors.black
                                                             .withOpacity(.7),

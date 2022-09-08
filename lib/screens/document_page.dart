@@ -334,14 +334,14 @@ class DocumentPage extends GetWidget<DocumentController> {
                           SizedBox(
                             height: size.height * .05,
                           ),
-                          CustomSideButtonMenu(
-                            onClick: () {},
-                            label: "comment".tr,
-                            image: 'assets/images/comment.png',
-                          ),
-                          SizedBox(
-                            height: size.height * .05,
-                          ),
+                          // CustomSideButtonMenu(
+                          //   onClick: () {},
+                          //   label: "comment".tr,
+                          //   image: 'assets/images/comment.png',
+                          // ),
+                          // SizedBox(
+                          //   height: size.height * .05,
+                          // ),
                           CustomSideButtonMenu(
                             onClick: () {
                               print("object");
@@ -562,14 +562,14 @@ class DocumentPage extends GetWidget<DocumentController> {
                           SizedBox(
                             height: size.height * .05,
                           ),
-                          CustomSideButtonMenu(
-                            onClick: () {},
-                            label: "marking".tr,
-                            image: 'assets/images/A.png',
-                          ),
-                          SizedBox(
-                            height: size.height * .05,
-                          ),
+                          // CustomSideButtonMenu(
+                          //   onClick: () {},
+                          //   label: "marking".tr,
+                          //   image: 'assets/images/A.png',
+                          // ),
+                          // SizedBox(
+                          //   height: size.height * .05,
+                          // ),
                           CustomSideButtonMenu(
                             onClick: () async {
                               List<DocumentAnnotations>
@@ -1093,7 +1093,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                               .recipients![pos].targetName, id
                                           :controller
                                           .favoriteRecipientsResponse!
-                                          .recipients![pos].ufrId);
+                                          .recipients![pos].targetGctid);
                                       controller.addTousersWillSendTo(user:user);
                                     },
                                       child: Card(elevation: 8,

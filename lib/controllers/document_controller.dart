@@ -1204,7 +1204,13 @@ class DocumentController extends GetxController {
             context: context,
             massge: isAlreadyExportedAsPaperworkModel!.message!,
             no: () {
-              Navigator.of(context).pop();
+            //  Navigator.of(context).pop();
+              getSwitchMethod(
+                  exportAction: exportAction,
+                  transferId: transferId,
+                  correspondenceId: correspondenceId,
+                  context: context,
+                  name: isAlreadyExportedAsPaperworkModel?.noMethod??isAlreadyExportedAsPaperworkModel!.noMethod2!);
             },
             yes: () {
               // getCanExportAsPaperwork(
@@ -1218,11 +1224,11 @@ class DocumentController extends GetxController {
                   transferId: transferId,
                   correspondenceId: correspondenceId,
                   context: context,
-                  name: isAlreadyExportedAsPaperworkModel!.yesMethod!);
+                  name: isAlreadyExportedAsPaperworkModel?.yesMethod??isAlreadyExportedAsPaperworkModel!.yesMethod2!);
               Get.back();
               // Navigator.of(context).pop();
             });
-      } else {
+      }else if(isAlreadyExportedAsPaperworkModel?.request!=null ){
         getSwitchMethod(
             exportAction: exportAction,
             transferId: transferId,
@@ -1230,54 +1236,121 @@ class DocumentController extends GetxController {
             context: context,
             name: isAlreadyExportedAsPaperworkModel!.request!);
         Get.back();
+
+      }
+
+      else {
+
+
+    Get.snackbar("", isAlreadyExportedAsPaperworkModel!.message!);
+
+
+        // getSwitchMethod(
+        //     exportAction: exportAction,
+        //     transferId: transferId,
+        //     correspondenceId: correspondenceId,
+        //     context: context,
+        //     name: isAlreadyExportedAsPaperworkModel!.request!);
+        // Get.back();
+        //
+
+
         //  Navigator.of(context).pop();
       }
       // print("_alreadyExportedAsPaperworkAPI =>  ${isAlreadyExportedAsPaperworkModel!.toJson()}");
     });
   }
 
-  getCanExportAsPaperwork(
+Future  getCanExportAsPaperwork(
       {required correspondenceId,
       required transferId,
       required exportAction,
-      required context}) {
+      required context}) async{
     CanExportAsPaperworkAPI _canExportAsPaperworkAPI =
-        CanExportAsPaperworkAPI(context);
+        CanExportAsPaperworkAPI(null);
     _canExportAsPaperworkAPI.data =
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
-    _canExportAsPaperworkAPI.getData().then((value) {
+  await  _canExportAsPaperworkAPI.getData().then((value) {
       canExportAsPaperworkModel = value as CanExportAsPaperworkModel;
       print(
           "canExportAsPaperworkModel =>  ${canExportAsPaperworkModel?.isConfirm}");
+
+
+
+
+
       // if(canExportAsPaperworkModel?.isConfirm??false){
       //   Get.snackbar("", canExportAsPaperworkModel!.message!);
       // }
       // print("_alreadyExportedAsPaperworkAPI =>  ${canExportAsPaperworkModel!.toJson()}");
-
-      if (canExportAsPaperworkModel?.isConfirm ?? false) {
-        showDilog(
-            context: context,
-            massge: canExportAsPaperworkModel!.message!,
-            no: () {
-              Navigator.of(context).pop();
-            },
-            yes: isAlreadyExportedAsTransferModel!.yesMethod2 != null ||
-                    isAlreadyExportedAsTransferModel!.yesMethod != null
-                ? () {
-                    print("oooooooooooooooooooooooooooooooooo");
-                    //  Navigator.of(context).pop();
-                    getCanExportAsPaperwork(
-                        exportAction: exportAction,
-                        transferId: transferId,
-                        correspondenceId: correspondenceId,
-                        context: context);
-                    Get.back();
-                  }
-                : () {
-                    Get.back();
-                  });
-      }
+//الي كان شغال
+//       if (canExportAsPaperworkModel?.isConfirm ?? false) {
+//         showDilog(
+//             context: context,
+//             massge: canExportAsPaperworkModel?.message??"",
+//             no: () {
+//             //  Navigator.of(context).pop();
+//             },
+//             yes:
+//             // isAlreadyExportedAsTransferModel?.yesMethod2 != null ||
+//             //         isAlreadyExportedAsTransferModel?.yesMethod != null
+//             //     ?
+//          ()
+//
+//             {
+//                     print("oooooooooooooooooooooooooooooooooo");
+//                     //  Navigator.of(context).pop();
+//                     // getCanExportAsPaperwork(
+//                     //     exportAction: exportAction,
+//                     //     transferId: transferId,
+//                     //     correspondenceId: correspondenceId,
+//                     //     context: context);
+//                  //   Get.back();
+//                   }
+//                 // : () {
+//                 //    // Get.back();
+//                 //   }
+//
+//
+//                   );
+//       }
     });
+
+
+    canExportAsPaperworkModel=   await  _canExportAsPaperworkAPI.getData() as CanExportAsPaperworkModel;
+
+    // if (canExportAsPaperworkModel?.isConfirm ?? false) {
+    //   showDilog(
+    //       context: context,
+    //       massge: canExportAsPaperworkModel?.message??"",
+    //       no: () {
+    //          Navigator.of(context).pop();
+    //       },
+    //       yes:
+    //       // isAlreadyExportedAsTransferModel?.yesMethod2 != null ||
+    //       //         isAlreadyExportedAsTransferModel?.yesMethod != null
+    //       //     ?
+    //           ()
+    //
+    //       {
+    //         print("oooooooooooooooooooooooooooooooooo");
+    //         //  Navigator.of(context).pop();
+    //         // getCanExportAsPaperwork(
+    //         //     exportAction: exportAction,
+    //         //     transferId: transferId,
+    //         //     correspondenceId: correspondenceId,
+    //         //     context: context);
+    //         //   Get.back();
+    //       }
+    //     // : () {
+    //     //    // Get.back();
+    //     //   }
+    //
+    //
+    //   );
+    // }
+
+
   }
 
   autoSendToRecepientsAndCC(

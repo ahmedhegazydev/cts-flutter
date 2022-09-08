@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cts/controllers/search_controller.dart';
+import 'package:cts/utility/Extenstions.dart';
 import 'package:cts/utility/utilitie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -426,6 +427,8 @@ showTopSnackBar(
           //   color: const Color(0x15000000),
           //   size: 50,
           // ),
+          // backgroundColor: "#94C973".toColor(),
+          backgroundColor: Colors.lightGreen,
           icon: Container(),
           message:
           "DeletedSuccess".tr,

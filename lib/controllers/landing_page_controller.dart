@@ -188,7 +188,7 @@ update();
     return name ?? "";
   }
 
-  Future addEditBasket({context, color, nameEn, nameAr}) async {
+  Future addEditBasket({context, color, nameEn, nameAr,OrderBy}) async {
     AddEditBasketFlagApi _addEditBasketFlagApi = AddEditBasketFlagApi(context);
 
     BasketDto basketDto = new BasketDto(
@@ -198,7 +198,7 @@ update();
         ID: 0,
         //=========
         CanBeReOrder: false,
-        OrderBy: 0,
+        OrderBy: OrderBy,
         AdminIsDeleted: false,
         isDeleted: false,
         UserGctId: 0);
@@ -215,6 +215,7 @@ update();
       showTopSnackBar(
         context,
         CustomSnackBar.success(
+          icon: Container(),
           message:
           "BasketAddedSuccess".tr,
         ),
@@ -257,6 +258,7 @@ update();
       // Get.back();
       // onSuccess(value.toString());
       // showTopSnackBar(
+      // icon: Container(),
       //   context,
       //   CustomSnackBar.success(
       //     message:
@@ -404,6 +406,12 @@ Navigator.pop(context);
       showTopSnackBar(
         context,
         CustomSnackBar.success(
+          // icon: const Icon(
+          //   Icons.check,
+          //   color: const Color(0x15000000),
+          //   size: 50,
+          // ),
+          icon: Container(),
           message:
           "DeletedSuccess".tr,
         ),

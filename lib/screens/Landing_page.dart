@@ -232,8 +232,11 @@ class LandingPage extends GetWidget<LandingPageController> {
                           key: ValueKey(basket),
                           // tileColor: _items[index].isOdd ? oddItemColor : evenItemColor,
                           onLongPress:
-                          !(basket.canBeReOrder ?? false) ? () {} : null,
+                          !(basket.canBeReOrder ?? false) ? () {
+                            print(basket.iD);
+                          } : null,
                           onTap: !(basket.canBeReOrder ?? false) ? () {
+                            print(basket.iD);
                             // Get.find<BasketController>().getBasketInbox(
                             //     id: inboxController
                             //         .fetchBasketListModel!
@@ -262,6 +265,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                   _showMyDialogDeleteConfirm(context, basket);
 
                                   // showTopSnackBar(
+                                  // icon: Container(),
                                   //   context,
                                   //   CustomSnackBar.success(
                                   //     message:
@@ -314,6 +318,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                         showTopSnackBar(
                           context,
                           CustomSnackBar.error(
+                            // icon: Container(),
                             message:
                             "${inboxController.fetchBasketListModel!
                                 .baskets![index].name} canBeReOrder = false",
@@ -326,6 +331,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                         // });
                         if (inboxController.oldIndex != index) {
                           u.showLoaderDialog(context);
+                          print(inboxController.fetchBasketListModel?.toJson());
                           controller.reOrderBaskets(
                               context: context,
                               baskets: inboxController
@@ -657,9 +663,12 @@ class LandingPage extends GetWidget<LandingPageController> {
               child: CustomButton(
                   name: 'register'.tr,
                   onPressed: () {
+                    //filter max
+
                     u.showLoaderDialog(context);
                     // controller.createNewBasket();
                     controller.addEditBasket(
+                        // OrderBy: OrderBy,
                         context: context,
                         color: Get.find<CreateBasketController>()
                             .pickerColor

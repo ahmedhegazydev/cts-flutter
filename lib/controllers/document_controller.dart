@@ -864,7 +864,7 @@ class DocumentController extends GetxController {
     usersWillSendTo.add(user);
     multipletransfersSend.TransferNode transferNode =
         multipletransfersSend.TransferNode(
-            purposeId: canOpenDocumentModel!.correspondence!.purposeId,destinationId: user!.id.toString(),voiceNotePrivate: false);
+            purposeId: canOpenDocumentModel!.correspondence!.purposeId,destinationId: user.id.toString(),voiceNotePrivate: false);
     multiTransferNode[user.id!] = transferNode;
     update(); // update(["user"]);
   }

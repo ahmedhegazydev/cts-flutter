@@ -458,7 +458,7 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
     // showLoaderDialog(context);
     final GetCorrespondencesAllAPI _getCorrespondencesAllAPI =
         GetCorrespondencesAllAPI(context);
-    correspondences.clear();
+    // correspondences.clear();
     allCorrespondences.clear();
     getData = true;
     haveMoreData = true;
@@ -471,20 +471,20 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
       getCorrespondencesAllModel = value as GetCorrespondencesAllModel;
       if (addToList) {
         allCorrespondences
-            .addAll(correspondencesModel?.inbox?.correspondences ?? []);
+            .addAll(getCorrespondencesAllModel?.inbox?.correspondences ?? []);
       } else {
-        allCorrespondences = correspondencesModel?.inbox?.correspondences ?? [];
+        allCorrespondences = getCorrespondencesAllModel?.inbox?.correspondences ?? [];
       }
 
       int listLength =
-          correspondencesModel?.inbox?.correspondences?.length ?? 0;
-      var v = correspondencesModel?.toJson();
+          getCorrespondencesAllModel?.inbox?.correspondences?.length ?? 0;
+      var v = getCorrespondencesAllModel?.toJson();
       if (listLength < pageSize) {
         haveMoreData = false;
       }
       update();
       // log(v.length);
-      print(correspondencesModel?.inbox?.correspondences?.length);
+      print(getCorrespondencesAllModel?.inbox?.correspondences?.length);
       getData = false;
       update();
     }).onError((error, stackTrace) {

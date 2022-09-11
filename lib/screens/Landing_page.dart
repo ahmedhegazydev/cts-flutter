@@ -1045,6 +1045,9 @@ class LandingPage extends GetWidget<LandingPageController> {
             controller.setSelectSuggest(true);
        await    Get.find<LandingPageController>().getMyRoutingsettings(context);
             await controller.listFavoriteRecipients(context: context);
+
+
+
             Get.bottomSheet(
               GetBuilder<LandingPageController>(builder: (logic) {
                 return Padding(
@@ -1344,6 +1347,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                                         u.showLoaderDialog(context);
                                         controller.postSaveMyRoutingSettingsApi(
                                             data: d, context: context);
+
+                                        Get.back();
                                       },
                                       child: Text(
                                         "Save".tr,
@@ -1371,9 +1376,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                                         borderRadius: const BorderRadius.all(
                                             Radius.circular(6))),
                                     child: ElevatedButton(
-                                      onPressed: () {
+                                      onPressed: () async{
                                         u.showLoaderDialog(context);
-                                        controller
+                                     await   controller
                                             .removeMyRoutingSettings(data: {
                                           "Token":
                                               controller.secureStorage.token(),
@@ -1382,6 +1387,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                                   ? "en"
                                                   : "ar"
                                         }, context: context);
+                                        Get.back();
                                       },
                                       child: Text(
                                         "حذف".tr,
@@ -1487,9 +1493,13 @@ class LandingPage extends GetWidget<LandingPageController> {
             ///ToDo
             ///open url and go to userGuideUrl
             //  controller.data.userGuideUrl
+            Get.find<WebViewPageController>().isPdf=true;
 
             Get.find<WebViewPageController>().url =
                 controller.data?.userGuideUrl;
+
+
+            print( "controller.data?.userGuideUrl =>${controller.data?.userGuideUrl }");
             Get.toNamed(
               "WebViewPage",
             );
@@ -2795,8 +2805,13 @@ class LandingPage extends GetWidget<LandingPageController> {
               ///open url and go to userGuideUrl
               //  controller.data.userGuideUrl
 
+              Get.find<WebViewPageController>().isPdf=true;
+
               Get.find<WebViewPageController>().url =
                   controller.data?.userGuideUrl;
+
+
+              print( "controller.data?.userGuideUrl =>${controller.data?.userGuideUrl }");
               Get.toNamed(
                 "WebViewPage",
               );

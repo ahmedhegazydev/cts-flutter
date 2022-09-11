@@ -1107,7 +1107,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                               id: controller
                                                   .favoriteRecipientsResponse!
                                                   .recipients![pos]
-                                                  .ufrId,
+                                                  .targetGctid,
                                               value: controller
                                                   .favoriteRecipientsResponse!
                                                   .recipients![pos]
@@ -1117,7 +1117,12 @@ class LandingPage extends GetWidget<LandingPageController> {
                                           controller
                                               .textEditingControllerTorouting
                                               .text = d.value!;
+                                          controller.textEditingControllerTo.text=d.value!;
+                                          print("0000000000000000000000000000");
                                           logic.update();
+
+
+
                                         },
                                         child: Row(
                                           children: [
@@ -1161,9 +1166,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                                 Expanded(
                                   child: TypeAheadField<Destination>(
                                     textFieldConfiguration:
-                                        TextFieldConfiguration(
-                                      controller: controller
-                                          .textEditingControllerTorouting,
+                                    TextFieldConfiguration(
+                                      controller:
+                                      controller.textEditingControllerTo,
                                       // autofocus: true,
                                       // style: DefaultTextStyle.of(context)
                                       //     .style
@@ -1185,18 +1190,24 @@ class LandingPage extends GetWidget<LandingPageController> {
 
                                       return // Te(v.originalName!);
 
-                                          ListTile(
-                                        title: FilterText(v.value!),
-                                      );
+                                        ListTile(
+                                          title: FilterText(v.value!),
+                                        );
                                     },
                                     onSuggestionSelected: (suggestion) {
                                       Destination v = suggestion;
-                                      controller.textEditingControllerTorouting
-                                          .text = v.value ?? "";
-                                      controller.toSaveMyRoutingSettings = v;
+                                      controller.textEditingControllerTo.text =
+                                          v.value ?? "";
+                                   controller
+                                          .toSaveMyRoutingSettings = v;
 
-                                     logic.update();
+                                      controller
+                                          .textEditingControllerTorouting
+                                          .text = v.value!;
 
+
+                                      print("0000000000000000000000000000");
+                                      logic.update();
                                       // v
                                       // .cLASNAMEDISPLAY;
                                       // Navigator.of(context).push(MaterialPageRoute(
@@ -1204,9 +1215,6 @@ class LandingPage extends GetWidget<LandingPageController> {
                                       // ));
                                     },
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 2,
                                 ),
                               ],
                             ),
@@ -2351,295 +2359,387 @@ class LandingPage extends GetWidget<LandingPageController> {
             ),
           ),
           InkWell(
-            onTap: () {
+            onTap: () async{
               //اعاده توجيه المرسلات وضع افقي
               print("اعاده توجيه المرسلات وضع افقي");
+              u.showLoaderDialog(context);
+              controller.setSelectSuggest(true);
+              await    Get.find<LandingPageController>().getMyRoutingsettings(context);
+              await controller.listFavoriteRecipients(context: context);
+
+
+
               Get.bottomSheet(
-                Padding(
-                  padding: EdgeInsets.only(
-                      right: size.width * .2, left: size.width * .2),
-                  child: Container(
+                GetBuilder<LandingPageController>(builder: (logic) {
+                  return Padding(
+                    padding: EdgeInsets.only(
+                        right: size.width * .2, left: size.width * .2),
+                    child: Container(
                       //height: 100,
-                      // margin: EdgeInsets.all(20),
-                      padding: EdgeInsets.all(8),
-                      decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20))),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Text("myDelegations".tr,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary)),
-                                Spacer(),
-                                InkWell(
-                                  onTap: () {
-                                    Get.back();
-                                  },
-                                  child: Image.asset(
-                                    'assets/images/close_button.png',
-                                    width: 20,
-                                    height: 20,
-                                  ),
-                                )
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: TypeAheadField<Destination>(
-                                    textFieldConfiguration:
-                                        TextFieldConfiguration(
-                                      controller:
-                                          controller.textEditingControllerTo,
-                                      // autofocus: true,
-                                      // style: DefaultTextStyle.of(context)
-                                      //     .style
-                                      //     .copyWith(fontStyle: FontStyle.italic),
-                                      decoration: InputDecoration(
-                                          border: OutlineInputBorder(),
-                                          labelText: 'To'.tr),
-                                    ),
-                                    suggestionsCallback: (pattern) async {
-                                      return controller.users.where((element) =>
-                                          element.value!
-                                              .toLowerCase()
-                                              .contains(pattern.toLowerCase()));
-
-                                      //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
+                        margin: EdgeInsets.all(20),
+                        padding: EdgeInsets.all(20),
+                        decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20))),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Text("myDelegations".tr,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary)),
+                                  Spacer(),
+                                  InkWell(
+                                    onTap: () {
+                                      Get.back();
                                     },
-                                    itemBuilder: (context, suggestion) {
-                                      Destination v = suggestion;
+                                    child: Image.asset(
+                                      'assets/images/close_button.png',
+                                      width: 20,
+                                      height: 20,
+                                    ),
+                                  )
+                                ],
+                              ),
 
-                                      return // Te(v.originalName!);
+                              GetBuilder<LandingPageController>(builder: (logic) {
+                                return SizedBox(
+                                  height: 100,
+                                  child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: controller
+                                          .favoriteRecipientsResponse
+                                          ?.recipients
+                                          ?.length ??
+                                          0,
+                                      itemBuilder: (context, pos) {
+                                        return InkWell(
+                                          onTap: () {
+                                            Destination d = Destination(
+                                                id: controller
+                                                    .favoriteRecipientsResponse!
+                                                    .recipients![pos]
+                                                    .targetGctid,
+                                                value: controller
+                                                    .favoriteRecipientsResponse!
+                                                    .recipients![pos]
+                                                    .targetName);
+                                            controller.toSaveMyRoutingSettings =
+                                                d;
+                                            controller
+                                                .textEditingControllerTorouting
+                                                .text = d.value!;
+                                            controller.textEditingControllerTo.text=d.value!;
+                                            print("0000000000000000000000000000");
+                                            logic.update();
+
+
+
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    right: 8, left: 8),
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary,
+                                                    image: DecorationImage(
+                                                        image: AssetImage(
+                                                          "assets/images/pr.jpg",
+                                                        ),
+                                                        fit: BoxFit.cover)),
+                                                height: 75,
+                                                width: 75,
+                                              ),
+                                              SizedBox(
+                                                width: 4,
+                                              ),
+                                              Text(controller
+                                                  .favoriteRecipientsResponse!
+                                                  .recipients![pos]
+                                                  .targetName!)
+                                            ],
+                                          ),
+                                        );
+
+                                        //  CircleAvatar(backgroundColor: Colors.red,backgroundImage: AssetImage("assets/images/pr.jpg",),,radius: 30,);
+                                      }),
+                                );
+                              }),
+
+                              SizedBox(
+                                height: 3,
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: TypeAheadField<Destination>(
+                                      textFieldConfiguration:
+                                      TextFieldConfiguration(
+                                        controller:
+                                        controller.textEditingControllerTo,
+                                        // autofocus: true,
+                                        // style: DefaultTextStyle.of(context)
+                                        //     .style
+                                        //     .copyWith(fontStyle: FontStyle.italic),
+                                        decoration: InputDecoration(
+                                            border: OutlineInputBorder(),
+                                            labelText: 'To'.tr),
+                                      ),
+                                      suggestionsCallback: (pattern) async {
+                                        return controller.users.where((element) =>
+                                            element.value!
+                                                .toLowerCase()
+                                                .contains(pattern.toLowerCase()));
+
+                                        //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
+                                      },
+                                      itemBuilder: (context, suggestion) {
+                                        Destination v = suggestion;
+
+                                        return // Te(v.originalName!);
 
                                           ListTile(
-                                        title: FilterText(v.value!),
-                                      );
-                                    },
-                                    onSuggestionSelected: (suggestion) {
-                                      Destination v = suggestion;
-                                      controller.textEditingControllerTo.text =
-                                          v.value ?? "";
-                                      controller.to = v;
-
-                                      controller.updateselectFavusers(v);
-                                      controller.textEditingControllerTo
-                                          .clear();
-                                      // v
-                                      // .cLASNAMEDISPLAY;
-                                      // Navigator.of(context).push(MaterialPageRoute(
-                                      //     builder: (context) => ProductPage(product: suggestion)
-                                      // ));
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                            // Text("start".tr),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: InkWell(
-                                onTap: () {
-                                  controller.selectFromDocDate(
-                                      context: context);
-                                },
-                                child: Container(
-                                    height: 60,
-                                    padding: EdgeInsets.only(right: 8, left: 8),
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary),
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(6))),
-                                    child: TextField(
-                                      enabled: false,
-                                      controller: controller
-                                          .textEditingControllerFromDate,
-                                      decoration: InputDecoration(
-                                        border: UnderlineInputBorder(),
-                                        labelText: "start".tr,
-                                      ),
-                                    )),
-                              ),
-                            ),
-                            // Text("end".tr),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: InkWell(
-                                onTap: () {
-                                  controller.selectToDocDate(context: context);
-                                },
-                                child: Container(
-                                    height: 60,
-                                    padding: EdgeInsets.only(right: 8, left: 8),
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary),
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(6))),
-                                    child: TextField(
-                                      enabled: false,
-                                      controller: controller
-                                          .textEditingControllerToDate,
-                                      decoration: InputDecoration(
-                                        border: UnderlineInputBorder(),
-                                        labelText: "end".tr,
-                                      ),
-                                    )
-                                    //   Center(child: Text(controller.toDocDate))
-                                    ),
-                              ),
-                            ),
-                            // Text("reason".tr),
-                            Container(
-                                height: 60,
-                                padding: EdgeInsets.only(right: 8, left: 8),
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(6))),
-                                child: TextField(
-                                  maxLines: 3,
-                                  enabled: false,
-                                  decoration: InputDecoration(
-                                    border: UnderlineInputBorder(),
-                                    labelText: "reason".tr,
-                                  ),
-                                )
-                                //   Center(child: Text(controller.toDocDate))
-                                ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.only(
-                                        left: 0, right: 0, top: 0, bottom: 0),
-                                    height: 60,
-                                    decoration: BoxDecoration(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(6))),
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        MyTransferRoutingDtoSend mytr =
-                                            MyTransferRoutingDtoSend(
-                                                Name: controller
-                                                    .toSaveMyRoutingSettings!
-                                                    .value!,
-                                                GctId: controller
-                                                    .toSaveMyRoutingSettings!
-                                                    .id,
-                                                NameAr: controller
-                                                    .toSaveMyRoutingSettings!
-                                                    .value,
-                                                CrtComments: controller
-                                                    .textEditingControllerToroutingReson
-                                                    .text,
-                                                CrtFromDate: controller
-                                                    .textEditingControllerFromDate
-                                                    .text
-                                                    .replaceAll("-", "/"),
-                                                CrtId: 0,
-                                                // controller.getMyRoutingSettingsModel.routing,
-                                                CrtToDate: controller
-                                                    .textEditingControllerToDate
-                                                    .text
-                                                    .replaceAll("-", "/"),
-                                                CrtToGctid: controller
-                                                    .toSaveMyRoutingSettings!
-                                                    .id,
-                                                DoRouting: true);
-
-                                        MyTransferRoutingRequestDto d =
-                                            MyTransferRoutingRequestDto(
-                                                Token: controller.secureStorage
-                                                    .token()!,
-                                                routing: mytr);
-                                        u.showLoaderDialog(context);
-                                        controller.postSaveMyRoutingSettingsApi(
-                                            data: d, context: context);
+                                            title: FilterText(v.value!),
+                                          );
                                       },
-                                      child: Text(
-                                        "Save".tr,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline2!
-                                            .copyWith(color: Colors.white),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.only(
-                                        left: 0, right: 0, top: 0, bottom: 0),
-                                    height: 60,
-                                    decoration: BoxDecoration(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(6))),
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        u.showLoaderDialog(context);
+                                      onSuggestionSelected: (suggestion) {
+                                        Destination v = suggestion;
+                                        controller.textEditingControllerTo.text =
+                                            v.value ?? "";
                                         controller
-                                            .removeMyRoutingSettings(data: {
-                                          "Token":
-                                              controller.secureStorage.token(),
-                                          "Language":
-                                              Get.locale?.languageCode == "en"
-                                                  ? "en"
-                                                  : "ar"
-                                        }, context: context);
+                                            .toSaveMyRoutingSettings = v;
+
+                                        controller
+                                            .textEditingControllerTorouting
+                                            .text = v.value!;
+
+
+                                        print("0000000000000000000000000000");
+                                        logic.update();
+                                        // v
+                                        // .cLASNAMEDISPLAY;
+                                        // Navigator.of(context).push(MaterialPageRoute(
+                                        //     builder: (context) => ProductPage(product: suggestion)
+                                        // ));
                                       },
-                                      child: Text(
-                                        "حذف".tr,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline2!
-                                            .copyWith(color: Colors.white),
-                                        textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              //    Text("start".tr),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: InkWell(
+                                  onTap: () {
+                                    controller.selectFromDocDate(
+                                        context: context);
+                                  },
+                                  child: Container(
+                                      height: 60,
+                                      padding: EdgeInsets.only(right: 8, left: 8),
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary),
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(6))),
+                                      child: TextField(
+                                        enabled: false,
+                                        controller: controller
+                                            .textEditingControllerFromDate,
+                                        decoration: InputDecoration(
+                                          border: UnderlineInputBorder(),
+                                          labelText: "start".tr,
+                                        ),
+                                      )),
+                                ),
+                              ),
+                              //   Text("end".tr),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: InkWell(
+                                  onTap: () {
+                                    controller.selectToDocDate(context: context);
+                                  },
+                                  child: Container(
+                                      height: 60,
+                                      padding: EdgeInsets.only(right: 8, left: 8),
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary),
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(6))),
+                                      child: TextField(
+                                        enabled: false,
+                                        maxLines: 5,
+                                        controller: controller
+                                            .textEditingControllerToDate,
+                                        decoration: InputDecoration(
+                                          border: UnderlineInputBorder(),
+                                          labelText: "end".tr,
+                                        ),
+                                      )
+                                    //   Center(child: Text(controller.toDocDate))
+                                  ),
+                                ),
+                              ),
+                              //  Text("reason".tr),
+                              Container(
+                                  height: 60,
+                                  padding: EdgeInsets.only(right: 16, left: 16),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(6))),
+                                  child: TextField(
+                                    controller: controller
+                                        .textEditingControllerToroutingReson,
+                                    decoration: InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      labelText: "reason".tr,
+                                    ),
+                                  )
+                                //   Center(child: Text(controller.toDocDate))
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.only(
+                                          left: 0, right: 0, top: 0, bottom: 0),
+                                      height: 60,
+                                      decoration: BoxDecoration(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(6))),
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          MyTransferRoutingDtoSend mytr =
+                                          MyTransferRoutingDtoSend(
+                                              Name: controller
+                                                  .toSaveMyRoutingSettings!
+                                                  .value!,
+                                              GctId: controller
+                                                  .toSaveMyRoutingSettings!
+                                                  .id,
+                                              NameAr: controller
+                                                  .toSaveMyRoutingSettings!
+                                                  .value,
+                                              CrtComments: controller
+                                                  .textEditingControllerToroutingReson
+                                                  .text,
+                                              CrtFromDate: controller
+                                                  .textEditingControllerFromDate
+                                                  .text
+                                                  .replaceAll("-", "/"),
+                                              CrtId:  controller.getMyRoutingSettingsModel?.routing?.crtId??0,
+                                              // controller.getMyRoutingSettingsModel.routing,
+                                              CrtToDate: controller
+                                                  .textEditingControllerToDate
+                                                  .text
+                                                  .replaceAll("-", "/"),
+                                              CrtToGctid: controller
+                                                  .toSaveMyRoutingSettings!
+                                                  .id,
+                                              DoRouting: true);
+
+                                          MyTransferRoutingRequestDto d =
+                                          MyTransferRoutingRequestDto(
+                                              Token: controller.secureStorage
+                                                  .token()!,
+                                              routing: mytr);
+                                          u.showLoaderDialog(context);
+                                          controller.postSaveMyRoutingSettingsApi(
+                                              data: d, context: context);
+
+                                          Get.back();
+                                        },
+                                        child: Text(
+                                          "Save".tr,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline2!
+                                              .copyWith(color: Colors.white),
+                                          textAlign: TextAlign.center,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      )),
-                ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.only(
+                                          left: 0, right: 0, top: 0, bottom: 0),
+                                      height: 60,
+                                      decoration: BoxDecoration(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(6))),
+                                      child: ElevatedButton(
+                                        onPressed: () async{
+                                          u.showLoaderDialog(context);
+                                          await   controller
+                                              .removeMyRoutingSettings(data: {
+                                            "Token":
+                                            controller.secureStorage.token(),
+                                            "Language":
+                                            Get.locale?.languageCode == "en"
+                                                ? "en"
+                                                : "ar"
+                                          }, context: context);
+                                          Get.back();
+                                        },
+                                        child: Text(
+                                          "حذف".tr,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline2!
+                                              .copyWith(color: Colors.white),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        )),
+                  );
+                }),
                 enterBottomSheetDuration: const Duration(seconds: 1),
               );
+
+
             },
             child: Container(
               height: 120,

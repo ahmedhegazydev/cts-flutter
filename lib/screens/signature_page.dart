@@ -9,13 +9,14 @@ import '../controllers/signature_Controller.dart';
 import '../services/json_model/signature_Info_model.dart';
 import '../utility/all_string_const.dart';
 import '../utility/utilitie.dart';
+import '../widgets/custom_button.dart';
 
 class SignaturePage extends GetView<SignaturePageController> {
   const SignaturePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Column(crossAxisAlignment: CrossAxisAlignment.start,
+    return Scaffold(appBar: AppBar(title: Text("اضف توقيعك هنا",style: TextStyle(color: Colors.white),),leading: SizedBox(),centerTitle: true),body: Column(crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(height: 300,
             width: double.infinity,
@@ -29,7 +30,7 @@ class SignaturePage extends GetView<SignaturePageController> {
           }, child: Icon(Icons.save, size: 50,)),
         ],),
         Divider(color: Colors.grey),
-
+        SizedBox(height: 10,),
         Text("defaultsignature".tr),
         GetBuilder<SignaturePageController>(builder: (logic) {
           return Image.memory(dataFromBase64String(
@@ -37,6 +38,7 @@ class SignaturePage extends GetView<SignaturePageController> {
                   AllStringConst.Signature)), height: 100,);
         }),
         Divider(color: Colors.grey),
+        SizedBox(height: 10,),
         Text("multisignature".tr)
         , Expanded(
           child: GetBuilder<SignaturePageController>(
@@ -69,8 +71,14 @@ class SignaturePage extends GetView<SignaturePageController> {
               //     });
             },
           ),
-        )
-      ],
+        ),
+        SizedBox(width: MediaQuery.of(context).size.width, height: 50,
+          child: CustomButton(
+              onPressed: (){
+                Get.back();
+              },
+              name: "bageback".tr),
+        ),    ],
     ),);
   }
 }

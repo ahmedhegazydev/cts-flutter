@@ -211,6 +211,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                     ],
                   ),
             GetBuilder<LandingPageController>(builder: (logic) {
+              print("inboxController.fetchBasketListModel");
+
+
               return Expanded(
                   child: ReorderableListView(
                     buildDefaultDragHandles: true,

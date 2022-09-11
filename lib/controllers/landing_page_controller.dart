@@ -273,7 +273,8 @@ update();
       );
 
     });
-    update();
+    getFetchBasketList(context: context);
+  //  update();
   }
 
   TextEditingController textEditingControllerFromDate =
@@ -481,7 +482,7 @@ showTopSnackBar(
     "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     await getFetchBasketListApi.getData().then((value) {
 
-      Navigator.pop(context!);
+    //  Navigator.pop(context!);
 
       if(value!=null){
         fetchBasketListModel = value as FetchBasketListModel;

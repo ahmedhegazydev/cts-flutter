@@ -131,6 +131,7 @@ const Map<String, String> ar = {
   "BasketDeletedSuccess":"تم مسح المحفظه بنجاح",
   "DoneDelegation":"تم اعاده توجيه المراسله بنجاح",
   "DeletedDelegation":"تم حذف المراسله بنجاح",
-
+  "bageback":"رجوع",
+  "addsing":"اضف توقيعك هنا"
 
 };

@@ -75,6 +75,7 @@ import '../services/models/signature_info.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
 import '../utility/utilitie.dart';
+import '../viewer/pdfview.dart';
 import '../widgets/custom_button_with_icon.dart';
 import 'inbox_controller.dart';
 import 'package:flutter/services.dart' as rootBundel;
@@ -280,10 +281,10 @@ class DocumentController extends GetxController {
     transfarForMany.clear();
     usersWillSendTo.clear();
     _multipleTransfersAPI.post(multipleTransfers.toMap()).then((value) {
-      DefaultOnSuccessResult defaultOnSuccessResult=value as DefaultOnSuccessResult;
+      DefaultOnSuccessResult defaultOnSuccessResult =
+          value as DefaultOnSuccessResult;
 
       Get.snackbar("", "تم التنفيذ بنجاح");
-
     });
   }
 
@@ -416,176 +417,8 @@ class DocumentController extends GetxController {
           //          //update();
         }
       }
-//       saveAttAchmentItemAnnotationsData?.attachments?.forEach((element) {
-//         if(element.attachmentId==getAttAchmentItem!.attachment!.attachmentId){
-//
-//           pdfUrlFile=element.uRL!;//"http://www.africau.edu/images/default/sample.pdf";
-// print(pdfUrlFile);
-//           saveAttAchmentItemAnnotationsresalt=element;
-//          pdfAndSing.clear();
-//          singpic.clear();
-//           pdfUrlFile= element.uRL!;// 'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
-//           pdfAndSing.add(SfPdfViewer.network(
-//             pdfUrlFile
-//
-//             , controller: pdfViewerController,
-//           //  key: pdfViewerkey,
-//           ));
-//
-//           if(element.annotations!.contains("[]")){
-//             print("[]");
-//           }
-//           else{
-//             print("i will addddddd");
-//             Map<dynamic,dynamic> dat=jsonDecode(element.annotations!);
-//             dat.forEach((key, value) async{
-//               print("--------------------------------------------");
-//               Annotation annotation= Annotation.fromJson( value[0]);
-//               List<int> list = annotation.imageByte!.codeUnits;
-//               final Uint8List? data =    Uint8List.fromList(list);
-//               print("the data is $data");
-//
-//
-//
-//               pdfAndSingannotation.add(
-//                 Visibility(
-//                   child: Positioned(top: double.tryParse(annotation.y!),left:double.tryParse(annotation.x!),
-//                         child: Image
-//                             .memory(
-//                           data!,
-//                           fit: BoxFit
-//                               .fill,
-//
-//                           width: double.tryParse(annotation.width!),
-//                           height:  double.tryParse(annotation.height!),
-//                         ),
-//                       ),
-//                 ),
-//                   );
-//               addWidgetToPdfAndSing(
-//                   Positioned(top: 100,right:500,
-//                       child:Container(height: 100,width: 100, color: Colors.red,)
-//                   ));
-//               pdfUrlFile=element.uRL!;
-//               print(pdfUrlFile);
-//
-//
-//               print(addWidgetToPdfAndSing);
-//               print("i add image");
-//             });
-//           }
-//           log(saveAttAchmentItemAnnotationsData.toString());
-//  // // String d=saveAttAchmentItemAnnotationsresalt!.annotations!..replaceAll(new RegExp(r'[^\w\s]+'),'');
-//  // print("ddddddddddddddddddddddd=>  ${saveAttAchmentItemAnnotationsresalt?.annotations}");
-//  //
-//  //          Map<String,dynamic>dat=jsonDecode(saveAttAchmentItemAnnotationsresalt?.annotations??"");
-//  //
-//  //
-//  //     //   DocumentAnnotations a=DocumentAnnotations.fromJson(jsonDecode( saveAttAchmentItemAnnotationsresalt!.annotations!));
-//  //
-//  //          //update();
-//         }
-//
-//       });
     });
   }
-
-//   Future getSaveDocAnnotationsDataLocalJson() async {
-//     ///ToDo is oraginal file
-//     ///
-//     notoragnalFileDoc = true;
-//     final jsondata = await rootBundel.rootBundle
-//         .loadString("assets/json/getattachments.json");
-//     saveAttAchmentItemAnnotationsData =
-//         GetattAchmentsModel.fromJson(jsonDecode(jsondata));
-//     pdfAndSing.clear();
-//     singpic.clear();
-//
-//     saveAttAchmentItemAnnotationsData?.attachments?.forEach((element) {
-//       //   print("saveAttAchmentItemAnnotationsData=>   \n${element.toJson()}");
-//       // String a= element.annotations!.replaceAll(r"\", ""); //.replaceAll(new RegExp(r'[^\w\s]+'),'');
-//       //  var bbb=jsonDecode(a);
-// //element.attachmentId==getAttAchmentItem!.attachment!.attachmentId
-//       if (true) {
-//         saveAttAchmentItemAnnotationsresalt = element;
-//
-//         //  pdfViewerkey=null;
-//         //  pdfViewerController=null;
-//         pdfUrlFile =
-//             'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
-//
-//         pdfAndSing.add(SfPdfViewer.network(
-//           pdfUrlFile
-//           // saveAttAchmentItemAnnotationsresalt!.uRL!
-//           // oragnalFileDoc??""
-//           ,
-//           controller: pdfViewerController,
-//           //   key: pdfViewerkey,
-//         ));
-//
-//         // pdfAndSing.add(Positioned(top: 100,right:100,
-//         //     child:Container(height: 100,width: 100, color: Colors.red,)
-//         // ));
-//
-//         if (element.annotations!.contains("[]")) {
-//           print("[]");
-//         } else {
-//           print("i will addddddd");
-//           Map<dynamic, dynamic> dat = jsonDecode(element.annotations!);
-//           dat.forEach((key, value) async {
-//             print("--------------------------------------------");
-//             Annotation annotation = Annotation.fromJson(value[0]);
-//             List<int> list = annotation.imageByte!.codeUnits;
-//             final Uint8List? data = Uint8List.fromList(list);
-//             print("the data is $data");
-//             addWidgetToPdfAndSing(Positioned(
-//               top: double.tryParse(annotation.y!),
-//               right: double.tryParse(annotation.x!),
-//               child: Image.memory(
-//                 data!,
-//                 fit: BoxFit.fill,
-//                 width: double.tryParse(annotation.width!),
-//                 height: double.tryParse(annotation.height!),
-//               ),
-//             ));
-//             addWidgetToPdfAndSing(Positioned(
-//                 top: 100,
-//                 right: 500,
-//                 child: Container(
-//                   height: 100,
-//                   width: 100,
-//                   color: Colors.red,
-//                 )));
-//             pdfUrlFile = element.uRL!;
-//             print(pdfUrlFile);
-//
-//             print(addWidgetToPdfAndSing);
-//             print("i add image");
-//           });
-//         }
-//         log(saveAttAchmentItemAnnotationsData.toString());
-//         print(
-//             "saveAttAchmentItemAnnotationsresalt!.annotations!=99999>  ${saveAttAchmentItemAnnotationsresalt!.annotations}");
-//
-//         update();
-//       }
-//
-//       // Map<String, dynamic> dat=   new Map<String, dynamic>.from(json.decode(element.annotations!));
-//       // print("ddddddddddddddddddddddd=>  ${saveAttAchmentItemAnnotationsresalt?.annotations}");
-//
-// //       if(dat.runtimeType is List<dynamic>){
-// //         print(dat.runtimeType );
-// //       }
-// // else{ print(dat as Map<dynamic,dynamic>);
-// //
-// //       }
-//       // printWrapped("dat=> $dat");
-//       //print(dat);
-//       //  debugPrint(bbb.toString(), wrapWidth: 1024);
-//     });
-//
-//     update();
-//   }
 
   backTooragnalFileDocpdf() {
     notoragnalFileDoc = false;
@@ -617,39 +450,17 @@ class DocumentController extends GetxController {
 
         pdfViewerkey = GlobalKey();
         pdfAndSing.clear();
-        pdfAndSing.add(SfPdfViewer.network(
-          oragnalFileDocpdfUrlFile
-          // oragnalFileDoc??""
-          ,
-          controller: pdfViewerController,
-          // onPageChanged: (v) {
-          //   print(
-          //       "ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
-          //   for (int i = 0; i < pdfAndSingannotation.length; i++) {
-          //     if (int.parse(pdfAndSingannotation[i].page!) ==
-          //         v.newPageNumber) {
-          //       List<int> list = pdfAndSingannotation[i].imageByte!.codeUnits;
-          //       final Uint8List? data = Uint8List.fromList(list);
-          //       pdfAndSingannotationShowOrHide.add(
-          //         Positioned(
-          //           top: double.tryParse(pdfAndSingannotation[i].y!),
-          //           left: double.tryParse(pdfAndSingannotation[i].x!),
-          //           child: Image.memory(
-          //             data!,
-          //             fit: BoxFit.fill,
-          //             width: double.tryParse(pdfAndSingannotation[i].width!),
-          //             height:
-          //             double.tryParse(pdfAndSingannotation[i].height!),
-          //           ),
-          //         ),
-          //       );
-          //     }
-          //   }
-          //   // pdfAndSingannotation
-          //   //   v.newPageNumber
-          // }
-          //  key: pdfViewerkey,
-        ));
+        // pdfAndSing.add(SfPdfViewer.network(
+        //   oragnalFileDocpdfUrlFile,
+        //   controller: pdfViewerController,
+        // ));
+        // pdfAndSing.add(Container(
+        //   color: Colors.red,
+        // ));
+
+        pdfAndSing.add(
+          PDFView(url: oragnalFileDocpdfUrlFile),
+        );
 
         log(element.annotations!);
         Map<String, dynamic> dat = jsonDecode(element.annotations!);
@@ -823,7 +634,6 @@ class DocumentController extends GetxController {
         GetDocumentTransfersApi(context);
     _getDocumentTransfersApi.data =
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
-
     _getDocumentTransfersApi.getData().then((value) {
       getDocumentTransfersModel = value as GetDocumentTransfersModel;
     });
@@ -867,7 +677,9 @@ class DocumentController extends GetxController {
     usersWillSendTo.add(user);
     multipletransfersSend.TransferNode transferNode =
         multipletransfersSend.TransferNode(
-            purposeId: canOpenDocumentModel!.correspondence!.purposeId,destinationId: user.id.toString(),voiceNotePrivate: false);
+            purposeId: canOpenDocumentModel!.correspondence!.purposeId,
+            destinationId: user.id.toString(),
+            voiceNotePrivate: false);
     multiTransferNode[user.id!] = transferNode;
     update(); // update(["user"]);
   }
@@ -1009,33 +821,6 @@ class DocumentController extends GetxController {
 
     genratG2GExportDto();
     g2GInfoForExport();
-    // pdfAndSing.add(SfPdfViewer.network(canOpenDocumentModel.correspondence.,
-    //   // pdfUrlFile,
-    //   controller: pdfViewerController,onPageChanged: (v){
-    //
-    //     print("ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
-    //     for(int i =0;i<pdfAndSingannotation.length;i++){
-    //       if(int.parse(pdfAndSingannotation[i].page!)==    v.newPageNumber){
-    //         List<int> list = pdfAndSingannotation[i].imageByte!.codeUnits;
-    //         final Uint8List? data = Uint8List.fromList(list);
-    //         pdfAndSingannotationShowOrHide.add(   Positioned(
-    //           top: double.tryParse(pdfAndSingannotation[i].y!),
-    //           left: double.tryParse(pdfAndSingannotation[i].x!),
-    //           child: Image.memory(
-    //             data!,
-    //             fit: BoxFit.fill,
-    //             width: double.tryParse(pdfAndSingannotation[i].width!),
-    //             height: double.tryParse(pdfAndSingannotation[i].height!),
-    //           ),
-    //         ),);
-    //       }
-    //     }
-    //     // pdfAndSingannotation
-    //     //   v.newPageNumber
-    //
-    //   },
-    //   //  key: pdfViewerkey,
-    // ));
   }
 
   @override
@@ -1175,9 +960,7 @@ class DocumentController extends GetxController {
           fileContent: img64,
           language: Get.locale?.languageCode == "en" ? "en" : "ar");
 
-      _uploadAttachmentApi.post(attachmentInfoModel?.toMap()).then((value) {
-
-      });
+      _uploadAttachmentApi.post(attachmentInfoModel?.toMap()).then((value) {});
     } else {}
   }
 
@@ -1192,10 +975,8 @@ class DocumentController extends GetxController {
 
     _alreadyExportedAsPaperworkAPI.data =
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
-    isAlreadyExportedAsPaperworkModel=await   _alreadyExportedAsPaperworkAPI.getData() as  IsAlreadyExportedAsPaperworkModel;
-
-
-
+    isAlreadyExportedAsPaperworkModel = await _alreadyExportedAsPaperworkAPI
+        .getData() as IsAlreadyExportedAsPaperworkModel;
 
     if (isAlreadyExportedAsPaperworkModel?.isConfirm ?? false) {
       showDilog(
@@ -1208,7 +989,8 @@ class DocumentController extends GetxController {
                 transferId: transferId,
                 correspondenceId: correspondenceId,
                 context: context,
-                name: isAlreadyExportedAsPaperworkModel?.noMethod??isAlreadyExportedAsPaperworkModel!.noMethod2!);
+                name: isAlreadyExportedAsPaperworkModel?.noMethod ??
+                    isAlreadyExportedAsPaperworkModel!.noMethod2!);
           },
           yes: () {
             // getCanExportAsPaperwork(
@@ -1222,12 +1004,12 @@ class DocumentController extends GetxController {
                 transferId: transferId,
                 correspondenceId: correspondenceId,
                 context: context,
-                name: isAlreadyExportedAsPaperworkModel?.yesMethod??isAlreadyExportedAsPaperworkModel!.yesMethod2!);
-         //   Get.back();
+                name: isAlreadyExportedAsPaperworkModel?.yesMethod ??
+                    isAlreadyExportedAsPaperworkModel!.yesMethod2!);
+            //   Get.back();
             // Navigator.of(context).pop();
           });
-    }
-    else if(isAlreadyExportedAsPaperworkModel?.request!=null ){
+    } else if (isAlreadyExportedAsPaperworkModel?.request != null) {
       getSwitchMethod(
           exportAction: exportAction,
           transferId: transferId,
@@ -1236,15 +1018,10 @@ class DocumentController extends GetxController {
           name: isAlreadyExportedAsPaperworkModel!.request!);
 
       print(isAlreadyExportedAsPaperworkModel?.request);
-    //  Get.back();
+      //  Get.back();
 
-    }
-
-    else {
-
-
+    } else {
       Get.snackbar("", isAlreadyExportedAsPaperworkModel!.message!);
-
 
       // getSwitchMethod(
       //     exportAction: exportAction,
@@ -1255,29 +1032,24 @@ class DocumentController extends GetxController {
       // Get.back();
       //
 
-
       //  Navigator.of(context).pop();
     }
   }
 
-Future  getCanExportAsPaperwork(
+  Future getCanExportAsPaperwork(
       {required correspondenceId,
       required transferId,
       required exportAction,
-      required context}) async{
-  print("getCanExportAsPaperwork");
+      required context}) async {
+    print("getCanExportAsPaperwork");
     CanExportAsPaperworkAPI _canExportAsPaperworkAPI =
         CanExportAsPaperworkAPI(null);
     _canExportAsPaperworkAPI.data =
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
-  await  _canExportAsPaperworkAPI.getData().then((value) {
+    await _canExportAsPaperworkAPI.getData().then((value) {
       canExportAsPaperworkModel = value as CanExportAsPaperworkModel;
       print(
           "canExportAsPaperworkModel =>  ${canExportAsPaperworkModel?.isConfirm}");
-
-
-
-
 
       // if(canExportAsPaperworkModel?.isConfirm??false){
       //   Get.snackbar("", canExportAsPaperworkModel!.message!);
@@ -1316,8 +1088,8 @@ Future  getCanExportAsPaperwork(
 //       }
     });
 
-
-    canExportAsPaperworkModel=   await  _canExportAsPaperworkAPI.getData() as CanExportAsPaperworkModel;
+    canExportAsPaperworkModel =
+        await _canExportAsPaperworkAPI.getData() as CanExportAsPaperworkModel;
 
     // if (canExportAsPaperworkModel?.isConfirm ?? false) {
     //   showDilog(
@@ -1349,8 +1121,6 @@ Future  getCanExportAsPaperwork(
     //
     //   );
     // }
-
-
   }
 
   autoSendToRecepientsAndCC(
@@ -1551,81 +1321,74 @@ Future  getCanExportAsPaperwork(
       required correspondenceId,
       required exportAction,
       required transferId,
-      required context})async {
+      required context}) async {
     switch (name) {
       case "CanExportAsPaperwork":
         // do something
 
-
-    // _alreadyExportedAsPaperworkAPI.getData() as  IsAlreadyExportedAsPaperworkModel;
-     isAlreadyExportedAsPaperworkModel=await        getCanExportAsPaperwork(
+        // _alreadyExportedAsPaperworkAPI.getData() as  IsAlreadyExportedAsPaperworkModel;
+        isAlreadyExportedAsPaperworkModel = await getCanExportAsPaperwork(
             exportAction: exportAction,
             transferId: transferId,
             correspondenceId: correspondenceId,
             context: context);
 
+        if (isAlreadyExportedAsPaperworkModel?.isConfirm ?? false) {
+          showDilog(
+              context: context,
+              massge: isAlreadyExportedAsPaperworkModel!.message!,
+              no: () {
+                //  Navigator.of(context).pop();
+                getSwitchMethod(
+                    exportAction: exportAction,
+                    transferId: transferId,
+                    correspondenceId: correspondenceId,
+                    context: context,
+                    name: isAlreadyExportedAsPaperworkModel?.noMethod ??
+                        isAlreadyExportedAsPaperworkModel!.noMethod2!);
+              },
+              yes: () {
+                // getCanExportAsPaperwork(
+                //     exportAction: exportAction,
+                //     transferId: transferId,
+                //     correspondenceId: correspondenceId,
+                //     context: context);
 
-     if (isAlreadyExportedAsPaperworkModel?.isConfirm ?? false) {
-       showDilog(
-           context: context,
-           massge: isAlreadyExportedAsPaperworkModel!.message!,
-           no: () {
-             //  Navigator.of(context).pop();
-             getSwitchMethod(
-                 exportAction: exportAction,
-                 transferId: transferId,
-                 correspondenceId: correspondenceId,
-                 context: context,
-                 name: isAlreadyExportedAsPaperworkModel?.noMethod??isAlreadyExportedAsPaperworkModel!.noMethod2!);
-           },
-           yes: () {
-             // getCanExportAsPaperwork(
-             //     exportAction: exportAction,
-             //     transferId: transferId,
-             //     correspondenceId: correspondenceId,
-             //     context: context);
+                getSwitchMethod(
+                    exportAction: exportAction,
+                    transferId: transferId,
+                    correspondenceId: correspondenceId,
+                    context: context,
+                    name: isAlreadyExportedAsPaperworkModel?.yesMethod ??
+                        isAlreadyExportedAsPaperworkModel!.yesMethod2!);
+                //   Get.back();
+                // Navigator.of(context).pop();
+              });
+        } else if (isAlreadyExportedAsPaperworkModel?.request != null) {
+          getSwitchMethod(
+              exportAction: exportAction,
+              transferId: transferId,
+              correspondenceId: correspondenceId,
+              context: context,
+              name: isAlreadyExportedAsPaperworkModel!.request!);
 
-             getSwitchMethod(
-                 exportAction: exportAction,
-                 transferId: transferId,
-                 correspondenceId: correspondenceId,
-                 context: context,
-                 name: isAlreadyExportedAsPaperworkModel?.yesMethod??isAlreadyExportedAsPaperworkModel!.yesMethod2!);
-             //   Get.back();
-             // Navigator.of(context).pop();
-           });
-     }
-     else if(isAlreadyExportedAsPaperworkModel?.request!=null ){
-       getSwitchMethod(
-           exportAction: exportAction,
-           transferId: transferId,
-           correspondenceId: correspondenceId,
-           context: context,
-           name: isAlreadyExportedAsPaperworkModel!.request!);
+          print(isAlreadyExportedAsPaperworkModel?.request);
+          //  Get.back();
 
-       print(isAlreadyExportedAsPaperworkModel?.request);
-       //  Get.back();
+        } else {
+          Get.snackbar("", isAlreadyExportedAsPaperworkModel!.message!);
 
-     }
+          // getSwitchMethod(
+          //     exportAction: exportAction,
+          //     transferId: transferId,
+          //     correspondenceId: correspondenceId,
+          //     context: context,
+          //     name: isAlreadyExportedAsPaperworkModel!.request!);
+          // Get.back();
+          //
 
-     else {
-
-
-       Get.snackbar("", isAlreadyExportedAsPaperworkModel!.message!);
-
-
-       // getSwitchMethod(
-       //     exportAction: exportAction,
-       //     transferId: transferId,
-       //     correspondenceId: correspondenceId,
-       //     context: context,
-       //     name: isAlreadyExportedAsPaperworkModel!.request!);
-       // Get.back();
-       //
-
-
-       //  Navigator.of(context).pop();
-     }
+          //  Navigator.of(context).pop();
+        }
         break;
       case "OpenTransferWindow":
         // do something else

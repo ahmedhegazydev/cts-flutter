@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:internet_file/internet_file.dart';
 import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 import './MoveableStackItem.dart';
 import './controllers/viewerController.dart';
@@ -8,28 +9,75 @@ import './measureSize.dart';
 import './pageContainer.dart';
 import './static/AnnotationTypes.dart';
 
-class PDFView extends StatelessWidget {
+class PDFView extends StatefulWidget {
   PDFView(
       {Key? key,
       // required this.screenWidth,
       // required this.screenHeight,
-      required this.pageWidth,
-      required this.pageHeigt,
-      required this.pages})
+      required this.url})
       : super(key: key);
 
-  //final ViewerController c = Get.find();
+  String url;
 
-  double screenWidthViewer = 0;
-  double screenHeightViewer = 0;
+  @override
+  State<PDFView> createState() => _PDFViewState();
+}
+
+class _PDFViewState extends State<PDFView> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.delayed(const Duration(milliseconds: 100), () {
+      preparePDF().then((data) {
+        setState(() {
+          pages = data;
+        });
+      });
+    });
+  }
+
+  List<PdfPageImage> pages = [];
+  double pageWidth = 200;
+  double pageHeigt = 200;
+  // double screenWidth = 0;
+  // double screenHeight = 0;
+  Size myChildSize = Size.zero;
+
+  preparePDF() async {
+    pages = [];
+
+    final document = await PdfDocument.openData(
+      await InternetFile.get(
+        widget.url,
+      ),
+    );
+    for (int i = 1; i <= document.pagesCount; i++) {
+      final page = await document.getPage(i);
+
+      pageHeigt = page.height.toDouble();
+      pageWidth = page.width.toDouble();
+      var aspect = screenWidthViewer / pageWidth;
+
+      pageHeigt = pageHeigt * aspect;
+      pageWidth = pageWidth * aspect;
+
+      final pageImage = await page.render(
+          width: pageWidth.toInt(), height: pageHeigt.toInt());
+      pages.add(pageImage!);
+      // ViewerController.to.addAnnotationList([]);
+    }
+    ViewerController.to.setupLists(document.pagesCount);
+    return pages;
+  }
+
+  //final ViewerController c = Get.find();
+  double screenWidthViewer = 300;
+
+  double screenHeightViewer = 300;
 
   // final double screenWidth;
-  // final double screenHeight;
-
   List<Widget> movableItems = [];
-  final List<PdfPageImage> pages;
-  double pageWidth;
-  double pageHeigt;
 
   void _showAction(BuildContext context, int index) {
     var annotation = AnnotationBaseTypes.none;
@@ -72,29 +120,32 @@ class PDFView extends StatelessWidget {
     // });
   }
 
-  Size myChildSize = Size.zero;
+  // Size myChildSize = Size.zero;
+
   @override
   Widget build(BuildContext context) {
     // ViewerController.to.setScreenWidthAndHeight(pageWidth, pageHeigt);
-
+    //screenWidth = MediaQuery.of(context).size.width;
+    //screenHeight = MediaQuery.of(context).size.height;
     if (pages.isEmpty) {
-      return const Text("error ?");
+      return MeasureSize(
+        //setScreenWidthAndHeight
+        onChange: (size) {
+          //  setState(() {
+
+          calculateDimensions(size);
+          //});
+        },
+        child: Container(
+          color: Colors.green,
+        ),
+      );
     } else {
       return MeasureSize(
         //setScreenWidthAndHeight
         onChange: (size) {
           //  setState(() {
-          print(size);
-          myChildSize = size;
-          screenWidthViewer = size.width;
-          screenHeightViewer = size.height;
-          var aspect = screenWidthViewer / pageWidth;
-
-          pageHeigt = pageHeigt * aspect;
-          pageWidth = screenWidthViewer;
-          ViewerController.to.setScreenWidthAndHeight(pageWidth, pageHeigt);
-
-          ViewerController.to.screenHeight.value = pageHeigt;
+          calculateDimensions(size);
           //});
         },
         child: Scaffold(
@@ -160,6 +211,21 @@ class PDFView extends StatelessWidget {
       );
     }
   }
+
+  void calculateDimensions(Size size) {
+    print(size);
+    myChildSize = size;
+    screenWidthViewer = size.width;
+    screenHeightViewer = size.height;
+    var aspect = screenWidthViewer / pageWidth;
+
+    // pageHeigt = pageHeigt * aspect;
+    // pageWidth = screenWidthViewer;
+    ViewerController.to.setScreenWidthAndHeight(
+        screenWidthViewer, screenHeightViewer * aspect);
+
+    ViewerController.to.screenHeight.value = screenHeightViewer * aspect;
+  }
 }
 
 class PDFColumn extends StatelessWidget {
@@ -188,7 +254,7 @@ class PDFColumn extends StatelessWidget {
 @immutable
 class ExpandableFab extends StatefulWidget {
   const ExpandableFab({
-    //  super.key,
+    // super.key,
     this.initialOpen,
     required this.distance,
     required this.children,
@@ -211,6 +277,9 @@ class _ExpandableFabState extends State<ExpandableFab>
   @override
   void initState() {
     super.initState();
+
+    Future.delayed(const Duration(milliseconds: 100), () {});
+
     _open = widget.initialOpen ?? false;
     _controller = AnimationController(
       value: _open ? 1.0 : 0.0,
@@ -368,7 +437,7 @@ class _ExpandingActionButton extends StatelessWidget {
 @immutable
 class ActionButton extends StatelessWidget {
   const ActionButton({
-    // super.key,
+    //  super.key,
     this.onPressed,
     required this.icon,
   });
@@ -396,7 +465,7 @@ class ActionButton extends StatelessWidget {
 @immutable
 class FakeItem extends StatelessWidget {
   const FakeItem({
-    // super.key,
+    //  super.key,
     required this.isBig,
   });
 

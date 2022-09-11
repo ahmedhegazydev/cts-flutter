@@ -14,18 +14,19 @@ import '../utility/utilitie.dart';
 import 'custom_button_with_icon.dart';
 
 class CustomListView extends GetView<InboxController> {
-  CustomListView({required this.function,
-    required this.allCorrespondences,
-    required this.correspondences,
-    required this.scrollController,
-    required this.haveMoreData,
-    required this.onClickItem,
-    required this.functionComplet,
-    required this.functionReply,
-    required this.functionSummary,
-    required this.functionTrunsfer //,required this.openMenu
-    ,
-    required this.customActions});
+  CustomListView(
+      {required this.function,
+      required this.allCorrespondences,
+      required this.correspondences,
+      required this.scrollController,
+      required this.haveMoreData,
+      required this.onClickItem,
+      required this.functionComplet,
+      required this.functionReply,
+      required this.functionSummary,
+      required this.functionTrunsfer //,required this.openMenu
+      ,
+      required this.customActions});
 
   VoidCallback functionComplet;
   VoidCallback functionTrunsfer;
@@ -4432,1218 +4433,1082 @@ class CustomListView extends GetView<InboxController> {
                       // print("correspondences[pos].privacyId    ${correspondences[pos].privacyId}");
 
                       return
-                        // correspondences[pos].isNew??false?
+                          // correspondences[pos].isNew??false?
 
-                        InkWell(
-                          onTap: () {
-                            Get.find<InboxController>().canOpenDoc(
-                                context: context,
-                                docId: correspondences[pos].purposeId,
-                                correspondenceId:
-                                correspondences[pos].correspondenceId,
-                                transferId: correspondences[pos].transferId);
+                          InkWell(
+                        onTap: () {
+                          Get.find<InboxController>().canOpenDoc(
+                              context: context,
+                              docId: correspondences[pos].purposeId,
+                              correspondenceId:
+                                  correspondences[pos].correspondenceId,
+                              transferId: correspondences[pos].transferId);
 
-                            Get
-                                .find<DocumentController>()
-                                .pdfViewerkey = null;
-                            // Get.find<InboxController>().openfilee(docId: correspondences[pos].purposeId, correspondenceId: correspondences[pos]
-                            //     .correspondenceId, transferId:  correspondences[pos].transferId);
+                          Get.find<DocumentController>().pdfViewerkey = null;
+                          // Get.find<InboxController>().openfilee(docId: correspondences[pos].purposeId, correspondenceId: correspondences[pos]
+                          //     .correspondenceId, transferId:  correspondences[pos].transferId);
 
-                            Get
-                                .find<DocumentController>()
-                                .correspondences =
-                            correspondences[pos];
+                          Get.find<DocumentController>().correspondences =
+                              correspondences[pos];
 
-                            //  Get.find<DocumentController>().loadPdf();
+                          //  Get.find<DocumentController>().loadPdf();
 
-                            //  Get.find<DocumentController>().loadPdf();
-                            //Get.toNamed("/DocumentPage");
-                          },
-                          child: SizedBox(
-                            //height: MediaQuery.of(context).size.height*.3,
-                            child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        children: [
-                                          // Padding(
-                                          //   padding:
-                                          //   const EdgeInsets.all(8.0),
-                                          //   child: ListView.builder(
-                                          //       shrinkWrap: true,
-                                          //       itemCount:
-                                          //       correspondences[pos]
-                                          //           .gridInfo
-                                          //           ?.length,
-                                          //       itemBuilder:
-                                          //           (context, index) {
-                                          //         return Row(
-                                          //           crossAxisAlignment:
-                                          //           CrossAxisAlignment
-                                          //               .start,
-                                          //           mainAxisAlignment:
-                                          //           MainAxisAlignment
-                                          //               .start,
-                                          //           children: [
-                                          //             // Container(
-                                          //             //     width: MediaQuery.of(
-                                          //             //                 context)
-                                          //             //             .size
-                                          //             //             .width *
-                                          //             //         .1,
-                                          //             //     child: Text(
-                                          //             //       correspondences[
-                                          //             //                   pos]
-                                          //             //               .gridInfo?[
-                                          //             //                   index]
-                                          //             //               .label ??
-                                          //             //           "",
-                                          //             //       softWrap:
-                                          //             //           true,
-                                          //             //       maxLines: 3,
-                                          //             //     )),
-                                          //             // SizedBox(
-                                          //             //   width: 8,
-                                          //             // ),
-                                          //
-                                          //
-                                          //    index==0?         Container(height: 20,width: 20,
-                                          //               decoration: BoxDecoration(
-                                          //                   color: Theme
-                                          //                       .of(
-                                          //                       context)
-                                          //                       .colorScheme
-                                          //                       .primary,shape: BoxShape.circle),):    Padding(
-                                          //      padding: const EdgeInsets.all(8.0),
-                                          //      child: Container(height: 10,width: 10,
-                                          //        decoration: BoxDecoration(
-                                          //           shape: BoxShape.circle),),
-                                          //    ),SizedBox(width: 8,),
-                                          //             index==0?    Expanded(
-                                          //               child: Container(
-                                          //                 // width: MediaQuery.of(
-                                          //                 //     context)
-                                          //                 //     .size
-                                          //                 //     .width *
-                                          //                 //     .3,
-                                          //                 child:
-                                          //                 Text(
-                                          //                   correspondences[
-                                          //                   pos]
-                                          //                       .gridInfo?[
-                                          //                   index]
-                                          //                       .value ??
-                                          //                       "",
-                                          //                   softWrap:
-                                          //                   true,
-                                          //                   maxLines: 3,
-                                          //                 ),
-                                          //               ),
-                                          //             ):
-                                          //
-                                          //             Expanded(
-                                          //               child: Container(
-                                          //                 // width: MediaQuery.of(
-                                          //                 //     context)
-                                          //                 //     .size
-                                          //                 //     .width *
-                                          //                 //     .3,
-                                          //                 child: Text(
-                                          //
-                                          //                       "${     correspondences[
-                                          //                       pos]
-                                          //                           .gridInfo?[
-                                          //                       index]
-                                          //                           .value}",
-                                          //                   softWrap:
-                                          //                   true,
-                                          //                   maxLines: 3,
-                                          //                 ),
-                                          //               ),
-                                          //             )
-                                          //             ,
-                                          //           ],
-                                          //         );
-                                          //
-                                          //         // Column(
-                                          //         //     crossAxisAlignment: CrossAxisAlignment.start,
-                                          //         //     children: [
-                                          //         //       // Text(correspondences[pos].fromStructure ??
-                                          //         //       //     ""),
-                                          //         //       Row(
-                                          //         //         mainAxisAlignment:
-                                          //         //         MainAxisAlignment.spaceBetween,
-                                          //         //         children: [
-                                          //         //           Text(correspondences[pos]. ??
-                                          //         //               ""),
-                                          //         //           Text(correspondences[pos].docDueDate ??
-                                          //         //               " "),
-                                          //         //         ],
-                                          //         //       ),
-                                          //         //       Row(
-                                          //         //         mainAxisAlignment:
-                                          //         //         MainAxisAlignment.spaceBetween,
-                                          //         //         children: [
-                                          //         //           Text(correspondences[pos].docDueDate ??
-                                          //         //               ""),
-                                          //         //         ],
-                                          //         //       ),
-                                          //         //       Row(
-                                          //         //         children: [
-                                          //         //           if (correspondences[pos]
-                                          //         //               .isHighPriority ??
-                                          //         //               false)
-                                          //         //             iconAndText(
-                                          //         //                 iconColor: AppColor,
-                                          //         //                 iconData: Icons.lock,
-                                          //         //                 title: 'secret'.tr),
-                                          //         //           if (correspondences[pos].isLocked ??
-                                          //         //               false)
-                                          //         //             iconAndText(
-                                          //         //                 iconColor: AppColor,
-                                          //         //                 iconData:
-                                          //         //                 Icons.person_add_disabled,
-                                          //         //                 title: 'closed'.tr),
-                                          //         //         ],
-                                          //         //       )
-                                          //         //     ]);
-                                          //       }),
-                                          // ),
-                                          //
+                          //  Get.find<DocumentController>().loadPdf();
+                          //Get.toNamed("/DocumentPage");
+                        },
+                        child: SizedBox(
+                          //height: MediaQuery.of(context).size.height*.3,
+                          child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        // Padding(
+                                        //   padding:
+                                        //   const EdgeInsets.all(8.0),
+                                        //   child: ListView.builder(
+                                        //       shrinkWrap: true,
+                                        //       itemCount:
+                                        //       correspondences[pos]
+                                        //           .gridInfo
+                                        //           ?.length,
+                                        //       itemBuilder:
+                                        //           (context, index) {
+                                        //         return Row(
+                                        //           crossAxisAlignment:
+                                        //           CrossAxisAlignment
+                                        //               .start,
+                                        //           mainAxisAlignment:
+                                        //           MainAxisAlignment
+                                        //               .start,
+                                        //           children: [
+                                        //             // Container(
+                                        //             //     width: MediaQuery.of(
+                                        //             //                 context)
+                                        //             //             .size
+                                        //             //             .width *
+                                        //             //         .1,
+                                        //             //     child: Text(
+                                        //             //       correspondences[
+                                        //             //                   pos]
+                                        //             //               .gridInfo?[
+                                        //             //                   index]
+                                        //             //               .label ??
+                                        //             //           "",
+                                        //             //       softWrap:
+                                        //             //           true,
+                                        //             //       maxLines: 3,
+                                        //             //     )),
+                                        //             // SizedBox(
+                                        //             //   width: 8,
+                                        //             // ),
+                                        //
+                                        //
+                                        //    index==0?         Container(height: 20,width: 20,
+                                        //               decoration: BoxDecoration(
+                                        //                   color: Theme
+                                        //                       .of(
+                                        //                       context)
+                                        //                       .colorScheme
+                                        //                       .primary,shape: BoxShape.circle),):    Padding(
+                                        //      padding: const EdgeInsets.all(8.0),
+                                        //      child: Container(height: 10,width: 10,
+                                        //        decoration: BoxDecoration(
+                                        //           shape: BoxShape.circle),),
+                                        //    ),SizedBox(width: 8,),
+                                        //             index==0?    Expanded(
+                                        //               child: Container(
+                                        //                 // width: MediaQuery.of(
+                                        //                 //     context)
+                                        //                 //     .size
+                                        //                 //     .width *
+                                        //                 //     .3,
+                                        //                 child:
+                                        //                 Text(
+                                        //                   correspondences[
+                                        //                   pos]
+                                        //                       .gridInfo?[
+                                        //                   index]
+                                        //                       .value ??
+                                        //                       "",
+                                        //                   softWrap:
+                                        //                   true,
+                                        //                   maxLines: 3,
+                                        //                 ),
+                                        //               ),
+                                        //             ):
+                                        //
+                                        //             Expanded(
+                                        //               child: Container(
+                                        //                 // width: MediaQuery.of(
+                                        //                 //     context)
+                                        //                 //     .size
+                                        //                 //     .width *
+                                        //                 //     .3,
+                                        //                 child: Text(
+                                        //
+                                        //                       "${     correspondences[
+                                        //                       pos]
+                                        //                           .gridInfo?[
+                                        //                       index]
+                                        //                           .value}",
+                                        //                   softWrap:
+                                        //                   true,
+                                        //                   maxLines: 3,
+                                        //                 ),
+                                        //               ),
+                                        //             )
+                                        //             ,
+                                        //           ],
+                                        //         );
+                                        //
+                                        //         // Column(
+                                        //         //     crossAxisAlignment: CrossAxisAlignment.start,
+                                        //         //     children: [
+                                        //         //       // Text(correspondences[pos].fromStructure ??
+                                        //         //       //     ""),
+                                        //         //       Row(
+                                        //         //         mainAxisAlignment:
+                                        //         //         MainAxisAlignment.spaceBetween,
+                                        //         //         children: [
+                                        //         //           Text(correspondences[pos]. ??
+                                        //         //               ""),
+                                        //         //           Text(correspondences[pos].docDueDate ??
+                                        //         //               " "),
+                                        //         //         ],
+                                        //         //       ),
+                                        //         //       Row(
+                                        //         //         mainAxisAlignment:
+                                        //         //         MainAxisAlignment.spaceBetween,
+                                        //         //         children: [
+                                        //         //           Text(correspondences[pos].docDueDate ??
+                                        //         //               ""),
+                                        //         //         ],
+                                        //         //       ),
+                                        //         //       Row(
+                                        //         //         children: [
+                                        //         //           if (correspondences[pos]
+                                        //         //               .isHighPriority ??
+                                        //         //               false)
+                                        //         //             iconAndText(
+                                        //         //                 iconColor: AppColor,
+                                        //         //                 iconData: Icons.lock,
+                                        //         //                 title: 'secret'.tr),
+                                        //         //           if (correspondences[pos].isLocked ??
+                                        //         //               false)
+                                        //         //             iconAndText(
+                                        //         //                 iconColor: AppColor,
+                                        //         //                 iconData:
+                                        //         //                 Icons.person_add_disabled,
+                                        //         //                 title: 'closed'.tr),
+                                        //         //         ],
+                                        //         //       )
+                                        //         //     ]);
+                                        //       }),
+                                        // ),
+                                        //
 
-                                          Row(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                const EdgeInsets.all(8.0),
-                                                child: Container(
-                                                    height: 20,
-                                                    width: 20,
-                                                    decoration: BoxDecoration(
-                                                        color: Theme
-                                                            .of(context)
-                                                            .colorScheme
-                                                            .primary,
-                                                        shape: BoxShape
-                                                            .circle)),
-                                              ),
-                                              Flexible(
-                                                child: Text(
-                                                    correspondences[pos]
-                                                        .gridInfo?[0]
-                                                        .value ??
-                                                        "",
-                                                    softWrap: true,
-                                                    maxLines: 2,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                        color: Colors.black
-                                                            .withOpacity(.7),
-                                                        fontSize: 20,
-                                                        fontWeight:
-                                                        FontWeight.bold)),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 8,
-                                          ),
-                                          Row(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                            children: [
-                                              Container(
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Container(
                                                   height: 20,
                                                   width: 20,
                                                   decoration: BoxDecoration(
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primary,
                                                       shape: BoxShape.circle)),
-                                              SizedBox(
-                                                width: 8,
-                                              ),
-                                              Text("sender".tr,
+                                            ),
+                                            Flexible(
+                                              child: Text(
+                                                  correspondences[pos]
+                                                          .gridInfo?[0]
+                                                          .value ??
+                                                      "",
+                                                  softWrap: true,
+                                                  maxLines: 2,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                   style: TextStyle(
                                                       color: Colors.black
-                                                          .withOpacity(.5),
+                                                          .withOpacity(.7),
+                                                      fontSize: 20,
                                                       fontWeight:
-                                                      FontWeight.bold)),
+                                                          FontWeight.bold)),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                                height: 20,
+                                                width: 20,
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle)),
+                                            SizedBox(
+                                              width: 8,
+                                            ),
+                                            Text("sender".tr,
+                                                style: TextStyle(
+                                                    color: Colors.black
+                                                        .withOpacity(.5),
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            SizedBox(
+                                              width: 4,
+                                            ),
+                                            Text(
+                                                correspondences[pos].fromUser ??
+                                                    "",
+                                                style: TextStyle(
+                                                    color: Colors.black
+                                                        .withOpacity(.5),
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            Spacer()
+                                            // Flexible(
+                                            //   child: Text(
+                                            //     correspondences[
+                                            //     pos]
+                                            //         .gridInfo?[
+                                            //     3]
+                                            //         .label ??
+                                            //         "",
+                                            //     softWrap:
+                                            //     true,
+                                            //     maxLines: 3,
+                                            //   ),
+                                            // ),
+                                            ,
+                                            Text(
+                                                correspondences[pos]
+                                                        .gridInfo?[3]
+                                                        .value ??
+                                                    "",
+                                                softWrap: true,
+                                                maxLines: 3,
+                                                style: TextStyle(
+                                                    color: Colors.black
+                                                        .withOpacity(.4),
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ],
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            // mainAxisAlignment:
+                                            //     MainAxisAlignment
+                                            //         .spaceAround,
+                                            children: [
+                                              SizedBox(
+                                                width: 50,
+                                              ),
+
+                                              // Container(
+                                              //   height: 20,
+                                              //   width: 20,
+                                              //   decoration: BoxDecoration(
+                                              //       color: correspondences[
+                                              //                       pos]
+                                              //                   .priorityId ==
+                                              //               "1"
+                                              //           ? Colors.green
+                                              //           : Colors.red,
+                                              //       shape: BoxShape
+                                              //           .circle),
+                                              // ),
+                                              if (correspondences[pos]
+                                                      .priorityId ==
+                                                  "1")
+                                                Icon(Icons.warning,
+                                                    color: RedColor),
                                               SizedBox(
                                                 width: 4,
                                               ),
-                                              Text(
-                                                  correspondences[pos]
-                                                      .fromUser ??
-                                                      "",
+                                              if (correspondences[pos]
+                                                      .priorityId ==
+                                                  "1")
+                                                Text(
+                                                  "veryimportant".tr,
                                                   style: TextStyle(
-                                                      color: Colors.black
-                                                          .withOpacity(.5),
-                                                      fontWeight:
-                                                      FontWeight.bold)),
-                                              Spacer()
-                                              // Flexible(
-                                              //   child: Text(
-                                              //     correspondences[
-                                              //     pos]
-                                              //         .gridInfo?[
-                                              //     3]
-                                              //         .label ??
-                                              //         "",
-                                              //     softWrap:
-                                              //     true,
-                                              //     maxLines: 3,
-                                              //   ),
+                                                      color: RedColor),
+                                                ),
+                                              SizedBox(
+                                                width: 50,
+                                              ),
+                                              if (correspondences[pos]
+                                                      .showLock ??
+                                                  false)
+                                                Icon(Icons.lock),
+                                              if (correspondences[pos]
+                                                      .showLock ??
+                                                  false)
+                                                Text("secret".tr),
+
+                                              SizedBox(
+                                                width: 50,
+                                              ),
+                                              Icon(
+                                                  correspondences[pos].isLocked!
+                                                      ? Icons.lock
+                                                      : Icons.lock_open,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary),
+                                              if (correspondences[pos]
+                                                      .isLocked ??
+                                                  false)
+                                                Text("closed".tr,
+                                                    style: TextStyle(
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primary)),
+                                              //   correspondences[pos].priorityId
+                                              //  correspondences[pos].purposeId
+
+                                              SizedBox(
+                                                width: 50,
+                                              )
+                                              // Text("sender".tr),
+                                              // SizedBox(
+                                              //   width: 4,
                                               // ),
+                                              // Text(
+                                              //     correspondences[pos]
+                                              //         .fromUser ??
+                                              //         ""),
+
                                               ,
-                                              Text(
-                                                  correspondences[pos]
-                                                      .gridInfo?[3]
-                                                      .value ??
-                                                      "",
-                                                  softWrap: true,
-                                                  maxLines: 3,
-                                                  style: TextStyle(
-                                                      color: Colors.black
-                                                          .withOpacity(.4),
-                                                      fontWeight:
-                                                      FontWeight.bold)),
+                                              if (correspondences[pos]
+                                                      .hasAttachments ??
+                                                  false)
+                                                Icon(Icons.attachment),
                                             ],
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Row(
-                                              // mainAxisAlignment:
-                                              //     MainAxisAlignment
-                                              //         .spaceAround,
-                                              children: [
-                                                SizedBox(
-                                                  width: 50,
-                                                ),
-
-                                                // Container(
-                                                //   height: 20,
-                                                //   width: 20,
-                                                //   decoration: BoxDecoration(
-                                                //       color: correspondences[
-                                                //                       pos]
-                                                //                   .priorityId ==
-                                                //               "1"
-                                                //           ? Colors.green
-                                                //           : Colors.red,
-                                                //       shape: BoxShape
-                                                //           .circle),
-                                                // ),
-                                                if (correspondences[pos]
-                                                    .priorityId ==
-                                                    "1")
-                                                  Icon(Icons.warning,
-                                                      color: RedColor),
-                                                SizedBox(
-                                                  width: 4,
-                                                ),
-                                                if (correspondences[pos]
-                                                    .priorityId ==
-                                                    "1")
-                                                  Text(
-                                                    "veryimportant".tr,
-                                                    style: TextStyle(
-                                                        color: RedColor),
-                                                  ),
-                                                SizedBox(
-                                                  width: 50,
-                                                ),
-                                                if (correspondences[pos]
-                                                    .showLock ??
-                                                    false)
-                                                  Icon(Icons.lock),
-                                                if (correspondences[pos]
-                                                    .showLock ??
-                                                    false)
-                                                  Text("secret".tr),
-
-                                                SizedBox(
-                                                  width: 50,
-                                                ),
-                                                Icon(
-                                                    correspondences[pos]
-                                                        .isLocked!
-                                                        ? Icons.lock
-                                                        : Icons.lock_open,
-                                                    color: Theme
-                                                        .of(context)
-                                                        .colorScheme
-                                                        .primary),
-                                                if (correspondences[pos]
-                                                    .isLocked ??
-                                                    false)
-                                                  Text("closed".tr,
-                                                      style: TextStyle(
-                                                          color: Theme
-                                                              .of(context)
-                                                              .colorScheme
-                                                              .primary)),
-                                                //   correspondences[pos].priorityId
-                                                //  correspondences[pos].purposeId
-
-                                                SizedBox(
-                                                  width: 50,
-                                                )
-                                                // Text("sender".tr),
-                                                // SizedBox(
-                                                //   width: 4,
-                                                // ),
-                                                // Text(
-                                                //     correspondences[pos]
-                                                //         .fromUser ??
-                                                //         ""),
-
-                                                ,
-                                                if (correspondences[pos]
-                                                    .hasAttachments ??
-                                                    false)
-                                                  Icon(Icons.attachment),
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
+                                        )
+                                      ],
                                     ),
-                                    Get
-                                        .find<InboxController>()
-                                        .edit
-                                        ? InkWell(
-                                      onTap: () {
-                                        print(
-                                            "is select      ${correspondences[pos]
-                                                .isSelect}");
+                                  ),
+                                  Get.find<InboxController>().edit
+                                      ? InkWell(
+                                          onTap: () {
+                                            print(
+                                                "is select      ${correspondences[pos].isSelect}");
 
-                                        print(Get
-                                            .find<InboxController>()
-                                            .listSelectCorrespondences
-                                            .length);
+                                            print(Get.find<InboxController>()
+                                                .listSelectCorrespondences
+                                                .length);
 
-                                        if (correspondences[pos].isSelect) {
-                                          correspondences[pos].isSelect =
-                                          false;
-                                        } else {
-                                          correspondences[pos].isSelect =
-                                          true;
-                                        }
-                                        if (correspondences[pos].isSelect) {
-                                          Get
-                                              .find<InboxController>()
-                                              .listSelectCorrespondences
-                                              .add(int.parse(
-                                              correspondences[pos]
-                                                  .correspondenceId!));
-                                        } else {
-                                          Get
-                                              .find<InboxController>()
-                                              .listSelectCorrespondences
-                                              .remove(correspondences[pos]);
-                                        }
+                                            if (correspondences[pos].isSelect) {
+                                              correspondences[pos].isSelect =
+                                                  false;
+                                            } else {
+                                              correspondences[pos].isSelect =
+                                                  true;
+                                            }
+                                            if (correspondences[pos].isSelect) {
+                                              Get.find<InboxController>()
+                                                  .listSelectCorrespondences
+                                                  .add(int.parse(
+                                                      correspondences[pos]
+                                                          .correspondenceId!));
+                                            } else {
+                                              Get.find<InboxController>()
+                                                  .listSelectCorrespondences
+                                                  .remove(correspondences[pos]);
+                                            }
 
-                                        Get.find<InboxController>()
-                                            .update();
-                                      },
-                                      child: Padding(
-                                          padding: EdgeInsets.all(8),
-                                          child: Container(
-                                              width: 30,
-                                              height: 30,
-                                              child: Image.asset(
-                                                  correspondences[
-                                                  pos]
-                                                      .isSelect
+                                            Get.find<InboxController>()
+                                                .update();
+                                          },
+                                          child: Padding(
+                                              padding: EdgeInsets.all(8),
+                                              child: Container(
+                                                  width: 30,
+                                                  height: 30,
+                                                  child: Image.asset(correspondences[
+                                                              pos]
+                                                          .isSelect
                                                       ? "assets/images/check.png"
                                                       : "assets/images/uncheck.png"))
 
-                                        //
-                                        // Checkbox(
-                                        //     value: correspondences[pos].isSelect,
-                                        //     onChanged: (v) {
-                                        //       correspondences[pos].isSelect = v!;
-                                        //       print(  Get.find<InboxController>()
-                                        //           .listSelectCorrespondences.length);
-                                        //       if(v!){
-                                        //
-                                        //
-                                        //         Get.find<InboxController>()
-                                        //             .listSelectCorrespondences
-                                        //             .add(correspondences[pos]);
-                                        //       }else{
-                                        //         Get.find<InboxController>()
-                                        //             .listSelectCorrespondences
-                                        //             .remove(correspondences[pos]);
-                                        //       }
-                                        //
-                                        //       Get.find<InboxController>()
-                                        //           .update();
-                                        //     }),
-                                      ),
-                                    )
-                                        : PopupMenuButton(
-                                        itemBuilder: (context) =>
-                                        [
-                                          PopupMenuItem(
-                                            child: Row(
-                                              children: [
-                                                Icon(
-                                                    Icons.forward_rounded,
-                                                    color: Colors.orange),
-                                                SizedBox(
-                                                  width: 4,
-                                                ),
-                                                Text("Reply".tr),
-                                              ],
-                                            ),
-                                            value: 1,
-                                            onTap: functionReply,
-                                          ),
-                                          PopupMenuItem(
-                                            child: Row(
-                                              children: [
-                                                Icon(Icons.account_circle,
-                                                    color: Colors.red),
-                                                SizedBox(
-                                                  width: 4,
-                                                ),
-                                                Text("Transfer".tr),
-                                              ],
-                                            ),
-                                            value: 2,
-                                            onTap: functionTrunsfer,
-                                          ),
-                                          PopupMenuItem(
-                                            child: Row(
-                                              children: [
-                                                Icon(Icons.bookmark,
-                                                    color: Colors.orange),
-                                                SizedBox(
-                                                  width: 4,
-                                                ),
-                                                Text("Complete".tr),
-                                              ],
-                                            ),
-                                            onTap: functionComplet,
-                                            value: 3,
-                                          ),
-                                          if (correspondences[pos]
-                                              .hasSummaries ??
-                                              false)
-                                            PopupMenuItem(
-                                              child: Row(
-                                                children: [
-                                                  Icon(Icons.menu,
-                                                      color: Colors
-                                                          .blueAccent),
-                                                  SizedBox(
-                                                    width: 4,
-                                                  ),
-                                                  Text("Summary".tr),
-                                                ],
+                                              //
+                                              // Checkbox(
+                                              //     value: correspondences[pos].isSelect,
+                                              //     onChanged: (v) {
+                                              //       correspondences[pos].isSelect = v!;
+                                              //       print(  Get.find<InboxController>()
+                                              //           .listSelectCorrespondences.length);
+                                              //       if(v!){
+                                              //
+                                              //
+                                              //         Get.find<InboxController>()
+                                              //             .listSelectCorrespondences
+                                              //             .add(correspondences[pos]);
+                                              //       }else{
+                                              //         Get.find<InboxController>()
+                                              //             .listSelectCorrespondences
+                                              //             .remove(correspondences[pos]);
+                                              //       }
+                                              //
+                                              //       Get.find<InboxController>()
+                                              //           .update();
+                                              //     }),
                                               ),
-                                              onTap: functionSummary,
-                                              value: 4,
-                                            ),
-                                          PopupMenuItem(
-                                            child: Row(
-                                              children: [
-                                                Icon(Icons.backpack_sharp,
-                                                    color: Colors
-                                                        .blueAccent),
-                                                SizedBox(
-                                                  width: 4,
+                                        )
+                                      : PopupMenuButton(
+                                          itemBuilder: (context) => [
+                                                PopupMenuItem(
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(
+                                                          Icons.forward_rounded,
+                                                          color: Colors.orange),
+                                                      SizedBox(
+                                                        width: 4,
+                                                      ),
+                                                      Text("Reply".tr),
+                                                    ],
+                                                  ),
+                                                  value: 1,
+                                                  onTap: functionReply,
                                                 ),
-                                                Text("addtoBasket".tr),
-                                              ],
-                                            ),
-                                            onTap: () {
-                                              Get.find<InboxController>()
-                                                  .getFetchBasketList(
-                                                  context: context);
-                                            },
-                                            value: 5,
-                                          ),
-                                        ],
-                                        enableFeedback: true,
-                                        onSelected: (v) async {
-                                          // print("*" * 50);
-                                          // print(correspondences[pos]
-                                          //     .hasSummaries);
-                                          // print(correspondences[pos]
-                                          //     .correspondenceId);
-                                          //
-                                          // print(correspondences[pos]
-                                          //     .transferId);
-                                          //
-                                          // print("*" * 50);
-
-                                          if (v == 1) {
-                                          controller.isPrivate=true;
-                                            showDialog(
-                                              context: context,
-                                              builder: (ctx) =>
-                                                  AlertDialog(
-                                                    title: Row(
+                                                PopupMenuItem(
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(Icons.account_circle,
+                                                          color: Colors.red),
+                                                      SizedBox(
+                                                        width: 4,
+                                                      ),
+                                                      Text("Transfer".tr),
+                                                    ],
+                                                  ),
+                                                  value: 2,
+                                                  onTap: functionTrunsfer,
+                                                ),
+                                                PopupMenuItem(
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(Icons.bookmark,
+                                                          color: Colors.orange),
+                                                      SizedBox(
+                                                        width: 4,
+                                                      ),
+                                                      Text("Complete".tr),
+                                                    ],
+                                                  ),
+                                                  onTap: functionComplet,
+                                                  value: 3,
+                                                ),
+                                                if (correspondences[pos]
+                                                        .hasSummaries ??
+                                                    false)
+                                                  PopupMenuItem(
+                                                    child: Row(
                                                       children: [
-                                                        Image.asset(
-                                                          'assets/images/refer.png'
-                                                          //
-                                                          ,
-                                                          height:
-                                                          20,
-                                                          width: 20,
+                                                        Icon(Icons.menu,
+                                                            color: Colors
+                                                                .blueAccent),
+                                                        SizedBox(
+                                                          width: 4,
                                                         ),
-                                                        SizedBox(width: 16,),
-                                                        Text("Reply".tr,
-                                                            style: TextStyle(
-                                                                fontSize: 30,
-                                                                color: Theme
-                                                                    .of(context)
-                                                                    .colorScheme
-                                                                    .primary)),
-                                                        Spacer(),
-                                                        InkWell(onTap: () {
-                                                          Navigator.of(ctx)
-                                                              .pop();
-                                                        },
-                                                            child: Image.asset(
-                                                              "assets/images/close_button.png",
-                                                              height: 24,
-                                                              width: 24,))
+                                                        Text("Summary".tr),
                                                       ],
                                                     ),
-                                                    content: Padding(
-                                                      padding:
-                                                      const EdgeInsets.all(
-                                                          8.0),
-                                                      child: Container(
-                                                        width:
-                                                        MediaQuery
-                                                            .of(context)
-                                                            .size
-                                                            .width *
-                                                            .5,
-                                                        color: Colors.grey[200],
-                                                        child:
-                                                        SingleChildScrollView(
-                                                          child: Column(
-                                                              children: [
-                                                                Row(
-                                                                    crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .center,
-                                                                    children: [
-                                                                      Text(
-                                                                        "name"
-                                                                            .tr,
-                                                                        style: Theme
-                                                                            .of(
-                                                                            context)
-                                                                            .textTheme
-                                                                            .headline3!
-                                                                            .copyWith(
-                                                                          color:
-                                                                          createMaterialColor(
-                                                                            const Color
-                                                                                .fromRGBO(
-                                                                                77,
-                                                                                77,
-                                                                                77,
-                                                                                1),
-                                                                          ),
-                                                                          fontSize:
-                                                                          15,
-                                                                        ),
-                                                                        textAlign:
-                                                                        TextAlign
-                                                                            .center,
-                                                                        overflow:
-                                                                        TextOverflow
-                                                                            .ellipsis,
-                                                                      ),
-                                                                      SizedBox(
-                                                                        width: 8,
-                                                                      ),
-                                                                      Padding(
-                                                                        padding:
-                                                                        const EdgeInsets
-                                                                            .all(
-                                                                            8.0),
-                                                                        child: Text(
-                                                                            correspondences[pos]
-                                                                                .fromUser ??
-                                                                                ""),
-                                                                      ),
-                                                                      Spacer(),
-                                                                      CircleAvatar(
-                                                                        backgroundImage: AssetImage(
-                                                                            "assets/images/pr.jpg"),
-                                                                        backgroundColor: Colors
-                                                                            .cyan,
-                                                                        maxRadius: 30,
-                                                                        minRadius: 30,
-                                                                      ),
-                                                                      SizedBox(
-                                                                        width: 8,)
-                                                                    ]),
-                                                                SizedBox(
-                                                                  height: 4,
-                                                                ),
-                                                                Row(
+                                                    onTap: functionSummary,
+                                                    value: 4,
+                                                  ),
+                                                PopupMenuItem(
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(Icons.backpack_sharp,
+                                                          color: Colors
+                                                              .blueAccent),
+                                                      SizedBox(
+                                                        width: 4,
+                                                      ),
+                                                      Text("addtoBasket".tr),
+                                                    ],
+                                                  ),
+                                                  onTap: () {
+                                                    Get.find<InboxController>()
+                                                        .getFetchBasketList(
+                                                            context: context);
+                                                  },
+                                                  value: 5,
+                                                ),
+                                              ],
+                                          enableFeedback: true,
+                                          onSelected: (v) async {
+                                            // print("*" * 50);
+                                            // print(correspondences[pos]
+                                            //     .hasSummaries);
+                                            // print(correspondences[pos]
+                                            //     .correspondenceId);
+                                            //
+                                            // print(correspondences[pos]
+                                            //     .transferId);
+                                            //
+                                            // print("*" * 50);
+
+                                            if (v == 1) {
+                                              controller.isPrivate = true;
+                                              showDialog(
+                                                context: context,
+                                                builder: (ctx) => AlertDialog(
+                                                  title: Row(
+                                                    children: [
+                                                      Image.asset(
+                                                        'assets/images/refer.png'
+                                                        //
+                                                        ,
+                                                        height: 20,
+                                                        width: 20,
+                                                      ),
+                                                      SizedBox(
+                                                        width: 16,
+                                                      ),
+                                                      Text("Reply".tr,
+                                                          style: TextStyle(
+                                                              fontSize: 30,
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .colorScheme
+                                                                  .primary)),
+                                                      Spacer(),
+                                                      InkWell(
+                                                          onTap: () {
+                                                            Navigator.of(ctx)
+                                                                .pop();
+                                                          },
+                                                          child: Image.asset(
+                                                            "assets/images/close_button.png",
+                                                            height: 24,
+                                                            width: 24,
+                                                          ))
+                                                    ],
+                                                  ),
+                                                  content: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Container(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              .5,
+                                                      color: Colors.grey[200],
+                                                      child:
+                                                          SingleChildScrollView(
+                                                        child: Column(
+                                                            children: [
+                                                              Row(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
                                                                   children: [
-                                                                    Expanded(
+                                                                    Text(
+                                                                      "name".tr,
+                                                                      style: Theme.of(
+                                                                              context)
+                                                                          .textTheme
+                                                                          .headline3!
+                                                                          .copyWith(
+                                                                            color:
+                                                                                createMaterialColor(
+                                                                              const Color.fromRGBO(77, 77, 77, 1),
+                                                                            ),
+                                                                            fontSize:
+                                                                                15,
+                                                                          ),
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .center,
+                                                                      overflow:
+                                                                          TextOverflow
+                                                                              .ellipsis,
+                                                                    ),
+                                                                    SizedBox(
+                                                                      width: 8,
+                                                                    ),
+                                                                    Padding(
+                                                                      padding:
+                                                                          const EdgeInsets.all(
+                                                                              8.0),
                                                                       child: Text(
-                                                                          "audioNotes"
-                                                                              .tr),
+                                                                          correspondences[pos].fromUser ??
+                                                                              ""),
                                                                     ),
                                                                     Spacer(),
-                                                                    Text(
-                                                                        "private"
+                                                                    CircleAvatar(
+                                                                      backgroundImage:
+                                                                          AssetImage(
+                                                                              "assets/images/pr.jpg"),
+                                                                      backgroundColor:
+                                                                          Colors
+                                                                              .cyan,
+                                                                      maxRadius:
+                                                                          30,
+                                                                      minRadius:
+                                                                          30,
+                                                                    ),
+                                                                    SizedBox(
+                                                                      width: 8,
+                                                                    )
+                                                                  ]),
+                                                              SizedBox(
+                                                                height: 4,
+                                                              ),
+                                                              Row(
+                                                                children: [
+                                                                  Expanded(
+                                                                    child: Text(
+                                                                        "audioNotes"
                                                                             .tr),
-                                                                    GetBuilder<
-                                                                        InboxController>(id: "pr",
-                                                                      assignId: true,autoRemove: false,
-                                                                      builder: (
-                                                                          logic) {
-                                                                        return Checkbox(
-                                                                          value: logic
-                                                                              .isPrivate,
-                                                                          onChanged:logic
-                                                                              .updateISPrivate,);
-                                                                      },
-                                                                    )
-                                                                  ],
-                                                                ),
-                                                                Row(
-                                                                  children: [
-                                                                    Expanded(
-                                                                      child: Container(
-                                                                          height: 40,
-                                                                          color: Colors
-                                                                              .grey[300],
-                                                                          child: Row(
-
-                                                                            children: [
-                                                                              GestureDetector(
-                                                                                onTap: () async {
-                                                                                  if (Get
-                                                                                      .find<
-                                                                                      InboxController>()
-                                                                                      .record
-                                                                                      .isRecording) {
-                                                                                    print(
-                                                                                        " ايقاف التشغيل");
-                                                                                    Get
-                                                                                        .find<
-                                                                                        InboxController>()
-                                                                                        .stopMathod();
-                                                                                  } else {
-                                                                                    print(
-                                                                                        " بداء  التشغيل");
-                                                                                    Get
-                                                                                        .find<
-                                                                                        InboxController>()
-                                                                                        .recordMathod();
-                                                                                  }
-                                                                                  //دي القديم الي كنت بستخدمه في الرد
-                                                                                  // Get
-                                                                                  //     .find<
-                                                                                  //     InboxController>()
-                                                                                  //     .recording
-                                                                                  //     ? Get
-                                                                                  //     .find<
-                                                                                  //     InboxController>()
-                                                                                  //     .stop2()
-                                                                                  //     : Get
-                                                                                  //     .find<
-                                                                                  //     InboxController>()
-                                                                                  //     .record2();
-                                                                                  // Get
-                                                                                  //     .find<
-                                                                                  //     InboxController>()
-                                                                                  //     .update(
-                                                                                  //     [
-                                                                                  //       "id"
-                                                                                  //     ]);
-                                                                                },
-                                                                                child: Padding(
-                                                                                  padding: const EdgeInsets
-                                                                                      .all(
-                                                                                      8.0),
-                                                                                  child: GetBuilder<
-                                                                                      InboxController>(
-                                                                                      id: "id",
-                                                                                      builder: (
-                                                                                          logic) {
-                                                                                        return Icon(
-                                                                                            Get
-                                                                                                .find<
-                                                                                                InboxController>()
-                                                                                                .recording
-                                                                                                ? Icons
-                                                                                                .stop
-                                                                                                : Icons
-                                                                                                .mic);
-                                                                                      }),
-                                                                                ),
-                                                                              ),
-                                                                              Expanded(
-                                                                                  child: Container(
-                                                                                    color: Theme
-                                                                                        .of(
-                                                                                        context)
-                                                                                        .colorScheme
-                                                                                        .primary,
-                                                                                    height: 1,)),
-                                                                              Padding(
-                                                                                padding: const EdgeInsets
-                                                                                    .all(
-                                                                                    8.0),
-                                                                                child: InkWell(
-                                                                                  onTap: () {
-                                                                                    Get
-                                                                                        .find<
-                                                                                        InboxController>()
-                                                                                        .playMathod();
-                                                                                  },
-                                                                                  child: Icon(
-                                                                                      Icons
-                                                                                          .play_arrow,
-                                                                                      color: Theme
-                                                                                          .of(
-                                                                                          context)
-                                                                                          .colorScheme
-                                                                                          .primary),
-                                                                                ),
-                                                                              )
-                                                                            ],
-                                                                          )),
-                                                                    )
-                                                                  ],
-                                                                ),
-                                                                SizedBox(
-                                                                  height: 8,
-                                                                ),
-                                                                Container(
-                                                                  child:
-                                                                  TextFormField(
-                                                                    decoration: InputDecoration(
-                                                                        hintText: " ادخل الرد",
-                                                                        contentPadding: EdgeInsets
-                                                                            .all(
-                                                                            16)),
-                                                                    onChanged:
-                                                                        (v) {
-                                                                      Get
-                                                                          .find<
-                                                                          InboxController>()
-                                                                          .replyNote =
-                                                                          v;
+                                                                  ),
+                                                                  Spacer(),
+                                                                  Text("private"
+                                                                      .tr),
+                                                                  GetBuilder<
+                                                                      InboxController>(
+                                                                    id: "pr",
+                                                                    assignId:
+                                                                        true,
+                                                                    autoRemove:
+                                                                        false,
+                                                                    builder:
+                                                                        (logic) {
+                                                                      return Checkbox(
+                                                                        value: logic
+                                                                            .isPrivate,
+                                                                        onChanged:
+                                                                            logic.updateISPrivate,
+                                                                      );
                                                                     },
-                                                                    maxLines: 4,
-                                                                  ),
-                                                                  color: Colors
-                                                                      .grey[300],
-                                                                ),
-                                                                SizedBox(
-                                                                  height: 8,
-                                                                ),
-                                                              ]),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    actions: <Widget>[
-                                                      FlatButton(
-                                                        onPressed: () async {
-                                                          ReplyWithVoiceNoteRequestModel
-                                                          v;
-                                                          String? audioFileBes64 =
-                                                          await audiobase64String(
-                                                              file: Get
-                                                                  .find<
-                                                                  InboxController>()
-                                                                  .recordFile);
-
-                                                          ReplyWithVoiceNoteApi
-                                                          replayAPI =
-                                                          ReplyWithVoiceNoteApi(
-                                                              context);
-                                                          if (Get
-                                                              .find<
-                                                              InboxController>()
-                                                              .recordFile !=
-                                                              null) {
-                                                            v =
-                                                                ReplyWithVoiceNoteRequestModel(
-                                                                    userId: correspondences[pos]
-                                                                        .fromUserId
-                                                                        .toString(),
-                                                                    transferId: correspondences[
-                                                                    pos]
-                                                                        .transferId,
-                                                                    token: Get
-                                                                        .find<
-                                                                        InboxController>()
-                                                                        .secureStorage
-                                                                        .token(),
-                                                                    correspondencesId:
-                                                                    correspondences[
-                                                                    pos]
-                                                                        .correspondenceId,
-                                                                    language:
-                                                                    Get.locale
-                                                                        ?.languageCode ==
-                                                                        "en"
-                                                                        ? "en"
-                                                                        : "ar",
-                                                                    voiceNote:
-                                                                    audioFileBes64,
-                                                                    notes: Get
-                                                                        .find<
-                                                                        InboxController>()
-                                                                        .replyNote,
-                                                                    voiceNoteExt:
-                                                                    "m4a",
-                                                                    voiceNotePrivate:
-                                                                    Get
-                                                                        .find<
-                                                                        InboxController>().isPrivate);
-                                                          } else {
-                                                            v =
-                                                                ReplyWithVoiceNoteRequestModel(
-                                                                    userId: correspondences[pos]
-                                                                        .fromUserId
-                                                                        .toString(),
-                                                                    transferId: correspondences[pos]
-                                                                        .transferId,
-                                                                    token: Get
-                                                                        .find<
-                                                                        InboxController>()
-                                                                        .secureStorage
-                                                                        .token(),
-                                                                    correspondencesId:
-                                                                    correspondences[
-                                                                    pos]
-                                                                        .correspondenceId,
-                                                                    language: Get
-                                                                        .locale
-                                                                        ?.languageCode ==
-                                                                        "en"
-                                                                        ? "en"
-                                                                        : "ar",
-                                                                    voiceNote: null,
-                                                                    notes: Get
-                                                                        .find<
-                                                                        InboxController>()
-                                                                        .replyNote,
-                                                                    voiceNoteExt:
-                                                                    null,
-                                                                    voiceNotePrivate:
-                                                                    false);
-                                                          }
-
-                                                          print(v.toMap());
-                                                          showLoaderDialog(context);
-                                                          await replayAPI
-                                                              .post(v.toMap())
-                                                              .then((value) {
-                                                                Navigator.pop(context);
-                                                            ReplyWithVoiceNoteModel
-                                                            v = value
-                                                            as ReplyWithVoiceNoteModel;
-                                                            if (v.status == 1) {
-                                                              Get.snackbar("",
-                                                                  "تمت العمليه بنجاح");
-                                                            }
-                                                            print("1" * 50);
-                                                          });
-
-                                                          /// ToDo send Replay
-                                                          Get
-                                                              .find<
-                                                              InboxController>()
-                                                              .recordFile =
-                                                          null;
-                                                          Get
-                                                              .find<
-                                                              InboxController>()
-                                                              .replyNote = "";
-                                                          Navigator.of(ctx)
-                                                              .pop();
-                                                        },
-                                                        child: Text("send".tr,style:
-                                                        TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
-                                                      ),
-                                                    ],
-                                                  ),
-                                            );
-                                          }
-
-
-                                          else if (v == 2) {
-
-
-///ToDo   عمل تحويل زي الي في داخل الدكيومنت
-
-
-
-
-                                          } else if (v == 3) {
-                                            showDialog(
-                                              context: context,
-                                              builder: (ctx) =>
-                                                  AlertDialog(
-                                                    title: Text(" "),
-                                                    content: Padding(
-                                                      padding:
-                                                      const EdgeInsets.all(
-                                                          8.0),
-                                                      child: Container(
-                                                        width:
-                                                        MediaQuery
-                                                            .of(context)
-                                                            .size
-                                                            .width *
-                                                            .8,
-                                                        color: Colors.grey[200],
-                                                        child:
-                                                        SingleChildScrollView(
-                                                          child: Column(
-                                                              mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                              crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                              children: [
-                                                                Text("note"),
-                                                                SizedBox(
-                                                                  height: 8,
-                                                                ),
-                                                                Container(
-                                                                  child:
-                                                                  TextFormField(
-                                                                    maxLines: 4,
-                                                                  ),
-                                                                  color: Colors
-                                                                      .grey[300],
-                                                                ),
-                                                                SizedBox(
-                                                                  height: 8,
-                                                                ),
-                                                              ]),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    actions: <Widget>[
-                                                      FlatButton(
-                                                        onPressed: () {
-                                                          print(Get
-                                                              .find<
-                                                              InboxController>()
-                                                              .completeCustomActions
-                                                              ?.name);
-                                                          print(Get
-                                                              .find<
-                                                              InboxController>()
-                                                              .completeCustomActions
-                                                              ?.icon);
-
-                                                          String data =
-                                                              'Token=${Get
-                                                              .find<
-                                                              InboxController>()
-                                                              .secureStorage
-                                                              .token()}&correspondenceId=${correspondences[pos]
-                                                              .correspondenceId}&transferId=${correspondences[pos]
-                                                              .transferId}&actionType=${Get
-                                                              .find<
-                                                              InboxController>()
-                                                              .completeCustomActions
-                                                              ?.name ??
-                                                              ""}&note=${Get
-                                                              .find<
-                                                              InboxController>()
-                                                              .completeNote}&language=${Get
-                                                              .locale
-                                                              ?.languageCode ==
-                                                              "en"
-                                                              ? "en"
-                                                              : "ar"}';
-
-                                                          Get.find<
-                                                              InboxController>()
-                                                              .completeInCorrespondence(
-                                                              context:
-                                                              context,
-                                                              data: data);
-
-                                                          Navigator.of(ctx)
-                                                              .pop();
-                                                        },
-                                                        child: Text("Ok"),
-                                                      ),
-                                                    ],
-                                                  ),
-                                            );
-
-                                            print(Get
-                                                .find<InboxController>()
-                                                .customAction
-                                                ?.name);
-
-                                            print(
-                                                "  Correspondences[pos].purposeId =>   ${correspondences[pos]
-                                                    .purposeId}");
-                                            print(
-                                                " Correspondences[pos].correspondenceId =>   ${correspondences[pos]
-                                                    .correspondenceId}");
-                                            print(
-                                                "   Correspondences[pos].transferId =>   ${correspondences[pos]
-                                                    .transferId}");
-
-                                            print("ppp" * 10);
-                                            print(Get
-                                                .find<InboxController>()
-                                                .customAction
-                                                ?.name);
-                                          } else if (v == 4) {
-                                            //correspondences[pos].
-
-                                          }
-                                          else if (v == 5) {
-                                            await Get.find<InboxController>()
-                                                .getFetchBasketList(
-                                                context: context);
-                                            //    print("Get.find<InboxController>().getFetchBasketList()");
-
-                                            showDialog(
-                                              context: context,
-                                              builder: (ctx) =>
-                                                  AlertDialog(
-                                                    title: Text(" "),
-                                                    content: Padding(
-                                                      padding:
-                                                      const EdgeInsets.all(
-                                                          8.0),
-                                                      child: Container(
-                                                          width: MediaQuery
-                                                              .of(
-                                                              context)
-                                                              .size
-                                                              .width *
-                                                              .3,
-                                                          color: Colors
-                                                              .grey[200],
-                                                          child: ListView
-                                                              .builder(
-                                                              itemCount: Get
-                                                                  .find<
-                                                                  InboxController>()
-                                                                  .fetchBasketListModel
-                                                                  ?.baskets
-                                                                  ?.length,
-                                                              itemBuilder:
-                                                                  (context,
-                                                                  pos) {
-                                                                return InkWell(
-                                                                  onTap:
-                                                                      () async {
-                                                                    Get
-                                                                        .find<
-                                                                        InboxController>()
-                                                                        .listSelectCorrespondences
-                                                                        .add(int
-                                                                        .parse(
-                                                                        correspondences[pos]
-                                                                            .correspondenceId!));
-
-                                                                    await Get
-                                                                        .find<
-                                                                        InboxController>()
-                                                                        .addDocumentsToBasket(
-                                                                        context:
-                                                                        context,
-                                                                        basketId: Get
-                                                                            .find<
+                                                                  )
+                                                                ],
+                                                              ),
+                                                              Row(
+                                                                children: [
+                                                                  Expanded(
+                                                                    child: Container(
+                                                                        height: 40,
+                                                                        color: Colors.grey[300],
+                                                                        child: Row(
+                                                                          children: [
+                                                                            GestureDetector(
+                                                                              onTap: () async {
+                                                                                if (Get.find<InboxController>().record.isRecording) {
+                                                                                  print(" ايقاف التشغيل");
+                                                                                  Get.find<InboxController>().stopMathod();
+                                                                                } else {
+                                                                                  print(" بداء  التشغيل");
+                                                                                  Get.find<InboxController>().recordMathod();
+                                                                                }
+                                                                                //دي القديم الي كنت بستخدمه في الرد
+                                                                                // Get
+                                                                                //     .find<
+                                                                                //     InboxController>()
+                                                                                //     .recording
+                                                                                //     ? Get
+                                                                                //     .find<
+                                                                                //     InboxController>()
+                                                                                //     .stop2()
+                                                                                //     : Get
+                                                                                //     .find<
+                                                                                //     InboxController>()
+                                                                                //     .record2();
+                                                                                // Get
+                                                                                //     .find<
+                                                                                //     InboxController>()
+                                                                                //     .update(
+                                                                                //     [
+                                                                                //       "id"
+                                                                                //     ]);
+                                                                              },
+                                                                              child: Padding(
+                                                                                padding: const EdgeInsets.all(8.0),
+                                                                                child: GetBuilder<InboxController>(
+                                                                                    id: "id",
+                                                                                    builder: (logic) {
+                                                                                      return Icon(Get.find<InboxController>().recording ? Icons.stop : Icons.mic);
+                                                                                    }),
+                                                                              ),
+                                                                            ),
+                                                                            Expanded(
+                                                                                child: Container(
+                                                                              color: Theme.of(context).colorScheme.primary,
+                                                                              height: 1,
+                                                                            )),
+                                                                            Padding(
+                                                                              padding: const EdgeInsets.all(8.0),
+                                                                              child: InkWell(
+                                                                                onTap: () {
+                                                                                  Get.find<InboxController>().playMathod();
+                                                                                },
+                                                                                child: Icon(Icons.play_arrow, color: Theme.of(context).colorScheme.primary),
+                                                                              ),
+                                                                            )
+                                                                          ],
+                                                                        )),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                              SizedBox(
+                                                                height: 8,
+                                                              ),
+                                                              Container(
+                                                                child:
+                                                                    TextFormField(
+                                                                  decoration: InputDecoration(
+                                                                      hintText:
+                                                                          " ادخل الرد",
+                                                                      contentPadding:
+                                                                          EdgeInsets.all(
+                                                                              16)),
+                                                                  onChanged:
+                                                                      (v) {
+                                                                    Get.find<
                                                                             InboxController>()
-                                                                            .fetchBasketListModel
-                                                                            ?.baskets?[
-                                                                        pos]
-                                                                            .iD);
-                                                                    Get.back();
+                                                                        .replyNote = v;
                                                                   },
-                                                                  child: Card(
-                                                                    elevation: 10,
-                                                                    child: Column(
-                                                                        children: [
-                                                                          Text(
-                                                                              Get
-                                                                                  .find<
-                                                                                  InboxController>()
-                                                                                  .fetchBasketListModel
-                                                                                  ?.baskets?[pos]
-                                                                                  .name ??
-                                                                                  ""),
-                                                                          Text(
-                                                                              Get
-                                                                                  .find<
-                                                                                  InboxController>()
-                                                                                  .fetchBasketListModel
-                                                                                  ?.baskets?[pos]
-                                                                                  .nameAr ??
-                                                                                  ""),
-                                                                          Text(
-                                                                              "color :${Get
-                                                                                  .find<
-                                                                                  InboxController>()
-                                                                                  .fetchBasketListModel
-                                                                                  ?.baskets?[pos]
-                                                                                  .color}")
-                                                                        ]),
-                                                                  ),
-                                                                );
-                                                              })),
-                                                    ),
-                                                    actions: <Widget>[
-                                                      FlatButton(
-                                                        onPressed: () async {
-                                                          /// ToDo send Replay
-                                                          print(
-                                                              "77777777777777777777777777777777777777777777777777");
-                                                          Navigator.of(ctx)
-                                                              .pop();
-                                                        },
-                                                        child: Text("Ok"),
+                                                                  maxLines: 4,
+                                                                ),
+                                                                color: Colors
+                                                                    .grey[300],
+                                                              ),
+                                                              SizedBox(
+                                                                height: 8,
+                                                              ),
+                                                            ]),
                                                       ),
-                                                    ],
+                                                    ),
                                                   ),
-                                            );
-                                          }
-                                        }),
-                                  ],
-                                )),
-                          ),
-                        );
+                                                  actions: <Widget>[
+                                                    FlatButton(
+                                                      onPressed: () async {
+                                                        ReplyWithVoiceNoteRequestModel
+                                                            v;
+                                                        String? audioFileBes64 =
+                                                            await audiobase64String(
+                                                                file: Get.find<
+                                                                        InboxController>()
+                                                                    .recordFile);
+
+                                                        ReplyWithVoiceNoteApi
+                                                            replayAPI =
+                                                            ReplyWithVoiceNoteApi(
+                                                                context);
+                                                        if (Get.find<
+                                                                    InboxController>()
+                                                                .recordFile !=
+                                                            null) {
+                                                          v = ReplyWithVoiceNoteRequestModel(
+                                                              userId: correspondences[pos]
+                                                                  .fromUserId
+                                                                  .toString(),
+                                                              transferId: correspondences[pos]
+                                                                  .transferId,
+                                                              token: Get.find<
+                                                                      InboxController>()
+                                                                  .secureStorage
+                                                                  .token(),
+                                                              correspondencesId:
+                                                                  correspondences[pos]
+                                                                      .correspondenceId,
+                                                              language: Get.locale
+                                                                          ?.languageCode ==
+                                                                      "en"
+                                                                  ? "en"
+                                                                  : "ar",
+                                                              voiceNote:
+                                                                  audioFileBes64,
+                                                              notes: Get.find<
+                                                                      InboxController>()
+                                                                  .replyNote,
+                                                              voiceNoteExt:
+                                                                  "m4a",
+                                                              voiceNotePrivate:
+                                                                  Get.find<InboxController>()
+                                                                      .isPrivate);
+                                                        } else {
+                                                          v = ReplyWithVoiceNoteRequestModel(
+                                                              userId: correspondences[pos]
+                                                                  .fromUserId
+                                                                  .toString(),
+                                                              transferId: correspondences[pos]
+                                                                  .transferId,
+                                                              token: Get.find<
+                                                                      InboxController>()
+                                                                  .secureStorage
+                                                                  .token(),
+                                                              correspondencesId:
+                                                                  correspondences[
+                                                                          pos]
+                                                                      .correspondenceId,
+                                                              language: Get
+                                                                          .locale
+                                                                          ?.languageCode ==
+                                                                      "en"
+                                                                  ? "en"
+                                                                  : "ar",
+                                                              voiceNote: null,
+                                                              notes: Get.find<
+                                                                      InboxController>()
+                                                                  .replyNote,
+                                                              voiceNoteExt:
+                                                                  null,
+                                                              voiceNotePrivate:
+                                                                  false);
+                                                        }
+
+                                                        print(v.toMap());
+                                                        showLoaderDialog(
+                                                            context);
+                                                        await replayAPI
+                                                            .post(v.toMap())
+                                                            .then((value) {
+                                                          Navigator.pop(
+                                                              context);
+                                                          ReplyWithVoiceNoteModel
+                                                              v = value
+                                                                  as ReplyWithVoiceNoteModel;
+                                                          if (v.status == 1) {
+                                                            Get.snackbar("",
+                                                                "تمت العمليه بنجاح");
+                                                          }
+                                                          print("1" * 50);
+                                                        });
+
+                                                        /// ToDo send Replay
+                                                        Get.find<
+                                                                InboxController>()
+                                                            .recordFile = null;
+                                                        Get.find<
+                                                                InboxController>()
+                                                            .replyNote = "";
+                                                        Navigator.of(ctx).pop();
+                                                      },
+                                                      child: Text("send".tr,
+                                                          style: TextStyle(
+                                                              fontSize: 18,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                            } else if (v == 2) {
+                                              ///ToDo   عمل تحويل زي الي في داخل الدكيومنت
+
+                                            } else if (v == 3) {
+                                              showDialog(
+                                                context: context,
+                                                builder: (ctx) => AlertDialog(
+                                                  title: Text(" "),
+                                                  content: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Container(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              .8,
+                                                      color: Colors.grey[200],
+                                                      child:
+                                                          SingleChildScrollView(
+                                                        child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text("note"),
+                                                              SizedBox(
+                                                                height: 8,
+                                                              ),
+                                                              Container(
+                                                                child:
+                                                                    TextFormField(
+                                                                  maxLines: 4,
+                                                                ),
+                                                                color: Colors
+                                                                    .grey[300],
+                                                              ),
+                                                              SizedBox(
+                                                                height: 8,
+                                                              ),
+                                                            ]),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  actions: <Widget>[
+                                                    FlatButton(
+                                                      onPressed: () {
+                                                        print(Get.find<
+                                                                InboxController>()
+                                                            .completeCustomActions
+                                                            ?.name);
+                                                        print(Get.find<
+                                                                InboxController>()
+                                                            .completeCustomActions
+                                                            ?.icon);
+
+                                                        String data =
+                                                            'Token=${Get.find<InboxController>().secureStorage.token()}&correspondenceId=${correspondences[pos].correspondenceId}&transferId=${correspondences[pos].transferId}&actionType=${Get.find<InboxController>().completeCustomActions?.name ?? ""}&note=${Get.find<InboxController>().completeNote}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}';
+
+                                                        Get.find<
+                                                                InboxController>()
+                                                            .completeInCorrespondence(
+                                                                context:
+                                                                    context,
+                                                                data: data);
+
+                                                        Navigator.of(ctx).pop();
+                                                      },
+                                                      child: Text("Ok"),
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+
+                                              print(Get.find<InboxController>()
+                                                  .customAction
+                                                  ?.name);
+
+                                              print(
+                                                  "  Correspondences[pos].purposeId =>   ${correspondences[pos].purposeId}");
+                                              print(
+                                                  " Correspondences[pos].correspondenceId =>   ${correspondences[pos].correspondenceId}");
+                                              print(
+                                                  "   Correspondences[pos].transferId =>   ${correspondences[pos].transferId}");
+
+                                              print("ppp" * 10);
+                                              print(Get.find<InboxController>()
+                                                  .customAction
+                                                  ?.name);
+                                            } else if (v == 4) {
+                                              //correspondences[pos].
+
+                                            } else if (v == 5) {
+                                              await Get.find<InboxController>()
+                                                  .getFetchBasketList(
+                                                      context: context);
+                                              //    print("Get.find<InboxController>().getFetchBasketList()");
+
+                                              showDialog(
+                                                context: context,
+                                                builder: (ctx) => AlertDialog(
+                                                  title: Text(" "),
+                                                  content: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Container(
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            .3,
+                                                        color: Colors.grey[200],
+                                                        child: ListView.builder(
+                                                            itemCount: Get.find<
+                                                                    InboxController>()
+                                                                .fetchBasketListModel
+                                                                ?.baskets
+                                                                ?.length,
+                                                            itemBuilder:
+                                                                (context, pos) {
+                                                              return InkWell(
+                                                                onTap:
+                                                                    () async {
+                                                                  Get.find<
+                                                                          InboxController>()
+                                                                      .listSelectCorrespondences
+                                                                      .add(int.parse(
+                                                                          correspondences[pos]
+                                                                              .correspondenceId!));
+
+                                                                  await Get.find<InboxController>().addDocumentsToBasket(
+                                                                      context:
+                                                                          context,
+                                                                      basketId: Get.find<
+                                                                              InboxController>()
+                                                                          .fetchBasketListModel
+                                                                          ?.baskets?[
+                                                                              pos]
+                                                                          .iD);
+                                                                  Get.back();
+                                                                },
+                                                                child: Card(
+                                                                  elevation: 10,
+                                                                  child: Column(
+                                                                      children: [
+                                                                        Text(Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].name ??
+                                                                            ""),
+                                                                        Text(Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].nameAr ??
+                                                                            ""),
+                                                                        Text(
+                                                                            "color :${Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].color}")
+                                                                      ]),
+                                                                ),
+                                                              );
+                                                            })),
+                                                  ),
+                                                  actions: <Widget>[
+                                                    FlatButton(
+                                                      onPressed: () async {
+                                                        /// ToDo send Replay
+                                                        print(
+                                                            "77777777777777777777777777777777777777777777777777");
+                                                        Navigator.of(ctx).pop();
+                                                      },
+                                                      child: Text("Ok"),
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                            }
+                                          }),
+                                ],
+                              )),
+                        ),
+                      );
 
                       ///:SizedBox();
                     } else {
                       return haveMoreData
                           ? const SizedBox(
-                        height: 50,
-                        width: 50,
-                        child: Center(child: CircularProgressIndicator()),
-                      )
+                              height: 50,
+                              width: 50,
+                              child: Center(child: CircularProgressIndicator()),
+                            )
                           : const SizedBox();
                     }
                   },
@@ -5656,9 +5521,10 @@ class CustomListView extends GetView<InboxController> {
     );
   }
 
-  Widget iconAndText({required IconData iconData,
-    required String title,
-    required Color iconColor}) {
+  Widget iconAndText(
+      {required IconData iconData,
+      required String title,
+      required Color iconColor}) {
     return Row(
       children: [
         Text(title),

@@ -8,7 +8,7 @@ import '../Models/AnnotationObject.dart';
 import '../MoveableStackItem.dart';
 
 class ViewerController extends GetxController {
-  static ViewerController get to => Get.find();
+  static ViewerController get to => Get.find<ViewerController>();
 
   RxBool viewerIsEditable = false.obs;
   var selectedActionIndex = 0.obs;

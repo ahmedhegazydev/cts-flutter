@@ -41,6 +41,8 @@ import '../utility/utilitie.dart';
 import 'document_controller.dart';
 import 'package:flutter/services.dart' as rootBundel;
 
+import 'landing_page_controller.dart';
+
 class InboxController extends GetxController {
   //ده عشان لو اختار من الشاشه بره كل الصادر و الوارد نخفي شاشاه التاب الي فيها صادر ووارد
   bool isAllOrNot=false;
@@ -102,7 +104,7 @@ int?nodeId=0;
       // });
       fetchBasketListModel?.baskets?.sort();
 
-      update();
+      Get.find<LandingPageController>().  update();
       print(fetchBasketListModel?.toJson());
       print("getFetchBasketList i getit");
     });

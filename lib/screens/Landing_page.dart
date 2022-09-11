@@ -677,6 +677,9 @@ class LandingPage extends GetWidget<LandingPageController> {
 
                     u.showLoaderDialog(context);
                     // controller.createNewBasket();
+
+                inboxController.    getFetchBasketList(context: context);
+
                     controller.addEditBasket(
                         // OrderBy: OrderBy,
                         context: context,
@@ -686,6 +689,10 @@ class LandingPage extends GetWidget<LandingPageController> {
                         nameAr: controller.textEditingControllerArabicName.text,
                         nameEn:
                             controller.textEditingControllerEnglishName.text);
+
+
+
+
                   }),
             ),
           ],
@@ -2655,95 +2662,98 @@ class LandingPage extends GetWidget<LandingPageController> {
           ),
           InkWell(
             onTap: () async {
-              //   await Get.find<InboxController>().getFetchBasketList();
-              await controller.getFetchBasketList(context: context);
-              showDialog(
-                context: context,
-                builder: (ctx) => AlertDialog(
-                  title: Text(" "),
-                  content: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                        width: MediaQuery.of(context).size.width * .3,
-                        color: Colors.grey[200],
-                        child: ListView.builder(
-                            itemCount: controller
-                                .fetchBasketListModel?.baskets?.length,
-                            itemBuilder: (context, pos) {
-                              return InkWell(
-                                onTap: () async {
-                                  controller.getBasketInbox(
-                                      context: context,
-                                      id: controller.fetchBasketListModel!
-                                          .baskets![pos].iD!,
-                                      pageSize: 20,
-                                      pageNumber: 0);
 
-                                  Get.back();
-
-                                  //  Get.toNamed("MyPocketsScreen");
-                                },
-                                child: Card(
-                                  elevation: 10,
-                                  child: Column(children: [
-                                    Text(controller.fetchBasketListModel
-                                            ?.baskets?[pos].name ??
-                                        ""),
-                                    Text(controller.fetchBasketListModel
-                                            ?.baskets?[pos].nameAr ??
-                                        ""),
-                                    Text(
-                                        "color :${Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].color}",
-                                        style: TextStyle(
-                                            color: u.HexColor(controller
-                                                    .fetchBasketListModel
-                                                    ?.baskets?[pos]
-                                                    .color ??
-                                                "#000000"))),
-                                    GestureDetector(
-                                        onTap: () {
-                                          //هنا هنعمل دليت
-                                        },
-                                        child: Icon(Icons.delete)),
-                                  ]),
-                                ),
-                              );
-                            })),
-                  ),
-                  actions: <Widget>[
-                    FlatButton(
-                      onPressed: () async {
-                        /// ToDo send Replay
-
-                        Navigator.of(ctx).pop();
-                      },
-                      child: Text("Ok"),
-                    ),
-                    // FlatButton(
-                    //   onPressed:
-                    //       () async {
-                    //
-                    //     /// ToDo send Replay
-                    //         ///  Navigator.of(
-                    //         //                         ctx)
-                    //         //                         .pop();
-                    //         Navigator.of(
-                    //             ctx)
-                    //             .pop();
-                    //         Get.to(BasketPage());
-                    //
-                    //   },
-                    //   child: Text("go to Basket"),
-                    // ),
-                    FlatButton(
-                      onPressed: () async {
-                        //هنا هنكريت الباسكت
-                      },
-                      child: Text("newBasket".tr),
-                    ),
-                  ],
-                ),
-              );
+    await showAllBasketsDialog(context);
+              // print("=====================================");
+              // //   await Get.find<InboxController>().getFetchBasketList();
+              // await controller.getFetchBasketList(context: context);
+              // showDialog(
+              //   context: context,
+              //   builder: (ctx) => AlertDialog(
+              //     title: Text(" "),
+              //     content: Padding(
+              //       padding: const EdgeInsets.all(8.0),
+              //       child: Container(
+              //           width: MediaQuery.of(context).size.width * .3,
+              //           color: Colors.grey[200],
+              //           child: ListView.builder(
+              //               itemCount: controller
+              //                   .fetchBasketListModel?.baskets?.length,
+              //               itemBuilder: (context, pos) {
+              //                 return InkWell(
+              //                   onTap: () async {
+              //                     controller.getBasketInbox(
+              //                         context: context,
+              //                         id: controller.fetchBasketListModel!
+              //                             .baskets![pos].iD!,
+              //                         pageSize: 20,
+              //                         pageNumber: 0);
+              //
+              //                     Get.back();
+              //
+              //                     //  Get.toNamed("MyPocketsScreen");
+              //                   },
+              //                   child: Card(
+              //                     elevation: 10,
+              //                     child: Column(children: [
+              //                       Text(controller.fetchBasketListModel
+              //                               ?.baskets?[pos].name ??
+              //                           ""),
+              //                       Text(controller.fetchBasketListModel
+              //                               ?.baskets?[pos].nameAr ??
+              //                           ""),
+              //                       Text(
+              //                           "color :${Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].color}",
+              //                           style: TextStyle(
+              //                               color: u.HexColor(controller
+              //                                       .fetchBasketListModel
+              //                                       ?.baskets?[pos]
+              //                                       .color ??
+              //                                   "#000000"))),
+              //                       GestureDetector(
+              //                           onTap: () {
+              //                             //هنا هنعمل دليت
+              //                           },
+              //                           child: Icon(Icons.delete)),
+              //                     ]),
+              //                   ),
+              //                 );
+              //               })),
+              //     ),
+              //     actions: <Widget>[
+              //       FlatButton(
+              //         onPressed: () async {
+              //           /// ToDo send Replay
+              //
+              //           Navigator.of(ctx).pop();
+              //         },
+              //         child: Text("Ok"),
+              //       ),
+              //       // FlatButton(
+              //       //   onPressed:
+              //       //       () async {
+              //       //
+              //       //     /// ToDo send Replay
+              //       //         ///  Navigator.of(
+              //       //         //                         ctx)
+              //       //         //                         .pop();
+              //       //         Navigator.of(
+              //       //             ctx)
+              //       //             .pop();
+              //       //         Get.to(BasketPage());
+              //       //
+              //       //   },
+              //       //   child: Text("go to Basket"),
+              //       // ),
+              //       FlatButton(
+              //         onPressed: () async {
+              //           //هنا هنكريت الباسكت
+              //         },
+              //         child: Text("newBasket".tr),
+              //       ),
+              //     ],
+              //   ),
+              // );
               // Get.toNamed( "MyPocketsScreen",);//MyPocketsScreen
             },
             child: Container(

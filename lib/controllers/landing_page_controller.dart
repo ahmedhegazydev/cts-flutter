@@ -346,12 +346,12 @@ update();
     });
   }
 
-  postSaveMyRoutingSettingsApi({required MyTransferRoutingRequestDto  data,context}){
+  Future postSaveMyRoutingSettingsApi({required MyTransferRoutingRequestDto  data,context})async{
     SaveMyRoutingSettingsApi getMyRoutingsettingsApi=SaveMyRoutingSettingsApi(context);
 
 
 
-    getMyRoutingsettingsApi.post(data.toMap()).then((value) {
+  await  getMyRoutingsettingsApi.post(data.toMap()).then((value) {
 Navigator.pop(context);
 showTopSnackBar(
   context,
@@ -364,13 +364,13 @@ showTopSnackBar(
 );
     });
   }
-  removeMyRoutingSettings({  data,context}){
+  Future removeMyRoutingSettings({  data,context})async{
     RemoveMyRoutingSettingsApi removeMyRoutingSettingsApi=RemoveMyRoutingSettingsApi(context);
 
 
 
 
-    removeMyRoutingSettingsApi.post(data ).then((value) {
+  await  removeMyRoutingSettingsApi.post(data ).then((value) {
       Navigator.pop(context);
       showTopSnackBar(
         context,

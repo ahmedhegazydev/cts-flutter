@@ -54,11 +54,11 @@ class Baskets extends AbstractJsonResource implements Comparable{
 
   @override
   int compareTo(otherPerson){
-    if(this.orderBy! > otherPerson.orderBy){
+    if((this.orderBy??1)  > otherPerson.orderBy){
       return 1;
     }
 
-    if(this.orderBy! < otherPerson.orderBy){
+    if((this.orderBy??0) < otherPerson.orderBy){
       return 0;
     }
 

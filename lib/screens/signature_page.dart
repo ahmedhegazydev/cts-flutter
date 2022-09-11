@@ -16,7 +16,7 @@ class SignaturePage extends GetView<SignaturePageController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text("اضف توقيعك هنا",style: TextStyle(color: Colors.white),),leading: SizedBox(),centerTitle: true),body: Column(crossAxisAlignment: CrossAxisAlignment.start,
+    return Scaffold(appBar: AppBar(title: Text("addsing".tr,style: TextStyle(color: Colors.white),),leading: SizedBox(),centerTitle: true),body: Column(crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(height: 300,
             width: double.infinity,
@@ -33,13 +33,17 @@ class SignaturePage extends GetView<SignaturePageController> {
         SizedBox(height: 10,),
         Text("defaultsignature".tr),
         GetBuilder<SignaturePageController>(builder: (logic) {
-          return Image.memory(dataFromBase64String(
-              controller.secureStorage.readSecureData(
-                  AllStringConst.Signature)), height: 100,);
+          return Padding(
+            padding: const EdgeInsets.all(  20.0),
+            child: Image.memory(dataFromBase64String(
+                controller.secureStorage.readSecureData(
+                    AllStringConst.Signature)), height: 100,),
+          );
         }),
         Divider(color: Colors.grey),
-        SizedBox(height: 10,),
-        Text("multisignature".tr)
+
+        Text("multisignature".tr),
+        SizedBox(height: 10,)
         , Expanded(
           child: GetBuilder<SignaturePageController>(
             assignId: true,

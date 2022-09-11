@@ -509,6 +509,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                     return null;
                   },
                 );
+                inboxController.fetchBasketListModel!
+                    .baskets?.remove(basket);
+                controller.update();
                 print('Confirmed');
                 Navigator.of(context).pop();
               },

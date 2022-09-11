@@ -195,17 +195,16 @@ update();
     return name ?? "";
   }
 
-  Future addEditBasket({context, color, nameEn, nameAr,OrderBy}) async {
+  Future addEditBasket({context, required Baskets basket}) async {
     AddEditBasketFlagApi _addEditBasketFlagApi = AddEditBasketFlagApi(context);
-
     BasketDto basketDto = new BasketDto(
-        Color: color,
-        Name: nameEn,
-        NameAr: nameAr,
+        Color: basket.color,
+        Name: basket.name,
+        NameAr: basket.nameAr,
         ID: 0,
         //=========
         CanBeReOrder: false,
-        OrderBy: OrderBy,
+        OrderBy: basket.orderBy,
         AdminIsDeleted: false,
         isDeleted: false,
         UserGctId: 0);
@@ -229,8 +228,8 @@ update();
         ),
       );
 
-      showLoaderDialog(context);
-       getFetchBasketList(context: context);
+      // showLoaderDialog(context);
+       // getFetchBasketList(context: context);
 
     });
     update();
@@ -489,7 +488,7 @@ showTopSnackBar(
     "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     await getFetchBasketListApi.getData().then((value) {
 
-    //  Navigator.pop(context!);
+     Navigator.pop(context!);
 
       if(value!=null){
         fetchBasketListModel = value as FetchBasketListModel;

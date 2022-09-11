@@ -1,4 +1,3 @@
-
 final String tableNotes = 'cts_settings';
 
 class SettingsFields {
@@ -16,7 +15,7 @@ class SettingsFields {
   // static final String isImportant = 'isImportant';
   // static final String number = 'number';
   static final String baseUrl = 'baseUrl';
-  static final String language = 'language';
+  static final String language = 'ar';
   static final String color = 'color';
 }
 
@@ -61,9 +60,9 @@ class SettingItem {
         id: json[SettingsFields.id] as int?,
         // isImportant: json[NoteFields.isImportant] == 1,
         // number: json[NoteFields.number] as int,
-    baseUrl: json[SettingsFields.baseUrl] as String,
-    language: json[SettingsFields.language] as String,
-    color: json[SettingsFields.color] as String,
+        baseUrl: json[SettingsFields.baseUrl] as String,
+        language: json[SettingsFields.language] as String,
+        color: json[SettingsFields.color] as String,
         // createdTime: DateTime.parse(json[NoteFields.time] as String),
       );
 
@@ -72,8 +71,8 @@ class SettingItem {
         SettingsFields.baseUrl: baseUrl,
         // NoteFields.isImportant: isImportant ? 1 : 0,
         // NoteFields.number: number,
-    SettingsFields.language: language,
-    SettingsFields.color: color,
+        SettingsFields.language: language,
+        SettingsFields.color: color,
         // NoteFields.time: createdTime.toIso8601String(),
       };
 }

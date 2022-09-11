@@ -17,8 +17,7 @@ class LoginController extends GetxController {
   TextEditingController userName = TextEditingController();
   TextEditingController baseUrl = TextEditingController(
       // text: 'http://192.168.1.6:9091/Mobility/CMS.svc'
-      text: 'http://139.99.149.12:9091/EverSuite.CTS.Mobile/CMS.svc'
-      );
+      text: 'http://139.99.149.12:9091/EverSuite.CTS.Mobile/CMS.svc');
   BuildContext? context;
   TextEditingController passWord = TextEditingController();
   Validators validators = Validators();
@@ -26,13 +25,14 @@ class LoginController extends GetxController {
   bool islogin = false;
   SecureStorage secureStorage = SecureStorage();
 
-  clear(){
+  clear() {
     baseUrl.clear();
     update();
   }
+
   logIngRequst(
- //  { required context}
-  ) {
+      //  { required context}
+      ) {
     if (loginFormKey.currentState!.validate()) {
       islogin = true;
       update();
@@ -51,9 +51,7 @@ class LoginController extends GetxController {
     return encrypted.base64;
   }
 
-  userLogin(
-  { required context}
-  ) async {
+  userLogin({required context}) async {
     LogInApi logInApi = LogInApi(context!);
     var encryptedPassword = encryptPassword(passWord.text);
     //language=${defaultLocale == "en" ? "en" : "ar"}
@@ -63,9 +61,11 @@ class LoginController extends GetxController {
 
     try {
       showLoaderDialog(context!);
-      await logInApi.getData(
-         // context: context
-      ).then((value) async {
+      await logInApi
+          .getData(
+              // context: context
+              )
+          .then((value) async {
         if (value != null) {
           LoginModel loginModel = value as LoginModel;
           loginModel.inbox?.inboxItems?.forEach((element) {
@@ -83,13 +83,13 @@ class LoginController extends GetxController {
           //    print("signature  ${loginModel}");
           print(
               "loginModel.tokenloginModel.tokenloginModel.token      ${loginModel.token}");
-            secureStorage.writeSecureData(
+          secureStorage.writeSecureData(
               AllStringConst.Token, loginModel.token!);
-            secureStorage.writeSecureData(
+          secureStorage.writeSecureData(
               AllStringConst.UserId, loginModel.userId);
-            secureStorage.writeSecureData(
+          secureStorage.writeSecureData(
               AllStringConst.FirstName, loginModel.firstName);
-         secureStorage.writeSecureData(
+          secureStorage.writeSecureData(
               AllStringConst.LastName, loginModel.lastName);
           await secureStorage.writeSecureData(
               AllStringConst.DepartmentName, loginModel.departmentName);
@@ -104,16 +104,14 @@ class LoginController extends GetxController {
           await secureStorage.writeSecureData(
               AllStringConst.ServiceType, loginModel.serviceType);
 
-
-          Get.put(  LandingPageController());
-
+          Get.put(LandingPageController());
 
           Get.offNamed("/Landing");
-        }else{
+        } else {
           // Get.snackbar("Error".tr, "WrongUsername".tr);
           Navigator.pop(context!);
         }
-      }).catchError((err){
+      }).catchError((err) {
         islogin = false;
         update();
       });

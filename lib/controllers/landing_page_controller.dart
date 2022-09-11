@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cts/controllers/search_controller.dart';
+import 'package:cts/utility/Extenstions.dart';
 import 'package:cts/utility/utilitie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -221,6 +222,7 @@ update();
       showTopSnackBar(
         context,
         CustomSnackBar.success(
+          backgroundColor: Colors.lightGreen,
           icon: Container(),
           message:
           "BasketAddedSuccess".tr,
@@ -266,6 +268,7 @@ update();
       showTopSnackBar(
         context,
         CustomSnackBar.success(
+          backgroundColor: Colors.lightGreen,
           icon: Container(),
           message:
           "BasketDeletedSuccess".tr,
@@ -353,6 +356,7 @@ Navigator.pop(context);
 showTopSnackBar(
   context,
   CustomSnackBar.success(
+    backgroundColor: Colors.lightGreen,
     icon: Container(),
     message:
     "DoneDelegation".tr,
@@ -371,6 +375,7 @@ showTopSnackBar(
       showTopSnackBar(
         context,
         CustomSnackBar.success(
+          backgroundColor: Colors.lightGreen,
           icon: Container(),
           message:
           "DeletedDelegation".tr,
@@ -428,11 +433,13 @@ showTopSnackBar(
       showTopSnackBar(
         context,
         CustomSnackBar.success(
+          backgroundColor: Colors.lightGreen,
           // icon: const Icon(
           //   Icons.check,
           //   color: const Color(0x15000000),
           //   size: 50,
           // ),
+          // backgroundColor: "#94C973".toColor(),
           icon: Container(),
           message:
           "DeletedSuccess".tr,

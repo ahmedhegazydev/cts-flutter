@@ -453,24 +453,18 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
       required int inboxId,
       int pageSize = 20,
       bool showThumbnails = false}) {
-
-
-
-
-
-
-
-
-
+    // showLoaderDialog(context);
     final GetCorrespondencesAllAPI _getCorrespondencesAllAPI =
         GetCorrespondencesAllAPI(context);
     correspondences.clear();
+    allCorrespondences.clear();
     getData = true;
     haveMoreData = true;
     update();
     _getCorrespondencesAllAPI.data =
         "Token=${secureStorage.token()}&inboxId=$inboxId&index=$index&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&showThumbnails=$showThumbnails";
     _getCorrespondencesAllAPI.getData().then((value) {
+      // Navigator.pop(context);
       print("i get alll _getCorrespondencesAllAPI");
       getCorrespondencesAllModel = value as GetCorrespondencesAllModel;
       if (addToList) {

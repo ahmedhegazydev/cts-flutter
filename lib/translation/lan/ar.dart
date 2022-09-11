@@ -121,7 +121,7 @@ const Map<String, String> ar = {
   "Cancel": "الغاء",
   "SureToDelete": "هل انت متاكد من مسح المحفظه؟",
   "new Basket": "محفظه جديده",
-  "Ok": "تمام",
+  "Ok": "الغاء",
   "CreateNewBasket": "انشاء محفظه جديده",
   "register": "انشاء محفظه",
   "nofiletoopen":"لا يوجد ملف للتشغيل",

@@ -7,8 +7,8 @@ extension ColorExtension on String {
       hexColor = "FF" + hexColor;
     }
     if (hexColor.length == 8) {
-    //  return Color(int.parse("0x$hexColor"));
-      return Colors.red;
+     return Color(int.parse("0x$hexColor"));
+      // return Colors.red;
     }
   }
 }

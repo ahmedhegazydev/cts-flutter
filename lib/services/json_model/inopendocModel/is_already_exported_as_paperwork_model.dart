@@ -15,7 +15,7 @@ class IsAlreadyExportedAsPaperworkModel extends AbstractJsonResource{
   String? request;
   String? structures;
   String? structuresTitle;
-  String? transferTo;
+  TransferTo? transferTo;
   String? yesMethod;
   String? yesMethod2;
 
@@ -53,7 +53,9 @@ class IsAlreadyExportedAsPaperworkModel extends AbstractJsonResource{
     request = json['request'];
     structures = json['structures'];
     structuresTitle = json['structuresTitle'];
-    transferTo = json['transferTo'];
+    transferTo = json['transferTo'] != null
+        ? new TransferTo.fromJson(json['transferTo'])
+        : null;
     yesMethod = json['yesMethod'];
     yesMethod2 = json['yesMethod2'];
   }
@@ -77,6 +79,24 @@ class IsAlreadyExportedAsPaperworkModel extends AbstractJsonResource{
     data['transferTo'] = this.transferTo;
     data['yesMethod'] = this.yesMethod;
     data['yesMethod2'] = this.yesMethod2;
+    return data;
+  }
+}
+class TransferTo {
+  int? id;
+  String? structureName;
+
+  TransferTo({this.id, this.structureName});
+
+  TransferTo.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    structureName = json['structureName'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['structureName'] = this.structureName;
     return data;
   }
 }

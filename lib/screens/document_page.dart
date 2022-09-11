@@ -1183,7 +1183,25 @@ class DocumentPage extends GetWidget<DocumentController> {
                                             Row(
                                                 crossAxisAlignment:
                                                 CrossAxisAlignment.center,
-                                                children: [
+                                                children: [     Text(
+                                                  "name".tr,
+                                                  style: Theme
+                                                      .of(context)
+                                                      .textTheme
+                                                      .headline3!
+                                                      .copyWith(
+                                                    color:
+                                                    createMaterialColor(
+                                                      const Color
+                                                          .fromRGBO(
+                                                          77, 77, 77, 1),
+                                                    ),
+                                                    fontSize: 15,
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                  overflow:
+                                                  TextOverflow.ellipsis,
+                                                ),
                                                   Padding(
                                                     padding:
                                                     const EdgeInsets.all(
@@ -1205,25 +1223,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                   SizedBox(
                                                     width: 8,
                                                   ),
-                                                  Text(
-                                                    "name",
-                                                    style: Theme
-                                                        .of(context)
-                                                        .textTheme
-                                                        .headline3!
-                                                        .copyWith(
-                                                      color:
-                                                      createMaterialColor(
-                                                        const Color
-                                                            .fromRGBO(
-                                                            77, 77, 77, 1),
-                                                      ),
-                                                      fontSize: 15,
-                                                    ),
-                                                    textAlign: TextAlign.center,
-                                                    overflow:
-                                                    TextOverflow.ellipsis,
-                                                  ),
+
                                                   Spacer(),
                                                   GestureDetector(
                                                     onTap: () {

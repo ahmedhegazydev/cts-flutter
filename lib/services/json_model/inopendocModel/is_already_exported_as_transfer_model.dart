@@ -1,5 +1,7 @@
 import 'package:cts/services/abstract_json_resource.dart';
 
+import 'auto_send_to_recepients_and_cc_model.dart';
+
 class IsAlreadyExportedAsTransferModel extends AbstractJsonResource{
   String? errorMessage;
   int? status;
@@ -15,7 +17,7 @@ class IsAlreadyExportedAsTransferModel extends AbstractJsonResource{
   String? request;
   String? structures;
   String? structuresTitle;
-  String? transferTo;
+  TransferTo? transferTo;
   String? yesMethod;
   String? yesMethod2;
 
@@ -53,7 +55,9 @@ class IsAlreadyExportedAsTransferModel extends AbstractJsonResource{
     request = json['request'];
     structures = json['structures'];
     structuresTitle = json['structuresTitle'];
-    transferTo = json['transferTo'];
+    transferTo = json['transferTo'] != null
+        ? new TransferTo.fromJson(json['transferTo'])
+        : null;
     yesMethod = json['yesMethod'];
     yesMethod2 = json['yesMethod2'];
   }

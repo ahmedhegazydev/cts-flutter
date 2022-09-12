@@ -27,6 +27,8 @@ import '../utility/all_const.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
 import '../utility/utilitie.dart';
+import '../viewer/controllers/viewerController.dart';
+import '../viewer/static/AnnotationTypes.dart';
 import '../widgets/Custom_button_with_image.dart';
 import '../widgets/custom_button_with_icon.dart';
 import '../widgets/custom_side_button_menu.dart';
@@ -51,6 +53,99 @@ class DocumentPage extends GetWidget<DocumentController> {
     var v = controller.correspondences.toJson();
     log(v.toString());
 
+    var SideViewActions = Container(
+      /// document actions menu
+      height: size.height * .8,
+      width: size.width * .08,
+      child: SingleChildScrollView(
+        child: Column(mainAxisSize: MainAxisSize.max, children: [
+          SizedBox(
+            height: size.height * .05,
+          ),
+
+          CustomSideButtonMenu(
+            onClick: () {
+              clickOnSign(context);
+
+              //controller.pdfAndSing
+            },
+            label: "signature".tr,
+            image: 'assets/images/signature.png',
+          ),
+          SizedBox(
+            height: size.height * .05,
+          ),
+
+          // SizedBox(
+          //   height: size.height * .05,
+          // ),
+          // CustomSideButtonMenu(
+          //   onClick: () {},
+          //   label: "marking".tr,
+          //   image: 'assets/images/A.png',
+          // ),
+          // SizedBox(
+          //   height: size.height * .05,
+          // ),
+          CustomSideButtonMenu(
+            onClick: () async {
+              List<DocumentAnnotations> listofdocumentAnnotations = [];
+              RenderBox? pdfViewerRenderBox =
+                  controller.pdfViewerkey!.currentContext?.findRenderObject()
+                      as RenderBox?;
+              controller.singpic.forEach((key, value) async {
+                print("image 64  => $value");
+                RenderBox? box =
+                    key.currentContext?.findRenderObject() as RenderBox?;
+
+                Offset? pos = box?.localToGlobal(Offset.zero);
+                print(box?.size.width);
+                print(box?.size.height);
+                print(box?.size.height);
+                print(pos?.dy);
+                print(pos?.dx);
+                DocumentAnnotations d = DocumentAnnotations();
+                d.FontSize = 12;
+                d.ForceViewers = "";
+                d.Height = box?.size.height;
+                d.ImageByte = value;
+                d.ImageName = "";
+                d.Text = "";
+                d.ParentWidth = pdfViewerRenderBox?.size.width;
+                d.ParentHeight = pdfViewerRenderBox?.size.height;
+                d.Page = controller.pdfViewerController!.pageNumber;
+                d.IsExclusive = false.toString();
+                d.Type = 3.toString();
+                d.Viewers = "Everyone";
+                d.Width = box?.size.width;
+                d.X = pos?.dx;
+                d.Y = pos?.dy;
+                listofdocumentAnnotations.add(d);
+              });
+
+              //controller.getSaveDocAnnotationsDataLocalJson();
+              await controller.getSaveDocAnnotationsData(
+                  context: context,
+                  attachmentId:
+                      controller.isOriginalMailAttachmentsList!.attachmentId,
+                  correspondenceId: controller
+                      .canOpenDocumentModel!.correspondence!.correspondenceId,
+                  delegateGctId: "0",
+                  documentAnnotationsString: listofdocumentAnnotations,
+                  isOriginalMail:
+                      controller.isOriginalMailAttachmentsList!.isOriginalMail,
+                  transferId: controller
+                      .canOpenDocumentModel!.correspondence!.transferId,
+                  userId: controller.secureStorage
+                      .readIntSecureData(AllStringConst.UserId)
+                      .toString());
+            },
+            label: "save".tr,
+            image: 'assets/images/save.png',
+          )
+        ]),
+      ),
+    );
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -243,53 +338,38 @@ class DocumentPage extends GetWidget<DocumentController> {
                   width: 1,
                   color: Colors.grey[800],
                 ),
-            GestureDetector(
-              child: CustomButtonWithImage(
-                // onClick: () {},
-                image: 'assets/images/ending.png',
-                label: "ending".tr,
-              ),
-              onTap: (){
-                print("ending");
-                // showLoaderDialog(context);
-                showDialog(
-                  context: context,
-                  builder: (ctx) =>
-                      AlertDialog(
+                GestureDetector(
+                  child: CustomButtonWithImage(
+                    // onClick: () {},
+                    image: 'assets/images/ending.png',
+                    label: "ending".tr,
+                  ),
+                  onTap: () {
+                    print("ending");
+                    // showLoaderDialog(context);
+                    showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
                         title: Text(" "),
                         content: Padding(
-                          padding:
-                          const EdgeInsets.all(
-                              8.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: Container(
-                            width:
-                            MediaQuery
-                                .of(context)
-                                .size
-                                .width *
-                                .8,
+                            width: MediaQuery.of(context).size.width * .8,
                             color: Colors.grey[200],
-                            child:
-                            SingleChildScrollView(
+                            child: SingleChildScrollView(
                               child: Column(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment
-                                      .start,
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment
-                                      .start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text("note"),
                                     SizedBox(
                                       height: 8,
                                     ),
                                     Container(
-                                      child:
-                                      TextFormField(
+                                      child: TextFormField(
                                         maxLines: 4,
                                       ),
-                                      color: Colors
-                                          .grey[300],
+                                      color: Colors.grey[300],
                                     ),
                                     SizedBox(
                                       height: 8,
@@ -301,61 +381,29 @@ class DocumentPage extends GetWidget<DocumentController> {
                         actions: <Widget>[
                           FlatButton(
                             onPressed: () {
-                              print(Get
-                                  .find<
-                                  InboxController>()
+                              print(Get.find<InboxController>()
                                   .completeCustomActions
                                   ?.name);
-                              print(Get
-                                  .find<
-                                  InboxController>()
+                              print(Get.find<InboxController>()
                                   .completeCustomActions
                                   ?.icon);
 
                               String data =
-                                  'Token=${Get
-                                  .find<
-                                  InboxController>()
-                                  .secureStorage
-                                  .token()}&correspondenceId=${controller
-                                  .canOpenDocumentModel!
-                                  .correspondence!
-                                  .correspondenceId}&transferId=${ controller
-                                  .canOpenDocumentModel!
-                                  .correspondence!
-                                  .transferId}&actionType=${Get
-                                  .find<
-                                  InboxController>()
-                                  .completeCustomActions
-                                  ?.name ??
-                                  ""}&note=${Get
-                                  .find<
-                                  InboxController>()
-                                  .completeNote}&language=${Get
-                                  .locale
-                                  ?.languageCode ==
-                                  "en"
-                                  ? "en"
-                                  : "ar"}';
+                                  'Token=${Get.find<InboxController>().secureStorage.token()}&correspondenceId=${controller.canOpenDocumentModel!.correspondence!.correspondenceId}&transferId=${controller.canOpenDocumentModel!.correspondence!.transferId}&actionType=${Get.find<InboxController>().completeCustomActions?.name ?? ""}&note=${Get.find<InboxController>().completeNote}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}';
 
-                              Navigator.of(ctx)
-                                  .pop();
+                              Navigator.of(ctx).pop();
                               showLoaderDialog(context);
-                              Get.find<
-                                  InboxController>()
+                              Get.find<InboxController>()
                                   .completeInCorrespondence(
-                                  context:
-                                  context,
-                                  data: data);
-
+                                      context: context, data: data);
                             },
                             child: Text("Ok"),
                           ),
                         ],
                       ),
-                );
-              },
-            ),
+                    );
+                  },
+                ),
                 Container(
                   height: 30,
                   width: 1,
@@ -420,102 +468,7 @@ class DocumentPage extends GetWidget<DocumentController> {
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  /// document actions menu
-                  height: size.height * .8,
-                  width: size.width * .08,
-                  child: SingleChildScrollView(
-                    child: Column(mainAxisSize: MainAxisSize.max, children: [
-                      SizedBox(
-                        height: size.height * .05,
-                      ),
-
-                      CustomSideButtonMenu(
-                        onClick: () {
-                          clickOnSign(context);
-
-                          //controller.pdfAndSing
-                        },
-                        label: "signature".tr,
-                        image: 'assets/images/signature.png',
-                      ),
-                      SizedBox(
-                        height: size.height * .05,
-                      ),
-
-                      // SizedBox(
-                      //   height: size.height * .05,
-                      // ),
-                      // CustomSideButtonMenu(
-                      //   onClick: () {},
-                      //   label: "marking".tr,
-                      //   image: 'assets/images/A.png',
-                      // ),
-                      // SizedBox(
-                      //   height: size.height * .05,
-                      // ),
-                      CustomSideButtonMenu(
-                        onClick: () async {
-                          List<DocumentAnnotations> listofdocumentAnnotations =
-                              [];
-                          RenderBox? pdfViewerRenderBox = controller
-                              .pdfViewerkey!.currentContext
-                              ?.findRenderObject() as RenderBox?;
-                          controller.singpic.forEach((key, value) async {
-                            print("image 64  => $value");
-                            RenderBox? box = key.currentContext
-                                ?.findRenderObject() as RenderBox?;
-
-                            Offset? pos = box?.localToGlobal(Offset.zero);
-                            print(box?.size.width);
-                            print(box?.size.height);
-                            print(box?.size.height);
-                            print(pos?.dy);
-                            print(pos?.dx);
-                            DocumentAnnotations d = DocumentAnnotations();
-                            d.FontSize = 12;
-                            d.ForceViewers = "";
-                            d.Height = box?.size.height;
-                            d.ImageByte = value;
-                            d.ImageName = "";
-                            d.Text = "";
-                            d.ParentWidth = pdfViewerRenderBox?.size.width;
-                            d.ParentHeight = pdfViewerRenderBox?.size.height;
-                            d.Page = controller.pdfViewerController!.pageNumber;
-                            d.IsExclusive = false.toString();
-                            d.Type = 3.toString();
-                            d.Viewers = "Everyone";
-                            d.Width = box?.size.width;
-                            d.X = pos?.dx;
-                            d.Y = pos?.dy;
-                            listofdocumentAnnotations.add(d);
-                          });
-
-                          //controller.getSaveDocAnnotationsDataLocalJson();
-                          await controller.getSaveDocAnnotationsData(
-                              context: context,
-                              attachmentId: controller
-                                  .isOriginalMailAttachmentsList!.attachmentId,
-                              correspondenceId: controller.canOpenDocumentModel!
-                                  .correspondence!.correspondenceId,
-                              delegateGctId: "0",
-                              documentAnnotationsString:
-                                  listofdocumentAnnotations,
-                              isOriginalMail: controller
-                                  .isOriginalMailAttachmentsList!
-                                  .isOriginalMail,
-                              transferId: controller.canOpenDocumentModel!
-                                  .correspondence!.transferId,
-                              userId: controller.secureStorage
-                                  .readIntSecureData(AllStringConst.UserId)
-                                  .toString());
-                        },
-                        label: "save".tr,
-                        image: 'assets/images/save.png',
-                      )
-                    ]),
-                  ),
-                ),
+                SideViewActions,
                 Container(
                   width: 1,
                   color: Colors.grey,
@@ -839,28 +792,34 @@ class DocumentPage extends GetWidget<DocumentController> {
                           )),
                       InkWell(
                           onTap: () async {
+                            //     ViewerController.to.prepareToAddAnnotationOnTap(
+                            //     AnnotationBaseTypes.signature);
                             final key = GlobalKey();
 
                             final Uint8List? data =
                                 await controller.controller.toPngBytes();
-                            controller.addWidgetToPdfAndSing(ResizebleWidget(
-                              child: Image.memory(
-                                data!,
-                                fit: BoxFit.fill,
-                                key: key,
-                                width: 100,
-                                height: 100,
-                              ),
+                            ViewerController.to
+                                .prepareToAddSignatureAnnotationOnTap(
+                                    Image.memory(
+                              data!,
+                              fit: BoxFit.fill,
+                              key: key,
+                              width: 100,
+                              height: 100,
                             ));
-                            RenderBox? box = key.currentContext
-                                ?.findRenderObject() as RenderBox?;
 
-                            Offset? pos = box?.localToGlobal(Offset.zero);
+                            // controller.addWidgetToPdfAndSing(ResizebleWidget(
+                            //   child: ,
+                            // ));
+                            // RenderBox? box = key.currentContext
+                            //     ?.findRenderObject() as RenderBox?;
 
-                            controller.singpic[key] = base64.encode(
-                                data); //SignatureInfo(offset:pos , signature: 'hguyggyuguy', size: box?.size);
+                            // Offset? pos = box?.localToGlobal(Offset.zero);
 
-                            controller.controller.toPngBytes();
+                            // controller.singpic[key] = base64.encode(
+                            //     data); //SignatureInfo(offset:pos , signature: 'hguyggyuguy', size: box?.size);
+
+                            // controller.controller.toPngBytes();
                             Get.back();
                           },
                           child: Icon(

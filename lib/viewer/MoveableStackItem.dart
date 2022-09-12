@@ -21,6 +21,9 @@ class MoveableStackItem extends StatefulWidget {
   MoveableStackItem.withImage(this.initailWidth, this.initailHeight,
       this.initailx, this.initaily, this.uuid, this.image, this.type);
 
+  MoveableStackItem.withUIImage(this.initailWidth, this.initailHeight,
+      this.initailx, this.initaily, this.uuid, this.uiimage, this.type);
+
   final String uuid;
   final double initailWidth;
   final double initailHeight;
@@ -28,6 +31,7 @@ class MoveableStackItem extends StatefulWidget {
   final double initaily;
   final AnnotationBaseTypes type;
   Uint8List? image;
+  Image? uiimage;
   void printSampleP() {
     print("Sample text");
   }
@@ -325,6 +329,13 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
               : Icon(Icons.add),
         );
 
+      case AnnotationBaseTypes.signature:
+        return Container(
+          width: width,
+          height: height,
+          color: color,
+          child: widget.uiimage,
+        );
       case AnnotationBaseTypes.text:
         return Container(
             width: width, height: height, color: color, child: Text("aaaaaaa"));

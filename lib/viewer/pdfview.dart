@@ -168,23 +168,23 @@ class _PDFViewState extends State<PDFView> {
                 //   ),
               ),
             ),
-            floatingActionButton: ExpandableFab(
-              distance: 112.0,
-              children: [
-                ActionButton(
-                  onPressed: () => _showAction(context, 0),
-                  icon: const Icon(Icons.text_fields),
-                ),
-                ActionButton(
-                  onPressed: () => _showAction(context, 1),
-                  icon: const Icon(Icons.draw),
-                ),
-                ActionButton(
-                  onPressed: () => _showAction(context, 2),
-                  icon: const Icon(Icons.format_shapes),
-                ),
-              ],
-            ),
+            // floatingActionButton: ExpandableFab(
+            //   distance: 112.0,
+            //   children: [
+            //     ActionButton(
+            //       onPressed: () => _showAction(context, 0),
+            //       icon: const Icon(Icons.text_fields),
+            //     ),
+            //     ActionButton(
+            //       onPressed: () => _showAction(context, 1),
+            //       icon: const Icon(Icons.draw),
+            //     ),
+            //     ActionButton(
+            //       onPressed: () => _showAction(context, 2),
+            //       icon: const Icon(Icons.format_shapes),
+            //     ),
+            //   ],
+            // ),
             bottomNavigationBar: Obx(
               () => BottomNavigationBar(
                 items: const <BottomNavigationBarItem>[

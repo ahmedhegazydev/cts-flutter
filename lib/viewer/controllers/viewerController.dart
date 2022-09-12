@@ -56,9 +56,14 @@ class ViewerController extends GetxController {
   }
 
   AnnotationBaseTypes annotationToAdd = AnnotationBaseTypes.none;
-
+  Image? annotationImage;
   prepareToAddAnnotationOnTap(AnnotationBaseTypes type) {
     annotationToAdd = type;
+  }
+
+  prepareToAddSignatureAnnotationOnTap(Image image) {
+    annotationToAdd = AnnotationBaseTypes.signature;
+    annotationImage = image;
   }
 
   creatAndAddAnnotationOnDraw(double width, double height, double originX,
@@ -81,12 +86,19 @@ class ViewerController extends GetxController {
     var v1 = uuid.v1();
     var x = originX - width / 2;
     var y = originY - height / 2;
+
     var annotation = AnnotationObject(x, y, 100, 40, "ann", page, v1);
     // ViewerController.to.annotations[page].add(MoveableStackItem(100, 50, x, y));
     allAnnotations.add(annotation);
-    var annotationWidget =
-        MoveableStackItem(width, height, x, y, v1, annotationToAdd);
-    annotations[page].add(annotationWidget);
+    if (annotationToAdd == AnnotationBaseTypes.signature) {
+      var annotationWidget = MoveableStackItem.withUIImage(width, height, x, y,
+          v1, annotationImage!, AnnotationBaseTypes.signature);
+      annotations[page].add(annotationWidget);
+    } else {
+      var annotationWidget =
+          MoveableStackItem(width, height, x, y, v1, annotationToAdd);
+      annotations[page].add(annotationWidget);
+    }
     annotationToAdd = AnnotationBaseTypes.none;
   }
 }

@@ -21,11 +21,22 @@ class SignaturePage extends GetView<SignaturePageController> {
           actions: <Widget>[
             InkWell(
                 onTap: () {
+                  controller.saveSign(context);
+                },
+                child: Icon(
+                  Icons.close,
+                  color: Colors.white,
+                  size: 30,
+                )),
+            Spacer(),
+            InkWell(
+                onTap: () {
                   controller.controller.clear();
                 },
                 child: Icon(
-                  Icons.clear,
-                  size: 50,
+                  Icons.delete,
+                  size: 30,
+                  color: Colors.white,
                 )),
             InkWell(
                 onTap: () {
@@ -33,8 +44,10 @@ class SignaturePage extends GetView<SignaturePageController> {
                 },
                 child: Icon(
                   Icons.save,
-                  size: 50,
-                ))
+                  color: Colors.white,
+                  size: 30,
+                )),
+
           ],
           title: Text(
             "addsing".tr,
@@ -66,7 +79,15 @@ class SignaturePage extends GetView<SignaturePageController> {
                 // color: Colors.red,
                 child: Column(
                   children: [
-                    Text("defaultsignature".tr),
+                  Padding(padding: EdgeInsets.all(10),
+                  child:   Text("defaultsignature".tr,  style: TextStyle(
+                    // fontFamily: 'Roboto',
+                    fontSize: 20,
+                    // letterSpacing: 0.15,
+                    // fontWeight: FontWeight.w500,
+                    // color: _themeData!.colorScheme.onSurface
+                    //     .withOpacity(0.87),
+                  )),),
                     GetBuilder<SignaturePageController>(builder: (logic) {
                       return Padding(
                         padding: const EdgeInsets.all(20.0),
@@ -85,7 +106,17 @@ class SignaturePage extends GetView<SignaturePageController> {
                 // color: Colors.yellow,
                 child: Column(
                   children: [
-                    Text("multisignature".tr),
+    Padding(padding: EdgeInsets.all(10),
+    child:
+    Text("multisignature".tr, style:
+                      TextStyle(
+                        // fontFamily: 'Roboto',
+                        fontSize: 20,
+                        // letterSpacing: 0.15,
+                        // fontWeight: FontWeight.w500,
+                        // color: _themeData!.colorScheme.onSurface
+                        //     .withOpacity(0.87),
+                      ),),),
                     Expanded(
                         child: GetBuilder<SignaturePageController>(
                             assignId: true,

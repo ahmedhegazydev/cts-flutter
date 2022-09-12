@@ -15,6 +15,7 @@ import 'package:signature/signature.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../controllers/document_controller.dart';
+import '../controllers/inbox_controller.dart';
 import '../controllers/main_controller.dart';
 import '../controllers/web_view_controller.dart';
 import '../services/json_model/find_recipient_model.dart';
@@ -242,11 +243,119 @@ class DocumentPage extends GetWidget<DocumentController> {
                   width: 1,
                   color: Colors.grey[800],
                 ),
-                CustomButtonWithImage(
-                  // onClick: () {},
-                  image: 'assets/images/ending.png',
-                  label: "ending".tr,
-                ),
+            GestureDetector(
+              child: CustomButtonWithImage(
+                // onClick: () {},
+                image: 'assets/images/ending.png',
+                label: "ending".tr,
+              ),
+              onTap: (){
+                print("ending");
+                // showLoaderDialog(context);
+                showDialog(
+                  context: context,
+                  builder: (ctx) =>
+                      AlertDialog(
+                        title: Text(" "),
+                        content: Padding(
+                          padding:
+                          const EdgeInsets.all(
+                              8.0),
+                          child: Container(
+                            width:
+                            MediaQuery
+                                .of(context)
+                                .size
+                                .width *
+                                .8,
+                            color: Colors.grey[200],
+                            child:
+                            SingleChildScrollView(
+                              child: Column(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment
+                                      .start,
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment
+                                      .start,
+                                  children: [
+                                    Text("note"),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Container(
+                                      child:
+                                      TextFormField(
+                                        maxLines: 4,
+                                      ),
+                                      color: Colors
+                                          .grey[300],
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                  ]),
+                            ),
+                          ),
+                        ),
+                        actions: <Widget>[
+                          FlatButton(
+                            onPressed: () {
+                              print(Get
+                                  .find<
+                                  InboxController>()
+                                  .completeCustomActions
+                                  ?.name);
+                              print(Get
+                                  .find<
+                                  InboxController>()
+                                  .completeCustomActions
+                                  ?.icon);
+
+                              String data =
+                                  'Token=${Get
+                                  .find<
+                                  InboxController>()
+                                  .secureStorage
+                                  .token()}&correspondenceId=${controller
+                                  .canOpenDocumentModel!
+                                  .correspondence!
+                                  .correspondenceId}&transferId=${ controller
+                                  .canOpenDocumentModel!
+                                  .correspondence!
+                                  .transferId}&actionType=${Get
+                                  .find<
+                                  InboxController>()
+                                  .completeCustomActions
+                                  ?.name ??
+                                  ""}&note=${Get
+                                  .find<
+                                  InboxController>()
+                                  .completeNote}&language=${Get
+                                  .locale
+                                  ?.languageCode ==
+                                  "en"
+                                  ? "en"
+                                  : "ar"}';
+
+                              Navigator.of(ctx)
+                                  .pop();
+                              showLoaderDialog(context);
+                              Get.find<
+                                  InboxController>()
+                                  .completeInCorrespondence(
+                                  context:
+                                  context,
+                                  data: data);
+
+                            },
+                            child: Text("Ok"),
+                          ),
+                        ],
+                      ),
+                );
+              },
+            ),
                 Container(
                   height: 30,
                   width: 1,

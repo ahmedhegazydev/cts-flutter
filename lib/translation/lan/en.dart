@@ -136,7 +136,8 @@ const Map<String, String> en = {
   "DoneDelegation":"Done saving delegation successfully",
   "DeletedDelegation":"Delegation deleted successfully",
   "bageback":"back",
-  "addsing":"Add your signature here"
+  "addsing":"Add your signature here",
+"EndedSuccess":"Completed successfully",
 
 
 };

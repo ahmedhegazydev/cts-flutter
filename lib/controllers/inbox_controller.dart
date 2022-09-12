@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../models/CorrespondencesModel.dart';
 import '../services/apis/basket/add_documents_to_basket_api.dart';
@@ -660,6 +662,16 @@ class InboxController extends GetxController {
     _completeInCorrespondenceAPI.data = data;
     _completeInCorrespondenceAPI.getData().then((value) {
       print("000000000000000000000");
+      Navigator.pop(context);
+      showTopSnackBar(
+        context,
+        CustomSnackBar.success(
+          icon: Container(),
+          backgroundColor: Colors.lightGreen,
+          message:
+          "EndedSuccess".tr,
+        ),
+      );
     });
   }
 

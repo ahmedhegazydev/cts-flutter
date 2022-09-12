@@ -132,6 +132,7 @@ const Map<String, String> ar = {
   "DoneDelegation":"تم اعاده توجيه المراسله بنجاح",
   "DeletedDelegation":"تم حذف المراسله بنجاح",
   "bageback":"رجوع",
-  "addsing":"اضف توقيعك هنا"
+  "addsing":"اضف توقيعك هنا",
+  "EndedSuccess":"تم الانهاء بنجاح",
 
 };

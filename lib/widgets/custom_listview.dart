@@ -5382,15 +5382,15 @@ class CustomListView extends GetView<InboxController> {
 
                                                         String data =
                                                             'Token=${Get.find<InboxController>().secureStorage.token()}&correspondenceId=${correspondences[pos].correspondenceId}&transferId=${correspondences[pos].transferId}&actionType=${Get.find<InboxController>().completeCustomActions?.name ?? ""}&note=${Get.find<InboxController>().completeNote}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}';
-
+                                                        Navigator.of(ctx).pop();
+                                                        showLoaderDialog(
+                                                            context);
                                                         Get.find<
                                                                 InboxController>()
                                                             .completeInCorrespondence(
                                                                 context:
                                                                     context,
                                                                 data: data);
-
-                                                        Navigator.of(ctx).pop();
                                                       },
                                                       child: Text("Ok"),
                                                     ),

@@ -121,7 +121,7 @@ const Map<String, String> ar = {
   "Cancel": "الغاء",
   "SureToDelete": "هل انت متاكد من مسح المحفظه؟",
   "new Basket": "محفظه جديده",
-  "Ok": "تمام",
+  "Ok": "الغاء",
   "CreateNewBasket": "انشاء محفظه جديده",
   "register": "انشاء محفظه",
   "nofiletoopen":"لا يوجد ملف للتشغيل",
@@ -131,6 +131,7 @@ const Map<String, String> ar = {
   "BasketDeletedSuccess":"تم مسح المحفظه بنجاح",
   "DoneDelegation":"تم اعاده توجيه المراسله بنجاح",
   "DeletedDelegation":"تم حذف المراسله بنجاح",
-
+  "bageback":"رجوع",
+  "addsing":"اضف توقيعك هنا"
 
 };

@@ -59,9 +59,15 @@ class LandingPageController extends GetxController {
       TextEditingController();
   TextEditingController textEditingControllerArabicName =
       TextEditingController();
+
+
+
   TextEditingController textEditingControllerTo = TextEditingController();
   TextEditingController textEditingControllerTorouting = TextEditingController();
   TextEditingController textEditingControllerToroutingReson = TextEditingController();
+
+
+
   List<Destination> users = [];
   List<Destination> selectFavusers = [];
   Destination? toSaveMyRoutingSettings;
@@ -195,17 +201,16 @@ update();
     return name ?? "";
   }
 
-  Future addEditBasket({context, color, nameEn, nameAr,OrderBy}) async {
+  Future addEditBasket({context, required Baskets basket}) async {
     AddEditBasketFlagApi _addEditBasketFlagApi = AddEditBasketFlagApi(context);
-
     BasketDto basketDto = new BasketDto(
-        Color: color,
-        Name: nameEn,
-        NameAr: nameAr,
+        Color: basket.color,
+        Name: basket.name,
+        NameAr: basket.nameAr,
         ID: 0,
         //=========
         CanBeReOrder: false,
-        OrderBy: OrderBy,
+        OrderBy: basket.orderBy,
         AdminIsDeleted: false,
         isDeleted: false,
         UserGctId: 0);
@@ -229,8 +234,8 @@ update();
         ),
       );
 
-      showLoaderDialog(context);
-       getFetchBasketList(context: context);
+      // showLoaderDialog(context);
+       // getFetchBasketList(context: context);
 
     });
     update();
@@ -276,25 +281,36 @@ update();
       );
 
     });
-    update();
+    getFetchBasketList(context: context);
+  //  update();
   }
 
   TextEditingController textEditingControllerFromDate =
       TextEditingController();
+  DateTime? pickedDateselectFromDocDate;
   Future<void> selectFromDocDate({required BuildContext context}) async {
-    final DateTime? pickedDate = await showDatePicker(
+    pickedDateselectFromDocDate  = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(2000),
         lastDate: DateTime(2050));
-    if (pickedDate != null) {
+    if (pickedDateselectFromDocDate != null) {
+
+if(DateTime.now().day.compareTo(pickedDateselectFromDocDate!.day)==0||DateTime.now().day.compareTo(pickedDateselectFromDocDate!.day)>0){
+print("object");
+  Get.snackbar("", "تاريخ البداء لا يمكن ان يكون اقل من اليوم");
 
 
-      var outputFormat = DateFormat('dd/MM/yyyy');
-      var outputDate = outputFormat.format(pickedDate);
-      textEditingControllerFromDate.text =
-          outputDate.toString().substring(0, 10);
-      update();
+
+
+}else{
+  var outputFormat = DateFormat('dd/MM/yyyy');
+  var outputDate = outputFormat.format(pickedDateselectFromDocDate!);
+  textEditingControllerFromDate.text =
+      outputDate.toString().substring(0, 10);
+  update();
+}
+
     }
   }
 
@@ -307,13 +323,21 @@ update();
         firstDate: DateTime(2000),
         lastDate: DateTime(2050));
     if (pickedDate != null) {
+if( pickedDateselectFromDocDate==null){
+  return;
+}
+if(pickedDate.compareTo(pickedDateselectFromDocDate!)==0||pickedDate.compareTo(pickedDateselectFromDocDate!)<0){
 
-      var outputFormat = DateFormat('dd/MM/yyyy');
-      var outputDate = outputFormat.format(pickedDate);
-      textEditingControllerToDate.text =
-          outputDate.toString().substring(0, 10);
+ Get.snackbar("", "لا يمكن ان يكون تاريخ البدا اكبر من تاريخ الانتهاء");
+}else{
+  var outputFormat = DateFormat('dd/MM/yyyy');
+  var outputDate = outputFormat.format(pickedDate);
+  textEditingControllerToDate.text =
+      outputDate.toString().substring(0, 10);
 
-      update();
+  update();
+}
+
     }
   }
 
@@ -331,26 +355,28 @@ update();
 
       getMyRoutingSettingsModel=value as MyTransferRoutingDto;
 
-
-
+      textEditingControllerTo.text=getMyRoutingSettingsModel?.routing?.name??"";
       textEditingControllerToDate.text=getMyRoutingSettingsModel?.routing?.crtToDate??"";
       textEditingControllerFromDate.text=getMyRoutingSettingsModel?.routing?.crtFromDate??"";
     textEditingControllerTorouting.text=getMyRoutingSettingsModel?.routing?.name??"";
       textEditingControllerToroutingReson.text=getMyRoutingSettingsModel?.routing?.crtComments??"";
+print("getMyRoutingSettingsModel?.routing?.name=> ${getMyRoutingSettingsModel?.routing?.name}");
+      print("getMyRoutingSettingsModel?.routing?.crtToDate=> ${getMyRoutingSettingsModel?.routing?.crtToDate}");
+      print("getMyRoutingSettingsModel?.routing?.crtFromDate=> ${getMyRoutingSettingsModel?.routing?.crtFromDate}");
+      print("getMyRoutingSettingsModel?.routing?.crtComments?.name=> ${getMyRoutingSettingsModel?.routing?.crtComments}");
 
 
-
-      update();
+    //  update();
 
     });
   }
 
-  postSaveMyRoutingSettingsApi({required MyTransferRoutingRequestDto  data,context}){
+  Future postSaveMyRoutingSettingsApi({required MyTransferRoutingRequestDto  data,context})async{
     SaveMyRoutingSettingsApi getMyRoutingsettingsApi=SaveMyRoutingSettingsApi(context);
 
 
 
-    getMyRoutingsettingsApi.post(data.toMap()).then((value) {
+  await  getMyRoutingsettingsApi.post(data.toMap()).then((value) {
 Navigator.pop(context);
 showTopSnackBar(
   context,
@@ -363,13 +389,13 @@ showTopSnackBar(
 );
     });
   }
-  removeMyRoutingSettings({  data,context}){
+  Future removeMyRoutingSettings({  data,context})async{
     RemoveMyRoutingSettingsApi removeMyRoutingSettingsApi=RemoveMyRoutingSettingsApi(context);
 
 
 
 
-    removeMyRoutingSettingsApi.post(data ).then((value) {
+  await  removeMyRoutingSettingsApi.post(data ).then((value) {
       Navigator.pop(context);
       showTopSnackBar(
         context,
@@ -488,7 +514,7 @@ showTopSnackBar(
     "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     await getFetchBasketListApi.getData().then((value) {
 
-      Navigator.pop(context!);
+     Navigator.pop(context!);
 
       if(value!=null){
         fetchBasketListModel = value as FetchBasketListModel;

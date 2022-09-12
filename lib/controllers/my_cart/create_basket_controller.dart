@@ -12,8 +12,8 @@ class CreateBasketController extends GetxController {
   final createBasketFormKey = GlobalKey<FormState>();
   bool islogin = false;
 
-  // Color pickerColor = Colors.transparent;
-  Color pickerColor = Colors.black;
+  Color pickerColor = Colors.white;
+  // Color pickerColor = Colors.black;
 
   TextEditingController textEditingControllerEnglishName=TextEditingController();
   TextEditingController textEditingControllerArabicName=TextEditingController();

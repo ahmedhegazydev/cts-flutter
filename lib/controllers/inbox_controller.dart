@@ -41,6 +41,8 @@ import '../utility/utilitie.dart';
 import 'document_controller.dart';
 import 'package:flutter/services.dart' as rootBundel;
 
+import 'landing_page_controller.dart';
+
 class InboxController extends GetxController {
   //ده عشان لو اختار من الشاشه بره كل الصادر و الوارد نخفي شاشاه التاب الي فيها صادر ووارد
   bool isAllOrNot=false;
@@ -102,7 +104,7 @@ int?nodeId=0;
       // });
       fetchBasketListModel?.baskets?.sort();
 
-      update();
+      Get.find<LandingPageController>().  update();
       print(fetchBasketListModel?.toJson());
       print("getFetchBasketList i getit");
     });
@@ -453,42 +455,36 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
       required int inboxId,
       int pageSize = 20,
       bool showThumbnails = false}) {
-
-
-
-
-
-
-
-
-
+    // showLoaderDialog(context);
     final GetCorrespondencesAllAPI _getCorrespondencesAllAPI =
         GetCorrespondencesAllAPI(context);
-    correspondences.clear();
+    // correspondences.clear();
+    allCorrespondences.clear();
     getData = true;
     haveMoreData = true;
     update();
     _getCorrespondencesAllAPI.data =
         "Token=${secureStorage.token()}&inboxId=$inboxId&index=$index&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&showThumbnails=$showThumbnails";
     _getCorrespondencesAllAPI.getData().then((value) {
+      // Navigator.pop(context);
       print("i get alll _getCorrespondencesAllAPI");
       getCorrespondencesAllModel = value as GetCorrespondencesAllModel;
       if (addToList) {
         allCorrespondences
-            .addAll(correspondencesModel?.inbox?.correspondences ?? []);
+            .addAll(getCorrespondencesAllModel?.inbox?.correspondences ?? []);
       } else {
-        allCorrespondences = correspondencesModel?.inbox?.correspondences ?? [];
+        allCorrespondences = getCorrespondencesAllModel?.inbox?.correspondences ?? [];
       }
 
       int listLength =
-          correspondencesModel?.inbox?.correspondences?.length ?? 0;
-      var v = correspondencesModel?.toJson();
+          getCorrespondencesAllModel?.inbox?.correspondences?.length ?? 0;
+      var v = getCorrespondencesAllModel?.toJson();
       if (listLength < pageSize) {
         haveMoreData = false;
       }
       update();
       // log(v.length);
-      print(correspondencesModel?.inbox?.correspondences?.length);
+      print(getCorrespondencesAllModel?.inbox?.correspondences?.length);
       getData = false;
       update();
     }).onError((error, stackTrace) {

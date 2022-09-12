@@ -331,234 +331,239 @@ class DocumentPage extends GetWidget<DocumentController> {
                     child: Column(mainAxisSize: MainAxisSize.max,
                         //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SizedBox(
-                            height: size.height * .05,
-                          ),
-                          CustomSideButtonMenu(
-                            onClick: () {},
-                            label: "comment".tr,
-                            image: 'assets/images/comment.png',
-                          ),
-                          SizedBox(
-                            height: size.height * .05,
-                          ),
-                          // CustomSideButtonMenu(
-                          //   onClick: () {
-                          //     print("object");
-                          //     showDialog(
-                          //       context: context,
-                          //       builder: (ctx) =>
-                          //           AlertDialog(
-                          //             title: Text(" "),
-                          //             content: Padding(
-                          //               padding: const EdgeInsets.all(8.0),
-                          //               child: Container(
-                          //                 height:
-                          //                 MediaQuery
-                          //                     .of(context)
-                          //                     .size
-                          //                     .height *
-                          //                     .5,
-                          //                 width: MediaQuery
-                          //                     .of(context)
-                          //                     .size
-                          //                     .width *
-                          //                     .5,
-                          //                 color: Colors.grey[200],
-                          //                 child: Column(
-                          //                     mainAxisAlignment:
-                          //                     MainAxisAlignment.start,
-                          //                     crossAxisAlignment:
-                          //                     CrossAxisAlignment.start,
-                          //                     children: [
-                          //                       Container(
-                          //                           height: 300,
-                          //                           width: double.infinity,
-                          //                           child: Signature(
-                          //                             controller:
-                          //                             controller.controller,
-                          //                           )),
-                          //                       Row(
-                          //                         mainAxisAlignment:
-                          //                         MainAxisAlignment.spaceEvenly,
-                          //                         children: [
-                          //                           InkWell(
-                          //                               onTap: () {
-                          //                                 controller.controller
-                          //                                     .clear();
-                          //                               },
-                          //                               child: Icon(
-                          //                                 Icons.clear,
-                          //                                 size: 50,
-                          //                               )),
-                          //                           InkWell(
-                          //                               onTap: () async {
-                          //                                 final key = GlobalKey();
-                          //
-                          //                                 final Uint8List? data =
-                          //                                 await controller
-                          //                                     .controller
-                          //                                     .toPngBytes();
-                          //                                 controller
-                          //                                     .addWidgetToPdfAndSing(
-                          //                                     ResizebleWidget(
-                          //                                       child: Image
-                          //                                           .memory(
-                          //                                         data!,
-                          //                                         fit: BoxFit
-                          //                                             .fill,
-                          //                                         key: key,
-                          //                                         width: 100,
-                          //                                         height: 100,
-                          //                                       ),
-                          //                                     ));
-                          //                                 RenderBox? box = key
-                          //                                     .currentContext
-                          //                                     ?.findRenderObject()
-                          //                                 as RenderBox?;
-                          //
-                          //                                 Offset? pos =
-                          //                                 box?.localToGlobal(
-                          //                                     Offset.zero);
-                          //
-                          //                                 controller
-                          //                                     .singpic[key] =
-                          //                                     base64.encode(
-                          //                                         data); //SignatureInfo(offset:pos , signature: 'hguyggyuguy', size: box?.size);
-                          //
-                          //                                 //
-                          //                                 //
-                          //                                 //
-                          //                                 //
-                          //                                 //
-                          //                                 //
-                          //
-                          //                                 controller.controller
-                          //                                     .toPngBytes();
-                          //                                 Get.back();
-                          //                               },
-                          //                               child: Icon(
-                          //                                 Icons.save,
-                          //                                 size: 50,
-                          //                               )),
-                          //                         ],
-                          //                       ),
-                          //                       Divider(color: Colors.grey),
-                          //                       Expanded(
-                          //                         child: GetBuilder<
-                          //                             DocumentController>(
-                          //                           assignId: true,
-                          //                           builder: (logic) {
-                          //                             return GridView.builder(
-                          //                               itemCount: controller
-                          //                                   .multiSignatures
-                          //                                   .length,
-                          //                               gridDelegate:
-                          //                               SliverGridDelegateWithFixedCrossAxisCount(
-                          //                                   crossAxisCount: 2,
-                          //                                   crossAxisSpacing:
-                          //                                   4.0,
-                          //                                   mainAxisSpacing:
-                          //                                   4.0),
-                          //                               itemBuilder:
-                          //                                   (
-                          //                                   BuildContext context,
-                          //                                   int index) {
-                          //                                 return GestureDetector(
-                          //                                   onTap: () {
-                          //                                     final key =
-                          //                                     GlobalKey();
-                          //                                     controller
-                          //                                         .addWidgetToPdfAndSing(
-                          //                                         ResizebleWidget(
-                          //                                           child: Image
-                          //                                               .memory(
-                          //                                             dataFromBase64String(
-                          //                                                 controller
-                          //                                                     .multiSignatures[
-                          //                                                 index]
-                          //                                                     .signature),
-                          //                                             fit: BoxFit
-                          //                                                 .fill,
-                          //                                             key: key,
-                          //                                           ),
-                          //                                         ));
-                          //
-                          //                                     controller
-                          //                                         .singpic[
-                          //                                     key] =
-                          //                                     controller
-                          //                                         .multiSignatures[
-                          //                                     index]
-                          //                                         .signature!;
-                          //
-                          //                                     Get.back();
-                          //                                   },
-                          //                                   child: Image.memory(
-                          //                                       dataFromBase64String(
-                          //                                           controller
-                          //                                               .multiSignatures[
-                          //                                           index]
-                          //                                               .signature)),
-                          //                                 );
-                          //                               },
-                          //                             );
-                          //
-                          //                             // ListView.builder(
-                          //                             //   itemCount: controller
-                          //                             //       .multiSignatures
-                          //                             //       .length,
-                          //                             //   itemBuilder: (context,
-                          //                             //       pos) {
-                          //                             //     return Padding(
-                          //                             //       padding: const EdgeInsets
-                          //                             //           .all(8.0),
-                          //                             //       child:
-                          //                             //     GestureDetector(
-                          //                             //         onTap: () {
-                          //                             //           controller
-                          //                             //               .addWidgetToPdfAndSing(
-                          //                             //               ResizebleWidget(
-                          //                             //                 child: Image
-                          //                             //                     .memory(
-                          //                             //                   dataFromBase64String(
-                          //                             //                       controller
-                          //                             //                           .multiSignatures[pos]
-                          //                             //                           .signature),
-                          //                             //                   fit: BoxFit.fill),));
-                          //                             //           Get.back();
-                          //                             //         },
-                          //                             //         child: Image
-                          //                             //             .memory(
-                          //                             //             dataFromBase64String(
-                          //                             //                 controller
-                          //                             //                     .multiSignatures[pos]
-                          //                             //                     .signature)),
-                          //                             //       ),
-                          //                             //     );
-                          //                             //   });
-                          //                           },
-                          //                         ),
-                          //                       )
-                          //                     ]),
-                          //               ),
-                          //             ),
-                          //             actions: <Widget>[
-                          //               FlatButton(
-                          //                 onPressed: () {
-                          //                   Get.back();
-                          //                 },
-                          //                 child: Text("Ok"),
-                          //               ),
-                          //             ],
-                          //           ),
-                          //     );
-                          //
-                          //     //controller.pdfAndSing
-                          //   },
-                          //   label: "signature".tr,
-                          //   image: 'assets/images/signature.png',
+                          // SizedBox(
+                          //   height: size.height * .05,
                           // ),
+                          // CustomSideButtonMenu(
+                          //   onClick: () {},
+                          //   label: "comment".tr,
+                          //   image: 'assets/images/comment.png',
+                          // ),
+                          SizedBox(
+                            height: size.height * .05,
+                          ),
+
+                          CustomSideButtonMenu(
+                            onClick: () {
+                              print("object");
+                              showDialog(
+                                context: context,
+                                builder: (ctx) =>
+                                    AlertDialog(
+                                      title: Text(" "),
+                                      content: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          height:
+                                          MediaQuery
+                                              .of(context)
+                                              .size
+                                              .height *
+                                              .5,
+                                          width: MediaQuery
+                                              .of(context)
+                                              .size
+                                              .width *
+                                              .5,
+                                          color: Colors.grey[200],
+                                          child: Column(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                    height: 300,
+                                                    width: double.infinity,
+                                                    child: Signature(
+                                                      controller:
+                                                      controller.controller,
+                                                    )),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                                  children: [
+                                                    InkWell(
+                                                        onTap: () {
+                                                          controller.controller
+                                                              .clear();
+                                                        },
+                                                        child: Icon(
+                                                          Icons.clear,
+                                                          size: 50,
+                                                        )),
+                                                    InkWell(
+                                                        onTap: () async {
+                                                          final key = GlobalKey();
+
+                                                          final Uint8List? data =
+                                                          await controller
+                                                              .controller
+                                                              .toPngBytes();
+                                                          controller
+                                                              .addWidgetToPdfAndSing(
+                                                              ResizebleWidget(
+                                                                child: Image
+                                                                    .memory(
+                                                                  data!,
+                                                                  fit: BoxFit
+                                                                      .fill,
+                                                                  key: key,
+                                                                  width: 100,
+                                                                  height: 100,
+                                                                ),
+                                                              ));
+                                                          RenderBox? box = key
+                                                              .currentContext
+                                                              ?.findRenderObject()
+                                                          as RenderBox?;
+
+                                                          Offset? pos =
+                                                          box?.localToGlobal(
+                                                              Offset.zero);
+
+                                                          controller
+                                                              .singpic[key] =
+                                                              base64.encode(
+                                                                  data); //SignatureInfo(offset:pos , signature: 'hguyggyuguy', size: box?.size);
+
+                                                          //
+                                                          //
+                                                          //
+                                                          //
+                                                          //
+                                                          //
+
+                                                          controller.controller
+                                                              .toPngBytes();
+                                                          Get.back();
+                                                        },
+                                                        child: Icon(
+                                                          Icons.save,
+                                                          size: 50,
+                                                        )),
+                                                  ],
+                                                ),
+                                                Divider(color: Colors.grey),
+                                                Expanded(
+                                                  child: GetBuilder<
+                                                      DocumentController>(
+                                                    assignId: true,
+                                                    builder: (logic) {
+                                                      return GridView.builder(
+                                                        itemCount: controller
+                                                            .multiSignatures
+                                                            .length,
+                                                        gridDelegate:
+                                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                                            crossAxisCount: 2,
+                                                            crossAxisSpacing:
+                                                            4.0,
+                                                            mainAxisSpacing:
+                                                            4.0),
+                                                        itemBuilder:
+                                                            (
+                                                            BuildContext context,
+                                                            int index) {
+                                                          return GestureDetector(
+                                                            onTap: () {
+                                                              final key =
+                                                              GlobalKey();
+                                                              controller
+                                                                  .addWidgetToPdfAndSing(
+                                                                  ResizebleWidget(
+                                                                    child: Image
+                                                                        .memory(
+                                                                      dataFromBase64String(
+                                                                          controller
+                                                                              .multiSignatures[
+                                                                          index]
+                                                                              .signature),
+                                                                      fit: BoxFit
+                                                                          .fill,
+                                                                      key: key,
+                                                                    ),
+                                                                  ));
+
+                                                              controller
+                                                                  .singpic[
+                                                              key] =
+                                                              controller
+                                                                  .multiSignatures[
+                                                              index]
+                                                                  .signature!;
+
+                                                              Get.back();
+                                                            },
+                                                            child: Image.memory(
+                                                                dataFromBase64String(
+                                                                    controller
+                                                                        .multiSignatures[
+                                                                    index]
+                                                                        .signature)),
+                                                          );
+                                                        },
+                                                      );
+
+                                                      // ListView.builder(
+                                                      //   itemCount: controller
+                                                      //       .multiSignatures
+                                                      //       .length,
+                                                      //   itemBuilder: (context,
+                                                      //       pos) {
+                                                      //     return Padding(
+                                                      //       padding: const EdgeInsets
+                                                      //           .all(8.0),
+                                                      //       child:
+                                                      //     GestureDetector(
+                                                      //         onTap: () {
+                                                      //           controller
+                                                      //               .addWidgetToPdfAndSing(
+                                                      //               ResizebleWidget(
+                                                      //                 child: Image
+                                                      //                     .memory(
+                                                      //                   dataFromBase64String(
+                                                      //                       controller
+                                                      //                           .multiSignatures[pos]
+                                                      //                           .signature),
+                                                      //                   fit: BoxFit.fill),));
+                                                      //           Get.back();
+                                                      //         },
+                                                      //         child: Image
+                                                      //             .memory(
+                                                      //             dataFromBase64String(
+                                                      //                 controller
+                                                      //                     .multiSignatures[pos]
+                                                      //                     .signature)),
+                                                      //       ),
+                                                      //     );
+                                                      //   });
+                                                    },
+                                                  ),
+                                                )
+                                              ]),
+                                        ),
+                                      ),
+                                      actions: <Widget>[
+                                        FlatButton(
+                                          onPressed: () {
+                                            Get.back();
+                                          },
+                                          child: Text("Ok"),
+                                        ),
+                                      ],
+                                    ),
+                              );
+
+                              //controller.pdfAndSing
+                            },
+                            label: "signature".tr,
+                            image: 'assets/images/signature.png',
+                          ),
+                          SizedBox(
+                            height: size.height * .05,
+                          ),
+
                           // SizedBox(
                           //   height: size.height * .05,
                           // ),
@@ -1183,7 +1188,25 @@ class DocumentPage extends GetWidget<DocumentController> {
                                             Row(
                                                 crossAxisAlignment:
                                                 CrossAxisAlignment.center,
-                                                children: [
+                                                children: [     Text(
+                                                  "name".tr,
+                                                  style: Theme
+                                                      .of(context)
+                                                      .textTheme
+                                                      .headline3!
+                                                      .copyWith(
+                                                    color:
+                                                    createMaterialColor(
+                                                      const Color
+                                                          .fromRGBO(
+                                                          77, 77, 77, 1),
+                                                    ),
+                                                    fontSize: 15,
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                  overflow:
+                                                  TextOverflow.ellipsis,
+                                                ),
                                                   Padding(
                                                     padding:
                                                     const EdgeInsets.all(
@@ -1205,25 +1228,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                   SizedBox(
                                                     width: 8,
                                                   ),
-                                                  Text(
-                                                    "name",
-                                                    style: Theme
-                                                        .of(context)
-                                                        .textTheme
-                                                        .headline3!
-                                                        .copyWith(
-                                                      color:
-                                                      createMaterialColor(
-                                                        const Color
-                                                            .fromRGBO(
-                                                            77, 77, 77, 1),
-                                                      ),
-                                                      fontSize: 15,
-                                                    ),
-                                                    textAlign: TextAlign.center,
-                                                    overflow:
-                                                    TextOverflow.ellipsis,
-                                                  ),
+
                                                   Spacer(),
                                                   GestureDetector(
                                                     onTap: () {

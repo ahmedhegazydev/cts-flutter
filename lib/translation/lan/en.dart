@@ -135,5 +135,8 @@ const Map<String, String> en = {
 "BasketAddedSuccess":"A new basket created successfully",
   "DoneDelegation":"Done saving delegation successfully",
   "DeletedDelegation":"Delegation deleted successfully",
+  "bageback":"back",
+  "addsing":"Add your signature here"
+
 
 };

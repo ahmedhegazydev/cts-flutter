@@ -52,7 +52,7 @@ class InboxController extends GetxController {
   //ده عشان لو اختار من الشاشه بره كل الصادر و الوارد نخفي شاشاه التاب الي فيها صادر ووارد
   bool isAllOrNot=false;
 
-
+  String? purposeId;
 
   TextEditingController textEditingControllerFilter = TextEditingController();
   BuildContext? context;
@@ -201,6 +201,8 @@ int?nodeId=0;
 
 
   addTousersWillSendTo({required Destination user, thepos}) {
+
+    purposeId=correspondences[thepos]!.purposeId!;
     usersWillSendTo.add(user);
     multipletransfersSend.TransferNode transferNode =
     multipletransfersSend.TransferNode(
@@ -955,8 +957,8 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
       multiTransferNode[key]?.voiceNoteExt = "m4a";
       multiTransferNode[key]?.voiceNotePrivate = false;
       multiTransferNode[key]?.destinationId = key.toString();
-      multiTransferNode[key]?.purposeId =
-          canOpenDocumentModel!.correspondence!.purposeId;
+      multiTransferNode[key]?.purposeId = purposeId;
+         // canOpenDocumentModel!.correspondence!.purposeId;
       multiTransferNode[key]?.voiceNotePrivate = false;
 
       // multipletransfersSend.TransferNode transferNode =

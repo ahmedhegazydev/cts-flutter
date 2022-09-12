@@ -161,10 +161,6 @@ class _PDFViewState extends State<PDFView> {
                       : const ScrollPhysics(),
                   child: PDFColumn(
                     pages: pages,
-                    // pageWidth: s.screenWidth,
-                    // pageHeigt: s.screenHeight,
-                    // screenHeight: screenWidthViewer,
-                    // screenWidth: screenHeightViewer
                   ),
                 ),
                 //   ),
@@ -237,17 +233,24 @@ class PDFColumn extends StatelessWidget {
   @override
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: List.generate(
-        pages.length,
-        (index) {
-          return PageContainer(
-            image: MemoryImage(pages[index].bytes),
-            pageNumber: index,
-          );
+    return MeasureSize(
+        //setScreenWidthAndHeight
+        onChange: (size) {
+          //  setState(() {
+          print(size);
+          //});
         },
-      ),
-    );
+        child: Column(
+          children: List.generate(
+            pages.length,
+            (index) {
+              return PageContainer(
+                image: MemoryImage(pages[index].bytes),
+                pageNumber: index,
+              );
+            },
+          ),
+        ));
   }
 }
 

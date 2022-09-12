@@ -2224,9 +2224,9 @@ class _ListView1State extends State<ListView1> {
                                                                                         children: [
                                                                                           GestureDetector(
                                                                                             onTap: () async {
-// Get.find<InboxController>().recording ? Get.find<InboxController>().stop2() : Get.find<InboxController>().record2();
+ Get.find<InboxController>().recording ? Get.find<InboxController>().stop2() : Get.find<InboxController>().record2();
 
-                                                                                              Get.find<InboxController>().recording ? Get.find<InboxController>().stopForMany(id: logic.usersWillSendTo[pos].id!) : Get.find<InboxController>().recordForMany();
+                                                                                  //            Get.find<InboxController>().recording ? Get.find<InboxController>().stopMathod2(id: logic.usersWillSendTo[pos].id!) : Get.find<InboxController>().recordForMany();
                                                                                             },
                                                                                             child: Padding(
                                                                                               padding: const EdgeInsets.all(8.0),

@@ -80,34 +80,7 @@ import 'inbox_controller.dart';
 import 'package:flutter/services.dart' as rootBundel;
 
 class DocumentController extends GetxController {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   Destination? userWillAddToOpenTransferWindow ;
-
-
-
-
-
-
-
   SecureStorage secureStorage = SecureStorage();
   CanOpenDocumentModel? canOpenDocumentModel;
   final record = FlutterSoundRecorder();

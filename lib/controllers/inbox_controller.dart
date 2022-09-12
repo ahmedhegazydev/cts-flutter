@@ -9,6 +9,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../models/CorrespondencesModel.dart';
 import '../services/apis/basket/add_documents_to_basket_api.dart';
@@ -469,7 +471,7 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
     // showLoaderDialog(context);
     final GetCorrespondencesAllAPI _getCorrespondencesAllAPI =
         GetCorrespondencesAllAPI(context);
-    correspondences.clear();
+    // correspondences.clear();
     allCorrespondences.clear();
     getData = true;
     haveMoreData = true;
@@ -482,20 +484,20 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
       getCorrespondencesAllModel = value as GetCorrespondencesAllModel;
       if (addToList) {
         allCorrespondences
-            .addAll(correspondencesModel?.inbox?.correspondences ?? []);
+            .addAll(getCorrespondencesAllModel?.inbox?.correspondences ?? []);
       } else {
-        allCorrespondences = correspondencesModel?.inbox?.correspondences ?? [];
+        allCorrespondences = getCorrespondencesAllModel?.inbox?.correspondences ?? [];
       }
 
       int listLength =
-          correspondencesModel?.inbox?.correspondences?.length ?? 0;
-      var v = correspondencesModel?.toJson();
+          getCorrespondencesAllModel?.inbox?.correspondences?.length ?? 0;
+      var v = getCorrespondencesAllModel?.toJson();
       if (listLength < pageSize) {
         haveMoreData = false;
       }
       update();
       // log(v.length);
-      print(correspondencesModel?.inbox?.correspondences?.length);
+      print(getCorrespondencesAllModel?.inbox?.correspondences?.length);
       getData = false;
       update();
     }).onError((error, stackTrace) {
@@ -799,6 +801,16 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
     _completeInCorrespondenceAPI.data = data;
     _completeInCorrespondenceAPI.getData().then((value) {
       print("000000000000000000000");
+      Navigator.pop(context);
+      showTopSnackBar(
+        context,
+        CustomSnackBar.success(
+          icon: Container(),
+          backgroundColor: Colors.lightGreen,
+          message:
+          "EndedSuccess".tr,
+        ),
+      );
     });
   }
 

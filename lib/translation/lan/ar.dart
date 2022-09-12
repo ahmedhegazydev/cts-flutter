@@ -102,8 +102,8 @@ const Map<String, String> ar = {
   "start": "تاريخ البدء",
   "end": "تاريخ الانتهاء",
   "reason": "السبب",
-  "defaultsignature": "الامضاء الافتراضية",
-  "multisignature": "جميع الامضاءات",
+  "defaultsignature": "التوقيع الافتراضي",
+  "multisignature": "جميع التواقيع",
   "userGuide": "دليل الاستخدام",
   "newBasket": "سلة جديدة",
   "title": "عنوان الرسالة",
@@ -132,6 +132,7 @@ const Map<String, String> ar = {
   "DoneDelegation":"تم اعاده توجيه المراسله بنجاح",
   "DeletedDelegation":"تم حذف المراسله بنجاح",
   "bageback":"رجوع",
-  "addsing":"اضف توقيعك هنا"
+  "addsing":"اضف توقيعك هنا",
+  "EndedSuccess":"تم الانهاء بنجاح",
 
 };

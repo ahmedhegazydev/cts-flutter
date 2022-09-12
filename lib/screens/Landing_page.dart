@@ -680,19 +680,19 @@ class LandingPage extends GetWidget<LandingPageController> {
                     u.showLoaderDialog(context);
                     // controller.createNewBasket();
 
-                inboxController.    getFetchBasketList(context: context);
-
-                    controller.addEditBasket(
-                        // OrderBy: OrderBy,
-                        context: context,
+                    var basket = Baskets(
                         color: Get.find<CreateBasketController>()
                             .pickerColor
                             .toHex(),
+                        canBeReOrder: true,
+                        orderBy: 0,
                         nameAr: controller.textEditingControllerArabicName.text,
-                        nameEn:
-                            controller.textEditingControllerEnglishName.text);
+                        name:
+                        controller.textEditingControllerEnglishName.text
+                    );
+                    inboxController.fetchBasketListModel!.baskets?.add(basket);
 
-
+                    controller.addEditBasket(context: context, basket: basket);
 
 
                   }),

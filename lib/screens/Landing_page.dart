@@ -274,7 +274,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                     //   context,
                                     //   CustomSnackBar.success(
                                     // backgroundColor: Colors.lightGreen,
-                                  //     message:
+                                    //     message:
                                     //     "Good job, basket have been deleted",
                                     //   ),
                                     // );
@@ -609,52 +609,50 @@ class LandingPage extends GetWidget<LandingPageController> {
                               content: Container(
                                 width: MediaQuery.of(context).size.width * .3,
                                 height: MediaQuery.of(context).size.height * .5,
-                                child:
-                              Column(children: [
+                                child: Column(children: [
+                                  buildHorizontalListViewCircleColors(context),
 
-                                buildHorizontalListViewCircleColors(context),
-
-                                // ColorPicker(
-                                //   pickerColor:
-                                //       Get.find<CreateBasketController>()
-                                //           .pickerColor,
-                                //   onColorChanged: (Color color) {
-                                //     Get.find<CreateBasketController>()
-                                //         .setPickerColor(color);
-                                //   },
-                                // ),
-                                // Padding(
-                                //   padding: const EdgeInsets.only(
-                                //       top: 8.0, bottom: 8, right: 20, left: 20),
-                                //   child: Row(children: []),
-                                // ),
-                                // Container(
-                                //   width: MediaQuery.of(context).size.width * .7,
-                                //   padding: const EdgeInsets.only(
-                                //       left: 0, right: 0, top: 0, bottom: 0),
-                                //   height: 60,
-                                //   decoration: BoxDecoration(
-                                //       color:
-                                //       Theme.of(context).colorScheme.primary,
-                                //       borderRadius: const BorderRadius.all(
-                                //           Radius.circular(6))),
-                                //   child: ElevatedButton(
-                                //       onPressed: () {
-                                //         // Get.find<SecureStorage>().writeSecureData(
-                                //         //     AllStringConst.AppColor,
-                                //         //     Get.find<MController>().appcolor.value);
-                                //         Navigator.of(context).pop();
-                                //       },
-                                //       child: GestureDetector(
-                                //         onTap: () {},
-                                //         child: Text(
-                                //           "save".tr,
-                                //           textAlign: TextAlign.center,
-                                //         ),
-                                //       )),
-                                // )
-                              ])
-                                ,),
+                                  // ColorPicker(
+                                  //   pickerColor:
+                                  //       Get.find<CreateBasketController>()
+                                  //           .pickerColor,
+                                  //   onColorChanged: (Color color) {
+                                  //     Get.find<CreateBasketController>()
+                                  //         .setPickerColor(color);
+                                  //   },
+                                  // ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.only(
+                                  //       top: 8.0, bottom: 8, right: 20, left: 20),
+                                  //   child: Row(children: []),
+                                  // ),
+                                  // Container(
+                                  //   width: MediaQuery.of(context).size.width * .7,
+                                  //   padding: const EdgeInsets.only(
+                                  //       left: 0, right: 0, top: 0, bottom: 0),
+                                  //   height: 60,
+                                  //   decoration: BoxDecoration(
+                                  //       color:
+                                  //       Theme.of(context).colorScheme.primary,
+                                  //       borderRadius: const BorderRadius.all(
+                                  //           Radius.circular(6))),
+                                  //   child: ElevatedButton(
+                                  //       onPressed: () {
+                                  //         // Get.find<SecureStorage>().writeSecureData(
+                                  //         //     AllStringConst.AppColor,
+                                  //         //     Get.find<MController>().appcolor.value);
+                                  //         Navigator.of(context).pop();
+                                  //       },
+                                  //       child: GestureDetector(
+                                  //         onTap: () {},
+                                  //         child: Text(
+                                  //           "save".tr,
+                                  //           textAlign: TextAlign.center,
+                                  //         ),
+                                  //       )),
+                                  // )
+                                ]),
+                              ),
                             ));
                   },
                   child: GetBuilder<CreateBasketController>(
@@ -687,14 +685,10 @@ class LandingPage extends GetWidget<LandingPageController> {
                         canBeReOrder: true,
                         orderBy: 0,
                         nameAr: controller.textEditingControllerArabicName.text,
-                        name:
-                        controller.textEditingControllerEnglishName.text
-                    );
+                        name: controller.textEditingControllerEnglishName.text);
                     inboxController.fetchBasketListModel!.baskets?.add(basket);
 
                     controller.addEditBasket(context: context, basket: basket);
-
-
                   }),
             ),
           ],
@@ -1040,13 +1034,12 @@ class LandingPage extends GetWidget<LandingPageController> {
         ),
         InkWell(
           onTap: () async {
-       print("i work h");
+            print("i work h");
             u.showLoaderDialog(context);
             controller.setSelectSuggest(true);
-       await    Get.find<LandingPageController>().getMyRoutingsettings(context);
+            await Get.find<LandingPageController>()
+                .getMyRoutingsettings(context);
             await controller.listFavoriteRecipients(context: context);
-
-
 
             Get.bottomSheet(
               GetBuilder<LandingPageController>(builder: (logic) {
@@ -1117,12 +1110,10 @@ class LandingPage extends GetWidget<LandingPageController> {
                                           controller
                                               .textEditingControllerTorouting
                                               .text = d.value!;
-                                          controller.textEditingControllerTo.text=d.value!;
+                                          controller.textEditingControllerTo
+                                              .text = d.value!;
                                           print("0000000000000000000000000000");
                                           logic.update();
-
-
-
                                         },
                                         child: Row(
                                           children: [
@@ -1166,9 +1157,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                                 Expanded(
                                   child: TypeAheadField<Destination>(
                                     textFieldConfiguration:
-                                    TextFieldConfiguration(
+                                        TextFieldConfiguration(
                                       controller:
-                                      controller.textEditingControllerTo,
+                                          controller.textEditingControllerTo,
                                       // autofocus: true,
                                       // style: DefaultTextStyle.of(context)
                                       //     .style
@@ -1190,21 +1181,18 @@ class LandingPage extends GetWidget<LandingPageController> {
 
                                       return // Te(v.originalName!);
 
-                                        ListTile(
-                                          title: FilterText(v.value!),
-                                        );
+                                          ListTile(
+                                        title: FilterText(v.value!),
+                                      );
                                     },
                                     onSuggestionSelected: (suggestion) {
                                       Destination v = suggestion;
                                       controller.textEditingControllerTo.text =
                                           v.value ?? "";
-                                   controller
-                                          .toSaveMyRoutingSettings = v;
+                                      controller.toSaveMyRoutingSettings = v;
 
-                                      controller
-                                          .textEditingControllerTorouting
+                                      controller.textEditingControllerTorouting
                                           .text = v.value!;
-
 
                                       print("0000000000000000000000000000");
                                       logic.update();
@@ -1384,9 +1372,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                                         borderRadius: const BorderRadius.all(
                                             Radius.circular(6))),
                                     child: ElevatedButton(
-                                      onPressed: () async{
+                                      onPressed: () async {
                                         u.showLoaderDialog(context);
-                                     await   controller
+                                        await controller
                                             .removeMyRoutingSettings(data: {
                                           "Token":
                                               controller.secureStorage.token(),
@@ -1417,7 +1405,6 @@ class LandingPage extends GetWidget<LandingPageController> {
               }),
               enterBottomSheetDuration: const Duration(seconds: 1),
             );
-
           },
           child: Container(
             height: 90,
@@ -1501,13 +1488,13 @@ class LandingPage extends GetWidget<LandingPageController> {
             ///ToDo
             ///open url and go to userGuideUrl
             //  controller.data.userGuideUrl
-            Get.find<WebViewPageController>().isPdf=true;
+            Get.find<WebViewPageController>().isPdf = true;
 
             Get.find<WebViewPageController>().url =
                 controller.data?.userGuideUrl;
 
-
-            print( "controller.data?.userGuideUrl =>${controller.data?.userGuideUrl }");
+            print(
+                "controller.data?.userGuideUrl =>${controller.data?.userGuideUrl}");
             Get.toNamed(
               "WebViewPage",
             );
@@ -2359,15 +2346,14 @@ class LandingPage extends GetWidget<LandingPageController> {
             ),
           ),
           InkWell(
-            onTap: () async{
+            onTap: () async {
               //اعاده توجيه المرسلات وضع افقي
               print("اعاده توجيه المرسلات وضع افقي");
               u.showLoaderDialog(context);
               controller.setSelectSuggest(true);
-              await    Get.find<LandingPageController>().getMyRoutingsettings(context);
+              await Get.find<LandingPageController>()
+                  .getMyRoutingsettings(context);
               await controller.listFavoriteRecipients(context: context);
-
-
 
               Get.bottomSheet(
                 GetBuilder<LandingPageController>(builder: (logic) {
@@ -2375,7 +2361,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                     padding: EdgeInsets.only(
                         right: size.width * .2, left: size.width * .2),
                     child: Container(
-                      //height: 100,
+                        //height: 100,
                         margin: EdgeInsets.all(20),
                         padding: EdgeInsets.all(20),
                         decoration: const BoxDecoration(
@@ -2411,15 +2397,16 @@ class LandingPage extends GetWidget<LandingPageController> {
                                 ],
                               ),
 
-                              GetBuilder<LandingPageController>(builder: (logic) {
+                              GetBuilder<LandingPageController>(
+                                  builder: (logic) {
                                 return SizedBox(
                                   height: 100,
                                   child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
                                       itemCount: controller
-                                          .favoriteRecipientsResponse
-                                          ?.recipients
-                                          ?.length ??
+                                              .favoriteRecipientsResponse
+                                              ?.recipients
+                                              ?.length ??
                                           0,
                                       itemBuilder: (context, pos) {
                                         return InkWell(
@@ -2438,12 +2425,11 @@ class LandingPage extends GetWidget<LandingPageController> {
                                             controller
                                                 .textEditingControllerTorouting
                                                 .text = d.value!;
-                                            controller.textEditingControllerTo.text=d.value!;
-                                            print("0000000000000000000000000000");
+                                            controller.textEditingControllerTo
+                                                .text = d.value!;
+                                            print(
+                                                "0000000000000000000000000000");
                                             logic.update();
-
-
-
                                           },
                                           child: Row(
                                             children: [
@@ -2487,9 +2473,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                                   Expanded(
                                     child: TypeAheadField<Destination>(
                                       textFieldConfiguration:
-                                      TextFieldConfiguration(
+                                          TextFieldConfiguration(
                                         controller:
-                                        controller.textEditingControllerTo,
+                                            controller.textEditingControllerTo,
                                         // autofocus: true,
                                         // style: DefaultTextStyle.of(context)
                                         //     .style
@@ -2499,10 +2485,11 @@ class LandingPage extends GetWidget<LandingPageController> {
                                             labelText: 'To'.tr),
                                       ),
                                       suggestionsCallback: (pattern) async {
-                                        return controller.users.where((element) =>
-                                            element.value!
+                                        return controller.users.where(
+                                            (element) => element.value!
                                                 .toLowerCase()
-                                                .contains(pattern.toLowerCase()));
+                                                .contains(
+                                                    pattern.toLowerCase()));
 
                                         //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
                                       },
@@ -2511,21 +2498,19 @@ class LandingPage extends GetWidget<LandingPageController> {
 
                                         return // Te(v.originalName!);
 
-                                          ListTile(
-                                            title: FilterText(v.value!),
-                                          );
+                                            ListTile(
+                                          title: FilterText(v.value!),
+                                        );
                                       },
                                       onSuggestionSelected: (suggestion) {
                                         Destination v = suggestion;
-                                        controller.textEditingControllerTo.text =
-                                            v.value ?? "";
-                                        controller
-                                            .toSaveMyRoutingSettings = v;
+                                        controller.textEditingControllerTo
+                                            .text = v.value ?? "";
+                                        controller.toSaveMyRoutingSettings = v;
 
                                         controller
                                             .textEditingControllerTorouting
                                             .text = v.value!;
-
 
                                         print("0000000000000000000000000000");
                                         logic.update();
@@ -2549,7 +2534,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                                   },
                                   child: Container(
                                       height: 60,
-                                      padding: EdgeInsets.only(right: 8, left: 8),
+                                      padding:
+                                          EdgeInsets.only(right: 8, left: 8),
                                       decoration: BoxDecoration(
                                           border: Border.all(
                                               color: Theme.of(context)
@@ -2573,11 +2559,13 @@ class LandingPage extends GetWidget<LandingPageController> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: InkWell(
                                   onTap: () {
-                                    controller.selectToDocDate(context: context);
+                                    controller.selectToDocDate(
+                                        context: context);
                                   },
                                   child: Container(
                                       height: 60,
-                                      padding: EdgeInsets.only(right: 8, left: 8),
+                                      padding:
+                                          EdgeInsets.only(right: 8, left: 8),
                                       decoration: BoxDecoration(
                                           border: Border.all(
                                               color: Theme.of(context)
@@ -2595,8 +2583,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                                           labelText: "end".tr,
                                         ),
                                       )
-                                    //   Center(child: Text(controller.toDocDate))
-                                  ),
+                                      //   Center(child: Text(controller.toDocDate))
+                                      ),
                                 ),
                               ),
                               //  Text("reason".tr),
@@ -2618,13 +2606,14 @@ class LandingPage extends GetWidget<LandingPageController> {
                                       labelText: "reason".tr,
                                     ),
                                   )
-                                //   Center(child: Text(controller.toDocDate))
-                              ),
+                                  //   Center(child: Text(controller.toDocDate))
+                                  ),
                               SizedBox(
                                 height: 10,
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   Expanded(
                                     child: Container(
@@ -2640,42 +2629,47 @@ class LandingPage extends GetWidget<LandingPageController> {
                                       child: ElevatedButton(
                                         onPressed: () {
                                           MyTransferRoutingDtoSend mytr =
-                                          MyTransferRoutingDtoSend(
-                                              Name: controller
-                                                  .toSaveMyRoutingSettings!
-                                                  .value!,
-                                              GctId: controller
-                                                  .toSaveMyRoutingSettings!
-                                                  .id,
-                                              NameAr: controller
-                                                  .toSaveMyRoutingSettings!
-                                                  .value,
-                                              CrtComments: controller
-                                                  .textEditingControllerToroutingReson
-                                                  .text,
-                                              CrtFromDate: controller
-                                                  .textEditingControllerFromDate
-                                                  .text
-                                                  .replaceAll("-", "/"),
-                                              CrtId:  controller.getMyRoutingSettingsModel?.routing?.crtId??0,
-                                              // controller.getMyRoutingSettingsModel.routing,
-                                              CrtToDate: controller
-                                                  .textEditingControllerToDate
-                                                  .text
-                                                  .replaceAll("-", "/"),
-                                              CrtToGctid: controller
-                                                  .toSaveMyRoutingSettings!
-                                                  .id,
-                                              DoRouting: true);
+                                              MyTransferRoutingDtoSend(
+                                                  Name: controller
+                                                      .toSaveMyRoutingSettings!
+                                                      .value!,
+                                                  GctId: controller
+                                                      .toSaveMyRoutingSettings!
+                                                      .id,
+                                                  NameAr: controller
+                                                      .toSaveMyRoutingSettings!
+                                                      .value,
+                                                  CrtComments: controller
+                                                      .textEditingControllerToroutingReson
+                                                      .text,
+                                                  CrtFromDate: controller
+                                                      .textEditingControllerFromDate
+                                                      .text
+                                                      .replaceAll("-", "/"),
+                                                  CrtId: controller
+                                                          .getMyRoutingSettingsModel
+                                                          ?.routing
+                                                          ?.crtId ??
+                                                      0,
+                                                  // controller.getMyRoutingSettingsModel.routing,
+                                                  CrtToDate: controller
+                                                      .textEditingControllerToDate
+                                                      .text
+                                                      .replaceAll("-", "/"),
+                                                  CrtToGctid:
+                                                      controller.toSaveMyRoutingSettings!.id,
+                                                  DoRouting: true);
 
                                           MyTransferRoutingRequestDto d =
-                                          MyTransferRoutingRequestDto(
-                                              Token: controller.secureStorage
-                                                  .token()!,
-                                              routing: mytr);
+                                              MyTransferRoutingRequestDto(
+                                                  Token: controller
+                                                      .secureStorage
+                                                      .token()!,
+                                                  routing: mytr);
                                           u.showLoaderDialog(context);
-                                          controller.postSaveMyRoutingSettingsApi(
-                                              data: d, context: context);
+                                          controller
+                                              .postSaveMyRoutingSettingsApi(
+                                                  data: d, context: context);
 
                                           Get.back();
                                         },
@@ -2705,16 +2699,16 @@ class LandingPage extends GetWidget<LandingPageController> {
                                           borderRadius: const BorderRadius.all(
                                               Radius.circular(6))),
                                       child: ElevatedButton(
-                                        onPressed: () async{
+                                        onPressed: () async {
                                           u.showLoaderDialog(context);
-                                          await   controller
+                                          await controller
                                               .removeMyRoutingSettings(data: {
-                                            "Token":
-                                            controller.secureStorage.token(),
+                                            "Token": controller.secureStorage
+                                                .token(),
                                             "Language":
-                                            Get.locale?.languageCode == "en"
-                                                ? "en"
-                                                : "ar"
+                                                Get.locale?.languageCode == "en"
+                                                    ? "en"
+                                                    : "ar"
                                           }, context: context);
                                           Get.back();
                                         },
@@ -2738,8 +2732,6 @@ class LandingPage extends GetWidget<LandingPageController> {
                 }),
                 enterBottomSheetDuration: const Duration(seconds: 1),
               );
-
-
             },
             child: Container(
               height: 120,
@@ -2774,8 +2766,7 @@ class LandingPage extends GetWidget<LandingPageController> {
           ),
           InkWell(
             onTap: () async {
-
-    await showAllBasketsDialog(context);
+              await showAllBasketsDialog(context);
               // print("=====================================");
               // //   await Get.find<InboxController>().getFetchBasketList();
               // await controller.getFetchBasketList(context: context);
@@ -2905,13 +2896,13 @@ class LandingPage extends GetWidget<LandingPageController> {
               ///open url and go to userGuideUrl
               //  controller.data.userGuideUrl
 
-              Get.find<WebViewPageController>().isPdf=true;
+              Get.find<WebViewPageController>().isPdf = true;
 
               Get.find<WebViewPageController>().url =
                   controller.data?.userGuideUrl;
 
-
-              print( "controller.data?.userGuideUrl =>${controller.data?.userGuideUrl }");
+              print(
+                  "controller.data?.userGuideUrl =>${controller.data?.userGuideUrl}");
               Get.toNamed(
                 "WebViewPage",
               );
@@ -4865,7 +4856,7 @@ class LandingPage extends GetWidget<LandingPageController> {
           ),
           Spacer(flex: 1),
           Flexible(
-            flex: 15,
+            flex: 10,
             child: Container(
               color: Colors.transparent,
               width: double.infinity,
@@ -4879,6 +4870,7 @@ class LandingPage extends GetWidget<LandingPageController> {
           ),
           Spacer(flex: 1),
           Flexible(
+            flex: 2,
             child: Container(
               color: Colors.transparent,
               width: 40,
@@ -4887,7 +4879,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                 style: Theme.of(content)
                     .textTheme
                     .headline2!
-                    .copyWith(fontSize: 17),
+                    .copyWith(fontSize: 15),
                 textAlign: TextAlign.end,
               ),
             ),
@@ -4943,7 +4935,7 @@ class LandingPage extends GetWidget<LandingPageController> {
           ),
           Spacer(flex: 1),
           Flexible(
-            flex: 15,
+            flex: 10,
             child: Container(
               color: Colors.transparent,
               width: double.infinity,
@@ -4959,24 +4951,25 @@ class LandingPage extends GetWidget<LandingPageController> {
           ),
           Spacer(flex: 1),
           Flexible(
+            flex: 2,
             child: Visibility(
               visible: showCount,
               child: Container(
                 color: Colors.transparent,
-                width: 40,
+                width: 70,
                 child: Text(
                   count.toString(),
                   style: Theme.of(context)
                       .textTheme
                       .headline2!
-                      .copyWith(fontSize: 17),
+                      .copyWith(fontSize: 12),
                   textAlign: TextAlign.end,
                 ),
               ),
             ),
           ),
           Flexible(
-            flex: 2,
+            flex: 1,
             child: Image(
               image: AssetImage(
                 u.returnImageNameBasedOnOppositeDirection(
@@ -5023,69 +5016,98 @@ class LandingPage extends GetWidget<LandingPageController> {
     );
   }
 
-
   Widget buildHorizontalListViewCircleColors(BuildContext context) {
     List<Color> colorArray = [
-      Color(0xFFFF6633), Color(0xFFFFB399), Color(0xFFFF33FF),
-      Color(0xFFFFFF99), Color(0xFF00B3E6), Color(0xFFE6B333),
-      Color(0xFF3366E6), Color(0xFF999966), Color(0xFF99FF99),
-      Color(0xFFB34D4D), Color(0xFF80B300), Color(0xFF809900),
-      Color(0xFFE6B3B3), Color(0xFF6680B3), Color(0xFF66991A),
-      Color(0xFFFF99E6), Color(0xFFCCFF1A), Color(0xFFFF1A66),
-      Color(0xFFE6331A), Color(0xFF33FFCC), Color(0xFF66994D),
-      Color(0xFFB366CC), Color(0xFF4D8000), Color(0xFFB33300),
-      Color(0xFFCC80CC), Color(0xFF66664D), Color(0xFF991AFF),
-      Color(0xFFE666FF), Color(0xFF4DB3FF), Color(0xFF1AB399),
-      Color(0xFFE666B3), Color(0xFF33991A), Color(0xFFCC9999),
-      Color(0xFFB3B31A), Color(0xFF00E680), Color(0xFF4D8066),
-      Color(0xFF809980), Color(0xFFE6FF80), Color(0xFF1AFF33),
-      Color(0xFF999933), Color(0xFFFF3380), Color(0xFFCCCC00),
-      Color(0xFF66E64D), Color(0xFF4D80CC), Color(0xFF9900B3),
-      Color(0xFFE64D66), Color(0xFF4DB380), Color(0xFFFF4D4D),
-      Color(0xFF99E6E6), Color(0xFF6666FF)
-    ];    return Container(
-      width: MediaQuery.of(context).size.width * .3,
+      Color(0xFFFF6633),
+      Color(0xFFFFB399),
+      Color(0xFFFF33FF),
+      Color(0xFFFFFF99),
+      Color(0xFF00B3E6),
+      Color(0xFFE6B333),
+      Color(0xFF3366E6),
+      Color(0xFF999966),
+      Color(0xFF99FF99),
+      Color(0xFFB34D4D),
+      Color(0xFF80B300),
+      Color(0xFF809900),
+      Color(0xFFE6B3B3),
+      Color(0xFF6680B3),
+      Color(0xFF66991A),
+      Color(0xFFFF99E6),
+      Color(0xFFCCFF1A),
+      Color(0xFFFF1A66),
+      Color(0xFFE6331A),
+      Color(0xFF33FFCC),
+      Color(0xFF66994D),
+      Color(0xFFB366CC),
+      Color(0xFF4D8000),
+      Color(0xFFB33300),
+      Color(0xFFCC80CC),
+      Color(0xFF66664D),
+      Color(0xFF991AFF),
+      Color(0xFFE666FF),
+      Color(0xFF4DB3FF),
+      Color(0xFF1AB399),
+      Color(0xFFE666B3),
+      Color(0xFF33991A),
+      Color(0xFFCC9999),
+      Color(0xFFB3B31A),
+      Color(0xFF00E680),
+      Color(0xFF4D8066),
+      Color(0xFF809980),
+      Color(0xFFE6FF80),
+      Color(0xFF1AFF33),
+      Color(0xFF999933),
+      Color(0xFFFF3380),
+      Color(0xFFCCCC00),
+      Color(0xFF66E64D),
+      Color(0xFF4D80CC),
+      Color(0xFF9900B3),
+      Color(0xFFE64D66),
+      Color(0xFF4DB380),
+      Color(0xFFFF4D4D),
+      Color(0xFF99E6E6),
+      Color(0xFF6666FF)
+    ];
+    return Container(
+        width: MediaQuery.of(context).size.width * .3,
         height: MediaQuery.of(context).size.height * .5,
-      // height: 100,
-      child:
-      // ListView(
-      //   scrollDirection: Axis.horizontal,
-      //   children: <Widget>[
-      //     Container(
-      //       width: 60,
-      //       height: 60,
-      //       // child: Icon(CustomIcons.option, size: 20,),
-      //       decoration: BoxDecoration(
-      //           shape: BoxShape.circle,
-      //           color: Color(0xFFe0f2f1)),
-      //     ),
-      //
-      //   ],
-      // ),
-      GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 6
-        ),
-        itemBuilder: (_, index) => Center(
-          child: GestureDetector(
-            child:   Container(
+        // height: 100,
+        child:
+            // ListView(
+            //   scrollDirection: Axis.horizontal,
+            //   children: <Widget>[
+            //     Container(
+            //       width: 60,
+            //       height: 60,
+            //       // child: Icon(CustomIcons.option, size: 20,),
+            //       decoration: BoxDecoration(
+            //           shape: BoxShape.circle,
+            //           color: Color(0xFFe0f2f1)),
+            //     ),
+            //
+            //   ],
+            // ),
+            GridView.builder(
+          gridDelegate:
+              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 6),
+          itemBuilder: (_, index) => Center(
+              child: GestureDetector(
+            child: Container(
               width: 60,
               height: 60,
               // child: Icon(CustomIcons.option, size: 20,),
               decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: colorArray[index]),
+                  shape: BoxShape.circle, color: colorArray[index]),
             ),
-              onTap: () {
-               var selectedColor = colorArray[index];
-               Get.find<CreateBasketController>()
-                   .setPickerColor(selectedColor);
-               Navigator.pop(context);
-              },
+            onTap: () {
+              var selectedColor = colorArray[index];
+              Get.find<CreateBasketController>().setPickerColor(selectedColor);
+              Navigator.pop(context);
+            },
           )),
-        itemCount: colorArray.length,
-      )
-    );
+          itemCount: colorArray.length,
+        ));
   }
 }
 

@@ -5352,7 +5352,8 @@ class CustomListView extends GetView<InboxController> {
                                                                     false);
                                                           }
 
-                                                          print(v.toMap());
+
+          print(v.toMap());
                                                           showLoaderDialog(context);
                                                           await replayAPI
                                                               .post(v.toMap())
@@ -5480,7 +5481,9 @@ class CustomListView extends GetView<InboxController> {
                                                               "en"
                                                               ? "en"
                                                               : "ar"}';
-
+                                                          Navigator.of(ctx)
+                                                              .pop();
+                                                          showLoaderDialog(context);
                                                           Get.find<
                                                               InboxController>()
                                                               .completeInCorrespondence(
@@ -5488,8 +5491,7 @@ class CustomListView extends GetView<InboxController> {
                                                               context,
                                                               data: data);
 
-                                                          Navigator.of(ctx)
-                                                              .pop();
+
                                                         },
                                                         child: Text("Ok"),
                                                       ),

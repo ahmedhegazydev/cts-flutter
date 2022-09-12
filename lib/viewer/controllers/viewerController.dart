@@ -13,6 +13,8 @@ class ViewerController extends GetxController {
   RxBool viewerIsEditable = false.obs;
   var selectedActionIndex = 0.obs;
 
+  Color themeColor = Colors.blue;
+
   RxDouble screenWidth = 0.0.obs;
   RxDouble screenHeight = 0.0.obs;
 

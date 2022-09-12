@@ -45,9 +45,7 @@ import 'landing_page_controller.dart';
 
 class InboxController extends GetxController {
   //ده عشان لو اختار من الشاشه بره كل الصادر و الوارد نخفي شاشاه التاب الي فيها صادر ووارد
-  bool isAllOrNot=false;
-
-
+  bool isAllOrNot = false;
 
   TextEditingController textEditingControllerFilter = TextEditingController();
   BuildContext? context;
@@ -55,12 +53,11 @@ class InboxController extends GetxController {
   List<int> listSelectCorrespondences = [];
   int? oldIndex = 0;
   int? newIndex = 0;
-int?nodeId=0;
-  setOldIndex(int oldIndex){
+  int? nodeId = 0;
+  setOldIndex(int oldIndex) {
     this.oldIndex = oldIndex;
     update();
   }
-
 
   Future addDocumentsToBasket({context, basketId}) async {
     AddDocumentsToBasketRequest addDocumentsToBasketRequest =
@@ -104,7 +101,7 @@ int?nodeId=0;
       // });
       fetchBasketListModel?.baskets?.sort();
 
-      Get.find<LandingPageController>().  update();
+      Get.find<LandingPageController>().update();
       print(fetchBasketListModel?.toJson());
       print("getFetchBasketList i getit");
     });
@@ -114,14 +111,12 @@ int?nodeId=0;
 
   String completeNote = "";
   String replyNote = "";
-  bool isPrivate=true;
+  bool isPrivate = true;
 
-  updateISPrivate(v){
-    isPrivate =v;
-    update( ["pr"]);
+  updateISPrivate(v) {
+    isPrivate = v;
+    update(["pr"]);
   }
-
-
 
   CustomActions? completeCustomActions;
 
@@ -245,7 +240,7 @@ int?nodeId=0;
       LoginModel data = LoginModel.fromJson(logindata!);
       customActions = data.customActions;
     }
-   // _scrollListener(context: context);
+    // _scrollListener(context: context);
   }
 
   getAllData({required context}) {
@@ -273,22 +268,9 @@ int?nodeId=0;
     print("onRefresh");
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-  final record=FlutterSoundRecorder();
-  Future recordMathod()async{
-  //  await record.startRecorder(toFile: "audio");
+  final record = FlutterSoundRecorder();
+  Future recordMathod() async {
+    //  await record.startRecorder(toFile: "audio");
     appDocDir = await getApplicationDocumentsDirectory();
     _directoryPath = appDocDir!.path +
         '/' +
@@ -299,20 +281,19 @@ int?nodeId=0;
 
     await record.startRecorder(codec: _codec, toFile: _directoryPath);
   }
-  Future stopMathod()async{
+
+  Future stopMathod() async {
     recording = false;
     update(["id"]);
     recordFile = File(_directoryPath);
     await record.stopRecorder();
   }
 
-  Future playMathod()async{
+  Future playMathod() async {
     audioPlayer = FlutterSoundPlayer();
     audioPlayer!.openPlayer();
-  await audioPlayer!.startPlayer(fromURI: _directoryPath);
+    await audioPlayer!.startPlayer(fromURI: _directoryPath);
   }
-
-
 
   @override
   void onInit() {
@@ -322,51 +303,28 @@ int?nodeId=0;
     initRecorder();
   }
 
-
-  Future initRecorder() async{
-
-
-
-
-    final statusmicrophone =await Permission.microphone.request();
-    final statusstorage =await Permission.storage.request();
-    final statusmanageExternalStorage =await Permission.manageExternalStorage.request();
+  Future initRecorder() async {
+    final statusmicrophone = await Permission.microphone.request();
+    final statusstorage = await Permission.storage.request();
+    final statusmanageExternalStorage =
+        await Permission.manageExternalStorage.request();
 
     await Permission.storage.request();
     await Permission.manageExternalStorage.request();
 
-    if(statusmicrophone!=PermissionStatus.granted){
+    if (statusmicrophone != PermissionStatus.granted) {
+      return;
       throw "Microphone permission not granted";
     }
-    if(statusstorage!=PermissionStatus.granted){
+    if (statusstorage != PermissionStatus.granted) {
+      return;
       throw "storage permission not granted";
     }
-    if(statusmanageExternalStorage!=PermissionStatus.granted){
+    if (statusmanageExternalStorage != PermissionStatus.granted) {
       Permission.manageExternalStorage.request();
     }
     await record.openRecorder();
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   _scrollListener({required context}) {
     if (scrollController.offset >= scrollController.position.maxScrollExtent &&
@@ -419,13 +377,13 @@ int?nodeId=0;
     getData = true;
     haveMoreData = true;
     update();
-    this.inboxId=inboxId;
+    this.inboxId = inboxId;
 
     _correspondencesApi.data =
-       // "Token=${secureStorage.token()}&inboxId=$inboxId&index=$index&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&showThumbnails=$showThumbnails";
-"Token=${secureStorage.token()}&inboxId=$inboxId&nodeId=$nodeId&index=$index&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&showThumbnails=$showThumbnails";
+        // "Token=${secureStorage.token()}&inboxId=$inboxId&index=$index&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&showThumbnails=$showThumbnails";
+        "Token=${secureStorage.token()}&inboxId=$inboxId&nodeId=$nodeId&index=$index&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&showThumbnails=$showThumbnails";
 
-print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
+    print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
     _correspondencesApi.getData().then((value) {
       correspondencesModel = value as CorrespondencesModel;
       if (addToList) {
@@ -473,7 +431,8 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
         allCorrespondences
             .addAll(getCorrespondencesAllModel?.inbox?.correspondences ?? []);
       } else {
-        allCorrespondences = getCorrespondencesAllModel?.inbox?.correspondences ?? [];
+        allCorrespondences =
+            getCorrespondencesAllModel?.inbox?.correspondences ?? [];
       }
 
       int listLength =
@@ -535,8 +494,8 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
 
       //   FindRecipientModel findRecipientModel = value as FindRecipientModel;
       if (canOpenDocumentModel!.allow!) {
-        Get.find<DocumentController>().updatecanOpenDocumentModel(canOpenDocumentModel!) ;
-
+        Get.find<DocumentController>()
+            .updatecanOpenDocumentModel(canOpenDocumentModel!);
 
         // Get.find<DocumentController>().gatAllDataAboutDOC(
         //     context: context,
@@ -544,17 +503,11 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
         //     transferId: transferId,
         //     correspondenceId: correspondenceId);
 
-
-          Get.find<DocumentController>().loadPdf();
-          Get.toNamed("/DocumentPage");
-
-        }else{
-          Get.snackbar("", "canotopen".tr);
-        }
-
-
-
-
+        Get.find<DocumentController>().loadPdf();
+        Get.toNamed("/DocumentPage");
+      } else {
+        Get.snackbar("", "canotopen".tr);
+      }
     }).catchError((e) {
       print("eeeeeeeeeeeeeeee=>  $e");
     });
@@ -659,7 +612,8 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
 
   Future record2() async {
     final statsstorage = await Permission.storage.request();
-    final statsmanageExternalStorage= await Permission.manageExternalStorage.request();
+    final statsmanageExternalStorage =
+        await Permission.manageExternalStorage.request();
     final statsmicrophone = await Permission.microphone.request();
 
     if (statsmicrophone != PermissionStatus.granted) {
@@ -671,9 +625,6 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
     if (statsmanageExternalStorage != PermissionStatus.granted) {
       throw RecordingPermissionException("manageExternalStorage Permission");
     }
-
-
-
 
     audioRecorder = FlutterSoundRecorder();
     audioPlayer = FlutterSoundPlayer();
@@ -785,7 +736,6 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
     "لاجراء اللازم",
     "للافاده",
     "للتوجيه",
-
   ];
   String selectTexts1pos = "";
 
@@ -805,11 +755,11 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
     selectTexts2pos = ppos;
     update();
   }
-    List<String> texts3 = [
+
+  List<String> texts3 = [
     "high".tr,
     "medium".tr,
     "low".tr,
-
   ];
   String selectTexts3pos = "";
 
@@ -818,24 +768,14 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
     update();
   }
 
-
-  canceldata(){
+  canceldata() {
     // updateTexts1(texts1[3]  );
     // updateTexts2(texts1[2]  );
     // updateTexts3( texts1[2] );
-    updateTexts1( ""  );
-    updateTexts2(""  );
-    updateTexts3( "" );
+    updateTexts1("");
+    updateTexts2("");
+    updateTexts3("");
     Get.back();
     update();
   }
-
-
-
-
-
-
-
-
-
 }

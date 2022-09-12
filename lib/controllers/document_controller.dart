@@ -80,6 +80,8 @@ import '../widgets/custom_button_with_icon.dart';
 import 'inbox_controller.dart';
 import 'package:flutter/services.dart' as rootBundel;
 
+import 'main_controller.dart';
+
 class DocumentController extends GetxController {
   Destination? userWillAddToOpenTransferWindow;
 
@@ -461,7 +463,9 @@ class DocumentController extends GetxController {
         // ));
 
         pdfAndSing.add(
-          PDFView(url: oragnalFileDocpdfUrlFile),
+          PDFView(
+              url: oragnalFileDocpdfUrlFile,
+              color: Get.find<MController>().appcolor),
         );
 
         log(element.annotations!);

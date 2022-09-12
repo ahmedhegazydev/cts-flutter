@@ -72,7 +72,7 @@ class PageContainer extends StatelessWidget {
                     ),
                   ),
                   GetX<ViewerController>(
-                    builder: (s) => s.selectedActionIndex.value == 1
+                    builder: (s) => s.selectedActionIndex.value == 99
                         ? HandSignature(
                             control: control,
                             color: Colors.blue,
@@ -91,7 +91,7 @@ class PageContainer extends StatelessWidget {
                         : Container(),
                   ),
                   GetX<ViewerController>(
-                    builder: (s) => s.selectedActionIndex.value == 1
+                    builder: (s) => s.selectedActionIndex.value == 99
                         ? Material(
                             shape: const CircleBorder(),
                             clipBehavior: Clip.antiAlias,

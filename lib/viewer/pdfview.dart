@@ -14,11 +14,12 @@ class PDFView extends StatefulWidget {
       {Key? key,
       // required this.screenWidth,
       // required this.screenHeight,
-      required this.url})
+      required this.url,
+      required this.color})
       : super(key: key);
 
   String url;
-
+  Color color;
   @override
   State<PDFView> createState() => _PDFViewState();
 }
@@ -28,6 +29,7 @@ class _PDFViewState extends State<PDFView> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    ViewerController.to.themeColor = widget.color;
     Future.delayed(const Duration(milliseconds: 100), () {
       preparePDF().then((data) {
         setState(() {
@@ -112,7 +114,7 @@ class _PDFViewState extends State<PDFView> {
   void _onItemTapped(int index) {
     // setState(() {
     ViewerController.to.selectedActionIndex.value = index;
-    if (index == 2) {
+    if (index == 1) {
       ViewerController.to.setEditable(true);
     } else {
       ViewerController.to.setEditable(false);
@@ -192,15 +194,15 @@ class _PDFViewState extends State<PDFView> {
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.edit),
-                    label: 'draw',
+                    label: 'edit',
                   ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.add),
-                    label: 'annotation',
-                  ),
+                  // BottomNavigationBarItem(
+                  //   icon: Icon(Icons.add),
+                  //   label: 'annotation',
+                  // ),
                 ],
                 currentIndex: ViewerController.to.selectedActionIndex.value,
-                selectedItemColor: Colors.amber[800],
+                selectedItemColor: ViewerController.to.themeColor,
                 onTap: _onItemTapped,
               ),
             )),
@@ -343,7 +345,7 @@ class _ExpandableFabState extends State<ExpandableFab>
               padding: const EdgeInsets.all(8.0),
               child: Icon(
                 Icons.close,
-                color: Theme.of(context).primaryColor,
+                color: ViewerController.to.themeColor,
               ),
             ),
           ),
@@ -454,12 +456,12 @@ class ActionButton extends StatelessWidget {
     return Material(
       shape: const CircleBorder(),
       clipBehavior: Clip.antiAlias,
-      color: theme.colorScheme.secondary,
+      color: Colors.red,
       elevation: 4.0,
       child: IconButton(
         onPressed: onPressed,
         icon: icon,
-        color: theme.colorScheme.onSecondary,
+        color: Colors.white,
       ),
     );
   }

@@ -1090,8 +1090,13 @@ class DocumentPage extends GetWidget<DocumentController> {
               onTap: () {
                 Get.back();
               },
-              child: Image.asset(
-                'assets/images/menu.png',
+              // child: Image.asset(
+              //   'assets/images/menu.png',
+              // ),
+              child: Icon(
+                Icons.close,
+                color: Colors.white,
+                size: 30,
               ),
             ),
           ],

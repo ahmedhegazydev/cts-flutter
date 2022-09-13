@@ -838,7 +838,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                   Divider(color: Colors.grey),
                   Expanded(
                     child: GetBuilder<DocumentController>(
-                      assignId: true,
+                      assignId: true,autoRemove: false,
                       builder: (logic) {
                         return GridView.builder(
                           itemCount: controller.multiSignatures.length,

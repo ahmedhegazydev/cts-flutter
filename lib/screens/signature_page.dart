@@ -19,6 +19,8 @@ class SignaturePage extends GetView<SignaturePageController> {
     return Scaffold(
       appBar: AppBar(
           actions: <Widget>[
+      Padding(padding: EdgeInsets.all(5),
+        child:
             InkWell(
                 onTap: () {
                   controller.saveSign(context);
@@ -27,8 +29,26 @@ class SignaturePage extends GetView<SignaturePageController> {
                   Icons.close,
                   color: Colors.white,
                   size: 30,
-                )),
+                ))),
             Spacer(),
+            Padding(padding: EdgeInsets.all(5),
+            child:
+            Text(
+              "addsing".tr,
+                style: TextStyle(
+                  // fontFamily: 'Roboto',
+                  fontSize: 20,
+                  color: Colors.white
+                  // letterSpacing: 0.15,
+                  // fontWeight: FontWeight.w500,
+                  // color: _themeData!.colorScheme.onSurface
+                  //     .withOpacity(0.87),
+                )
+    ),
+    ),
+            Spacer(),
+            Padding(padding: EdgeInsets.all(5),
+            child:
             InkWell(
                 onTap: () {
                   controller.controller.clear();
@@ -37,7 +57,9 @@ class SignaturePage extends GetView<SignaturePageController> {
                   Icons.delete,
                   size: 30,
                   color: Colors.white,
-                )),
+                ))),
+    Padding(padding: EdgeInsets.all(5),
+    child:
             InkWell(
                 onTap: () {
                   controller.saveSign(context);
@@ -46,13 +68,13 @@ class SignaturePage extends GetView<SignaturePageController> {
                   Icons.save,
                   color: Colors.white,
                   size: 30,
-                )),
+                ))),
 
           ],
-          title: Text(
-            "addsing".tr,
-            style: TextStyle(color: Colors.white),
-          ),
+          // title: Text(
+          //   "addsing".tr,
+          //   style: TextStyle(color: Colors.white),
+          // ),
           leading: SizedBox(),
           centerTitle: true),
       body: Column(

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 import 'dart:ui' as ui;
@@ -19,6 +20,7 @@ import '../services/apis/basket/get_gasket_inbox_api.dart';
 import '../services/apis/basket/remove_basket_api.dart';
 import '../services/apis/can_open_document.dart';
 import '../services/apis/complete_in_correspondence_api.dart';
+import '../services/apis/favorites/ListFavoriteRecipients_api.dart';
 import '../services/apis/find_recipient_api.dart';
 import '../services/apis/get_correspondences_all_api.dart';
 import '../services/apis/get_correspondences_api.dart';
@@ -30,6 +32,8 @@ import '../services/json_model/basket/add_edit_basket_flag_model.dart';
 import '../services/json_model/basket/fetch_basket_list_model.dart';
 import '../services/json_model/basket/remove_basket_request_model.dart';
 import '../services/json_model/can_open_document_model.dart';
+import '../services/json_model/default_on_success_result.dart';
+import '../services/json_model/favorites/list_all/ListFavoriteRecipients_response.dart';
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_correspondences_all_model.dart';
 import '../services/json_model/inopendocModel/multiple_transfers_model.dart';
@@ -42,12 +46,15 @@ import '../utility/storage.dart';
 import '../utility/utilitie.dart';
 import 'document_controller.dart';
 import 'package:flutter/services.dart' as rootBundel;
-
+import '../services/models/multiple_transfers_model_send.dart'
+    as multipletransfersSend;
 import 'landing_page_controller.dart';
 
 class InboxController extends GetxController {
   //ده عشان لو اختار من الشاشه بره كل الصادر و الوارد نخفي شاشاه التاب الي فيها صادر ووارد
   bool isAllOrNot = false;
+
+  String? purposeId;
 
   TextEditingController textEditingControllerFilter = TextEditingController();
   BuildContext? context;
@@ -191,16 +198,21 @@ class InboxController extends GetxController {
       TextEditingController();
   TextEditingController textEditingControllerSearch = TextEditingController();
 
-  addTousersWillSendTo({required Destination user}) {
-    if (!usersWillSendTo.contains(user)) {
-      usersWillSendTo.add(user);
-    }
-
+  addTousersWillSendTo({required Destination user, thepos}) {
+    purposeId = correspondences[thepos]!.purposeId!;
+    usersWillSendTo.add(user);
+    multipletransfersSend.TransferNode transferNode =
+        multipletransfersSend.TransferNode(
+            purposeId: correspondences[thepos]!.purposeId!,
+            destinationId: user.id.toString(),
+            voiceNotePrivate: false);
+    multiTransferNode[user.id!] = transferNode;
     update(); // update(["user"]);
   }
 
   delTousersWillSendTo({required Destination user}) {
     usersWillSendTo.remove(user);
+    multiTransferNode.remove(user.id);
     update(); // update(["alluser"]);
   }
 
@@ -303,6 +315,7 @@ class InboxController extends GetxController {
     // scrollController.addListener(_scrollListener(context: context));
 
     initRecorder();
+    // initRecorder2();
   }
 
   Future initRecorder() async {
@@ -526,47 +539,126 @@ class InboxController extends GetxController {
   Map<int, ReplyWithVoiceNoteRequestModel> transfarForMany = {};
   Map<int, CustomActions> transfarForManyCustomActions = {};
 
-  // Map<int, String> transfarForManyNots = {};
-//=============================================================================================
+// //open the AttachmentItem
+// //   getAttachmentItemlocal(
+// //       {documentId, transferId, attachmentId, required BuildContext context}) async {
+// //
+// //     notoragnalFileDoc=true;
+// //
+// //     final jsondata = await rootBundel.rootBundle.loadString(
+// //         "assets/json/getattachmentitem.json");
+// //
+// //     getAttAchmentItem = GetAttAchmentItem.fromJson(json.decode(jsondata));
+// //     print("g2gInfoForExportModel?.toJson()=>  ${g2gInfoForExportModel
+// //         ?.toJson()}");
+// //
+// //     pdfUrlFile=   getAttAchmentItem!.attachment!.uRL!;
+// //
+// // update();
+// //
+// //
+// //     // showDialog(
+// //     //     context: context,
+// //     //     builder: (BuildContext context) {
+// //     //       return AlertDialog(
+// //     //         title: Text(getAttAchmentItem!.attachment!.fileName!),
+// //     //         content: SizedBox(
+// //     //             height: MediaQuery
+// //     //                 .of(context)
+// //     //                 .size
+// //     //                 .height * .7,
+// //     //             width: MediaQuery
+// //     //                 .of(context)
+// //     //                 .size
+// //     //                 .width * .7,
+// //     //             child: SfPdfViewer.network(
+// //     //               //'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf'
+// //     //                 getAttAchmentItem!.attachment!.uRL!
+// //     //
+// //     //             )),
+// //     //         actions: <Widget>[
+// //     //           TextButton(
+// //     //             onPressed: () {
+// //     //               Navigator.of(context).pop();
+// //     //             },
+// //     //             child: Text("Ok"),
+// //     //           ),
+// //     //         ],
+// //     //       );
+// //     //     });
+// //   }
+//
+//   // [OperationContract]
+//   // [WebGet(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
+//   // UriTemplate = "GetAttachmentItem?)]
+//   // GetAttachmentItemResult GetAttachmentItem(string Token, string documentId, string transferId, string attachmentId, string language);
+//   //
+//
+// //=============================================================================================
+//
+//   multipleTransferspost({context, correspondenceId, transferId}) {
+//     //
+//     MultipleTransfersAPI _multipleTransfersAPI = MultipleTransfersAPI(context);
+//     recordingMap.forEach((key, value) async {
+//       print("key====>$key");
+//       print("key====>${value}");
+//
+//       String? audioFileBes64 = await audiobase64String(file: File(value));
+//
+//       multiTransferNode[key]?.voiceNote = audioFileBes64;
+//       multiTransferNode[key]?.voiceNoteExt = "m4a";
+//       multiTransferNode[key]?.voiceNotePrivate = false;
+//       multiTransferNode[key]?.destinationId = key.toString();
+//       multiTransferNode[key]?.purposeId =
+//           canOpenDocumentModel!.correspondence!.purposeId;
+//       multiTransferNode[key]?.voiceNotePrivate = false;
+//
+//       // multipletransfersSend.TransferNode transferNode =
+//       // multipletransfersSend.TransferNode(
+//       //     destinationId: key.toString(),note: ,voiceNotePrivate: ,
+//       //     purposeId:
+//       //         canOpenDocumentModel!.correspondence!.correspondenceId!,
+//       //     //value.correspondencesId!,
+//       //     dueDate: canOpenDocumentModel!.correspondence!.docDueDate!,
+//       //     //canOpenDocumentModel!.correspondence!.docDueDate!,
+//       //     voiceNote: audioFileBes64!,
+//       //     voiceNoteExt: "m4a");
+//       print(
+//           "multiTransferNode[key]=>    ${jsonEncode(multiTransferNode[key]?.toMap())}");
+//       print("key====>${jsonEncode(value)}");
+//     });
+//
+//     List<multipletransfersSend.TransferNode> transfers = [];
+//     multiTransferNode.forEach((key, value) {
+//       transfers.add(value);
+//     });
+//
+//     multipletransfersSend.MultipleTransfers multipleTransfers =
+//     multipletransfersSend.MultipleTransfers(
+//         transfers: transfers,
+//         correspondenceId: correspondenceId,
+//         token: secureStorage.token()!,
+//         transferId: transferId);
+//
+//     // MultipleTransfersModel multipleTransfersModel = MultipleTransfersModel(
+//     //     token: secureStorage.token()!,
+//     //     correspondenceId: correspondenceId,
+//     //     transferId: transferId,
+//     //     transfers: transfers);
+//
+//     print(
+//         "multipleTransfersModel.toMap()   =>${jsonEncode(multipleTransfers.toMap())}");
+//     transfarForMany.clear();
+//     usersWillSendTo.clear();
+//     _multipleTransfersAPI.post(multipleTransfers.toMap()).then((value) {
+//       DefaultOnSuccessResult defaultOnSuccessResult=value as DefaultOnSuccessResult;
+//
+//       Get.snackbar("", "تم التنفيذ بنجاح");
+//
+//     });
+//   }
 
-  multipleTransferspost(
-      {required context,
-      required correspondenceId,
-      required transferId,
-      required docDueDate}) {
-    MultipleTransfersAPI _multipleTransfersAPI = MultipleTransfersAPI(context);
-    List<TransferNode> transfers = [];
-
-    transfarForMany.forEach((key, value) {
-      TransferNode transferNode = TransferNode(
-          destinationId: key.toString(),
-          purposeId: correspondenceId,
-          dueDate: docDueDate.toString(),
-          voiceNote: value.voiceNote!,
-          voiceNoteExt: "m4a");
-      print("transferNode=>  ${transferNode.toMap()}");
-
-      transfers.add(transferNode);
-    });
-
-    print("transferNode=>  ${transfers.length}");
-
-    MultipleTransfersModel multipleTransfersModel = MultipleTransfersModel(
-        token: secureStorage.token()!,
-        correspondenceId: correspondenceId,
-        transferId: transferId,
-        transfers: transfers);
-
-    print(multipleTransfersModel.toMap());
-    transfarForMany.clear();
-    usersWillSendTo.clear();
-    _multipleTransfersAPI.post(multipleTransfersModel.toMap()).then((value) {
-      print(" _multipleTransfersAPI end");
-      print(value);
-    });
-  }
-
-//=====================================================================================
+//============================================================================
   CustomActions? getactions(id) {
     return transfarForManyCustomActions[id];
     update();
@@ -587,7 +679,6 @@ class InboxController extends GetxController {
       {required int id,
       required String transferId,
       required String correspondencesId}) {
-    print("user add to list ");
     ReplyWithVoiceNoteRequestModel model = ReplyWithVoiceNoteRequestModel(
         userId: id.toString(),
         transferId: transferId,
@@ -668,46 +759,48 @@ class InboxController extends GetxController {
         CustomSnackBar.success(
           icon: Container(),
           backgroundColor: Colors.lightGreen,
-          message:
-          "EndedSuccess".tr,
+          message: "EndedSuccess".tr,
         ),
       );
     });
   }
 
   //================================================================================================
-  Future recordForMany() async {
-    await Permission.storage.request();
-    await Permission.manageExternalStorage.request();
-    final stats = await Permission.microphone.request();
+  // Future recordForMany() async {
+  //   await Permission.storage.request();
+  //   await Permission.manageExternalStorage.request();
+  //   final stats = await Permission.microphone.request();
+  //
+  //   if (stats != PermissionStatus.granted) {
+  //     throw RecordingPermissionException("Microphone Permission");
+  //   }
+  //   audioRecorder = FlutterSoundRecorder();
+  //   audioPlayer = FlutterSoundPlayer();
+  //   // audioRecorder!.openAudioSession();
+  //   audioRecorder!.stopRecorder();
+  //   appDocDir = await getApplicationDocumentsDirectory();
+  //   _directoryPath = appDocDir!.path +
+  //       '/' +
+  //       DateTime.now().millisecondsSinceEpoch.toString() +
+  //       '.mp4';
+  //   recording = true;
+  //   update();
+  //
+  //   await audioRecorder?.startRecorder(codec: _codec, toFile: _directoryPath);
+  // }
+  //
+  // Future stopForMany({required int id}) async {
+  //   await audioRecorder?.stopRecorder();
+  //   recordFile = File(_directoryPath);
+  //   recording = false;
+  //   String? audioFileBes64 = await audiobase64String(file: recordFile);
+  //   update();
+  //   transfarForMany[id]?.voiceNote = audioFileBes64;
+  // }
+  //
+  //
 
-    if (stats != PermissionStatus.granted) {
-      throw RecordingPermissionException("Microphone Permission");
-    }
-    audioRecorder = FlutterSoundRecorder();
-    audioPlayer = FlutterSoundPlayer();
-    // audioRecorder!.openAudioSession();
-    audioRecorder!.stopRecorder();
-    appDocDir = await getApplicationDocumentsDirectory();
-    _directoryPath = appDocDir!.path +
-        '/' +
-        DateTime.now().millisecondsSinceEpoch.toString() +
-        '.mp4';
-    recording = true;
-    update();
-
-    await audioRecorder?.startRecorder(codec: _codec, toFile: _directoryPath);
-  }
-
-  Future stopForMany({required int id}) async {
-    await audioRecorder?.stopRecorder();
-    recordFile = File(_directoryPath);
-    recording = false;
-    String? audioFileBes64 = await audiobase64String(file: recordFile);
-    update();
-    transfarForMany[id]?.voiceNote = audioFileBes64;
-  }
-
+  /////=============================
   Future<void> selectFromDocDate({required BuildContext context}) async {
     final DateTime? pickedDate = await showDatePicker(
         context: context,
@@ -789,5 +882,150 @@ class InboxController extends GetxController {
     updateTexts3("");
     Get.back();
     update();
+  }
+
+//=============================================================================================
+
+  multipleTransferspost2({context, correspondenceId, transferId}) {
+    //
+    MultipleTransfersAPI _multipleTransfersAPI = MultipleTransfersAPI(context);
+    recordingMap.forEach((key, value) async {
+      print("key====>$key");
+      print("key====>${value}");
+
+      String? audioFileBes64 = await audiobase64String(file: File(value));
+
+      multiTransferNode[key]?.voiceNote = audioFileBes64;
+      multiTransferNode[key]?.voiceNoteExt = "m4a";
+      multiTransferNode[key]?.voiceNotePrivate = false;
+      multiTransferNode[key]?.destinationId = key.toString();
+      multiTransferNode[key]?.purposeId = purposeId;
+      // canOpenDocumentModel!.correspondence!.purposeId;
+      multiTransferNode[key]?.voiceNotePrivate = false;
+
+      // multipletransfersSend.TransferNode transferNode =
+      // multipletransfersSend.TransferNode(
+      //     destinationId: key.toString(),note: ,voiceNotePrivate: ,
+      //     purposeId:
+      //         canOpenDocumentModel!.correspondence!.correspondenceId!,
+      //     //value.correspondencesId!,
+      //     dueDate: canOpenDocumentModel!.correspondence!.docDueDate!,
+      //     //canOpenDocumentModel!.correspondence!.docDueDate!,
+      //     voiceNote: audioFileBes64!,
+      //     voiceNoteExt: "m4a");
+      print(
+          "multiTransferNode[key]=>    ${jsonEncode(multiTransferNode[key]?.toMap())}");
+      print("key====>${jsonEncode(value)}");
+    });
+
+    List<multipletransfersSend.TransferNode> transfers = [];
+    multiTransferNode.forEach((key, value) {
+      transfers.add(value);
+    });
+
+    multipletransfersSend.MultipleTransfers multipleTransfers =
+        multipletransfersSend.MultipleTransfers(
+            transfers: transfers,
+            correspondenceId: correspondenceId,
+            token: secureStorage.token()!,
+            transferId: transferId);
+
+    // MultipleTransfersModel multipleTransfersModel = MultipleTransfersModel(
+    //     token: secureStorage.token()!,
+    //     correspondenceId: correspondenceId,
+    //     transferId: transferId,
+    //     transfers: transfers);
+
+    print(
+        "multipleTransfersModel.toMap()   =>${jsonEncode(multipleTransfers.toMap())}");
+    transfarForMany.clear();
+    usersWillSendTo.clear();
+    _multipleTransfersAPI.post(multipleTransfers.toMap()).then((value) {
+      DefaultOnSuccessResult defaultOnSuccessResult =
+          value as DefaultOnSuccessResult;
+
+      Get.snackbar("", "تم التنفيذ بنجاح");
+    });
+  }
+
+//=====================================================================================
+  //Favorites user
+  ListFavoriteRecipientsResponse? favoriteRecipientsResponse;
+
+  Future listFavoriteRecipients({context}) async {
+    ListFavoriteRecipientsApi listFavoriteRecipientsApi =
+        ListFavoriteRecipientsApi(context);
+    listFavoriteRecipientsApi.data =
+        "Token=${secureStorage.token()}&Language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+    await listFavoriteRecipientsApi.getData().then((value) {
+      if (value != null) {
+        favoriteRecipientsResponse = value as ListFavoriteRecipientsResponse;
+      } else {
+        Get.snackbar("", "err".tr);
+      }
+
+      // print("listFavoriteRecipientsApi  =>${favoriteRecipientsResponse?.recipients[0].targetPhotoBs64.isEmpty}");
+    });
+    update();
+  }
+
+//التسجيل الجديد
+
+  setNots2({required int id, String? not}) {
+    multiTransferNode[id]?.note = not;
+  }
+
+  Map<int, multipletransfersSend.TransferNode> multiTransferNode = {};
+  Map<int, dynamic> recordingMap = {};
+
+  Future initRecorder2() async {
+    final statusmicrophone = await Permission.microphone.request();
+    final statusstorage = await Permission.storage.request();
+    final statusmanageExternalStorage =
+        await Permission.manageExternalStorage.request();
+
+    if (statusmicrophone != PermissionStatus.granted) {
+      Permission.microphone.request();
+    }
+    if (statusstorage != PermissionStatus.granted) {
+      await Permission.storage.request();
+    }
+    if (statusmanageExternalStorage != PermissionStatus.granted) {
+      Permission.manageExternalStorage.request();
+    }
+    await record.openRecorder();
+  }
+
+  Future recordMathod2({required id}) async {
+    await record.openRecorder();
+    //  await record.startRecorder(toFile: "audio");
+    appDocDir = await getApplicationDocumentsDirectory();
+    _directoryPath = appDocDir!.path +
+        '/' +
+        DateTime.now().millisecondsSinceEpoch.toString() +
+        '.mp4';
+    recording = true;
+    update(["id"]);
+    recordingMap[id] = _directoryPath;
+    await record.startRecorder(codec: _codec, toFile: _directoryPath);
+    update(["record"]);
+  }
+
+  Future stopMathod2() async {
+    recording = false;
+    update(["id"]);
+    recordFile = File(_directoryPath);
+    await record.stopRecorder();
+    update(["record"]);
+  }
+
+  Future playMathod2({required id}) async {
+    audioPlayer = FlutterSoundPlayer();
+    audioPlayer!.openPlayer();
+    if (recordingMap[id] != null) {
+      await audioPlayer!.startPlayer(fromURI: recordingMap[id]);
+    } else {
+      Get.snackbar("", "nofiletoopen".tr);
+    }
   }
 }

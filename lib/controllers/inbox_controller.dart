@@ -801,12 +801,13 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
     await audioPlayer!.startPlayer(fromURI: _directoryPath);
   }
 
-  completeInCorrespondence({context, data}) {
+  Future completeInCorrespondence({context, data})async {
     CompleteInCorrespondenceAPI _completeInCorrespondenceAPI =
         CompleteInCorrespondenceAPI(context);
     _completeInCorrespondenceAPI.data = data;
     _completeInCorrespondenceAPI.getData().then((value) {
       print("000000000000000000000");
+      Get.find<LandingPageController>().getDashboardStats(context: context);
       Navigator.pop(context);
       showTopSnackBar(
         context,
@@ -1017,6 +1018,7 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
     transfarForMany.clear();
     usersWillSendTo.clear();
     _multipleTransfersAPI.post(multipleTransfers.toMap()).then((value) {
+      Get.find<LandingPageController>().getDashboardStats(context: context);
       DefaultOnSuccessResult defaultOnSuccessResult=value as DefaultOnSuccessResult;
 
       Get.snackbar("", "تم التنفيذ بنجاح");

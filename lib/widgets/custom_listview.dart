@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../controllers/document_controller.dart';
 import '../controllers/inbox_controller.dart';
 
+import '../controllers/landing_page_controller.dart';
 import '../models/CorrespondencesModel.dart';
 import '../services/apis/reply_with_voice_note_api.dart';
 import '../services/json_model/find_recipient_model.dart';
@@ -5367,7 +5368,8 @@ class CustomListView extends GetView<InboxController> {
                                                               Get.snackbar("",
                                                                   "تمت العمليه بنجاح");
                                                             }
-                                                            print("1" * 50);
+                                                        // Get.       getDashboardStats()
+                                                            Get.find<LandingPageController>().getDashboardStats(context: context);
                                                           });
 
                                                           /// ToDo send Replay

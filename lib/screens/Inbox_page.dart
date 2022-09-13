@@ -1636,7 +1636,6 @@ class InboxPage extends GetWidget<InboxController> {
                                                           .customAction
                                                           ?.name);
                                                     }
-
                                                     else if (v == 4) {
                                                       //correspondences[pos].
 

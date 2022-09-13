@@ -13,6 +13,7 @@ import 'package:signature/signature.dart';
 
 //import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/document_controller.dart';
 import '../controllers/inbox_controller.dart';
@@ -62,12 +63,9 @@ class DocumentPage extends GetWidget<DocumentController> {
           SizedBox(
             height: size.height * .05,
           ),
-
           CustomSideButtonMenu(
             onClick: () {
               clickOnSign(context);
-
-              //controller.pdfAndSing
             },
             label: "signature".tr,
             image: 'assets/images/signature.png',
@@ -75,18 +73,27 @@ class DocumentPage extends GetWidget<DocumentController> {
           SizedBox(
             height: size.height * .05,
           ),
+          SizedBox(
+            height: size.height * .05,
+          ),
+          CustomSideButtonMenu(
+            onClick: () async {
+              String url =
+                  "https://intaliocom-my.sharepoint.com/:w:/r/personal/izzat_hajj_intalio_com/_layouts/15/Doc.aspx?sourcedoc=%7B433EEEF0-A155-4F05-B1BF-B9FBEEF77575%7D&file=5833639______%20____%20____%20(1).docx&action=default&mobileredirect=true";
+              final Uri toLaunch = Uri.parse("ms-word:ofe|u|$url|a|App");
 
-          // SizedBox(
-          //   height: size.height * .05,
-          // ),
-          // CustomSideButtonMenu(
-          //   onClick: () {},
-          //   label: "marking".tr,
-          //   image: 'assets/images/A.png',
-          // ),
-          // SizedBox(
-          //   height: size.height * .05,
-          // ),
+              final bool nativeAppLaunchSucceeded = await launchUrl(
+                toLaunch,
+                mode: LaunchMode.externalApplication,
+              );
+              print("was able to launch ? $nativeAppLaunchSucceeded");
+            },
+            label: "marking".tr,
+            image: 'assets/images/A.png',
+          ),
+          SizedBox(
+            height: size.height * .05,
+          ),
           CustomSideButtonMenu(
             onClick: () async {
               List<DocumentAnnotations> listofdocumentAnnotations = [];
@@ -163,7 +170,7 @@ class DocumentPage extends GetWidget<DocumentController> {
               children: [
                 Container(
                     color: Colors.grey[400],
-                    height: 80,
+                    height: 60,
                     width: size.width * .1,
                     child: Center(
                       child: Image.asset(

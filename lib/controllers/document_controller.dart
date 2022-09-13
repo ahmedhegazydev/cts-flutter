@@ -312,6 +312,8 @@ class DocumentController extends GetxController {
         SaveDocumentAnnotationsAPI(context);
     // pdfViewerkey=null;
     postSaveDocumentAnnotationsModel = SaveDocumentAnnotationModel(
+        Language: Get.locale?.languageCode == "en" ? "en" : "ar",
+        DocumentUrl: oragnalFileDocpdfUrlFile,
         AttachmentId: attachmentId.toString(),
         CorrespondenceId: correspondenceId,
         DelegateGctId: delegateGctId,

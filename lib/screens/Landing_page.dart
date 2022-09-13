@@ -10,6 +10,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../controllers/basket_controller.dart';
 import '../controllers/inbox_controller.dart';
 import '../controllers/landing_page_controller.dart';
+import '../controllers/login_controller.dart';
 import '../controllers/main_controller.dart';
 import '../controllers/my_cart/create_basket_controller.dart';
 import '../controllers/search_controller.dart';
@@ -51,6 +52,8 @@ class LandingPage extends GetWidget<LandingPageController> {
   Color pickerColor = Color(0xff443a49);
   Color currentColor = Color(0xff443a49);
   InboxController inboxController = Get.put<InboxController>(InboxController());
+
+  LoginController loginController = Get.put<LoginController>(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -1683,6 +1686,9 @@ class LandingPage extends GetWidget<LandingPageController> {
         InkWell(
           onTap: () {
             secureStorage.deleteSecureData(AllStringConst.Token);
+
+            loginController.passWord.text = "";
+            loginController.userName.text = "";
             Get.offAll(LoginPage());
 
             /// ToDo
@@ -3082,6 +3088,8 @@ class LandingPage extends GetWidget<LandingPageController> {
           InkWell(
             onTap: () {
               secureStorage.deleteSecureData(AllStringConst.Token);
+              loginController.passWord.text = "";
+              loginController.userName.text = "";
               Get.offAll(LoginPage());
 
               /// ToDo
@@ -3682,10 +3690,10 @@ class LandingPage extends GetWidget<LandingPageController> {
                                     .textTheme
                                     .headline3!
                                     .copyWith(
-                                        fontSize: 24,
+                                        fontSize: 16,
                                         fontFamily: "Bahij_bold",
                                         height:
-                                            1.2 // the height between text, default is null
+                                            2.1 // the height between text, default is null
                                         ),
                                 textAlign: TextAlign.center,
                               ),

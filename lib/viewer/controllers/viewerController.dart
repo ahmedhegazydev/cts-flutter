@@ -76,7 +76,7 @@ class ViewerController extends GetxController {
     // ViewerController.to.annotations[page].add(MoveableStackItem(100, 50, x, y));
     allAnnotations.add(annotation);
     var annotationWidget = MoveableStackItem.withImage(
-        width, height, x, y, v1, img, AnnotationBaseTypes.handWrite);
+        width, height, x, y, v1, img, AnnotationBaseTypes.handWrite, page);
     annotations[page].add(annotationWidget);
   }
 
@@ -92,11 +92,11 @@ class ViewerController extends GetxController {
     allAnnotations.add(annotation);
     if (annotationToAdd == AnnotationBaseTypes.signature) {
       var annotationWidget = MoveableStackItem.withUIImage(width, height, x, y,
-          v1, annotationImage!, AnnotationBaseTypes.signature);
+          v1, annotationImage!, AnnotationBaseTypes.signature, page);
       annotations[page].add(annotationWidget);
     } else {
       var annotationWidget =
-          MoveableStackItem(width, height, x, y, v1, annotationToAdd);
+          MoveableStackItem(width, height, x, y, v1, annotationToAdd, page);
       annotations[page].add(annotationWidget);
     }
     annotationToAdd = AnnotationBaseTypes.none;

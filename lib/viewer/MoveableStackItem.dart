@@ -16,20 +16,37 @@ class MoveableStackItem extends StatefulWidget {
   }
 
   MoveableStackItem(this.initailWidth, this.initailHeight, this.initailx,
-      this.initaily, this.uuid, this.type);
+      this.initaily, this.uuid, this.type, this.page);
 
-  MoveableStackItem.withImage(this.initailWidth, this.initailHeight,
-      this.initailx, this.initaily, this.uuid, this.image, this.type);
+  MoveableStackItem.withImage(
+      this.initailWidth,
+      this.initailHeight,
+      this.initailx,
+      this.initaily,
+      this.uuid,
+      this.image,
+      this.type,
+      this.page);
 
-  MoveableStackItem.withUIImage(this.initailWidth, this.initailHeight,
-      this.initailx, this.initaily, this.uuid, this.uiimage, this.type);
+  MoveableStackItem.withUIImage(
+      this.initailWidth,
+      this.initailHeight,
+      this.initailx,
+      this.initaily,
+      this.uuid,
+      this.uiimage,
+      this.type,
+      this.page);
 
   final String uuid;
+  final int page;
+
   final double initailWidth;
   final double initailHeight;
   final double initailx;
   final double initaily;
   final AnnotationBaseTypes type;
+
   Uint8List? image;
   Image? uiimage;
   void printSampleP() {
@@ -83,16 +100,39 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
     );
   }
 
-  Widget dragableNode() {
+  Widget dragableNode(
+      [Color color = Colors.green, String text = "", double size = 18]) {
+    double radius = size / 2;
     return Container(
-      decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.green,
+      child: Align(
+        alignment: Alignment.center,
+        child: Text(
+          text,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: color,
+            shadows: [
+              Shadow(
+                color: Colors.blue.shade900.withOpacity(0.8),
+                offset: Offset(1, 2),
+                blurRadius: 4,
+              ),
+            ],
           ),
-          color: Colors.white,
-          borderRadius: const BorderRadius.all(Radius.circular(12))),
-      width: resizeButtonSize,
-      height: resizeButtonSize,
+        ),
+      ),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: color,
+        ),
+        color: Colors.white,
+        borderRadius: BorderRadius.all(
+          Radius.circular(radius),
+        ),
+      ),
+      width: size,
+      height: size,
       // color: Colors.white,
     );
   }
@@ -242,6 +282,27 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
     );
   }
 
+  Widget deleteButton() {
+    return Positioned(
+      top: 10,
+      right: 10,
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            print("bd");
+            print(ViewerController.to.annotations);
+            ViewerController.to.annotations[widget.page].remove(this.widget);
+            print(this);
+            print("ad");
+            print(ViewerController.to.annotations);
+            //validateConstraints();
+          });
+        },
+        child: dragableNode(Colors.red, "X", 30),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetX<ViewerController>(
@@ -309,6 +370,7 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
 
             s.viewerIsEditable.value ? dragButtonCR() : Text(""),
             s.viewerIsEditable.value ? dragButtonCL() : Text(""),
+            s.viewerIsEditable.value ? deleteButton() : Text(""),
             // isEditing ? dragButton() : Text("ss"),
             // CloseButton(),
           ]),

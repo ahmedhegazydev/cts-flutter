@@ -2226,7 +2226,7 @@ class InboxPage extends GetWidget<InboxController> {
                           Expanded(
                             child: CustomListView(
                               function: controller.onRefresh(),
-                              correspondences: controller.correspondences,
+                              correspondences: controller.allCorrespondences,
                               scrollController: controller.scrollController,
                               haveMoreData: controller.haveMoreData,
                               onClickItem: () {
@@ -2252,7 +2252,7 @@ class InboxPage extends GetWidget<InboxController> {
                           Expanded(
                             child: CustomListView(
                               function: controller.onRefresh(),
-                              correspondences: controller.correspondences,
+                              correspondences: controller.allCorrespondences,
                               scrollController: controller.scrollController,
                               haveMoreData: controller.haveMoreData,
                               onClickItem: () {
@@ -2278,7 +2278,7 @@ class InboxPage extends GetWidget<InboxController> {
                           Expanded(
                             child: CustomListView(
                               function: controller.onRefresh(),
-                              correspondences: controller.correspondences,
+                              correspondences: controller.allCorrespondences,
                               scrollController: controller.scrollController,
                               haveMoreData: controller.haveMoreData,
                               onClickItem: () {
@@ -3285,8 +3285,8 @@ controller.isAllOrNot=false;
                   // correspondences[pos].docDueDate ,
                       context: context,
                       transferId: controller.
-                      correspondences[pos].transferId!,
-                      correspondenceId: controller.correspondences[pos]
+                      allCorrespondences[pos].transferId!,
+                      correspondenceId: controller.allCorrespondences[pos]
                           .correspondenceId);
                   Navigator.pop(context);
                 },
@@ -3491,11 +3491,11 @@ controller.isAllOrNot=false;
                                                         .SetMultipleReplyWithVoiceNoteRequestModel(
                                                         correspondencesId:
                                                         controller
-                                                            .correspondences[
+                                                            .allCorrespondences[
                                                         pos]
                                                             .correspondenceId!,
                                                         transferId: controller.
-                                                           correspondences[pos]
+                                                           allCorrespondences[pos]
                                                             .transferId!,
                                                         id: logic
                                                             .users[pos].id!);

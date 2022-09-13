@@ -177,7 +177,7 @@ int?nodeId=0;
   GetCorrespondencesAllModel? getCorrespondencesAllModel;
   CorrespondencesModel? correspondencesModel;
 
-  List<Correspondences> correspondences = [];
+ // List<Correspondences> correspondences = [];
   List<Correspondences> allCorrespondences = [];
 
   final SecureStorage secureStorage = SecureStorage();
@@ -204,11 +204,11 @@ int?nodeId=0;
 
   addTousersWillSendTo({required Destination user, thepos}) {
 
-    purposeId=correspondences[thepos]!.purposeId!;
+    purposeId=allCorrespondences[thepos]!.purposeId!;
     usersWillSendTo.add(user);
     multipletransfersSend.TransferNode transferNode =
     multipletransfersSend.TransferNode(
-        purposeId: correspondences[thepos]!.purposeId!,destinationId: user.id.toString(),voiceNotePrivate: false);
+        purposeId: allCorrespondences[thepos]!.purposeId!,destinationId: user.id.toString(),voiceNotePrivate: false);
     multiTransferNode[user.id!] = transferNode;
     update(); // update(["user"]);
   }
@@ -257,7 +257,7 @@ int?nodeId=0;
       LoginModel data = LoginModel.fromJson(logindata!);
       customActions = data.customActions;
     }
-   // _scrollListener(context: context);
+  // _scrollListener(context: context);
   }
 
   getAllData({required context}) {
@@ -281,7 +281,7 @@ int?nodeId=0;
   Future<void> onRefresh() async {
     //  getCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false,context: context );
 
-    //  getAllCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false );
+   // getAllCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false, context: context );
     print("onRefresh");
   }
 
@@ -329,7 +329,7 @@ int?nodeId=0;
   @override
   void onInit() {
     super.onInit();
-    // scrollController.addListener(_scrollListener(context: context));
+     // scrollController.addListener(_scrollListener(context: context));
 
     initRecorder();
    // initRecorder2();
@@ -442,10 +442,10 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
     _correspondencesApi.getData().then((value) {
       correspondencesModel = value as CorrespondencesModel;
       if (addToList) {
-        correspondences
+        allCorrespondences
             .addAll(correspondencesModel?.inbox?.correspondences ?? []);
       } else {
-        correspondences = correspondencesModel?.inbox?.correspondences ?? [];
+        allCorrespondences = correspondencesModel?.inbox?.correspondences ?? [];
       }
       int listLength =
           correspondencesModel?.inbox?.correspondences?.length ?? 0;
@@ -492,7 +492,7 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
       int listLength =
           getCorrespondencesAllModel?.inbox?.correspondences?.length ?? 0;
       var v = getCorrespondencesAllModel?.toJson();
-      if (listLength < pageSize) {
+      if (listLength < pageSize-1) {
         haveMoreData = false;
       }
       update();

@@ -6121,8 +6121,8 @@ class CustomListView extends GetView<InboxController> {
                   controller.multipleTransferspost2(
                       context: context,
                       transferId: controller.
-                      correspondences[thepos].transferId!,
-                      correspondenceId: controller.correspondences[thepos].correspondenceId);
+                      allCorrespondences[thepos].transferId!,
+                      correspondenceId: controller.allCorrespondences[thepos].correspondenceId);
                   Navigator.pop(context);
                 },
                 child: Text("Ok"),
@@ -6326,11 +6326,11 @@ class CustomListView extends GetView<InboxController> {
                                                         .SetMultipleReplyWithVoiceNoteRequestModel(
                                                         correspondencesId:
                                                         controller.
-                                                        correspondences[
+                                                        allCorrespondences[
                                                         pos]
                                                             .correspondenceId!,
                                                         transferId: controller.
-                                                            correspondences[
+                                                            allCorrespondences[
                                                                     pos]
                                                             .transferId!,
                                                         id: logic

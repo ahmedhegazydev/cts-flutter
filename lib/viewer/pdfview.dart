@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:internet_file/internet_file.dart';
-import 'package:native_pdf_renderer/native_pdf_renderer.dart';
+import 'package:pdfx/pdfx.dart';
+//import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 import './MoveableStackItem.dart';
 import './controllers/viewerController.dart';
 import './measureSize.dart';
@@ -65,8 +66,7 @@ class _PDFViewState extends State<PDFView> {
       pageHeigt = pageHeigt * aspect;
       pageWidth = pageWidth * aspect;
 
-      final pageImage = await page.render(
-          width: pageWidth.toInt(), height: pageHeigt.toInt());
+      final pageImage = await page.render(width: pageWidth, height: pageHeigt);
       pages.add(pageImage!);
       // ViewerController.to.addAnnotationList([]);
     }

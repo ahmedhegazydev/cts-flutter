@@ -19,57 +19,59 @@ class SignaturePage extends GetView<SignaturePageController> {
     return Scaffold(
       appBar: AppBar(
           actions: <Widget>[
-      Padding(padding: EdgeInsets.all(5),
-        child:
-            InkWell(
-                onTap: () {
-                  controller.saveSign(context);
-                },
-                child: Icon(
-                  Icons.close,
-                  color: Colors.white,
-                  size: 30,
-                ))),
+            Padding(
+                padding: EdgeInsets.all(5),
+                child: InkWell(
+                    onTap: () {
+                      controller.saveSign(context);
+                    },
+                    child: Icon(
+                      Icons.close,
+                      color: Colors.white,
+                      size: 30,
+                    ))),
             Spacer(),
-            Padding(padding: EdgeInsets.all(5),
-            child:
-            Text(
-              "addsing".tr,
-                style: TextStyle(
-                  // fontFamily: 'Roboto',
-                  fontSize: 20,
-                  color: Colors.white
-                  // letterSpacing: 0.15,
-                  // fontWeight: FontWeight.w500,
-                  // color: _themeData!.colorScheme.onSurface
-                  //     .withOpacity(0.87),
-                )
-    ),
-    ),
+            Padding(
+              padding: EdgeInsets.all(5),
+              child: GestureDetector(
+                onTap: (){
+                          Get.back();
+                },
+                child:  Text("addsing".tr,
+                    style: TextStyle(
+                      // fontFamily: 'Roboto',
+                        fontSize: 20,
+                        color: Colors.white
+                      // letterSpacing: 0.15,
+                      // fontWeight: FontWeight.w500,
+                      // color: _themeData!.colorScheme.onSurface
+                      //     .withOpacity(0.87),
+                    )),
+              ),
+            ),
             Spacer(),
-            Padding(padding: EdgeInsets.all(5),
-            child:
-            InkWell(
-                onTap: () {
-                  controller.controller.clear();
-                },
-                child: Icon(
-                  Icons.delete,
-                  size: 30,
-                  color: Colors.white,
-                ))),
-    Padding(padding: EdgeInsets.all(5),
-    child:
-            InkWell(
-                onTap: () {
-                  controller.saveSign(context);
-                },
-                child: Icon(
-                  Icons.save,
-                  color: Colors.white,
-                  size: 30,
-                ))),
-
+            Padding(
+                padding: EdgeInsets.all(5),
+                child: InkWell(
+                    onTap: () {
+                      controller.controller.clear();
+                    },
+                    child: Icon(
+                      Icons.delete,
+                      size: 30,
+                      color: Colors.white,
+                    ))),
+            Padding(
+                padding: EdgeInsets.all(5),
+                child: InkWell(
+                    onTap: () {
+                      controller.saveSign(context);
+                    },
+                    child: Icon(
+                      Icons.save,
+                      color: Colors.white,
+                      size: 30,
+                    ))),
           ],
           // title: Text(
           //   "addsing".tr,
@@ -101,15 +103,18 @@ class SignaturePage extends GetView<SignaturePageController> {
                 // color: Colors.red,
                 child: Column(
                   children: [
-                  Padding(padding: EdgeInsets.all(10),
-                  child:   Text("defaultsignature".tr,  style: TextStyle(
-                    // fontFamily: 'Roboto',
-                    fontSize: 20,
-                    // letterSpacing: 0.15,
-                    // fontWeight: FontWeight.w500,
-                    // color: _themeData!.colorScheme.onSurface
-                    //     .withOpacity(0.87),
-                  )),),
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Text("defaultsignature".tr,
+                          style: TextStyle(
+                            // fontFamily: 'Roboto',
+                            fontSize: 20,
+                            // letterSpacing: 0.15,
+                            // fontWeight: FontWeight.w500,
+                            // color: _themeData!.colorScheme.onSurface
+                            //     .withOpacity(0.87),
+                          )),
+                    ),
                     GetBuilder<SignaturePageController>(builder: (logic) {
                       return Padding(
                         padding: const EdgeInsets.all(20.0),
@@ -128,17 +133,20 @@ class SignaturePage extends GetView<SignaturePageController> {
                 // color: Colors.yellow,
                 child: Column(
                   children: [
-    Padding(padding: EdgeInsets.all(10),
-    child:
-    Text("multisignature".tr, style:
-                      TextStyle(
-                        // fontFamily: 'Roboto',
-                        fontSize: 20,
-                        // letterSpacing: 0.15,
-                        // fontWeight: FontWeight.w500,
-                        // color: _themeData!.colorScheme.onSurface
-                        //     .withOpacity(0.87),
-                      ),),),
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        "multisignature".tr,
+                        style: TextStyle(
+                          // fontFamily: 'Roboto',
+                          fontSize: 20,
+                          // letterSpacing: 0.15,
+                          // fontWeight: FontWeight.w500,
+                          // color: _themeData!.colorScheme.onSurface
+                          //     .withOpacity(0.87),
+                        ),
+                      ),
+                    ),
                     Expanded(
                         child: GetBuilder<SignaturePageController>(
                             assignId: true,

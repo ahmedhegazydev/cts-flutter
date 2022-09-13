@@ -51,6 +51,12 @@ as multipletransfersSend;
 import 'landing_page_controller.dart';
 
 class InboxController extends GetxController {
+
+
+
+
+
+
   //ده عشان لو اختار من الشاشه بره كل الصادر و الوارد نخفي شاشاه التاب الي فيها صادر ووارد
   bool isAllOrNot=false;
 

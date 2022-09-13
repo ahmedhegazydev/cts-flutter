@@ -557,7 +557,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                 Expanded(
                                                   child: GetBuilder<
                                                       DocumentController>(
-                                                    assignId: true,
+                                                    assignId: true,autoRemove: false,
                                                     builder: (logic) {
                                                       return GridView.builder(
                                                         itemCount: controller

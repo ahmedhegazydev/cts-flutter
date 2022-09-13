@@ -5434,7 +5434,12 @@ class CustomListView extends GetView<InboxController> {
                                                                 ),
                                                                 Container(
                                                                   child:
-                                                                  TextFormField(
+                                                                  TextFormField(onChanged: (v){
+                                                                    Get
+                                                                        .find<
+                                                                        InboxController>()
+                                                                        .completeNote=v;
+                                                                  },
                                                                     maxLines: 4,
                                                                   ),
                                                                   color: Colors
@@ -5468,12 +5473,7 @@ class CustomListView extends GetView<InboxController> {
                                                               .secureStorage
                                                               .token()}&correspondenceId=${correspondences[pos]
                                                               .correspondenceId}&transferId=${correspondences[pos]
-                                                              .transferId}&actionType=${Get
-                                                              .find<
-                                                              InboxController>()
-                                                              .completeCustomActions
-                                                              ?.name ??
-                                                              ""}&note=${Get
+                                                              .transferId}&actionType=Complete&note=${Get
                                                               .find<
                                                               InboxController>()
                                                               .completeNote}&language=${Get

@@ -771,7 +771,8 @@ class InboxPage extends GetWidget<InboxController> {
                                                               ],
                                                             ),
                                                       );
-                                                    } else if (v == 2) {
+                                                    }
+                                                    else if (v == 2) {
                                                       showDialog(
                                                           context: context,
                                                           builder: (BuildContext
@@ -1507,7 +1508,8 @@ class InboxPage extends GetWidget<InboxController> {
                                                               ],
                                                             );
                                                           });
-                                                    } else if (v == 3) {
+                                                    }
+                                                    else if (v == 3) {
                                                       showDialog(
                                                         context: context,
                                                         builder: (ctx) =>
@@ -1544,7 +1546,9 @@ class InboxPage extends GetWidget<InboxController> {
                                                                           ),
                                                                           Container(
                                                                             child:
-                                                                            TextFormField(
+                                                                            TextFormField(onChanged: (v){
+                                                                              controller.completeNote=v;
+                                                                            },
                                                                               maxLines:
                                                                               4,
                                                                             ),
@@ -1580,12 +1584,7 @@ class InboxPage extends GetWidget<InboxController> {
                                                                         .secureStorage
                                                                         .token()}&correspondenceId=${controller.allCorrespondences[pos]
                                                                         .correspondenceId}&transferId=${controller.allCorrespondences[pos]
-                                                                        .transferId}&actionType=${Get
-                                                                        .find<
-                                                                        InboxController>()
-                                                                        .completeCustomActions
-                                                                        ?.name ??
-                                                                        ""}&note=${Get
+                                                                        .transferId}&actionType="Complete"}&note=${Get
                                                                         .find<
                                                                         InboxController>()
                                                                         .completeNote}&language=${Get
@@ -1636,7 +1635,9 @@ class InboxPage extends GetWidget<InboxController> {
                                                           InboxController>()
                                                           .customAction
                                                           ?.name);
-                                                    } else if (v == 4) {
+                                                    }
+
+                                                    else if (v == 4) {
                                                       //correspondences[pos].
 
                                                     } else if (v == 5) {

@@ -51,6 +51,12 @@ import '../services/models/multiple_transfers_model_send.dart'
 import 'landing_page_controller.dart';
 
 class InboxController extends GetxController {
+
+
+
+
+
+
   //ده عشان لو اختار من الشاشه بره كل الصادر و الوارد نخفي شاشاه التاب الي فيها صادر ووارد
   bool isAllOrNot = false;
 
@@ -103,7 +109,7 @@ class InboxController extends GetxController {
     getFetchBasketListApi.data =
         "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     await getFetchBasketListApi.getData().then((value) {
-      Navigator.pop(context);
+     // Navigator.pop(context);
       fetchBasketListModel = value as FetchBasketListModel;
       // fetchBasketListModel?.baskets?.forEach((element) {
       //   element.orderBy = Random().nextInt(100);
@@ -165,7 +171,7 @@ class InboxController extends GetxController {
   int index = 0;
   int inboxId = 0;
   bool haveMoreData = true;
-  bool addToList = true;
+  bool addToList = false;
 
   bool showHideFilterScreen = false;
   bool showHideMyFavListScreen = false;
@@ -174,7 +180,7 @@ class InboxController extends GetxController {
   GetCorrespondencesAllModel? getCorrespondencesAllModel;
   CorrespondencesModel? correspondencesModel;
 
-  List<Correspondences> correspondences = [];
+ // List<Correspondences> correspondences = [];
   List<Correspondences> allCorrespondences = [];
 
   final SecureStorage secureStorage = SecureStorage();
@@ -199,13 +205,12 @@ class InboxController extends GetxController {
   TextEditingController textEditingControllerSearch = TextEditingController();
 
   addTousersWillSendTo({required Destination user, thepos}) {
-    purposeId = correspondences[thepos]!.purposeId!;
+
+    purposeId=allCorrespondences[thepos].purposeId;
     usersWillSendTo.add(user);
     multipletransfersSend.TransferNode transferNode =
-        multipletransfersSend.TransferNode(
-            purposeId: correspondences[thepos]!.purposeId!,
-            destinationId: user.id.toString(),
-            voiceNotePrivate: false);
+    multipletransfersSend.TransferNode(
+        purposeId: allCorrespondences[thepos].purposeId,destinationId: user.id.toString(),voiceNotePrivate: false);
     multiTransferNode[user.id!] = transferNode;
     update(); // update(["user"]);
   }
@@ -254,7 +259,7 @@ class InboxController extends GetxController {
       LoginModel data = LoginModel.fromJson(logindata!);
       customActions = data.customActions;
     }
-    // _scrollListener(context: context);
+  // _scrollListener(context: context);
   }
 
   getAllData({required context}) {
@@ -278,7 +283,7 @@ class InboxController extends GetxController {
   Future<void> onRefresh() async {
     //  getCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false,context: context );
 
-    //  getAllCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false );
+   // getAllCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false, context: context );
     print("onRefresh");
   }
 
@@ -312,7 +317,7 @@ class InboxController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // scrollController.addListener(_scrollListener(context: context));
+     // scrollController.addListener(_scrollListener(context: context));
 
     initRecorder();
     // initRecorder2();
@@ -395,17 +400,17 @@ class InboxController extends GetxController {
     this.inboxId = inboxId;
 
     _correspondencesApi.data =
-        // "Token=${secureStorage.token()}&inboxId=$inboxId&index=$index&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&showThumbnails=$showThumbnails";
-        "Token=${secureStorage.token()}&inboxId=$inboxId&nodeId=$nodeId&index=$index&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&showThumbnails=$showThumbnails";
-
-    print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
+       // "Token=${secureStorage.token()}&inboxId=$inboxId&index=$index&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&showThumbnails=$showThumbnails";
+"Token=${secureStorage.token()}&inboxId=$inboxId&nodeId=$nodeId&index=$index&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&showThumbnails=$showThumbnails";
+print("_correspondencesApi.data =>${_correspondencesApi.data}");
+print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
     _correspondencesApi.getData().then((value) {
       correspondencesModel = value as CorrespondencesModel;
       if (addToList) {
-        correspondences
+        allCorrespondences
             .addAll(correspondencesModel?.inbox?.correspondences ?? []);
       } else {
-        correspondences = correspondencesModel?.inbox?.correspondences ?? [];
+        allCorrespondences = correspondencesModel?.inbox?.correspondences ?? [];
       }
       int listLength =
           correspondencesModel?.inbox?.correspondences?.length ?? 0;
@@ -428,7 +433,7 @@ class InboxController extends GetxController {
       required int inboxId,
       int pageSize = 20,
       bool showThumbnails = false}) {
-    // showLoaderDialog(context);
+print("theinboxId=> $inboxId =================  theindex=>   $index  ");
     final GetCorrespondencesAllAPI _getCorrespondencesAllAPI =
         GetCorrespondencesAllAPI(context);
     // correspondences.clear();
@@ -453,7 +458,7 @@ class InboxController extends GetxController {
       int listLength =
           getCorrespondencesAllModel?.inbox?.correspondences?.length ?? 0;
       var v = getCorrespondencesAllModel?.toJson();
-      if (listLength < pageSize) {
+      if (listLength < pageSize-1) {
         haveMoreData = false;
       }
       update();
@@ -747,12 +752,13 @@ class InboxController extends GetxController {
     await audioPlayer!.startPlayer(fromURI: _directoryPath);
   }
 
-  completeInCorrespondence({context, data}) {
+  Future completeInCorrespondence({context, data})async {
     CompleteInCorrespondenceAPI _completeInCorrespondenceAPI =
         CompleteInCorrespondenceAPI(context);
     _completeInCorrespondenceAPI.data = data;
-    _completeInCorrespondenceAPI.getData().then((value) {
+  await  _completeInCorrespondenceAPI.getData().then((value) {
       print("000000000000000000000");
+      Get.find<LandingPageController>().getDashboardStats(context: context);
       Navigator.pop(context);
       showTopSnackBar(
         context,
@@ -941,8 +947,7 @@ class InboxController extends GetxController {
     transfarForMany.clear();
     usersWillSendTo.clear();
     _multipleTransfersAPI.post(multipleTransfers.toMap()).then((value) {
-      DefaultOnSuccessResult defaultOnSuccessResult =
-          value as DefaultOnSuccessResult;
+      DefaultOnSuccessResult defaultOnSuccessResult=value as DefaultOnSuccessResult;
 
       Get.snackbar("", "تم التنفيذ بنجاح");
     });

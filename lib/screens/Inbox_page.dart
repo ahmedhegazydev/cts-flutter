@@ -771,7 +771,8 @@ class InboxPage extends GetWidget<InboxController> {
                                                               ],
                                                             ),
                                                       );
-                                                    } else if (v == 2) {
+                                                    }
+                                                    else if (v == 2) {
                                                       showDialog(
                                                           context: context,
                                                           builder: (BuildContext
@@ -1507,7 +1508,8 @@ class InboxPage extends GetWidget<InboxController> {
                                                               ],
                                                             );
                                                           });
-                                                    } else if (v == 3) {
+                                                    }
+                                                    else if (v == 3) {
                                                       showDialog(
                                                         context: context,
                                                         builder: (ctx) =>
@@ -1544,7 +1546,9 @@ class InboxPage extends GetWidget<InboxController> {
                                                                           ),
                                                                           Container(
                                                                             child:
-                                                                            TextFormField(
+                                                                            TextFormField(onChanged: (v){
+                                                                              controller.completeNote=v;
+                                                                            },
                                                                               maxLines:
                                                                               4,
                                                                             ),
@@ -1580,12 +1584,7 @@ class InboxPage extends GetWidget<InboxController> {
                                                                         .secureStorage
                                                                         .token()}&correspondenceId=${controller.allCorrespondences[pos]
                                                                         .correspondenceId}&transferId=${controller.allCorrespondences[pos]
-                                                                        .transferId}&actionType=${Get
-                                                                        .find<
-                                                                        InboxController>()
-                                                                        .completeCustomActions
-                                                                        ?.name ??
-                                                                        ""}&note=${Get
+                                                                        .transferId}&actionType="Complete"}&note=${Get
                                                                         .find<
                                                                         InboxController>()
                                                                         .completeNote}&language=${Get
@@ -1636,7 +1635,8 @@ class InboxPage extends GetWidget<InboxController> {
                                                           InboxController>()
                                                           .customAction
                                                           ?.name);
-                                                    } else if (v == 4) {
+                                                    }
+                                                    else if (v == 4) {
                                                       //correspondences[pos].
 
                                                     } else if (v == 5) {
@@ -2226,7 +2226,7 @@ class InboxPage extends GetWidget<InboxController> {
                           Expanded(
                             child: CustomListView(
                               function: controller.onRefresh(),
-                              correspondences: controller.correspondences,
+                              correspondences: controller.allCorrespondences,
                               scrollController: controller.scrollController,
                               haveMoreData: controller.haveMoreData,
                               onClickItem: () {
@@ -2252,7 +2252,7 @@ class InboxPage extends GetWidget<InboxController> {
                           Expanded(
                             child: CustomListView(
                               function: controller.onRefresh(),
-                              correspondences: controller.correspondences,
+                              correspondences: controller.allCorrespondences,
                               scrollController: controller.scrollController,
                               haveMoreData: controller.haveMoreData,
                               onClickItem: () {
@@ -2278,7 +2278,7 @@ class InboxPage extends GetWidget<InboxController> {
                           Expanded(
                             child: CustomListView(
                               function: controller.onRefresh(),
-                              correspondences: controller.correspondences,
+                              correspondences: controller.allCorrespondences,
                               scrollController: controller.scrollController,
                               haveMoreData: controller.haveMoreData,
                               onClickItem: () {
@@ -3285,8 +3285,8 @@ controller.isAllOrNot=false;
                   // correspondences[pos].docDueDate ,
                       context: context,
                       transferId: controller.
-                      correspondences[pos].transferId!,
-                      correspondenceId: controller.correspondences[pos]
+                      allCorrespondences[pos].transferId!,
+                      correspondenceId: controller.allCorrespondences[pos]
                           .correspondenceId);
                   Navigator.pop(context);
                 },
@@ -3491,11 +3491,11 @@ controller.isAllOrNot=false;
                                                         .SetMultipleReplyWithVoiceNoteRequestModel(
                                                         correspondencesId:
                                                         controller
-                                                            .correspondences[
+                                                            .allCorrespondences[
                                                         pos]
                                                             .correspondenceId!,
                                                         transferId: controller.
-                                                           correspondences[pos]
+                                                           allCorrespondences[pos]
                                                             .transferId!,
                                                         id: logic
                                                             .users[pos].id!);

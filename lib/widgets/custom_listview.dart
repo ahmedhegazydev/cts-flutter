@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../controllers/document_controller.dart';
 import '../controllers/inbox_controller.dart';
 
+import '../controllers/landing_page_controller.dart';
 import '../models/CorrespondencesModel.dart';
 import '../services/apis/reply_with_voice_note_api.dart';
 import '../services/json_model/find_recipient_model.dart';
@@ -5284,23 +5285,24 @@ class CustomListView extends GetView<InboxController> {
                                                                   false);
                                                         }
 
-                                                        print(v.toMap());
-                                                        showLoaderDialog(
-                                                            context);
-                                                        await replayAPI
-                                                            .post(v.toMap())
-                                                            .then((value) {
-                                                          Navigator.pop(
-                                                              context);
-                                                          ReplyWithVoiceNoteModel
-                                                              v = value
-                                                                  as ReplyWithVoiceNoteModel;
-                                                          if (v.status == 1) {
-                                                            Get.snackbar("",
-                                                                "تمت العمليه بنجاح");
-                                                          }
-                                                          print("1" * 50);
-                                                        });
+
+          print(v.toMap());
+                                                          showLoaderDialog(context);
+                                                          await replayAPI
+                                                              .post(v.toMap())
+                                                              .then((value) {
+                                                                Navigator.pop(context);
+                                                            ReplyWithVoiceNoteModel
+                                                            v = value
+                                                            as ReplyWithVoiceNoteModel;
+                                                            if (v.status == 1) {
+                                                              Get.snackbar("",
+                                                                  "تمت العمليه بنجاح");
+                                                            }
+                                                        // Get.       getDashboardStats()
+                                                            Get.find<LandingPageController>().getDashboardStats(context: context);
+                                                                Get.find<InboxController>().     getCorrespondencesData(context: context,inboxId:  Get.find<InboxController>().inboxId ,pageSize:20,showThumbnails: false );
+                                                          });
 
                                                         /// ToDo send Replay
                                                         Get.find<
@@ -5324,81 +5326,109 @@ class CustomListView extends GetView<InboxController> {
                                             } else if (v == 2) {
                                               ///ToDo   عمل تحويل زي الي في داخل الدكيومنت
 
-                                              _popUpMenu(context, pos);
-                                            } else if (v == 3) {
-                                              showDialog(
-                                                context: context,
-                                                builder: (ctx) => AlertDialog(
-                                                  title: Text(" "),
-                                                  content: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Container(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              .8,
-                                                      color: Colors.grey[200],
-                                                      child:
-                                                          SingleChildScrollView(
-                                                        child: Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Text("note"),
-                                                              SizedBox(
-                                                                height: 8,
-                                                              ),
-                                                              Container(
-                                                                child:
-                                                                    TextFormField(
-                                                                  maxLines: 4,
+
+                                            _popUpMenu(context,pos);
+
+                                          } else if (v == 3) {
+                                            showDialog(
+                                              context: context,
+                                              builder: (ctx) =>
+                                                  AlertDialog(
+                                                    title: Text(" "),
+                                                    content: Padding(
+                                                      padding:
+                                                      const EdgeInsets.all(
+                                                          8.0),
+                                                      child: Container(
+                                                        width:
+                                                        MediaQuery
+                                                            .of(context)
+                                                            .size
+                                                            .width *
+                                                            .8,
+                                                        color: Colors.grey[200],
+                                                        child:
+                                                        SingleChildScrollView(
+                                                          child: Column(
+                                                              mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                              crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                              children: [
+                                                                Text("note"),
+                                                                SizedBox(
+                                                                  height: 8,
                                                                 ),
-                                                                color: Colors
-                                                                    .grey[300],
-                                                              ),
-                                                              SizedBox(
-                                                                height: 8,
-                                                              ),
-                                                            ]),
+                                                                Container(
+                                                                  child:
+                                                                  TextFormField(onChanged: (v){
+                                                                    Get
+                                                                        .find<
+                                                                        InboxController>()
+                                                                        .completeNote=v;
+                                                                  },
+                                                                    maxLines: 4,
+                                                                  ),
+                                                                  color: Colors
+                                                                      .grey[300],
+                                                                ),
+                                                                SizedBox(
+                                                                  height: 8,
+                                                                ),
+                                                              ]),
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                  actions: <Widget>[
-                                                    FlatButton(
-                                                      onPressed: () {
-                                                        print(Get.find<
-                                                                InboxController>()
-                                                            .completeCustomActions
-                                                            ?.name);
-                                                        print(Get.find<
-                                                                InboxController>()
-                                                            .completeCustomActions
-                                                            ?.icon);
+                                                    actions: <Widget>[
+                                                      FlatButton(
+                                                        onPressed: () async{
+                                                          print(Get
+                                                              .find<
+                                                              InboxController>()
+                                                              .completeCustomActions
+                                                              ?.name);
+                                                          print(Get
+                                                              .find<
+                                                              InboxController>()
+                                                              .completeCustomActions
+                                                              ?.icon);
 
-                                                        String data =
-                                                            'Token=${Get.find<InboxController>().secureStorage.token()}&correspondenceId=${correspondences[pos].correspondenceId}&transferId=${correspondences[pos].transferId}&actionType=${Get.find<InboxController>().completeCustomActions?.name ?? ""}&note=${Get.find<InboxController>().completeNote}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}';
-                                                        Navigator.of(ctx).pop();
-                                                        showLoaderDialog(
-                                                            context);
-                                                        Get.find<
-                                                                InboxController>()
-                                                            .completeInCorrespondence(
-                                                                context:
-                                                                    context,
-                                                                data: data);
-                                                      },
-                                                      child: Text("Ok"),
-                                                    ),
-                                                  ],
-                                                ),
-                                              );
+                                                          String data =
+                                                              'Token=${Get
+                                                              .find<
+                                                              InboxController>()
+                                                              .secureStorage
+                                                              .token()}&correspondenceId=${correspondences[pos]
+                                                              .correspondenceId}&transferId=${correspondences[pos]
+                                                              .transferId}&actionType=Complete&note=${Get
+                                                              .find<
+                                                              InboxController>()
+                                                              .completeNote}&language=${Get
+                                                              .locale
+                                                              ?.languageCode ==
+                                                              "en"
+                                                              ? "en"
+                                                              : "ar"}';
+                                                          Navigator.of(ctx)
+                                                              .pop();
+                                                          showLoaderDialog(context);
+                                                    await      Get.find<
+                                                              InboxController>()
+                                                              .completeInCorrespondence(
+                                                              context:
+                                                              context,
+                                                              data: data);
+                                                          Get.find<LandingPageController>().getDashboardStats(context: context);
+                                                          Get.find<InboxController>().     getCorrespondencesData(context: context,inboxId:  Get.find<InboxController>().inboxId ,pageSize:20,showThumbnails: false );
+
+                                                        },
+                                                        child: Text("Ok"),
+                                                      ),
+                                                    ],
+                                                  ),
+                                            );
 
                                               print(Get.find<InboxController>()
                                                   .customAction
@@ -5964,10 +5994,9 @@ class CustomListView extends GetView<InboxController> {
 
                   controller.multipleTransferspost2(
                       context: context,
-                      transferId:
-                          controller.correspondences[thepos].transferId!,
-                      correspondenceId:
-                          controller.correspondences[thepos].correspondenceId);
+                      transferId: controller.
+                      allCorrespondences[thepos].transferId!,
+                      correspondenceId: controller.allCorrespondences[thepos].correspondenceId);
                   Navigator.pop(context);
                 },
                 child: Text("Ok"),
@@ -6170,13 +6199,13 @@ class CustomListView extends GetView<InboxController> {
                                                 controller
                                                     .SetMultipleReplyWithVoiceNoteRequestModel(
                                                         correspondencesId:
-                                                            controller
-                                                                .correspondences[
+                                                        controller.
+                                                        allCorrespondences[
+                                                        pos]
+                                                            .correspondenceId!,
+                                                        transferId: controller.
+                                                            allCorrespondences[
                                                                     pos]
-                                                                .correspondenceId!,
-                                                        transferId: controller
-                                                            .correspondences[
-                                                                pos]
                                                             .transferId!,
                                                         id: logic
                                                             .users[pos].id!);

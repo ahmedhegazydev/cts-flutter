@@ -23,21 +23,17 @@ class SignaturePage extends GetView<SignaturePageController> {
                 padding: EdgeInsets.all(5),
                 child: InkWell(
                     onTap: () {
-                      controller.saveSign(context);
+                      Get.back();
                     },
                     child: Icon(
                       Icons.close,
                       color: Colors.white,
                       size: 30,
-                    ))),
+                    ))),  
             Spacer(),
             Padding(
               padding: EdgeInsets.all(5),
-              child: GestureDetector(
-                onTap: (){
-                          Get.back();
-                },
-                child:  Text("addsing".tr,
+              child:  Text("addsing".tr,
                     style: TextStyle(
                       // fontFamily: 'Roboto',
                         fontSize: 20,
@@ -48,7 +44,7 @@ class SignaturePage extends GetView<SignaturePageController> {
                       //     .withOpacity(0.87),
                     )),
               ),
-            ),
+
             Spacer(),
             Padding(
                 padding: EdgeInsets.all(5),

@@ -166,19 +166,23 @@ class DocumentPage extends GetWidget<DocumentController> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               mainAxisSize: MainAxisSize.max,
               children: [
-                Container(
-                    color: Colors.grey[400],
-                    height: 60,
-                    width: size.width * .1,
-                    child: Center(
-                      child: Image.asset(
-                        returnImageNameBasedOnDirection(
-                            "assets/images/arrow", context, "png"),
-                        color: Colors.white,
-                        height: 50,
-                        width: 50,
-                      ),
-                    )),
+                InkWell(onTap: (){
+                  Get.back();
+                },
+                  child: Container(
+                      color: Colors.grey[400],
+                      height: 60,
+                      width: size.width * .08,
+                      child: Center(
+                        child: Image.asset(
+                          returnImageNameBasedOnDirection(
+                              "assets/images/arrow", context, "png"),
+                          color: Colors.white,
+                          height: 50,
+                          width: 50,
+                        ),
+                      )),
+                ),
                 const SizedBox(
                   width: 4,
                 ),
@@ -394,7 +398,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                   ?.icon);
 
                               String data =
-                                  'Token=${Get.find<InboxController>().secureStorage.token()}&correspondenceId=${controller.canOpenDocumentModel!.correspondence!.correspondenceId}&transferId=${controller.canOpenDocumentModel!.correspondence!.transferId}&actionType=${Get.find<InboxController>().completeCustomActions?.name ?? ""}&note=${Get.find<InboxController>().completeNote}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}';
+                                  'Token=${Get.find<InboxController>().secureStorage.token()}&correspondenceId=${controller.canOpenDocumentModel!.correspondence!.correspondenceId}&transferId=${controller.canOpenDocumentModel!.correspondence!.transferId}&actionType=Complete&note=${Get.find<InboxController>().completeNote}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}';
 
                               Navigator.of(ctx).pop();
                               showLoaderDialog(context);

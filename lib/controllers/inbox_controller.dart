@@ -759,7 +759,11 @@ print("theinboxId=> $inboxId =================  theindex=>   $index  ");
   await  _completeInCorrespondenceAPI.getData().then((value) {
       print("000000000000000000000");
       Get.find<LandingPageController>().getDashboardStats(context: context);
+
+      Get.find<InboxController>().     getCorrespondencesData(context: context,inboxId:  Get.find<InboxController>().inboxId ,pageSize:20,showThumbnails: false );
+
       Navigator.pop(context);
+      Get.back();
       showTopSnackBar(
         context,
         CustomSnackBar.success(

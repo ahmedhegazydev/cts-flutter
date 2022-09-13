@@ -80,6 +80,7 @@ import '../widgets/custom_button_with_icon.dart';
 import 'inbox_controller.dart';
 import 'package:flutter/services.dart' as rootBundel;
 
+import 'landing_page_controller.dart';
 import 'main_controller.dart';
 
 class DocumentController extends GetxController {
@@ -287,7 +288,9 @@ class DocumentController extends GetxController {
     _multipleTransfersAPI.post(multipleTransfers.toMap()).then((value) {
       DefaultOnSuccessResult defaultOnSuccessResult =
           value as DefaultOnSuccessResult;
-
+      Get.find<LandingPageController>().getDashboardStats(context: context);
+      Get.find<InboxController>().     getCorrespondencesData(context: context,inboxId:  Get.find<InboxController>().inboxId ,pageSize:20,showThumbnails: false );
+Get.back();
       Get.snackbar("", "تم التنفيذ بنجاح");
     });
   }

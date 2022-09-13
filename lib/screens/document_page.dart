@@ -481,7 +481,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                       key: logic.pdfViewerkey,
                       child: controller.pdfAndSing.length > 0
                           ? controller.pdfAndSing.first
-                          : Container(color: Colors.purple),
+                          : Container(color: Colors.grey[400]),
                     ),
                   );
                 }),

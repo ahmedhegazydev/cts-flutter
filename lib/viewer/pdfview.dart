@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
@@ -30,7 +31,7 @@ class _PDFViewState extends State<PDFView> {
     // TODO: implement initState
     super.initState();
     ViewerController.to.themeColor = widget.color;
-    Future.delayed(const Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 200), () {
       preparePDF().then((data) {
         setState(() {
           pages = data;
@@ -139,7 +140,9 @@ class _PDFViewState extends State<PDFView> {
           //});
         },
         child: Container(
-          color: Colors.green,
+          // width: double.maxFinite,
+          //child: Expanded(child: CupertinoActivityIndicator(animating: true)),
+          color: Colors.grey[200],
         ),
       );
     } else {
@@ -456,7 +459,7 @@ class ActionButton extends StatelessWidget {
     return Material(
       shape: const CircleBorder(),
       clipBehavior: Clip.antiAlias,
-      color: Colors.red,
+      //  color: Colors.red,
       elevation: 4.0,
       child: IconButton(
         onPressed: onPressed,

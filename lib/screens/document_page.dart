@@ -70,9 +70,7 @@ class DocumentPage extends GetWidget<DocumentController> {
             label: "signature".tr,
             image: 'assets/images/signature.png',
           ),
-          SizedBox(
-            height: size.height * .05,
-          ),
+
           SizedBox(
             height: size.height * .05,
           ),

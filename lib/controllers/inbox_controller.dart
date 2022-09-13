@@ -110,7 +110,7 @@ int?nodeId=0;
     getFetchBasketListApi.data =
         "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     await getFetchBasketListApi.getData().then((value) {
-      Navigator.pop(context);
+     // Navigator.pop(context);
       fetchBasketListModel = value as FetchBasketListModel;
       // fetchBasketListModel?.baskets?.forEach((element) {
       //   element.orderBy = Random().nextInt(100);
@@ -174,7 +174,7 @@ int?nodeId=0;
   int index = 0;
   int inboxId = 0;
   bool haveMoreData = true;
-  bool addToList = true;
+  bool addToList = false;
 
   bool showHideFilterScreen = false;
   bool showHideMyFavListScreen = false;
@@ -210,11 +210,11 @@ int?nodeId=0;
 
   addTousersWillSendTo({required Destination user, thepos}) {
 
-    purposeId=allCorrespondences[thepos]!.purposeId!;
+    purposeId=allCorrespondences[thepos].purposeId;
     usersWillSendTo.add(user);
     multipletransfersSend.TransferNode transferNode =
     multipletransfersSend.TransferNode(
-        purposeId: allCorrespondences[thepos]!.purposeId!,destinationId: user.id.toString(),voiceNotePrivate: false);
+        purposeId: allCorrespondences[thepos].purposeId,destinationId: user.id.toString(),voiceNotePrivate: false);
     multiTransferNode[user.id!] = transferNode;
     update(); // update(["user"]);
   }
@@ -443,7 +443,7 @@ int?nodeId=0;
     _correspondencesApi.data =
        // "Token=${secureStorage.token()}&inboxId=$inboxId&index=$index&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&showThumbnails=$showThumbnails";
 "Token=${secureStorage.token()}&inboxId=$inboxId&nodeId=$nodeId&index=$index&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&showThumbnails=$showThumbnails";
-
+print("_correspondencesApi.data =>${_correspondencesApi.data}");
 print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
     _correspondencesApi.getData().then((value) {
       correspondencesModel = value as CorrespondencesModel;
@@ -474,7 +474,7 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
       required int inboxId,
       int pageSize = 20,
       bool showThumbnails = false}) {
-    // showLoaderDialog(context);
+print("theinboxId=> $inboxId =================  theindex=>   $index  ");
     final GetCorrespondencesAllAPI _getCorrespondencesAllAPI =
         GetCorrespondencesAllAPI(context);
     // correspondences.clear();
@@ -805,7 +805,7 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
     CompleteInCorrespondenceAPI _completeInCorrespondenceAPI =
         CompleteInCorrespondenceAPI(context);
     _completeInCorrespondenceAPI.data = data;
-    _completeInCorrespondenceAPI.getData().then((value) {
+  await  _completeInCorrespondenceAPI.getData().then((value) {
       print("000000000000000000000");
       Get.find<LandingPageController>().getDashboardStats(context: context);
       Navigator.pop(context);
@@ -1018,6 +1018,8 @@ print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
     transfarForMany.clear();
     usersWillSendTo.clear();
     _multipleTransfersAPI.post(multipleTransfers.toMap()).then((value) {
+
+      getCorrespondencesData(context: context,inboxId:inboxId ,pageSize:20,showThumbnails: false );
       Get.find<LandingPageController>().getDashboardStats(context: context);
       DefaultOnSuccessResult defaultOnSuccessResult=value as DefaultOnSuccessResult;
 

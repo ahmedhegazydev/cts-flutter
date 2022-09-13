@@ -5370,6 +5370,7 @@ class CustomListView extends GetView<InboxController> {
                                                             }
                                                         // Get.       getDashboardStats()
                                                             Get.find<LandingPageController>().getDashboardStats(context: context);
+                                                                Get.find<InboxController>().     getCorrespondencesData(context: context,inboxId:  Get.find<InboxController>().inboxId ,pageSize:20,showThumbnails: false );
                                                           });
 
                                                           /// ToDo send Replay
@@ -5456,7 +5457,7 @@ class CustomListView extends GetView<InboxController> {
                                                     ),
                                                     actions: <Widget>[
                                                       FlatButton(
-                                                        onPressed: () {
+                                                        onPressed: () async{
                                                           print(Get
                                                               .find<
                                                               InboxController>()
@@ -5487,13 +5488,14 @@ class CustomListView extends GetView<InboxController> {
                                                           Navigator.of(ctx)
                                                               .pop();
                                                           showLoaderDialog(context);
-                                                          Get.find<
+                                                    await      Get.find<
                                                               InboxController>()
                                                               .completeInCorrespondence(
                                                               context:
                                                               context,
                                                               data: data);
-
+                                                          Get.find<LandingPageController>().getDashboardStats(context: context);
+                                                          Get.find<InboxController>().     getCorrespondencesData(context: context,inboxId:  Get.find<InboxController>().inboxId ,pageSize:20,showThumbnails: false );
 
                                                         },
                                                         child: Text("Ok"),

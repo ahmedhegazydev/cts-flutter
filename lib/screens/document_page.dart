@@ -171,7 +171,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                 },
                   child: Container(
                       color: Colors.grey[400],
-                      height: 60,
+                      height: 50,
                       width: size.width * .08,
                       child: Center(
                         child: Image.asset(
@@ -940,7 +940,7 @@ class DocumentPage extends GetWidget<DocumentController> {
               },
               child: Image.asset(
                 'assets/images/menu.png',
-              ),
+             height: 50,width: 50, ),
             ),
           ],
         ));

@@ -7,6 +7,6 @@ import '../controllers/document_controller.dart';
 class DocumentBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(()=>  DocumentController(), ) ;
+    Get.put(  DocumentController(), permanent: true) ;
   }
 }

@@ -1442,7 +1442,6 @@ class _ListView1State extends State<ListView1> {
                     Get.find<DocumentController>()
                         .correspondences = logic.getBasketInboxModel!.correspondences![pos];
 
-                    Get.find<DocumentController>().loadPdf();
                     Get.find<DocumentController>()
                         .gatAllDataAboutDOC(
                         context: context,

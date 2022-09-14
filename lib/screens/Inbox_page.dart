@@ -2131,13 +2131,18 @@ class InboxPage extends GetWidget<InboxController> {
               width: 120,
               height: double.infinity,
               color: Colors.transparent,
-              child: const Image(
-                image: AssetImage(
-                  'assets/images/menu.png',
-                ),
-                fit: BoxFit.contain,
-                width: double.infinity,
-                height: double.infinity,
+              // child: const Image(
+              //   image: AssetImage(
+              //     'assets/images/menu.png',
+              //   ),
+              //   fit: BoxFit.contain,
+              //   width: double.infinity,
+              //   height: double.infinity,
+              // ),
+              child: Icon(
+                Icons.close,
+                color: Colors.white,
+                size: 30,
               ),
             ),
           ),

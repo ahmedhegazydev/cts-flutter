@@ -78,7 +78,6 @@ class DocumentPage extends GetWidget<DocumentController> {
             label: "signature".tr,
             image: 'assets/images/signature.png',
           ),
-
           SizedBox(
             height: size.height * .05,
           ),
@@ -168,51 +167,52 @@ class DocumentPage extends GetWidget<DocumentController> {
         GetBuilder<DocumentController>( //autoRemove: false,
             autoRemove: false,
             builder: (logic) {
-              return SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    InkWell(onTap: () {
-                      Get.back();
-                    },
-                      child: Container(
-                          color: Colors.grey[400],
+          return SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                InkWell(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: Container(
+                      color: Colors.grey[400],
+                      height: 50,
+                      width: size.width * .08,
+                      child: Center(
+                        child: Image.asset(
+                          returnImageNameBasedOnDirection(
+                              "assets/images/arrow", context, "png"),
+                          color: Colors.white,
                           height: 50,
-                          width: size.width * .08,
-                          child: Center(
-                            child: Image.asset(
-                              returnImageNameBasedOnDirection(
-                                  "assets/images/arrow", context, "png"),
-                              color: Colors.white,
-                              height: 50,
-                              width: 50,
-                            ),
-                          )),
-                    ),
-                    const SizedBox(
-                      width: 4,
-                    ),
-                    // Container(width: size.width*.5,height: 50,
-                    //   child: ListView.builder(shrinkWrap: true,   scrollDirection: Axis.horizontal,
-                    //       itemCount: controller.canOpenDocumentModel?.correspondence?.controlList?.toolbarItems?.length,
-                    //       itemBuilder: (context,pos){
-                    //
-                    //
-                    //     return controller.canOpenDocumentModel!.correspondence!.controlList!.toolbarItems![pos].display!?
-                    //
-                    //
-                    //
-                    //       CustomButtonWithImage(
-                    //               // onClick: () {},
-                    //               image: 'assets/images/refer.png',
-                    //               label:controller.canOpenDocumentModel!.correspondence!.controlList!.toolbarItems![pos].name! ,
-                    //             ):SizedBox();
-                    //
-                    //
-                    //       }),
-                    // ),
+                          width: 50,
+                        ),
+                      )),
+                ),
+                const SizedBox(
+                  width: 4,
+                ),
+                // Container(width: size.width*.5,height: 50,
+                //   child: ListView.builder(shrinkWrap: true,   scrollDirection: Axis.horizontal,
+                //       itemCount: controller.canOpenDocumentModel?.correspondence?.controlList?.toolbarItems?.length,
+                //       itemBuilder: (context,pos){
+                //
+                //
+                //     return controller.canOpenDocumentModel!.correspondence!.controlList!.toolbarItems![pos].display!?
+                //
+                //
+                //
+                //       CustomButtonWithImage(
+                //               // onClick: () {},
+                //               image: 'assets/images/refer.png',
+                //               label:controller.canOpenDocumentModel!.correspondence!.controlList!.toolbarItems![pos].name! ,
+                //             ):SizedBox();
+                //
+                //
+                //       }),
+                // ),
 //=====================================================================
 //                 if (controller.openAttachment)
 //                   InkWell(
@@ -886,23 +886,23 @@ class DocumentPage extends GetWidget<DocumentController> {
                                 // controller.singpic[key] = base64.encode(
                                 //     data); //SignatureInfo(offset:pos , signature: 'hguyggyuguy', size: box?.size);
 
-                                // controller.controller.toPngBytes();
-                                Get.back();
-                              },
-                              child: Icon(
-                                Icons.save,
-                                size: 50,
-                              )),
-                        ],
-                      ),
-                      Divider(color: Colors.grey),
-                      Expanded(
-                        child: GetBuilder<DocumentController>(
-                          assignId: true, autoRemove: false,
-                          builder: (logic) {
-                            return GridView.builder(
-                              itemCount: controller.multiSignatures.length,
-                              gridDelegate:
+                            // controller.controller.toPngBytes();
+                            Get.back();
+                          },
+                          child: Icon(
+                            Icons.save,
+                            size: 50,
+                          )),
+                    ],
+                  ),
+                  Divider(color: Colors.grey),
+                  Expanded(
+                    child: GetBuilder<DocumentController>(
+                      assignId: true,autoRemove: false,
+                      builder: (logic) {
+                        return GridView.builder(
+                          itemCount: controller.multiSignatures.length,
+                          gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
                                   crossAxisSpacing: 4.0,
@@ -1006,7 +1006,7 @@ class DocumentPage extends GetWidget<DocumentController> {
               },
               child: Image.asset(
                 'assets/images/menu.png',
-                height: 50, width: 50,),
+             height: 50,width: 50, ),
             ),
           ],
         ));

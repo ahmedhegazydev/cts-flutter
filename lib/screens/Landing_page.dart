@@ -4585,8 +4585,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                           context,
                           "advancedSearch".tr,
                           "assets/images/search.png",
-                          false,
-                          0),
+                          true,
+                          ""),
                     ),
                   ],
                 ),
@@ -4808,7 +4808,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                           "advancedSearch".tr,
                           "assets/images/search.png",
                           false,
-                          0),
+                          ""),
                     ),
                   ],
                 ),
@@ -4852,18 +4852,21 @@ class LandingPage extends GetWidget<LandingPageController> {
         children: [
           Flexible(
             flex: 1,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Theme.of(content).colorScheme.primary,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(6),
-                  topRight: Radius.circular(6),
-                  bottomLeft: Radius.circular(6),
-                  bottomRight: Radius.circular(6),
+            child: Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(content).colorScheme.primary,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(6),
+                    topRight: Radius.circular(6),
+                    bottomLeft: Radius.circular(6),
+                    bottomRight: Radius.circular(6),
+                  ),
                 ),
+                width: 12,
+                height: 12,
               ),
-              width: 12,
-              height: 12,
             ),
           ),
           Spacer(flex: 1),
@@ -4882,10 +4885,10 @@ class LandingPage extends GetWidget<LandingPageController> {
           ),
           Spacer(flex: 1),
           Flexible(
-            flex: 2,
+            flex: 1,
             child: Container(
               color: Colors.transparent,
-              width: 40,
+              width: 70,
               child: Text(
                 count.toString(),
                 style: Theme.of(content)
@@ -4897,7 +4900,7 @@ class LandingPage extends GetWidget<LandingPageController> {
             ),
           ),
           Flexible(
-            flex: 2,
+            flex: 1,
             child: Image(
               image: AssetImage(
                 u.returnImageNameBasedOnOppositeDirection(
@@ -4940,7 +4943,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                   iconTitle,
                 ),
                 fit: BoxFit.contain,
-                width: 50,
+                width: 24,
                 height: double.infinity,
               ),
             ),
@@ -4963,9 +4966,9 @@ class LandingPage extends GetWidget<LandingPageController> {
           ),
           Spacer(flex: 1),
           Flexible(
-            flex: 2,
+            flex: 1,
             child: Visibility(
-              visible: showCount,
+              //visible: showCount,
               child: Container(
                 color: Colors.transparent,
                 width: 70,

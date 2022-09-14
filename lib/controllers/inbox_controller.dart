@@ -105,13 +105,14 @@ int?nodeId=0;
         "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     await getFetchBasketListApi.getData().then((value) {
       Navigator.pop(context);
+      // Get.back();
       fetchBasketListModel = value as FetchBasketListModel;
       // fetchBasketListModel?.baskets?.forEach((element) {
       //   element.orderBy = Random().nextInt(100);
       // });
       fetchBasketListModel?.baskets?.sort();
 
-      Get.find<LandingPageController>().  update();
+      Get.find<LandingPageController>().update();
       print(fetchBasketListModel?.toJson());
       print("getFetchBasketList i getit");
     });
@@ -275,7 +276,7 @@ int?nodeId=0;
     //     showThumbnails: false);
 
     //getFindRecipientData();
-    getFetchBasketList(context: context);
+    // getFetchBasketList(context: context);
   }
 
   Future<void> onRefresh() async {

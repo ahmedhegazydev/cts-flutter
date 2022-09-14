@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../controllers/document_controller.dart';
 import '../controllers/inbox_controller.dart';
 
+import '../controllers/landing_page_controller.dart';
+import '../controllers/my_cart/create_basket_controller.dart';
 import '../models/CorrespondencesModel.dart';
 import '../services/apis/reply_with_voice_note_api.dart';
+import '../services/json_model/basket/fetch_basket_list_model.dart';
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/login_model.dart';
 import '../services/json_model/reply_with_voicenote_model.dart';
 import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
 import '../utility/all_const.dart';
 import '../utility/utilitie.dart';
+import 'custom_button.dart';
 import 'custom_button_with_icon.dart';
+import 'package:cts/utility/Extenstions.dart';
 
 class CustomListView extends GetView<InboxController> {
   CustomListView({required this.function,
@@ -4968,9 +4975,10 @@ class CustomListView extends GetView<InboxController> {
                                               ],
                                             ),
                                             onTap: () {
-                                              Get.find<InboxController>()
-                                                  .getFetchBasketList(
-                                                  context: context);
+                                              // Get.find<InboxController>()
+                                              //     .getFetchBasketList(
+                                              //     context: context);
+
                                             },
                                             value: 5,
                                           ),
@@ -5525,113 +5533,119 @@ class CustomListView extends GetView<InboxController> {
 
                                           }
                                           else if (v == 5) {
-                                            await Get.find<InboxController>()
-                                                .getFetchBasketList(
-                                                context: context);
+                                            await showAllBasketsDialog(context);
+                                            // await Get.find<InboxController>()
+                                            //     .getFetchBasketList(
+                                            //     context: context);
                                             //    print("Get.find<InboxController>().getFetchBasketList()");
-
-                                            showDialog(
-                                              context: context,
-                                              builder: (ctx) =>
-                                                  AlertDialog(
-                                                    title: Text(" "),
-                                                    content: Padding(
-                                                      padding:
-                                                      const EdgeInsets.all(
-                                                          8.0),
-                                                      child: Container(
-                                                          width: MediaQuery
-                                                              .of(
-                                                              context)
-                                                              .size
-                                                              .width *
-                                                              .3,
-                                                          color: Colors
-                                                              .grey[200],
-                                                          child: ListView
-                                                              .builder(
-                                                              itemCount: Get
-                                                                  .find<
-                                                                  InboxController>()
-                                                                  .fetchBasketListModel
-                                                                  ?.baskets
-                                                                  ?.length,
-                                                              itemBuilder:
-                                                                  (context,
-                                                                  pos) {
-                                                                return InkWell(
-                                                                  onTap:
-                                                                      () async {
-                                                                    Get
-                                                                        .find<
-                                                                        InboxController>()
-                                                                        .listSelectCorrespondences
-                                                                        .add(int
-                                                                        .parse(
-                                                                        correspondences[pos]
-                                                                            .correspondenceId!));
-
-                                                                    await Get
-                                                                        .find<
-                                                                        InboxController>()
-                                                                        .addDocumentsToBasket(
-                                                                        context:
-                                                                        context,
-                                                                        basketId: Get
-                                                                            .find<
-                                                                            InboxController>()
-                                                                            .fetchBasketListModel
-                                                                            ?.baskets?[
-                                                                        pos]
-                                                                            .iD);
-                                                                    Get.back();
-                                                                  },
-                                                                  child: Card(
-                                                                    elevation: 10,
-                                                                    child: Column(
-                                                                        children: [
-                                                                          Text(
-                                                                              Get
-                                                                                  .find<
-                                                                                  InboxController>()
-                                                                                  .fetchBasketListModel
-                                                                                  ?.baskets?[pos]
-                                                                                  .name ??
-                                                                                  ""),
-                                                                          Text(
-                                                                              Get
-                                                                                  .find<
-                                                                                  InboxController>()
-                                                                                  .fetchBasketListModel
-                                                                                  ?.baskets?[pos]
-                                                                                  .nameAr ??
-                                                                                  ""),
-                                                                          Text(
-                                                                              "color :${Get
-                                                                                  .find<
-                                                                                  InboxController>()
-                                                                                  .fetchBasketListModel
-                                                                                  ?.baskets?[pos]
-                                                                                  .color}")
-                                                                        ]),
-                                                                  ),
-                                                                );
-                                                              })),
-                                                    ),
-                                                    actions: <Widget>[
-                                                      FlatButton(
-                                                        onPressed: () async {
-                                                          /// ToDo send Replay
-                                                          print(
-                                                              "77777777777777777777777777777777777777777777777777");
-                                                          Navigator.of(ctx)
-                                                              .pop();
-                                                        },
-                                                        child: Text("Ok"),
-                                                      ),
-                                                    ],
-                                                  ),
-                                            );
+                                            // showDialog(
+                                            //   context: context,
+                                            //   builder: (ctx) =>
+                                            //       AlertDialog(
+                                            //         title: Text(" "),
+                                            //         content: Padding(
+                                            //           padding:
+                                            //           const EdgeInsets.all(
+                                            //               8.0),
+                                            //           child: Container(
+                                            //               width: MediaQuery
+                                            //                   .of(
+                                            //                   context)
+                                            //                   .size
+                                            //                   .width *
+                                            //                   .3,
+                                            //               color: Colors
+                                            //                   .grey[200],
+                                            //               child: ListView
+                                            //                   .builder(
+                                            //                   itemCount: Get
+                                            //                       .find<
+                                            //                       InboxController>()
+                                            //                       .fetchBasketListModel
+                                            //                       ?.baskets
+                                            //                       ?.length,
+                                            //                   itemBuilder:
+                                            //                       (context,
+                                            //                       pos) {
+                                            //                     return InkWell(
+                                            //                       onTap:
+                                            //                           () async {
+                                            //                         Get
+                                            //                             .find<
+                                            //                             InboxController>()
+                                            //                             .listSelectCorrespondences
+                                            //                             .add(int
+                                            //                             .parse(
+                                            //                             correspondences[pos]
+                                            //                                 .correspondenceId!));
+                                            //
+                                            //                         await Get
+                                            //                             .find<
+                                            //                             InboxController>()
+                                            //                             .addDocumentsToBasket(
+                                            //                             context:
+                                            //                             context,
+                                            //                             basketId: Get
+                                            //                                 .find<
+                                            //                                 InboxController>()
+                                            //                                 .fetchBasketListModel
+                                            //                                 ?.baskets?[
+                                            //                             pos]
+                                            //                                 .iD);
+                                            //                         Get.back();
+                                            //                       },
+                                            //                       child: Card(
+                                            //                         elevation: 10,
+                                            //                         color: Get
+                                            //                             .find<
+                                            //                             InboxController>()
+                                            //                             .fetchBasketListModel
+                                            //                             ?.baskets?[
+                                            //                         pos].color?.toColor(),
+                                            //                         child: Column(
+                                            //                             children: [
+                                            //                               Text(
+                                            //                                   Get
+                                            //                                       .find<
+                                            //                                       InboxController>()
+                                            //                                       .fetchBasketListModel
+                                            //                                       ?.baskets?[pos]
+                                            //                                       .name ??
+                                            //                                       ""),
+                                            //                               Text(
+                                            //                                   Get
+                                            //                                       .find<
+                                            //                                       InboxController>()
+                                            //                                       .fetchBasketListModel
+                                            //                                       ?.baskets?[pos]
+                                            //                                       .nameAr ??
+                                            //                                       ""),
+                                            //                               Text(
+                                            //                                   "color :${Get
+                                            //                                       .find<
+                                            //                                       InboxController>()
+                                            //                                       .fetchBasketListModel
+                                            //                                       ?.baskets?[pos]
+                                            //                                       .color}")
+                                            //                             ]),
+                                            //                       ),
+                                            //                     );
+                                            //                   })),
+                                            //         ),
+                                            //         actions: <Widget>[
+                                            //           FlatButton(
+                                            //             onPressed: () async {
+                                            //               /// ToDo send Replay
+                                            //               print(
+                                            //                   "77777777777777777777777777777777777777777777777777");
+                                            //               Navigator.of(ctx)
+                                            //                   .pop();
+                                            //             },
+                                            //             child: Text("Ok"),
+                                            //           ),
+                                            //         ],
+                                            //       ),
+                                            // );
                                           }
                                         }),
                                   ],
@@ -5656,6 +5670,580 @@ class CustomListView extends GetView<InboxController> {
           ],
         ),
       ),
+    );
+  }
+
+  InboxController inboxController = Get.put<InboxController>(InboxController());
+  LandingPageController landingPageController = Get.put<LandingPageController>(LandingPageController());
+
+  Future<void> showAllBasketsDialog(BuildContext context) async {
+    showLoaderDialog(context);
+    await inboxController.getFetchBasketList(context: context);
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(" "),
+        content: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+              width: MediaQuery.of(context).size.width * .3,
+              color: Colors.grey[200],
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Spacer(),
+                      // controller.isSavingOrder
+                      //     ? IconButton(
+                      //         icon: Icon(Icons.check), onPressed: () {})
+                      //     : Container(),
+                    ],
+                  ),
+                  GetBuilder<LandingPageController>(builder: (logic) {
+                    print("inboxController.fetchBasketListModel");
+
+                    return Expanded(
+                        child: ReorderableListView(
+                          buildDefaultDragHandles: true,
+                          // buildDefaultDragHandles: false,
+                          padding: const EdgeInsets.symmetric(horizontal: 40),
+                          children: <Widget>[
+                            // for (int index = 0;
+                            //     index <
+                            //         inboxController
+                            //             .fetchBasketListModel!
+                            //             .baskets!
+                            //             .length;
+                            //     // 4;
+                            //     index += 1)
+                            for (final basket
+                            in inboxController.fetchBasketListModel!.baskets!)
+                              ListTile(
+                                // key: Key('$index'),
+                                key: ValueKey(basket),
+                                // tileColor: _items[index].isOdd ? oddItemColor : evenItemColor,
+                                onLongPress: !(basket.canBeReOrder ?? false)
+                                    ? () {
+                                  print(basket.iD);
+                                }
+                                    : null,
+                                onTap: !(basket.canBeReOrder ?? false)
+                                    ? () {
+                                  print(basket.iD);
+                                  // Get.find<BasketController>().getBasketInbox(
+                                  //     id: inboxController
+                                  //         .fetchBasketListModel!
+                                  //         .baskets![pos]
+                                  //         .iD!,
+                                  //     pageSize: 20,
+                                  //     pageNumber: 0, context: null);
+                                }
+                                    : null,
+                                enabled: !(basket.canBeReOrder ?? false),
+                                enableFeedback: !(basket.canBeReOrder ?? false),
+                                title: Card(
+                                  elevation: 10,
+                                  color: basket.color?.toColor(),
+                                  child: Column(children: [
+                                    Text(basket.name ?? ""),
+                                    Text(basket.nameAr ?? ""),
+                                    // Text( "color :${inboxController
+                                    //     .fetchBasketListModel
+                                    //     ?.baskets?[pos].color}",style: TextStyle( color:  HexColor(inboxController
+                                    //     .fetchBasketListModel
+                                    //     ?.baskets?[pos].color??"#000000"))),
+
+                                    GestureDetector(
+                                      onTap: () {
+                                        //هنا هنعمل دليت
+                                        _showMyDialogDeleteConfirm(context, basket);
+
+                                        // showTopSnackBar(
+                                        // icon: Container(),
+                                        //   context,
+                                        //   CustomSnackBar.success(
+                                        // backgroundColor: Colors.lightGreen,
+                                        //     message:
+                                        //     "Good job, basket have been deleted",
+                                        //   ),
+                                        // );
+                                      },
+                                      // child:  Icon(Icons.delete, color: (basket.canBeReOrder ?? false) ? Colors.black: Colors.transparent,) ,
+                                      child: (basket.canBeReOrder ?? false)
+                                          ? Icon(Icons.delete)
+                                          : Container(),
+                                    ),
+                                  ]),
+                                ),
+                              )
+                          ],
+                          onReorder: (int oldIndex, int newIndex) {
+                            print("onReorder = $oldIndex - $newIndex");
+                            if (oldIndex < newIndex) {
+                              newIndex -= 1;
+                            }
+                            final Baskets item = inboxController
+                                .fetchBasketListModel!.baskets!
+                                .removeAt(oldIndex);
+                            inboxController.fetchBasketListModel!.baskets!
+                                .insert(newIndex, item);
+                          },
+                          onReorderStart: (int index) {
+                            //0-1-2-....
+                            print("onReorderStart = $index");
+                            inboxController.setOldIndex(index);
+                            // print("onReorderStart = ${inboxController.fetchBasketListModel!.baskets![index].canBeReOrder}");
+                            // if (inboxController
+                            //         .fetchBasketListModel!.baskets![index].canBeReOrder ==
+                            //     false) {
+                            //
+                            // }else{
+                            //
+                            // }
+                          },
+                          onReorderEnd: (int index) {
+                            landingPageController.setSavingOrder(true);
+                            //get the item that will be replaced
+                            //check if ite canBeReorder or not
+                            //2-3-4-...
+                            print("onReorderEnd = $index");
+                            if (inboxController.fetchBasketListModel!
+                                .baskets![index].canBeReOrder ==
+                                false) {
+                              showTopSnackBar(
+                                context,
+                                CustomSnackBar.error(
+                                  // icon: Container(),
+                                  message:
+                                  "${inboxController.fetchBasketListModel!.baskets![index].name} canBeReOrder = false",
+                                ),
+                              );
+                            } else {
+                              // print("fetchBasketListModel__ = ${inboxController.fetchBasketListModel?.baskets.toString()}");
+                              // inboxController.fetchBasketListModel?.baskets?.forEach((element) {
+                              //   print(element.orderBy);
+                              // });
+                              if (inboxController.oldIndex != index) {
+                                showLoaderDialog(context);
+                                print(
+                                    inboxController.fetchBasketListModel?.toJson());
+                                landingPageController.reOrderBaskets(
+                                    context: context,
+                                    baskets: inboxController
+                                        .fetchBasketListModel!.baskets);
+                              }
+                            }
+                          },
+                        ));
+                  }),
+                ],
+              )
+
+            // child: ListView.builder(
+            //     // itemCount: inboxController
+            //     //     .fetchBasketListModel
+            //     //     ?.baskets
+            //     //     ?.length,
+            //     itemCount: 5,
+            //     itemBuilder: (context, pos) {
+            //       return InkWell(
+            //         onTap: () async {
+            //           print(
+            //               "${inboxController.fetchBasketListModel?.baskets?[pos].iD}");
+            //
+            //           Get.find<BasketController>().getBasketInbox(
+            //               id: inboxController
+            //                   .fetchBasketListModel!
+            //                   .baskets![pos]
+            //                   .iD!,
+            //               pageSize: 20,
+            //               pageNumber: 0);
+            //
+            //           Get.back();
+            //
+            //           Get.toNamed("MyPocketsScreen");
+            //         },
+            //         child: Card(
+            //           elevation: 10,
+            //           child: Column(children: [
+            //             Text(inboxController
+            //                 .fetchBasketListModel
+            //                 ?.baskets?[pos]
+            //                 .name ??
+            //                 ""),
+            //             Text(inboxController
+            //                 .fetchBasketListModel
+            //                 ?.baskets?[pos]
+            //                 .nameAr ??
+            //                 ""),
+            //             // Text( "color :${inboxController
+            //             //     .fetchBasketListModel
+            //             //     ?.baskets?[pos].color}",style: TextStyle( color:  HexColor(inboxController
+            //             //     .fetchBasketListModel
+            //             //     ?.baskets?[pos].color??"#000000"))),
+            //
+            //             GestureDetector(
+            //                 onTap: () {
+            //                   //هنا هنعمل دليت
+            //                   controller.removeBasket(
+            //                       basketId:
+            //                       inboxController
+            //                           .fetchBasketListModel
+            //                           ?.baskets?[pos]
+            //                           .iD);
+            //                 },
+            //                 child: Icon(Icons.delete)),
+            //           ]),
+            //         ),
+            //       );
+            //     })
+
+          ),
+        ),
+        actions: <Widget>[
+          FlatButton(
+            onPressed: () async {
+              Navigator.of(ctx).pop();
+            },
+            child: Text("Ok".tr),
+          )
+          ,
+          // Visibility(
+          //     visible: controller.isSavingOrder,
+          //     child: FlatButton(
+          //       onPressed: () async {
+          //         // Navigator.of(ctx).pop();
+          //         // Get.to(BasketPage());
+          //       },
+          //       child: Text("Save Order"),
+          //     )),
+          FlatButton(
+            onPressed: () async {
+              //هنا هنكريت الباسكت
+
+              showInputDialog(
+                  context, 'CreateNewBasket'.tr, 'default inpit', 'message');
+            },
+            child: Text("new Basket".tr),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+  Future<String?> showInputDialog(
+      BuildContext context, String title, String defaultInput, String message) {
+    var textController = TextEditingController(text: defaultInput);
+    var content = Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        // Text(message), TextField(controller: textController)
+        // CreateNewBasket(),
+
+        Form(
+          // key: controller.createBasketFormKey,
+          // child: LayoutBuilder(builder: (context, constraint) {
+          //   return Container(
+            child: Column(
+              children: [
+                // Spacer(),
+                // CustomInputTextFiled(
+                //     validator: controller.validators.nameValidator,
+                //     textEditingController: controller.englishName,
+                //     label: "english_name".tr),
+                // CustomInputTextFiled(
+                //     validator: controller.validators.nameValidator,
+                //     textEditingController: controller.arabicName,
+                //     label: "arabic_name".tr),
+
+                Container(
+                  // padding: EdgeInsets.only(right: 10, left: 10),
+                  padding: EdgeInsets.all(10),
+                  child: Container(
+                      padding: EdgeInsets.only(right: 8, left: 8),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Theme.of(context).colorScheme.primary),
+                          borderRadius: const BorderRadius.all(Radius.circular(6))),
+                      child: TextField(
+                        controller: landingPageController.textEditingControllerEnglishName,
+                        decoration: InputDecoration(
+                          border: UnderlineInputBorder(),
+                          labelText: "english_name".tr,
+                        ),
+                      )),
+                ),
+
+                Container(
+                  // padding: EdgeInsets.only(right: 10, left: 10),
+                  padding: EdgeInsets.all(10),
+                  child: Container(
+                      padding: EdgeInsets.only(right: 8, left: 8),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Theme.of(context).colorScheme.primary),
+                          borderRadius: const BorderRadius.all(Radius.circular(6))),
+                      child: TextField(
+                        controller: landingPageController.textEditingControllerArabicName,
+                        decoration: InputDecoration(
+                          border: UnderlineInputBorder(),
+                          labelText: "arabic_name".tr,
+                        ),
+                      )),
+                ),
+
+                Container(
+                  padding: EdgeInsets.only(right: 10, left: 10),
+                  width: MediaQuery.of(context).size.width * .3,
+                  child: RaisedButton(
+                      onPressed: () {
+                        // inboxController.applyFilter();
+                        // Navigator.pop(context);
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: Text(
+                                "pick your Color".tr,
+                              ),
+                              content: Container(
+                                width: MediaQuery.of(context).size.width * .3,
+                                height: MediaQuery.of(context).size.height * .5,
+                                child:
+                                Column(children: [
+
+                                  buildHorizontalListViewCircleColors(context),
+
+                                  // ColorPicker(
+                                  //   pickerColor:
+                                  //       Get.find<CreateBasketController>()
+                                  //           .pickerColor,
+                                  //   onColorChanged: (Color color) {
+                                  //     Get.find<CreateBasketController>()
+                                  //         .setPickerColor(color);
+                                  //   },
+                                  // ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.only(
+                                  //       top: 8.0, bottom: 8, right: 20, left: 20),
+                                  //   child: Row(children: []),
+                                  // ),
+                                  // Container(
+                                  //   width: MediaQuery.of(context).size.width * .7,
+                                  //   padding: const EdgeInsets.only(
+                                  //       left: 0, right: 0, top: 0, bottom: 0),
+                                  //   height: 60,
+                                  //   decoration: BoxDecoration(
+                                  //       color:
+                                  //       Theme.of(context).colorScheme.primary,
+                                  //       borderRadius: const BorderRadius.all(
+                                  //           Radius.circular(6))),
+                                  //   child: ElevatedButton(
+                                  //       onPressed: () {
+                                  //         // Get.find<SecureStorage>().writeSecureData(
+                                  //         //     AllStringConst.AppColor,
+                                  //         //     Get.find<MController>().appcolor.value);
+                                  //         Navigator.of(context).pop();
+                                  //       },
+                                  //       child: GestureDetector(
+                                  //         onTap: () {},
+                                  //         child: Text(
+                                  //           "save".tr,
+                                  //           textAlign: TextAlign.center,
+                                  //         ),
+                                  //       )),
+                                  // )
+                                ])
+                                ,),
+                            ));
+                      },
+                      child: GetBuilder<CreateBasketController>(
+                        init: CreateBasketController(),
+                        builder: (_) {
+                          return Text("pick your Color".tr,
+                              style: TextStyle(
+                                // backgroundColor: _.pickerColor,
+                                  color: _.pickerColor));
+                        },
+                      )),
+                ),
+
+                Container(
+                  height: 40,
+                  padding: EdgeInsets.only(right: 10, left: 10),
+                  width: MediaQuery.of(context).size.width * .3,
+                  child: CustomButton(
+                      name: 'register'.tr,
+                      onPressed: () {
+                        //filter max
+
+                        showLoaderDialog(context);
+                        // controller.createNewBasket();
+
+                        var basket = Baskets(
+                            color: Get.find<CreateBasketController>()
+                                .pickerColor
+                                .toHex(),
+                            canBeReOrder: true,
+                            orderBy: 0,
+                            nameAr: landingPageController.textEditingControllerArabicName.text,
+                            name:
+                            landingPageController.textEditingControllerEnglishName.text
+                        );
+                        inboxController.fetchBasketListModel!.baskets?.add(basket);
+
+                        landingPageController.addEditBasket(context: context, basket: basket);
+
+
+                      }),
+                ),
+              ],
+              // ),
+              // );
+              // }
+            ))
+      ],
+    );
+    // var content = CreateNewBasket();
+
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        var mediaQuery = MediaQuery.of(context);
+
+        return AnimatedContainer(
+          padding: mediaQuery.padding,
+          duration: const Duration(milliseconds: 300),
+          child: AlertDialog(
+            title: Text(title),
+            content: content,
+            scrollable: true,
+            // actions: <Widget>[
+            //   TextButton(
+            //     child: const Text('Cancel'),
+            //     onPressed: () => Navigator.pop(context),
+            //   ),
+            //   TextButton(
+            //     child: const Text('Okay'),
+            //     onPressed: () => Navigator.pop(context, textController.text),
+            //   ),
+            // ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _showMyDialogDeleteConfirm(
+      BuildContext context, Baskets basket) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          // title: Text('AlertDialog Title'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Text('SureToDelete'.tr),
+                // Text('Would you like to confirm this message?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Confirm'.tr),
+              onPressed: () {
+                showLoaderDialog(context);
+                landingPageController.removeBasket(
+                  context: context,
+                  basketId: basket.iD,
+                  onSuccess: (String message) {
+                    // Navigator.pop(context);
+                    // Get.back();
+                    // showAllBasketsDialog(context);
+                    return null;
+                  },
+                );
+                inboxController.fetchBasketListModel!.baskets?.remove(basket);
+                controller.update();
+                print('Confirmed');
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Cancel'.tr),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget buildHorizontalListViewCircleColors(BuildContext context) {
+    List<Color> colorArray = [
+      Color(0xFFFF6633), Color(0xFFFFB399), Color(0xFFFF33FF),
+      Color(0xFFFFFF99), Color(0xFF00B3E6), Color(0xFFE6B333),
+      Color(0xFF3366E6), Color(0xFF999966), Color(0xFF99FF99),
+      Color(0xFFB34D4D), Color(0xFF80B300), Color(0xFF809900),
+      Color(0xFFE6B3B3), Color(0xFF6680B3), Color(0xFF66991A),
+      Color(0xFFFF99E6), Color(0xFFCCFF1A), Color(0xFFFF1A66),
+      Color(0xFFE6331A), Color(0xFF33FFCC), Color(0xFF66994D),
+      Color(0xFFB366CC), Color(0xFF4D8000), Color(0xFFB33300),
+      Color(0xFFCC80CC), Color(0xFF66664D), Color(0xFF991AFF),
+      Color(0xFFE666FF), Color(0xFF4DB3FF), Color(0xFF1AB399),
+      Color(0xFFE666B3), Color(0xFF33991A), Color(0xFFCC9999),
+      Color(0xFFB3B31A), Color(0xFF00E680), Color(0xFF4D8066),
+      Color(0xFF809980), Color(0xFFE6FF80), Color(0xFF1AFF33),
+      Color(0xFF999933), Color(0xFFFF3380), Color(0xFFCCCC00),
+      Color(0xFF66E64D), Color(0xFF4D80CC), Color(0xFF9900B3),
+      Color(0xFFE64D66), Color(0xFF4DB380), Color(0xFFFF4D4D),
+      Color(0xFF99E6E6), Color(0xFF6666FF)
+    ];    return Container(
+        width: MediaQuery.of(context).size.width * .3,
+        height: MediaQuery.of(context).size.height * .5,
+        // height: 100,
+        child:
+        // ListView(
+        //   scrollDirection: Axis.horizontal,
+        //   children: <Widget>[
+        //     Container(
+        //       width: 60,
+        //       height: 60,
+        //       // child: Icon(CustomIcons.option, size: 20,),
+        //       decoration: BoxDecoration(
+        //           shape: BoxShape.circle,
+        //           color: Color(0xFFe0f2f1)),
+        //     ),
+        //
+        //   ],
+        // ),
+        GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 6
+          ),
+          itemBuilder: (_, index) => Center(
+              child: GestureDetector(
+                child:   Container(
+                  width: 60,
+                  height: 60,
+                  // child: Icon(CustomIcons.option, size: 20,),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: colorArray[index]),
+                ),
+                onTap: () {
+                  var selectedColor = colorArray[index];
+                  Get.find<CreateBasketController>()
+                      .setPickerColor(selectedColor);
+                  Navigator.pop(context);
+                },
+              )),
+          itemCount: colorArray.length,
+        )
     );
   }
 

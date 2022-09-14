@@ -49,8 +49,8 @@ class _BasketListTileState extends State<BasketListTile> {
 
 class LandingPage extends GetWidget<LandingPageController> {
   SecureStorage secureStorage = SecureStorage();
-  Color pickerColor = Color(0xff443a49);
-  Color currentColor = Color(0xff443a49);
+  Color pickerColor = Color(0x800000);
+  Color currentColor = Color(0x800000);
   InboxController inboxController = Get.put<InboxController>(InboxController());
 
   LoginController loginController = Get.put<LoginController>(LoginController());
@@ -3278,7 +3278,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                 // width: double.infinity,
                 // height: double.infinity,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Colors.white54,
                   borderRadius: BorderRadius.all(
                     Radius.circular(6),
                   ),
@@ -3417,7 +3417,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       width: double.infinity,
                       height: double.infinity,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Colors.white54,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(6),
                             topRight: Radius.circular(6),
@@ -3488,7 +3488,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       width: double.infinity,
                       height: double.infinity,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Colors.white54,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(6),
                             topRight: Radius.circular(6),

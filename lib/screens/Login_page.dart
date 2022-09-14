@@ -21,8 +21,8 @@ import 'package:restart_app/restart_app.dart';
 
 class LoginPage extends GetWidget<LoginController> {
   // create some values
-  Color pickerColor = Color(0xff443a49);
-  Color currentColor = Color(0xff443a49);
+  Color pickerColor = Color(0x880000);
+  Color currentColor = Color(0x880000);
 
   @override
   Widget build(BuildContext context) {
@@ -70,9 +70,7 @@ class LoginPage extends GetWidget<LoginController> {
             ),
           ),
         ),
-        onTap: () => {
-        FocusScope.of(context).requestFocus(FocusNode())
-      },
+        onTap: () => {FocusScope.of(context).requestFocus(FocusNode())},
       );
     }
 
@@ -109,83 +107,90 @@ class LoginPage extends GetWidget<LoginController> {
                 : landscapeBody(context),
         floatingActionButton: showFab
             ? Row(
-          // crossAxisAlignment: CrossAxisAlignment.start,
-          // mainAxisAlignment: MainAxisAlignment.spaceAround,
-          // verticalDirection: VerticalDirection.up,
-          // textBaseline: TextBaseline.alphabetic,
-          textDirection: TextDirection.rtl,
-          // mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Spacer(),
-            Align(
-              // alignment: Get.locale=="en" ?  Alignment.bottomRight : Alignment.bottomLeft,
-              // alignment:  Alignment.bottomRight,
-              alignment : Alignment.bottomLeft,
-              child: Row(
-                children: [
-                  // SizedBox(
-                  //   // width:  Get.locale=="en"? 0 : 110,
-                  //   width: 110,
-                  //   // width:  0,
-                  // ) ,
-                  FloatingActionButton(
-                      onPressed: () {
+                // crossAxisAlignment: CrossAxisAlignment.start,
+                // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                // verticalDirection: VerticalDirection.up,
+                // textBaseline: TextBaseline.alphabetic,
+                textDirection: TextDirection.rtl,
+                // mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Spacer(),
+                  Align(
+                    // alignment: Get.locale=="en" ?  Alignment.bottomRight : Alignment.bottomLeft,
+                    // alignment:  Alignment.bottomRight,
+                    alignment: Alignment.bottomLeft,
+                    child: Row(
+                      children: [
+                        // SizedBox(
+                        //   // width:  Get.locale=="en"? 0 : 110,
+                        //   width: 110,
+                        //   // width:  0,
+                        // ) ,
+                        FloatingActionButton(
+                            onPressed: () {
+                              getSavedBaseUrlFormDatabase();
 
-                        getSavedBaseUrlFormDatabase();
-
-                        // String? link =           controller.secureStorage.readSecureData(   AllStringConst.BaseUrl)??"";
-                        // controller.baseUrl.text=link;
-                        showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: Text("Settings".tr),
-                              content: SingleChildScrollView(
-                                child: Column(children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 8.0,
-                                        bottom: 8,
-                                        right: 0,
-                                        left: 0),
-                                    child: Column(children: [
-
-                                    Container(
-                                    decoration: BoxDecoration(
-                                    color: Colors.grey.shade300,
-                                      // color: Colors.grey.shade200,
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(6),
-                                      ),
-                                    ),
-                                  width: double.infinity,
-                                      child:  Row(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: <Widget>[
-                                            Expanded(child:   CustomInputTextFiled(
-                                              validator: controller
-                                                  .validators
-                                                  .userNameValidator,
-                                              textEditingController: controller.baseUrl,
-                                              label: "Base Url".tr,
-
+                              // String? link =           controller.secureStorage.readSecureData(   AllStringConst.BaseUrl)??"";
+                              // controller.baseUrl.text=link;
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                        title: Text("Settings".tr),
+                                        content: SingleChildScrollView(
+                                          child: Column(children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 8.0,
+                                                  bottom: 8,
+                                                  right: 0,
+                                                  left: 0),
+                                              child: Column(children: [
+                                                Container(
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          Colors.grey.shade300,
+                                                      // color: Colors.grey.shade200,
+                                                      borderRadius:
+                                                          const BorderRadius
+                                                              .all(
+                                                        Radius.circular(6),
+                                                      ),
+                                                    ),
+                                                    width: double.infinity,
+                                                    child: Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: <Widget>[
+                                                          Expanded(
+                                                            child:
+                                                                CustomInputTextFiled(
+                                                              validator: controller
+                                                                  .validators
+                                                                  .userNameValidator,
+                                                              textEditingController:
+                                                                  controller
+                                                                      .baseUrl,
+                                                              label:
+                                                                  "Base Url".tr,
+                                                            ),
+                                                          ),
+                                                          new FlatButton(
+                                                              onPressed: () {
+                                                                controller
+                                                                    .clear();
+                                                              },
+                                                              child: new Icon(
+                                                                  Icons.clear))
+                                                        ]))
+                                              ]),
                                             ),
-
-                                            ),
-
-                                            new FlatButton(
-                                                onPressed: () {
-                                                  controller.clear();
-                                                },
-                                                child: new Icon(Icons.clear))
-                                          ]
-                                      )
-                                    )
-                                    ]),
-                                  ),
-                                  // SizedBox(
-                                  //   height: 100,
-                                  // ),
+                                            // SizedBox(
+                                            //   height: 100,
+                                            // ),
 
                                             Padding(
                                               padding: const EdgeInsets.only(
@@ -343,11 +348,12 @@ class LoginPage extends GetWidget<LoginController> {
                                                   // prefs.setString(AllStringConst.BaseUrl, controller.baseUrl.text);
 
                                                   final settings = SettingItem(
-                                                    baseUrl: controller.baseUrl.text,
-                                                    language: "ar",
-                                                    color: ""
-                                                  );
-                                        await saveSettingsIntoDatabase(settings);
+                                                      baseUrl: controller
+                                                          .baseUrl.text,
+                                                      language: "ar",
+                                                      color: "");
+                                                  await saveSettingsIntoDatabase(
+                                                      settings);
 
                                                   // Restart.restartApp();
                                                   // Phoenix.rebirth(context);
@@ -437,26 +443,30 @@ class LoginPage extends GetWidget<LoginController> {
                                                         .value);
 
                                             final settingObj = SettingItem(
-                                                baseUrl: controller.baseUrl.text,
+                                                baseUrl:
+                                                    controller.baseUrl.text,
                                                 language: "ar",
-                                                color: pickerColor.toHex()
-                                            );
-                                            List<SettingItem> settingItems = await CtsSettingsDatabase.instance.readAllNotes();
-                                            if(settingItems.isEmpty){
+                                                color: pickerColor.toHex());
+                                            List<SettingItem> settingItems =
+                                                await CtsSettingsDatabase
+                                                    .instance
+                                                    .readAllNotes();
+                                            if (settingItems.isEmpty) {
                                               // final settings = SettingItem(
                                               //   baseUrl: controller.baseUrl.text,
                                               //   language: controller.baseUrl.text,
                                               // );
-                                              await CtsSettingsDatabase.instance.create(settingObj);
-
-                                            }else{
+                                              await CtsSettingsDatabase.instance
+                                                  .create(settingObj);
+                                            } else {
                                               var settingItem = settingItems[0];
                                               settingItem = settingItem.copy(
                                                 // baseUrl:  settingObj.baseUrl,
                                                 // language: settingObj.language,
                                                 color: settingObj.color,
                                               );
-                                              await CtsSettingsDatabase.instance.update(settingItem);
+                                              await CtsSettingsDatabase.instance
+                                                  .update(settingItem);
                                             }
                                             Navigator.of(context).pop();
                                           },
@@ -502,20 +512,20 @@ class LoginPage extends GetWidget<LoginController> {
   }
 
   Future<void> saveSettingsIntoDatabase(SettingItem settingObj) async {
-    List<SettingItem> settingItems = await CtsSettingsDatabase.instance.readAllNotes();
-    if(settingItems.isEmpty){
+    List<SettingItem> settingItems =
+        await CtsSettingsDatabase.instance.readAllNotes();
+    if (settingItems.isEmpty) {
       // final settings = SettingItem(
       //   baseUrl: controller.baseUrl.text,
       //   language: controller.baseUrl.text,
       // );
       await CtsSettingsDatabase.instance.create(settingObj);
-
-    }else{
+    } else {
       var settingItem = settingItems[0];
       settingItem = settingItem.copy(
-        baseUrl:  settingObj.baseUrl,
-      language: settingObj.language,
-      color: settingObj.color,
+        baseUrl: settingObj.baseUrl,
+        language: settingObj.language,
+        color: settingObj.color,
       );
       await CtsSettingsDatabase.instance.update(settingItem);
     }
@@ -535,14 +545,19 @@ class LoginPage extends GetWidget<LoginController> {
                   children: [
                     // Spacer(),
                     Padding(
-                        padding:  orientation == Orientation.landscape? EdgeInsets.only(right: 60, left: 60): EdgeInsets.only(right: 20, left: 20),
-
-                        child: Column(mainAxisAlignment: MainAxisAlignment.center,crossAxisAlignment: CrossAxisAlignment.center,
+                        padding: orientation == Orientation.landscape
+                            ? EdgeInsets.only(right: 60, left: 60)
+                            : EdgeInsets.only(right: 20, left: 20),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SizedBox(height: 30,),
+                            SizedBox(
+                              height: 30,
+                            ),
                             Container(
                               // color: Colors.red,
-                            //  width: double.infinity,
+                              //  width: double.infinity,
                               padding: const EdgeInsets.all(0),
                               child: Text(
                                 "appTitle".tr,
@@ -563,7 +578,8 @@ class LoginPage extends GetWidget<LoginController> {
                                 : SizedBox(
                                     height: 10,
                                   ),
-                            SizedBox(width: size.width*.6,
+                            SizedBox(
+                              width: size.width * .6,
                               child: CustomInputTextFiled(
                                   validator:
                                       controller.validators.userNameValidator,
@@ -577,7 +593,8 @@ class LoginPage extends GetWidget<LoginController> {
                                 : SizedBox(
                                     height: 8,
                                   ),
-                            SizedBox(width:     size.width*.6 ,
+                            SizedBox(
+                              width: size.width * .6,
                               child: CustomInputTextFiled(
                                   validator:
                                       controller.validators.passWordValidator,
@@ -604,21 +621,27 @@ class LoginPage extends GetWidget<LoginController> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
 
                                   children: [
-
-                                    SizedBox(width: orientation == Orientation.landscape? size.width*.2:size.width*.4,
+                                    SizedBox(
+                                      width:
+                                          orientation == Orientation.landscape
+                                              ? size.width * .2
+                                              : size.width * .4,
                                       child: CustomButton(
                                           onPressed: controller.logIngRequst,
                                           name: "login".tr),
                                     ),
-                                   SizedBox(width: 8,),
                                     SizedBox(
-                                         width: 50,height: 50,
+                                      width: 8,
+                                    ),
+                                    SizedBox(
+                                        width: 50,
+                                        height: 50,
                                         child: CustomImageButton(
                                           imagePath: 'assets/images/faceid.png',
                                           onClick:
                                               controller.faceIdButtonOnClick,
                                         )),
-                             ],
+                                  ],
                                 ),
                               ),
                             ),
@@ -658,11 +681,10 @@ class LoginPage extends GetWidget<LoginController> {
   }
 
   void getSavedBaseUrlFormDatabase() async {
-    List<SettingItem> settingItems = await CtsSettingsDatabase.instance.readAllNotes();
-    if(settingItems.isNotEmpty){
+    List<SettingItem> settingItems =
+        await CtsSettingsDatabase.instance.readAllNotes();
+    if (settingItems.isNotEmpty) {
       controller.baseUrl.text = settingItems[0].baseUrl;
-    }else{
-    }
+    } else {}
   }
-
 }

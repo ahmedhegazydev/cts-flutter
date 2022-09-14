@@ -9,18 +9,23 @@ class WebViewPage extends GetWidget<WebViewPageController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(actions: <Widget>[
-        Padding(
-            padding: EdgeInsets.all(5),
-            child: InkWell(
-                onTap: () {
-                  Get.back();
-                },
-                child: Icon(
-                  Icons.close,
-                  color: Colors.white,
-                  size: 30,
-                ))),
+      appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: Colors.white, //change your color here
+          ),
+          actions: <Widget>[
+        // Padding(
+        //     padding: EdgeInsets.all(5),
+        //     child: InkWell(
+        //         onTap: () {
+        //           Get.back();
+        //         },
+        //         child: Icon(
+        //           Icons.close,
+        //           color: Colors.white,
+        //           size: 30,
+        //         ))
+        // ),
       ]),
       body: controller.isPdf
           ? SfPdfViewer.network(controller.url!)

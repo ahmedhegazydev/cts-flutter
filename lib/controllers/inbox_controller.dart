@@ -510,12 +510,16 @@ print("theinboxId=> $inboxId =================  theindex=>   $index  ");
       canOpenDocumentModel = value as CanOpenDocumentModel;
 
       print(
-          "the valll ogfffcanOpenDocumentModel!.allow!cumentModel!.allow! =>${canOpenDocumentModel!.allow!}");
-
+          "the valll ogfffcanOpenDocumentModel!.allow!cumentModel!.allow! =>${canOpenDocumentModel?.toJson()}");
+      Get.find<DocumentController>().canOpenDocumentModel= value ;
+      Get.find<DocumentController>()
+          .updatecanOpenDocumentModel(value);
       //   FindRecipientModel findRecipientModel = value as FindRecipientModel;
       if (canOpenDocumentModel!.allow!) {
-        Get.find<DocumentController>()
-            .updatecanOpenDocumentModel(canOpenDocumentModel!);
+
+     //   Get.put(DocumentController(),permanent: true);
+
+
 
         // Get.find<DocumentController>().gatAllDataAboutDOC(
         //     context: context,
@@ -523,8 +527,9 @@ print("theinboxId=> $inboxId =================  theindex=>   $index  ");
         //     transferId: transferId,
         //     correspondenceId: correspondenceId);
 
-        Get.find<DocumentController>().loadPdf();
+
         Get.toNamed("/DocumentPage");
+
       } else {
         Get.snackbar("", "canotopen".tr);
       }

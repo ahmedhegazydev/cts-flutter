@@ -87,7 +87,7 @@ class DocumentController extends GetxController {
   Destination? userWillAddToOpenTransferWindow;
 
   SecureStorage secureStorage = SecureStorage();
-  CanOpenDocumentModel? canOpenDocumentModel;
+   CanOpenDocumentModel? canOpenDocumentModel;
   final record = FlutterSoundRecorder();
 
 //Map<int,String>folder={};
@@ -450,6 +450,12 @@ Get.back();
 
   //تحديث كان ابن فيل وجلب جميع البيانات الخاصه بلملف
   updatecanOpenDocumentModel(CanOpenDocumentModel data) {
+
+
+
+    print("CanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModel");
+    print("canOpenDocumentModel.toJson()  =>${canOpenDocumentModel!.toJson()}");
+
     canOpenDocumentModel = data;
     canOpenDocumentModel?.attachments?.attachments?.forEach((element) {
       if (element.isOriginalMail!) {
@@ -529,6 +535,8 @@ Get.back();
         ),
       );
     }
+
+    print("update canOpenDocumentModel");
     update();
   }
 
@@ -777,13 +785,7 @@ Get.back();
 //         });
 //
 //   }
-  loadPdf() async {
-    //correspondences.visualTrackingUrl
-    //  doc = await PDFDocument.fromURL('http://www.africau.edu/images/default/sample.pdf');
-    print("get the pdf");
 
-    update();
-  }
 
   @override
   void onReady() {
@@ -828,7 +830,7 @@ Get.back();
   @override
   void onInit() {
     super.onInit();
-    initRecorder();
+  //  initRecorder();
 
     genratG2GExportDto();
     g2GInfoForExport();
@@ -1564,6 +1566,7 @@ Get.back();
   }
 
   Future recordMathod({required id}) async {
+   await initRecorder();
     await record.openRecorder();
     //  await record.startRecorder(toFile: "audio");
     appDocDir = await getApplicationDocumentsDirectory();

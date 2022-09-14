@@ -189,7 +189,7 @@ class MyApp extends StatelessWidget {
           GetPage(
               name: "/DocumentPage",
               page: () => DocumentPage(),
-              binding: DocumentBinding(),
+           //  binding: DocumentBinding(),
               transition: Transition.rightToLeft),
           GetPage(
               name: "/OpenPDFFile",

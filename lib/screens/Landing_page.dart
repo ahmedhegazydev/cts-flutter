@@ -3634,17 +3634,17 @@ class LandingPage extends GetWidget<LandingPageController> {
                                   textAlign: TextAlign.center,
                                 ),
                               ),
-                              Flexible(
-                                flex: 1,
-                                child: Image(
-                                  image: AssetImage(
-                                    "assets/images/arrow_L.png",
-                                  ),
-                                  fit: BoxFit.contain,
-                                  //  width: 20,
-                                  //   height: double.infinity,
-                                ),
-                              )
+                              // Flexible(
+                              //   flex: 1,
+                              //   child: Image(
+                              //     image: AssetImage(
+                              //       "assets/images/arrow_L.png",
+                              //     ),
+                              //     fit: BoxFit.contain,
+                              //     //  width: 20,
+                              //     //   height: double.infinity,
+                              //   ),
+                              // )
                             ],
                           ),
                         ),
@@ -3723,17 +3723,17 @@ class LandingPage extends GetWidget<LandingPageController> {
                                   textAlign: TextAlign.center,
                                 ),
                               ),
-                              Flexible(
-                                flex: 1,
-                                child: Image(
-                                  image: AssetImage(
-                                    "assets/images/arrow_L.png",
-                                  ),
-                                  fit: BoxFit.contain,
-                                  // width: 50,
-                                  // height: double.infinity,
-                                ),
-                              )
+                              // Flexible(
+                              //   flex: 1,
+                              //   child: Image(
+                              //     image: AssetImage(
+                              //       "assets/images/arrow_L.png",
+                              //     ),
+                              //     fit: BoxFit.contain,
+                              //     // width: 50,
+                              //     // height: double.infinity,
+                              //   ),
+                              // )
                             ],
                           ),
                         ),

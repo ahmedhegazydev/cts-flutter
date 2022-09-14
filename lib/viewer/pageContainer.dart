@@ -61,11 +61,12 @@ class PageContainer extends StatelessWidget {
                 width: s.screenWidth.value,
                 height: s.screenHeight.value,
                 child: Stack(children: [
-                  SizedBox(
-                    child: Image(
-                      image: image,
-                    ),
+                  //  SizedBox(
+                  //    child:
+                  Image(
+                    image: image,
                   ),
+                  //  ),
                   GetX<ViewerController>(
                     builder: (s) => Stack(
                       children: s.annotations[pageNumber],

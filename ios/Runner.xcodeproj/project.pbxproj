@@ -357,7 +357,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = GLBQ957D8S;
+				DEVELOPMENT_TEAM = BXFAJD3968;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -412,7 +412,7 @@
 					"\"webview_flutter_wkwebview\"",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.qia.esigncms;
+				PRODUCT_BUNDLE_IDENTIFIER = com.intalio.newcmsdevtest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -537,7 +537,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = GLBQ957D8S;
+				DEVELOPMENT_TEAM = BXFAJD3968;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -592,7 +592,7 @@
 					"\"webview_flutter_wkwebview\"",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.qia.esigncms;
+				PRODUCT_BUNDLE_IDENTIFIER = com.intalio.newcmsdevtest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -611,7 +611,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = GLBQ957D8S;
+				DEVELOPMENT_TEAM = BXFAJD3968;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -666,7 +666,7 @@
 					"\"webview_flutter_wkwebview\"",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.qia.esigncms;
+				PRODUCT_BUNDLE_IDENTIFIER = com.intalio.newcmsdevtest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";

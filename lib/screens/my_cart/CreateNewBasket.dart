@@ -17,7 +17,7 @@ class _CreateNewBasketState extends State<CreateNewBasket> {
 
   // Color pickerColor = Color(0xff443a49);
   // Color pickerColor = Colors.transparent;
-  Color currentColor = Color(0xff443a49);
+  Color currentColor = Color(0x800000);
 
   @override
   Widget build(BuildContext context) {
@@ -136,59 +136,57 @@ class _CreateNewBasketState extends State<CreateNewBasket> {
         key: controller.createBasketFormKey,
         // child: LayoutBuilder(builder: (context, constraint) {
         //   return Container(
-            child: Column(
-              children: [
-                // Spacer(),
-                // CustomInputTextFiled(
-                //     validator: controller.validators.nameValidator,
-                //     textEditingController: controller.englishName,
-                //     label: "english_name".tr),
-                // CustomInputTextFiled(
-                //     validator: controller.validators.nameValidator,
-                //     textEditingController: controller.arabicName,
-                //     label: "arabic_name".tr),
+        child: Column(
+          children: [
+            // Spacer(),
+            // CustomInputTextFiled(
+            //     validator: controller.validators.nameValidator,
+            //     textEditingController: controller.englishName,
+            //     label: "english_name".tr),
+            // CustomInputTextFiled(
+            //     validator: controller.validators.nameValidator,
+            //     textEditingController: controller.arabicName,
+            //     label: "arabic_name".tr),
 
-                Container(
-                  // padding: EdgeInsets.only(right: 10, left: 10),
-                  padding: EdgeInsets.all(10),
-                  child: Container(
-                      padding: EdgeInsets.only(right: 8, left: 8),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              color: Theme.of(context).colorScheme.primary),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(6))),
-                      child: TextField(
-                        controller: controller.textEditingControllerEnglishName,
-                        decoration: InputDecoration(
-                          border: UnderlineInputBorder(),
-                          labelText: "english_name".tr,
-                        ),
-                      )),
-                ),
+            Container(
+              // padding: EdgeInsets.only(right: 10, left: 10),
+              padding: EdgeInsets.all(10),
+              child: Container(
+                  padding: EdgeInsets.only(right: 8, left: 8),
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          color: Theme.of(context).colorScheme.primary),
+                      borderRadius: const BorderRadius.all(Radius.circular(6))),
+                  child: TextField(
+                    controller: controller.textEditingControllerEnglishName,
+                    decoration: InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: "english_name".tr,
+                    ),
+                  )),
+            ),
 
-                Container(
-                  // padding: EdgeInsets.only(right: 10, left: 10),
-                  padding: EdgeInsets.all(10),
-                  child: Container(
-                      padding: EdgeInsets.only(right: 8, left: 8),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              color: Theme.of(context).colorScheme.primary),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(6))),
-                      child: TextField(
-                        controller: controller.textEditingControllerArabicName,
-                        decoration: InputDecoration(
-                          border: UnderlineInputBorder(),
-                          labelText: "arabic_name".tr,
-                        ),
-                      )),
-                ),
-              ],
-            // ),
+            Container(
+              // padding: EdgeInsets.only(right: 10, left: 10),
+              padding: EdgeInsets.all(10),
+              child: Container(
+                  padding: EdgeInsets.only(right: 8, left: 8),
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          color: Theme.of(context).colorScheme.primary),
+                      borderRadius: const BorderRadius.all(Radius.circular(6))),
+                  child: TextField(
+                    controller: controller.textEditingControllerArabicName,
+                    decoration: InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: "arabic_name".tr,
+                    ),
+                  )),
+            ),
+          ],
+          // ),
           // );
-        // }
+          // }
         ));
   }
 

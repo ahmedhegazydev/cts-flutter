@@ -35,7 +35,7 @@ class Baskets extends AbstractJsonResource implements Comparable{
   int? iD;
   String? name;
   String? nameAr;
-  int? orderBy;
+  int? orderBy = 0;
   int? userGctId;
   bool? isDeleted;
   bool? canBeReOrder;
@@ -54,17 +54,17 @@ class Baskets extends AbstractJsonResource implements Comparable{
 
   @override
   int compareTo(otherPerson){
-    // if(this.orderBy! > otherPerson.orderBy){
-    //   return 1;
-    // }
-    //
-    // if(this.orderBy! < otherPerson.orderBy){
-    //   return 0;
-    // }
-    //
-    // if(this.orderBy == otherPerson.orderBy){
-    //   return 0;
-    // }
+    if(this.orderBy! > otherPerson.orderBy){
+      return 1;
+    }
+
+    if(this.orderBy! < otherPerson.orderBy){
+      return 0;
+    }
+
+    if(this.orderBy == otherPerson.orderBy){
+      return 0;
+    }
 
     return 0;
   }
@@ -75,7 +75,7 @@ class Baskets extends AbstractJsonResource implements Comparable{
     iD = json['ID'];
     name = json['Name'];
     nameAr = json['NameAr'];
-    orderBy = json['OrderBy'];
+    orderBy = json['OrderBy'] ?? 0;
     userGctId = json['UserGctId'];
     isDeleted = json['isDeleted'];
     canBeReOrder = json['CanBeReOrder'];
@@ -88,7 +88,7 @@ class Baskets extends AbstractJsonResource implements Comparable{
     data['ID'] = this.iD;
     data['Name'] = this.name;
     data['NameAr'] = this.nameAr;
-    data['OrderBy'] = this.orderBy;
+    data['OrderBy'] = this.orderBy ?? 0;
     data['UserGctId'] = this.userGctId;
     data['isDeleted'] = this.isDeleted;
     data['CanBeReOrder'] = this.canBeReOrder;

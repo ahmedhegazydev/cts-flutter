@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -44,6 +47,8 @@ class _PDFViewState extends State<PDFView> {
   List<PdfPageImage> pages = [];
   double pageWidth = 200;
   double pageHeigt = 200;
+  double opageWidth = 200;
+  double opageHeigt = 200;
   // double screenWidth = 0;
   // double screenHeight = 0;
   Size myChildSize = Size.zero;
@@ -61,11 +66,14 @@ class _PDFViewState extends State<PDFView> {
 
       pageHeigt = page.height.toDouble();
       pageWidth = page.width.toDouble();
+      opageHeigt = page.height.toDouble();
+      opageWidth = page.width.toDouble();
       var aspect = screenWidthViewer / pageWidth;
 
       pageHeigt = pageHeigt * aspect;
       pageWidth = pageWidth * aspect;
 
+      calculateDimensions2();
       final pageImage = await page.render(width: pageWidth, height: pageHeigt);
       pages.add(pageImage!);
       // ViewerController.to.addAnnotationList([]);
@@ -227,6 +235,17 @@ class _PDFViewState extends State<PDFView> {
 
     ViewerController.to.screenHeight.value = screenHeightViewer * aspect;
   }
+
+  void calculateDimensions2() {
+    var aspect = screenWidthViewer / opageWidth;
+
+    // pageHeigt = pageHeigt * aspect;
+    // pageWidth = screenWidthViewer;
+    ViewerController.to.setScreenWidthAndHeight(
+        screenWidthViewer, screenHeightViewer * aspect * 1.6);
+
+    ViewerController.to.screenHeight.value = screenHeightViewer * aspect;
+  }
 }
 
 class PDFColumn extends StatelessWidget {
@@ -245,18 +264,30 @@ class PDFColumn extends StatelessWidget {
           print(size);
           //});
         },
-        child: Column(
-          children: List.generate(
-            pages.length,
-            (index) {
-              return PageContainer(
-                image: MemoryImage(pages[index].bytes),
-                pageNumber: index,
-              );
-            },
+        child: Container(
+          color: Colors.green,
+          child: Column(
+            children: List.generate(
+              pages.length,
+              (index) {
+                // print("---------");
+                // var bytes = base64Encode(pages[index].bytes);
+                // print(bytes);
+                return PageContainer(
+                  image: MemoryImage(pages[index].bytes),
+                  pageNumber: index,
+                );
+              },
+            ),
           ),
         ));
   }
+}
+
+String uint8ListTob64(Uint8List uint8list) {
+  String base64String = base64Encode(uint8list);
+  String header = "data:image/png;base64,";
+  return header + base64String;
 }
 
 @immutable

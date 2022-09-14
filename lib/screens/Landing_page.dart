@@ -3291,265 +3291,112 @@ class LandingPage extends GetWidget<LandingPageController> {
                     ),
                   ],
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Flexible(
-                      flex: 1,
-                      child: Container(
-                        color: Colors.transparent,
-                        width: double.infinity,
-                        height: double.infinity,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Flexible(
-                              flex: 3,
-                              child: Text(
-                                u.calculateDate("dd", 'en'),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline3!
-                                    .copyWith(
-                                        fontSize:
-                                            u.calculateFontSize(65, context)),
-                                textAlign: TextAlign.center,
+                child: Flexible(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Flexible(
+                        flex: 1,
+                        child: Container(
+                          color: Colors.transparent,
+                          width: double.infinity,
+                          height: double.infinity,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Flexible(
+                                flex: 3,
+                                child: Text(
+                                  u.calculateDate("dd", 'en'),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline3!
+                                      .copyWith(
+                                          fontSize:
+                                              u.calculateFontSize(65, context)),
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
-                            ),
-                            Flexible(
-                              flex: 2,
-                              child: Text(
-                                u.calculateDate(
-                                        "MMMM", u.getLocaleCode(context)) +
-                                    " " +
-                                    u.calculateDate("yyyy", 'en'),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .copyWith(
-                                      color: Colors.grey.shade600,
-                                      fontSize: 15,
-                                      fontFamily: "Bahij_light",
-                                    ),
-                                textAlign: TextAlign.center,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    FractionallySizedBox(
-                      heightFactor: 0.7,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade400,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(4),
+                              Flexible(
+                                flex: 2,
+                                child: Text(
+                                  u.calculateDate(
+                                          "MMMM", u.getLocaleCode(context)) +
+                                      " " +
+                                      u.calculateDate("yyyy", 'en'),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline2!
+                                      .copyWith(
+                                        color: Colors.grey.shade600,
+                                        fontSize: 15,
+                                        fontFamily: "Bahij_light",
+                                      ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              )
+                            ],
                           ),
                         ),
-                        width: 0.5,
                       ),
-                    ),
-                    Flexible(
-                      flex: 1,
-                      child: Container(
-                        color: Colors.transparent,
-                        width: double.infinity,
-                        height: double.infinity,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Flexible(
-                              flex: 3,
-                              child: Text(
-                                u.calculateDate("hh:mm", 'en'),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline3!
-                                    .copyWith(color: Colors.grey, fontSize: 24),
-                                textAlign: TextAlign.center,
-                              ),
+                      FractionallySizedBox(
+                        heightFactor: 0.7,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade400,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(4),
                             ),
-                            Flexible(
-                              flex: 2,
-                              child: Text(
-                                " " + u.calculateDate("a", 'en'),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline3!
-                                    .copyWith(
-                                        color: Colors.grey.shade400,
-                                        fontSize: 24),
-                              ),
-                            )
-                          ],
+                          ),
+                          width: 0.5,
                         ),
                       ),
-                    ),
-                  ],
+                      Flexible(
+                        flex: 1,
+                        child: Container(
+                          color: Colors.transparent,
+                          width: double.infinity,
+                          height: double.infinity,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Flexible(
+                                flex: 3,
+                                child: Text(
+                                  u.calculateDate("hh:mm", 'en'),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline3!
+                                      .copyWith(
+                                          color: Colors.grey, fontSize: 24),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              Flexible(
+                                flex: 2,
+                                child: Text(
+                                  " " + u.calculateDate("a", 'en'),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline3!
+                                      .copyWith(
+                                          color: Colors.grey.shade400,
+                                          fontSize: 24),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ),
-          ),
-          Flexible(
-            flex: 3,
-            child: Container(
-              color: Colors.transparent,
-              padding: const EdgeInsets.only(
-                  left: 80, right: 80, top: 10, bottom: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Flexible(
-                    flex: 1,
-                    child: Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(6),
-                            topRight: Radius.circular(6),
-                            bottomLeft: Radius.circular(6),
-                            bottomRight: Radius.circular(6)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.25),
-                            spreadRadius: 6,
-                            blurRadius: 6,
-                            offset: Offset(0, 0),
-                          ),
-                        ],
-                      ),
-                      child: Container(
-                        color: Colors.transparent,
-                        width: double.infinity,
-                        height: double.infinity,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Flexible(
-                              flex: 1,
-                              child: Text(
-                                "unreadCorrespondences".tr,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .copyWith(
-                                        color: Colors.grey,
-                                        // fontFamily: "Bahij_light",
-                                        fontSize:
-                                            u.calculateFontSize(16, context)),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                            Flexible(
-                              flex: 1,
-                              child: Text(
-                                Get.find<LandingPageController>()
-                                        .dashboardStatsResultModel
-                                        ?.unreadCount
-                                        ?.toString() ??
-                                    "",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline3!
-                                    .copyWith(
-                                      fontSize: 24,
-                                      fontFamily: "Bahij_bold",
-                                    ),
-                                textAlign: TextAlign.center,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 20),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(6),
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.25),
-                            spreadRadius: 6,
-                            blurRadius: 6,
-                            offset: Offset(0, 0),
-                          ),
-                        ],
-                      ),
-                      child: Container(
-                        color: Colors.transparent,
-                        width: double.infinity,
-                        height: double.infinity,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Flexible(
-                              flex: 1,
-                              child: Text(
-                                "pendingCorrespondences".tr,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .copyWith(
-                                        color: Colors.grey,
-                                        fontSize:
-                                            u.calculateFontSize(16, context)),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                            Flexible(
-                              flex: 1,
-                              child: Text(
-                                Get.find<LandingPageController>()
-                                        .dashboardStatsResultModel
-                                        ?.forActionCount
-                                        ?.toString() ??
-                                    ""
-                                //controller.data?.transferData.sections[].destination
-                                // controller.data?.transferData.priorities
-                                //   controller.data?.transferData.privacies.
-                                // controller.data?.transferData.purposes.
-                                //  controller.data?.signature
-
-                                ,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline3!
-                                    .copyWith(
-                                      fontSize: 24,
-                                      fontFamily: "Bahij_bold",
-                                    ),
-                                textAlign: TextAlign.center,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
               ),
             ),
           ),
@@ -3707,185 +3554,196 @@ class LandingPage extends GetWidget<LandingPageController> {
               ),
             ),
           ),
-          // Flexible(
-          //   flex: 2,
-          //   child: Container(
-          //     color: Colors.transparent,
-          //     padding:
-          //         EdgeInsets.only(left: 80, right: 80, top: 10, bottom: 10),
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //       crossAxisAlignment: CrossAxisAlignment.center,
-          //       mainAxisSize: MainAxisSize.max,
-          //       children: [
-          //         Flexible(
-          //           flex: 1,
-          //           child: Container(
-          //             width: double.infinity,
-          //             height: double.infinity,
-          //             decoration: BoxDecoration(
-          //               color: Colors.white,
-          //               borderRadius: BorderRadius.only(
-          //                   topLeft: Radius.circular(6),
-          //                   topRight: Radius.circular(6),
-          //                   bottomLeft: Radius.circular(6),
-          //                   bottomRight: Radius.circular(6)),
-          //               boxShadow: [
-          //                 BoxShadow(
-          //                   color: Colors.grey.withOpacity(0.25),
-          //                   spreadRadius: 6,
-          //                   blurRadius: 6,
-          //                   offset: Offset(0, 0),
-          //                 ),
-          //               ],
-          //             ),
-          //             child: Row(
-          //               mainAxisAlignment: MainAxisAlignment.center,
-          //               crossAxisAlignment: CrossAxisAlignment.center,
-          //               mainAxisSize: MainAxisSize.max,
-          //               children: [
-          //                 Spacer(flex: 2),
-          //                 const Flexible(
-          //                   flex: 2,
-          //                   child: Image(
-          //                     image: AssetImage(
-          //                       'assets/images/flagged.png',
-          //                     ),
-          //                     fit: BoxFit.contain,
-          //                     width: double.infinity,
-          //                     height: double.infinity,
-          //                     color: Colors.grey,
-          //                   ),
-          //                 ),
-          //                 const Spacer(flex: 1),
-          //                 Flexible(
-          //                   flex: 10,
-          //                   child: Container(
-          //                     width: double.infinity,
-          //                     child: Text(
-          //                       "flagged".tr,
-          //                       style: Theme.of(context)
-          //                           .textTheme
-          //                           .headline2!
-          //                           .copyWith(
-          //                               color: Colors.grey,
-          //                               fontSize:
-          //                                   calculateFontSize(16, context)),
-          //                       textAlign: TextAlign.start,
-          //                     ),
-          //                   ),
-          //                 ),
-          //                 Flexible(
-          //                   flex: 3,
-          //                   child: Container(
-          //                     width: double.infinity,
-          //                     child: Text(
-          //                       "5",
-          //                       style: Theme.of(context)
-          //                           .textTheme
-          //                           .headline3!
-          //                           .copyWith(
-          //                             fontSize: 22,
-          //                             color: createMaterialColor(
-          //                               Color.fromRGBO(247, 148, 29, 1),
-          //                             ),
-          //                           ),
-          //                       textAlign: TextAlign.center,
-          //                     ),
-          //                   ),
-          //                 ),
-          //                 Spacer(flex: 2)
-          //               ],
-          //             ),
-          //           ),
-          //         ),
-          //         SizedBox(width: 20),
-          //         Flexible(
-          //           flex: 1,
-          //           child: Container(
-          //             width: double.infinity,
-          //             height: double.infinity,
-          //             decoration: BoxDecoration(
-          //               color: Colors.white,
-          //               borderRadius: BorderRadius.only(
-          //                 topLeft: Radius.circular(6),
-          //                 topRight: Radius.circular(6),
-          //                 bottomLeft: Radius.circular(6),
-          //                 bottomRight: Radius.circular(6),
-          //               ),
-          //               boxShadow: [
-          //                 BoxShadow(
-          //                   color: Colors.grey.withOpacity(0.25),
-          //                   spreadRadius: 6,
-          //                   blurRadius: 6,
-          //                   offset: Offset(0, 0),
-          //                 ),
-          //               ],
-          //             ),
-          //             child: Row(
-          //               mainAxisAlignment: MainAxisAlignment.center,
-          //               crossAxisAlignment: CrossAxisAlignment.center,
-          //               mainAxisSize: MainAxisSize.max,
-          //               children: [
-          //                 const Spacer(flex: 2),
-          //                 const Flexible(
-          //                   flex: 2,
-          //                   child: Image(
-          //                     image: AssetImage(
-          //                       'assets/images/notification.png',
-          //                     ),
-          //                     fit: BoxFit.contain,
-          //                     width: double.infinity,
-          //                     height: double.infinity,
-          //                     color: Colors.grey,
-          //                   ),
-          //                 ),
-          //                 const Spacer(flex: 1),
-          //                 Flexible(
-          //                   flex: 10,
-          //                   child: Container(
-          //                     width: double.infinity,
-          //                     child: Text(
-          //                       "notifications".tr,
-          //                       style: Theme.of(context)
-          //                           .textTheme
-          //                           .headline2!
-          //                           .copyWith(
-          //                               color: Colors.grey,
-          //                               fontSize:
-          //                                   calculateFontSize(16, context)),
-          //                       textAlign: TextAlign.start,
-          //                     ),
-          //                   ),
-          //                 ),
-          //                 Flexible(
-          //                   flex: 3,
-          //                   child: Container(
-          //                     width: double.infinity,
-          //                     child: Text(
-          //                       "9",
-          //                       style: Theme.of(context)
-          //                           .textTheme
-          //                           .headline3!
-          //                           .copyWith(
-          //                             fontSize: 22,
-          //                             color: createMaterialColor(
-          //                               Color.fromRGBO(247, 148, 29, 1),
-          //                             ),
-          //                           ),
-          //                       textAlign: TextAlign.center,
-          //                     ),
-          //                   ),
-          //                 ),
-          //                 Spacer(flex: 2)
-          //               ],
-          //             ),
-          //           ),
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // )
+
+          // bottom actions
+          Flexible(
+            flex: 3,
+            child: Container(
+              color: Colors.transparent,
+              padding: const EdgeInsets.only(
+                  left: 80, right: 80, top: 10, bottom: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Flexible(
+                    flex: 1,
+                    child: Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(6),
+                            topRight: Radius.circular(6),
+                            bottomLeft: Radius.circular(6),
+                            bottomRight: Radius.circular(6)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.25),
+                            spreadRadius: 6,
+                            blurRadius: 6,
+                            offset: Offset(0, 0),
+                          ),
+                        ],
+                      ),
+                      child: InkWell(
+                        onTap: () {
+                          openInbox(boxid: 0, context: context, nodeId: 20097);
+                        },
+                        child: Container(
+                          color: Colors.transparent,
+                          width: double.infinity,
+                          height: double.infinity,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Flexible(
+                                flex: 1,
+                                child: Text(
+                                  "unreadCorrespondences".tr,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline2!
+                                      .copyWith(
+                                          color: Colors.grey,
+                                          // fontFamily: "Bahij_light",
+                                          fontSize:
+                                              u.calculateFontSize(16, context)),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              Flexible(
+                                flex: 2,
+                                child: Text(
+                                  Get.find<LandingPageController>()
+                                          .dashboardStatsResultModel
+                                          ?.unreadCount
+                                          ?.toString() ??
+                                      "",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline3!
+                                      .copyWith(
+                                        fontSize: 24,
+                                        fontFamily: "Bahij_bold",
+                                      ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              Flexible(
+                                flex: 1,
+                                child: Image(
+                                  image: AssetImage(
+                                    "assets/images/arrow_L.png",
+                                  ),
+                                  fit: BoxFit.contain,
+                                  //  width: 20,
+                                  //   height: double.infinity,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 20),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(6),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.25),
+                            spreadRadius: 6,
+                            blurRadius: 6,
+                            offset: Offset(0, 0),
+                          ),
+                        ],
+                      ),
+                      child: InkWell(
+                        onTap: () {
+                          openInbox(boxid: 0, context: context, nodeId: 20094);
+                        },
+                        child: Container(
+                          color: Colors.transparent,
+                          width: double.infinity,
+                          height: double.infinity,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Flexible(
+                                flex: 1,
+                                child: Text(
+                                  "pendingCorrespondences".tr,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline2!
+                                      .copyWith(
+                                          color: Colors.grey,
+                                          fontSize:
+                                              u.calculateFontSize(16, context)),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              Flexible(
+                                flex: 2,
+                                child: Text(
+                                  Get.find<LandingPageController>()
+                                          .dashboardStatsResultModel
+                                          ?.forActionCount
+                                          ?.toString() ??
+                                      ""
+                                  //controller.data?.transferData.sections[].destination
+                                  // controller.data?.transferData.priorities
+                                  //   controller.data?.transferData.privacies.
+                                  // controller.data?.transferData.purposes.
+                                  //  controller.data?.signature
+
+                                  ,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline3!
+                                      .copyWith(
+                                        fontSize: 24,
+                                        fontFamily: "Bahij_bold",
+                                      ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              Flexible(
+                                flex: 1,
+                                child: Image(
+                                  image: AssetImage(
+                                    "assets/images/arrow_L.png",
+                                  ),
+                                  fit: BoxFit.contain,
+                                  // width: 50,
+                                  // height: double.infinity,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -3936,50 +3794,56 @@ class LandingPage extends GetWidget<LandingPageController> {
                             ),
                           ],
                         ),
-                        child: Container(
-                          color: Colors.transparent,
-                          width: double.infinity,
-                          height: double.infinity,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Flexible(
-                                flex: 1,
-                                child: Text(
-                                  "unreadCorrespondences".tr,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline2!
-                                      .copyWith(
-                                        color: Colors.grey,
-                                        // fontFamily: "Bahij_light",
-                                        fontSize:
-                                            u.calculateFontSize(30, context),
-                                      ),
-                                  textAlign: TextAlign.center,
+                        child: InkWell(
+                          onTap: () {
+                            openInbox(
+                                boxid: 0, context: context, nodeId: 20094);
+                          },
+                          child: Container(
+                            color: Colors.transparent,
+                            width: double.infinity,
+                            height: double.infinity,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Flexible(
+                                  flex: 1,
+                                  child: Text(
+                                    "unreadCorrespondences".tr,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline2!
+                                        .copyWith(
+                                          color: Colors.grey,
+                                          // fontFamily: "Bahij_light",
+                                          fontSize:
+                                              u.calculateFontSize(30, context),
+                                        ),
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ),
-                              ),
-                              Flexible(
-                                flex: 1,
-                                child: Text(
-                                  Get.find<LandingPageController>()
-                                      .dashboardStatsResultModel!
-                                      .unreadCount
-                                      .toString(),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline3!
-                                      .copyWith(
-                                        fontFamily: "Bahij_bold",
-                                        fontSize:
-                                            u.calculateFontSize(80, context),
-                                      ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              )
-                            ],
+                                Flexible(
+                                  flex: 1,
+                                  child: Text(
+                                    Get.find<LandingPageController>()
+                                        .dashboardStatsResultModel!
+                                        .unreadCount
+                                        .toString(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline3!
+                                        .copyWith(
+                                          fontFamily: "Bahij_bold",
+                                          fontSize:
+                                              u.calculateFontSize(80, context),
+                                        ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -4011,49 +3875,55 @@ class LandingPage extends GetWidget<LandingPageController> {
                             ),
                           ],
                         ),
-                        child: Container(
-                          color: Colors.transparent,
-                          width: double.infinity,
-                          height: double.infinity,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Flexible(
-                                flex: 1,
-                                child: Text(
-                                  "pendingCorrespondences".tr,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline2!
-                                      .copyWith(
-                                        color: Colors.grey,
-                                        fontSize:
-                                            u.calculateFontSize(30, context),
-                                      ),
-                                  textAlign: TextAlign.center,
+                        child: InkWell(
+                          onTap: () {
+                            openInbox(
+                                boxid: 0, context: context, nodeId: 20094);
+                          },
+                          child: Container(
+                            color: Colors.transparent,
+                            width: double.infinity,
+                            height: double.infinity,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Flexible(
+                                  flex: 1,
+                                  child: Text(
+                                    "pendingCorrespondences".tr,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline2!
+                                        .copyWith(
+                                          color: Colors.grey,
+                                          fontSize:
+                                              u.calculateFontSize(30, context),
+                                        ),
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ),
-                              ),
-                              Flexible(
-                                flex: 1,
-                                child: Text(
-                                  Get.find<LandingPageController>()
-                                      .dashboardStatsResultModel!
-                                      .forActionCount
-                                      .toString(),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline3!
-                                      .copyWith(
-                                        fontFamily: "Bahij_bold",
-                                        fontSize:
-                                            u.calculateFontSize(80, context),
-                                      ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              )
-                            ],
+                                Flexible(
+                                  flex: 1,
+                                  child: Text(
+                                    Get.find<LandingPageController>()
+                                        .dashboardStatsResultModel!
+                                        .forActionCount
+                                        .toString(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline3!
+                                        .copyWith(
+                                          fontFamily: "Bahij_bold",
+                                          fontSize:
+                                              u.calculateFontSize(80, context),
+                                        ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -4700,7 +4570,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                             openInbox(
                                 boxid: 0,
                                 context: context,
-                                nodeId: e.value!.nodeId!);
+                                nodeId: e.value!.nodeId!
+                                //20094
+                                );
                           },
                           child: _buildInboxesRow(
                             context,

@@ -9,15 +9,28 @@ class WebViewPage extends GetWidget<WebViewPageController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-       controller.isPdf? SfPdfViewer.network(controller.url!):
-      WebView(
-        initialUrl: controller.url!,
-        javascriptMode: JavascriptMode.unrestricted,
-        allowsInlineMediaPlayback: true,
-        gestureNavigationEnabled: true,
-        zoomEnabled: true,
-      ),
+      appBar: AppBar(actions: <Widget>[
+        Padding(
+            padding: EdgeInsets.all(5),
+            child: InkWell(
+                onTap: () {
+                  Get.back();
+                },
+                child: Icon(
+                  Icons.close,
+                  color: Colors.white,
+                  size: 30,
+                ))),
+      ]),
+      body: controller.isPdf
+          ? SfPdfViewer.network(controller.url!)
+          : WebView(
+              initialUrl: controller.url!,
+              javascriptMode: JavascriptMode.unrestricted,
+              allowsInlineMediaPlayback: true,
+              gestureNavigationEnabled: true,
+              zoomEnabled: true,
+            ),
     );
   }
 }

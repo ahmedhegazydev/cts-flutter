@@ -33,21 +33,16 @@ class SignaturePage extends GetView<SignaturePageController> {
             Spacer(),
             Padding(
               padding: EdgeInsets.all(5),
-              child: GestureDetector(
-                onTap: () {
-                  Get.back();
-                },
-                child: Text("addsing".tr,
-                    style: TextStyle(
-                        // fontFamily: 'Roboto',
-                        fontSize: 20,
-                        color: Colors.white
-                        // letterSpacing: 0.15,
-                        // fontWeight: FontWeight.w500,
-                        // color: _themeData!.colorScheme.onSurface
-                        //     .withOpacity(0.87),
-                        )),
-              ),
+              child: Text("addsing".tr,
+                  style: TextStyle(
+                      // fontFamily: 'Roboto',
+                      fontSize: 20,
+                      color: Colors.white
+                      // letterSpacing: 0.15,
+                      // fontWeight: FontWeight.w500,
+                      // color: _themeData!.colorScheme.onSurface
+                      //     .withOpacity(0.87),
+                      )),
             ),
             Spacer(),
             Padding(

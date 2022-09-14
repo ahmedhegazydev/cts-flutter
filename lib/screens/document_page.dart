@@ -70,7 +70,6 @@ class DocumentPage extends GetWidget<DocumentController> {
             label: "signature".tr,
             image: 'assets/images/signature.png',
           ),
-
           SizedBox(
             height: size.height * .05,
           ),
@@ -166,9 +165,10 @@ class DocumentPage extends GetWidget<DocumentController> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               mainAxisSize: MainAxisSize.max,
               children: [
-                InkWell(onTap: (){
-                  Get.back();
-                },
+                InkWell(
+                  onTap: () {
+                    Get.back();
+                  },
                   child: Container(
                       color: Colors.grey[400],
                       height: 50,
@@ -840,7 +840,8 @@ class DocumentPage extends GetWidget<DocumentController> {
                   Divider(color: Colors.grey),
                   Expanded(
                     child: GetBuilder<DocumentController>(
-                      assignId: true,autoRemove: false,
+                      assignId: true,
+                      autoRemove: false,
                       builder: (logic) {
                         return GridView.builder(
                           itemCount: controller.multiSignatures.length,
@@ -938,9 +939,14 @@ class DocumentPage extends GetWidget<DocumentController> {
               onTap: () {
                 Get.back();
               },
-              child: Image.asset(
-                'assets/images/menu.png',
-             height: 50,width: 50, ),
+              // child: Image.asset(
+              //   'assets/images/menu.png',
+              // ),
+              child: Icon(
+                Icons.close,
+                color: Colors.white,
+                size: 30,
+              ),
             ),
           ],
         ));

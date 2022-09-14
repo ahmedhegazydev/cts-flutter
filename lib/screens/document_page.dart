@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cts/models/DocumentModel.dart';
 import 'package:cts/screens/resize_sing.dart';
 import 'package:cts/screens/search_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sound/public/flutter_sound_player.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 //import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
 
@@ -753,13 +755,28 @@ class DocumentPage extends GetWidget<DocumentController> {
                              Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: InkWell(
-                                        onTap: () {
+                                        onTap: () async{
+                                          print("object");
                                           /// هنشغل ملف الصوت هنا
-                                          ///
-                                          ///
+                                          FlutterSoundPlayer    audioPlayer = FlutterSoundPlayer();
+
+                                         audioPlayer!.openPlayer();
+                               String filePath= await createFileFromString(controller.canOpenDocumentModel?.attachments?.voiceNote)       ;
 
 
-
+  print(filePath);
+                                          await   audioPlayer!.startPlayer(fromURI:filePath);
+                                          // await controller.audioPlayer?.startPlayer(fromURI: filePath,sampleRate: 16000,whenFinished: (){
+                                          //
+                                          // });
+                                          //   (
+                                          //   fromURI: = outputFile,
+                                          //   codec: Codec.pcm16,
+                                          //   numChannels: 1,
+                                          //   sampleRate: 16000, // Used only with codec == Codec.pcm16
+                                          //   whenFinished: (){ /* Do something */},
+                                          //
+                                          // );
 
                                         },
                                         child: Icon(Icons.play_arrow,

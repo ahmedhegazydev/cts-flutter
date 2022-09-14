@@ -258,9 +258,7 @@ class DocumentController extends GetxController {
       //     //canOpenDocumentModel!.correspondence!.docDueDate!,
       //     voiceNote: audioFileBes64!,
       //     voiceNoteExt: "m4a");
-      print(
-          "multiTransferNode[key]=>    ${jsonEncode(multiTransferNode[key]?.toMap())}");
-      print("key====>${jsonEncode(value)}");
+
     });
 
     List<multipletransfersSend.TransferNode> transfers = [];
@@ -281,8 +279,7 @@ class DocumentController extends GetxController {
     //     transferId: transferId,
     //     transfers: transfers);
 
-    print(
-        "multipleTransfersModel.toMap()   =>${jsonEncode(multipleTransfers.toMap())}");
+
     transfarForMany.clear();
     usersWillSendTo.clear();
     _multipleTransfersAPI.post(multipleTransfers.toMap()).then((value) {
@@ -353,8 +350,7 @@ Get.back();
             pdfUrlFile,
             controller: pdfViewerController,
             onPageChanged: (v) {
-              print(
-                  "ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+
               for (int i = 0; i < pdfAndSingannotation.length; i++) {
                 if (int.parse(pdfAndSingannotation[i].page!) ==
                     v.newPageNumber) {
@@ -383,9 +379,9 @@ Get.back();
 
           if (saveAttAchmentItemAnnotationsData!.attachments![i].annotations!
               .contains("[]")) {
-            print("[]");
+
           } else {
-            print("i will addddddd");
+
             Map<dynamic, dynamic> dat = jsonDecode(
                 saveAttAchmentItemAnnotationsData!
                     .attachments![i].annotations!);
@@ -923,7 +919,7 @@ Get.back();
     _directoryPath = appDocDir!.path +
         '/' +
         DateTime.now().millisecondsSinceEpoch.toString() +
-        '.mp4';
+        '.aac';
     recording = true;
     update();
 
@@ -982,7 +978,7 @@ Get.back();
       required transferId,
       required exportAction,
       required context}) async {
-    print("hhhhhhhhhhhhgetIsAlreadyExportedAsPaperwork");
+
     IsAlreadyExportedAsPaperworkAPI _alreadyExportedAsPaperworkAPI =
         IsAlreadyExportedAsPaperworkAPI(null);
 

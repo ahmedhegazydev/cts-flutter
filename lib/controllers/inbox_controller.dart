@@ -89,6 +89,16 @@ int?nodeId=0;
     await addEDocumentsToBasketApi
         .post(addDocumentsToBasketRequest.toMap())
         .then((value) {
+          Navigator.pop(context);
+          showTopSnackBar(
+            context,
+            CustomSnackBar.success(
+              icon: Container(),
+              backgroundColor: Colors.lightGreen,
+              message:
+              "EndedSuccess".tr,
+            ),
+          );
       listSelectCorrespondences.clear();
 
       print(value);

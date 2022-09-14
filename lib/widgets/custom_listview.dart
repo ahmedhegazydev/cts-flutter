@@ -4978,7 +4978,6 @@ class CustomListView extends GetView<InboxController> {
                                               // Get.find<InboxController>()
                                               //     .getFetchBasketList(
                                               //     context: context);
-
                                             },
                                             value: 5,
                                           ),
@@ -5707,77 +5706,8 @@ class CustomListView extends GetView<InboxController> {
                           buildDefaultDragHandles: true,
                           // buildDefaultDragHandles: false,
                           padding: const EdgeInsets.symmetric(horizontal: 40),
-                          children: <Widget>[
-                            // for (int index = 0;
-                            //     index <
-                            //         inboxController
-                            //             .fetchBasketListModel!
-                            //             .baskets!
-                            //             .length;
-                            //     // 4;
-                            //     index += 1)
-                            for (final basket
-                            in inboxController.fetchBasketListModel!.baskets!)
-                              ListTile(
-                                // key: Key('$index'),
-                                key: ValueKey(basket),
-                                // tileColor: _items[index].isOdd ? oddItemColor : evenItemColor,
-                                onLongPress: !(basket.canBeReOrder ?? false)
-                                    ? () {
-                                  print(basket.iD);
-                                }
-                                    : null,
-                                onTap: !(basket.canBeReOrder ?? false)
-                                    ? () {
-                                  print(basket.iD);
-                                  // Get.find<BasketController>().getBasketInbox(
-                                  //     id: inboxController
-                                  //         .fetchBasketListModel!
-                                  //         .baskets![pos]
-                                  //         .iD!,
-                                  //     pageSize: 20,
-                                  //     pageNumber: 0, context: null);
-                                }
-                                    : null,
-                                enabled: !(basket.canBeReOrder ?? false),
-                                enableFeedback: !(basket.canBeReOrder ?? false),
-                                title: Card(
-                                  elevation: 10,
-                                  color: basket.color?.toColor(),
-                                  child: Column(children: [
-                                    Text(basket.name ?? ""),
-                                    Text(basket.nameAr ?? ""),
-                                    // Text( "color :${inboxController
-                                    //     .fetchBasketListModel
-                                    //     ?.baskets?[pos].color}",style: TextStyle( color:  HexColor(inboxController
-                                    //     .fetchBasketListModel
-                                    //     ?.baskets?[pos].color??"#000000"))),
-
-                                    GestureDetector(
-                                      onTap: () {
-                                        //هنا هنعمل دليت
-                                        _showMyDialogDeleteConfirm(context, basket);
-
-                                        // showTopSnackBar(
-                                        // icon: Container(),
-                                        //   context,
-                                        //   CustomSnackBar.success(
-                                        // backgroundColor: Colors.lightGreen,
-                                        //     message:
-                                        //     "Good job, basket have been deleted",
-                                        //   ),
-                                        // );
-                                      },
-                                      // child:  Icon(Icons.delete, color: (basket.canBeReOrder ?? false) ? Colors.black: Colors.transparent,) ,
-                                      child: (basket.canBeReOrder ?? false)
-                                          ? Icon(Icons.delete)
-                                          : Container(),
-                                    ),
-                                  ]),
-                                ),
-                              )
-                          ],
-                          onReorder: (int oldIndex, int newIndex) {
+                          children:  addBasketData(context),
+                            onReorder: (int oldIndex, int newIndex) {
                             print("onReorder = $oldIndex - $newIndex");
                             if (oldIndex < newIndex) {
                               newIndex -= 1;
@@ -7320,5 +7250,93 @@ class CustomListView extends GetView<InboxController> {
     //           ),
     //           actions: [],
     //         ));
+  }
+
+  List<Widget> addBasketData(BuildContext context) {
+    List<Widget> list = [];
+    for (int index = 0;
+    index <
+        inboxController
+            .fetchBasketListModel!
+            .baskets!
+            .length;
+    index += 1){
+      var basket =  inboxController
+          .fetchBasketListModel!
+          .baskets![index];
+      // for (final basket in inboxController.fetchBasketListModel!.baskets!)
+      list.add(ListTile(
+        // key: Key('$index'),
+        key: ValueKey(basket),
+        // tileColor: _items[index].isOdd ? oddItemColor : evenItemColor,
+        onLongPress: !(basket.canBeReOrder ?? false)
+            ? () {
+          print(basket.iD);
+        }
+            : null,
+        onTap: !(basket.canBeReOrder ?? false)
+            ? () async {
+          print(basket.iD);
+          showLoaderDialog(context);
+          // Get
+          //     .find<
+          //     InboxController>()
+          //     .listSelectCorrespondences
+          //     .add(int
+          //     .parse(
+          //     correspondences[index]
+          //         .correspondenceId!));
+          Get.back();
+          await Get
+              .find<
+              InboxController>()
+              .addDocumentsToBasket(
+              context:
+              context,
+              basketId:
+              basket.iD);
+        }
+            : null,
+        enabled: !(basket.canBeReOrder ?? false),
+        enableFeedback: !(basket.canBeReOrder ?? false),
+        title: Card(
+          elevation: 10,
+          color: basket.color?.toColor(),
+          child: Column(children: [
+            Text(basket.name ?? ""),
+            Text(basket.nameAr ?? ""),
+            // Text( "color :${inboxController
+            //     .fetchBasketListModel
+            //     ?.baskets?[pos].color}",style: TextStyle( color:  HexColor(inboxController
+            //     .fetchBasketListModel
+            //     ?.baskets?[pos].color??"#000000"))),
+
+            GestureDetector(
+              onTap: () {
+                //هنا هنعمل دليت
+                _showMyDialogDeleteConfirm(
+                    context, basket);
+
+                // showTopSnackBar(
+                // icon: Container(),
+                //   context,
+                //   CustomSnackBar.success(
+                // backgroundColor: Colors.lightGreen,
+                //     message:
+                //     "Good job, basket have been deleted",
+                //   ),
+                // );
+              },
+              // child:  Icon(Icons.delete, color: (basket.canBeReOrder ?? false) ? Colors.black: Colors.transparent,) ,
+              child: (basket.canBeReOrder ?? false)
+                  ? Icon(Icons.delete)
+                  : Container(),
+            ),
+          ]),
+        ),
+      )
+      );
+    }
+    return list;// all widget added now retrun the list here
   }
 }

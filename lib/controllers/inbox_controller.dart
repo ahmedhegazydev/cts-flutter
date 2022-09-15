@@ -30,6 +30,7 @@ import '../services/apis/multiple_transfers_api.dart';
 import '../services/json_model/basket/add_documents_to_basket_request.dart';
 import '../services/json_model/basket/add_edit_basket_flag_model.dart';
 import '../services/json_model/basket/fetch_basket_list_model.dart';
+import '../services/json_model/basket/get_basket_inbox_model.dart';
 import '../services/json_model/basket/remove_basket_request_model.dart';
 import '../services/json_model/can_open_document_model.dart';
 import '../services/json_model/default_on_success_result.dart';
@@ -199,7 +200,7 @@ bool isUrgentClicked = false;
   bool showHideMyFavListScreen = false;
   bool showHideCreateNewBasketScreen = false;
 
-  GetCorrespondencesAllModel? getCorrespondencesAllModel;
+// GetCorrespondencesAllModel? getCorrespondencesAllModel;
   CorrespondencesModel? correspondencesModel;
 
   // List<Correspondences> correspondences = [];
@@ -496,24 +497,25 @@ bool isUrgentClicked = false;
     _getCorrespondencesAllAPI.getData().then((value) {
       // Navigator.pop(context);
       print("i get alll _getCorrespondencesAllAPI");
-      getCorrespondencesAllModel = value as GetCorrespondencesAllModel;
+      //getCorrespondencesAllModel = value as GetCorrespondencesAllModel;
+      correspondencesModel =value as CorrespondencesModel;
       if (addToList) {
         allCorrespondences
-            .addAll(getCorrespondencesAllModel?.inbox?.correspondences ?? []);
+            .addAll(correspondencesModel?.inbox?.correspondences ?? []);
       } else {
         allCorrespondences =
-            getCorrespondencesAllModel?.inbox?.correspondences ?? [];
+            correspondencesModel?.inbox?.correspondences ?? [];
       }
 
       int listLength =
-          getCorrespondencesAllModel?.inbox?.correspondences?.length ?? 0;
-      var v = getCorrespondencesAllModel?.toJson();
+          correspondencesModel?.inbox?.correspondences?.length ?? 0;
+      var v = correspondencesModel?.toJson();
       if (listLength < pageSize - 1) {
         haveMoreData = false;
       }
       update();
       // log(v.length);
-      print(getCorrespondencesAllModel?.inbox?.correspondences?.length);
+      print(correspondencesModel?.inbox?.correspondences?.length);
       getData = false;
       update();
     }).onError((error, stackTrace) {
@@ -770,7 +772,7 @@ bool isUrgentClicked = false;
       throw RecordingPermissionException("storage Permission");
     }
     if (statsmanageExternalStorage != PermissionStatus.granted) {
-      throw RecordingPermissionException("manageExternalStorage Permission");
+      await Permission.manageExternalStorage.request();
     }
 
     audioRecorder = FlutterSoundRecorder();
@@ -1091,5 +1093,36 @@ bool isUrgentClicked = false;
     } else {
       Get.snackbar("", "nofiletoopen".tr);
     }
+  }
+
+
+  getBasketInbox( {
+    required context, required int id,int pageSize=20,int pageNumber=0}){
+    GetBasketInboxApi getBasketInboxApi=GetBasketInboxApi(context);
+
+
+
+    getBasketInboxApi.data="token=${secureStorage.token()}&basketId=$id&pageNumber=$pageNumber&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+
+
+    getBasketInboxApi.getData().then((value) {
+      if(value!=null){
+
+        GetBasketInboxModel       getBasketInboxModel=value as GetBasketInboxModel;
+
+
+        allCorrespondences
+            .addAll(getBasketInboxModel?.correspondences?? []);
+        if((getBasketInboxModel?.correspondences?.length??0)<pageSize){
+          haveMoreData=false;
+        }
+
+      }else{
+        Get.snackbar("", "err".tr);
+      }
+
+      update();
+      // print(a.toJson());
+    });
   }
 }

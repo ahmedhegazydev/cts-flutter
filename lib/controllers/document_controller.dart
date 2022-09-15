@@ -1144,7 +1144,8 @@ Get.back();
             //   Get.back();
             // Navigator.of(context).pop();
           });
-    } else if (canExportAsPaperworkModel?.request != null) {
+    }
+    else if (canExportAsPaperworkModel?.request != null) {
       getSwitchMethod(
           exportAction: exportAction,
           transferId: transferId,

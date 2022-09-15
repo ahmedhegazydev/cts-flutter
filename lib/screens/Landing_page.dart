@@ -140,7 +140,7 @@ class LandingPage extends GetWidget<LandingPageController> {
             alignment: Alignment.center,
             width: 120,
             height: double.infinity,
-            color: Colors.grey.shade300,
+            color: Colors.grey.shade50,
             child: _buildSideMenu(context),
             // child: Container(),
           ),
@@ -206,7 +206,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                 children: [
                   Row(
                     children: [
-                      Spacer(),
+                     // Spacer(),
                       // controller.isSavingOrder
                       //     ? IconButton(
                       //         icon: Icon(Icons.check), onPressed: () {})
@@ -241,9 +241,12 @@ class LandingPage extends GetWidget<LandingPageController> {
                                     print(basket.iD);
                                   }
                                 : null,
-                            onTap: !(basket.canBeReOrder ?? false)
-                                ? () {
-                                    print(basket.iD);
+                            onTap:
+
+                            // !(basket.canBeReOrder ?? false)
+                            //     ?
+                                () {
+                                    print("basket.iDbasket.iDbasket.iDbasket.iDbasket.iD=>${basket.iD}");
                                     // Get.find<BasketController>().getBasketInbox(
                                     //     id: inboxController
                                     //         .fetchBasketListModel!
@@ -251,43 +254,55 @@ class LandingPage extends GetWidget<LandingPageController> {
                                     //         .iD!,
                                     //     pageSize: 20,
                                     //     pageNumber: 0, context: null);
-                                  }
-                                : null,
+                                  },
+                                //: null,
                             enabled: !(basket.canBeReOrder ?? false),
                             enableFeedback: !(basket.canBeReOrder ?? false),
-                            title: Card(
-                              elevation: 10,
-                              color: basket.color?.toColor(),
-                              child: Column(children: [
-                                Text(basket.name ?? ""),
-                                Text(basket.nameAr ?? ""),
-                                // Text( "color :${inboxController
-                                //     .fetchBasketListModel
-                                //     ?.baskets?[pos].color}",style: TextStyle( color:  HexColor(inboxController
-                                //     .fetchBasketListModel
-                                //     ?.baskets?[pos].color??"#000000"))),
+                            title: GestureDetector(onTap: (){
+                           //  controller.getBasketInbox(context: context, id: basket.iD!);
 
-                                GestureDetector(
-                                  onTap: () {
-                                    //هنا هنعمل دليت
-                                    _showMyDialogDeleteConfirm(context, basket);
 
-                                    // showTopSnackBar(
-                                    // icon: Container(),
-                                    //   context,
-                                    //   CustomSnackBar.success(
-                                    // backgroundColor: Colors.lightGreen,
-                                    //     message:
-                                    //     "Good job, basket have been deleted",
-                                    //   ),
-                                    // );
-                                  },
-                                  // child:  Icon(Icons.delete, color: (basket.canBeReOrder ?? false) ? Colors.black: Colors.transparent,) ,
-                                  child: (basket.canBeReOrder ?? false)
-                                      ? Icon(Icons.delete)
-                                      : Container(),
-                                ),
-                              ]),
+                             Get.find<InboxController>().isAllOrNot = true;
+                             Get.find<InboxController>().getBasketInbox(
+                                 context: context, id:  basket.iD!,  );
+                             Get.toNamed("/InboxPage");
+
+
+                            },
+                              child: Card(
+                                elevation: 10,
+                                color: basket.color?.toColor(),
+                                child: Column(children: [
+                                  Text(basket.name ?? ""),
+                                  Text(basket.nameAr ?? ""),
+                                  // Text( "color :${inboxController
+                                  //     .fetchBasketListModel
+                                  //     ?.baskets?[pos].color}",style: TextStyle( color:  HexColor(inboxController
+                                  //     .fetchBasketListModel
+                                  //     ?.baskets?[pos].color??"#000000"))),
+
+                                  GestureDetector(
+                                    onTap: () {
+                                      //هنا هنعمل دليت
+                                      _showMyDialogDeleteConfirm(context, basket);
+
+                                      // showTopSnackBar(
+                                      // icon: Container(),
+                                      //   context,
+                                      //   CustomSnackBar.success(
+                                      // backgroundColor: Colors.lightGreen,
+                                      //     message:
+                                      //     "Good job, basket have been deleted",
+                                      //   ),
+                                      // );
+                                    },
+                                    // child:  Icon(Icons.delete, color: (basket.canBeReOrder ?? false) ? Colors.black: Colors.transparent,) ,
+                                    child: (basket.canBeReOrder ?? false)
+                                        ? Icon(Icons.delete)
+                                        : Container(),
+                                  ),
+                                ]),
+                              ),
                             ),
                           )
                       ],
@@ -832,174 +847,10 @@ class LandingPage extends GetWidget<LandingPageController> {
           ),
         ),
         InkWell(
+          //fav users
           onTap: () async {
             //roro
-            u.showLoaderDialog(context);
-            controller.setSelectSuggest(true);
-            await controller.listFavoriteRecipients(context: context);
-            controller.textEditingControllerTo.clear();
-            Get.bottomSheet(
-              Padding(
-                padding: EdgeInsets.only(
-                    right: size.width * .2, left: size.width * .2),
-                child: Container(
-                    //height: 100,
-                    margin: EdgeInsets.all(20),
-                    padding: EdgeInsets.all(20),
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20))),
-                    child: Column(
-                      children: [
-                        Row(children: [
-                          Text("favoritesUsers".tr,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 24,
-                                  color:
-                                      Theme.of(context).colorScheme.primary)),
-                          Spacer(),
-                          InkWell(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Image.asset(
-                              'assets/images/close_button.png',
-                              width: 20,
-                              height: 20,
-                            ),
-                          ),
-                        ]),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TypeAheadField<Destination>(
-                                textFieldConfiguration: TextFieldConfiguration(
-                                  controller:
-                                      controller.textEditingControllerTo,
-                                  // autofocus: true,
-                                  // style: DefaultTextStyle.of(context)
-                                  //     .style
-                                  //     .copyWith(fontStyle: FontStyle.italic),
-                                  decoration: InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      labelText: ""),
-                                ),
-                                suggestionsCallback: (pattern) async {
-                                  return controller.users.where((element) =>
-                                      element.value!
-                                          .toLowerCase()
-                                          .contains(pattern.toLowerCase()));
-
-                                  //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
-                                },
-                                itemBuilder: (context, suggestion) {
-                                  Destination v = suggestion;
-
-                                  return // Te(v.originalName!);
-
-                                      ListTile(
-                                    title: FilterText(v.value!),
-                                  );
-                                },
-                                onSuggestionSelected: (suggestion) {
-                                  u.showLoaderDialog(context);
-                                  Destination v = suggestion;
-                                  controller.textEditingControllerTo.text =
-                                      v.value ?? "";
-                                  controller.to = v;
-                                  controller.updateselectFavusers(v);
-                                  controller.setSelectSuggest(false);
-                                  controller.addFavoriteRecipients(
-                                      addFavorite: v.id!, context: context);
-                                  controller.textEditingControllerTo.clear();
-                                  // v
-                                  // .cLASNAMEDISPLAY;
-                                  // Navigator.of(context).push(MaterialPageRoute(
-                                  //     builder: (context) => ProductPage(product: suggestion)
-                                  // ));
-                                },
-                              ),
-                            ),
-                            SizedBox(
-                              width: 2,
-                            ),
-                          ],
-                        ),
-                        GetBuilder<LandingPageController>(builder: (logic_) {
-                          return Expanded(
-                            child: ListView.separated(
-                                separatorBuilder: (context, index) =>
-                                    const Divider(),
-                                itemCount: controller.favoriteRecipientsResponse
-                                        ?.recipients?.length ??
-                                    0,
-                                itemBuilder: (context, pos) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: Card(
-                                      elevation: 5,
-                                      child: Row(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(4.0),
-                                            child: Container(
-                                              width: 30,
-                                              height: 30,
-                                              decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  image: controller
-                                                          .favoriteRecipientsResponse!
-                                                          .recipients![pos]
-                                                          .targetPhotoBs64!
-                                                          .isNotEmpty
-                                                      ? DecorationImage(
-                                                          image: MemoryImage(u
-                                                              .dataFromBase64String(controller
-                                                                  .favoriteRecipientsResponse!
-                                                                  .recipients![
-                                                                      pos]
-                                                                  .targetPhotoBs64!)))
-                                                      : DecorationImage(
-                                                          image: AssetImage(
-                                                              "assets/images/pr.jpg"))),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              controller
-                                                      .favoriteRecipientsResponse!
-                                                      .recipients![pos]
-                                                      .targetName ??
-                                                  "",
-                                            ),
-                                          ),
-                                          Spacer(),
-                                          InkWell(
-                                              onTap: () {
-                                                controller
-                                                    .setSelectSuggest(true);
-                                                _showMyDialogDelFavUserConfirm(
-                                                    context, pos);
-                                              },
-                                              child: Icon(Icons.delete))
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                }),
-                          );
-                        }),
-                      ],
-                    )),
-              ),
-              enterBottomSheetDuration: const Duration(seconds: 1),
-            );
+            await favUsersTap(context, size);
           },
           child: Container(
             height: 100,
@@ -1537,6 +1388,7 @@ class LandingPage extends GetWidget<LandingPageController> {
           ),
         ),
         InkWell(
+          //color
           onTap: () {
             showDialog(
                 context: context,
@@ -1684,6 +1536,7 @@ class LandingPage extends GetWidget<LandingPageController> {
           ),
         ),
         InkWell(
+          //logout
           onTap: () {
             secureStorage.deleteSecureData(AllStringConst.Token);
 
@@ -2101,6 +1954,166 @@ class LandingPage extends GetWidget<LandingPageController> {
     //     )
     //   ],
     // );
+  }
+
+  Future<void> favUsersTap(BuildContext context, Size size) async {
+    u.showLoaderDialog(context);
+    controller.setSelectSuggest(true);
+    await controller.listFavoriteRecipients(context: context);
+    controller.textEditingControllerTo.clear();
+    Get.bottomSheet(
+      Padding(
+        padding: EdgeInsets.only(right: size.width * .2, left: size.width * .2),
+        child: Container(
+            //height: 100,
+            margin: EdgeInsets.all(20),
+            padding: EdgeInsets.all(20),
+            decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20))),
+            child: Column(
+              children: [
+                Row(children: [
+                  Text("favoritesUsers".tr,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24,
+                          color: Theme.of(context).colorScheme.primary)),
+                  Spacer(),
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Image.asset(
+                      'assets/images/close_button.png',
+                      width: 20,
+                      height: 20,
+                    ),
+                  ),
+                ]),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TypeAheadField<Destination>(
+                        textFieldConfiguration: TextFieldConfiguration(
+                          controller: controller.textEditingControllerTo,
+                          // autofocus: true,
+                          // style: DefaultTextStyle.of(context)
+                          //     .style
+                          //     .copyWith(fontStyle: FontStyle.italic),
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(), labelText: ""),
+                        ),
+                        suggestionsCallback: (pattern) async {
+                          return controller.users.where((element) => element
+                              .value!
+                              .toLowerCase()
+                              .contains(pattern.toLowerCase()));
+
+                          //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
+                        },
+                        itemBuilder: (context, suggestion) {
+                          Destination v = suggestion;
+
+                          return // Te(v.originalName!);
+
+                              ListTile(
+                            title: FilterText(v.value!),
+                          );
+                        },
+                        onSuggestionSelected: (suggestion) {
+                          u.showLoaderDialog(context);
+                          Destination v = suggestion;
+                          controller.textEditingControllerTo.text =
+                              v.value ?? "";
+                          controller.to = v;
+                          controller.updateselectFavusers(v);
+                          controller.setSelectSuggest(false);
+                          controller.addFavoriteRecipients(
+                              addFavorite: v.id!, context: context);
+                          controller.textEditingControllerTo.clear();
+                          // v
+                          // .cLASNAMEDISPLAY;
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => ProductPage(product: suggestion)
+                          // ));
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: 2,
+                    ),
+                  ],
+                ),
+                GetBuilder<LandingPageController>(builder: (logic_) {
+                  return Expanded(
+                    child: ListView.separated(
+                        separatorBuilder: (context, index) => const Divider(),
+                        itemCount: controller.favoriteRecipientsResponse
+                                ?.recipients?.length ??
+                            0,
+                        itemBuilder: (context, pos) {
+                          return Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Card(
+                              elevation: 5,
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Container(
+                                      width: 30,
+                                      height: 30,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: controller
+                                                  .favoriteRecipientsResponse!
+                                                  .recipients![pos]
+                                                  .targetPhotoBs64!
+                                                  .isNotEmpty
+                                              ? DecorationImage(
+                                                  image: MemoryImage(u
+                                                      .dataFromBase64String(controller
+                                                          .favoriteRecipientsResponse!
+                                                          .recipients![pos]
+                                                          .targetPhotoBs64!)))
+                                              : DecorationImage(
+                                                  image: AssetImage(
+                                                      "assets/images/pr.jpg"))),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      controller.favoriteRecipientsResponse!
+                                              .recipients![pos].targetName ??
+                                          "",
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  InkWell(
+                                      onTap: () {
+                                        controller.setSelectSuggest(true);
+                                        _showMyDialogDelFavUserConfirm(
+                                            context, pos);
+                                      },
+                                      child: Icon(Icons.delete))
+                                ],
+                              ),
+                            ),
+                          );
+                        }),
+                  );
+                }),
+              ],
+            )),
+      ),
+      enterBottomSheetDuration: const Duration(seconds: 1),
+    );
   }
 
   _buildSideMenuPort(BuildContext context) {
@@ -3278,7 +3291,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                 // width: double.infinity,
                 // height: double.infinity,
                 decoration: BoxDecoration(
-                  color: Colors.white54,
+                  color: Colors.white70,
                   borderRadius: BorderRadius.all(
                     Radius.circular(6),
                   ),
@@ -3417,7 +3430,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       width: double.infinity,
                       height: double.infinity,
                       decoration: BoxDecoration(
-                        color: Colors.white54,
+                        color: Colors.white70,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(6),
                             topRight: Radius.circular(6),
@@ -3488,7 +3501,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       width: double.infinity,
                       height: double.infinity,
                       decoration: BoxDecoration(
-                        color: Colors.white54,
+                        color: Colors.white70,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(6),
                             topRight: Radius.circular(6),
@@ -3635,17 +3648,17 @@ class LandingPage extends GetWidget<LandingPageController> {
                                   textAlign: TextAlign.center,
                                 ),
                               ),
-                              Flexible(
-                                flex: 1,
-                                child: Image(
-                                  image: AssetImage(
-                                    "assets/images/arrow_L.png",
-                                  ),
-                                  fit: BoxFit.contain,
-                                  //  width: 20,
-                                  //   height: double.infinity,
-                                ),
-                              )
+                              // Flexible(
+                              //   flex: 1,
+                              //   child: Image(
+                              //     image: AssetImage(
+                              //       "assets/images/arrow_L.png",
+                              //     ),
+                              //     fit: BoxFit.contain,
+                              //     //  width: 20,
+                              //     //   height: double.infinity,
+                              //   ),
+                              // )
                             ],
                           ),
                         ),
@@ -3724,17 +3737,17 @@ class LandingPage extends GetWidget<LandingPageController> {
                                   textAlign: TextAlign.center,
                                 ),
                               ),
-                              Flexible(
-                                flex: 1,
-                                child: Image(
-                                  image: AssetImage(
-                                    "assets/images/arrow_L.png",
-                                  ),
-                                  fit: BoxFit.contain,
-                                  // width: 50,
-                                  // height: double.infinity,
-                                ),
-                              )
+                              // Flexible(
+                              //   flex: 1,
+                              //   child: Image(
+                              //     image: AssetImage(
+                              //       "assets/images/arrow_L.png",
+                              //     ),
+                              //     fit: BoxFit.contain,
+                              //     // width: 50,
+                              //     // height: double.infinity,
+                              //   ),
+                              // )
                             ],
                           ),
                         ),
@@ -4401,7 +4414,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       child: _buildOtherFoldersRows(
                         context,
                         "allincom".tr,
-                        "assets/images/incoming.png",
+                        "assets/images/incoming_icon.png",
                         true,
                         "",
                       ),
@@ -4424,7 +4437,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                         // "notifications".tr,
                         "allout".tr,
                         // "assets/images/notification.png",
-                        "assets/images/outgoing.png",
+                        "assets/images/outgoing_icon.png",
                         true,
                         "",
                       ),
@@ -4455,7 +4468,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       child: _buildOtherFoldersRows(
                           context,
                           "advancedSearch".tr,
-                          "assets/images/search.png",
+                          "assets/images/search_icon.png",
                           true,
                           ""),
                     ),
@@ -4621,7 +4634,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       child: _buildOtherFoldersRows(
                         context,
                         "allincom".tr,
-                        "assets/images/incoming.png",
+                        "assets/images/incoming_icon.png",
                         true,
                         "",
                       ),
@@ -4644,7 +4657,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                         context,
                         "allout".tr,
                         // "assets/images/notification.png",
-                        "assets/images/outgoing.png",
+                        "assets/images/outgoing_icon.png",
                         true,
                         "",
                       ),
@@ -4679,7 +4692,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       child: _buildOtherFoldersRows(
                           context,
                           "advancedSearch".tr,
-                          "assets/images/search.png",
+                          "assets/images/search_icon.png",
                           false,
                           ""),
                     ),
@@ -4816,8 +4829,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                   iconTitle,
                 ),
                 fit: BoxFit.contain,
-                width: 24,
-                height: double.infinity,
+                width: 32,
+                height: 32,
               ),
             ),
           ),

@@ -1,6 +1,7 @@
 
 import 'package:flutter/src/widgets/framework.dart';
 
+import '../../models/CorrespondencesModel.dart';
 import '../../utility/settings_app.dart';
 import '../abstract_json_resource.dart';
 import '../api_manager.dart';
@@ -20,7 +21,7 @@ class GetCorrespondencesAllAPI extends ApiManager{
   @override
   AbstractJsonResource fromJson(data) {
     // TODO: implement fromJson
-  return GetCorrespondencesAllModel.fromJson(data);
+  return CorrespondencesModel.fromJson(data);
   }
 
 }

@@ -5,15 +5,39 @@ class CorrespondencesModel extends AbstractJsonResource{
     this.errorMessage,
     this.status,
     this.inbox,
+    this.priorities,
+    this.privacies,
+    this.purposes,
   });
   late final String? errorMessage;
   late final int? status;
   late final Inbox? inbox;
+  List<Priorities>? priorities;
+  List<Privacies>? privacies;
+  List<Purposes>? purposes;
 
   CorrespondencesModel.fromJson(Map<String, dynamic> json) {
     errorMessage = null;
     status = json['Status'];
     inbox = Inbox.fromJson(json['Inbox']);
+    if (json['priorities'] != null) {
+      priorities = <Priorities>[];
+      json['priorities'].forEach((v) {
+        priorities!.add(Priorities.fromJson(v));
+      });
+    }
+    if (json['privacies'] != null) {
+      privacies = <Privacies>[];
+      json['privacies'].forEach((v) {
+        privacies!.add(Privacies.fromJson(v));
+      });
+    }
+    if (json['purposes'] != null) {
+      purposes = <Purposes>[];
+      json['purposes'].forEach((v) {
+        purposes!.add(Purposes.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -21,6 +45,18 @@ class CorrespondencesModel extends AbstractJsonResource{
     _data['ErrorMessage'] = errorMessage;
     _data['Status'] = status;
     _data['Inbox'] = inbox?.toJson();
+    if (this.priorities != null) {
+      _data['priorities'] =
+          this.priorities!.map((v) => v.toJson()).toList();
+    }
+    if (this.privacies != null) {
+      _data['privacies'] =
+          this.privacies!.map((v) => v.toJson()).toList();
+    }
+    if (this.purposes != null) {
+      _data['purposes'] =
+          this.purposes!.map((v) => v.toJson()).toList();
+    }
     return _data;
   }
 }
@@ -322,5 +358,84 @@ class Metadata {
     _data['Label'] = label;
     _data['Value'] = value;
     return _data;
+  }
+}
+
+
+class Priorities {
+  String? Text;
+  String? TextAr;
+  int? Value;
+
+  Priorities({
+    this.Text,
+    this.TextAr,
+    this.Value,
+  });
+
+  Priorities.fromJson(Map<String, dynamic> json) {
+    Text = json['Text'];
+    TextAr = json['TextAr'];
+    Value = json['Value'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Text'] = this.Text;
+    data['TextAr'] = this.TextAr;
+    data['Value'] = this.Value;
+    return data;
+  }
+}
+
+class Privacies {
+  String? Text;
+  String? TextAr;
+  int? Value;
+
+  Privacies({
+    this.Text,
+    this.TextAr,
+    this.Value,
+  });
+
+  Privacies.fromJson(Map<String, dynamic> json) {
+    Text = json['Text'];
+    TextAr = json['TextAr'];
+    Value = json['Value'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Text'] = this.Text;
+    data['TextAr'] = this.TextAr;
+    data['Value'] = this.Value;
+    return data;
+  }
+}
+
+class Purposes {
+  String? Text;
+  String? TextAr;
+  int? Value;
+
+  Purposes({
+    this.Text,
+    this.TextAr,
+    this.Value,
+  });
+
+  Purposes.fromJson(Map<String, dynamic> json) {
+    Text = json['Text'];
+    TextAr = json['TextAr'];
+    Value = json['Value'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Text'] = this.Text;
+    data['TextAr'] = this.TextAr;
+    data['Value'] = this.Value;
+    return data;
   }
 }

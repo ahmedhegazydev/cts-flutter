@@ -3603,6 +3603,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       ),
                       child: InkWell(
                         onTap: () {
+                          Get.find<InboxController>().updateUnread(true);
                           openInbox(boxid: 0, context: context, nodeId: 20097);
                         },
                         child: Container(

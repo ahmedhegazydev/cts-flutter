@@ -56,7 +56,7 @@ class InboxController extends GetxController {
   bool isAllOrNot = false;
 
   String? purposeId;
-
+bool isUrgentClicked = false;
   TextEditingController textEditingControllerFilter = TextEditingController();
   BuildContext? context;
   FetchBasketListModel? fetchBasketListModel;
@@ -66,6 +66,24 @@ class InboxController extends GetxController {
   int? nodeId = 0;
   setOldIndex(int oldIndex) {
     this.oldIndex = oldIndex;
+    update();
+  }
+
+  setIsUrgentFilterClicked(bool isUrgentClicked) {
+    this.isUrgentClicked = isUrgentClicked;
+    var filteredUrgentPriorities = correspondencesModel?.priorities
+        ?.where((content) => content.Value == 3)
+        .toList();
+    if(filteredUrgentPriorities?.isNotEmpty == true){
+      var filteredUrgentCorrespondences = allCorrespondences
+          .where((content) => content.priorityId == filteredUrgentPriorities![0].Value)
+          .toList();
+      if(isUrgentClicked == true){
+        allCorrespondences = filteredUrgentCorrespondences;
+      }else{
+        allCorrespondences = filteredUrgentCorrespondencesTemp;
+      }
+    }
     update();
   }
 
@@ -187,6 +205,8 @@ class InboxController extends GetxController {
 
   // List<Correspondences> correspondences = [];
   List<Correspondences> allCorrespondences = [];
+  List<Correspondences> allCorrespondencesTempFilterUnread = [];
+  List<Correspondences> filteredUrgentCorrespondencesTemp = [];
 
   final SecureStorage secureStorage = SecureStorage();
 
@@ -251,8 +271,20 @@ class InboxController extends GetxController {
     // listOfUser(0);
   }
 
+
   updateUnread(v) {
     unread = v;
+    var filtered = allCorrespondences
+        .where((content) => content.isNew == v)
+        .toList();
+    if(v == true){
+      allCorrespondences = filtered;
+      if(isUrgentClicked){
+
+      }
+    }else{
+      allCorrespondences =  allCorrespondencesTempFilterUnread;
+    }
     update();
   }
 
@@ -418,6 +450,19 @@ class InboxController extends GetxController {
       } else {
         allCorrespondences = correspondencesModel?.inbox?.correspondences ?? [];
       }
+
+      //For filter by urgent priority check box
+      filteredUrgentCorrespondencesTemp = allCorrespondences;
+
+      //For filter by unRead check box
+      allCorrespondencesTempFilterUnread = allCorrespondences;
+      if(unread == true){
+        var filtered = allCorrespondences
+            .where((content) => content.isNew == true)
+            .toList();
+        allCorrespondences = filtered;
+      }
+
       int listLength =
           correspondencesModel?.inbox?.correspondences?.length ?? 0;
       var v = correspondencesModel?.toJson();

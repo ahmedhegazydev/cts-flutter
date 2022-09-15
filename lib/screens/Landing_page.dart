@@ -140,7 +140,7 @@ class LandingPage extends GetWidget<LandingPageController> {
             alignment: Alignment.center,
             width: 120,
             height: double.infinity,
-            color: Colors.grey.shade300,
+            color: Colors.grey.shade50,
             child: _buildSideMenu(context),
             // child: Container(),
           ),
@@ -3276,7 +3276,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                 // width: double.infinity,
                 // height: double.infinity,
                 decoration: BoxDecoration(
-                  color: Colors.white54,
+                  color: Colors.white70,
                   borderRadius: BorderRadius.all(
                     Radius.circular(6),
                   ),
@@ -3415,7 +3415,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       width: double.infinity,
                       height: double.infinity,
                       decoration: BoxDecoration(
-                        color: Colors.white54,
+                        color: Colors.white70,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(6),
                             topRight: Radius.circular(6),
@@ -3486,7 +3486,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       width: double.infinity,
                       height: double.infinity,
                       decoration: BoxDecoration(
-                        color: Colors.white54,
+                        color: Colors.white70,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(6),
                             topRight: Radius.circular(6),
@@ -4398,7 +4398,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       child: _buildOtherFoldersRows(
                         context,
                         "allincom".tr,
-                        "assets/images/incoming.png",
+                        "assets/images/incoming_icon.png",
                         true,
                         "",
                       ),
@@ -4421,7 +4421,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                         // "notifications".tr,
                         "allout".tr,
                         // "assets/images/notification.png",
-                        "assets/images/outgoing.png",
+                        "assets/images/outgoing_icon.png",
                         true,
                         "",
                       ),
@@ -4452,7 +4452,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       child: _buildOtherFoldersRows(
                           context,
                           "advancedSearch".tr,
-                          "assets/images/search.png",
+                          "assets/images/search_icon.png",
                           true,
                           ""),
                     ),
@@ -4618,7 +4618,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       child: _buildOtherFoldersRows(
                         context,
                         "allincom".tr,
-                        "assets/images/incoming.png",
+                        "assets/images/incoming_icon.png",
                         true,
                         "",
                       ),
@@ -4641,7 +4641,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                         context,
                         "allout".tr,
                         // "assets/images/notification.png",
-                        "assets/images/outgoing.png",
+                        "assets/images/outgoing_icon.png",
                         true,
                         "",
                       ),
@@ -4676,7 +4676,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       child: _buildOtherFoldersRows(
                           context,
                           "advancedSearch".tr,
-                          "assets/images/search.png",
+                          "assets/images/search_icon.png",
                           false,
                           ""),
                     ),
@@ -4813,8 +4813,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                   iconTitle,
                 ),
                 fit: BoxFit.contain,
-                width: 24,
-                height: double.infinity,
+                width: 32,
+                height: 32,
               ),
             ),
           ),

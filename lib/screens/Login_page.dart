@@ -89,8 +89,10 @@ class LoginPage extends GetWidget<LoginController> {
                         Expanded(
                           child: Container(
                             width: MediaQuery.of(context).size.width,
-                            child: Align(
-                              alignment: Alignment.bottomRight,
+                            child:Padding(
+                              padding: EdgeInsets.only(bottom: 20),
+                                child: Align(
+                              alignment: Alignment.bottomCenter,
                               child: Image.asset(
                                   "assets/images/login_background.png"
                                   // returnImageNameBasedOnDirection(
@@ -98,7 +100,7 @@ class LoginPage extends GetWidget<LoginController> {
 
                                   //),
                                   ),
-                            ),
+                            )),
                           ),
                         ),
                       ],
@@ -573,7 +575,7 @@ class LoginPage extends GetWidget<LoginController> {
                             ),
                             orientation == Orientation.landscape
                                 ? SizedBox(
-                                    height: 60,
+                                    height: 30,
                                   )
                                 : SizedBox(
                                     height: 10,
@@ -588,7 +590,7 @@ class LoginPage extends GetWidget<LoginController> {
                             ),
                             orientation == Orientation.landscape
                                 ? SizedBox(
-                                    height: 20,
+                                    height: 10,
                                   )
                                 : SizedBox(
                                     height: 8,
@@ -605,9 +607,9 @@ class LoginPage extends GetWidget<LoginController> {
                             Padding(
                               padding: orientation == Orientation.landscape
                                   ? EdgeInsets.only(
-                                      top: 25.0, left: 0, right: 0)
+                                      top: 15.0, left: 0, right: 0)
                                   : EdgeInsets.only(
-                                      top: 15.0, left: 0, right: 0),
+                                      top: 25.0, left: 0, right: 0),
                               child: Container(
                                 width: double.infinity,
                                 height: 50,
@@ -624,8 +626,8 @@ class LoginPage extends GetWidget<LoginController> {
                                     SizedBox(
                                       width:
                                           orientation == Orientation.landscape
-                                              ? size.width * .2
-                                              : size.width * .4,
+                                              ? size.width * .348
+                                              : size.width * .51,
                                       child: CustomButton(
                                           onPressed: controller.logIngRequst,
                                           name: "login".tr),

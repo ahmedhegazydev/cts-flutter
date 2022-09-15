@@ -642,187 +642,187 @@ class MyPocketsScreen extends GetWidget<InboxController> {
               ],
             ),
           ),
-          InkWell(
-            onTap: () {
-              //  Get.back();
-              Navigator.pop(context);
-            },
-            child: Container(
-              width: 120,
-              height: double.infinity,
-              color: Colors.transparent,
-              child: const Image(
-                image: AssetImage(
-                  'assets/images/menu.png',
-                ),
-                fit: BoxFit.contain,
-                width: double.infinity,
-                height: double.infinity,
-              ),
-            ),
-          ),
-          InkWell(
-            onTap: () {
-              //  Get.back();
-              // Navigator.pop(context);
-              // controller
-              //     .showMyFavListScreen(!controller.showHideMyFavListScreen);
-              // controller.showFilterScreen(!controller.showHideFilterScreen);
-              showGeneralDialog(
-                  context: context,
-                  barrierDismissible: true,
-                  barrierLabel: MaterialLocalizations.of(context)
-                      .modalBarrierDismissLabel,
-                  barrierColor: Colors.black45,
-                  transitionDuration: const Duration(milliseconds: 200),
-                  pageBuilder: (BuildContext buildContext, Animation animation,
-                      Animation secondaryAnimation) {
-                    return Center(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width - 100,
-                        height: MediaQuery.of(context).size.height - 130,
-                        // padding: EdgeInsets.all(20),
-                        color: Colors.white,
-                        child: MyFavListViewWidget(),
-                        // RaisedButton(
-                        //   onPressed: () {
-                        //     Navigator.of(context).pop();
-                        //   },
-                      ),
-                    );
-                  });
-            },
-            child: Visibility(
-              child: Container(
-                width: 40,
-                padding: const EdgeInsets.only(right: 10),
-                // height: double.infinity,
-                height: 40,
-                color: Colors.transparent,
-                // color: Colors.white,
-                child: const Image(
-                  image: AssetImage(
-                    'assets/images/favorites.png',
-                  ),
-                  fit: BoxFit.contain,
-                  width: double.infinity,
-                  height: double.infinity,
-                  color: Colors.white,
-                ),
-              ),
-              // visible: controller.showHideFilterScreen,
-              visible: true,
-            ),
-          ),
-
-          InkWell(
-            onTap: () {
-              //  Get.back();
-              // Navigator.pop(context);
-              // controller.showFilterScreen(!controller.showHideFilterScreen);
-              showGeneralDialog(
-                  context: context,
-                  barrierDismissible: true,
-                  barrierLabel: MaterialLocalizations.of(context)
-                      .modalBarrierDismissLabel,
-                  barrierColor: Colors.black45,
-                  transitionDuration: const Duration(milliseconds: 200),
-                  pageBuilder: (BuildContext buildContext, Animation animation,
-                      Animation secondaryAnimation) {
-                    return Center(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width - 100,
-                        height: MediaQuery.of(context).size.height - 130,
-                        // padding: EdgeInsets.all(20),
-                        color: Colors.white,
-                        child: AllAvailablePocketsPage(),
-                        // RaisedButton(
-                        //   onPressed: () {
-                        //     Navigator.of(context).pop();
-                        //   },
-                      ),
-                    );
-                  });
-            },
-            child: Visibility(
-              child: Container(
-                width: 40,
-                padding: const EdgeInsets.only(right: 10),
-                // height: double.infinity,
-                height: 40,
-                color: Colors.transparent,
-                // color: Colors.white,
-                child: const Image(
-                  image: AssetImage(
-                    // 'assets/images/pin.png',
-                    'assets/images/import.png',
-                  ),
-                  fit: BoxFit.contain,
-                  width: double.infinity,
-                  height: double.infinity,
-                  color: Colors.white,
-                ),
-              ),
-              // visible: controller.showHideFilterScreen,
-              visible: true,
-            ),
-          ),
-
-          InkWell(
-            onTap: () {
-              //  Get.back();
-              // Navigator.pop(context);
-              // controller.showCreateNewBasketScreen(
-              //     !controller.showHideCreateNewBasketScreen);
-              // showGeneralDialog(
-              //     context: context,
-              //     barrierDismissible: true,
-              //     barrierLabel: MaterialLocalizations.of(context)
-              //         .modalBarrierDismissLabel,
-              //     barrierColor: Colors.black45,
-              //     transitionDuration: const Duration(milliseconds: 200),
-              //     pageBuilder: (BuildContext buildContext, Animation animation,
-              //         Animation secondaryAnimation) {
-              //       return Center(
-              //         child: Container(
-              //           width: MediaQuery.of(context).size.width - 700,
-              //           height: MediaQuery.of(context).size.height - 200,
-              //           // padding: EdgeInsets.all(20),
-              //           color: Colors.white,
-              //           child: CreateNewBasket(),
-              //           // RaisedButton(
-              //           //   onPressed: () {
-              //           //     Navigator.of(context).pop();
-              //           //   },
-              //         ),
-              //       );
-              //     });
-
-              showInputDialog(
-                  context, 'CreateNewBasket', 'default inpit', 'message');
-            },
-            child: Visibility(
-              child: Container(
-                width: 40,
-                padding: const EdgeInsets.only(right: 10),
-                // height: double.infinity,
-                height: 40,
-                color: Colors.transparent,
-                // color: Colors.white,
-                child: const Image(
-                  image: AssetImage(
-                    'assets/images/add.png',
-                  ),
-                  fit: BoxFit.contain,
-                  width: double.infinity,
-                  height: double.infinity,
-                  color: Colors.white,
-                ),
-              ),
-              // visible: controller.showHideFilterScreen,
-              visible: true,
-            ),
-          ),
+          // InkWell(
+          //   onTap: () {
+          //     //  Get.back();
+          //     Navigator.pop(context);
+          //   },
+          //   child: Container(
+          //     width: 120,
+          //     height: double.infinity,
+          //     color: Colors.transparent,
+          //     child: const Image(
+          //       image: AssetImage(
+          //         'assets/images/menu.png',
+          //       ),
+          //       fit: BoxFit.contain,
+          //       width: double.infinity,
+          //       height: double.infinity,
+          //     ),
+          //   ),
+          // ),
+          // InkWell(
+          //   onTap: () {
+          //     //  Get.back();
+          //     // Navigator.pop(context);
+          //     // controller
+          //     //     .showMyFavListScreen(!controller.showHideMyFavListScreen);
+          //     // controller.showFilterScreen(!controller.showHideFilterScreen);
+          //     showGeneralDialog(
+          //         context: context,
+          //         barrierDismissible: true,
+          //         barrierLabel: MaterialLocalizations.of(context)
+          //             .modalBarrierDismissLabel,
+          //         barrierColor: Colors.black45,
+          //         transitionDuration: const Duration(milliseconds: 200),
+          //         pageBuilder: (BuildContext buildContext, Animation animation,
+          //             Animation secondaryAnimation) {
+          //           return Center(
+          //             child: Container(
+          //               width: MediaQuery.of(context).size.width - 100,
+          //               height: MediaQuery.of(context).size.height - 130,
+          //               // padding: EdgeInsets.all(20),
+          //               color: Colors.white,
+          //               child: MyFavListViewWidget(),
+          //               // RaisedButton(
+          //               //   onPressed: () {
+          //               //     Navigator.of(context).pop();
+          //               //   },
+          //             ),
+          //           );
+          //         });
+          //   },
+          //   child: Visibility(
+          //     child: Container(
+          //       width: 40,
+          //       padding: const EdgeInsets.only(right: 10),
+          //       // height: double.infinity,
+          //       height: 40,
+          //       color: Colors.transparent,
+          //       // color: Colors.white,
+          //       child: const Image(
+          //         image: AssetImage(
+          //           'assets/images/favorites.png',
+          //         ),
+          //         fit: BoxFit.contain,
+          //         width: double.infinity,
+          //         height: double.infinity,
+          //         color: Colors.white,
+          //       ),
+          //     ),
+          //     // visible: controller.showHideFilterScreen,
+          //     visible: true,
+          //   ),
+          // ),
+          //
+          // InkWell(
+          //   onTap: () {
+          //     //  Get.back();
+          //     // Navigator.pop(context);
+          //     // controller.showFilterScreen(!controller.showHideFilterScreen);
+          //     showGeneralDialog(
+          //         context: context,
+          //         barrierDismissible: true,
+          //         barrierLabel: MaterialLocalizations.of(context)
+          //             .modalBarrierDismissLabel,
+          //         barrierColor: Colors.black45,
+          //         transitionDuration: const Duration(milliseconds: 200),
+          //         pageBuilder: (BuildContext buildContext, Animation animation,
+          //             Animation secondaryAnimation) {
+          //           return Center(
+          //             child: Container(
+          //               width: MediaQuery.of(context).size.width - 100,
+          //               height: MediaQuery.of(context).size.height - 130,
+          //               // padding: EdgeInsets.all(20),
+          //               color: Colors.white,
+          //               child: AllAvailablePocketsPage(),
+          //               // RaisedButton(
+          //               //   onPressed: () {
+          //               //     Navigator.of(context).pop();
+          //               //   },
+          //             ),
+          //           );
+          //         });
+          //   },
+          //   child: Visibility(
+          //     child: Container(
+          //       width: 40,
+          //       padding: const EdgeInsets.only(right: 10),
+          //       // height: double.infinity,
+          //       height: 40,
+          //       color: Colors.transparent,
+          //       // color: Colors.white,
+          //       child: const Image(
+          //         image: AssetImage(
+          //           // 'assets/images/pin.png',
+          //           'assets/images/import.png',
+          //         ),
+          //         fit: BoxFit.contain,
+          //         width: double.infinity,
+          //         height: double.infinity,
+          //         color: Colors.white,
+          //       ),
+          //     ),
+          //     // visible: controller.showHideFilterScreen,
+          //     visible: true,
+          //   ),
+          // ),
+          //
+          // InkWell(
+          //   onTap: () {
+          //     //  Get.back();
+          //     // Navigator.pop(context);
+          //     // controller.showCreateNewBasketScreen(
+          //     //     !controller.showHideCreateNewBasketScreen);
+          //     // showGeneralDialog(
+          //     //     context: context,
+          //     //     barrierDismissible: true,
+          //     //     barrierLabel: MaterialLocalizations.of(context)
+          //     //         .modalBarrierDismissLabel,
+          //     //     barrierColor: Colors.black45,
+          //     //     transitionDuration: const Duration(milliseconds: 200),
+          //     //     pageBuilder: (BuildContext buildContext, Animation animation,
+          //     //         Animation secondaryAnimation) {
+          //     //       return Center(
+          //     //         child: Container(
+          //     //           width: MediaQuery.of(context).size.width - 700,
+          //     //           height: MediaQuery.of(context).size.height - 200,
+          //     //           // padding: EdgeInsets.all(20),
+          //     //           color: Colors.white,
+          //     //           child: CreateNewBasket(),
+          //     //           // RaisedButton(
+          //     //           //   onPressed: () {
+          //     //           //     Navigator.of(context).pop();
+          //     //           //   },
+          //     //         ),
+          //     //       );
+          //     //     });
+          //
+          //     showInputDialog(
+          //         context, 'CreateNewBasket', 'default inpit', 'message');
+          //   },
+          //   child: Visibility(
+          //     child: Container(
+          //       width: 40,
+          //       padding: const EdgeInsets.only(right: 10),
+          //       // height: double.infinity,
+          //       height: 40,
+          //       color: Colors.transparent,
+          //       // color: Colors.white,
+          //       child: const Image(
+          //         image: AssetImage(
+          //           'assets/images/add.png',
+          //         ),
+          //         fit: BoxFit.contain,
+          //         width: double.infinity,
+          //         height: double.infinity,
+          //         color: Colors.white,
+          //       ),
+          //     ),
+          //     // visible: controller.showHideFilterScreen,
+          //     visible: true,
+          //   ),
+          // ),
 
           // InkWell(
           //   onTap: () {

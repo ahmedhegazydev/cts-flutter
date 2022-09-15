@@ -206,7 +206,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                 children: [
                   Row(
                     children: [
-                      Spacer(),
+                     // Spacer(),
                       // controller.isSavingOrder
                       //     ? IconButton(
                       //         icon: Icon(Icons.check), onPressed: () {})
@@ -241,9 +241,12 @@ class LandingPage extends GetWidget<LandingPageController> {
                                     print(basket.iD);
                                   }
                                 : null,
-                            onTap: !(basket.canBeReOrder ?? false)
-                                ? () {
-                                    print(basket.iD);
+                            onTap:
+
+                            // !(basket.canBeReOrder ?? false)
+                            //     ?
+                                () {
+                                    print("basket.iDbasket.iDbasket.iDbasket.iDbasket.iD=>${basket.iD}");
                                     // Get.find<BasketController>().getBasketInbox(
                                     //     id: inboxController
                                     //         .fetchBasketListModel!
@@ -251,43 +254,55 @@ class LandingPage extends GetWidget<LandingPageController> {
                                     //         .iD!,
                                     //     pageSize: 20,
                                     //     pageNumber: 0, context: null);
-                                  }
-                                : null,
+                                  },
+                                //: null,
                             enabled: !(basket.canBeReOrder ?? false),
                             enableFeedback: !(basket.canBeReOrder ?? false),
-                            title: Card(
-                              elevation: 10,
-                              color: basket.color?.toColor(),
-                              child: Column(children: [
-                                Text(basket.name ?? ""),
-                                Text(basket.nameAr ?? ""),
-                                // Text( "color :${inboxController
-                                //     .fetchBasketListModel
-                                //     ?.baskets?[pos].color}",style: TextStyle( color:  HexColor(inboxController
-                                //     .fetchBasketListModel
-                                //     ?.baskets?[pos].color??"#000000"))),
+                            title: GestureDetector(onTap: (){
+                           //  controller.getBasketInbox(context: context, id: basket.iD!);
 
-                                GestureDetector(
-                                  onTap: () {
-                                    //هنا هنعمل دليت
-                                    _showMyDialogDeleteConfirm(context, basket);
 
-                                    // showTopSnackBar(
-                                    // icon: Container(),
-                                    //   context,
-                                    //   CustomSnackBar.success(
-                                    // backgroundColor: Colors.lightGreen,
-                                    //     message:
-                                    //     "Good job, basket have been deleted",
-                                    //   ),
-                                    // );
-                                  },
-                                  // child:  Icon(Icons.delete, color: (basket.canBeReOrder ?? false) ? Colors.black: Colors.transparent,) ,
-                                  child: (basket.canBeReOrder ?? false)
-                                      ? Icon(Icons.delete)
-                                      : Container(),
-                                ),
-                              ]),
+                             Get.find<InboxController>().isAllOrNot = true;
+                             Get.find<InboxController>().getBasketInbox(
+                                 context: context, id:  basket.iD!,  );
+                             Get.toNamed("/InboxPage");
+
+
+                            },
+                              child: Card(
+                                elevation: 10,
+                                color: basket.color?.toColor(),
+                                child: Column(children: [
+                                  Text(basket.name ?? ""),
+                                  Text(basket.nameAr ?? ""),
+                                  // Text( "color :${inboxController
+                                  //     .fetchBasketListModel
+                                  //     ?.baskets?[pos].color}",style: TextStyle( color:  HexColor(inboxController
+                                  //     .fetchBasketListModel
+                                  //     ?.baskets?[pos].color??"#000000"))),
+
+                                  GestureDetector(
+                                    onTap: () {
+                                      //هنا هنعمل دليت
+                                      _showMyDialogDeleteConfirm(context, basket);
+
+                                      // showTopSnackBar(
+                                      // icon: Container(),
+                                      //   context,
+                                      //   CustomSnackBar.success(
+                                      // backgroundColor: Colors.lightGreen,
+                                      //     message:
+                                      //     "Good job, basket have been deleted",
+                                      //   ),
+                                      // );
+                                    },
+                                    // child:  Icon(Icons.delete, color: (basket.canBeReOrder ?? false) ? Colors.black: Colors.transparent,) ,
+                                    child: (basket.canBeReOrder ?? false)
+                                        ? Icon(Icons.delete)
+                                        : Container(),
+                                  ),
+                                ]),
+                              ),
                             ),
                           )
                       ],

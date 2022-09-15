@@ -53,46 +53,46 @@ class BasketPage extends GetView<BasketController> {
               ],
             ),
           ),
-          InkWell(
-            onTap: () {
-              //  Get.back();
-              Navigator.pop(context);
-            },
-            child: Container(
-              width: 120,
-              height: double.infinity,
-              color: Colors.transparent,
-              child: const Image(
-                image: AssetImage(
-                  'assets/images/menu.png',
-                ),
-                fit: BoxFit.contain,
-                width: double.infinity,
-                height: double.infinity,
-              ),
-            ),
-          ),
-          InkWell(
-              onTap: () {
-                Get.toNamed("SearchPage");
-              },
-              child: Icon(
-                Icons.search,
-                size: 50,
-                color: Colors.white,
-              )),
-          InkWell(
-              onTap: () {
-                _popUpMenu(context);
-              },
-              child: Icon(
-                Icons.map,
-                size: 50,
-                color: Colors.white,
-              )),
-          SizedBox(
-            width: 8,
-          )
+          // InkWell(
+          //   onTap: () {
+          //     //  Get.back();
+          //     Navigator.pop(context);
+          //   },
+          //   child: Container(
+          //     width: 120,
+          //     height: double.infinity,
+          //     color: Colors.transparent,
+          //     child: const Image(
+          //       image: AssetImage(
+          //         'assets/images/menu.png',
+          //       ),
+          //       fit: BoxFit.contain,
+          //       width: double.infinity,
+          //       height: double.infinity,
+          //     ),
+          //   ),
+          // ),
+          // InkWell(
+          //     onTap: () {
+          //       Get.toNamed("SearchPage");
+          //     },
+          //     child: Icon(
+          //       Icons.search,
+          //       size: 50,
+          //       color: Colors.white,
+          //     )),
+          // InkWell(
+          //     onTap: () {
+          //       _popUpMenu(context);
+          //     },
+          //     child: Icon(
+          //       Icons.map,
+          //       size: 50,
+          //       color: Colors.white,
+          //     )),
+          // SizedBox(
+          //   width: 8,
+          // )
         ],
       ),
     );

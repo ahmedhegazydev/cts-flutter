@@ -58,6 +58,34 @@ class InboxController extends GetxController {
   UserFilter? selectUserFilter;
 updateselectUserFilter(UserFilter? data){
   selectUserFilter=data;
+   filteredFormUserIdCorrespondences = allCorrespondences
+      .where((content) => content.fromUserId == data?.userId)
+      .toList();
+if(filteredFormUserIdCorrespondences.isNotEmpty){
+  // allCorrespondences.clear();
+  allCorrespondences = (filteredFormUserIdCorrespondences);
+  if(unread){
+    allCorrespondences = allCorrespondences
+        .where((content) => content.isNew == true)
+        .toList();
+  }
+  if(isUrgentClicked){
+    var filteredUrgentPriorities = correspondencesModel?.priorities
+        ?.where((content) => content.Value == 3)
+        .toList();
+    allCorrespondences = allCorrespondences
+        .where((content) => content.priorityId == filteredUrgentPriorities![0].Value.toString())
+        .toList();
+  }
+}else{
+  allCorrespondences  = filteredFormUserIdCorrespondencesTemp;
+  if(unread){
+    allCorrespondences.addAll(allCorrespondencesTempFilterUnread);
+  }
+  if(isUrgentClicked){
+    allCorrespondences.addAll(filteredUrgentCorrespondencesTemp);
+  }
+}
   update();
 }
 
@@ -83,12 +111,25 @@ bool isUrgentClicked = false;
         ?.where((content) => content.Value == 3)
         .toList();
     if(filteredUrgentPriorities?.isNotEmpty == true){
-      var filteredUrgentCorrespondences = allCorrespondences
-          .where((content) => content.priorityId == filteredUrgentPriorities![0].Value)
-          .toList();
+
       if(isUrgentClicked == true){
+        if(unread == true){
+          filteredUrgentCorrespondences = filteredAllCorrespondencesByUnread
+              .where((content) => content.priorityId == filteredUrgentPriorities![0].Value.toString())
+              .toList();
+        }else{
+          filteredUrgentCorrespondences = allCorrespondences
+              .where((content) => content.priorityId == filteredUrgentPriorities![0].Value.toString())
+              .toList();
+        }
         allCorrespondences = filteredUrgentCorrespondences;
       }else{
+        if(unread == true){
+          allCorrespondences = filteredAllCorrespondencesByUnread
+              .where((content) => content.priorityId == filteredUrgentPriorities![0].Value.toString())
+              .toList();
+          // allCorrespondences = filteredUrgentCorrespondences;
+        }else
         allCorrespondences = filteredUrgentCorrespondencesTemp;
       }
     }
@@ -213,8 +254,15 @@ bool isUrgentClicked = false;
 
   // List<Correspondences> correspondences = [];
   List<Correspondences> allCorrespondences = [];
+
   List<Correspondences> allCorrespondencesTempFilterUnread = [];
+  List<Correspondences> filteredAllCorrespondencesByUnread = [];
+
   List<Correspondences> filteredUrgentCorrespondencesTemp = [];
+  List<Correspondences> filteredUrgentCorrespondences = [];
+
+  List<Correspondences> filteredFormUserIdCorrespondencesTemp = [];
+  List<Correspondences> filteredFormUserIdCorrespondences = [];
 
   final SecureStorage secureStorage = SecureStorage();
 
@@ -282,15 +330,24 @@ bool isUrgentClicked = false;
 
   updateUnread(v) {
     unread = v;
-    var filtered = allCorrespondences
-        .where((content) => content.isNew == v)
-        .toList();
     if(v == true){
-      allCorrespondences = filtered;
       if(isUrgentClicked){
-
+        filteredAllCorrespondencesByUnread = filteredUrgentCorrespondences
+            .where((content) => content.isNew == v)
+            .toList();
+      }else{
+        filteredAllCorrespondencesByUnread = allCorrespondences
+            .where((content) => content.isNew == v)
+            .toList();
       }
+      allCorrespondences = filteredAllCorrespondencesByUnread;
     }else{
+      if(isUrgentClicked){
+        allCorrespondences = filteredUrgentCorrespondences
+            .where((content) => content.isNew == v)
+            .toList();
+        // allCorrespondences =  allCorrespondencesTempFilterUnread;
+      }else
       allCorrespondences =  allCorrespondencesTempFilterUnread;
     }
     update();
@@ -460,10 +517,6 @@ bool isUrgentClicked = false;
 
       });
 
-
-
-
-
       if (addToList) {
         allCorrespondences
             .addAll(correspondencesModel?.inbox?.correspondences ?? []);
@@ -471,8 +524,11 @@ bool isUrgentClicked = false;
         allCorrespondences = correspondencesModel?.inbox?.correspondences ?? [];
       }
 
-      //For filter by urgent priority check box
+      //For filter by urgent check box
       filteredUrgentCorrespondencesTemp = allCorrespondences;
+
+      //For filter by form user id check box
+      filteredFormUserIdCorrespondencesTemp = allCorrespondences;
 
       //For filter by unRead check box
       allCorrespondencesTempFilterUnread = allCorrespondences;
@@ -1152,6 +1208,15 @@ if(!userFilter.contains(element.fromUserId)){
       update();
       // print(a.toJson());
     });
+  }
+
+  void clearFilter() {
+    unread = false;
+    isUrgentClicked = false;
+    allCorrespondences = filteredUrgentCorrespondencesTemp;
+    //or
+    // allCorrespondences = filteredFormUserIdCorrespondencesTemp;
+    update();
   }
 }
 class UserFilter{

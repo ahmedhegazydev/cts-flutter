@@ -54,6 +54,14 @@ import 'landing_page_controller.dart';
 class InboxController extends GetxController {
   //ده عشان لو اختار من الشاشه بره كل الصادر و الوارد نخفي شاشاه التاب الي فيها صادر ووارد
   bool isAllOrNot = false;
+  List<UserFilter>userFilter=[];
+  UserFilter? selectUserFilter;
+updateselectUserFilter(UserFilter? data){
+  selectUserFilter=data;
+  update();
+}
+
+
 
   String? purposeId;
 bool isUrgentClicked = false;
@@ -444,6 +452,18 @@ bool isUrgentClicked = false;
     print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
     _correspondencesApi.getData().then((value) {
       correspondencesModel = value as CorrespondencesModel;
+
+      correspondencesModel?.inbox?.correspondences?.forEach((element) {
+        if(!userFilter.contains(element.fromUserId)){
+          userFilter.add(UserFilter(userId: element.fromUserId!, name: element.fromUser!));
+        }
+
+      });
+
+
+
+
+
       if (addToList) {
         allCorrespondences
             .addAll(correspondencesModel?.inbox?.correspondences ?? []);
@@ -484,6 +504,7 @@ bool isUrgentClicked = false;
       required int inboxId,
       int pageSize = 20,
       bool showThumbnails = false}) {
+    userFilter.clear();
     print("theinboxId=> $inboxId =================  theindex=>   $index  ");
     final GetCorrespondencesAllAPI _getCorrespondencesAllAPI =
         GetCorrespondencesAllAPI(context);
@@ -499,6 +520,13 @@ bool isUrgentClicked = false;
       print("i get alll _getCorrespondencesAllAPI");
       //getCorrespondencesAllModel = value as GetCorrespondencesAllModel;
       correspondencesModel =value as CorrespondencesModel;
+      correspondencesModel?.inbox?.correspondences?.forEach((element) {
+if(!userFilter.contains(element.fromUserId)){
+  userFilter.add(UserFilter(userId: element.fromUserId!, name: element.fromUser!));
+}
+
+      });
+
       if (addToList) {
         allCorrespondences
             .addAll(correspondencesModel?.inbox?.correspondences ?? []);
@@ -1125,4 +1153,10 @@ bool isUrgentClicked = false;
       // print(a.toJson());
     });
   }
+}
+class UserFilter{
+  int userId;
+  String name;
+
+  UserFilter({required this.userId,required this.name});
 }

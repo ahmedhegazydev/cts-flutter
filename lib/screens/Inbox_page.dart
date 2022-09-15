@@ -23,17 +23,23 @@ class InboxPage extends GetWidget<InboxController> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: GetBuilder<InboxController>(autoRemove: false,builder: (logic) {
-        return Scaffold(
-          body: _buildBody(context),
-        );
-      }),
+      child: GetBuilder<InboxController>(
+          autoRemove: false,
+          builder: (logic) {
+            return Scaffold(
+              body: _buildBody(context),
+            );
+          }),
     );
   }
 
   _buildBody(BuildContext context) {
-    Orientation orientation = MediaQuery.of(context).orientation;
-    Size size = MediaQuery.of(context).size;
+    Orientation orientation = MediaQuery
+        .of(context)
+        .orientation;
+    Size size = MediaQuery
+        .of(context)
+        .size;
 
     return Container(
       width: size.width,
@@ -46,11 +52,11 @@ class InboxPage extends GetWidget<InboxController> {
           //side bar
           orientation == Orientation.landscape
               ? Container(
-                  width: 200,
-                  height: size.height,
-                  color: Colors.grey.shade300,
-                  child: _buildSideMenu(context),
-                )
+            width: 200,
+            height: size.height,
+            color: Colors.grey.shade300,
+            child: _buildSideMenu(context),
+          )
               : Container(),
           Expanded(
             child: Container(
@@ -67,7 +73,10 @@ class InboxPage extends GetWidget<InboxController> {
                     width: double.infinity,
                     height: 100,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme
+                          .of(context)
+                          .colorScheme
+                          .primary,
                     ),
                     child: _buildTopBar(context),
                   ),
@@ -86,15 +95,11 @@ class InboxPage extends GetWidget<InboxController> {
                         //     ? const Center(child: CircularProgressIndicator())
                         //     :
                         controller.isAllOrNot
-                            ?
-
-
-
-
-                        Expanded(
+                            ? Expanded(
                           child: CustomListView(
                             function: controller.onRefresh(),
-                            correspondences: controller.allCorrespondences,
+                            correspondences:
+                            controller.allCorrespondences,
                             scrollController: controller.scrollController,
                             haveMoreData: controller.haveMoreData,
                             onClickItem: () {
@@ -108,11 +113,9 @@ class InboxPage extends GetWidget<InboxController> {
                             functionComplet: () {},
                           ),
                         )
-
-                            :
-                        Expanded(
-                                    child: _buildTopInboxMenu(context),
-                                  ),
+                            : Expanded(
+                          child: _buildTopInboxMenu(context),
+                        ),
 
                         //line separator
                         Container(
@@ -141,7 +144,9 @@ class InboxPage extends GetWidget<InboxController> {
   }
 
   Widget _filterMail(context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     return Row(
       children: [
         Container(
@@ -149,11 +154,13 @@ class InboxPage extends GetWidget<InboxController> {
           child: Center(
             child: Row(
               children: [
-                GetBuilder<InboxController>(autoRemove: false,builder: (logic) {
-                  return Checkbox(
-                      value: controller.unread,
-                      onChanged: controller.updateUnread);
-                }),
+                GetBuilder<InboxController>(
+                    autoRemove: false,
+                    builder: (logic) {
+                      return Checkbox(
+                          value: controller.unread,
+                          onChanged: controller.updateUnread);
+                    }),
                 Text("unread".tr,
                     style: TextStyle(
                         fontSize: 16, color: Colors.black.withOpacity(.7)))
@@ -176,32 +183,81 @@ class InboxPage extends GetWidget<InboxController> {
         Container(
           child: Center(
               child: Text(
-            "sender".tr,
-            style: TextStyle(fontSize: 16, color: Colors.black.withOpacity(.7)),
-          )),
+                "sender".tr,
+                style: TextStyle(
+                    fontSize: 16, color: Colors.black.withOpacity(.7)),
+              )),
         ),
         SizedBox(
           width: 16,
         ),
-        Expanded(
-          child: Container(
-            height: size.height * .1,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 20,
-                itemBuilder: (context, pos) {
-                  return Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: CircleAvatar(
-                      backgroundImage: AssetImage("assets/images/pr.jpg"),
-                      backgroundColor: Colors.cyan,
-                      maxRadius: 30,
-                      minRadius: 30,
-                    ),
-                  );
-                }),
-          ),
-        ),
+
+        // اليسته القديمة
+
+        // Expanded(
+        //   child: Container(
+        //     height: size.height * .1,
+        //     child: ListView.builder(
+        //         scrollDirection: Axis.horizontal,
+        //         itemCount: 20,
+        //         itemBuilder: (context, pos) {
+        //           return Padding(
+        //             padding: const EdgeInsets.all(4.0),
+        //             child: CircleAvatar(
+        //               backgroundImage: AssetImage("assets/images/pr.jpg"),
+        //               backgroundColor: Colors.cyan,
+        //               maxRadius: 30,
+        //               minRadius: 30,
+        //             ),
+        //           );
+        //         }),
+        //   ),
+        // ),
+        // controller.allCorrespondences
+
+        GetBuilder<InboxController>(autoRemove: false,builder: (logic) {
+          return Container(
+            // height: 50,
+            // width: 50,
+            decoration: BoxDecoration(
+              borderRadius:BorderRadius.circular(10),border: Border.all(width: 1,color:Theme.of(context)
+                .colorScheme
+                .primary )),
+            child: DropdownButton<UserFilter>(
+              value: controller.selectUserFilter,
+              icon: const Icon(Icons.arrow_downward),hint:Row(
+              children: [Container(width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: AssetImage("assets/images/pr.jpg")))),
+                Text( "chooseaperson".tr),
+              ],
+            ) ,
+              iconSize: 24,
+              elevation: 16,
+
+              underline: SizedBox(),
+              onChanged:controller.updateselectUserFilter,
+              items: controller.userFilter
+                  .map<DropdownMenuItem<UserFilter>>((UserFilter value) {
+                return DropdownMenuItem<UserFilter>(
+                  value: value,
+                  child: Row(
+                    children: [Container(width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(shape: BoxShape.circle,
+                            image: DecorationImage(
+                                image: AssetImage("assets/images/pr.jpg")))),
+                      Text(value.name),
+                    ],
+                  ),
+                );
+              })
+                  .toList(),
+            ),);
+        }),
+
         SizedBox(
           width: 16,
         ),
@@ -218,13 +274,16 @@ class InboxPage extends GetWidget<InboxController> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             GestureDetector(
-              onTap: (){
-                controller.setIsUrgentFilterClicked(!controller.isUrgentClicked);
+              onTap: () {
+                controller
+                    .setIsUrgentFilterClicked(!controller.isUrgentClicked);
               },
               child: Container(
                 width: 160, padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                    color: controller.isUrgentClicked ? AppColor : Colors.grey[400],
+                    color: controller.isUrgentClicked
+                        ? AppColor
+                        : Colors.grey[400],
                     // color: Colors.grey[200],
                     borderRadius: BorderRadius.circular(8)),
                 // margin: EdgeInsets.only(right: 8, left: 8),
@@ -246,7 +305,8 @@ class InboxPage extends GetWidget<InboxController> {
                       ),
                       Text(
                         "urgent".tr,
-                        style: Theme.of(context)
+                        style: Theme
+                            .of(context)
                             .textTheme
                             .headline1!
                             .copyWith(color: Colors.white, fontSize: 16),
@@ -296,7 +356,10 @@ class InboxPage extends GetWidget<InboxController> {
         ),
         Icon(
           Icons.clear,
-          color: Theme.of(context).colorScheme.primary,
+          color: Theme
+              .of(context)
+              .colorScheme
+              .primary,
           size: 30,
         ),
         SizedBox(
@@ -334,7 +397,8 @@ class InboxPage extends GetWidget<InboxController> {
                   children: [
                     Text(
                       "hello".tr,
-                      style: Theme.of(context)
+                      style: Theme
+                          .of(context)
                           .textTheme
                           .headline2!
                           .copyWith(color: Colors.grey, fontSize: 14),
@@ -343,8 +407,14 @@ class InboxPage extends GetWidget<InboxController> {
                     FittedBox(
                       child: Text(
                         //  "hello".tr +
-                        "${secureStorage.readSecureData(AllStringConst.FirstName)} ${secureStorage.readSecureData(AllStringConst.LastName)}",
-                        style: Theme.of(context).textTheme.headline2!.copyWith(
+                        "${secureStorage.readSecureData(
+                            AllStringConst.FirstName)} ${secureStorage
+                            .readSecureData(AllStringConst.LastName)}",
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headline2!
+                            .copyWith(
                             color: createMaterialColor(
                               const Color.fromRGBO(77, 77, 77, 1),
                             ),
@@ -410,12 +480,16 @@ class InboxPage extends GetWidget<InboxController> {
                           child: Text(
                             "sharedServicesAdministration".tr,
                             style:
-                                Theme.of(context).textTheme.headline2!.copyWith(
-                                      color: createMaterialColor(
-                                        const Color.fromRGBO(77, 77, 77, 1),
-                                      ),
-                                      fontSize: 15,
-                                    ),
+                            Theme
+                                .of(context)
+                                .textTheme
+                                .headline2!
+                                .copyWith(
+                              color: createMaterialColor(
+                                const Color.fromRGBO(77, 77, 77, 1),
+                              ),
+                              fontSize: 15,
+                            ),
                             textAlign: TextAlign.start,
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
@@ -453,7 +527,8 @@ class InboxPage extends GetWidget<InboxController> {
                       left: 30, right: 30, top: 0, bottom: 0),
                   child: Text(
                     "appTitle".tr,
-                    style: Theme.of(context)
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .headline1!
                         .copyWith(color: Colors.white, fontSize: 25),
@@ -495,29 +570,41 @@ class InboxPage extends GetWidget<InboxController> {
   _buildTopInboxMenu(BuildContext context) {
     return Container(
       color: Colors.transparent,
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
+      width: MediaQuery
+          .of(context)
+          .size
+          .width,
+      height: MediaQuery
+          .of(context)
+          .size
+          .height,
       child: DefaultTabController(
         length: 3,
         child: ContainedTabBarView(
           tabs: [
             Text(
               "all".tr,
-              style: Theme.of(context).textTheme.headline1!.copyWith(
-                    color: Colors.grey,
-                    fontSize: 21,
-                  ),
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .headline1!
+                  .copyWith(
+                color: Colors.grey,
+                fontSize: 21,
+              ),
             ),
             Text(
               "incoming".tr,
-              style: Theme.of(context)
+              style: Theme
+                  .of(context)
                   .textTheme
                   .headline1!
                   .copyWith(color: Colors.grey, fontSize: 21),
             ),
             Text(
               "outgoing".tr,
-              style: Theme.of(context)
+              style: Theme
+                  .of(context)
                   .textTheme
                   .headline1!
                   .copyWith(color: Colors.grey, fontSize: 21),
@@ -531,9 +618,15 @@ class InboxPage extends GetWidget<InboxController> {
             // ),
           ],
           tabBarProperties: TabBarProperties(
-            width: MediaQuery.of(context).size.width * .3,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width * .3,
             height: 70.0,
-            indicatorColor: Theme.of(context).colorScheme.primary,
+            indicatorColor: Theme
+                .of(context)
+                .colorScheme
+                .primary,
             indicatorWeight: 5.0,
             labelColor: Colors.black.withOpacity(.7),
             unselectedLabelColor: Colors.black.withOpacity(.5),
@@ -566,80 +659,80 @@ class InboxPage extends GetWidget<InboxController> {
                 child: controller.getData
                     ? const Center(child: CircularProgressIndicator())
                     : Column(
-                        children: [
-                          Visibility(
-                              visible: true, child: _filterMail(context)),
-                          Expanded(
-                            child: CustomListView(
-                              function: controller.onRefresh(),
-                              correspondences: controller.allCorrespondences,
-                              scrollController: controller.scrollController,
-                              haveMoreData: controller.haveMoreData,
-                              onClickItem: () {
-                                //     Get.toNamed("/DocumentPage");
-                              },
-                              functionSummary: () {},
-                              //allCorrespondences: controller.allCorrespondences,
-                              customActions: controller.customActions,
-                              functionReply: () {},
-                              functionTrunsfer: () {},
-                              functionComplet: () {},
-                            ),
-                          ),
-                        ],
-                      )),
+                  children: [
+                    Visibility(
+                        visible: true, child: _filterMail(context)),
+                    Expanded(
+                      child: CustomListView(
+                        function: controller.onRefresh(),
+                        correspondences: controller.allCorrespondences,
+                        scrollController: controller.scrollController,
+                        haveMoreData: controller.haveMoreData,
+                        onClickItem: () {
+                          //     Get.toNamed("/DocumentPage");
+                        },
+                        functionSummary: () {},
+                        //allCorrespondences: controller.allCorrespondences,
+                        customActions: controller.customActions,
+                        functionReply: () {},
+                        functionTrunsfer: () {},
+                        functionComplet: () {},
+                      ),
+                    ),
+                  ],
+                )),
             Center(
                 child: controller.getData
                     ? const Center(child: CircularProgressIndicator())
                     : Column(
-                        children: [
-                          Visibility(
-                              visible: true, child: _filterMail(context)),
-                          Expanded(
-                            child: CustomListView(
-                              function: controller.onRefresh(),
-                              correspondences: controller.allCorrespondences,
-                              scrollController: controller.scrollController,
-                              haveMoreData: controller.haveMoreData,
-                              onClickItem: () {
-                                Get.toNamed("/DocumentPage");
-                              },
-                              functionSummary: () {},
-                              //allCorrespondences: controller.allCorrespondences,
-                              customActions: controller.customActions,
-                              functionReply: () {},
-                              functionTrunsfer: () {},
-                              functionComplet: () {},
-                            ),
-                          ),
-                        ],
-                      )),
+                  children: [
+                    Visibility(
+                        visible: true, child: _filterMail(context)),
+                    Expanded(
+                      child: CustomListView(
+                        function: controller.onRefresh(),
+                        correspondences: controller.allCorrespondences,
+                        scrollController: controller.scrollController,
+                        haveMoreData: controller.haveMoreData,
+                        onClickItem: () {
+                          Get.toNamed("/DocumentPage");
+                        },
+                        functionSummary: () {},
+                        //allCorrespondences: controller.allCorrespondences,
+                        customActions: controller.customActions,
+                        functionReply: () {},
+                        functionTrunsfer: () {},
+                        functionComplet: () {},
+                      ),
+                    ),
+                  ],
+                )),
             Center(
                 child: controller.getData
                     ? const Center(child: CircularProgressIndicator())
                     : Column(
-                        children: [
-                          Visibility(
-                              visible: true, child: _filterMail(context)),
-                          Expanded(
-                            child: CustomListView(
-                              function: controller.onRefresh(),
-                              correspondences: controller.allCorrespondences,
-                              scrollController: controller.scrollController,
-                              haveMoreData: controller.haveMoreData,
-                              onClickItem: () {
-                                Get.toNamed("/DocumentPage");
-                              },
-                              functionSummary: () {},
-                              //allCorrespondences: [],
-                              customActions: [],
-                              functionReply: () {},
-                              functionTrunsfer: () {},
-                              functionComplet: () {},
-                            ),
-                          ),
-                        ],
-                      )),
+                  children: [
+                    Visibility(
+                        visible: true, child: _filterMail(context)),
+                    Expanded(
+                      child: CustomListView(
+                        function: controller.onRefresh(),
+                        correspondences: controller.allCorrespondences,
+                        scrollController: controller.scrollController,
+                        haveMoreData: controller.haveMoreData,
+                        onClickItem: () {
+                          Get.toNamed("/DocumentPage");
+                        },
+                        functionSummary: () {},
+                        //allCorrespondences: [],
+                        customActions: [],
+                        functionReply: () {},
+                        functionTrunsfer: () {},
+                        functionComplet: () {},
+                      ),
+                    ),
+                  ],
+                )),
             // Center(
             //     child: controller.getData
             //         ? const Center(child: CircularProgressIndicator())
@@ -749,26 +842,32 @@ class InboxPage extends GetWidget<InboxController> {
                 "allincom".tr,
                 "assets/images/incoming_icon.png",
                 true,
-                "",() {
-              controller.nodeId=0;
-              Get.find<InboxController>().isAllOrNot=true;
-              Get.find<InboxController>().getAllCorrespondencesData(context: context, inboxId: 1);
+                "", () {
+              controller.nodeId = 0;
+              Get
+                  .find<InboxController>()
+                  .isAllOrNot = true;
+              Get.find<InboxController>()
+                  .getAllCorrespondencesData(context: context, inboxId: 1);
               controller.update();
-                }),
+            }),
             _buildSideMenuFolders(
-                context,
-                // "notifications".tr,
-                "allout".tr,
-                "assets/images/outgoing_icon.png",
-                false,
-                 ""
-              ,() {
-             controller.nodeId=0;
-              Get.find<InboxController>().isAllOrNot=true;
-              Get.find<InboxController>().getAllCorrespondencesData(context: context, inboxId: 5);
-              controller.update();
-              }
-                ,)
+              context,
+              // "notifications".tr,
+              "allout".tr,
+              "assets/images/outgoing_icon.png",
+              false,
+              "",
+                  () {
+                controller.nodeId = 0;
+                Get
+                    .find<InboxController>()
+                    .isAllOrNot = true;
+                Get.find<InboxController>()
+                    .getAllCorrespondencesData(context: context, inboxId: 5);
+                controller.update();
+              },
+            )
           ],
         ),
       ),
@@ -783,7 +882,8 @@ class InboxPage extends GetWidget<InboxController> {
       height: calculateHeight(50, context),
       child: Text(
         title,
-        style: Theme.of(context)
+        style: Theme
+            .of(context)
             .textTheme
             .headline2!
             .copyWith(color: Colors.grey.shade500, fontSize: 15),
@@ -799,7 +899,8 @@ class InboxPage extends GetWidget<InboxController> {
         color: Colors.transparent,
         child: ListView.builder(
             shrinkWrap: true,
-            itemCount: Get.find<LandingPageController>()
+            itemCount: Get
+                .find<LandingPageController>()
                 .dashboardStatsResultModel!
                 .inboxCategories
                 ?.length,
@@ -812,13 +913,13 @@ class InboxPage extends GetWidget<InboxController> {
                   //   .inboxCategories![pos].value!.nodeId==controller.nodeId?Colors.red:Colors.orange),
                   child: GestureDetector(
                     onTap: () {
-
-                      controller.nodeId = Get.find<LandingPageController>()
+                      controller.nodeId = Get
+                          .find<LandingPageController>()
                           .dashboardStatsResultModel!
                           .inboxCategories![pos]
                           .value!
                           .nodeId;
-controller.isAllOrNot=false;
+                      controller.isAllOrNot = false;
                       controller.getCorrespondencesData(
                           context: context, inboxId: controller.inboxId);
                       controller.update();
@@ -832,26 +933,32 @@ controller.isAllOrNot=false;
                             ? FractionalOffset.centerLeft
                             : FractionalOffset.centerRight,
                         child: Text(
-                          Get.find<LandingPageController>()
+                          Get
+                              .find<LandingPageController>()
                               .dashboardStatsResultModel!
                               .inboxCategories![pos]
                               .key!,
-                          style: Theme.of(context)
+                          style: Theme
+                              .of(context)
                               .textTheme
                               .headline1!
                               .copyWith(
-                                color: createMaterialColor(
-                                  Get.find<LandingPageController>()
-                                              .dashboardStatsResultModel!
-                                              .inboxCategories![pos]
-                                              .value!
-                                              .nodeId ==
-                                          controller.nodeId
-                                      ? Theme.of(context).colorScheme.primary
-                                      : gray,
-                                ),
-                                fontSize: 20,
-                              ),
+                            color: createMaterialColor(
+                              Get
+                                  .find<LandingPageController>()
+                                  .dashboardStatsResultModel!
+                                  .inboxCategories![pos]
+                                  .value!
+                                  .nodeId ==
+                                  controller.nodeId
+                                  ? Theme
+                                  .of(context)
+                                  .colorScheme
+                                  .primary
+                                  : gray,
+                            ),
+                            fontSize: 20,
+                          ),
                           textAlign: TextAlign.start,
                         ),
                       ),
@@ -861,143 +968,145 @@ controller.isAllOrNot=false;
               );
             })
 
-        //     Get.find<LandingPageController>()!
-        //     .dashboardStatsResultModel!
-        //     .inboxCategories!
-        //     .map(
-        //       (e) => TableRow(
-        //     children: [
-        //       TableRowInkWell(
-        //         onTap: () {
-        //
-        //           //   openInbox(context);
-        //         },
-        //         child: _buildInboxesRow(
-        //           context,
-        //           e.key!,
-        //           e.value!.count!,
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // )
-        //     .toList(),
-        //
-        // Column(
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //   children: [
-        //     GestureDetector(
-        //       // onTap:,
-        //       child: SizedBox(
-        //         //   width: double.infinity,
-        //         height: calculateHeight(80, context),
-        //         child: Align(
-        //           alignment: isDirectionRTL(context)
-        //               ? FractionalOffset.centerLeft
-        //               : FractionalOffset.centerRight,
-        //           child: Text(
-        //             "allInbox".tr,
-        //             style: Theme.of(context).textTheme.headline1!.copyWith(
-        //                   color: createMaterialColor(
-        //                     Color.fromRGBO(100, 100, 100, 1),
-        //                   ),
-        //                   fontSize: 20,
-        //                 ),
-        //             textAlign: TextAlign.start,
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //     // SizedBox(
-        //     //   //width: double.infinity,
-        //     //   height: 80,
-        //     //   child: Align(
-        //     //     alignment: isDirectionRTL(context)
-        //     //         ? FractionalOffset.centerLeft
-        //     //         : FractionalOffset.centerRight,
-        //     //     child: Text(
-        //     //       "forAction".tr,
-        //     //       style: Theme.of(context).textTheme.headline1!.copyWith(
-        //     //           color: createMaterialColor(
-        //     //             const Color.fromRGBO(100, 100, 100, 1),
-        //     //           ),
-        //     //           fontSize: 20),
-        //     //       textAlign: TextAlign.start,
-        //     //     ),
-        //     //   ),
-        //     // ),
-        //     // SizedBox(
-        //     //   height: calculateHeight(80, context),
-        //     //   child: Align(
-        //     //     alignment: isDirectionRTL(context)
-        //     //         ? FractionalOffset.centerLeft
-        //     //         : FractionalOffset.centerRight,
-        //     //     child: Text(
-        //     //       "forSignature".tr,
-        //     //       style: Theme.of(context).textTheme.headline1!.copyWith(
-        //     //             color: createMaterialColor(
-        //     //               const Color.fromRGBO(100, 100, 100, 1),
-        //     //             ),
-        //     //             fontSize: 20,
-        //     //           ),
-        //     //       textAlign: TextAlign.start,
-        //     //     ),
-        //     //   ),
-        //     // ),
-        //     // SizedBox(
-        //     //   width: double.infinity,
-        //     //   height: 80,
-        //     //   child: Align(
-        //     //     alignment: isDirectionRTL(context)
-        //     //         ? FractionalOffset.centerLeft
-        //     //         : FractionalOffset.centerRight,
-        //     //     child: Text(
-        //     //       "forInfo".tr,
-        //     //       style: Theme.of(context).textTheme.headline1!.copyWith(
-        //     //             color: createMaterialColor(
-        //     //               Color.fromRGBO(100, 100, 100, 1),
-        //     //             ),
-        //     //             fontSize: 20,
-        //     //           ),
-        //     //       textAlign: TextAlign.start,
-        //     //     ),
-        //     //   ),
-        //     // )
-        //   ],
-        // ),
-        //
-        //
+      //     Get.find<LandingPageController>()!
+      //     .dashboardStatsResultModel!
+      //     .inboxCategories!
+      //     .map(
+      //       (e) => TableRow(
+      //     children: [
+      //       TableRowInkWell(
+      //         onTap: () {
+      //
+      //           //   openInbox(context);
+      //         },
+      //         child: _buildInboxesRow(
+      //           context,
+      //           e.key!,
+      //           e.value!.count!,
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      // )
+      //     .toList(),
+      //
+      // Column(
+      //   crossAxisAlignment: CrossAxisAlignment.start,
+      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //   children: [
+      //     GestureDetector(
+      //       // onTap:,
+      //       child: SizedBox(
+      //         //   width: double.infinity,
+      //         height: calculateHeight(80, context),
+      //         child: Align(
+      //           alignment: isDirectionRTL(context)
+      //               ? FractionalOffset.centerLeft
+      //               : FractionalOffset.centerRight,
+      //           child: Text(
+      //             "allInbox".tr,
+      //             style: Theme.of(context).textTheme.headline1!.copyWith(
+      //                   color: createMaterialColor(
+      //                     Color.fromRGBO(100, 100, 100, 1),
+      //                   ),
+      //                   fontSize: 20,
+      //                 ),
+      //             textAlign: TextAlign.start,
+      //           ),
+      //         ),
+      //       ),
+      //     ),
+      //     // SizedBox(
+      //     //   //width: double.infinity,
+      //     //   height: 80,
+      //     //   child: Align(
+      //     //     alignment: isDirectionRTL(context)
+      //     //         ? FractionalOffset.centerLeft
+      //     //         : FractionalOffset.centerRight,
+      //     //     child: Text(
+      //     //       "forAction".tr,
+      //     //       style: Theme.of(context).textTheme.headline1!.copyWith(
+      //     //           color: createMaterialColor(
+      //     //             const Color.fromRGBO(100, 100, 100, 1),
+      //     //           ),
+      //     //           fontSize: 20),
+      //     //       textAlign: TextAlign.start,
+      //     //     ),
+      //     //   ),
+      //     // ),
+      //     // SizedBox(
+      //     //   height: calculateHeight(80, context),
+      //     //   child: Align(
+      //     //     alignment: isDirectionRTL(context)
+      //     //         ? FractionalOffset.centerLeft
+      //     //         : FractionalOffset.centerRight,
+      //     //     child: Text(
+      //     //       "forSignature".tr,
+      //     //       style: Theme.of(context).textTheme.headline1!.copyWith(
+      //     //             color: createMaterialColor(
+      //     //               const Color.fromRGBO(100, 100, 100, 1),
+      //     //             ),
+      //     //             fontSize: 20,
+      //     //           ),
+      //     //       textAlign: TextAlign.start,
+      //     //     ),
+      //     //   ),
+      //     // ),
+      //     // SizedBox(
+      //     //   width: double.infinity,
+      //     //   height: 80,
+      //     //   child: Align(
+      //     //     alignment: isDirectionRTL(context)
+      //     //         ? FractionalOffset.centerLeft
+      //     //         : FractionalOffset.centerRight,
+      //     //     child: Text(
+      //     //       "forInfo".tr,
+      //     //       style: Theme.of(context).textTheme.headline1!.copyWith(
+      //     //             color: createMaterialColor(
+      //     //               Color.fromRGBO(100, 100, 100, 1),
+      //     //             ),
+      //     //             fontSize: 20,
+      //     //           ),
+      //     //       textAlign: TextAlign.start,
+      //     //     ),
+      //     //   ),
+      //     // )
+      //   ],
+      // ),
+      //
+      //
 
-        );
+    );
   }
 
   _buildBotomMenuInboxes(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     return Container(
       padding: const EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 0),
       // width: double.infinity,
       // color: Colors.transparent,
       child: Row(
-          children: Get.find<LandingPageController>()
+          children: Get
+              .find<LandingPageController>()
               .dashboardStatsResultModel!
               .inboxCategories!
               .map(
-                (e) => Expanded(
+                (e) =>
+                Expanded(
                   child: GestureDetector(
                     onTap: () {
                       controller.nodeId = e.value!.nodeId;
                       controller.getCorrespondencesData(
                           context: context, inboxId: controller.inboxId);
 
-
-
                       // controller.nodeId = Get.find<LandingPageController>()
                       //     .dashboardStatsResultModel!
                       //     .inboxCategories![pos]
                       //     .value!
                       //     .nodeId;
-                      controller.isAllOrNot=false;
+                      controller.isAllOrNot = false;
                       // controller.getCorrespondencesData(
                       //     context: context, inboxId: controller.inboxId);
                       controller.update();
@@ -1012,124 +1121,129 @@ controller.isAllOrNot=false;
                             : FractionalOffset.centerLeft,
                         child: Text(
                           e.key!,
-                          style: Theme.of(context)
+                          style: Theme
+                              .of(context)
                               .textTheme
                               .headline1!
                               .copyWith(
-                                color: createMaterialColor(
-                                  e.value!.nodeId == controller.nodeId
-                                      ? Theme.of(context).colorScheme.primary
-                                      : gray,
-                                ),
-                                fontSize: 20,
-                              ),
+                            color: createMaterialColor(
+                              e.value!.nodeId == controller.nodeId
+                                  ? Theme
+                                  .of(context)
+                                  .colorScheme
+                                  .primary
+                                  : gray,
+                            ),
+                            fontSize: 20,
+                          ),
                           textAlign: TextAlign.start,
                         ),
                       ),
                     ),
                   ),
                 ),
-              )
+          )
               .toList()
 
-          // [
-          //
-          //
-          //
-          //
-          //   Expanded(
-          //     child: GestureDetector(
-          //       // onTap:,
-          //       child: SizedBox(
-          //         width: size.width * .2,
-          //         height: calculateHeight(80, context),
-          //         child: Align(
-          //           alignment: isDirectionRTL(context)
-          //               ? FractionalOffset.centerRight
-          //               : FractionalOffset.centerLeft,
-          //           child: Text(
-          //             "allInbox".tr,
-          //             style: Theme.of(context).textTheme.headline1!.copyWith(
-          //                   color: createMaterialColor(
-          //                     Color.fromRGBO(100, 100, 100, 1),
-          //                   ),
-          //                   fontSize: 20,
-          //                 ),
-          //             textAlign: TextAlign.start,
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          //   // Expanded(
-          //   //   child: SizedBox(
-          //   //     //  width: size.width*.2,
-          //   //     height: calculateHeight(80, context),
-          //   //     child: Align(
-          //   //       alignment: isDirectionRTL(context)
-          //   //           ? FractionalOffset.centerRight
-          //   //           : FractionalOffset.centerLeft,
-          //   //       child: Text(
-          //   //         "forAction".tr,
-          //   //         style: Theme.of(context).textTheme.headline1!.copyWith(
-          //   //             color: createMaterialColor(
-          //   //               const Color.fromRGBO(100, 100, 100, 1),
-          //   //             ),
-          //   //             fontSize: 20),
-          //   //         textAlign: TextAlign.start,
-          //   //       ),
-          //   //     ),
-          //   //   ),
-          //   // ),
-          //   // Expanded(
-          //   //   child: SizedBox(
-          //   //     height: calculateHeight(80, context),
-          //   //     child: Align(
-          //   //       alignment: isDirectionRTL(context)
-          //   //           ? FractionalOffset.centerRight
-          //   //           : FractionalOffset.centerLeft,
-          //   //       child: Text(
-          //   //         "forSignature".tr,
-          //   //         style: Theme.of(context).textTheme.headline1!.copyWith(
-          //   //               color: createMaterialColor(
-          //   //                 const Color.fromRGBO(100, 100, 100, 1),
-          //   //               ),
-          //   //               fontSize: 20,
-          //   //             ),
-          //   //         textAlign: TextAlign.start,
-          //   //       ),
-          //   //     ),
-          //   //   ),
-          //   // ),
-          //   // Expanded(
-          //   //   child: SizedBox(
-          //   //     //  width: size.width*.2,
-          //   //     height: calculateHeight(80, context),
-          //   //     child: Align(
-          //   //       alignment: isDirectionRTL(context)
-          //   //           ? FractionalOffset.centerRight
-          //   //           : FractionalOffset.centerLeft,
-          //   //       child: Text(
-          //   //         "forInfo".tr,
-          //   //         style: Theme.of(context).textTheme.headline1!.copyWith(
-          //   //               color: createMaterialColor(
-          //   //                 Color.fromRGBO(100, 100, 100, 1),
-          //   //               ),
-          //   //               fontSize: 20,
-          //   //             ),
-          //   //         textAlign: TextAlign.start,
-          //   //       ),
-          //   //     ),
-          //   //   ),
-          //   // )
-          // ],
-          ),
+        // [
+        //
+        //
+        //
+        //
+        //   Expanded(
+        //     child: GestureDetector(
+        //       // onTap:,
+        //       child: SizedBox(
+        //         width: size.width * .2,
+        //         height: calculateHeight(80, context),
+        //         child: Align(
+        //           alignment: isDirectionRTL(context)
+        //               ? FractionalOffset.centerRight
+        //               : FractionalOffset.centerLeft,
+        //           child: Text(
+        //             "allInbox".tr,
+        //             style: Theme.of(context).textTheme.headline1!.copyWith(
+        //                   color: createMaterialColor(
+        //                     Color.fromRGBO(100, 100, 100, 1),
+        //                   ),
+        //                   fontSize: 20,
+        //                 ),
+        //             textAlign: TextAlign.start,
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        //   // Expanded(
+        //   //   child: SizedBox(
+        //   //     //  width: size.width*.2,
+        //   //     height: calculateHeight(80, context),
+        //   //     child: Align(
+        //   //       alignment: isDirectionRTL(context)
+        //   //           ? FractionalOffset.centerRight
+        //   //           : FractionalOffset.centerLeft,
+        //   //       child: Text(
+        //   //         "forAction".tr,
+        //   //         style: Theme.of(context).textTheme.headline1!.copyWith(
+        //   //             color: createMaterialColor(
+        //   //               const Color.fromRGBO(100, 100, 100, 1),
+        //   //             ),
+        //   //             fontSize: 20),
+        //   //         textAlign: TextAlign.start,
+        //   //       ),
+        //   //     ),
+        //   //   ),
+        //   // ),
+        //   // Expanded(
+        //   //   child: SizedBox(
+        //   //     height: calculateHeight(80, context),
+        //   //     child: Align(
+        //   //       alignment: isDirectionRTL(context)
+        //   //           ? FractionalOffset.centerRight
+        //   //           : FractionalOffset.centerLeft,
+        //   //       child: Text(
+        //   //         "forSignature".tr,
+        //   //         style: Theme.of(context).textTheme.headline1!.copyWith(
+        //   //               color: createMaterialColor(
+        //   //                 const Color.fromRGBO(100, 100, 100, 1),
+        //   //               ),
+        //   //               fontSize: 20,
+        //   //             ),
+        //   //         textAlign: TextAlign.start,
+        //   //       ),
+        //   //     ),
+        //   //   ),
+        //   // ),
+        //   // Expanded(
+        //   //   child: SizedBox(
+        //   //     //  width: size.width*.2,
+        //   //     height: calculateHeight(80, context),
+        //   //     child: Align(
+        //   //       alignment: isDirectionRTL(context)
+        //   //           ? FractionalOffset.centerRight
+        //   //           : FractionalOffset.centerLeft,
+        //   //       child: Text(
+        //   //         "forInfo".tr,
+        //   //         style: Theme.of(context).textTheme.headline1!.copyWith(
+        //   //               color: createMaterialColor(
+        //   //                 Color.fromRGBO(100, 100, 100, 1),
+        //   //               ),
+        //   //               fontSize: 20,
+        //   //             ),
+        //   //         textAlign: TextAlign.start,
+        //   //       ),
+        //   //     ),
+        //   //   ),
+        //   // )
+        // ],
+      ),
     );
   }
 
   _buildSideMenuFolders(BuildContext context, String title, String iconTitle,
-      bool showCount,   count, VoidCallback function) {
-    return InkWell(onTap:function ,
+      bool showCount, count, VoidCallback function) {
+    return InkWell(
+      onTap: function,
       child: Container(
         padding: const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 0),
         width: double.infinity,
@@ -1161,7 +1275,8 @@ controller.isAllOrNot=false;
                 width: double.infinity,
                 child: Text(
                   title,
-                  style: Theme.of(context)
+                  style: Theme
+                      .of(context)
                       .textTheme
                       .headline1!
                       .copyWith(color: Colors.grey, fontSize: 20),
@@ -1175,22 +1290,7 @@ controller.isAllOrNot=false;
     );
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  _popUpMenu(context,pos) async {
+  _popUpMenu(context, pos) async {
     await controller.listFavoriteRecipients(context: context);
     showDialog(
         context: context,
@@ -1216,8 +1316,8 @@ controller.isAllOrNot=false;
                         .headlineMedium!
                         .copyWith(
                         color: Colors.black.withOpacity(.5),
-                        fontSize: 18, fontWeight: FontWeight.bold
-                    ),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -1238,128 +1338,135 @@ controller.isAllOrNot=false;
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("referTo".tr, style: Theme
-                        .of(context)
-                        .textTheme
-                        .headline3!
-                        .copyWith(
-                        color: Colors.black.withOpacity(.5),
-                        fontSize: 18, fontWeight: FontWeight.bold
-                    )),
-
-                    Container(height: 100, width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * .8,
-                      child: GetBuilder<InboxController>(//autoRemove: false,
-
+                    Text("referTo".tr,
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headline3!
+                            .copyWith(
+                            color: Colors.black.withOpacity(.5),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold)),
+                    Container(
+                      height: 100,
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width * .8,
+                      child: GetBuilder<InboxController>( //autoRemove: false,
 
                           builder: (logic) {
                             return ListView.builder(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: (controller.favoriteRecipientsResponse
-                                    ?.recipients?.length ?? 0) + 1,
+                                itemCount: (controller
+                                    .favoriteRecipientsResponse
+                                    ?.recipients?.length ??
+                                    0) +
+                                    1,
                                 itemBuilder: (context, pos) {
-                                  if (pos == (controller.favoriteRecipientsResponse
-                                      ?.recipients?.length ?? 0)) {
-                                    return
-
-
-                                      InkWell(onTap: (){
+                                  if (pos ==
+                                      (controller.favoriteRecipientsResponse
+                                          ?.recipients?.length ??
+                                          0)) {
+                                    return InkWell(
+                                      onTap: () {
                                         _popUpMenuMore(context);
                                       },
-                                        child: Container(padding: EdgeInsets.all(8),
-                                          child: Icon(Icons.add,size: 30,color: Colors.white),
-                                          decoration: BoxDecoration(shape: BoxShape
-                                              .circle, color: Theme
+                                      child: Container(
+                                        padding: EdgeInsets.all(8),
+                                        child: Icon(Icons.add,
+                                            size: 30, color: Colors.white),
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color:
+                                          Theme
                                               .of(context)
                                               .colorScheme
-                                              .primary,),
-                                          height: 75,
-                                          width: 75,),
-                                      );
-
-
-
-
-
-
-
+                                              .primary,
+                                        ),
+                                        height: 75,
+                                        width: 75,
+                                      ),
+                                    );
                                   } else {
-                                    return
-
-
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: InkWell(onTap: () {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: InkWell(
+                                        onTap: () {
                                           Destination user = Destination(
                                               value: controller
                                                   .favoriteRecipientsResponse!
-                                                  .recipients![pos].targetName, id
-                                              :controller
-                                              .favoriteRecipientsResponse!
-                                              .recipients![pos].targetGctid);
-                                          controller.addTousersWillSendTo(user:user);
+                                                  .recipients![pos]
+                                                  .targetName,
+                                              id: controller
+                                                  .favoriteRecipientsResponse!
+                                                  .recipients![pos]
+                                                  .targetGctid);
+                                          controller.addTousersWillSendTo(
+                                              user: user);
                                         },
-                                          child: Card(elevation: 8,
-                                            child: Row(
-                                              children: [
-                                                controller
-                                                    .favoriteRecipientsResponse!
-                                                    .recipients![pos]
-                                                    .targetPhotoBs64!.trim()
-                                                    .isEmpty ? Container(
-                                                  padding: EdgeInsets.all(8),
-                                                  decoration: BoxDecoration(
-                                                      shape: BoxShape
-                                                          .circle,
-                                                      color: Theme
-                                                          .of(context)
-                                                          .colorScheme
-                                                          .primary,
-                                                      image: DecorationImage(
-                                                          image: AssetImage(
-                                                            "assets/images/pr.jpg",),
-                                                          fit: BoxFit.cover)),
-                                                  height: 75,
-                                                  width: 75,) :
-                                                Container(
-                                                  padding: EdgeInsets.all(8),
-                                                  decoration: BoxDecoration(
-                                                      shape: BoxShape
-                                                          .circle,
-                                                      color: Theme
-                                                          .of(context)
-                                                          .colorScheme
-                                                          .primary,
-                                                      image: DecorationImage(
-                                                          image: MemoryImage(
-                                                              dataFromBase64String(
-                                                                  controller
-                                                                      .favoriteRecipientsResponse!
-                                                                      .recipients![pos]
-                                                                      .targetPhotoBs64!)),
-                                                          fit: BoxFit.cover)),
-                                                  height: 75,
-                                                  width: 75,),
-                                                Text(controller
-                                                    .favoriteRecipientsResponse!
-                                                    .recipients![pos].targetName!)
-                                              ],
-                                            ),
+                                        child: Card(
+                                          elevation: 8,
+                                          child: Row(
+                                            children: [
+                                              controller
+                                                  .favoriteRecipientsResponse!
+                                                  .recipients![pos]
+                                                  .targetPhotoBs64!
+                                                  .trim()
+                                                  .isEmpty
+                                                  ? Container(
+                                                padding: EdgeInsets.all(8),
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: Theme
+                                                        .of(context)
+                                                        .colorScheme
+                                                        .primary,
+                                                    image: DecorationImage(
+                                                        image: AssetImage(
+                                                          "assets/images/pr.jpg",
+                                                        ),
+                                                        fit: BoxFit.cover)),
+                                                height: 75,
+                                                width: 75,
+                                              )
+                                                  : Container(
+                                                padding: EdgeInsets.all(8),
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: Theme
+                                                        .of(context)
+                                                        .colorScheme
+                                                        .primary,
+                                                    image: DecorationImage(
+                                                        image: MemoryImage(
+                                                            dataFromBase64String(
+                                                                controller
+                                                                    .favoriteRecipientsResponse!
+                                                                    .recipients![
+                                                                pos]
+                                                                    .targetPhotoBs64!)),
+                                                        fit: BoxFit.cover)),
+                                                height: 75,
+                                                width: 75,
+                                              ),
+                                              Text(controller
+                                                  .favoriteRecipientsResponse!
+                                                  .recipients![pos]
+                                                  .targetName!)
+                                            ],
                                           ),
                                         ),
-                                      );
+                                      ),
+                                    );
                                   }
 
                                   //  CircleAvatar(backgroundColor: Colors.red,backgroundImage: AssetImage("assets/images/pr.jpg",),,radius: 30,);
-
                                 });
                           }),
-                    )
-
-
-                    , const Divider(
+                    ),
+                    const Divider(
                       color: Colors.grey,
                     ),
                     SizedBox(
@@ -1368,7 +1475,8 @@ controller.isAllOrNot=false;
                             .size
                             .width * .8,
                         height: 300, // MediaQuery.of(context).size.height * .5,
-                        child: GetBuilder<InboxController>(//autoRemove: false,
+                        child: GetBuilder<InboxController>(
+                          //autoRemove: false,
                           //   assignId: true,//tag: "user",
                           builder: (logic) {
                             return //Text(logic.filterWord);
@@ -1388,25 +1496,26 @@ controller.isAllOrNot=false;
                                             Row(
                                                 crossAxisAlignment:
                                                 CrossAxisAlignment.center,
-                                                children: [     Text(
-                                                  "name".tr,
-                                                  style: Theme
-                                                      .of(context)
-                                                      .textTheme
-                                                      .headline3!
-                                                      .copyWith(
-                                                    color:
-                                                    createMaterialColor(
-                                                      const Color
-                                                          .fromRGBO(
-                                                          77, 77, 77, 1),
+                                                children: [
+                                                  Text(
+                                                    "name".tr,
+                                                    style: Theme
+                                                        .of(context)
+                                                        .textTheme
+                                                        .headline3!
+                                                        .copyWith(
+                                                      color:
+                                                      createMaterialColor(
+                                                        const Color
+                                                            .fromRGBO(
+                                                            77, 77, 77, 1),
+                                                      ),
+                                                      fontSize: 15,
                                                     ),
-                                                    fontSize: 15,
+                                                    textAlign: TextAlign.center,
+                                                    overflow:
+                                                    TextOverflow.ellipsis,
                                                   ),
-                                                  textAlign: TextAlign.center,
-                                                  overflow:
-                                                  TextOverflow.ellipsis,
-                                                ),
                                                   Padding(
                                                     padding:
                                                     const EdgeInsets.all(
@@ -1428,7 +1537,6 @@ controller.isAllOrNot=false;
                                                   SizedBox(
                                                     width: 8,
                                                   ),
-
                                                   Spacer(),
                                                   GestureDetector(
                                                     onTap: () {
@@ -1535,29 +1643,31 @@ controller.isAllOrNot=false;
                                                               ///
                                                               ///
                                                               // controller.canOpenDocumentModel.correspondence.docDueDate
-                                                              controller
-                                                                  .record.isRecording
+                                                              controller.record
+                                                                  .isRecording
                                                                   ? controller
-                                                                  .stopMathod2(
-                                                              )
+                                                                  .stopMathod2()
                                                                   : controller
-                                                                  .recordMathod2( id:logic
-                                                                  .usersWillSendTo[
-                                                              pos]
-                                                                  .id, );
+                                                                  .recordMathod2(
+                                                                id: logic
+                                                                    .usersWillSendTo[
+                                                                pos]
+                                                                    .id,
+                                                              );
                                                             },
                                                             child: Padding(
                                                               padding:
                                                               const EdgeInsets
                                                                   .all(8.0),
                                                               child: GetBuilder<
-                                                                  InboxController>(//id: "record",//autoRemove: false,
+                                                                  InboxController>(
+                                                                //id: "record",//autoRemove: false,
                                                                   builder:
                                                                       (logic) {
-
                                                                     return Icon(
                                                                         controller
-                                                                            .record.isRecording
+                                                                            .record
+                                                                            .isRecording
                                                                             ? Icons
                                                                             .stop
                                                                             : Icons
@@ -1572,10 +1682,11 @@ controller.isAllOrNot=false;
                                                             child: InkWell(
                                                               onTap: () {
                                                                 controller
-                                                                    .playMathod2(id:logic
-                                                                    .usersWillSendTo[
-                                                                pos]
-                                                                    .id  );
+                                                                    .playMathod2(
+                                                                    id: logic
+                                                                        .usersWillSendTo[
+                                                                    pos]
+                                                                        .id);
                                                               },
                                                               child: Icon(Icons
                                                                   .play_arrow),
@@ -1592,11 +1703,11 @@ controller.isAllOrNot=false;
                                             Container(
                                               child: TextFormField(
                                                 onChanged: (v) {
-
-
-                                                  controller. multiTransferNode[logic
+                                                  controller
+                                                      .multiTransferNode[logic
                                                       .usersWillSendTo[pos]
-                                                      .id]?.note=v;
+                                                      .id]
+                                                      ?.note = v;
                                                   controller.setNots2(
                                                       id: logic
                                                           .usersWillSendTo[pos]
@@ -1616,7 +1727,6 @@ controller.isAllOrNot=false;
                                   });
                           },
                         ))
-
                   ]),
             ),
             actions: <Widget>[
@@ -1625,15 +1735,14 @@ controller.isAllOrNot=false;
                   ///ToDo
                   ///send to many
 
-
                   controller.multipleTransferspost2(
-                  //     docDueDate:controller.
-                  // correspondences[pos].docDueDate ,
+                    //     docDueDate:controller.
+                    // correspondences[pos].docDueDate ,
                       context: context,
-                      transferId: controller.
-                      allCorrespondences[pos].transferId!,
-                      correspondenceId: controller.allCorrespondences[pos]
-                          .correspondenceId);
+                      transferId:
+                      controller.allCorrespondences[pos].transferId!,
+                      correspondenceId:
+                      controller.allCorrespondences[pos].correspondenceId);
                   Navigator.pop(context);
                 },
                 child: Text("Ok"),
@@ -1709,14 +1818,13 @@ controller.isAllOrNot=false;
     //         ));
   }
 
-
 // الاحاله القديمة//
   _popUpMenuMore(context) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Row(//mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            title: Row( //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Image.asset(
                     'assets/images/refer.png'
@@ -1730,10 +1838,14 @@ controller.isAllOrNot=false;
                   ),
                   Text(
                     "refer".tr,
-                    style: Theme.of(context).textTheme.headline3!.copyWith(
-                        color:Colors.black.withOpacity(.5),
-                        fontSize: 18,fontWeight: FontWeight.bold
-                    ),
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(
+                        color: Colors.black.withOpacity(.5),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -1763,7 +1875,8 @@ controller.isAllOrNot=false;
                             child: Container(
                                 decoration: BoxDecoration(
                                     border: Border.all(
-                                        color: Theme.of(context)
+                                        color: Theme
+                                            .of(context)
                                             .colorScheme
                                             .primary),
                                     borderRadius: const BorderRadius.all(
@@ -1806,12 +1919,16 @@ controller.isAllOrNot=false;
                     ),
                     Text("referTo".tr),
                     SizedBox(
-                        width: MediaQuery.of(context).size.width * .8,
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width * .8,
                         height: 100,
                         child: Row(
                           children: [
                             Expanded(
-                                child: GetBuilder<DocumentController>( autoRemove: false,
+                                child: GetBuilder<DocumentController>(
+                                  autoRemove: false,
                                   assignId: true, //tag: "alluser",
                                   builder: (logic) {
                                     return ListView.builder(
@@ -1826,22 +1943,26 @@ controller.isAllOrNot=false;
                                               ?.contains(logic.filterWord) ??
                                               false) {
                                             return Padding(
-                                              padding: const EdgeInsets.all(8.0),
+                                              padding: const EdgeInsets.all(
+                                                  8.0),
                                               child: InkWell(
                                                 onTap: () {
-                                                  if (!controller.usersWillSendTo
-                                                      .contains(logic.users[pos])) {
-                                                    controller.addTousersWillSendTo(
+                                                  if (!controller
+                                                      .usersWillSendTo
+                                                      .contains(
+                                                      logic.users[pos])) {
+                                                    controller
+                                                        .addTousersWillSendTo(
                                                         user: logic.users[pos]);
                                                     controller
                                                         .SetMultipleReplyWithVoiceNoteRequestModel(
-                                                        correspondencesId:
-                                                        controller
+                                                        correspondencesId: controller
                                                             .allCorrespondences[
                                                         pos]
                                                             .correspondenceId!,
-                                                        transferId: controller.
-                                                           allCorrespondences[pos]
+                                                        transferId: controller
+                                                            .allCorrespondences[
+                                                        pos]
                                                             .transferId!,
                                                         id: logic
                                                             .users[pos].id!);
@@ -1850,7 +1971,8 @@ controller.isAllOrNot=false;
                                                 child: Container(
                                                   decoration: BoxDecoration(
                                                     border: Border.all(
-                                                        color: Theme.of(context)
+                                                        color: Theme
+                                                            .of(context)
                                                             .colorScheme
                                                             .primary,
                                                         width: 1),
@@ -1862,15 +1984,18 @@ controller.isAllOrNot=false;
                                                         height: 50,
                                                         width: 50,
                                                         decoration: BoxDecoration(
-                                                          shape: BoxShape.circle,
-                                                          color: Theme.of(context)
+                                                          shape: BoxShape
+                                                              .circle,
+                                                          color: Theme
+                                                              .of(context)
                                                               .colorScheme
                                                               .primary,
                                                         ),
                                                         child: Center(
                                                             child: FittedBox(
                                                                 child: Text(
-                                                                    "${a?[0][0]} ${a?[0][0] ?? ""}"))),
+                                                                    "${a?[0][0]} ${a?[0][0] ??
+                                                                        ""}"))),
                                                       ),
                                                       Padding(
                                                           padding:
@@ -2168,7 +2293,6 @@ controller.isAllOrNot=false;
             actions: <Widget>[
               TextButton(
                 onPressed: () {
-
                   Navigator.of(context).pop();
                 },
                 child: Text("Ok"),
@@ -2244,8 +2368,6 @@ controller.isAllOrNot=false;
     //         ));
   }
 }
-
-
 
 ////القديم
 // Expanded(child: Container(child: ListView.separated(

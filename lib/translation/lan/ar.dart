@@ -135,4 +135,5 @@ const Map<String, String> ar = {
   "addsing": "اضف توقيعك هنا",
   "EndedSuccess": "تم الانهاء بنجاح",
   "AddToBasketSucceess": "تم الاضافه الي المحفظه بنجاح",
+  "chooseaperson":"اختار شخص"
 };

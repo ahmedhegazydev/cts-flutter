@@ -265,6 +265,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                              Get.find<InboxController>().isAllOrNot = true;
                              Get.find<InboxController>().getBasketInbox(
                                  context: context, id:  basket.iD!,  );
+                             Get.find<InboxController>().selectUserFilter=null;
+                             Get.find<InboxController>().userFilter.clear();
                              Get.toNamed("/InboxPage");
 
 
@@ -4408,7 +4410,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                         Get.find<InboxController>().isAllOrNot = true;
                         Get.find<InboxController>().getAllCorrespondencesData(
                             context: context, inboxId: 1);
-
+                        Get.find<InboxController>().selectUserFilter=null;
+                        Get.find<InboxController>().userFilter.clear();
                         Get.toNamed("/InboxPage");
                       },
                       child: _buildOtherFoldersRows(
@@ -4430,6 +4433,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                         Get.find<InboxController>().isAllOrNot = true;
                         Get.find<InboxController>().getAllCorrespondencesData(
                             context: context, inboxId: 5);
+                        Get.find<InboxController>().selectUserFilter=null;
+                        Get.find<InboxController>().userFilter.clear();
                         Get.toNamed("/InboxPage");
                       },
                       child: _buildOtherFoldersRows(
@@ -4628,7 +4633,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                         Get.find<InboxController>().isAllOrNot = true;
                         Get.find<InboxController>().getAllCorrespondencesData(
                             context: context, inboxId: 1);
-
+                        Get.find<InboxController>().selectUserFilter=null;
+                        Get.find<InboxController>().userFilter.clear();
                         Get.toNamed("/InboxPage");
                       },
                       child: _buildOtherFoldersRows(
@@ -4651,6 +4657,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                         Get.find<InboxController>().isAllOrNot = true;
                         Get.find<InboxController>().getAllCorrespondencesData(
                             context: context, inboxId: 5);
+                        Get.find<InboxController>().selectUserFilter=null;
+                        Get.find<InboxController>().userFilter.clear();
                         Get.toNamed("/InboxPage");
                       },
                       child: _buildOtherFoldersRows(
@@ -4896,7 +4904,9 @@ class LandingPage extends GetWidget<LandingPageController> {
     Get.find<InboxController>().nodeId = nodeId;
     Get.find<InboxController>().context = context;
     Get.find<InboxController>().getAllData(context: context);
+    Get.find<InboxController>().selectUserFilter=null;
 
+    Get.find<InboxController>().userFilter.clear();
     Get.toNamed("/InboxPage");
     // Navigator.push(
     //   context,

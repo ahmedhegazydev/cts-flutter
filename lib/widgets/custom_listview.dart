@@ -24,7 +24,7 @@ import 'package:cts/utility/Extenstions.dart';
 class CustomListView extends GetView<InboxController> {
   CustomListView(
       {required this.function,
-      required this.allCorrespondences,
+    //  required this.allCorrespondences,
       required this.correspondences,
       required this.scrollController,
       required this.haveMoreData,
@@ -48,7 +48,7 @@ class CustomListView extends GetView<InboxController> {
 
   VoidCallback onClickItem;
   List<Correspondences> correspondences;
-  List<Correspondences> allCorrespondences;
+  //List<Correspondences> allCorrespondences;
   ScrollController scrollController;
   bool haveMoreData = true;
 

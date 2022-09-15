@@ -1882,63 +1882,69 @@ class InboxPage extends GetWidget<InboxController> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Container(
-              width: 160, padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                  color: AppColor, borderRadius: BorderRadius.circular(8)),
-              // margin: EdgeInsets.only(right: 8, left: 8),
-              //   height: size.height * .03,
-              ////width: 1,
-              child: IntrinsicHeight(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Icon(
-                      Icons.warning,
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      "urgent".tr,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline1!
-                          .copyWith(color: Colors.white, fontSize: 16),
-                    ),
-                  ],
+            GestureDetector(
+              onTap: (){
+                controller.setIsUrgentFilterClicked(!controller.isUrgentClicked);
+              },
+              child: Container(
+                width: 160, padding: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                    color: controller.isUrgentClicked ? AppColor : Colors.grey[400],
+                    // color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(8)),
+                // margin: EdgeInsets.only(right: 8, left: 8),
+                //   height: size.height * .03,
+                ////width: 1,
+                child: IntrinsicHeight(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Icon(
+                        Icons.warning,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        "urgent".tr,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline1!
+                            .copyWith(color: Colors.white, fontSize: 16),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-            SizedBox(
-              width: 16,
-            ),
-            Container(
-              width: 160, padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(8)),
-              //  padding: EdgeInsets.only(right: 8, left: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.lock, color: Colors.black.withOpacity(.6)),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    "secret".tr,
-                    style: Theme.of(context).textTheme.headline1!.copyWith(
-                        color: Colors.black.withOpacity(.6), fontSize: 16),
-                  ),
-                ],
-              ),
-              ////width: 1,
-            ),
+            // SizedBox(
+            //   width: 16,
+            // ),
+            // Container(
+            //   width: 160, padding: EdgeInsets.all(8),
+            //   decoration: BoxDecoration(
+            //       color: Colors.grey[200],
+            //       borderRadius: BorderRadius.circular(8)),
+            //   //  padding: EdgeInsets.only(right: 8, left: 8),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     children: [
+            //       Icon(Icons.lock, color: Colors.black.withOpacity(.6)),
+            //       SizedBox(
+            //         width: 10,
+            //       ),
+            //       Text(
+            //         "secret".tr,
+            //         style: Theme.of(context).textTheme.headline1!.copyWith(
+            //             color: Colors.black.withOpacity(.6), fontSize: 16),
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
         SizedBox(

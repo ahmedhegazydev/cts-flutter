@@ -147,16 +147,26 @@ class SignaturePage extends GetView<SignaturePageController> {
                             assignId: true,
                             builder: (logic) {
                               return GridView.builder(
+                                physics: ScrollPhysics(),
                                 itemCount: controller.multiSignatures.length,
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 1,
-                                        crossAxisSpacing: 4.0,
-                                        mainAxisSpacing: 4.0),
+                                        crossAxisCount: 3,
+                                        // crossAxisSpacing: 4.0,
+                                        // mainAxisSpacing: 4.0
+                                    ),
                                 itemBuilder: (BuildContext context, int index) {
-                                  return Image.memory(dataFromBase64String(
-                                      controller
-                                          .multiSignatures[index].signature));
+                                  return Container(
+                                    // width: 50,
+                                    // height: 50,
+                                    child: Image.memory(
+                                        dataFromBase64String(
+                                        controller
+                                            .multiSignatures[index].signature),
+                                      // width: 50,
+                                      // height: 50,
+                                    ),
+                                  );
                                 },
                               );
                             })

@@ -2406,7 +2406,7 @@ class InboxPage extends GetWidget<InboxController> {
                 context,
                 // "flagged".tr,
                 "allincom".tr,
-                "assets/images/incoming.png",
+                "assets/images/incoming_icon.png",
                 true,
                 "",() {
               controller.nodeId=0;
@@ -2418,7 +2418,7 @@ class InboxPage extends GetWidget<InboxController> {
                 context,
                 // "notifications".tr,
                 "allout".tr,
-                "assets/images/outgoing.png",
+                "assets/images/outgoing_icon.png",
                 false,
                  ""
               ,() {

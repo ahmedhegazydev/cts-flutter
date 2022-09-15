@@ -978,6 +978,7 @@ class InboxController extends GetxController {
     listFavoriteRecipientsApi.data =
         "Token=${secureStorage.token()}&Language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     await listFavoriteRecipientsApi.getData().then((value) {
+      Navigator.pop(context);
       if (value != null) {
         favoriteRecipientsResponse = value as ListFavoriteRecipientsResponse;
       } else {

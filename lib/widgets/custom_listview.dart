@@ -5344,7 +5344,8 @@ class CustomListView extends GetView<InboxController> {
                                                   ],
                                                 ),
                                               );
-                                            } else if (v == 2) {
+                                            }
+                                            else if (v == 2) {
                                               ///ToDo   عمل تحويل زي الي في داخل الدكيومنت
 
                                               _popUpMenu(context, pos);
@@ -6158,6 +6159,7 @@ class CustomListView extends GetView<InboxController> {
   }
 
   _popUpMenu(context, thepos) async {
+    showLoaderDialog(context);
     await controller.listFavoriteRecipients(context: context);
     showDialog(
         context: context,

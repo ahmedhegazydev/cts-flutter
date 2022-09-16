@@ -354,13 +354,21 @@ class InboxPage extends GetWidget<InboxController> {
         SizedBox(
           width: 16,
         ),
-        Icon(
-          Icons.clear,
-          color: Theme
-              .of(context)
-              .colorScheme
-              .primary,
-          size: 30,
+        GestureDetector(
+
+          child: Container(
+            child: Icon(
+              Icons.clear,
+              color: Theme
+                  .of(context)
+                  .colorScheme
+                  .primary,
+              size: 30,
+            ),
+          ),
+          onTap: (){
+            controller.clearFilter();
+          },
         ),
         SizedBox(
           width: 16,

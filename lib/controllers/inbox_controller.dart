@@ -1042,6 +1042,11 @@ if(!userFilter.contains(element.fromUserId)){
   }
 
 //=====================================================================================
+
+
+  List<Recipients> listfavoriteUser=[];
+  Recipients? selectlistfavoriteUser;
+
   //Favorites user
   ListFavoriteRecipientsResponse? favoriteRecipientsResponse;
 
@@ -1054,6 +1059,7 @@ if(!userFilter.contains(element.fromUserId)){
       Navigator.pop(context);
       if (value != null) {
         favoriteRecipientsResponse = value as ListFavoriteRecipientsResponse;
+        listfavoriteUser=favoriteRecipientsResponse?.recipients??[];
       } else {
         Get.snackbar("", "err".tr);
       }

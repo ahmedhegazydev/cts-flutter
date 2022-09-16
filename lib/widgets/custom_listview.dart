@@ -11,6 +11,7 @@ import '../controllers/my_cart/create_basket_controller.dart';
 import '../models/CorrespondencesModel.dart';
 import '../services/apis/reply_with_voice_note_api.dart';
 import '../services/json_model/basket/fetch_basket_list_model.dart';
+import '../services/json_model/favorites/list_all/ListFavoriteRecipients_response.dart';
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/login_model.dart';
 import '../services/json_model/reply_with_voicenote_model.dart';
@@ -1631,115 +1632,187 @@ class CustomListView extends GetView<InboxController> {
                             color: Colors.black.withOpacity(.5),
                             fontSize: 18,
                             fontWeight: FontWeight.bold)),
-                    Container(
-                      height: 100,
-                      width: MediaQuery.of(context).size.width * .8,
-                      child: GetBuilder<InboxController>(//autoRemove: false,
+                    // Container(
+                    //   height: 100,
+                    //   width: MediaQuery.of(context).size.width * .8,
+                    //   child: GetBuilder<InboxController>(//autoRemove: false,
+                    //
+                    //       builder: (logic) {
+                    //     return ListView.builder(
+                    //         scrollDirection: Axis.horizontal,
+                    //         itemCount: (controller.favoriteRecipientsResponse
+                    //                     ?.recipients?.length ??
+                    //                 0) +
+                    //             1,
+                    //         itemBuilder: (context, pos) {
+                    //           if (pos ==
+                    //               (controller.favoriteRecipientsResponse
+                    //                       ?.recipients?.length ??
+                    //                   0)) {
+                    //             return InkWell(
+                    //               onTap: () {
+                    //                 _popUpMenuMore(context);
+                    //               },
+                    //               child: Container(
+                    //                 padding: EdgeInsets.all(8),
+                    //                 child: Icon(Icons.add,
+                    //                     size: 30, color: Colors.white),
+                    //                 decoration: BoxDecoration(
+                    //                   shape: BoxShape.circle,
+                    //                   color:
+                    //                       Theme.of(context).colorScheme.primary,
+                    //                 ),
+                    //                 height: 75,
+                    //                 width: 75,
+                    //               ),
+                    //             );
+                    //           } else {
+                    //             return Padding(
+                    //               padding: const EdgeInsets.all(8.0),
+                    //               child: InkWell(
+                    //                 onTap: () {
+                    //                   Destination user = Destination(
+                    //                       value: controller
+                    //                           .favoriteRecipientsResponse!
+                    //                           .recipients![pos]
+                    //                           .targetName,
+                    //                       id: controller
+                    //                           .favoriteRecipientsResponse!
+                    //                           .recipients![pos]
+                    //                           .targetGctid);
+                    //                   controller.addTousersWillSendTo(
+                    //                       user: user, thepos: thepos);
+                    //                 },
+                    //                 child: Card(
+                    //                   elevation: 8,
+                    //                   child: Row(
+                    //                     children: [
+                    //                       controller
+                    //                               .favoriteRecipientsResponse!
+                    //                               .recipients![pos]
+                    //                               .targetPhotoBs64!
+                    //                               .trim()
+                    //                               .isEmpty
+                    //                           ? Container(
+                    //                               padding: EdgeInsets.all(8),
+                    //                               decoration: BoxDecoration(
+                    //                                   shape: BoxShape.circle,
+                    //                                   color: Theme.of(context)
+                    //                                       .colorScheme
+                    //                                       .primary,
+                    //                                   image: DecorationImage(
+                    //                                       image: AssetImage(
+                    //                                         "assets/images/pr.jpg",
+                    //                                       ),
+                    //                                       fit: BoxFit.cover)),
+                    //                               height: 75,
+                    //                               width: 75,
+                    //                             )
+                    //                           : Container(
+                    //                               padding: EdgeInsets.all(8),
+                    //                               decoration: BoxDecoration(
+                    //                                   shape: BoxShape.circle,
+                    //                                   color: Theme.of(context)
+                    //                                       .colorScheme
+                    //                                       .primary,
+                    //                                   image: DecorationImage(
+                    //                                       image: MemoryImage(
+                    //                                           dataFromBase64String(controller
+                    //                                               .favoriteRecipientsResponse!
+                    //                                               .recipients![
+                    //                                                   pos]
+                    //                                               .targetPhotoBs64!)),
+                    //                                       fit: BoxFit.cover)),
+                    //                               height: 75,
+                    //                               width: 75,
+                    //                             ),
+                    //                       Text(controller
+                    //                           .favoriteRecipientsResponse!
+                    //                           .recipients![pos]
+                    //                           .targetName!)
+                    //                     ],
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //             );
+                    //           }
+                    //
+                    //           //  CircleAvatar(backgroundColor: Colors.red,backgroundImage: AssetImage("assets/images/pr.jpg",),,radius: 30,);
+                    //         });
+                    //   }),
+                    // ),
 
-                          builder: (logic) {
-                        return ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: (controller.favoriteRecipientsResponse
-                                        ?.recipients?.length ??
-                                    0) +
-                                1,
-                            itemBuilder: (context, pos) {
-                              if (pos ==
-                                  (controller.favoriteRecipientsResponse
-                                          ?.recipients?.length ??
-                                      0)) {
-                                return InkWell(
-                                  onTap: () {
-                                    _popUpMenuMore(context);
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.all(8),
-                                    child: Icon(Icons.add,
-                                        size: 30, color: Colors.white),
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                    ),
-                                    height: 75,
-                                    width: 75,
+
+                    Row(
+                      children: [
+                        GetBuilder<InboxController>(autoRemove: false,builder: (logic) {
+                          return Container(
+                            // height: 50,
+                            // width: 50,
+                            decoration: BoxDecoration(
+                                borderRadius:BorderRadius.circular(10),border: Border.all(width: 1,color:Theme.of(context)
+                                .colorScheme
+                                .primary )),
+                            child: DropdownButton<Recipients>(
+                              value: controller.selectlistfavoriteUser,
+                              icon: const Icon(Icons.arrow_downward),hint:Row(
+                              children: [Container(width: 50,
+                                  height: 50,
+                                  decoration: BoxDecoration(shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                          image: AssetImage("assets/images/pr.jpg")))),
+                                Text( "chooseaperson".tr),
+                              ],
+                            ) ,
+                              iconSize: 24,
+                              elevation: 16,
+
+                              underline: SizedBox(),
+                              onChanged:              (v) {
+                          Destination user = Destination(
+                          value: v!.targetName,
+                          id: v.targetGctid);
+                          controller.addTousersWillSendTo(
+                          user: user, thepos: thepos);
+                          },
+                              items:controller.listfavoriteUser
+
+                                  .map<DropdownMenuItem<Recipients>>((Recipients value) {
+                                return DropdownMenuItem<Recipients>(
+                                  value: value,
+                                  child: Row(
+                                    children: [Container(width: 50,
+                                        height: 50,
+                                        decoration: BoxDecoration(shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                                image: AssetImage("assets/images/pr.jpg")))),
+                                      Text(value.targetName??""),
+                                    ],
                                   ),
                                 );
-                              } else {
-                                return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: InkWell(
-                                    onTap: () {
-                                      Destination user = Destination(
-                                          value: controller
-                                              .favoriteRecipientsResponse!
-                                              .recipients![pos]
-                                              .targetName,
-                                          id: controller
-                                              .favoriteRecipientsResponse!
-                                              .recipients![pos]
-                                              .targetGctid);
-                                      controller.addTousersWillSendTo(
-                                          user: user, thepos: thepos);
-                                    },
-                                    child: Card(
-                                      elevation: 8,
-                                      child: Row(
-                                        children: [
-                                          controller
-                                                  .favoriteRecipientsResponse!
-                                                  .recipients![pos]
-                                                  .targetPhotoBs64!
-                                                  .trim()
-                                                  .isEmpty
-                                              ? Container(
-                                                  padding: EdgeInsets.all(8),
-                                                  decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .primary,
-                                                      image: DecorationImage(
-                                                          image: AssetImage(
-                                                            "assets/images/pr.jpg",
-                                                          ),
-                                                          fit: BoxFit.cover)),
-                                                  height: 75,
-                                                  width: 75,
-                                                )
-                                              : Container(
-                                                  padding: EdgeInsets.all(8),
-                                                  decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .primary,
-                                                      image: DecorationImage(
-                                                          image: MemoryImage(
-                                                              dataFromBase64String(controller
-                                                                  .favoriteRecipientsResponse!
-                                                                  .recipients![
-                                                                      pos]
-                                                                  .targetPhotoBs64!)),
-                                                          fit: BoxFit.cover)),
-                                                  height: 75,
-                                                  width: 75,
-                                                ),
-                                          Text(controller
-                                              .favoriteRecipientsResponse!
-                                              .recipients![pos]
-                                              .targetName!)
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }
-
-                              //  CircleAvatar(backgroundColor: Colors.red,backgroundImage: AssetImage("assets/images/pr.jpg",),,radius: 30,);
-                            });
-                      }),
+                              })
+                                  .toList(),
+                            ),);
+                        }),SizedBox(width: 20,), InkWell(
+                          onTap: () {
+                            _popUpMenuMore(context);
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(8),
+                            child: Icon(Icons.add,
+                                size: 30, color: Colors.white),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color:
+                              Theme.of(context).colorScheme.primary,
+                            ),
+                            height: 75,
+                            width: 75,
+                          ),
+                        ),
+                      ],
                     ),
+
                     const Divider(
                       color: Colors.grey,
                     ),

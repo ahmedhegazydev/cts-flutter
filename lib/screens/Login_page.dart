@@ -180,7 +180,7 @@ class LoginPage extends GetWidget<LoginController> {
                                                                   "Base Url".tr,
                                                             ),
                                                           ),
-                                                          new FlatButton(
+                                                          new TextButton(
                                                               onPressed: () {
                                                                 controller
                                                                     .clear();

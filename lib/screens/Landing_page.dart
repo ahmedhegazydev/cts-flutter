@@ -432,7 +432,7 @@ class LandingPage extends GetWidget<LandingPageController> {
               ),
         ),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             onPressed: () async {
               Navigator.of(ctx).pop();
             },
@@ -447,7 +447,7 @@ class LandingPage extends GetWidget<LandingPageController> {
           //       },
           //       child: Text("Save Order"),
           //     )),
-          FlatButton(
+          TextButton(
             onPressed: () async {
               //هنا هنكريت الباسكت
 
@@ -616,7 +616,7 @@ class LandingPage extends GetWidget<LandingPageController> {
             Container(
               padding: EdgeInsets.only(right: 10, left: 10),
               width: MediaQuery.of(context).size.width * .3,
-              child: RaisedButton(
+              child: ElevatedButton(
                   onPressed: () {
                     // inboxController.applyFilter();
                     // Navigator.pop(context);

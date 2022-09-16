@@ -16,22 +16,22 @@ class SignaturePageController extends GetxController {
   List<MultiSignatures> multiSignatures = [];
   final SecureStorage secureStorage = SecureStorage();
 
-List newSing=[];
+  List newSing = [];
   final SignatureController controller = SignatureController(
     penStrokeWidth: 5,
     penColor: Colors.black,
     exportBackgroundColor: Colors.white,
   );
-replaceSing(sin){
-  // newSing.clear();
-  // newSing.add(sin);
 
-  update();
-}
-  updateSignature({
-    context,
-    required SignatureInfoModel signatureInfoModel}) {
-    UpdateSignatureApi _updateSignatureApi=UpdateSignatureApi(context);
+  replaceSing(sin) {
+    // newSing.clear();
+    // newSing.add(sin);
+
+    update();
+  }
+
+  updateSignature({context, required SignatureInfoModel signatureInfoModel}) {
+    UpdateSignatureApi _updateSignatureApi = UpdateSignatureApi(context);
     _updateSignatureApi.post(signatureInfoModel.toMap()).then((value) {
       print(value);
     });
@@ -47,29 +47,22 @@ replaceSing(sin){
       multiSignatures = data.multiSignatures ?? [];
       update();
       //multiSignatures.add(secureStorage.readSecureData(AllStringConst.Signature))
-      
     }
-    
   }
 
-  saveSign(context)async {
-  print("9999999999999999999999999999999");
-  final Uint8List? data =await  controller.toPngBytes();
-  SignatureInfoModel _signatureInfoModel = SignatureInfoModel(
-      signature:   base64.encode(data!), Token:  secureStorage.token()!,
-      SignatureId: multiSignatures[0].cNTGctId.toString());
+  saveSign(context) async {
+    print("9999999999999999999999999999999");
+    final Uint8List? data = await controller.toPngBytes();
+    SignatureInfoModel _signatureInfoModel = SignatureInfoModel(
+        signature: base64.encode(data!),
+        Token: secureStorage.token()!,
+        SignatureId: multiSignatures[0].cNTGctId.toString());
 
-   updateSignature(
-  context: context,
-  signatureInfoModel: _signatureInfoModel);
+    updateSignature(context: context, signatureInfoModel: _signatureInfoModel);
 
+    secureStorage.writeSecureData(
+        AllStringConst.Signature, base64.encode(data));
 
-
-
-
-  secureStorage.writeSecureData(AllStringConst.Signature,base64.encode(data));
-
-
- replaceSing(base64.encode(data));
-}
+    replaceSing(base64.encode(data));
+  }
 }

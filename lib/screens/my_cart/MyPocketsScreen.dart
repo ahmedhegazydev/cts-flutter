@@ -215,7 +215,7 @@ class MyPocketsScreen extends GetWidget<InboxController> {
             Container(
               padding: EdgeInsets.only(right: 10, left: 10),
               width: MediaQuery.of(context).size.width * .3,
-              child: RaisedButton(
+              child: ElevatedButton(
                   onPressed: () {
                     // inboxController.applyFilter();
                     // Navigator.pop(context);
@@ -1838,7 +1838,7 @@ class _ListView1State extends State<ListView1> {
                                               ),
                                             ),
                                             actions: <Widget>[
-                                              FlatButton(
+                                              TextButton(
                                                 onPressed:
                                                     () async {
                                                   String?
@@ -2350,7 +2350,7 @@ class _ListView1State extends State<ListView1> {
                                               ),
                                             ),
                                             actions: <Widget>[
-                                              FlatButton(
+                                              TextButton(
                                                 onPressed: () {
                                                   print(Get.find<
                                                       InboxController>()

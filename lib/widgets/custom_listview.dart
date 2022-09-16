@@ -638,7 +638,7 @@ class CustomListView extends GetView<InboxController> {
                                                     ),
                                                   ),
                                                   actions: <Widget>[
-                                                    FlatButton(
+                                                    TextButton(
                                                       onPressed: () async {
                                                         ReplyWithVoiceNoteRequestModel
                                                             v;
@@ -825,7 +825,7 @@ class CustomListView extends GetView<InboxController> {
                                                     ),
                                                   ),
                                                   actions: <Widget>[
-                                                    FlatButton(
+                                                    TextButton(
                                                       onPressed: () async {
                                                         print(Get.find<
                                                                 InboxController>()
@@ -991,7 +991,7 @@ class CustomListView extends GetView<InboxController> {
                                                                 })),
                                                       ),
                                                       actions: <Widget>[
-                                                        FlatButton(
+                                                        TextButton(
                                                           onPressed: () async {
                                                             /// ToDo send Replay
                                                             print(
@@ -1191,7 +1191,7 @@ class CustomListView extends GetView<InboxController> {
               ),
         ),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             onPressed: () async {
               Navigator.of(ctx).pop();
             },
@@ -1206,7 +1206,7 @@ class CustomListView extends GetView<InboxController> {
           //       },
           //       child: Text("Save Order"),
           //     )),
-          FlatButton(
+          TextButton(
             onPressed: () async {
               //هنا هنكريت الباسكت
 
@@ -1286,7 +1286,7 @@ class CustomListView extends GetView<InboxController> {
             Container(
               padding: EdgeInsets.only(right: 10, left: 10),
               width: MediaQuery.of(context).size.width * .3,
-              child: RaisedButton(
+              child: ElevatedButton(
                   onPressed: () {
                     // inboxController.applyFilter();
                     // Navigator.pop(context);

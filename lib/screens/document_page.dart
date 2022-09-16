@@ -403,7 +403,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                               ),
                             ),
                             actions: <Widget>[
-                              FlatButton(
+                              TextButton(
                                 onPressed: () {
                                   print(Get.find<InboxController>()
                                       .completeCustomActions
@@ -935,7 +935,7 @@ class DocumentPage extends GetWidget<DocumentController> {
           ),
         ),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             onPressed: () {
               Get.back();
             },

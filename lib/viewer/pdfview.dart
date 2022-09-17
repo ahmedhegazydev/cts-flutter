@@ -265,7 +265,7 @@ class PDFColumn extends StatelessWidget {
           //});
         },
         child: Container(
-          color: Colors.green,
+          // color: Colors.green,
           child: Column(
             children: List.generate(
               pages.length,

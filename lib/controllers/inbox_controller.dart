@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 import 'dart:ui' as ui;
 
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
@@ -511,8 +512,10 @@ bool isUrgentClicked = false;
       correspondencesModel = value as CorrespondencesModel;
 
       correspondencesModel?.inbox?.correspondences?.forEach((element) {
-        if(!userFilter.contains(element.fromUserId)){
-          userFilter.add(UserFilter(userId: element.fromUserId!, name: element.fromUser!));
+        UserFilter user=      UserFilter(userId: element.fromUserId!, name: element.fromUser!);
+
+        if(!userFilter.contains(user)){
+          userFilter.add(user);
         }
 
       });
@@ -577,8 +580,10 @@ bool isUrgentClicked = false;
       //getCorrespondencesAllModel = value as GetCorrespondencesAllModel;
       correspondencesModel =value as CorrespondencesModel;
       correspondencesModel?.inbox?.correspondences?.forEach((element) {
-if(!userFilter.contains(element.fromUserId)){
-  userFilter.add(UserFilter(userId: element.fromUserId!, name: element.fromUser!));
+        UserFilter user=      UserFilter(userId: element.fromUserId!, name: element.fromUser!);
+if(!userFilter.contains(user)){
+
+  userFilter.add(user);
 }
 
       });
@@ -1225,9 +1230,13 @@ if(!userFilter.contains(element.fromUserId)){
     update();
   }
 }
-class UserFilter{
+class UserFilter  extends Equatable{
   int userId;
   String name;
 
   UserFilter({required this.userId,required this.name});
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [userId,name];
 }

@@ -89,18 +89,18 @@ class LoginPage extends GetWidget<LoginController> {
                         Expanded(
                           child: Container(
                             width: MediaQuery.of(context).size.width,
-                            child:Padding(
-                              padding: EdgeInsets.only(bottom: 20),
+                            child: Padding(
+                                padding: EdgeInsets.only(bottom: 20),
                                 child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Image.asset(
-                                  "assets/images/login_background.png"
-                                  // returnImageNameBasedOnDirection(
-                                  //     "assets/images/background", context, "png"
+                                  alignment: Alignment.bottomCenter,
+                                  child: Image.asset(
+                                      "assets/images/login_background.png"
+                                      // returnImageNameBasedOnDirection(
+                                      //     "assets/images/background", context, "png"
 
-                                  //),
-                                  ),
-                            )),
+                                      //),
+                                      ),
+                                )),
                           ),
                         ),
                       ],
@@ -555,23 +555,7 @@ class LoginPage extends GetWidget<LoginController> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             SizedBox(
-                              height: 30,
-                            ),
-                            Container(
-                              // color: Colors.red,
-                              //  width: double.infinity,
-                              padding: const EdgeInsets.all(0),
-                              child: Text(
-                                "appTitle".tr,
-                                // textAlign: TextAlign.center,
-                                textDirection: Get.locale?.languageCode == "en"
-                                    ? TextDirection.ltr
-                                    : TextDirection.rtl,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline1!
-                                    .copyWith(),
-                              ),
+                              height: 90,
                             ),
                             orientation == Orientation.landscape
                                 ? SizedBox(
@@ -645,6 +629,38 @@ class LoginPage extends GetWidget<LoginController> {
                                         )),
                                   ],
                                 ),
+                              ),
+                            ),
+                            SizedBox(height: 50),
+                            Container(
+                              // color: Colors.red,
+                              //  width: double.infinity,
+                              padding: const EdgeInsets.all(0),
+                              child: Text(
+                                "appTitle".tr,
+                                // textAlign: TextAlign.center,
+                                textDirection: Get.locale?.languageCode == "en"
+                                    ? TextDirection.ltr
+                                    : TextDirection.rtl,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline1!
+                                    .copyWith(),
+                              ),
+                            ),
+                            SizedBox(height: 50),
+                            Container(
+                              // color: Colors.red,
+                              //  width: double.infinity,
+                              padding: const EdgeInsets.all(0),
+                              child: Image.asset(
+                                // width: orientation == Orientation.landscape
+                                //     ? size.width * .348
+                                //     : size.width * .51,
+                                'assets/images/logo-new.png',
+                                height: 100,
+
+                                //
                               ),
                             ),
                           ],

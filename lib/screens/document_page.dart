@@ -31,6 +31,7 @@ import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
 import '../utility/utilitie.dart';
 import '../viewer/controllers/viewerController.dart';
+import '../viewer/pdfview.dart';
 import '../viewer/static/AnnotationTypes.dart';
 import '../widgets/Custom_button_with_image.dart';
 import '../widgets/custom_button_with_icon.dart';
@@ -42,6 +43,22 @@ class DocumentPage extends GetWidget<DocumentController> {
   bool portraitIsActive = false;
   List<Widget> list = [];
 
+  void _showAction(BuildContext context, int index) {
+    var annotation = AnnotationBaseTypes.none;
+    switch (index) {
+      case 0:
+        annotation = AnnotationBaseTypes.text;
+        break;
+      case 1:
+        annotation = AnnotationBaseTypes.handWrite;
+        break;
+      case 2:
+        _popUpMenu(context);
+        // annotation = AnnotationBaseTypes.shape;
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -49,11 +66,31 @@ class DocumentPage extends GetWidget<DocumentController> {
             autoRemove: false,
             builder: (logic) {
               return Scaffold(
-                  body: controller.canOpenDocumentModel == null
-                      ? Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : _buildBody(context));
+                body: controller.canOpenDocumentModel == null
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : _buildBody(context),
+                floatingActionButtonLocation:
+                    FloatingActionButtonLocation.miniStartFloat,
+                floatingActionButton: ExpandableFab(
+                  distance: 122.0,
+                  children: [
+                    ActionButton(
+                      onPressed: () => completeClick(context),
+                      icon: const Icon(Icons.archive),
+                    ),
+                    ActionButton(
+                      onPressed: () => clickOnSign(context),
+                      icon: const Icon(Icons.edit),
+                    ),
+                    ActionButton(
+                      onPressed: () => _popUpMenu(context),
+                      icon: const Icon(Icons.send),
+                    ),
+                  ],
+                ),
+              );
             }));
   }
 
@@ -178,137 +215,27 @@ class DocumentPage extends GetWidget<DocumentController> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    InkWell(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: Container(
-                          color: Colors.grey[400],
-                          height: 50,
-                          width: size.width * .08,
-                          child: Center(
-                            child: Image.asset(
-                              returnImageNameBasedOnDirection(
-                                  "assets/images/arrow", context, "png"),
-                              color: Colors.white,
-                              height: 50,
-                              width: 50,
-                            ),
-                          )),
-                    ),
                     const SizedBox(
                       width: 4,
+                      height: 50,
                     ),
-                    // Container(width: size.width*.5,height: 50,
-                    //   child: ListView.builder(shrinkWrap: true,   scrollDirection: Axis.horizontal,
-                    //       itemCount: controller.canOpenDocumentModel?.correspondence?.controlList?.toolbarItems?.length,
-                    //       itemBuilder: (context,pos){
-                    //
-                    //
-                    //     return controller.canOpenDocumentModel!.correspondence!.controlList!.toolbarItems![pos].display!?
-                    //
-                    //
-                    //
-                    //       CustomButtonWithImage(
-                    //               // onClick: () {},
-                    //               image: 'assets/images/refer.png',
-                    //               label:controller.canOpenDocumentModel!.correspondence!.controlList!.toolbarItems![pos].name! ,
-                    //             ):SizedBox();
-                    //
-                    //
-                    //       }),
-                    // ),
-//=====================================================================
-//                 if (controller.openAttachment)
-//                   InkWell(
-//                     onTap: () {
-//                       controller.updatecloseAttashment(
-//                           controller.isOriginalMailAttachmentsList!.uRL!);
-//                     },
-//                     child: CustomButtonWithImage(
-//                       // onClick: () {},
-//                       image: 'assets/images/up_arrow.png',
-//                       label: "backtooriginalfile".tr,
-//                     ),
-//                   ),
-//                 if (controller.openAttachment)
-//                   Container(
-//                     height: 30,
-//                     width: 1,
-//                     color: Colors.grey[800],
-//                   ),
-//
-//                 if (controller
-//                         .canOpenDocumentModel?.correspondence?.hasAttachments ??
-//                     true)
-//                   InkWell(
-//                     onTap: () {
-//                       _popUpMenuhasAttachments(context);
-//                     },
-//                     child: CustomButtonWithImage(
-//                       // onClick: () {},
-//                       image: 'assets/images/refer.png',
-//                       label: "Attachments".tr,
-//                     ),
-//                   ),
-//                 if (controller
-//                         .canOpenDocumentModel?.correspondence?.hasAttachments ??
-//                     true)
-//                   Container(
-//                     height: 30,
-//                     width: 1,
-//                     color: Colors.grey[800],
-//                   ),
-//                 // if (controller
-//                 //     .canOpenDocumentModel?.correspondence?.hasSummaries ??
-//                 //     true)
-//                 InkWell(
-//                   onTap: () {
-//                     // controller
-//                     //     .canOpenDocumentModel?.correspondence.
-//                     _popUpExportG2GDocument(context);
-//                   },
-//                   child: CustomButtonWithImage(
-//                     //onClick: () {},
-//                     image: 'assets/images/refer.png',
-//                     label: "hasSummaries".tr,
-//                   ),
-//                 ),
-//                 InkWell(
-//                   onTap: () {
-//                     controller.filePickerR();
-//                   },
-//                   child: CustomButtonWithImage(
-//                     //onClick: () {},
-//                     image: 'assets/images/attachment.png',
-//                     label: "AddAttachments".tr,
-//                   ),
-//                 ),
-//
-//
-//                 Container(
-//                   height: 30,
-//                   width: 1,
-//                   color: Colors.grey[800],
-//                 ),
-//
 
-                    //==========================================
-                    InkWell(
-                      onTap: () {
-                        _popUpMenu(context);
-                      },
-                      child: CustomButtonWithImage(
-                        //onClick: () {},
-                        image: 'assets/images/refer.png',
-                        label: "refer".tr,
-                      ),
-                    ),
-                    Container(
-                      height: 30,
-                      width: 1,
-                      color: Colors.grey[800],
-                    ),
+                    // InkWell(
+                    //   onTap: () {
+                    //     _popUpMenu(context);
+
+                    //   },
+                    //   child: CustomButtonWithImage(
+                    //     //onClick: () {},
+                    //     image: 'assets/images/refer.png',
+                    //     label: "refer".tr,
+                    //   ),
+                    // ),
+                    // Container(
+                    //   height: 30,
+                    //   width: 1,
+                    //   color: Colors.grey[800],
+                    // ),
                     PopupMenuButton(
                       elevation: 4,
                       child: CustomButtonWithImage(
@@ -360,72 +287,40 @@ class DocumentPage extends GetWidget<DocumentController> {
                       width: 1,
                       color: Colors.grey[800],
                     ),
+                    // GestureDetector(
+                    //   child: CustomButtonWithImage(
+                    //     // onClick: () {},
+                    //     image: 'assets/images/ending.png',
+                    //     label: "ending".tr,
+                    //   ),
+                    //   onTap: () {
+                    //     print("ending");
+                    //     // showLoaderDialog(context);
+                    //     completeClick(context);
+                    //   },
+                    // ),
+                    // Container(
+                    //   height: 30,
+                    //   width: 1,
+                    //   color: Colors.grey[800],
+                    // ),
                     GestureDetector(
                       child: CustomButtonWithImage(
                         // onClick: () {},
-                        image: 'assets/images/ending.png',
-                        label: "ending".tr,
+                        label: "marking".tr,
+                        image: 'assets/images/A.png',
                       ),
-                      onTap: () {
-                        print("ending");
-                        // showLoaderDialog(context);
-                        showDialog(
-                          context: context,
-                          builder: (ctx) => AlertDialog(
-                            title: Text(" "),
-                            content: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                width: MediaQuery.of(context).size.width * .8,
-                                color: Colors.grey[200],
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text("note"),
-                                        SizedBox(
-                                          height: 8,
-                                        ),
-                                        Container(
-                                          child: TextFormField(
-                                            maxLines: 4,
-                                          ),
-                                          color: Colors.grey[300],
-                                        ),
-                                        SizedBox(
-                                          height: 8,
-                                        ),
-                                      ]),
-                                ),
-                              ),
-                            ),
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () {
-                                  print(Get.find<InboxController>()
-                                      .completeCustomActions
-                                      ?.name);
-                                  print(Get.find<InboxController>()
-                                      .completeCustomActions
-                                      ?.icon);
+                      onTap: () async {
+                        String url =
+                            "https://intaliocom-my.sharepoint.com/:w:/r/personal/izzat_hajj_intalio_com/_layouts/15/Doc.aspx?sourcedoc=%7B433EEEF0-A155-4F05-B1BF-B9FBEEF77575%7D&file=5833639______%20____%20____%20(1).docx&action=default&mobileredirect=true";
+                        final Uri toLaunch =
+                            Uri.parse("ms-word:ofe|u|$url|a|App");
 
-                                  String data =
-                                      'Token=${Get.find<InboxController>().secureStorage.token()}&correspondenceId=${controller.canOpenDocumentModel!.correspondence!.correspondenceId}&transferId=${controller.canOpenDocumentModel!.correspondence!.transferId}&actionType=Complete&note=${Get.find<InboxController>().completeNote}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}';
-
-                                  Navigator.of(ctx).pop();
-                                  showLoaderDialog(context);
-                                  Get.find<InboxController>()
-                                      .completeInCorrespondence(
-                                          context: context, data: data);
-                                },
-                                child: Text("Ok"),
-                              ),
-                            ],
-                          ),
+                        final bool nativeAppLaunchSucceeded = await launchUrl(
+                          toLaunch,
+                          mode: LaunchMode.externalApplication,
                         );
+                        print("was able to launch ? $nativeAppLaunchSucceeded");
                       },
                     ),
                     Container(
@@ -492,11 +387,11 @@ class DocumentPage extends GetWidget<DocumentController> {
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SideViewActions,
-                Container(
-                  width: 1,
-                  color: Colors.grey,
-                ),
+                // SideViewActions,
+                // Container(
+                //   width: 1,
+                //   color: Colors.grey,
+                // ),
                 GetBuilder<DocumentController>(
                     autoRemove: false,
                     builder: (logic) {
@@ -559,8 +454,8 @@ class DocumentPage extends GetWidget<DocumentController> {
                                       width: 100,
                                       decoration: BoxDecoration(
                                           border: Border.all(
-                                            width: 1,
-                                            color: Colors.grey,
+                                            width: 0,
+                                            color: Colors.transparent,
                                           ),
                                           borderRadius:
                                               BorderRadius.circular(5)),
@@ -596,7 +491,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                       decoration: BoxDecoration(
                                           border: Border.all(
                                             width: 1,
-                                            color: Colors.grey,
+                                            color: Colors.transparent,
                                           ),
                                           borderRadius:
                                               BorderRadius.circular(5)),
@@ -625,7 +520,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                     decoration: BoxDecoration(
                                         border: Border.all(
                                           width: 1,
-                                          color: Colors.grey,
+                                          color: Colors.transparent,
                                         ),
                                         borderRadius: BorderRadius.circular(5)),
                                     child: Center(
@@ -817,6 +712,59 @@ class DocumentPage extends GetWidget<DocumentController> {
           ),
         )
       ],
+    );
+  }
+
+  Future<dynamic> completeClick(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(" "),
+        content: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            width: MediaQuery.of(context).size.width * .8,
+            color: Colors.grey[200],
+            child: SingleChildScrollView(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("note"),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Container(
+                      child: TextFormField(
+                        maxLines: 4,
+                      ),
+                      color: Colors.grey[300],
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                  ]),
+            ),
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              print(Get.find<InboxController>().completeCustomActions?.name);
+              print(Get.find<InboxController>().completeCustomActions?.icon);
+
+              String data =
+                  'Token=${Get.find<InboxController>().secureStorage.token()}&correspondenceId=${controller.canOpenDocumentModel!.correspondence!.correspondenceId}&transferId=${controller.canOpenDocumentModel!.correspondence!.transferId}&actionType=Complete&note=${Get.find<InboxController>().completeNote}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}';
+
+              Navigator.of(ctx).pop();
+              showLoaderDialog(context);
+              Get.find<InboxController>()
+                  .completeInCorrespondence(context: context, data: data);
+            },
+            child: Text("Ok"),
+          ),
+        ],
+      ),
     );
   }
 

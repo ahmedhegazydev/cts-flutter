@@ -17,7 +17,7 @@ class _CreateNewBasketState extends State<CreateNewBasket> {
 
   // Color pickerColor = Color(0xff443a49);
   // Color pickerColor = Colors.transparent;
-  Color currentColor = Color(0x800000);
+  Color currentColor = Color(0x0d2b40);
 
   @override
   Widget build(BuildContext context) {

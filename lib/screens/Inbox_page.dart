@@ -236,14 +236,14 @@ class InboxPage extends GetWidget<InboxController> {
                                                             style: TextStyle(color: Colors.black.withOpacity(.4),fontWeight: FontWeight.bold)  ),],)    ,
                                                     Padding(
                                                       padding:
-                                                      const EdgeInsets.all(8.0),
+                                                      const EdgeInsets.all(0),
                                                       child: Row(
                                                         // mainAxisAlignment:
                                                         //     MainAxisAlignment
                                                         //         .spaceAround,
                                                         children: [
 
-                                                          SizedBox(width: 50,),
+                                                          // SizedBox(width: 50,),
 
                                                           // Container(
                                                           //   height: 20,

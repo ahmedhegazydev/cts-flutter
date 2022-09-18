@@ -31,9 +31,17 @@ class LoginPage extends GetWidget<LoginController> {
 
     controller.context = context;
 
-    Size size = MediaQuery.of(context).size;
-    Orientation orientation = MediaQuery.of(context).orientation;
-    final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
+    Size size = MediaQuery
+        .of(context)
+        .size;
+    Orientation orientation = MediaQuery
+        .of(context)
+        .orientation;
+
+    final bool showFab = MediaQuery
+        .of(context)
+        .viewInsets
+        .bottom == 0.0;
     landscapeBody(BuildContext context) {
       return GestureDetector(
         child: Container(
@@ -80,433 +88,533 @@ class LoginPage extends GetWidget<LoginController> {
 //|| DeviceSize.isTablet(context)
 //                DeviceSize.isPortrait(context) ==
 //                    Orientation.portrait
-            //
-            orientation == Orientation.portrait
-                ? Container(
-                    child: Column(
-                      children: [
-                        Expanded(child: logForm(context)),
-                        Expanded(
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            child:Padding(
-                              padding: EdgeInsets.only(bottom: 20),
-                                child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Image.asset(
-                                  "assets/images/login_background.png"
-                                  // returnImageNameBasedOnDirection(
-                                  //     "assets/images/background", context, "png"
+        //
+        orientation == Orientation.portrait
+            ? Container(
+          child: Column(
+            children: [
+              Expanded(child: logForm(context)),
+              Expanded(
+                child: Container(
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width,
+                  child: Padding(
+                      padding: EdgeInsets.only(bottom: 20),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Image.asset(
+                            "assets/images/login_background.png"
+                          // returnImageNameBasedOnDirection(
+                          //     "assets/images/background", context, "png"
 
-                                  //),
-                                  ),
-                            )),
-                          ),
+                          //),
                         ),
-                      ],
-                    ),
-                  )
-                : landscapeBody(context),
+                      )),
+                ),
+              ),
+            ],
+          ),
+        )
+            : landscapeBody(context),
         floatingActionButton: showFab
             ? Row(
-                // crossAxisAlignment: CrossAxisAlignment.start,
-                // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                // verticalDirection: VerticalDirection.up,
-                // textBaseline: TextBaseline.alphabetic,
-                textDirection: TextDirection.rtl,
-                // mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Spacer(),
-                  Align(
-                    // alignment: Get.locale=="en" ?  Alignment.bottomRight : Alignment.bottomLeft,
-                    // alignment:  Alignment.bottomRight,
-                    alignment: Alignment.bottomLeft,
-                    child: Row(
-                      children: [
-                        // SizedBox(
-                        //   // width:  Get.locale=="en"? 0 : 110,
-                        //   width: 110,
-                        //   // width:  0,
-                        // ) ,
-                        FloatingActionButton(
-                            onPressed: () {
-                              getSavedBaseUrlFormDatabase();
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          // mainAxisAlignment: MainAxisAlignment.spaceAround,
+          // verticalDirection: VerticalDirection.up,
+          // textBaseline: TextBaseline.alphabetic,
+          textDirection: TextDirection.rtl,
+          // mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Spacer(),
+            Align(
+              // alignment: Get.locale=="en" ?  Alignment.bottomRight : Alignment.bottomLeft,
+              // alignment:  Alignment.bottomRight,
+              alignment: Alignment.bottomLeft,
+              child: Row(
+                children: [
+                  // SizedBox(
+                  //   // width:  Get.locale=="en"? 0 : 110,
+                  //   width: 110,
+                  //   // width:  0,
+                  // ) ,
+                  FloatingActionButton(
+                      onPressed: () {
+                        getSavedBaseUrlFormDatabase();
 
-                              // String? link =           controller.secureStorage.readSecureData(   AllStringConst.BaseUrl)??"";
-                              // controller.baseUrl.text=link;
-                              showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                        title: Text("Settings".tr),
-                                        content: SingleChildScrollView(
+                        // String? link =           controller.secureStorage.readSecureData(   AllStringConst.BaseUrl)??"";
+                        // controller.baseUrl.text=link;
+                        showDialog(
+                            context: context,
+                            builder: (context) =>
+                                AlertDialog(
+                                    title: Text("Settings".tr),
+                                    content: SingleChildScrollView(
+                                      child: Column(children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 8.0,
+                                              bottom: 8,
+                                              right: 0,
+                                              left: 0),
                                           child: Column(children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 8.0,
-                                                  bottom: 8,
-                                                  right: 0,
-                                                  left: 0),
-                                              child: Column(children: [
-                                                Container(
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          Colors.grey.shade300,
-                                                      // color: Colors.grey.shade200,
-                                                      borderRadius:
-                                                          const BorderRadius
-                                                              .all(
-                                                        Radius.circular(6),
-                                                      ),
-                                                    ),
-                                                    width: double.infinity,
-                                                    child: Row(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: <Widget>[
-                                                          Expanded(
-                                                            child:
-                                                                CustomInputTextFiled(
-                                                              validator: controller
-                                                                  .validators
-                                                                  .userNameValidator,
-                                                              textEditingController:
-                                                                  controller
-                                                                      .baseUrl,
-                                                              label:
-                                                                  "Base Url".tr,
-                                                            ),
-                                                          ),
-                                                          new FlatButton(
-                                                              onPressed: () {
-                                                                controller
-                                                                    .clear();
-                                                              },
-                                                              child: new Icon(
-                                                                  Icons.clear))
-                                                        ]))
-                                              ]),
-                                            ),
-                                            // SizedBox(
-                                            //   height: 100,
-                                            // ),
-
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 8.0,
-                                                  bottom: 30,
-                                                  right: 0,
-                                                  left: 0),
-                                              child: Row(children: [
-                                                Expanded(
-                                                  child: Container(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 0,
-                                                            right: 0,
-                                                            top: 0,
-                                                            bottom: 0),
-                                                    height: 60,
-                                                    decoration: BoxDecoration(
-                                                        color: Theme.of(context)
-                                                            .colorScheme
-                                                            .primary,
-                                                        borderRadius:
-                                                            const BorderRadius
-                                                                    .all(
-                                                                Radius.circular(
-                                                                    6))),
-                                                    child: ElevatedButton(
-                                                      onPressed: () async {
-                                                        var locale =
-                                                            const Locale(
-                                                                'ar', 'AR');
-                                                        SecureStorage
-                                                            secureStorage =
-                                                            SecureStorage();
-
-                                                        secureStorage
-                                                            .writeSecureData(
-                                                                AllStringConst
-                                                                    .AppLan,
-                                                                "ar");
-
-                                                        // final settings = SettingItem(
-                                                        //   baseUrl: controller.baseUrl.text,
-                                                        //   language: "ar",
-                                                        // );
-                                                        // await saveSettingsIntoDatabase(settings);
-
-                                                        Get.updateLocale(
-                                                            locale);
-                                                      },
-                                                      child: Text(
-                                                        "عربي",
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .headline2!
-                                                            .copyWith(
-                                                                color: Colors
-                                                                    .white),
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Expanded(
-                                                  child: Container(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 0,
-                                                            right: 0,
-                                                            top: 0,
-                                                            bottom: 0),
-                                                    height: 60,
-                                                    decoration: BoxDecoration(
-                                                        color: Theme.of(context)
-                                                            .colorScheme
-                                                            .primary,
-                                                        borderRadius:
-                                                            const BorderRadius
-                                                                    .all(
-                                                                Radius.circular(
-                                                                    6))),
-                                                    child: ElevatedButton(
-                                                      onPressed: () async {
-                                                        SecureStorage
-                                                            secureStorage =
-                                                            SecureStorage();
-                                                        var locale =
-                                                            const Locale(
-                                                                'en', 'US');
-                                                        secureStorage
-                                                            .writeSecureData(
-                                                                AllStringConst
-                                                                    .AppLan,
-                                                                "en");
-
-                                                        // final settings = SettingItem(
-                                                        //   baseUrl: controller.baseUrl.text,
-                                                        //   language: "en",
-                                                        // );
-                                                        // await saveSettingsIntoDatabase(settings);
-
-                                                        Get.updateLocale(
-                                                            locale);
-                                                      },
-                                                      child: Text(
-                                                        "En",
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .headline2!
-                                                            .copyWith(
-                                                                color: Colors
-                                                                    .white),
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                )
-                                              ]),
-                                            ),
-
                                             Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  .7,
-                                              padding: const EdgeInsets.only(
-                                                  left: 0,
-                                                  right: 0,
-                                                  top: 0,
-                                                  bottom: 0),
-                                              height: 60,
-                                              decoration: BoxDecoration(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .primary,
+                                                decoration: BoxDecoration(
+                                                  color:
+                                                  Colors.grey.shade300,
+                                                  // color: Colors.grey.shade200,
                                                   borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(6))),
-                                              child: ElevatedButton(
-                                                onPressed: () async {
-                                                  controller.secureStorage
-                                                      .writeSecureData(
-                                                          AllStringConst
-                                                              .BaseUrl,
+                                                  const BorderRadius
+                                                      .all(
+                                                    Radius.circular(6),
+                                                  ),
+                                                ),
+                                                width: double.infinity,
+                                                child: Row(
+                                                    crossAxisAlignment:
+                                                    CrossAxisAlignment
+                                                        .center,
+                                                    mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .center,
+                                                    children: <Widget>[
+                                                      Expanded(
+                                                        child:
+                                                        CustomInputTextFiled(
+                                                          validator: controller
+                                                              .validators
+                                                              .userNameValidator,
+                                                          textEditingController:
                                                           controller
-                                                              .baseUrl.text);
+                                                              .baseUrl,
+                                                          label:
+                                                          "Base Url".tr,
+                                                        ),
+                                                      ),
+                                                      new FlatButton(
+                                                          onPressed: () {
+                                                            controller
+                                                                .clear();
+                                                          },
+                                                          child: new Icon(
+                                                              Icons.clear))
+                                                    ]))
+                                          ]),
+                                        ),
+                                        // SizedBox(
+                                        //   height: 100,
+                                        // ),
 
-                                                  // final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-                                                  // final SharedPreferences prefs = await _prefs;
-                                                  // prefs.setString(AllStringConst.BaseUrl, controller.baseUrl.text);
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 8.0,
+                                              bottom: 30,
+                                              right: 0,
+                                              left: 0),
+                                          child: Row(children: [
+                                            Expanded(
+                                              child: Container(
+                                                padding:
+                                                const EdgeInsets.only(
+                                                    left: 0,
+                                                    right: 0,
+                                                    top: 0,
+                                                    bottom: 0),
+                                                height: 60,
+                                                decoration: BoxDecoration(
+                                                    color: Theme
+                                                        .of(context)
+                                                        .colorScheme
+                                                        .primary,
+                                                    borderRadius:
+                                                    const BorderRadius
+                                                        .all(
+                                                        Radius.circular(
+                                                            6))),
+                                                child: ElevatedButton(
+                                                  onPressed: () async {
+                                                    var locale =
+                                                    const Locale(
+                                                        'ar', 'AR');
+                                                    SecureStorage
+                                                    secureStorage =
+                                                    SecureStorage();
 
-                                                  final settings = SettingItem(
-                                                      baseUrl: controller
-                                                          .baseUrl.text,
-                                                      language: "ar",
-                                                      color: "");
-                                                  await saveSettingsIntoDatabase(
-                                                      settings);
+                                                    secureStorage
+                                                        .writeSecureData(
+                                                        AllStringConst
+                                                            .AppLan,
+                                                        "ar");
 
-                                                  // Restart.restartApp();
-                                                  // Phoenix.rebirth(context);
-                                                  Navigator.of(context).pop();
-                                                  // RestartWidget.restartApp(
-                                                  //     context);
-                                                },
-                                                child: Text(
-                                                  "Save Settings".tr,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .headline2!
-                                                      .copyWith(
-                                                          color: Colors.white),
-                                                  textAlign: TextAlign.center,
+                                                    // final settings = SettingItem(
+                                                    //   baseUrl: controller.baseUrl.text,
+                                                    //   language: "ar",
+                                                    // );
+                                                    // await saveSettingsIntoDatabase(settings);
+
+                                                    Get.updateLocale(
+                                                        locale);
+                                                  },
+                                                  child: Text(
+                                                    "العربية",
+                                                    style: Theme
+                                                        .of(context)
+                                                        .textTheme
+                                                        .headline2!
+                                                        .copyWith(
+                                                        color: Colors
+                                                            .white),
+                                                    textAlign:
+                                                    TextAlign.center,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Expanded(
+                                              child: Container(
+                                                padding:
+                                                const EdgeInsets.only(
+                                                    left: 0,
+                                                    right: 0,
+                                                    top: 0,
+                                                    bottom: 0),
+                                                height: 60,
+                                                decoration: BoxDecoration(
+                                                    color: Theme
+                                                        .of(context)
+                                                        .colorScheme
+                                                        .primary,
+                                                    borderRadius:
+                                                    const BorderRadius
+                                                        .all(
+                                                        Radius.circular(
+                                                            6))),
+                                                child: ElevatedButton(
+                                                  onPressed: () async {
+                                                    SecureStorage
+                                                    secureStorage =
+                                                    SecureStorage();
+                                                    var locale =
+                                                    const Locale(
+                                                        'en', 'US');
+                                                    secureStorage
+                                                        .writeSecureData(
+                                                        AllStringConst
+                                                            .AppLan,
+                                                        "en");
+
+                                                    // final settings = SettingItem(
+                                                    //   baseUrl: controller.baseUrl.text,
+                                                    //   language: "en",
+                                                    // );
+                                                    // await saveSettingsIntoDatabase(settings);
+
+                                                    Get.updateLocale(
+                                                        locale);
+                                                  },
+                                                  child: Text(
+                                                    "English",
+                                                    style: Theme
+                                                        .of(context)
+                                                        .textTheme
+                                                        .headline2!
+                                                        .copyWith(
+                                                        color: Colors
+                                                            .white),
+                                                    textAlign:
+                                                    TextAlign.center,
+                                                  ),
                                                 ),
                                               ),
                                             )
                                           ]),
                                         ),
-                                      ));
-                            },
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(6.0),
-                              ),
-                            ),
-                            child: Icon(
-                              Icons.settings,
-                              color: Colors.white,
-                            )
-                            // Image(
-                            //   image: AssetImage(
-                            //     'assets/images/palette.png',
-                            //   ),
-                            //   fit: BoxFit.contain,
-                            //   width: 25,
-                            //   height: 25,
-                            // ),
-                            )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 0),
-                    child: Align(
-                      alignment: Alignment.bottomLeft,
-                      child: FloatingActionButton(
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                    title: Text("pick your Color".tr),
-                                    content: Column(children: [
-                                      buildColorPicker(),
-                                      SizedBox(
-                                        height: 30,
-                                      ),
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                .7,
-                                        padding: const EdgeInsets.only(
-                                            left: 0,
-                                            right: 0,
-                                            top: 0,
-                                            bottom: 0),
-                                        height: 60,
-                                        decoration: BoxDecoration(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(6))),
-                                        child: ElevatedButton(
-                                          onPressed: () async {
-                                            controller.secureStorage
-                                                .writeSecureData(
-                                                    AllStringConst.AppColor,
-                                                    Get.find<MController>()
-                                                        .appcolor
-                                                        .value);
+                                        //
+                                        // Container(
+                                        //   width: MediaQuery.of(context)
+                                        //           .size
+                                        //           .width *
+                                        //       .7,
+                                        //   padding: const EdgeInsets.only(
+                                        //       left: 0,
+                                        //       right: 0,
+                                        //       top: 0,
+                                        //       bottom: 0),
+                                        //   height: 60,
+                                        //   decoration: BoxDecoration(
+                                        //       color: Theme.of(context)
+                                        //           .colorScheme
+                                        //           .primary,
+                                        //       borderRadius:
+                                        //           BorderRadius.all(
+                                        //               Radius.circular(6))),
+                                        //   child: ElevatedButton(
+                                        //     onPressed: () async {
+                                        //       controller.secureStorage
+                                        //           .writeSecureData(
+                                        //               AllStringConst
+                                        //                   .BaseUrl,
+                                        //               controller
+                                        //                   .baseUrl.text);
+                                        //
+                                        //       // final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+                                        //       // final SharedPreferences prefs = await _prefs;
+                                        //       // prefs.setString(AllStringConst.BaseUrl, controller.baseUrl.text);
+                                        //
+                                        //       final settings = SettingItem(
+                                        //           baseUrl: controller
+                                        //               .baseUrl.text,
+                                        //           language: "ar",
+                                        //           color: "");
+                                        //       await saveSettingsIntoDatabase(
+                                        //           settings);
+                                        //
+                                        //       // Restart.restartApp();
+                                        //       // Phoenix.rebirth(context);
+                                        //       Navigator.of(context).pop();
+                                        //       // RestartWidget.restartApp(
+                                        //       //     context);
+                                        //     },
+                                        //     child: Text(
+                                        //       "Save Settings".tr,
+                                        //       style: Theme.of(context)
+                                        //           .textTheme
+                                        //           .headline2!
+                                        //           .copyWith(
+                                        //               color: Colors.white),
+                                        //       textAlign: TextAlign.center,
+                                        //     ),
+                                        //   ),
+                                        // )
+                                      ]),
+                                    ),
+                                    actions: <Widget>[
+                                      FlatButton(
+                                        onPressed: () async {
+                                          controller.secureStorage
+                                              .writeSecureData(
+                                              AllStringConst
+                                                  .BaseUrl,
+                                              controller
+                                                  .baseUrl.text);
 
-                                            final settingObj = SettingItem(
-                                                baseUrl:
-                                                    controller.baseUrl.text,
-                                                language: "ar",
-                                                color: pickerColor.toHex());
-                                            List<SettingItem> settingItems =
-                                                await CtsSettingsDatabase
-                                                    .instance
-                                                    .readAllNotes();
-                                            if (settingItems.isEmpty) {
-                                              // final settings = SettingItem(
-                                              //   baseUrl: controller.baseUrl.text,
-                                              //   language: controller.baseUrl.text,
-                                              // );
-                                              await CtsSettingsDatabase.instance
-                                                  .create(settingObj);
-                                            } else {
-                                              var settingItem = settingItems[0];
-                                              settingItem = settingItem.copy(
-                                                // baseUrl:  settingObj.baseUrl,
-                                                // language: settingObj.language,
-                                                color: settingObj.color,
-                                              );
-                                              await CtsSettingsDatabase.instance
-                                                  .update(settingItem);
-                                            }
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Text(
-                                            "save".tr,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline2!
-                                                .copyWith(color: Colors.white),
-                                            textAlign: TextAlign.center,
-                                          ),
+                                                // final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+                                                // final SharedPreferences prefs = await _prefs;
+                                                // prefs.setString(AllStringConst.BaseUrl, controller.baseUrl.text);
+
+                                          final settings = SettingItem(
+                                              baseUrl: controller
+                                                  .baseUrl.text,
+                                              language: "ar",
+                                              color: "");
+                                          await saveSettingsIntoDatabase(
+                                              settings);
+
+                                          // Restart.restartApp();
+                                          // Phoenix.rebirth(context);
+                                          Navigator.of(context).pop();
+                                          // RestartWidget.restartApp(
+                                          //     context);
+
+                                        },
+                                        child: Text(
+                                          "save".tr,
+                                          style: TextStyle(
+                                              fontSize: 20, color: Theme
+                                              .of(context)
+                                              .colorScheme
+                                              .primary),
                                         ),
-                                      )
-                                    ]),
-                                  ));
-                        },
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(6.0),
-                          ),
-                        ),
-                        child: Image(
-                          image: AssetImage(
-                            'assets/images/palette.png',
-                          ),
-                          fit: BoxFit.contain,
-                          width: 25,
-                          height: 25,
+                                      ),
+                                    ]
+                                ));
+                      },
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(6.0),
                         ),
                       ),
+                      child: Icon(
+                        Icons.settings,
+                        color: Colors.white,
+                      )
+                    // Image(
+                    //   image: AssetImage(
+                    //     'assets/images/palette.png',
+                    //   ),
+                    //   fit: BoxFit.contain,
+                    //   width: 25,
+                    //   height: 25,
+                    // ),
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 0),
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: FloatingActionButton(
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) =>
+                            AlertDialog(
+                                title: Text("selectAppColor".tr,
+                                    style: TextStyle(fontSize: 20)),
+                                content: Container(
+                                    height: size.height / 2,
+                                    width: size.width / 1.5,
+                                    child: Column(children: [
+                                      buildColorPicker(),
+                                      // SizedBox(
+                                      //   height: 30,
+                                      // ),
+                                      // Container(
+                                      //   width:
+                                      //       MediaQuery.of(context).size.width *
+                                      //           .7,
+                                      //   padding: const EdgeInsets.only(
+                                      //       left: 0,
+                                      //       right: 0,
+                                      //       top: 0,
+                                      //       bottom: 0),
+                                      //   height: 60,
+                                      //   decoration: BoxDecoration(
+                                      //       color: Theme.of(context)
+                                      //           .colorScheme
+                                      //           .primary,
+                                      //       borderRadius:
+                                      //           const BorderRadius.all(
+                                      //               Radius.circular(6))),
+                                      //   child: ElevatedButton(
+                                      //     onPressed: () async {
+                                      //       controller.secureStorage
+                                      //           .writeSecureData(
+                                      //               AllStringConst.AppColor,
+                                      //               Get.find<MController>()
+                                      //                   .appcolor
+                                      //                   .value);
+                                      //
+                                      //       final settingObj = SettingItem(
+                                      //           baseUrl:
+                                      //               controller.baseUrl.text,
+                                      //           language: "ar",
+                                      //           color: pickerColor.toHex());
+                                      //       List<SettingItem> settingItems =
+                                      //           await CtsSettingsDatabase
+                                      //               .instance
+                                      //               .readAllNotes();
+                                      //       if (settingItems.isEmpty) {
+                                      //         // final settings = SettingItem(
+                                      //         //   baseUrl: controller.baseUrl.text,
+                                      //         //   language: controller.baseUrl.text,
+                                      //         // );
+                                      //         await CtsSettingsDatabase.instance
+                                      //             .create(settingObj);
+                                      //       } else {
+                                      //         var settingItem = settingItems[0];
+                                      //         settingItem = settingItem.copy(
+                                      //           // baseUrl:  settingObj.baseUrl,
+                                      //           // language: settingObj.language,
+                                      //           color: settingObj.color,
+                                      //         );
+                                      //         await CtsSettingsDatabase.instance
+                                      //             .update(settingItem);
+                                      //       }
+                                      //       Navigator.of(context).pop();
+                                      //     },
+                                      //     child: Text(
+                                      //       "save".tr,
+                                      //       style: Theme.of(context)
+                                      //           .textTheme
+                                      //           .headline2!
+                                      //           .copyWith(color: Colors.white),
+                                      //       textAlign: TextAlign.center,
+                                      //     ),
+                                      //   ),
+                                      // )
+                                    ])),
+                                actions: <Widget>[
+                                  FlatButton(
+                                    onPressed: () async {
+                                      controller.secureStorage
+                                          .writeSecureData(
+                                          AllStringConst.AppColor,
+                                          Get
+                                              .find<MController>()
+                                              .appcolor
+                                              .value);
+                                      final settingObj = SettingItem(
+                                          baseUrl:
+                                          controller.baseUrl.text,
+                                          language: "ar",
+                                          color: pickerColor.toHex());
+                                      List<SettingItem> settingItems =
+                                      await CtsSettingsDatabase
+                                          .instance
+                                          .readAllNotes();
+                                      if (settingItems.isEmpty) {
+                                        // final settings = SettingItem(
+                                        //   baseUrl: controller.baseUrl.text,
+                                        //   language: controller.baseUrl.text,
+                                        // );
+                                        await CtsSettingsDatabase.instance
+                                            .create(settingObj);
+                                      } else {
+                                        var settingItem = settingItems[0];
+                                        settingItem = settingItem.copy(
+                                          // baseUrl:  settingObj.baseUrl,
+                                          // language: settingObj.language,
+                                          color: settingObj.color,
+                                        );
+                                        await CtsSettingsDatabase.instance
+                                            .update(settingItem);
+                                      }
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text(
+                                      "save".tr,
+                                      style: TextStyle(
+                                          fontSize: 20, color: Theme
+                                          .of(context)
+                                          .colorScheme
+                                          .primary),
+                                    ),
+                                  ),
+                                ]
+                            ));
+                  },
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(6.0),
                     ),
                   ),
-                  SizedBox(
+                  child: Image(
+                    image: AssetImage(
+                      'assets/images/palette.png',
+                    ),
+                    fit: BoxFit.contain,
                     width: 25,
+                    height: 25,
                   ),
-                ],
-              )
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 25,
+            ),
+          ],
+        )
             : null,
         floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       ),

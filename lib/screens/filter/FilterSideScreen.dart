@@ -401,7 +401,7 @@ class _ListView3State extends State<ListView3> {
           Expanded(
             child: Container(
               padding: const EdgeInsets.all(10),
-              child: RaisedButton(
+              child: ElevatedButton(
                 onPressed: () {
                   inboxController.applyFilter();
                       Navigator.of(context).pop();
@@ -416,15 +416,18 @@ class _ListView3State extends State<ListView3> {
           Expanded(
             child: Container(
               padding: const EdgeInsets.all(10),
-              child: RaisedButton(
+              child: ElevatedButton(
                 child: Text("الغاء"),
-                color: Colors.red,
+                style: ElevatedButton.styleFrom(
+                  // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
+                  padding: const EdgeInsets.all(10),
+                  primary: Colors.red,
+                ),
                 onPressed: () {
                   // inboxController.showFilterScreen(!inboxController.showHideFilterScreen);
                       Navigator.of(context).pop();
 
                 },
-                padding: const EdgeInsets.all(10),
               ),
             ),
           )

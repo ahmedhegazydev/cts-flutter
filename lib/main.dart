@@ -12,6 +12,7 @@ import 'package:get_storage/get_storage.dart';
 
 import 'Translation/Trans.dart';
 import 'bindings/bindings.dart';
+import 'bindings/busket_bindings.dart';
 import 'bindings/document_controller_binding.dart';
 import 'bindings/inbox_bindings.dart';
 import 'bindings/landing_page_bindings.dart';
@@ -217,6 +218,7 @@ class MyApp extends StatelessWidget {
           GetPage(
               name: "/MyPocketsScreen",
               page: () => MyPocketsScreen(),
+              binding: BasketPageBinding(),
               transition: Transition.rightToLeft)
         ], //initialRoute:"/" ,
         // home: const MyHomePage(title: 'Flutter Demo Home Page'),

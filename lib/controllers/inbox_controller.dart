@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 import 'dart:ui' as ui;
 
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
@@ -30,6 +31,7 @@ import '../services/apis/multiple_transfers_api.dart';
 import '../services/json_model/basket/add_documents_to_basket_request.dart';
 import '../services/json_model/basket/add_edit_basket_flag_model.dart';
 import '../services/json_model/basket/fetch_basket_list_model.dart';
+import '../services/json_model/basket/get_basket_inbox_model.dart';
 import '../services/json_model/basket/remove_basket_request_model.dart';
 import '../services/json_model/can_open_document_model.dart';
 import '../services/json_model/default_on_success_result.dart';
@@ -53,9 +55,45 @@ import 'landing_page_controller.dart';
 class InboxController extends GetxController {
   //ده عشان لو اختار من الشاشه بره كل الصادر و الوارد نخفي شاشاه التاب الي فيها صادر ووارد
   bool isAllOrNot = false;
+  List<UserFilter>userFilter=[];
+  UserFilter? selectUserFilter;
+updateselectUserFilter(UserFilter? data){
+  selectUserFilter=data;
+   filteredFormUserIdCorrespondences = allCorrespondences
+      .where((content) => content.fromUserId == data?.userId)
+      .toList();
+if(filteredFormUserIdCorrespondences.isNotEmpty){
+  // allCorrespondences.clear();
+  allCorrespondences = (filteredFormUserIdCorrespondences);
+  if(unread){
+    allCorrespondences = allCorrespondences
+        .where((content) => content.isNew == true)
+        .toList();
+  }
+  if(isUrgentClicked){
+    var filteredUrgentPriorities = correspondencesModel?.priorities
+        ?.where((content) => content.Value == 3)
+        .toList();
+    allCorrespondences = allCorrespondences
+        .where((content) => content.priorityId == filteredUrgentPriorities![0].Value.toString())
+        .toList();
+  }
+}else{
+  allCorrespondences  = filteredFormUserIdCorrespondencesTemp;
+  if(unread){
+    allCorrespondences.addAll(allCorrespondencesTempFilterUnread);
+  }
+  if(isUrgentClicked){
+    allCorrespondences.addAll(filteredUrgentCorrespondencesTemp);
+  }
+}
+  update();
+}
+
+
 
   String? purposeId;
-
+bool isUrgentClicked = false;
   TextEditingController textEditingControllerFilter = TextEditingController();
   BuildContext? context;
   FetchBasketListModel? fetchBasketListModel;
@@ -65,6 +103,37 @@ class InboxController extends GetxController {
   int? nodeId = 0;
   setOldIndex(int oldIndex) {
     this.oldIndex = oldIndex;
+    update();
+  }
+
+  setIsUrgentFilterClicked(bool isUrgentClicked) {
+    this.isUrgentClicked = isUrgentClicked;
+    var filteredUrgentPriorities = correspondencesModel?.priorities
+        ?.where((content) => content.Value == 3)
+        .toList();
+    if(filteredUrgentPriorities?.isNotEmpty == true){
+
+      if(isUrgentClicked == true){
+        if(unread == true){
+          filteredUrgentCorrespondences = filteredAllCorrespondencesByUnread
+              .where((content) => content.priorityId == filteredUrgentPriorities![0].Value.toString())
+              .toList();
+        }else{
+          filteredUrgentCorrespondences = allCorrespondences
+              .where((content) => content.priorityId == filteredUrgentPriorities![0].Value.toString())
+              .toList();
+        }
+        allCorrespondences = filteredUrgentCorrespondences;
+      }else{
+        if(unread == true){
+          allCorrespondences = filteredAllCorrespondencesByUnread
+              .where((content) => content.priorityId == filteredUrgentPriorities![0].Value.toString())
+              .toList();
+          // allCorrespondences = filteredUrgentCorrespondences;
+        }else
+        allCorrespondences = filteredUrgentCorrespondencesTemp;
+      }
+    }
     update();
   }
 
@@ -181,11 +250,20 @@ class InboxController extends GetxController {
   bool showHideMyFavListScreen = false;
   bool showHideCreateNewBasketScreen = false;
 
-  GetCorrespondencesAllModel? getCorrespondencesAllModel;
+// GetCorrespondencesAllModel? getCorrespondencesAllModel;
   CorrespondencesModel? correspondencesModel;
 
   // List<Correspondences> correspondences = [];
   List<Correspondences> allCorrespondences = [];
+
+  List<Correspondences> allCorrespondencesTempFilterUnread = [];
+  List<Correspondences> filteredAllCorrespondencesByUnread = [];
+
+  List<Correspondences> filteredUrgentCorrespondencesTemp = [];
+  List<Correspondences> filteredUrgentCorrespondences = [];
+
+  List<Correspondences> filteredFormUserIdCorrespondencesTemp = [];
+  List<Correspondences> filteredFormUserIdCorrespondences = [];
 
   final SecureStorage secureStorage = SecureStorage();
 
@@ -250,8 +328,29 @@ class InboxController extends GetxController {
     // listOfUser(0);
   }
 
+
   updateUnread(v) {
     unread = v;
+    if(v == true){
+      if(isUrgentClicked){
+        filteredAllCorrespondencesByUnread = filteredUrgentCorrespondences
+            .where((content) => content.isNew == v)
+            .toList();
+      }else{
+        filteredAllCorrespondencesByUnread = allCorrespondences
+            .where((content) => content.isNew == v)
+            .toList();
+      }
+      allCorrespondences = filteredAllCorrespondencesByUnread;
+    }else{
+      if(isUrgentClicked){
+        allCorrespondences = filteredUrgentCorrespondences
+            .where((content) => content.isNew == v)
+            .toList();
+        // allCorrespondences =  allCorrespondencesTempFilterUnread;
+      }else
+      allCorrespondences =  allCorrespondencesTempFilterUnread;
+    }
     update();
   }
 
@@ -411,12 +510,38 @@ class InboxController extends GetxController {
     print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
     _correspondencesApi.getData().then((value) {
       correspondencesModel = value as CorrespondencesModel;
+
+      correspondencesModel?.inbox?.correspondences?.forEach((element) {
+        UserFilter user=      UserFilter(userId: element.fromUserId!, name: element.fromUser!);
+
+        if(!userFilter.contains(user)){
+          userFilter.add(user);
+        }
+
+      });
+
       if (addToList) {
         allCorrespondences
             .addAll(correspondencesModel?.inbox?.correspondences ?? []);
       } else {
         allCorrespondences = correspondencesModel?.inbox?.correspondences ?? [];
       }
+
+      //For filter by urgent check box
+      filteredUrgentCorrespondencesTemp = allCorrespondences;
+
+      //For filter by form user id check box
+      filteredFormUserIdCorrespondencesTemp = allCorrespondences;
+
+      //For filter by unRead check box
+      allCorrespondencesTempFilterUnread = allCorrespondences;
+      if(unread == true){
+        var filtered = allCorrespondences
+            .where((content) => content.isNew == true)
+            .toList();
+        allCorrespondences = filtered;
+      }
+
       int listLength =
           correspondencesModel?.inbox?.correspondences?.length ?? 0;
       var v = correspondencesModel?.toJson();
@@ -438,6 +563,7 @@ class InboxController extends GetxController {
       required int inboxId,
       int pageSize = 20,
       bool showThumbnails = false}) {
+    userFilter.clear();
     print("theinboxId=> $inboxId =================  theindex=>   $index  ");
     final GetCorrespondencesAllAPI _getCorrespondencesAllAPI =
         GetCorrespondencesAllAPI(context);
@@ -451,24 +577,34 @@ class InboxController extends GetxController {
     _getCorrespondencesAllAPI.getData().then((value) {
       // Navigator.pop(context);
       print("i get alll _getCorrespondencesAllAPI");
-      getCorrespondencesAllModel = value as GetCorrespondencesAllModel;
+      //getCorrespondencesAllModel = value as GetCorrespondencesAllModel;
+      correspondencesModel =value as CorrespondencesModel;
+      correspondencesModel?.inbox?.correspondences?.forEach((element) {
+        UserFilter user=      UserFilter(userId: element.fromUserId!, name: element.fromUser!);
+if(!userFilter.contains(user)){
+
+  userFilter.add(user);
+}
+
+      });
+
       if (addToList) {
         allCorrespondences
-            .addAll(getCorrespondencesAllModel?.inbox?.correspondences ?? []);
+            .addAll(correspondencesModel?.inbox?.correspondences ?? []);
       } else {
         allCorrespondences =
-            getCorrespondencesAllModel?.inbox?.correspondences ?? [];
+            correspondencesModel?.inbox?.correspondences ?? [];
       }
 
       int listLength =
-          getCorrespondencesAllModel?.inbox?.correspondences?.length ?? 0;
-      var v = getCorrespondencesAllModel?.toJson();
+          correspondencesModel?.inbox?.correspondences?.length ?? 0;
+      var v = correspondencesModel?.toJson();
       if (listLength < pageSize - 1) {
         haveMoreData = false;
       }
       update();
       // log(v.length);
-      print(getCorrespondencesAllModel?.inbox?.correspondences?.length);
+      print(correspondencesModel?.inbox?.correspondences?.length);
       getData = false;
       update();
     }).onError((error, stackTrace) {
@@ -725,7 +861,7 @@ class InboxController extends GetxController {
       throw RecordingPermissionException("storage Permission");
     }
     if (statsmanageExternalStorage != PermissionStatus.granted) {
-      throw RecordingPermissionException("manageExternalStorage Permission");
+      await Permission.manageExternalStorage.request();
     }
 
     audioRecorder = FlutterSoundRecorder();
@@ -967,6 +1103,11 @@ class InboxController extends GetxController {
   }
 
 //=====================================================================================
+
+
+  List<Recipients> listfavoriteUser=[];
+  Recipients? selectlistfavoriteUser;
+
   //Favorites user
   ListFavoriteRecipientsResponse? favoriteRecipientsResponse;
 
@@ -979,6 +1120,7 @@ class InboxController extends GetxController {
       Navigator.pop(context);
       if (value != null) {
         favoriteRecipientsResponse = value as ListFavoriteRecipientsResponse;
+        listfavoriteUser=favoriteRecipientsResponse?.recipients??[];
       } else {
         Get.snackbar("", "err".tr);
       }
@@ -1047,4 +1189,54 @@ class InboxController extends GetxController {
       Get.snackbar("", "nofiletoopen".tr);
     }
   }
+
+
+  getBasketInbox( {
+    required context, required int id,int pageSize=20,int pageNumber=0}){
+    GetBasketInboxApi getBasketInboxApi=GetBasketInboxApi(context);
+
+
+
+    getBasketInboxApi.data="token=${secureStorage.token()}&basketId=$id&pageNumber=$pageNumber&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+
+
+    getBasketInboxApi.getData().then((value) {
+      if(value!=null){
+
+        GetBasketInboxModel       getBasketInboxModel=value as GetBasketInboxModel;
+
+
+        allCorrespondences
+            .addAll(getBasketInboxModel?.correspondences?? []);
+        if((getBasketInboxModel?.correspondences?.length??0)<pageSize){
+          haveMoreData=false;
+        }
+
+      }else{
+        Get.snackbar("", "err".tr);
+      }
+
+      update();
+      // print(a.toJson());
+    });
+  }
+
+  void clearFilter() {
+    unread = false;
+    isUrgentClicked = false;
+    allCorrespondences = filteredUrgentCorrespondencesTemp;
+    //or
+    // allCorrespondences = filteredFormUserIdCorrespondencesTemp;
+    update();
+  }
+}
+class UserFilter  extends Equatable{
+  int userId;
+  String name;
+
+  UserFilter({required this.userId,required this.name});
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [userId,name];
 }

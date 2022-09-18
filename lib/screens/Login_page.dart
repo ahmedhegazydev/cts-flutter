@@ -755,6 +755,38 @@ class LoginPage extends GetWidget<LoginController> {
                                 ),
                               ),
                             ),
+                            SizedBox(height: 50),
+                            Container(
+                              // color: Colors.red,
+                              //  width: double.infinity,
+                              padding: const EdgeInsets.all(0),
+                              child: Text(
+                                "appTitle".tr,
+                                // textAlign: TextAlign.center,
+                                textDirection: Get.locale?.languageCode == "en"
+                                    ? TextDirection.ltr
+                                    : TextDirection.rtl,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline1!
+                                    .copyWith(),
+                              ),
+                            ),
+                            SizedBox(height: 50),
+                            Container(
+                              // color: Colors.red,
+                              //  width: double.infinity,
+                              padding: const EdgeInsets.all(0),
+                              child: Image.asset(
+                                // width: orientation == Orientation.landscape
+                                //     ? size.width * .348
+                                //     : size.width * .51,
+                                'assets/images/logo-new.png',
+                                height: 100,
+
+                                //
+                              ),
+                            ),
                           ],
                         )),
                     Spacer(),

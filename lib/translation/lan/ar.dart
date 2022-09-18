@@ -1,5 +1,5 @@
 const Map<String, String> ar = {
-  "appTitle": "نظام تتبع المراسلات",
+  "appTitle": "نظام سير المكتبات",
   "name": "الإسم",
   "password": "كلمة المرور",
   "copyrights": "وزارة الخارجية © ",
@@ -136,5 +136,6 @@ const Map<String, String> ar = {
   "EndedSuccess": "تم الانهاء بنجاح",
   "AddToBasketSucceess": "تم الاضافه الي المحفظه بنجاح",
   "selectAppColor": "اختر لون التطبيق",
-  "selectAppLanguage": "اختر لغة التطبيق"
+  "selectAppLanguage": "اختر لغة التطبيق",
+  "chooseaperson": "اختر شخصاً"
 };

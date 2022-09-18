@@ -49,8 +49,8 @@ class _BasketListTileState extends State<BasketListTile> {
 
 class LandingPage extends GetWidget<LandingPageController> {
   SecureStorage secureStorage = SecureStorage();
-  Color pickerColor = Color(0x800000);
-  Color currentColor = Color(0x800000);
+  Color pickerColor = Color(0x0d2b40);
+  Color currentColor = Color(0x0d2b40);
   InboxController inboxController = Get.put<InboxController>(InboxController());
 
   LoginController loginController = Get.put<LoginController>(LoginController());
@@ -206,7 +206,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                 children: [
                   Row(
                     children: [
-                      Spacer(),
+                      // Spacer(),
                       // controller.isSavingOrder
                       //     ? IconButton(
                       //         icon: Icon(Icons.check), onPressed: () {})
@@ -241,53 +241,73 @@ class LandingPage extends GetWidget<LandingPageController> {
                                     print(basket.iD);
                                   }
                                 : null,
-                            onTap: !(basket.canBeReOrder ?? false)
-                                ? () {
-                                    print(basket.iD);
-                                    // Get.find<BasketController>().getBasketInbox(
-                                    //     id: inboxController
-                                    //         .fetchBasketListModel!
-                                    //         .baskets![pos]
-                                    //         .iD!,
-                                    //     pageSize: 20,
-                                    //     pageNumber: 0, context: null);
-                                  }
-                                : null,
+                            onTap:
+
+                                // !(basket.canBeReOrder ?? false)
+                                //     ?
+                                () {
+                              print(
+                                  "basket.iDbasket.iDbasket.iDbasket.iDbasket.iD=>${basket.iD}");
+                              // Get.find<BasketController>().getBasketInbox(
+                              //     id: inboxController
+                              //         .fetchBasketListModel!
+                              //         .baskets![pos]
+                              //         .iD!,
+                              //     pageSize: 20,
+                              //     pageNumber: 0, context: null);
+                            },
+                            //: null,
                             enabled: !(basket.canBeReOrder ?? false),
                             enableFeedback: !(basket.canBeReOrder ?? false),
-                            title: Card(
-                              elevation: 10,
-                              color: basket.color?.toColor(),
-                              child: Column(children: [
-                                Text(basket.name ?? ""),
-                                Text(basket.nameAr ?? ""),
-                                // Text( "color :${inboxController
-                                //     .fetchBasketListModel
-                                //     ?.baskets?[pos].color}",style: TextStyle( color:  HexColor(inboxController
-                                //     .fetchBasketListModel
-                                //     ?.baskets?[pos].color??"#000000"))),
+                            title: GestureDetector(
+                              onTap: () {
+                                //  controller.getBasketInbox(context: context, id: basket.iD!);
 
-                                GestureDetector(
-                                  onTap: () {
-                                    //هنا هنعمل دليت
-                                    _showMyDialogDeleteConfirm(context, basket);
+                                Get.find<InboxController>().isAllOrNot = true;
+                                Get.find<InboxController>().getBasketInbox(
+                                  context: context,
+                                  id: basket.iD!,
+                                );
+                                Get.find<InboxController>().selectUserFilter =
+                                    null;
+                                Get.find<InboxController>().userFilter.clear();
+                                Get.toNamed("/InboxPage");
+                              },
+                              child: Card(
+                                elevation: 10,
+                                color: basket.color?.toColor(),
+                                child: Column(children: [
+                                  Text(basket.name ?? ""),
+                                  Text(basket.nameAr ?? ""),
+                                  // Text( "color :${inboxController
+                                  //     .fetchBasketListModel
+                                  //     ?.baskets?[pos].color}",style: TextStyle( color:  HexColor(inboxController
+                                  //     .fetchBasketListModel
+                                  //     ?.baskets?[pos].color??"#000000"))),
 
-                                    // showTopSnackBar(
-                                    // icon: Container(),
-                                    //   context,
-                                    //   CustomSnackBar.success(
-                                    // backgroundColor: Colors.lightGreen,
-                                    //     message:
-                                    //     "Good job, basket have been deleted",
-                                    //   ),
-                                    // );
-                                  },
-                                  // child:  Icon(Icons.delete, color: (basket.canBeReOrder ?? false) ? Colors.black: Colors.transparent,) ,
-                                  child: (basket.canBeReOrder ?? false)
-                                      ? Icon(Icons.delete)
-                                      : Container(),
-                                ),
-                              ]),
+                                  GestureDetector(
+                                    onTap: () {
+                                      //هنا هنعمل دليت
+                                      _showMyDialogDeleteConfirm(
+                                          context, basket);
+
+                                      // showTopSnackBar(
+                                      // icon: Container(),
+                                      //   context,
+                                      //   CustomSnackBar.success(
+                                      // backgroundColor: Colors.lightGreen,
+                                      //     message:
+                                      //     "Good job, basket have been deleted",
+                                      //   ),
+                                      // );
+                                    },
+                                    // child:  Icon(Icons.delete, color: (basket.canBeReOrder ?? false) ? Colors.black: Colors.transparent,) ,
+                                    child: (basket.canBeReOrder ?? false)
+                                        ? Icon(Icons.delete)
+                                        : Container(),
+                                  ),
+                                ]),
+                              ),
                             ),
                           )
                       ],
@@ -415,7 +435,7 @@ class LandingPage extends GetWidget<LandingPageController> {
               ),
         ),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             onPressed: () async {
               Navigator.of(ctx).pop();
             },
@@ -430,7 +450,7 @@ class LandingPage extends GetWidget<LandingPageController> {
           //       },
           //       child: Text("Save Order"),
           //     )),
-          FlatButton(
+          TextButton(
             onPressed: () async {
               //هنا هنكريت الباسكت
 
@@ -599,7 +619,7 @@ class LandingPage extends GetWidget<LandingPageController> {
             Container(
               padding: EdgeInsets.only(right: 10, left: 10),
               width: MediaQuery.of(context).size.width * .3,
-              child: RaisedButton(
+              child: ElevatedButton(
                   onPressed: () {
                     // inboxController.applyFilter();
                     // Navigator.pop(context);
@@ -3252,21 +3272,43 @@ class LandingPage extends GetWidget<LandingPageController> {
             // color: Colors.green,
             child: Column(
               children: [
-                SizedBox(
-                  height: 30,
-                ),
-                Flexible(
-                  flex: 3,
-                  child: Container(
-                    color: Colors.transparent,
-                    width: double.infinity,
-                    // height: 100,
-                    child: Text(
-                      "appTitle".tr,
-                      style: Theme.of(contex).textTheme.headline1,
-                      textAlign: TextAlign.start,
+                SizedBox(height: 30),
+                Row(
+                  children: [
+                    Flexible(
+                      flex: 3,
+                      child: Container(
+                        // color: Colors.red,
+                        //  width: double.infinity,
+                        padding: const EdgeInsets.all(0),
+                        child: Image.asset(
+                          // width: orientation == Orientation.landscape
+                          //     ? size.width * .348
+                          //     : size.width * .51,
+                          'assets/images/logo-new.png',
+                          height: 30,
+
+                          //
+                        ),
+                      ),
                     ),
-                  ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Flexible(
+                      flex: 3,
+                      child: Container(
+                        color: Colors.transparent,
+                        width: double.infinity,
+                        // height: 100,
+                        child: Text(
+                          "appTitle".tr,
+                          style: Theme.of(contex).textTheme.headline1,
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(
                   height: 15,
@@ -3694,6 +3736,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       ),
                       child: InkWell(
                         onTap: () {
+                          Get.find<InboxController>().updateUnread(true);
                           openInbox(boxid: 0, context: context, nodeId: 20097);
                         },
                         child: Container(
@@ -4498,7 +4541,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                         Get.find<InboxController>().isAllOrNot = true;
                         Get.find<InboxController>().getAllCorrespondencesData(
                             context: context, inboxId: 1);
-
+                        Get.find<InboxController>().selectUserFilter = null;
+                        Get.find<InboxController>().userFilter.clear();
                         Get.toNamed("/InboxPage");
                       },
                       child: _buildOtherFoldersRows(
@@ -4520,6 +4564,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                         Get.find<InboxController>().isAllOrNot = true;
                         Get.find<InboxController>().getAllCorrespondencesData(
                             context: context, inboxId: 5);
+                        Get.find<InboxController>().selectUserFilter = null;
+                        Get.find<InboxController>().userFilter.clear();
                         Get.toNamed("/InboxPage");
                       },
                       child: _buildOtherFoldersRows(
@@ -4718,7 +4764,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                         Get.find<InboxController>().isAllOrNot = true;
                         Get.find<InboxController>().getAllCorrespondencesData(
                             context: context, inboxId: 1);
-
+                        Get.find<InboxController>().selectUserFilter = null;
+                        Get.find<InboxController>().userFilter.clear();
                         Get.toNamed("/InboxPage");
                       },
                       child: _buildOtherFoldersRows(
@@ -4741,6 +4788,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                         Get.find<InboxController>().isAllOrNot = true;
                         Get.find<InboxController>().getAllCorrespondencesData(
                             context: context, inboxId: 5);
+                        Get.find<InboxController>().selectUserFilter = null;
+                        Get.find<InboxController>().userFilter.clear();
                         Get.toNamed("/InboxPage");
                       },
                       child: _buildOtherFoldersRows(
@@ -4986,7 +5035,9 @@ class LandingPage extends GetWidget<LandingPageController> {
     Get.find<InboxController>().nodeId = nodeId;
     Get.find<InboxController>().context = context;
     Get.find<InboxController>().getAllData(context: context);
+    Get.find<InboxController>().selectUserFilter = null;
 
+    Get.find<InboxController>().userFilter.clear();
     Get.toNamed("/InboxPage");
     // Navigator.push(
     //   context,

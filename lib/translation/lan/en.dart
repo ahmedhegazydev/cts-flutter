@@ -139,6 +139,7 @@ const Map<String, String> en = {
   "addsing": "Add your signature here",
   "EndedSuccess": "Completed successfully",
   "AddToBasketSucceess": "The correspondence add to basket successfully",
+  "chooseaperson":"choose a person",
   "selectAppColor": "Select application color",
   "selectAppLanguage": "Select Application language"
 };

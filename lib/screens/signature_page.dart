@@ -1,15 +1,18 @@
-import 'dart:convert';
-import 'dart:typed_data';
-
+import 'package:cached_memory_image/cached_memory_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:signature/signature.dart';
 
 import '../controllers/signature_Controller.dart';
-import '../services/json_model/signature_Info_model.dart';
 import '../utility/all_string_const.dart';
 import '../utility/utilitie.dart';
-import '../widgets/custom_button.dart';
+
+import 'package:cached_memory_image/cached_image_base64_manager.dart';
+import 'package:cached_memory_image/cached_image_manager.dart';
+import 'package:cached_memory_image/cached_memory_image.dart';
+import 'package:cached_memory_image/provider/cached_memory_image_placeholder_provider.dart';
+import 'package:cached_memory_image/provider/cached_memory_image_provider.dart';
+import 'package:flutter/material.dart';
 
 class SignaturePage extends GetView<SignaturePageController> {
   const SignaturePage({Key? key}) : super(key: key);
@@ -112,13 +115,19 @@ class SignaturePage extends GetView<SignaturePageController> {
                     ),
                     GetBuilder<SignaturePageController>(builder: (logic) {
                       return Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Image.memory(
-                          dataFromBase64String(controller.secureStorage
-                              .readSecureData(AllStringConst.Signature)),
-                          height: 100,
-                        ),
-                      );
+                          padding: const EdgeInsets.all(20.0),
+                          // child: Image.memory(
+                          //   dataFromBase64String(controller.secureStorage
+                          //       .readSecureData(AllStringConst.Signature)),
+                          //   height: 100,
+                          // ),
+                          child: CachedMemoryImage(
+                            uniqueKey: "defaultsignature",
+                            errorWidget: const Text('Error'),
+                            bytes: dataFromBase64String(controller.secureStorage
+                                .readSecureData(AllStringConst.Signature)),
+                            placeholder: const CircularProgressIndicator(),
+                          ));
                     }),
                   ],
                 ),
@@ -147,16 +156,36 @@ class SignaturePage extends GetView<SignaturePageController> {
                             assignId: true,
                             builder: (logic) {
                               return GridView.builder(
+                                physics: ScrollPhysics(),
                                 itemCount: controller.multiSignatures.length,
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 1,
-                                        crossAxisSpacing: 4.0,
-                                        mainAxisSpacing: 4.0),
+                                  crossAxisCount: 3,
+                                  // crossAxisSpacing: 4.0,
+                                  // mainAxisSpacing: 4.0
+                                ),
                                 itemBuilder: (BuildContext context, int index) {
-                                  return Image.memory(dataFromBase64String(
-                                      controller
-                                          .multiSignatures[index].signature));
+                                  return Container(
+                                    // child: Image.memory(
+                                    //     dataFromBase64String(
+                                    //     controller
+                                    //         .multiSignatures[index].signature),
+                                    // ),
+                                    // child: CachedNetworkImage(
+                                    //   imageUrl: controller.multiSignatures[index].signature ?? "",
+                                    //   progressIndicatorBuilder: (context, url, downloadProgress) =>
+                                    //       CircularProgressIndicator(value: downloadProgress.progress),
+                                    //   errorWidget: (context, url, error) => Icon(Icons.error),
+                                    // ),
+                                    child: CachedMemoryImage(
+                                      uniqueKey: index.toString(),
+                                      errorWidget: const Text('Error'),
+                                      bytes: dataFromBase64String(controller
+                                          .multiSignatures[index].signature),
+                                      placeholder:
+                                          const CircularProgressIndicator(),
+                                    ),
+                                  );
                                 },
                               );
                             })

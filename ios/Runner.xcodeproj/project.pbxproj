@@ -412,7 +412,7 @@
 					"\"webview_flutter_wkwebview\"",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.intalio.newcmsdevtest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.intalio.newcmsdevtests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -592,7 +592,7 @@
 					"\"webview_flutter_wkwebview\"",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.intalio.newcmsdevtest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.intalio.newcmsdevtests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -666,7 +666,7 @@
 					"\"webview_flutter_wkwebview\"",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.intalio.newcmsdevtest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.intalio.newcmsdevtests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";

@@ -648,7 +648,7 @@ class LoginPage extends GetWidget<LoginController> {
                                     .copyWith(),
                               ),
                             ),
-                            SizedBox(height: 50),
+                            SizedBox(height: 20),
                             Container(
                               // color: Colors.red,
                               //  width: double.infinity,

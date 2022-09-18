@@ -3179,7 +3179,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                           // width: orientation == Orientation.landscape
                           //     ? size.width * .348
                           //     : size.width * .51,
-                          'assets/images/logo-new.png',
+                          'assets/images/Logo_qar.png',
                           height: 30,
 
                           //

@@ -37,6 +37,7 @@ dependencies:
   flutter_typeahead: ^4.0.0
   dropdown_button2:
   top_snackbar_flutter: ^2.1.1
+  equatable: ^2.0.5
 
 #  drag_and_drop_lists: ^0.2.1
   drag_and_drop_lists: ^0.3.1

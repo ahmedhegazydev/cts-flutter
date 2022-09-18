@@ -978,13 +978,13 @@ Get.back();
       required transferId,
       required exportAction,
       required context}) async {
-
+print("i call getIsAlreadyExportedAsPaperwork888888888888888888888888888888888888");
     IsAlreadyExportedAsPaperworkAPI _alreadyExportedAsPaperworkAPI =
         IsAlreadyExportedAsPaperworkAPI(null);
 
     _alreadyExportedAsPaperworkAPI.data =
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
-    isAlreadyExportedAsPaperworkModel = await _alreadyExportedAsPaperworkAPI
+IsAlreadyExportedAsPaperworkModel  isAlreadyExportedAsPaperworkModel = await _alreadyExportedAsPaperworkAPI
         .getData() as IsAlreadyExportedAsPaperworkModel;
     if (isAlreadyExportedAsPaperworkModel?.transferTo != null) {
       userWillAddToOpenTransferWindow = Destination(
@@ -993,6 +993,8 @@ Get.back();
       usersWillSendTo.clear();
       addTousersWillSendTo(user: userWillAddToOpenTransferWindow!);
     }
+
+
     if (isAlreadyExportedAsPaperworkModel?.isConfirm ?? false) {
       showDilog(
           context: context,
@@ -1006,6 +1008,7 @@ Get.back();
                 context: context,
                 name: isAlreadyExportedAsPaperworkModel?.noMethod ??
                     isAlreadyExportedAsPaperworkModel!.noMethod2!);
+            Get.back();
           },
           yes: () {
             // getCanExportAsPaperwork(
@@ -1024,7 +1027,9 @@ Get.back();
             //   Get.back();
             // Navigator.of(context).pop();
           });
-    } else if (isAlreadyExportedAsPaperworkModel?.request != null) {
+    }
+    else if (isAlreadyExportedAsPaperworkModel?.request != null) {
+      print("i get isAlreadyExportedAsPaperworkModel?.isConfirm == false");
       getSwitchMethod(
           exportAction: exportAction,
           transferId: transferId,
@@ -1035,8 +1040,9 @@ Get.back();
       print(isAlreadyExportedAsPaperworkModel?.request);
       //  Get.back();
 
-    } else {
-      Get.snackbar("", isAlreadyExportedAsPaperworkModel!.message!);
+    }
+    else {
+      Get.snackbar("", isAlreadyExportedAsPaperworkModel?.message??"");
 
       // getSwitchMethod(
       //     exportAction: exportAction,
@@ -1050,6 +1056,102 @@ Get.back();
       //  Navigator.of(context).pop();
     }
   }
+
+
+
+
+
+  isAlreadyExportedAsTransfer(
+      {required context,
+        required correspondenceId,
+        required transferId,
+        required exportAction}) {
+    IsAlreadyExportedAsTransferAPI _isAlreadyExportedAsTransferAPI =
+    IsAlreadyExportedAsTransferAPI(context);
+    _isAlreadyExportedAsTransferAPI.data =
+    "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
+    _isAlreadyExportedAsTransferAPI.getData().then((value) {
+      IsAlreadyExportedAsTransferModel   isAlreadyExportedAsTransferModel =
+      value as IsAlreadyExportedAsTransferModel;
+
+
+      if (isAlreadyExportedAsTransferModel?.isConfirm ?? false) {
+        showDilog(
+            context: context,
+            massge: isAlreadyExportedAsTransferModel!.message!,
+            no: () {
+              //  Navigator.of(context).pop();
+              getSwitchMethod(
+                  exportAction: exportAction,
+                  transferId: transferId,
+                  correspondenceId: correspondenceId,
+                  context: context,
+                  name: isAlreadyExportedAsTransferModel?.noMethod ??
+                      isAlreadyExportedAsTransferModel!.noMethod2!);
+              Get.back();
+            },
+            yes: () {
+              // getCanExportAsPaperwork(
+              //     exportAction: exportAction,
+              //     transferId: transferId,
+              //     correspondenceId: correspondenceId,
+              //     context: context);
+
+              getSwitchMethod(
+                  exportAction: exportAction,
+                  transferId: transferId,
+                  correspondenceId: correspondenceId,
+                  context: context,
+                  name: isAlreadyExportedAsTransferModel?.yesMethod ??
+                      isAlreadyExportedAsTransferModel!.yesMethod2!);
+            Get.back();
+              // Navigator.of(context).pop();
+            });
+      }
+      else if (isAlreadyExportedAsTransferModel?.request != null) {
+        print("i get isAlreadyExportedAsPaperworkModel?.isConfirm == false");
+        getSwitchMethod(
+            exportAction: exportAction,
+            transferId: transferId,
+            correspondenceId: correspondenceId,
+            context: context,
+            name: isAlreadyExportedAsTransferModel!.request!);
+
+        print(isAlreadyExportedAsTransferModel?.request);
+      Get.back();
+
+      }
+      else {
+        Get.snackbar("isAlreadyExportedAsTransferModel", isAlreadyExportedAsTransferModel!.message!);
+
+        // getSwitchMethod(
+        //     exportAction: exportAction,
+        //     transferId: transferId,
+        //     correspondenceId: correspondenceId,
+        //     context: context,
+        //     name: isAlreadyExportedAsPaperworkModel!.request!);
+        // Get.back();
+        //
+
+        //  Navigator.of(context).pop();
+      }
+
+
+
+
+
+
+      // if (isAlreadyExportedAsTransferModel?.isConfirm ?? false) {
+      //   Get.snackbar("", isAlreadyExportedAsTransferModel!.message!);
+      // }
+      print(
+          "_alreadyExportedAsPaperworkAPI =>  ${isAlreadyExportedAsTransferModel!.toJson()}");
+    });
+  }
+
+
+
+
 
   Future getCanExportAsPaperwork(
       {required correspondenceId,
@@ -1126,6 +1228,7 @@ Get.back();
                 context: context,
                 name: canExportAsPaperworkModel?.noMethod ??
                     canExportAsPaperworkModel!.noMethod2!);
+            Get.back();
           },
           yes: () {
             // getCanExportAsPaperwork(
@@ -1157,7 +1260,7 @@ Get.back();
       //  Get.back();
 
     } else {
-      Get.snackbar("", canExportAsPaperworkModel!.message!);
+      Get.snackbar("canExportAsPaperworkModel", canExportAsPaperworkModel!.message!);
 
       // getSwitchMethod(
       //     exportAction: exportAction,
@@ -1212,10 +1315,67 @@ Get.back();
     _autoSendToRecepientsAndCCAPI.data =
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
     _autoSendToRecepientsAndCCAPI.getData().then((value) {
-      autoSendToRecepientsAndCCModel = value as AutoSendToRecepientsAndCCModel;
+      AutoSendToRecepientsAndCCModel   autoSendToRecepientsAndCCModel = value as AutoSendToRecepientsAndCCModel;
 
       if (autoSendToRecepientsAndCCModel?.isConfirm ?? false) {
-        Get.snackbar("", autoSendToRecepientsAndCCModel!.message!);
+        showDilog(
+            context: context,
+            massge: autoSendToRecepientsAndCCModel!.message!,
+            no: () {
+              //  Navigator.of(context).pop();
+              getSwitchMethod(
+                  exportAction: exportAction,
+                  transferId: transferId,
+                  correspondenceId: correspondenceId,
+                  context: context,
+                  name: autoSendToRecepientsAndCCModel?.noMethod ??
+                      autoSendToRecepientsAndCCModel!.noMethod2!);
+              Get.back();
+            },
+            yes: () {
+              // getCanExportAsPaperwork(
+              //     exportAction: exportAction,
+              //     transferId: transferId,
+              //     correspondenceId: correspondenceId,
+              //     context: context);
+
+              getSwitchMethod(
+                  exportAction: exportAction,
+                  transferId: transferId,
+                  correspondenceId: correspondenceId,
+                  context: context,
+                  name: autoSendToRecepientsAndCCModel?.yesMethod ??
+                      autoSendToRecepientsAndCCModel!.yesMethod2!);
+              Get.back();
+              // Navigator.of(context).pop();
+            });
+      }
+      else if (autoSendToRecepientsAndCCModel?.request != null) {
+        print("i get isAlreadyExportedAsPaperworkModel?.isConfirm == false");
+        getSwitchMethod(
+            exportAction: exportAction,
+            transferId: transferId,
+            correspondenceId: correspondenceId,
+            context: context,
+            name: autoSendToRecepientsAndCCModel!.request!);
+
+        print(autoSendToRecepientsAndCCModel?.request);
+        Get.back();
+
+      }
+      else {
+        Get.snackbar("autoSendToRecepientsAndCCModel", autoSendToRecepientsAndCCModel!.message!);
+
+        // getSwitchMethod(
+        //     exportAction: exportAction,
+        //     transferId: transferId,
+        //     correspondenceId: correspondenceId,
+        //     context: context,
+        //     name: isAlreadyExportedAsPaperworkModel!.request!);
+        // Get.back();
+        //
+
+        //  Navigator.of(context).pop();
       }
       print(
           "_alreadyExportedAsPaperworkAPI =>  ${autoSendToRecepientsAndCCModel!.toJson()}");
@@ -1226,43 +1386,83 @@ Get.back();
       {required context,
       required correspondenceId,
       required transferId,
-      required exportAction}) {
+      required exportAction})async {
     CheckForEmptyStructureRecipientsAPI _checkForEmptyStructureRecipientsAPI =
-        CheckForEmptyStructureRecipientsAPI(context);
+        CheckForEmptyStructureRecipientsAPI(null);
     _checkForEmptyStructureRecipientsAPI.data =
-        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
-    _checkForEmptyStructureRecipientsAPI.getData().then((value) {
-      checkForEmptyStructureRecipientsModel =
-          value as CheckForEmptyStructureRecipientsModel;
+        "Token=${secureStorage.token()}&exportAction=$exportAction&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+    CheckForEmptyStructureRecipientsModel?    checkForEmptyStructureRecipientsModel =(await   _checkForEmptyStructureRecipientsAPI.getData()) as CheckForEmptyStructureRecipientsModel?;
 
-      if (checkForEmptyStructureRecipientsModel?.isConfirm ?? false) {
-        Get.snackbar("", checkForEmptyStructureRecipientsModel!.message!);
-      }
-      print(
-          "_alreadyExportedAsPaperworkAPI =>  ${checkForEmptyStructureRecipientsModel!.toJson()}");
-    });
+
+print("9"*50);
+
+    print(checkForEmptyStructureRecipientsModel?.toJson());
+    print("9"*50);
+
+
+    if (checkForEmptyStructureRecipientsModel?.isConfirm ?? false) {
+      print("checkForEmptyStructureRecipientsModel?.isConfirm");
+      showDilog(
+          context: context,
+          massge: checkForEmptyStructureRecipientsModel!.message!,
+          no: () {
+            //  Navigator.of(context).pop();
+            getSwitchMethod(
+                exportAction: exportAction,
+                transferId: transferId,
+                correspondenceId: correspondenceId,
+                context: context,
+                name: checkForEmptyStructureRecipientsModel?.noMethod ??
+                    checkForEmptyStructureRecipientsModel!.noMethod2!);
+            Get.back();
+          },
+          yes: () {
+            // getCanExportAsPaperwork(
+            //     exportAction: exportAction,
+            //     transferId: transferId,
+            //     correspondenceId: correspondenceId,
+            //     context: context);
+
+            getSwitchMethod(
+                exportAction: exportAction,
+                transferId: transferId,
+                correspondenceId: correspondenceId,
+                context: context,
+                name: checkForEmptyStructureRecipientsModel?.yesMethod ??
+                    checkForEmptyStructureRecipientsModel!.yesMethod2!);
+            Get.back();
+            // Navigator.of(context).pop();
+          });
+    }
+    else if (checkForEmptyStructureRecipientsModel?.request != null) {
+      print("i get isAlreadyExportedAsPaperworkModel?.isConfirm == false");
+      getSwitchMethod(
+          exportAction: exportAction,
+          transferId: transferId,
+          correspondenceId: correspondenceId,
+          context: context,
+          name: checkForEmptyStructureRecipientsModel!.request!);
+
+
+      Get.back();
+
+    }
+    else {
+      Get.snackbar("", checkForEmptyStructureRecipientsModel?.message??"");
+
+      // getSwitchMethod(
+      //     exportAction: exportAction,
+      //     transferId: transferId,
+      //     correspondenceId: correspondenceId,
+      //     context: context,
+      //     name: isAlreadyExportedAsPaperworkModel!.request!);
+      // Get.back();
+      //
+
+      //  Navigator.of(context).pop();
+    }
   }
 
-  isAlreadyExportedAsTransfer(
-      {required context,
-      required correspondenceId,
-      required transferId,
-      required exportAction}) {
-    IsAlreadyExportedAsTransferAPI _isAlreadyExportedAsTransferAPI =
-        IsAlreadyExportedAsTransferAPI(context);
-    _isAlreadyExportedAsTransferAPI.data =
-        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
-    _isAlreadyExportedAsTransferAPI.getData().then((value) {
-      isAlreadyExportedAsTransferModel =
-          value as IsAlreadyExportedAsTransferModel;
-
-      if (isAlreadyExportedAsTransferModel?.isConfirm ?? false) {
-        Get.snackbar("", isAlreadyExportedAsTransferModel!.message!);
-      }
-      print(
-          "_alreadyExportedAsPaperworkAPI =>  ${isAlreadyExportedAsTransferModel!.toJson()}");
-    });
-  }
 
   //-----------------------------------------------------------------------
   getUserRouting({required context, required gctId}) {
@@ -1406,11 +1606,11 @@ Get.back();
         // do something
 
         // _alreadyExportedAsPaperworkAPI.getData() as  IsAlreadyExportedAsPaperworkModel;
-        isAlreadyExportedAsPaperworkModel = await getCanExportAsPaperwork(
+        isAlreadyExportedAsPaperworkModel = await (getCanExportAsPaperwork(
             exportAction: exportAction,
             transferId: transferId,
             correspondenceId: correspondenceId,
-            context: context);
+            context: context))as IsAlreadyExportedAsPaperworkModel;
 
         if (isAlreadyExportedAsPaperworkModel?.isConfirm ?? false) {
           showDilog(
@@ -1425,6 +1625,7 @@ Get.back();
                     context: context,
                     name: isAlreadyExportedAsPaperworkModel?.noMethod ??
                         isAlreadyExportedAsPaperworkModel!.noMethod2!);
+                Get.back();
               },
               yes: () {
                 // getCanExportAsPaperwork(
@@ -1474,11 +1675,18 @@ Get.back();
         _popUpMenu(context);
         break;
       case "IsAlreadyExportedAsTransfer":
+
+
+
         isAlreadyExportedAsTransfer(
             context: context,
             correspondenceId: correspondenceId,
             transferId: transferId,
             exportAction: exportAction);
+
+
+
+
         // do something else
         break;
       case "CheckForEmptyStructureRecipients":
@@ -1488,6 +1696,7 @@ Get.back();
             exportAction: exportAction,
             transferId: transferId,
             correspondenceId: correspondenceId);
+
         break;
       case "ConfirmAgain":
         // do something else
@@ -1498,6 +1707,7 @@ Get.back();
             correspondenceId: correspondenceId,
             exportAction: exportAction,
             transferId: transferId);
+
         break;
       case "IsAlreadyExportedAsPaperwork":
         isAlreadyExportedAsTransfer(
@@ -1505,6 +1715,7 @@ Get.back();
             exportAction: exportAction,
             transferId: transferId,
             correspondenceId: correspondenceId);
+
         // do something else
         break;
       case "NOTHING":

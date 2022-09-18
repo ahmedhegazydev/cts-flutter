@@ -1508,7 +1508,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                               ]),
                         ),
                         actions: <Widget>[
-                          FlatButton(
+                          TextButton(
+                            //style: flatButtonStyle,
                               onPressed: () {
                                 SecureStorage secureStorage = SecureStorage();
                                 secureStorage.writeSecureData(
@@ -3152,7 +3153,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                 ]),
                           ),
                           actions: <Widget>[
-                            FlatButton(
+                            TextButton(
                               onPressed: () {
                                 SecureStorage secureStorage = SecureStorage();
                                 secureStorage.writeSecureData(

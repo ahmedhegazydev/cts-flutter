@@ -192,7 +192,7 @@ class LoginPage extends GetWidget<LoginController> {
                                                           "Base Url".tr,
                                                         ),
                                                       ),
-                                                      new FlatButton(
+                                                      new TextButton(
                                                           onPressed: () {
                                                             controller
                                                                 .clear();
@@ -393,7 +393,7 @@ class LoginPage extends GetWidget<LoginController> {
                                       ]),
                                     ),
                                     actions: <Widget>[
-                                      FlatButton(
+                                      TextButton(
                                         onPressed: () async {
                                           controller.secureStorage
                                               .writeSecureData(
@@ -544,7 +544,7 @@ class LoginPage extends GetWidget<LoginController> {
                                       // )
                                     ])),
                                 actions: <Widget>[
-                                  FlatButton(
+                                  TextButton(
                                     onPressed: () async {
                                       controller.secureStorage
                                           .writeSecureData(
@@ -753,23 +753,6 @@ class LoginPage extends GetWidget<LoginController> {
                                         )),
                                   ],
                                 ),
-                              ),
-                            ),
-                            SizedBox(height: 50),
-                            Container(
-                              // color: Colors.red,
-                              //  width: double.infinity,
-                              padding: const EdgeInsets.all(0),
-                              child: Text(
-                                "appTitle".tr,
-                                // textAlign: TextAlign.center,
-                                textDirection: Get.locale?.languageCode == "en"
-                                    ? TextDirection.ltr
-                                    : TextDirection.rtl,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline1!
-                                    .copyWith(),
                               ),
                             ),
                             SizedBox(height: 50),

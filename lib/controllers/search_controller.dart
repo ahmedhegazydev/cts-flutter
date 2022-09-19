@@ -86,6 +86,9 @@ class SearchController extends GetxController {
       TextEditingController();
   TextEditingController textEditingControllerToDocDate =
       TextEditingController();
+
+  TextEditingController textEditingControllerRegisterDate =
+  TextEditingController();
 //=======================================================
   TextEditingController textEditingControllerDocData = TextEditingController();
 
@@ -197,6 +200,49 @@ class SearchController extends GetxController {
     }
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+  Future<void> selecttextrRegisterDate({required BuildContext context}) async {
+    final DateTime? pickedDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2050));
+    if (pickedDate != null) {
+      textEditingControllerRegisterDate.text =
+          pickedDate.toString().substring(0, 10);
+      var outputFormat = DateFormat('dd/MM/yyyy');
+      var outputDate = outputFormat.format(pickedDate);
+      textEditingControllerRegisterDate.text =
+          outputDate.toString().substring(0, 10);
+
+      update();
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
   @override
   void onReady() {
     super.onReady();
@@ -305,7 +351,7 @@ class SearchController extends GetxController {
     // }
 
     String cr =
-        "ReferenceNumber:${textEditingControllerReferenceNumber1.text}/${textEditingControllerReferenceNumber2.text}/${textEditingControllerReferenceNumber2.text};%23Subject:${textEditingControllerSubject.text??""};%23From:${from?.id??""};%23To:${to?.id??""};%23TransferFrom:${fromDestination?.id??""};%23TransferTo:${toDestination?.id??""};%23Privacy:${privacieVal?.id??""};%23Priority:${prioritieVal?.id??""};%23Status:${statuseVal?.id??""};%23Country:${countrieVal?.id??""};%23Classification:${classificationsVal?.id??""};%23PrimaryClassification:${primaryClassificationval?.iD??""};%23FromDocumentDate:${textEditingControllerFromDocDate.text};%23ToDocumentDate:${textEditingControllerToDocDate.text};%23RegisterDate:;%23";
+        "ReferenceNumber:${textEditingControllerReferenceNumber1.text}/${textEditingControllerReferenceNumber2.text}/${textEditingControllerReferenceNumber2.text};%23Subject:${textEditingControllerSubject.text??""};%23From:${from?.id??""};%23To:${to?.id??""};%23TransferFrom:${fromDestination?.id??""};%23TransferTo:${toDestination?.id??""};%23Privacy:${privacieVal?.id??""};%23Priority:${prioritieVal?.id??""};%23Status:${statuseVal?.id??""};%23Country:${countrieVal?.id??""};%23Classification:${classificationsVal?.id??""};%23PrimaryClassification:${primaryClassificationval?.iD??""};%23FromDocumentDate:${textEditingControllerFromDocDate.text};%23ToDocumentDate:${textEditingControllerToDocDate.text};%23RegisterDate:${textEditingControllerRegisterDate.text};%23";
     final SearchCorrespondencesApi _searchCorrespondencesApi =
     SearchCorrespondencesApi(context!);
     print(cr);

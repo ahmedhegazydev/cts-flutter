@@ -895,7 +895,7 @@ controller.classificationsVal=suggestion;
               height: 8,
             ),
             Container(
-                padding: EdgeInsets.only(right: 8, left: 8),
+
                 decoration: BoxDecoration(
                     border:
                     Border.all(color: Theme
@@ -903,13 +903,31 @@ controller.classificationsVal=suggestion;
                         .colorScheme
                         .primary),
                     borderRadius: const BorderRadius.all(Radius.circular(6))),
-                child: TextField(
-                  controller: controller.textEditingControllerDocData,
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: 'Document Data',
+                child:  InkWell(onTap: () {
+                  controller.selecttextrRegisterDate(context: context);
+                },
+                  child: Container(
+                      height: 60,
+                      padding: EdgeInsets.only(right: 8, left: 8),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Theme
+                                  .of(context)
+                                  .colorScheme
+                                  .primary),
+                          borderRadius: const BorderRadius.all(
+                              Radius.circular(6))),
+                      child:
+                      TextField(enabled: false,
+                        controller: controller.textEditingControllerRegisterDate,
+                        decoration:   InputDecoration(
+                          border: UnderlineInputBorder(),
+                          labelText: 'registerDate'.tr,
+                        ),
+                      )
+                    //   Center(child: Text(controller.toDocDate))
                   ),
-                )),
+                ),),
             SizedBox(
               height: 8,
             ),

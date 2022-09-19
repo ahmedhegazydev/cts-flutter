@@ -139,4 +139,5 @@ const Map<String, String> ar = {
   "selectAppLanguage": "اختر لغة التطبيق",
   "chooseaperson": "اختر شخصاً",
   "noData": "لا يوجد بيانات"
+,"registerDate":"تاريخ التسجيل"
 };

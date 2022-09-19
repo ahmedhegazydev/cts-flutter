@@ -1,5 +1,5 @@
 const Map<String, String> ar = {
-  "appTitle": "نظام تتبع المراسلات",
+  "appTitle": "نظام سير المكاتبات ",
   "name": "الإسم",
   "password": "كلمة المرور",
   "copyrights": "وزارة الخارجية © ",
@@ -135,5 +135,8 @@ const Map<String, String> ar = {
   "addsing": "اضف توقيعك هنا",
   "EndedSuccess": "تم الانهاء بنجاح",
   "AddToBasketSucceess": "تم الاضافه الي المحفظه بنجاح",
-  "chooseaperson":"اختار شخص"
+  "selectAppColor": "اختر لون التطبيق",
+  "selectAppLanguage": "اختر لغة التطبيق",
+  "chooseaperson": "اختر شخصاً",
+  "noData": "لا يوجد بيانات"
 };

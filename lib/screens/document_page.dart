@@ -91,7 +91,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                     leading: Icon(Icons.attachment),
                     title: Text("electronicExport".tr),
                     onTap: () {
-                      controller.getIsAlreadyExportedAsPaperwork(
+                      controller.isAlreadyExportedAsTransfer(
                           context: context,
                           correspondenceId:
                               controller.correspondences.correspondenceId!,
@@ -103,7 +103,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                     leading: Icon(Icons.print),
                     title: Text("paperAndElectronicExport".tr),
                     onTap: () {
-                      controller.getIsAlreadyExportedAsPaperwork(
+                      controller.isAlreadyExportedAsTransfer(
                           context: context,
                           correspondenceId:
                               controller.correspondences.correspondenceId!,
@@ -247,7 +247,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                         PopupMenuItem(
                           child: Text("electronicExport".tr),
                           onTap: () {
-                            controller.getIsAlreadyExportedAsPaperwork(
+                            controller.isAlreadyExportedAsTransfer(
                                 context: context,
                                 correspondenceId: controller
                                     .correspondences.correspondenceId!,
@@ -260,7 +260,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                         PopupMenuItem(
                           child: Text("paperAndElectronicExport".tr),
                           onTap: () {
-                            controller.getIsAlreadyExportedAsPaperwork(
+                            controller.isAlreadyExportedAsTransfer(
                                 context: context,
                                 correspondenceId: controller
                                     .correspondences.correspondenceId!,

@@ -1245,6 +1245,61 @@ class DocumentController extends GetxController {
           value as IsAlreadyExportedAsTransferModel;
 
       if (isAlreadyExportedAsTransferModel?.isConfirm ?? false) {
+        showDilog(
+            context: context,
+            massge: isAlreadyExportedAsTransferModel!.message!,
+            no: () {
+              //  Navigator.of(context).pop();
+              getSwitchMethod(
+                  exportAction: exportAction,
+                  transferId: transferId,
+                  correspondenceId: correspondenceId,
+                  context: context,
+                  name: isAlreadyExportedAsTransferModel?.noMethod ??
+                      isAlreadyExportedAsTransferModel!.noMethod2!);
+              Get.back();
+            },
+            yes: () {
+              // getCanExportAsPaperwork(
+              //     exportAction: exportAction,
+              //     transferId: transferId,
+              //     correspondenceId: correspondenceId,
+              //     context: context);
+              getSwitchMethod(
+                  exportAction: exportAction,
+                  transferId: transferId,
+                  correspondenceId: correspondenceId,
+                  context: context,
+                  name: isAlreadyExportedAsTransferModel?.yesMethod ??
+                      isAlreadyExportedAsTransferModel!.yesMethod2!);
+              Get.back();
+              // Navigator.of(context).pop();
+            });
+      } else if (isAlreadyExportedAsTransferModel?.request != null) {
+        print("i get isAlreadyExportedAsPaperworkModel?.isConfirm == false");
+        getSwitchMethod(
+            exportAction: exportAction,
+            transferId: transferId,
+            correspondenceId: correspondenceId,
+            context: context,
+            name: isAlreadyExportedAsTransferModel!.request!);
+        print(isAlreadyExportedAsTransferModel?.request);
+        Get.back();
+      } else {
+        Get.snackbar("isAlreadyExportedAsTransferModel",
+            isAlreadyExportedAsTransferModel!.message!);
+        // getSwitchMethod(
+        //     exportAction: exportAction,
+        //     transferId: transferId,
+        //     correspondenceId: correspondenceId,
+        //     context: context,
+        //     name: isAlreadyExportedAsPaperworkModel!.request!);
+        // Get.back();
+        //
+        //  Navigator.of(context).pop();
+      }
+
+      if (isAlreadyExportedAsTransferModel?.isConfirm ?? false) {
         Get.snackbar("", isAlreadyExportedAsTransferModel!.message!);
       }
       print(

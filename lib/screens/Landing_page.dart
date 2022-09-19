@@ -261,7 +261,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                             title: GestureDetector(onTap: (){
                            //  controller.getBasketInbox(context: context, id: basket.iD!);
 
-
+                              Get.find<InboxController>().clearFilter();
                              Get.find<InboxController>().isAllOrNot = true;
                              Get.find<InboxController>().getBasketInbox(
                                  context: context, id:  basket.iD!,  );
@@ -4405,6 +4405,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                   children: [
                     TableRowInkWell(
                       onTap: () {
+                        Get.find<InboxController>().clearFilter();
                         Get.find<InboxController>().allCorrespondences.clear();
                         Get.find<InboxController>().nodeId = 0;
                         Get.find<InboxController>().isAllOrNot = true;
@@ -4428,6 +4429,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                   children: [
                     TableRowInkWell(
                       onTap: () {
+                        Get.find<InboxController>().clearFilter();
                         Get.find<InboxController>().allCorrespondences.clear();
                         Get.find<InboxController>().nodeId = 0;
                         Get.find<InboxController>().isAllOrNot = true;
@@ -4628,6 +4630,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                     TableRowInkWell(
                       onTap: () {
                         //openInbox(context);
+                        Get.find<InboxController>().clearFilter();
                         Get.find<InboxController>().allCorrespondences.clear();
                         Get.find<InboxController>().nodeId = 0;
                         Get.find<InboxController>().isAllOrNot = true;
@@ -4652,6 +4655,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                     TableRowInkWell(
                       onTap: () {
                         //openInbox(context);
+                        Get.find<InboxController>().clearFilter();
                         Get.find<InboxController>().allCorrespondences.clear();
                         Get.find<InboxController>().nodeId = 0;
                         Get.find<InboxController>().isAllOrNot = true;
@@ -4898,6 +4902,7 @@ class LandingPage extends GetWidget<LandingPageController> {
       {required BuildContext context,
       required int boxid,
       required int nodeId}) {
+    Get.find<InboxController>().clearFilter();
     Get.find<InboxController>().allCorrespondences.clear();
     Get.find<InboxController>().isAllOrNot = false;
     Get.find<InboxController>().inboxId = boxid;

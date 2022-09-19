@@ -239,58 +239,64 @@ class InboxPage extends GetWidget<InboxController> {
         // ),
         // controller.allCorrespondences
 
-        GetBuilder<InboxController>(
-            autoRemove: false,
-            builder: (logic) {
-              return Container(
-                // height: 50,
-                // width: 50,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                        width: 1,
-                        color: Theme.of(context).colorScheme.primary)),
-                child: DropdownButton<UserFilter>(
-                  value: controller.selectUserFilter,
-                  icon: const Icon(Icons.arrow_downward),
-                  hint: Row(
-                    children: [
-                      Container(
-                          width: 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  image: AssetImage("assets/images/pr.jpg")))),
-                      Text("chooseaperson".tr),
-                    ],
-                  ),
-                  iconSize: 24,
-                  elevation: 16,
-                  underline: SizedBox(),
-                  onChanged: controller.updateselectUserFilter,
-                  items: controller.userFilter
-                      .map<DropdownMenuItem<UserFilter>>((UserFilter value) {
-                    return DropdownMenuItem<UserFilter>(
-                      value: value,
-                      child: Row(
+        Flexible(
+          child: GetBuilder<InboxController>(
+              autoRemove: false,
+              builder: (logic) {
+                return Container(
+                  // height: 50,
+                  // width: 50,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                          width: 1,
+                          color: Theme.of(context).colorScheme.primary)),
+                  child: Flexible(
+                    child: DropdownButton<UserFilter>(
+                      value: controller.selectUserFilter,
+                      icon: const Icon(Icons.arrow_downward),
+                      hint: Row(
                         children: [
                           Container(
-                              width: 50,
+                              //width: 50,
                               height: 50,
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
                                       image:
                                           AssetImage("assets/images/pr.jpg")))),
-                          Text(value.name),
+                          Text("chooseaperson".tr),
                         ],
                       ),
-                    );
-                  }).toList(),
-                ),
-              );
-            }),
+                      iconSize: 24,
+                      elevation: 16,
+                      underline: SizedBox(),
+                      onChanged: controller.updateselectUserFilter,
+                      items: controller.userFilter
+                          .map<DropdownMenuItem<UserFilter>>(
+                              (UserFilter value) {
+                        return DropdownMenuItem<UserFilter>(
+                          value: value,
+                          child: Row(
+                            children: [
+                              Container(
+                                  //width: 50,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              "assets/images/pr.jpg")))),
+                              Text(value.name),
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                );
+              }),
+        ),
 
         SizedBox(
           width: 16,
@@ -668,23 +674,32 @@ class InboxPage extends GetWidget<InboxController> {
                     : Column(
                         children: [
                           Visibility(
-                              visible: true, child: _filterMail(context)),
+                              visible: controller.allCorrespondences.isNotEmpty,
+                              child: _filterMail(context)),
                           Expanded(
-                            child: CustomListView(
-                              function: controller.onRefresh(),
-                              correspondences: controller.allCorrespondences,
-                              scrollController: controller.scrollController,
-                              haveMoreData: controller.haveMoreData,
-                              onClickItem: () {
-                                //     Get.toNamed("/DocumentPage");
-                              },
-                              functionSummary: () {},
-                              //allCorrespondences: controller.allCorrespondences,
-                              customActions: controller.customActions,
-                              functionReply: () {},
-                              functionTrunsfer: () {},
-                              functionComplet: () {},
-                            ),
+                            child: controller.allCorrespondences.isNotEmpty
+                                ? CustomListView(
+                                    function: controller.onRefresh(),
+                                    correspondences:
+                                        controller.allCorrespondences,
+                                    scrollController:
+                                        controller.scrollController,
+                                    haveMoreData: controller.haveMoreData,
+                                    onClickItem: () {
+                                      //     Get.toNamed("/DocumentPage");
+                                    },
+                                    functionSummary: () {},
+                                    //allCorrespondences: controller.allCorrespondences,
+                                    customActions: controller.customActions,
+                                    functionReply: () {},
+                                    functionTrunsfer: () {},
+                                    functionComplet: () {},
+                                  )
+                                : Center(
+                                    child: Text('noData'.tr,
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.grey.shade500))),
                           ),
                         ],
                       )),
@@ -694,23 +709,32 @@ class InboxPage extends GetWidget<InboxController> {
                     : Column(
                         children: [
                           Visibility(
-                              visible: true, child: _filterMail(context)),
+                              visible: controller.allCorrespondences.isNotEmpty,
+                              child: _filterMail(context)),
                           Expanded(
-                            child: CustomListView(
-                              function: controller.onRefresh(),
-                              correspondences: controller.allCorrespondences,
-                              scrollController: controller.scrollController,
-                              haveMoreData: controller.haveMoreData,
-                              onClickItem: () {
-                                Get.toNamed("/DocumentPage");
-                              },
-                              functionSummary: () {},
-                              //allCorrespondences: controller.allCorrespondences,
-                              customActions: controller.customActions,
-                              functionReply: () {},
-                              functionTrunsfer: () {},
-                              functionComplet: () {},
-                            ),
+                            child: controller.allCorrespondences.isNotEmpty
+                                ? CustomListView(
+                                    function: controller.onRefresh(),
+                                    correspondences:
+                                        controller.allCorrespondences,
+                                    scrollController:
+                                        controller.scrollController,
+                                    haveMoreData: controller.haveMoreData,
+                                    onClickItem: () {
+                                      Get.toNamed("/DocumentPage");
+                                    },
+                                    functionSummary: () {},
+                                    //allCorrespondences: controller.allCorrespondences,
+                                    customActions: controller.customActions,
+                                    functionReply: () {},
+                                    functionTrunsfer: () {},
+                                    functionComplet: () {},
+                                  )
+                                : Center(
+                                    child: Text('noData'.tr,
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.grey.shade500))),
                           ),
                         ],
                       )),
@@ -720,23 +744,34 @@ class InboxPage extends GetWidget<InboxController> {
                     : Column(
                         children: [
                           Visibility(
-                              visible: true, child: _filterMail(context)),
+                              visible: controller.allCorrespondences.isNotEmpty,
+                              child: _filterMail(context)),
                           Expanded(
-                            child: CustomListView(
-                              function: controller.onRefresh(),
-                              correspondences: controller.allCorrespondences,
-                              scrollController: controller.scrollController,
-                              haveMoreData: controller.haveMoreData,
-                              onClickItem: () {
-                                Get.toNamed("/DocumentPage");
-                              },
-                              functionSummary: () {},
-                              //allCorrespondences: [],
-                              customActions: [],
-                              functionReply: () {},
-                              functionTrunsfer: () {},
-                              functionComplet: () {},
-                            ),
+                            child: controller.allCorrespondences.isNotEmpty
+                                ? CustomListView(
+                                    function: controller.onRefresh(),
+                                    correspondences:
+                                        controller.allCorrespondences,
+                                    scrollController:
+                                        controller.scrollController,
+                                    haveMoreData: controller.haveMoreData,
+                                    onClickItem: () {
+                                      Get.toNamed("/DocumentPage");
+                                    },
+                                    functionSummary: () {},
+                                    //allCorrespondences: [],
+                                    customActions: [],
+                                    functionReply: () {},
+                                    functionTrunsfer: () {},
+                                    functionComplet: () {},
+                                  )
+                                : Center(
+                                    child: Text(
+                                    'noData'.tr,
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.grey.shade500),
+                                  )),
                           ),
                         ],
                       )),
@@ -769,6 +804,7 @@ class InboxPage extends GetWidget<InboxController> {
             //     )),
           ],
           onChange: (value) {
+            controller.clearFilter();
             controller.getData = true;
             controller.addToList = false;
             controller.index = 0;
@@ -850,6 +886,7 @@ class InboxPage extends GetWidget<InboxController> {
                 "assets/images/incoming_icon.png",
                 true,
                 "", () {
+              controller.clearFilter();
               controller.nodeId = 0;
               Get.find<InboxController>().isAllOrNot = true;
               Get.find<InboxController>()
@@ -864,6 +901,7 @@ class InboxPage extends GetWidget<InboxController> {
               false,
               "",
               () {
+                controller.clearFilter();
                 controller.nodeId = 0;
                 Get.find<InboxController>().isAllOrNot = true;
                 Get.find<InboxController>()
@@ -914,6 +952,7 @@ class InboxPage extends GetWidget<InboxController> {
                   //   .inboxCategories![pos].value!.nodeId==controller.nodeId?Colors.red:Colors.orange),
                   child: GestureDetector(
                     onTap: () {
+                      controller.clearFilter();
                       controller.nodeId = Get.find<LandingPageController>()
                           .dashboardStatsResultModel!
                           .inboxCategories![pos]
@@ -1087,6 +1126,7 @@ class InboxPage extends GetWidget<InboxController> {
                 (e) => Expanded(
                   child: GestureDetector(
                     onTap: () {
+                      controller.clearFilter();
                       controller.nodeId = e.value!.nodeId;
                       controller.getCorrespondencesData(
                           context: context, inboxId: controller.inboxId);

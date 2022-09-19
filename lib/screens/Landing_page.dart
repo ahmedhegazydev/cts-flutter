@@ -263,6 +263,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                               onTap: () {
                                 //  controller.getBasketInbox(context: context, id: basket.iD!);
 
+                                Get.find<InboxController>().clearFilter();
                                 Get.find<InboxController>().isAllOrNot = true;
                                 Get.find<InboxController>().getBasketInbox(
                                   context: context,
@@ -808,9 +809,6 @@ class LandingPage extends GetWidget<LandingPageController> {
 
   _buildSideMenu(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    var appLocale = Localizations.localeOf(context).languageCode;
-    double screenHeight = MediaQuery.of(context).size.height;
-
     return SingleChildScrollView(
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -1401,110 +1399,92 @@ class LandingPage extends GetWidget<LandingPageController> {
             showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                        title: Text(
-                          "selectAppColor".tr,
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        content: Container(
-                          height: screenHeight / 1.5,
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                buildColorPicker(),
-                                Padding(
-                                    padding:
-                                        EdgeInsets.only(top: 30, bottom: 10),
-                                    child: Text("selectAppLanguage".tr,
-                                        style: TextStyle(fontSize: 20))),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 10.0),
-                                  child: Row(children: [
-                                    Expanded(
-                                      child: Container(
-                                        padding: const EdgeInsets.only(
-                                            left: 0,
-                                            right: 0,
-                                            top: 0,
-                                            bottom: 0),
-                                        height: 60,
-                                        decoration: BoxDecoration(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(6))),
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            var locale =
-                                                const Locale('ar', 'AR');
-                                            Get.updateLocale(locale);
-                                            SecureStorage secureStorage =
-                                                SecureStorage();
+                      title: const Text("pick your Color"),
+                      content: Column(children: [
+                        buildColorPicker(),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 8.0, bottom: 8, right: 0, left: 0),
+                          child: Row(children: [
+                            Expanded(
+                              child: Container(
+                                padding: const EdgeInsets.only(
+                                    left: 0, right: 0, top: 0, bottom: 0),
+                                height: 60,
+                                decoration: BoxDecoration(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(6))),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    var locale = const Locale('ar', 'AR');
+                                    Get.updateLocale(locale);
+                                    SecureStorage secureStorage =
+                                        SecureStorage();
 
-                                            secureStorage.writeSecureData(
-                                                AllStringConst.AppLan, "ar");
-                                            Get.updateLocale(locale);
-                                          },
-                                          child: Text(
-                                            "العربية",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline2!
-                                                .copyWith(color: Colors.white),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Expanded(
-                                      child: Container(
-                                        padding: const EdgeInsets.only(
-                                            left: 0,
-                                            right: 0,
-                                            top: 0,
-                                            bottom: 0),
-                                        height: 60,
-                                        decoration: BoxDecoration(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(6))),
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            var locale =
-                                                const Locale('en', 'US');
-                                            SecureStorage secureStorage =
-                                                SecureStorage();
-
-                                            secureStorage.writeSecureData(
-                                                AllStringConst.AppLan, "en");
-                                            Get.updateLocale(locale);
-                                            Get.updateLocale(locale);
-                                          },
-                                          child: Text(
-                                            "English",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline2!
-                                                .copyWith(color: Colors.white),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  ]),
+                                    secureStorage.writeSecureData(
+                                        AllStringConst.AppLan, "ar");
+                                    Get.updateLocale(locale);
+                                  },
+                                  child: Text(
+                                    "عربي",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline2!
+                                        .copyWith(color: Colors.white),
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ),
-                              ]),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Container(
+                                padding: const EdgeInsets.only(
+                                    left: 0, right: 0, top: 0, bottom: 0),
+                                height: 60,
+                                decoration: BoxDecoration(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(6))),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    var locale = const Locale('en', 'US');
+                                    SecureStorage secureStorage =
+                                        SecureStorage();
+
+                                    secureStorage.writeSecureData(
+                                        AllStringConst.AppLan, "en");
+                                    Get.updateLocale(locale);
+                                    Get.updateLocale(locale);
+                                  },
+                                  child: Text(
+                                    "En",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline2!
+                                        .copyWith(color: Colors.white),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ]),
                         ),
-                        actions: <Widget>[
-                          TextButton(
-                            //style: flatButtonStyle,
+                        Container(
+                          width: MediaQuery.of(context).size.width * .7,
+                          padding: const EdgeInsets.only(
+                              left: 0, right: 0, top: 0, bottom: 0),
+                          height: 60,
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.primary,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(6))),
+                          child: ElevatedButton(
                             onPressed: () {
                               SecureStorage secureStorage = SecureStorage();
                               secureStorage.writeSecureData(
@@ -1513,13 +1493,17 @@ class LandingPage extends GetWidget<LandingPageController> {
                               Navigator.of(context).pop();
                             },
                             child: Text(
-                              "save".tr,
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Theme.of(context).colorScheme.primary),
+                              "save",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .copyWith(color: Colors.white),
+                              textAlign: TextAlign.center,
                             ),
                           ),
-                        ]));
+                        )
+                      ]),
+                    ));
           },
           child: Container(
             height: 100,
@@ -2140,10 +2124,6 @@ class LandingPage extends GetWidget<LandingPageController> {
 
   _buildSideMenuPort(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    var appLocale = Localizations.localeOf(context).languageCode;
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
-
     return Container(
       height: 150,
       child: Row(
@@ -2991,111 +2971,86 @@ class LandingPage extends GetWidget<LandingPageController> {
               showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                          title: Text("selectAppColor".tr,
-                              style: TextStyle(fontSize: 20)),
-                          content: Container(
-                            height: screenHeight / 2,
-                            width: screenWidth / 1.5,
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  buildColorPicker(),
-                                  Padding(
-                                      padding:
-                                          EdgeInsets.only(top: 30, bottom: 10),
-                                      child: Text("selectAppLanguage".tr,
-                                          style: TextStyle(fontSize: 20))),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 8.0, bottom: 8, left: 8, right: 8),
-                                    child: Row(children: [
-                                      Expanded(
-                                          child: Container(
-                                        padding: const EdgeInsets.only(
-                                            left: 0,
-                                            right: 0,
-                                            top: 0,
-                                            bottom: 0),
-                                        height: 60,
-                                        decoration: BoxDecoration(
-                                            color: appLocale == "ar"
-                                                ? Theme.of(context)
-                                                    .colorScheme
-                                                    .primary
-                                                : Colors.grey.shade500,
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(6))),
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            var locale =
-                                                const Locale('ar', 'AR');
-                                            SecureStorage secureStorage =
-                                                SecureStorage();
+                        title: const Text("pick your Color"),
+                        content: Column(children: [
+                          buildColorPicker(),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 8.0, bottom: 8, right: 20, left: 20),
+                            child: Row(children: [
+                              Container(
+                                padding: const EdgeInsets.only(
+                                    left: 0, right: 0, top: 0, bottom: 0),
+                                height: 60,
+                                decoration: BoxDecoration(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(6))),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    var locale = const Locale('ar', 'AR');
+                                    SecureStorage secureStorage =
+                                        SecureStorage();
 
-                                            secureStorage.writeSecureData(
-                                                AllStringConst.AppLan, "ar");
-                                            Get.updateLocale(locale);
-                                          },
-                                          child: Text(
-                                            "العربية",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline2!
-                                                .copyWith(color: Colors.white),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      )),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Expanded(
-                                          child: Container(
-                                        padding: const EdgeInsets.only(
-                                            left: 0,
-                                            right: 0,
-                                            top: 0,
-                                            bottom: 0),
-                                        height: 60,
-                                        decoration: BoxDecoration(
-                                            color: appLocale == "en"
-                                                ? Theme.of(context)
-                                                    .colorScheme
-                                                    .primary
-                                                : Theme.of(context)
-                                                    .colorScheme
-                                                    .secondary,
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(6))),
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            var locale =
-                                                const Locale('en', 'US');
-                                            SecureStorage secureStorage =
-                                                SecureStorage();
-
-                                            secureStorage.writeSecureData(
-                                                AllStringConst.AppLan, "en");
-                                            Get.updateLocale(locale);
-                                          },
-                                          child: Text(
-                                            "English",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline2!
-                                                .copyWith(color: Colors.white),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ))
-                                    ]),
+                                    secureStorage.writeSecureData(
+                                        AllStringConst.AppLan, "ar");
+                                    Get.updateLocale(locale);
+                                  },
+                                  child: Text(
+                                    "عربي",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline2!
+                                        .copyWith(color: Colors.white),
+                                    textAlign: TextAlign.center,
                                   ),
-                                ]),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Container(
+                                padding: const EdgeInsets.only(
+                                    left: 0, right: 0, top: 0, bottom: 0),
+                                height: 60,
+                                decoration: BoxDecoration(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(6))),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    var locale = const Locale('en', 'US');
+                                    SecureStorage secureStorage =
+                                        SecureStorage();
+
+                                    secureStorage.writeSecureData(
+                                        AllStringConst.AppLan, "en");
+                                    Get.updateLocale(locale);
+                                  },
+                                  child: Text(
+                                    "En",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline2!
+                                        .copyWith(color: Colors.white),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              )
+                            ]),
                           ),
-                          actions: <Widget>[
-                            TextButton(
+                          Container(
+                            width: MediaQuery.of(context).size.width * .7,
+                            padding: const EdgeInsets.only(
+                                left: 0, right: 0, top: 0, bottom: 0),
+                            height: 60,
+                            decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.primary,
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(6))),
+                            child: ElevatedButton(
                               onPressed: () {
                                 SecureStorage secureStorage = SecureStorage();
                                 secureStorage.writeSecureData(
@@ -3105,13 +3060,16 @@ class LandingPage extends GetWidget<LandingPageController> {
                               },
                               child: Text(
                                 "save".tr,
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    color:
-                                        Theme.of(context).colorScheme.primary),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline2!
+                                    .copyWith(color: Colors.white),
+                                textAlign: TextAlign.center,
                               ),
                             ),
-                          ]));
+                          )
+                        ]),
+                      ));
             },
             child: Container(
               height: 100,
@@ -3209,43 +3167,21 @@ class LandingPage extends GetWidget<LandingPageController> {
             // color: Colors.green,
             child: Column(
               children: [
-                SizedBox(height: 30),
-                Row(
-                  children: [
-                    Flexible(
-                      flex: 3,
-                      child: Container(
-                        // color: Colors.red,
-                        //  width: double.infinity,
-                        padding: const EdgeInsets.all(0),
-                        child: Image.asset(
-                          // width: orientation == Orientation.landscape
-                          //     ? size.width * .348
-                          //     : size.width * .51,
-                          'assets/images/Logo_qar.png',
-                          height: 30,
-
-                          //
-                        ),
-                      ),
+                SizedBox(
+                  height: 30,
+                ),
+                Flexible(
+                  flex: 3,
+                  child: Container(
+                    color: Colors.transparent,
+                    width: double.infinity,
+                    // height: 100,
+                    child: Text(
+                      "appTitle".tr,
+                      style: Theme.of(contex).textTheme.headline1,
+                      textAlign: TextAlign.start,
                     ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Flexible(
-                      flex: 3,
-                      child: Container(
-                        color: Colors.transparent,
-                        width: double.infinity,
-                        // height: 100,
-                        child: Text(
-                          "appTitle".tr,
-                          style: Theme.of(contex).textTheme.headline1,
-                          textAlign: TextAlign.start,
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
                 SizedBox(
                   height: 15,
@@ -4762,7 +4698,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                   children: [
                     TableRowInkWell(
                       onTap: () {
-                        Get.put(SearchController()).getAllData(context);
+                        Get.find<SearchController>().getAllData();
+
                         Get.toNamed("SearchPage");
                       },
                       child: _buildOtherFoldersRows(

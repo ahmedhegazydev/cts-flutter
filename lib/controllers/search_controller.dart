@@ -73,7 +73,9 @@ class SearchController extends GetxController {
   TextEditingController textEditingControllerFrom = TextEditingController();
   TextEditingController textEditingControllerTo = TextEditingController();
   TextEditingController textEditingControllerFrom2 = TextEditingController();
+  Destination? fromDestination ;
   TextEditingController textEditingControllerTo2 = TextEditingController();
+  Destination? toDestination ;
   //=====================================================
   TextEditingController textEditingControllerTransferFrom =
       TextEditingController();
@@ -147,6 +149,14 @@ class SearchController extends GetxController {
     textEditingControllerdocCountrieVal.clear();
     textEditingControllerClassificationsVal.clear();
     textEditingControllerprimaryClassificationsVal.clear();
+
+
+
+
+   classificationsVal=null;
+  primaryClassificationval=null;
+
+
   }
 
   Future<void> selectFromDocDate({required BuildContext context}) async {
@@ -156,11 +166,13 @@ class SearchController extends GetxController {
         firstDate: DateTime(2000),
         lastDate: DateTime(2050));
     if (pickedDate != null) {
-      textEditingControllerFromDocDate.text =
-          pickedDate.toString().substring(0, 10);
+      // textEditingControllerFromDocDate.text =
+      //     pickedDate.toString().substring(0, 10);
 
       var outputFormat = DateFormat('dd/MM/yyyy');
       var outputDate = outputFormat.format(pickedDate);
+      textEditingControllerFromDocDate.text =
+          outputDate.toString().substring(0, 10);
       serachData["FromDocumentDate"] =
           outputDate.toString(); //fromDocDate.toString();
       update();
@@ -178,6 +190,8 @@ class SearchController extends GetxController {
           pickedDate.toString().substring(0, 10);
       var outputFormat = DateFormat('dd/MM/yyyy');
       var outputDate = outputFormat.format(pickedDate);
+      textEditingControllerToDocDate.text =
+          outputDate.toString().substring(0, 10);
       serachData["ToDocumentDate"] = outputDate;
       update();
     }
@@ -291,7 +305,7 @@ class SearchController extends GetxController {
     // }
 
     String cr =
-        "ReferenceNumber:${textEditingControllerReferenceNumber1.text}/${textEditingControllerReferenceNumber2.text}/${textEditingControllerReferenceNumber2.text};%23Subject:${textEditingControllerSubject.text};%23From:${from?.id ?? ""};%23To:${to?.id ?? ""};%23TransferFrom:;%23TransferTo:;%23Privacy:${privacieVal?.id ?? ""};%23Priority:${prioritieVal?.id ?? ""};%23Status:${statuseVal?.id ?? ""};%23Country:${countrieVal?.id ?? ""};%23Classification:${classificationsVal?.id ?? ""};%23PrimaryClassification:${primaryClassificationval?.iD ?? ""};%23FromDocumentDate:${textEditingControllerFromDocDate.text};%23ToDocumentDate:${textEditingControllerToDocDate.text};%23RegisterDate:;%23";
+        "ReferenceNumber:${textEditingControllerReferenceNumber1.text}/${textEditingControllerReferenceNumber2.text}/${textEditingControllerReferenceNumber2.text};%23Subject:${textEditingControllerSubject.text??""};%23From:${from?.id??""};%23To:${to?.id??""};%23TransferFrom:${fromDestination?.id??""};%23TransferTo:${toDestination?.id??""};%23Privacy:${privacieVal?.id??""};%23Priority:${prioritieVal?.id??""};%23Status:${statuseVal?.id??""};%23Country:${countrieVal?.id??""};%23Classification:${classificationsVal?.id??""};%23PrimaryClassification:${primaryClassificationval?.iD??""};%23FromDocumentDate:${textEditingControllerFromDocDate.text};%23ToDocumentDate:${textEditingControllerToDocDate.text};%23RegisterDate:;%23";
     final SearchCorrespondencesApi _searchCorrespondencesApi =
     SearchCorrespondencesApi(context!);
     print(cr);
@@ -301,6 +315,8 @@ class SearchController extends GetxController {
       "IsAdvanced": 1,
       "Language": Get.locale?.languageCode == "en" ? "en" : "ar"
     }).then((value) {
+      getSerchData = false;
+      update();
       searchCorrespondencesModel = value as SearchCorrespondencesModel;
 
       if ((searchCorrespondencesModel?.correspondences?.length ?? 0) < 1) {

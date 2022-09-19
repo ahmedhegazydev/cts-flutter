@@ -205,6 +205,7 @@ class MyApp extends StatelessWidget {
           GetPage(
               name: "/SearchPageResult",
               page: () => SearchPageResult(),
+
               transition: Transition.rightToLeft),
           GetPage(
               name: "/WebViewPage",

@@ -342,6 +342,7 @@ class SearchPage extends GetWidget<SearchController> {
                           },
                           onSuggestionSelected: (suggestion) {
                             Destination v = suggestion;
+                            controller.fromDestination=suggestion;
                             controller.textEditingControllerFrom2.text =
                                 v.value ?? "";
 controller.from=v;
@@ -412,7 +413,7 @@ controller.from=v;
                             controller.textEditingControllerTo2.text =
                                 v.value ?? "";
                             controller.to=v;
-
+                            controller.toDestination=suggestion;
 
                             // v
                             // .cLASNAMEDISPLAY;
@@ -750,7 +751,7 @@ controller.from=v;
                       controller.textEditingControllerClassificationsVal.text =
                           v.cLASNAMEDISPLAY ?? "";
 
-
+controller.classificationsVal=suggestion;
                       controller.serachData["Classification"] = suggestion.id;
                           // v
                           // .cLASNAMEDISPLAY;

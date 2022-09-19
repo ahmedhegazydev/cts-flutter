@@ -27,19 +27,49 @@ class InboxPage extends GetWidget<InboxController> {
           autoRemove: false,
           builder: (logic) {
             return Scaffold(
+              appBar: _buildAppBar(context),
               body: _buildBody(context),
+              drawer: _buildDrawer(context),
             );
           }),
     );
   }
 
+  Drawer _buildDrawer(BuildContext context) {
+    return Drawer(
+      child: _buildSideMenu(context),
+    );
+  }
+
+  AppBar _buildAppBar(BuildContext context) {
+    return AppBar(
+      toolbarHeight: 100,
+      title: Text(
+        "appTitle".tr,
+        style: Theme.of(context)
+            .textTheme
+            .headline1!
+            .copyWith(color: Colors.white, fontSize: 25),
+        textAlign: TextAlign.start,
+      ),
+      actions: <Widget>[
+        SizedBox(
+          width: 100,
+        ),
+        IconButton(
+          icon: const Icon(Icons.navigate_next),
+          tooltip: 'back',
+          onPressed: () {
+            Get.back();
+          },
+        ),
+      ],
+    );
+  }
+
   _buildBody(BuildContext context) {
-    Orientation orientation = MediaQuery
-        .of(context)
-        .orientation;
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Orientation orientation = MediaQuery.of(context).orientation;
+    Size size = MediaQuery.of(context).size;
 
     return Container(
       width: size.width,
@@ -50,14 +80,14 @@ class InboxPage extends GetWidget<InboxController> {
         mainAxisSize: MainAxisSize.max,
         children: [
           //side bar
-          orientation == Orientation.landscape
-              ? Container(
-            width: 200,
-            height: size.height,
-            color: Colors.grey.shade300,
-            child: _buildSideMenu(context),
-          )
-              : Container(),
+          // orientation == Orientation.landscape
+          //     ? Container(
+          //         width: 200,
+          //         height: size.height,
+          //         color: Colors.grey.shade300,
+          //         child: _buildSideMenu(context),
+          //       )
+          //     : Container(),
           Expanded(
             child: Container(
               // width: size.infinity,
@@ -69,17 +99,14 @@ class InboxPage extends GetWidget<InboxController> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   //top bar
-                  Container(
-                    width: double.infinity,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: Theme
-                          .of(context)
-                          .colorScheme
-                          .primary,
-                    ),
-                    child: _buildTopBar(context),
-                  ),
+                  // Container(
+                  //   width: double.infinity,
+                  //   height: 100,
+                  //   decoration: BoxDecoration(
+                  //     color: Theme.of(context).colorScheme.primary,
+                  //   ),
+                  //   child: _buildTopBar(context),
+                  // ),
 
                   //inbox menu (filters with inbox type or with purpose -- depends on the configuration)
                   //and correspondences table view container
@@ -96,26 +123,26 @@ class InboxPage extends GetWidget<InboxController> {
                         //     :
                         controller.isAllOrNot
                             ? Expanded(
-                          child: CustomListView(
-                            function: controller.onRefresh(),
-                            correspondences:
-                            controller.allCorrespondences,
-                            scrollController: controller.scrollController,
-                            haveMoreData: controller.haveMoreData,
-                            onClickItem: () {
-                              //     Get.toNamed("/DocumentPage");
-                            },
-                            functionSummary: () {},
-                            //allCorrespondences: controller.allCorrespondences,
-                            customActions: controller.customActions,
-                            functionReply: () {},
-                            functionTrunsfer: () {},
-                            functionComplet: () {},
-                          ),
-                        )
+                                child: CustomListView(
+                                  function: controller.onRefresh(),
+                                  correspondences:
+                                      controller.allCorrespondences,
+                                  scrollController: controller.scrollController,
+                                  haveMoreData: controller.haveMoreData,
+                                  onClickItem: () {
+                                    //     Get.toNamed("/DocumentPage");
+                                  },
+                                  functionSummary: () {},
+                                  //allCorrespondences: controller.allCorrespondences,
+                                  customActions: controller.customActions,
+                                  functionReply: () {},
+                                  functionTrunsfer: () {},
+                                  functionComplet: () {},
+                                ),
+                              )
                             : Expanded(
-                          child: _buildTopInboxMenu(context),
-                        ),
+                                child: _buildTopInboxMenu(context),
+                              ),
 
                         //line separator
                         Container(
@@ -144,9 +171,7 @@ class InboxPage extends GetWidget<InboxController> {
   }
 
   Widget _filterMail(context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     return Row(
       children: [
         Container(
@@ -183,10 +208,9 @@ class InboxPage extends GetWidget<InboxController> {
         Container(
           child: Center(
               child: Text(
-                "sender".tr,
-                style: TextStyle(
-                    fontSize: 16, color: Colors.black.withOpacity(.7)),
-              )),
+            "sender".tr,
+            style: TextStyle(fontSize: 16, color: Colors.black.withOpacity(.7)),
+          )),
         ),
         SizedBox(
           width: 16,
@@ -215,48 +239,58 @@ class InboxPage extends GetWidget<InboxController> {
         // ),
         // controller.allCorrespondences
 
-        GetBuilder<InboxController>(autoRemove: false,builder: (logic) {
-          return Container(
-            // height: 50,
-            // width: 50,
-            decoration: BoxDecoration(
-              borderRadius:BorderRadius.circular(10),border: Border.all(width: 1,color:Theme.of(context)
-                .colorScheme
-                .primary )),
-            child: DropdownButton<UserFilter>(
-              value: controller.selectUserFilter,
-              icon: const Icon(Icons.arrow_downward),hint:Row(
-              children: [Container(width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: AssetImage("assets/images/pr.jpg")))),
-                Text( "chooseaperson".tr),
-              ],
-            ) ,
-              iconSize: 24,
-              elevation: 16,
-
-              underline: SizedBox(),
-              onChanged:controller.updateselectUserFilter,
-              items: controller.userFilter
-                  .map<DropdownMenuItem<UserFilter>>((UserFilter value) {
-                return DropdownMenuItem<UserFilter>(
-                  value: value,
-                  child: Row(
-                    children: [Container(width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(shape: BoxShape.circle,
-                            image: DecorationImage(
-                                image: AssetImage("assets/images/pr.jpg")))),
-                      Text(value.name),
+        GetBuilder<InboxController>(
+            autoRemove: false,
+            builder: (logic) {
+              return Container(
+                // height: 50,
+                // width: 50,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                        width: 1,
+                        color: Theme.of(context).colorScheme.primary)),
+                child: DropdownButton<UserFilter>(
+                  value: controller.selectUserFilter,
+                  icon: const Icon(Icons.arrow_downward),
+                  hint: Row(
+                    children: [
+                      Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  image: AssetImage("assets/images/pr.jpg")))),
+                      Text("chooseaperson".tr),
                     ],
                   ),
-                );
-              })
-                  .toList(),
-            ),);
-        }),
+                  iconSize: 24,
+                  elevation: 16,
+                  underline: SizedBox(),
+                  onChanged: controller.updateselectUserFilter,
+                  items: controller.userFilter
+                      .map<DropdownMenuItem<UserFilter>>((UserFilter value) {
+                    return DropdownMenuItem<UserFilter>(
+                      value: value,
+                      child: Row(
+                        children: [
+                          Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                      image:
+                                          AssetImage("assets/images/pr.jpg")))),
+                          Text(value.name),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                ),
+              );
+            }),
 
         SizedBox(
           width: 16,
@@ -305,8 +339,7 @@ class InboxPage extends GetWidget<InboxController> {
                       ),
                       Text(
                         "urgent".tr,
-                        style: Theme
-                            .of(context)
+                        style: Theme.of(context)
                             .textTheme
                             .headline1!
                             .copyWith(color: Colors.white, fontSize: 16),
@@ -355,18 +388,14 @@ class InboxPage extends GetWidget<InboxController> {
           width: 16,
         ),
         GestureDetector(
-
           child: Container(
             child: Icon(
               Icons.clear,
-              color: Theme
-                  .of(context)
-                  .colorScheme
-                  .primary,
+              color: Theme.of(context).colorScheme.primary,
               size: 30,
             ),
           ),
-          onTap: (){
+          onTap: () {
             controller.clearFilter();
           },
         ),
@@ -405,8 +434,7 @@ class InboxPage extends GetWidget<InboxController> {
                   children: [
                     Text(
                       "hello".tr,
-                      style: Theme
-                          .of(context)
+                      style: Theme.of(context)
                           .textTheme
                           .headline2!
                           .copyWith(color: Colors.grey, fontSize: 14),
@@ -415,14 +443,8 @@ class InboxPage extends GetWidget<InboxController> {
                     FittedBox(
                       child: Text(
                         //  "hello".tr +
-                        "${secureStorage.readSecureData(
-                            AllStringConst.FirstName)} ${secureStorage
-                            .readSecureData(AllStringConst.LastName)}",
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .headline2!
-                            .copyWith(
+                        "${secureStorage.readSecureData(AllStringConst.FirstName)} ${secureStorage.readSecureData(AllStringConst.LastName)}",
+                        style: Theme.of(context).textTheme.headline2!.copyWith(
                             color: createMaterialColor(
                               const Color.fromRGBO(77, 77, 77, 1),
                             ),
@@ -488,16 +510,12 @@ class InboxPage extends GetWidget<InboxController> {
                           child: Text(
                             "sharedServicesAdministration".tr,
                             style:
-                            Theme
-                                .of(context)
-                                .textTheme
-                                .headline2!
-                                .copyWith(
-                              color: createMaterialColor(
-                                const Color.fromRGBO(77, 77, 77, 1),
-                              ),
-                              fontSize: 15,
-                            ),
+                                Theme.of(context).textTheme.headline2!.copyWith(
+                                      color: createMaterialColor(
+                                        const Color.fromRGBO(77, 77, 77, 1),
+                                      ),
+                                      fontSize: 15,
+                                    ),
                             textAlign: TextAlign.start,
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
@@ -535,8 +553,7 @@ class InboxPage extends GetWidget<InboxController> {
                       left: 30, right: 30, top: 0, bottom: 0),
                   child: Text(
                     "appTitle".tr,
-                    style: Theme
-                        .of(context)
+                    style: Theme.of(context)
                         .textTheme
                         .headline1!
                         .copyWith(color: Colors.white, fontSize: 25),
@@ -578,41 +595,29 @@ class InboxPage extends GetWidget<InboxController> {
   _buildTopInboxMenu(BuildContext context) {
     return Container(
       color: Colors.transparent,
-      width: MediaQuery
-          .of(context)
-          .size
-          .width,
-      height: MediaQuery
-          .of(context)
-          .size
-          .height,
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
       child: DefaultTabController(
         length: 3,
         child: ContainedTabBarView(
           tabs: [
             Text(
               "all".tr,
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .headline1!
-                  .copyWith(
-                color: Colors.grey,
-                fontSize: 21,
-              ),
+              style: Theme.of(context).textTheme.headline1!.copyWith(
+                    color: Colors.grey,
+                    fontSize: 21,
+                  ),
             ),
             Text(
               "incoming".tr,
-              style: Theme
-                  .of(context)
+              style: Theme.of(context)
                   .textTheme
                   .headline1!
                   .copyWith(color: Colors.grey, fontSize: 21),
             ),
             Text(
               "outgoing".tr,
-              style: Theme
-                  .of(context)
+              style: Theme.of(context)
                   .textTheme
                   .headline1!
                   .copyWith(color: Colors.grey, fontSize: 21),
@@ -626,15 +631,9 @@ class InboxPage extends GetWidget<InboxController> {
             // ),
           ],
           tabBarProperties: TabBarProperties(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width * .3,
+            width: MediaQuery.of(context).size.width * .3,
             height: 70.0,
-            indicatorColor: Theme
-                .of(context)
-                .colorScheme
-                .primary,
+            indicatorColor: Theme.of(context).colorScheme.primary,
             indicatorWeight: 5.0,
             labelColor: Colors.black.withOpacity(.7),
             unselectedLabelColor: Colors.black.withOpacity(.5),
@@ -667,80 +666,80 @@ class InboxPage extends GetWidget<InboxController> {
                 child: controller.getData
                     ? const Center(child: CircularProgressIndicator())
                     : Column(
-                  children: [
-                    Visibility(
-                        visible: true, child: _filterMail(context)),
-                    Expanded(
-                      child: CustomListView(
-                        function: controller.onRefresh(),
-                        correspondences: controller.allCorrespondences,
-                        scrollController: controller.scrollController,
-                        haveMoreData: controller.haveMoreData,
-                        onClickItem: () {
-                          //     Get.toNamed("/DocumentPage");
-                        },
-                        functionSummary: () {},
-                        //allCorrespondences: controller.allCorrespondences,
-                        customActions: controller.customActions,
-                        functionReply: () {},
-                        functionTrunsfer: () {},
-                        functionComplet: () {},
-                      ),
-                    ),
-                  ],
-                )),
+                        children: [
+                          Visibility(
+                              visible: true, child: _filterMail(context)),
+                          Expanded(
+                            child: CustomListView(
+                              function: controller.onRefresh(),
+                              correspondences: controller.allCorrespondences,
+                              scrollController: controller.scrollController,
+                              haveMoreData: controller.haveMoreData,
+                              onClickItem: () {
+                                //     Get.toNamed("/DocumentPage");
+                              },
+                              functionSummary: () {},
+                              //allCorrespondences: controller.allCorrespondences,
+                              customActions: controller.customActions,
+                              functionReply: () {},
+                              functionTrunsfer: () {},
+                              functionComplet: () {},
+                            ),
+                          ),
+                        ],
+                      )),
             Center(
                 child: controller.getData
                     ? const Center(child: CircularProgressIndicator())
                     : Column(
-                  children: [
-                    Visibility(
-                        visible: true, child: _filterMail(context)),
-                    Expanded(
-                      child: CustomListView(
-                        function: controller.onRefresh(),
-                        correspondences: controller.allCorrespondences,
-                        scrollController: controller.scrollController,
-                        haveMoreData: controller.haveMoreData,
-                        onClickItem: () {
-                          Get.toNamed("/DocumentPage");
-                        },
-                        functionSummary: () {},
-                        //allCorrespondences: controller.allCorrespondences,
-                        customActions: controller.customActions,
-                        functionReply: () {},
-                        functionTrunsfer: () {},
-                        functionComplet: () {},
-                      ),
-                    ),
-                  ],
-                )),
+                        children: [
+                          Visibility(
+                              visible: true, child: _filterMail(context)),
+                          Expanded(
+                            child: CustomListView(
+                              function: controller.onRefresh(),
+                              correspondences: controller.allCorrespondences,
+                              scrollController: controller.scrollController,
+                              haveMoreData: controller.haveMoreData,
+                              onClickItem: () {
+                                Get.toNamed("/DocumentPage");
+                              },
+                              functionSummary: () {},
+                              //allCorrespondences: controller.allCorrespondences,
+                              customActions: controller.customActions,
+                              functionReply: () {},
+                              functionTrunsfer: () {},
+                              functionComplet: () {},
+                            ),
+                          ),
+                        ],
+                      )),
             Center(
                 child: controller.getData
                     ? const Center(child: CircularProgressIndicator())
                     : Column(
-                  children: [
-                    Visibility(
-                        visible: true, child: _filterMail(context)),
-                    Expanded(
-                      child: CustomListView(
-                        function: controller.onRefresh(),
-                        correspondences: controller.allCorrespondences,
-                        scrollController: controller.scrollController,
-                        haveMoreData: controller.haveMoreData,
-                        onClickItem: () {
-                          Get.toNamed("/DocumentPage");
-                        },
-                        functionSummary: () {},
-                        //allCorrespondences: [],
-                        customActions: [],
-                        functionReply: () {},
-                        functionTrunsfer: () {},
-                        functionComplet: () {},
-                      ),
-                    ),
-                  ],
-                )),
+                        children: [
+                          Visibility(
+                              visible: true, child: _filterMail(context)),
+                          Expanded(
+                            child: CustomListView(
+                              function: controller.onRefresh(),
+                              correspondences: controller.allCorrespondences,
+                              scrollController: controller.scrollController,
+                              haveMoreData: controller.haveMoreData,
+                              onClickItem: () {
+                                Get.toNamed("/DocumentPage");
+                              },
+                              functionSummary: () {},
+                              //allCorrespondences: [],
+                              customActions: [],
+                              functionReply: () {},
+                              functionTrunsfer: () {},
+                              functionComplet: () {},
+                            ),
+                          ),
+                        ],
+                      )),
             // Center(
             //     child: controller.getData
             //         ? const Center(child: CircularProgressIndicator())
@@ -852,9 +851,7 @@ class InboxPage extends GetWidget<InboxController> {
                 true,
                 "", () {
               controller.nodeId = 0;
-              Get
-                  .find<InboxController>()
-                  .isAllOrNot = true;
+              Get.find<InboxController>().isAllOrNot = true;
               Get.find<InboxController>()
                   .getAllCorrespondencesData(context: context, inboxId: 1);
               controller.update();
@@ -866,11 +863,9 @@ class InboxPage extends GetWidget<InboxController> {
               "assets/images/outgoing_icon.png",
               false,
               "",
-                  () {
+              () {
                 controller.nodeId = 0;
-                Get
-                    .find<InboxController>()
-                    .isAllOrNot = true;
+                Get.find<InboxController>().isAllOrNot = true;
                 Get.find<InboxController>()
                     .getAllCorrespondencesData(context: context, inboxId: 5);
                 controller.update();
@@ -890,8 +885,7 @@ class InboxPage extends GetWidget<InboxController> {
       height: calculateHeight(50, context),
       child: Text(
         title,
-        style: Theme
-            .of(context)
+        style: Theme.of(context)
             .textTheme
             .headline2!
             .copyWith(color: Colors.grey.shade500, fontSize: 15),
@@ -907,8 +901,7 @@ class InboxPage extends GetWidget<InboxController> {
         color: Colors.transparent,
         child: ListView.builder(
             shrinkWrap: true,
-            itemCount: Get
-                .find<LandingPageController>()
+            itemCount: Get.find<LandingPageController>()
                 .dashboardStatsResultModel!
                 .inboxCategories
                 ?.length,
@@ -921,8 +914,7 @@ class InboxPage extends GetWidget<InboxController> {
                   //   .inboxCategories![pos].value!.nodeId==controller.nodeId?Colors.red:Colors.orange),
                   child: GestureDetector(
                     onTap: () {
-                      controller.nodeId = Get
-                          .find<LandingPageController>()
+                      controller.nodeId = Get.find<LandingPageController>()
                           .dashboardStatsResultModel!
                           .inboxCategories![pos]
                           .value!
@@ -941,32 +933,26 @@ class InboxPage extends GetWidget<InboxController> {
                             ? FractionalOffset.centerLeft
                             : FractionalOffset.centerRight,
                         child: Text(
-                          Get
-                              .find<LandingPageController>()
+                          Get.find<LandingPageController>()
                               .dashboardStatsResultModel!
                               .inboxCategories![pos]
                               .key!,
-                          style: Theme
-                              .of(context)
+                          style: Theme.of(context)
                               .textTheme
                               .headline1!
                               .copyWith(
-                            color: createMaterialColor(
-                              Get
-                                  .find<LandingPageController>()
-                                  .dashboardStatsResultModel!
-                                  .inboxCategories![pos]
-                                  .value!
-                                  .nodeId ==
-                                  controller.nodeId
-                                  ? Theme
-                                  .of(context)
-                                  .colorScheme
-                                  .primary
-                                  : gray,
-                            ),
-                            fontSize: 20,
-                          ),
+                                color: createMaterialColor(
+                                  Get.find<LandingPageController>()
+                                              .dashboardStatsResultModel!
+                                              .inboxCategories![pos]
+                                              .value!
+                                              .nodeId ==
+                                          controller.nodeId
+                                      ? Theme.of(context).colorScheme.primary
+                                      : gray,
+                                ),
+                                fontSize: 20,
+                              ),
                           textAlign: TextAlign.start,
                         ),
                       ),
@@ -976,133 +962,129 @@ class InboxPage extends GetWidget<InboxController> {
               );
             })
 
-      //     Get.find<LandingPageController>()!
-      //     .dashboardStatsResultModel!
-      //     .inboxCategories!
-      //     .map(
-      //       (e) => TableRow(
-      //     children: [
-      //       TableRowInkWell(
-      //         onTap: () {
-      //
-      //           //   openInbox(context);
-      //         },
-      //         child: _buildInboxesRow(
-      //           context,
-      //           e.key!,
-      //           e.value!.count!,
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // )
-      //     .toList(),
-      //
-      // Column(
-      //   crossAxisAlignment: CrossAxisAlignment.start,
-      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //   children: [
-      //     GestureDetector(
-      //       // onTap:,
-      //       child: SizedBox(
-      //         //   width: double.infinity,
-      //         height: calculateHeight(80, context),
-      //         child: Align(
-      //           alignment: isDirectionRTL(context)
-      //               ? FractionalOffset.centerLeft
-      //               : FractionalOffset.centerRight,
-      //           child: Text(
-      //             "allInbox".tr,
-      //             style: Theme.of(context).textTheme.headline1!.copyWith(
-      //                   color: createMaterialColor(
-      //                     Color.fromRGBO(100, 100, 100, 1),
-      //                   ),
-      //                   fontSize: 20,
-      //                 ),
-      //             textAlign: TextAlign.start,
-      //           ),
-      //         ),
-      //       ),
-      //     ),
-      //     // SizedBox(
-      //     //   //width: double.infinity,
-      //     //   height: 80,
-      //     //   child: Align(
-      //     //     alignment: isDirectionRTL(context)
-      //     //         ? FractionalOffset.centerLeft
-      //     //         : FractionalOffset.centerRight,
-      //     //     child: Text(
-      //     //       "forAction".tr,
-      //     //       style: Theme.of(context).textTheme.headline1!.copyWith(
-      //     //           color: createMaterialColor(
-      //     //             const Color.fromRGBO(100, 100, 100, 1),
-      //     //           ),
-      //     //           fontSize: 20),
-      //     //       textAlign: TextAlign.start,
-      //     //     ),
-      //     //   ),
-      //     // ),
-      //     // SizedBox(
-      //     //   height: calculateHeight(80, context),
-      //     //   child: Align(
-      //     //     alignment: isDirectionRTL(context)
-      //     //         ? FractionalOffset.centerLeft
-      //     //         : FractionalOffset.centerRight,
-      //     //     child: Text(
-      //     //       "forSignature".tr,
-      //     //       style: Theme.of(context).textTheme.headline1!.copyWith(
-      //     //             color: createMaterialColor(
-      //     //               const Color.fromRGBO(100, 100, 100, 1),
-      //     //             ),
-      //     //             fontSize: 20,
-      //     //           ),
-      //     //       textAlign: TextAlign.start,
-      //     //     ),
-      //     //   ),
-      //     // ),
-      //     // SizedBox(
-      //     //   width: double.infinity,
-      //     //   height: 80,
-      //     //   child: Align(
-      //     //     alignment: isDirectionRTL(context)
-      //     //         ? FractionalOffset.centerLeft
-      //     //         : FractionalOffset.centerRight,
-      //     //     child: Text(
-      //     //       "forInfo".tr,
-      //     //       style: Theme.of(context).textTheme.headline1!.copyWith(
-      //     //             color: createMaterialColor(
-      //     //               Color.fromRGBO(100, 100, 100, 1),
-      //     //             ),
-      //     //             fontSize: 20,
-      //     //           ),
-      //     //       textAlign: TextAlign.start,
-      //     //     ),
-      //     //   ),
-      //     // )
-      //   ],
-      // ),
-      //
-      //
+        //     Get.find<LandingPageController>()!
+        //     .dashboardStatsResultModel!
+        //     .inboxCategories!
+        //     .map(
+        //       (e) => TableRow(
+        //     children: [
+        //       TableRowInkWell(
+        //         onTap: () {
+        //
+        //           //   openInbox(context);
+        //         },
+        //         child: _buildInboxesRow(
+        //           context,
+        //           e.key!,
+        //           e.value!.count!,
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // )
+        //     .toList(),
+        //
+        // Column(
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: [
+        //     GestureDetector(
+        //       // onTap:,
+        //       child: SizedBox(
+        //         //   width: double.infinity,
+        //         height: calculateHeight(80, context),
+        //         child: Align(
+        //           alignment: isDirectionRTL(context)
+        //               ? FractionalOffset.centerLeft
+        //               : FractionalOffset.centerRight,
+        //           child: Text(
+        //             "allInbox".tr,
+        //             style: Theme.of(context).textTheme.headline1!.copyWith(
+        //                   color: createMaterialColor(
+        //                     Color.fromRGBO(100, 100, 100, 1),
+        //                   ),
+        //                   fontSize: 20,
+        //                 ),
+        //             textAlign: TextAlign.start,
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //     // SizedBox(
+        //     //   //width: double.infinity,
+        //     //   height: 80,
+        //     //   child: Align(
+        //     //     alignment: isDirectionRTL(context)
+        //     //         ? FractionalOffset.centerLeft
+        //     //         : FractionalOffset.centerRight,
+        //     //     child: Text(
+        //     //       "forAction".tr,
+        //     //       style: Theme.of(context).textTheme.headline1!.copyWith(
+        //     //           color: createMaterialColor(
+        //     //             const Color.fromRGBO(100, 100, 100, 1),
+        //     //           ),
+        //     //           fontSize: 20),
+        //     //       textAlign: TextAlign.start,
+        //     //     ),
+        //     //   ),
+        //     // ),
+        //     // SizedBox(
+        //     //   height: calculateHeight(80, context),
+        //     //   child: Align(
+        //     //     alignment: isDirectionRTL(context)
+        //     //         ? FractionalOffset.centerLeft
+        //     //         : FractionalOffset.centerRight,
+        //     //     child: Text(
+        //     //       "forSignature".tr,
+        //     //       style: Theme.of(context).textTheme.headline1!.copyWith(
+        //     //             color: createMaterialColor(
+        //     //               const Color.fromRGBO(100, 100, 100, 1),
+        //     //             ),
+        //     //             fontSize: 20,
+        //     //           ),
+        //     //       textAlign: TextAlign.start,
+        //     //     ),
+        //     //   ),
+        //     // ),
+        //     // SizedBox(
+        //     //   width: double.infinity,
+        //     //   height: 80,
+        //     //   child: Align(
+        //     //     alignment: isDirectionRTL(context)
+        //     //         ? FractionalOffset.centerLeft
+        //     //         : FractionalOffset.centerRight,
+        //     //     child: Text(
+        //     //       "forInfo".tr,
+        //     //       style: Theme.of(context).textTheme.headline1!.copyWith(
+        //     //             color: createMaterialColor(
+        //     //               Color.fromRGBO(100, 100, 100, 1),
+        //     //             ),
+        //     //             fontSize: 20,
+        //     //           ),
+        //     //       textAlign: TextAlign.start,
+        //     //     ),
+        //     //   ),
+        //     // )
+        //   ],
+        // ),
+        //
+        //
 
-    );
+        );
   }
 
   _buildBotomMenuInboxes(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     return Container(
       padding: const EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 0),
       // width: double.infinity,
       // color: Colors.transparent,
       child: Row(
-          children: Get
-              .find<LandingPageController>()
+          children: Get.find<LandingPageController>()
               .dashboardStatsResultModel!
               .inboxCategories!
               .map(
-                (e) =>
-                Expanded(
+                (e) => Expanded(
                   child: GestureDetector(
                     onTap: () {
                       controller.nodeId = e.value!.nodeId;
@@ -1129,122 +1111,118 @@ class InboxPage extends GetWidget<InboxController> {
                             : FractionalOffset.centerLeft,
                         child: Text(
                           e.key!,
-                          style: Theme
-                              .of(context)
+                          style: Theme.of(context)
                               .textTheme
                               .headline1!
                               .copyWith(
-                            color: createMaterialColor(
-                              e.value!.nodeId == controller.nodeId
-                                  ? Theme
-                                  .of(context)
-                                  .colorScheme
-                                  .primary
-                                  : gray,
-                            ),
-                            fontSize: 20,
-                          ),
+                                color: createMaterialColor(
+                                  e.value!.nodeId == controller.nodeId
+                                      ? Theme.of(context).colorScheme.primary
+                                      : gray,
+                                ),
+                                fontSize: 20,
+                              ),
                           textAlign: TextAlign.start,
                         ),
                       ),
                     ),
                   ),
                 ),
-          )
+              )
               .toList()
 
-        // [
-        //
-        //
-        //
-        //
-        //   Expanded(
-        //     child: GestureDetector(
-        //       // onTap:,
-        //       child: SizedBox(
-        //         width: size.width * .2,
-        //         height: calculateHeight(80, context),
-        //         child: Align(
-        //           alignment: isDirectionRTL(context)
-        //               ? FractionalOffset.centerRight
-        //               : FractionalOffset.centerLeft,
-        //           child: Text(
-        //             "allInbox".tr,
-        //             style: Theme.of(context).textTheme.headline1!.copyWith(
-        //                   color: createMaterialColor(
-        //                     Color.fromRGBO(100, 100, 100, 1),
-        //                   ),
-        //                   fontSize: 20,
-        //                 ),
-        //             textAlign: TextAlign.start,
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        //   // Expanded(
-        //   //   child: SizedBox(
-        //   //     //  width: size.width*.2,
-        //   //     height: calculateHeight(80, context),
-        //   //     child: Align(
-        //   //       alignment: isDirectionRTL(context)
-        //   //           ? FractionalOffset.centerRight
-        //   //           : FractionalOffset.centerLeft,
-        //   //       child: Text(
-        //   //         "forAction".tr,
-        //   //         style: Theme.of(context).textTheme.headline1!.copyWith(
-        //   //             color: createMaterialColor(
-        //   //               const Color.fromRGBO(100, 100, 100, 1),
-        //   //             ),
-        //   //             fontSize: 20),
-        //   //         textAlign: TextAlign.start,
-        //   //       ),
-        //   //     ),
-        //   //   ),
-        //   // ),
-        //   // Expanded(
-        //   //   child: SizedBox(
-        //   //     height: calculateHeight(80, context),
-        //   //     child: Align(
-        //   //       alignment: isDirectionRTL(context)
-        //   //           ? FractionalOffset.centerRight
-        //   //           : FractionalOffset.centerLeft,
-        //   //       child: Text(
-        //   //         "forSignature".tr,
-        //   //         style: Theme.of(context).textTheme.headline1!.copyWith(
-        //   //               color: createMaterialColor(
-        //   //                 const Color.fromRGBO(100, 100, 100, 1),
-        //   //               ),
-        //   //               fontSize: 20,
-        //   //             ),
-        //   //         textAlign: TextAlign.start,
-        //   //       ),
-        //   //     ),
-        //   //   ),
-        //   // ),
-        //   // Expanded(
-        //   //   child: SizedBox(
-        //   //     //  width: size.width*.2,
-        //   //     height: calculateHeight(80, context),
-        //   //     child: Align(
-        //   //       alignment: isDirectionRTL(context)
-        //   //           ? FractionalOffset.centerRight
-        //   //           : FractionalOffset.centerLeft,
-        //   //       child: Text(
-        //   //         "forInfo".tr,
-        //   //         style: Theme.of(context).textTheme.headline1!.copyWith(
-        //   //               color: createMaterialColor(
-        //   //                 Color.fromRGBO(100, 100, 100, 1),
-        //   //               ),
-        //   //               fontSize: 20,
-        //   //             ),
-        //   //         textAlign: TextAlign.start,
-        //   //       ),
-        //   //     ),
-        //   //   ),
-        //   // )
-        // ],
-      ),
+          // [
+          //
+          //
+          //
+          //
+          //   Expanded(
+          //     child: GestureDetector(
+          //       // onTap:,
+          //       child: SizedBox(
+          //         width: size.width * .2,
+          //         height: calculateHeight(80, context),
+          //         child: Align(
+          //           alignment: isDirectionRTL(context)
+          //               ? FractionalOffset.centerRight
+          //               : FractionalOffset.centerLeft,
+          //           child: Text(
+          //             "allInbox".tr,
+          //             style: Theme.of(context).textTheme.headline1!.copyWith(
+          //                   color: createMaterialColor(
+          //                     Color.fromRGBO(100, 100, 100, 1),
+          //                   ),
+          //                   fontSize: 20,
+          //                 ),
+          //             textAlign: TextAlign.start,
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          //   // Expanded(
+          //   //   child: SizedBox(
+          //   //     //  width: size.width*.2,
+          //   //     height: calculateHeight(80, context),
+          //   //     child: Align(
+          //   //       alignment: isDirectionRTL(context)
+          //   //           ? FractionalOffset.centerRight
+          //   //           : FractionalOffset.centerLeft,
+          //   //       child: Text(
+          //   //         "forAction".tr,
+          //   //         style: Theme.of(context).textTheme.headline1!.copyWith(
+          //   //             color: createMaterialColor(
+          //   //               const Color.fromRGBO(100, 100, 100, 1),
+          //   //             ),
+          //   //             fontSize: 20),
+          //   //         textAlign: TextAlign.start,
+          //   //       ),
+          //   //     ),
+          //   //   ),
+          //   // ),
+          //   // Expanded(
+          //   //   child: SizedBox(
+          //   //     height: calculateHeight(80, context),
+          //   //     child: Align(
+          //   //       alignment: isDirectionRTL(context)
+          //   //           ? FractionalOffset.centerRight
+          //   //           : FractionalOffset.centerLeft,
+          //   //       child: Text(
+          //   //         "forSignature".tr,
+          //   //         style: Theme.of(context).textTheme.headline1!.copyWith(
+          //   //               color: createMaterialColor(
+          //   //                 const Color.fromRGBO(100, 100, 100, 1),
+          //   //               ),
+          //   //               fontSize: 20,
+          //   //             ),
+          //   //         textAlign: TextAlign.start,
+          //   //       ),
+          //   //     ),
+          //   //   ),
+          //   // ),
+          //   // Expanded(
+          //   //   child: SizedBox(
+          //   //     //  width: size.width*.2,
+          //   //     height: calculateHeight(80, context),
+          //   //     child: Align(
+          //   //       alignment: isDirectionRTL(context)
+          //   //           ? FractionalOffset.centerRight
+          //   //           : FractionalOffset.centerLeft,
+          //   //       child: Text(
+          //   //         "forInfo".tr,
+          //   //         style: Theme.of(context).textTheme.headline1!.copyWith(
+          //   //               color: createMaterialColor(
+          //   //                 Color.fromRGBO(100, 100, 100, 1),
+          //   //               ),
+          //   //               fontSize: 20,
+          //   //             ),
+          //   //         textAlign: TextAlign.start,
+          //   //       ),
+          //   //     ),
+          //   //   ),
+          //   // )
+          // ],
+          ),
     );
   }
 
@@ -1283,8 +1261,7 @@ class InboxPage extends GetWidget<InboxController> {
                 width: double.infinity,
                 child: Text(
                   title,
-                  style: Theme
-                      .of(context)
+                  style: Theme.of(context)
                       .textTheme
                       .headline1!
                       .copyWith(color: Colors.grey, fontSize: 20),
@@ -1304,184 +1281,163 @@ class InboxPage extends GetWidget<InboxController> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Row( //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            title: Row(//mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.asset(
-                    'assets/images/refer.png'
-                    //
-                    ,
-                    height: 20,
-                    width: 20,
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    "refer".tr,
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .headlineMedium!
-                        .copyWith(
-                        color: Colors.black.withOpacity(.5),
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const Spacer(),
-                  InkWell(
-                    onTap: () {
-                      controller.filterWord = "";
-                      Navigator.pop(context);
-                    },
-                    child: Image.asset(
-                      'assets/images/close_button.png',
-                      width: 30,
-                      height: 30,
-                    ),
-                  ),
-                ]),
+              Image.asset(
+                'assets/images/refer.png'
+                //
+                ,
+                height: 20,
+                width: 20,
+              ),
+              const SizedBox(
+                width: 8,
+              ),
+              Text(
+                "refer".tr,
+                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                    color: Colors.black.withOpacity(.5),
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const Spacer(),
+              InkWell(
+                onTap: () {
+                  controller.filterWord = "";
+                  Navigator.pop(context);
+                },
+                child: Image.asset(
+                  'assets/images/close_button.png',
+                  width: 30,
+                  height: 30,
+                ),
+              ),
+            ]),
             content: SingleChildScrollView(
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("referTo".tr,
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .headline3!
-                            .copyWith(
+                        style: Theme.of(context).textTheme.headline3!.copyWith(
                             color: Colors.black.withOpacity(.5),
                             fontSize: 18,
                             fontWeight: FontWeight.bold)),
                     Container(
                       height: 100,
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width * .8,
-                      child: GetBuilder<InboxController>( //autoRemove: false,
+                      width: MediaQuery.of(context).size.width * .8,
+                      child: GetBuilder<InboxController>(//autoRemove: false,
 
                           builder: (logic) {
-                            return ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: (controller
-                                    .favoriteRecipientsResponse
-                                    ?.recipients?.length ??
+                        return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: (controller.favoriteRecipientsResponse
+                                        ?.recipients?.length ??
                                     0) +
-                                    1,
-                                itemBuilder: (context, pos) {
-                                  if (pos ==
-                                      (controller.favoriteRecipientsResponse
+                                1,
+                            itemBuilder: (context, pos) {
+                              if (pos ==
+                                  (controller.favoriteRecipientsResponse
                                           ?.recipients?.length ??
-                                          0)) {
-                                    return InkWell(
-                                      onTap: () {
-                                        _popUpMenuMore(context);
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.all(8),
-                                        child: Icon(Icons.add,
-                                            size: 30, color: Colors.white),
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color:
-                                          Theme
-                                              .of(context)
-                                              .colorScheme
-                                              .primary,
-                                        ),
-                                        height: 75,
-                                        width: 75,
-                                      ),
-                                    );
-                                  } else {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: InkWell(
-                                        onTap: () {
-                                          Destination user = Destination(
-                                              value: controller
-                                                  .favoriteRecipientsResponse!
-                                                  .recipients![pos]
-                                                  .targetName,
-                                              id: controller
-                                                  .favoriteRecipientsResponse!
-                                                  .recipients![pos]
-                                                  .targetGctid);
-                                          controller.addTousersWillSendTo(
-                                              user: user);
-                                        },
-                                        child: Card(
-                                          elevation: 8,
-                                          child: Row(
-                                            children: [
-                                              controller
+                                      0)) {
+                                return InkWell(
+                                  onTap: () {
+                                    _popUpMenuMore(context);
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(8),
+                                    child: Icon(Icons.add,
+                                        size: 30, color: Colors.white),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
+                                    height: 75,
+                                    width: 75,
+                                  ),
+                                );
+                              } else {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Destination user = Destination(
+                                          value: controller
+                                              .favoriteRecipientsResponse!
+                                              .recipients![pos]
+                                              .targetName,
+                                          id: controller
+                                              .favoriteRecipientsResponse!
+                                              .recipients![pos]
+                                              .targetGctid);
+                                      controller.addTousersWillSendTo(
+                                          user: user);
+                                    },
+                                    child: Card(
+                                      elevation: 8,
+                                      child: Row(
+                                        children: [
+                                          controller
                                                   .favoriteRecipientsResponse!
                                                   .recipients![pos]
                                                   .targetPhotoBs64!
                                                   .trim()
                                                   .isEmpty
-                                                  ? Container(
-                                                padding: EdgeInsets.all(8),
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: Theme
-                                                        .of(context)
-                                                        .colorScheme
-                                                        .primary,
-                                                    image: DecorationImage(
-                                                        image: AssetImage(
-                                                          "assets/images/pr.jpg",
-                                                        ),
-                                                        fit: BoxFit.cover)),
-                                                height: 75,
-                                                width: 75,
-                                              )
-                                                  : Container(
-                                                padding: EdgeInsets.all(8),
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: Theme
-                                                        .of(context)
-                                                        .colorScheme
-                                                        .primary,
-                                                    image: DecorationImage(
-                                                        image: MemoryImage(
-                                                            dataFromBase64String(
-                                                                controller
-                                                                    .favoriteRecipientsResponse!
-                                                                    .recipients![
-                                                                pos]
-                                                                    .targetPhotoBs64!)),
-                                                        fit: BoxFit.cover)),
-                                                height: 75,
-                                                width: 75,
-                                              ),
-                                              Text(controller
-                                                  .favoriteRecipientsResponse!
-                                                  .recipients![pos]
-                                                  .targetName!)
-                                            ],
-                                          ),
-                                        ),
+                                              ? Container(
+                                                  padding: EdgeInsets.all(8),
+                                                  decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primary,
+                                                      image: DecorationImage(
+                                                          image: AssetImage(
+                                                            "assets/images/pr.jpg",
+                                                          ),
+                                                          fit: BoxFit.cover)),
+                                                  height: 75,
+                                                  width: 75,
+                                                )
+                                              : Container(
+                                                  padding: EdgeInsets.all(8),
+                                                  decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primary,
+                                                      image: DecorationImage(
+                                                          image: MemoryImage(
+                                                              dataFromBase64String(controller
+                                                                  .favoriteRecipientsResponse!
+                                                                  .recipients![
+                                                                      pos]
+                                                                  .targetPhotoBs64!)),
+                                                          fit: BoxFit.cover)),
+                                                  height: 75,
+                                                  width: 75,
+                                                ),
+                                          Text(controller
+                                              .favoriteRecipientsResponse!
+                                              .recipients![pos]
+                                              .targetName!)
+                                        ],
                                       ),
-                                    );
-                                  }
+                                    ),
+                                  ),
+                                );
+                              }
 
-                                  //  CircleAvatar(backgroundColor: Colors.red,backgroundImage: AssetImage("assets/images/pr.jpg",),,radius: 30,);
-                                });
-                          }),
+                              //  CircleAvatar(backgroundColor: Colors.red,backgroundImage: AssetImage("assets/images/pr.jpg",),,radius: 30,);
+                            });
+                      }),
                     ),
                     const Divider(
                       color: Colors.grey,
                     ),
                     SizedBox(
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width * .8,
+                        width: MediaQuery.of(context).size.width * .8,
                         height: 300, // MediaQuery.of(context).size.height * .5,
                         child: GetBuilder<InboxController>(
                           //autoRemove: false,
@@ -1489,49 +1445,48 @@ class InboxPage extends GetWidget<InboxController> {
                           builder: (logic) {
                             return //Text(logic.filterWord);
 
-                              ListView.builder(
-                                  scrollDirection: Axis.vertical,
-                                  itemCount:
-                                  controller.usersWillSendTo.length,
-                                  itemBuilder: (context, pos) {
-                                    return //Text(controller.filterWord);
+                                ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    itemCount:
+                                        controller.usersWillSendTo.length,
+                                    itemBuilder: (context, pos) {
+                                      return //Text(controller.filterWord);
 
-                                      Padding(
+                                          Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Container(
                                           color: Colors.grey[200],
                                           child: Column(children: [
                                             Row(
                                                 crossAxisAlignment:
-                                                CrossAxisAlignment.center,
+                                                    CrossAxisAlignment.center,
                                                 children: [
                                                   Text(
                                                     "name".tr,
-                                                    style: Theme
-                                                        .of(context)
+                                                    style: Theme.of(context)
                                                         .textTheme
                                                         .headline3!
                                                         .copyWith(
-                                                      color:
-                                                      createMaterialColor(
-                                                        const Color
-                                                            .fromRGBO(
-                                                            77, 77, 77, 1),
-                                                      ),
-                                                      fontSize: 15,
-                                                    ),
+                                                          color:
+                                                              createMaterialColor(
+                                                            const Color
+                                                                    .fromRGBO(
+                                                                77, 77, 77, 1),
+                                                          ),
+                                                          fontSize: 15,
+                                                        ),
                                                     textAlign: TextAlign.center,
                                                     overflow:
-                                                    TextOverflow.ellipsis,
+                                                        TextOverflow.ellipsis,
                                                   ),
                                                   Padding(
                                                     padding:
-                                                    const EdgeInsets.all(
-                                                        8.0),
+                                                        const EdgeInsets.all(
+                                                            8.0),
                                                     child: Text(logic
-                                                        .usersWillSendTo[
-                                                    pos]
-                                                        .value ??
+                                                            .usersWillSendTo[
+                                                                pos]
+                                                            .value ??
                                                         ""),
                                                     // child: Container(
                                                     //   height: 50,
@@ -1552,14 +1507,13 @@ class InboxPage extends GetWidget<InboxController> {
                                                           "i deeeeeeeeeeeeeeeeeeeeeeee");
                                                       controller.transfarForMany
                                                           .remove(logic
-                                                          .usersWillSendTo[
-                                                      pos]
-                                                          .id);
-                                                      logic
-                                                          .delTousersWillSendTo(
-                                                          user: logic
                                                               .usersWillSendTo[
-                                                          pos]);
+                                                                  pos]
+                                                              .id);
+                                                      logic.delTousersWillSendTo(
+                                                          user: logic
+                                                                  .usersWillSendTo[
+                                                              pos]);
                                                     },
                                                     child: Image.asset(
                                                       'assets/images/close_button.png',
@@ -1593,11 +1547,11 @@ class InboxPage extends GetWidget<InboxController> {
                                                     child: DropdownButton<
                                                         CustomActions>(
                                                       alignment:
-                                                      Alignment.topRight,
+                                                          Alignment.topRight,
                                                       value: logic.getactions(
                                                           logic
                                                               .usersWillSendTo[
-                                                          pos]
+                                                                  pos]
                                                               .id),
                                                       // icon: const Icon(
                                                       //     Icons.arrow_downward),
@@ -1606,11 +1560,11 @@ class InboxPage extends GetWidget<InboxController> {
                                                       underline: SizedBox(),
                                                       hint: Text("اختار"),
                                                       onChanged: (CustomActions?
-                                                      newValue) {
+                                                          newValue) {
                                                         controller.setactions(
                                                             logic
                                                                 .usersWillSendTo[
-                                                            pos]
+                                                                    pos]
                                                                 .id,
                                                             newValue!);
                                                         //  dropdownValue = newValue!;
@@ -1618,17 +1572,17 @@ class InboxPage extends GetWidget<InboxController> {
                                                       items: controller
                                                           .customActions
                                                           ?.map<
-                                                          DropdownMenuItem<
-                                                              CustomActions>>(
+                                                                  DropdownMenuItem<
+                                                                      CustomActions>>(
                                                               (CustomActions
-                                                          value) {
-                                                            return DropdownMenuItem<
-                                                                CustomActions>(
-                                                              value: value,
-                                                              child:
+                                                                  value) {
+                                                        return DropdownMenuItem<
+                                                            CustomActions>(
+                                                          value: value,
+                                                          child:
                                                               Text(value.name!),
-                                                            );
-                                                          }).toList(),
+                                                        );
+                                                      }).toList(),
                                                     ),
                                                   ),
                                                 ),
@@ -1641,8 +1595,8 @@ class InboxPage extends GetWidget<InboxController> {
                                                       color: Colors.grey[300],
                                                       child: Row(
                                                         mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
                                                         children: [
                                                           GestureDetector(
                                                             onTap: () async {
@@ -1652,48 +1606,45 @@ class InboxPage extends GetWidget<InboxController> {
                                                               ///
                                                               // controller.canOpenDocumentModel.correspondence.docDueDate
                                                               controller.record
-                                                                  .isRecording
+                                                                      .isRecording
                                                                   ? controller
-                                                                  .stopMathod2()
+                                                                      .stopMathod2()
                                                                   : controller
-                                                                  .recordMathod2(
-                                                                id: logic
-                                                                    .usersWillSendTo[
-                                                                pos]
-                                                                    .id,
-                                                              );
+                                                                      .recordMathod2(
+                                                                      id: logic
+                                                                          .usersWillSendTo[
+                                                                              pos]
+                                                                          .id,
+                                                                    );
                                                             },
                                                             child: Padding(
                                                               padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
                                                               child: GetBuilder<
-                                                                  InboxController>(
-                                                                //id: "record",//autoRemove: false,
+                                                                      InboxController>(
+                                                                  //id: "record",//autoRemove: false,
                                                                   builder:
                                                                       (logic) {
-                                                                    return Icon(
-                                                                        controller
-                                                                            .record
-                                                                            .isRecording
-                                                                            ? Icons
-                                                                            .stop
-                                                                            : Icons
-                                                                            .mic);
-                                                                  }),
+                                                                return Icon(controller
+                                                                        .record
+                                                                        .isRecording
+                                                                    ? Icons.stop
+                                                                    : Icons
+                                                                        .mic);
+                                                              }),
                                                             ),
                                                           ),
                                                           Padding(
                                                             padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
+                                                                const EdgeInsets
+                                                                    .all(8.0),
                                                             child: InkWell(
                                                               onTap: () {
-                                                                controller
-                                                                    .playMathod2(
+                                                                controller.playMathod2(
                                                                     id: logic
                                                                         .usersWillSendTo[
-                                                                    pos]
+                                                                            pos]
                                                                         .id);
                                                               },
                                                               child: Icon(Icons
@@ -1713,8 +1664,8 @@ class InboxPage extends GetWidget<InboxController> {
                                                 onChanged: (v) {
                                                   controller
                                                       .multiTransferNode[logic
-                                                      .usersWillSendTo[pos]
-                                                      .id]
+                                                          .usersWillSendTo[pos]
+                                                          .id]
                                                       ?.note = v;
                                                   controller.setNots2(
                                                       id: logic
@@ -1732,7 +1683,7 @@ class InboxPage extends GetWidget<InboxController> {
                                           ]),
                                         ),
                                       );
-                                  });
+                                    });
                           },
                         ))
                   ]),
@@ -1744,13 +1695,13 @@ class InboxPage extends GetWidget<InboxController> {
                   ///send to many
 
                   controller.multipleTransferspost2(
-                    //     docDueDate:controller.
-                    // correspondences[pos].docDueDate ,
+                      //     docDueDate:controller.
+                      // correspondences[pos].docDueDate ,
                       context: context,
                       transferId:
-                      controller.allCorrespondences[pos].transferId!,
+                          controller.allCorrespondences[pos].transferId!,
                       correspondenceId:
-                      controller.allCorrespondences[pos].correspondenceId);
+                          controller.allCorrespondences[pos].correspondenceId);
                   Navigator.pop(context);
                 },
                 child: Text("Ok"),
@@ -1832,44 +1783,40 @@ class InboxPage extends GetWidget<InboxController> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Row( //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            title: Row(//mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.asset(
-                    'assets/images/refer.png'
-                    //
-                    ,
-                    height: 20,
-                    width: 20,
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    "refer".tr,
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .headline3!
-                        .copyWith(
-                        color: Colors.black.withOpacity(.5),
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const Spacer(),
-                  InkWell(
-                    onTap: () {
-                      controller.filterWord = "";
-                      Navigator.pop(context);
-                    },
-                    child: Image.asset(
-                      'assets/images/close_button.png',
-                      width: 30,
-                      height: 30,
-                    ),
-                  ),
-                ]),
+              Image.asset(
+                'assets/images/refer.png'
+                //
+                ,
+                height: 20,
+                width: 20,
+              ),
+              const SizedBox(
+                width: 8,
+              ),
+              Text(
+                "refer".tr,
+                style: Theme.of(context).textTheme.headline3!.copyWith(
+                    color: Colors.black.withOpacity(.5),
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const Spacer(),
+              InkWell(
+                onTap: () {
+                  controller.filterWord = "";
+                  Navigator.pop(context);
+                },
+                child: Image.asset(
+                  'assets/images/close_button.png',
+                  width: 30,
+                  height: 30,
+                ),
+              ),
+            ]),
             content: SingleChildScrollView(
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -1883,8 +1830,7 @@ class InboxPage extends GetWidget<InboxController> {
                             child: Container(
                                 decoration: BoxDecoration(
                                     border: Border.all(
-                                        color: Theme
-                                            .of(context)
+                                        color: Theme.of(context)
                                             .colorScheme
                                             .primary),
                                     borderRadius: const BorderRadius.all(
@@ -1927,119 +1873,108 @@ class InboxPage extends GetWidget<InboxController> {
                     ),
                     Text("referTo".tr),
                     SizedBox(
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width * .8,
+                        width: MediaQuery.of(context).size.width * .8,
                         height: 100,
                         child: Row(
                           children: [
                             Expanded(
                                 child: GetBuilder<DocumentController>(
-                                  autoRemove: false,
-                                  assignId: true, //tag: "alluser",
-                                  builder: (logic) {
-                                    return ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: controller.users.length,
-                                        itemBuilder: (context, pos) {
-                                          List<String>? a =
+                              autoRemove: false,
+                              assignId: true, //tag: "alluser",
+                              builder: (logic) {
+                                return ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: controller.users.length,
+                                    itemBuilder: (context, pos) {
+                                      List<String>? a =
                                           logic.users[pos].value?.split(" ");
 
-                                          // bool a=logic.user?[pos].value?.contains(logic.filterWord)??false;
-                                          if (logic.users[pos].value
+                                      // bool a=logic.user?[pos].value?.contains(logic.filterWord)??false;
+                                      if (logic.users[pos].value
                                               ?.contains(logic.filterWord) ??
-                                              false) {
-                                            return Padding(
-                                              padding: const EdgeInsets.all(
-                                                  8.0),
-                                              child: InkWell(
-                                                onTap: () {
-                                                  if (!controller
-                                                      .usersWillSendTo
-                                                      .contains(
-                                                      logic.users[pos])) {
-                                                    controller
-                                                        .addTousersWillSendTo(
-                                                        user: logic.users[pos]);
-                                                    controller
-                                                        .SetMultipleReplyWithVoiceNoteRequestModel(
+                                          false) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: InkWell(
+                                            onTap: () {
+                                              if (!controller.usersWillSendTo
+                                                  .contains(logic.users[pos])) {
+                                                controller.addTousersWillSendTo(
+                                                    user: logic.users[pos]);
+                                                controller
+                                                    .SetMultipleReplyWithVoiceNoteRequestModel(
                                                         correspondencesId: controller
                                                             .allCorrespondences[
-                                                        pos]
+                                                                pos]
                                                             .correspondenceId!,
                                                         transferId: controller
                                                             .allCorrespondences[
-                                                        pos]
+                                                                pos]
                                                             .transferId!,
                                                         id: logic
                                                             .users[pos].id!);
-                                                  }
-                                                },
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color: Theme
-                                                            .of(context)
-                                                            .colorScheme
-                                                            .primary,
-                                                        width: 1),
+                                              }
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary,
+                                                    width: 1),
+                                              ),
+                                              padding: EdgeInsets.all(2.0),
+                                              child: Row(
+                                                children: [
+                                                  Container(
+                                                    height: 50,
+                                                    width: 50,
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primary,
+                                                    ),
+                                                    child: Center(
+                                                        child: FittedBox(
+                                                            child: Text(
+                                                                "${a?[0][0]} ${a?[0][0] ?? ""}"))),
                                                   ),
-                                                  padding: EdgeInsets.all(2.0),
-                                                  child: Row(
-                                                    children: [
-                                                      Container(
-                                                        height: 50,
-                                                        width: 50,
-                                                        decoration: BoxDecoration(
-                                                          shape: BoxShape
-                                                              .circle,
-                                                          color: Theme
-                                                              .of(context)
-                                                              .colorScheme
-                                                              .primary,
-                                                        ),
-                                                        child: Center(
-                                                            child: FittedBox(
-                                                                child: Text(
-                                                                    "${a?[0][0]} ${a?[0][0] ??
-                                                                        ""}"))),
-                                                      ),
-                                                      Padding(
-                                                          padding:
+                                                  Padding(
+                                                      padding:
                                                           const EdgeInsets.only(
                                                               top: 2.0,
                                                               bottom: 2,
                                                               right: 8,
                                                               left: 8),
-                                                          child: Text(
-                                                            logic.users[pos]
+                                                      child: Text(
+                                                        logic.users[pos]
                                                                 .value ??
-                                                                "",
-                                                            maxLines: 3,
-                                                            softWrap: true,
-                                                          )
+                                                            "",
+                                                        maxLines: 3,
+                                                        softWrap: true,
+                                                      )
 
-                                                        //
-                                                        // Container(
-                                                        //   height: 50,
-                                                        //   width: 50,
-                                                        //   decoration: const BoxDecoration(
-                                                        //       shape: BoxShape.circle,
-                                                        //       color: Colors.green),
-                                                        // ),
+                                                      //
+                                                      // Container(
+                                                      //   height: 50,
+                                                      //   width: 50,
+                                                      //   decoration: const BoxDecoration(
+                                                      //       shape: BoxShape.circle,
+                                                      //       color: Colors.green),
+                                                      // ),
                                                       ),
-                                                    ],
-                                                  ),
-                                                ),
+                                                ],
                                               ),
-                                            );
-                                          } else {
-                                            return SizedBox();
-                                          }
-                                        });
-                                  },
-                                )),
+                                            ),
+                                          ),
+                                        );
+                                      } else {
+                                        return SizedBox();
+                                      }
+                                    });
+                              },
+                            )),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(

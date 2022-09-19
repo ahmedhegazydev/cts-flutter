@@ -310,7 +310,15 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
         top: yPosition,
         left: xPosition,
         child: GestureDetector(
-          onTapDown: (details) {},
+          behavior: HitTestBehavior.translucent,
+          onTapDown: (details) {
+            if (s.viewerIsEditable.value) return;
+            s.selectedActionIndex.value = 0;
+
+            s.setEditable(true);
+            FocusScope.of(context).requestFocus();
+            print(details);
+          },
           onTapUp: (details) {
             setState(() {
               isEditing = !isEditing;

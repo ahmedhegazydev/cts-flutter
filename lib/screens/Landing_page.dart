@@ -49,8 +49,8 @@ class _BasketListTileState extends State<BasketListTile> {
 
 class LandingPage extends GetWidget<LandingPageController> {
   SecureStorage secureStorage = SecureStorage();
-  Color pickerColor = Color(0x0d2b40);
-  Color currentColor = Color(0x0d2b40);
+  Color pickerColor = Color.fromARGB(255, 6, 94, 107);
+  Color currentColor = Color.fromARGB(255, 6, 94, 107);
   InboxController inboxController = Get.put<InboxController>(InboxController());
 
   LoginController loginController = Get.put<LoginController>(LoginController());
@@ -812,7 +812,7 @@ class LandingPage extends GetWidget<LandingPageController> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return SingleChildScrollView(
-        child:Column(
+        child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -1400,10 +1400,11 @@ class LandingPage extends GetWidget<LandingPageController> {
           onTap: () {
             showDialog(
                 context: context,
-                builder: (context) =>
-                    AlertDialog(
+                builder: (context) => AlertDialog(
                         title: Text(
-                          "selectAppColor".tr, style: TextStyle(fontSize: 20),),
+                          "selectAppColor".tr,
+                          style: TextStyle(fontSize: 20),
+                        ),
                         content: Container(
                           height: screenHeight / 1.5,
                           child: Column(
@@ -1411,8 +1412,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                               children: [
                                 buildColorPicker(),
                                 Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 30, bottom: 10),
+                                    padding:
+                                        EdgeInsets.only(top: 30, bottom: 10),
                                     child: Text("selectAppLanguage".tr,
                                         style: TextStyle(fontSize: 20))),
                                 Padding(
@@ -1427,21 +1428,19 @@ class LandingPage extends GetWidget<LandingPageController> {
                                             bottom: 0),
                                         height: 60,
                                         decoration: BoxDecoration(
-                                            color:
-                                            Theme
-                                                .of(context)
+                                            color: Theme.of(context)
                                                 .colorScheme
                                                 .primary,
-                                            borderRadius: const BorderRadius
-                                                .all(
-                                                Radius.circular(6))),
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(6))),
                                         child: ElevatedButton(
                                           onPressed: () {
-                                            var locale = const Locale(
-                                                'ar', 'AR');
+                                            var locale =
+                                                const Locale('ar', 'AR');
                                             Get.updateLocale(locale);
                                             SecureStorage secureStorage =
-                                            SecureStorage();
+                                                SecureStorage();
 
                                             secureStorage.writeSecureData(
                                                 AllStringConst.AppLan, "ar");
@@ -1449,8 +1448,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                           },
                                           child: Text(
                                             "العربية",
-                                            style: Theme
-                                                .of(context)
+                                            style: Theme.of(context)
                                                 .textTheme
                                                 .headline2!
                                                 .copyWith(color: Colors.white),
@@ -1471,20 +1469,18 @@ class LandingPage extends GetWidget<LandingPageController> {
                                             bottom: 0),
                                         height: 60,
                                         decoration: BoxDecoration(
-                                            color:
-                                            Theme
-                                                .of(context)
+                                            color: Theme.of(context)
                                                 .colorScheme
                                                 .primary,
-                                            borderRadius: const BorderRadius
-                                                .all(
-                                                Radius.circular(6))),
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(6))),
                                         child: ElevatedButton(
                                           onPressed: () {
-                                            var locale = const Locale(
-                                                'en', 'US');
+                                            var locale =
+                                                const Locale('en', 'US');
                                             SecureStorage secureStorage =
-                                            SecureStorage();
+                                                SecureStorage();
 
                                             secureStorage.writeSecureData(
                                                 AllStringConst.AppLan, "en");
@@ -1493,8 +1489,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                           },
                                           child: Text(
                                             "English",
-                                            style: Theme
-                                                .of(context)
+                                            style: Theme.of(context)
                                                 .textTheme
                                                 .headline2!
                                                 .copyWith(color: Colors.white),
@@ -1510,27 +1505,21 @@ class LandingPage extends GetWidget<LandingPageController> {
                         actions: <Widget>[
                           TextButton(
                             //style: flatButtonStyle,
-                              onPressed: () {
-                                SecureStorage secureStorage = SecureStorage();
-                                secureStorage.writeSecureData(
-                                    AllStringConst.AppColor,
-                                    Get
-                                        .find<MController>()
-                                        .appcolor
-                                        .value);
-                                Navigator.of(context).pop();
-                              },
-                              child: Text(
-                                "save".tr,
-                                style: TextStyle(
-                                    fontSize: 20, color: Theme
-                                    .of(context)
-                                    .colorScheme
-                                    .primary),
-                              ),
+                            onPressed: () {
+                              SecureStorage secureStorage = SecureStorage();
+                              secureStorage.writeSecureData(
+                                  AllStringConst.AppColor,
+                                  Get.find<MController>().appcolor.value);
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              "save".tr,
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Theme.of(context).colorScheme.primary),
                             ),
-                        ]
-                    ));
+                          ),
+                        ]));
           },
           child: Container(
             height: 100,
@@ -2150,20 +2139,10 @@ class LandingPage extends GetWidget<LandingPageController> {
   }
 
   _buildSideMenuPort(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
-    var appLocale = Localizations
-        .localeOf(context)
-        .languageCode;
-    double screenHeight = MediaQuery
-        .of(context)
-        .size
-        .height;
-    double screenWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
+    Size size = MediaQuery.of(context).size;
+    var appLocale = Localizations.localeOf(context).languageCode;
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
 
     return Container(
       height: 150,
@@ -2193,8 +2172,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                   child: Text(
                     "mySignatures".tr,
                     textAlign: TextAlign.center,
-                    style: Theme
-                        .of(context)
+                    style: Theme.of(context)
                         .textTheme
                         .headline3!
                         .copyWith(color: Colors.grey.shade600),
@@ -2215,7 +2193,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                   padding: EdgeInsets.only(
                       right: size.width * .2, left: size.width * .2),
                   child: Container(
-                    //height: 100,
+                      //height: 100,
                       margin: EdgeInsets.all(20),
                       padding: EdgeInsets.all(20),
                       decoration: const BoxDecoration(
@@ -2231,10 +2209,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                     fontWeight: FontWeight.bold,
                                     fontSize: 24,
                                     color:
-                                    Theme
-                                        .of(context)
-                                        .colorScheme
-                                        .primary)),
+                                        Theme.of(context).colorScheme.primary)),
                             Spacer(),
                             InkWell(
                               onTap: () {
@@ -2255,9 +2230,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                               Expanded(
                                 child: TypeAheadField<Destination>(
                                   textFieldConfiguration:
-                                  TextFieldConfiguration(
+                                      TextFieldConfiguration(
                                     controller:
-                                    controller.textEditingControllerTo,
+                                        controller.textEditingControllerTo,
                                     // autofocus: true,
                                     // style: DefaultTextStyle.of(context)
                                     //     .style
@@ -2279,9 +2254,9 @@ class LandingPage extends GetWidget<LandingPageController> {
 
                                     return // Te(v.originalName!);
 
-                                      ListTile(
-                                        title: FilterText(v.value!),
-                                      );
+                                        ListTile(
+                                      title: FilterText(v.value!),
+                                    );
                                   },
                                   onSuggestionSelected: (suggestion) {
                                     Destination v = suggestion;
@@ -2311,11 +2286,11 @@ class LandingPage extends GetWidget<LandingPageController> {
                             return Expanded(
                               child: ListView.separated(
                                   separatorBuilder: (context, index) =>
-                                  const Divider(),
+                                      const Divider(),
                                   itemCount: controller
-                                      .favoriteRecipientsResponse
-                                      ?.recipients
-                                      ?.length ??
+                                          .favoriteRecipientsResponse
+                                          ?.recipients
+                                          ?.length ??
                                       0,
                                   itemBuilder: (context, pos) {
                                     return Padding(
@@ -2326,36 +2301,35 @@ class LandingPage extends GetWidget<LandingPageController> {
                                           children: [
                                             Padding(
                                               padding:
-                                              const EdgeInsets.all(4.0),
+                                                  const EdgeInsets.all(4.0),
                                               child: Container(
                                                 width: 30,
                                                 height: 30,
                                                 decoration: BoxDecoration(
                                                     shape: BoxShape.circle,
                                                     image: controller
-                                                        .favoriteRecipientsResponse!
-                                                        .recipients![pos]
-                                                        .targetPhotoBs64!
-                                                        .isNotEmpty
+                                                            .favoriteRecipientsResponse!
+                                                            .recipients![pos]
+                                                            .targetPhotoBs64!
+                                                            .isNotEmpty
                                                         ? DecorationImage(
-                                                        image: MemoryImage(u
-                                                            .dataFromBase64String(
-                                                            controller
-                                                                .favoriteRecipientsResponse!
-                                                                .recipients![
-                                                            pos]
-                                                                .targetPhotoBs64!)))
+                                                            image: MemoryImage(u
+                                                                .dataFromBase64String(controller
+                                                                    .favoriteRecipientsResponse!
+                                                                    .recipients![
+                                                                        pos]
+                                                                    .targetPhotoBs64!)))
                                                         : DecorationImage(
-                                                        image: AssetImage(
-                                                            "assets/images/pr.jpg"))),
+                                                            image: AssetImage(
+                                                                "assets/images/pr.jpg"))),
                                               ),
                                             ),
                                             Expanded(
                                               child: Text(
                                                   controller
-                                                      .favoriteRecipientsResponse!
-                                                      .recipients![pos]
-                                                      .targetName ??
+                                                          .favoriteRecipientsResponse!
+                                                          .recipients![pos]
+                                                          .targetName ??
                                                       "",
                                                   maxLines: 3),
                                             ),
@@ -2364,13 +2338,13 @@ class LandingPage extends GetWidget<LandingPageController> {
                                                 onTap: () {
                                                   controller
                                                       .removeFavoriteRecipients(
-                                                      context: context,
-                                                      favoriteRecipients:
-                                                      controller
-                                                          .favoriteRecipientsResponse!
-                                                          .recipients![
-                                                      pos]
-                                                          .ufrId);
+                                                          context: context,
+                                                          favoriteRecipients:
+                                                              controller
+                                                                  .favoriteRecipientsResponse!
+                                                                  .recipients![
+                                                                      pos]
+                                                                  .ufrId);
 
                                                   print(
                                                       " i removeeeeeeeeeeeeeeeeeeeeee");
@@ -2407,8 +2381,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                   Text(
                     "favoritesUsers".tr,
                     textAlign: TextAlign.center,
-                    style: Theme
-                        .of(context)
+                    style: Theme.of(context)
                         .textTheme
                         .headline3!
                         .copyWith(color: Colors.grey.shade600),
@@ -2433,7 +2406,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                     padding: EdgeInsets.only(
                         right: size.width * .2, left: size.width * .2),
                     child: Container(
-                      //height: 100,
+                        //height: 100,
                         margin: EdgeInsets.all(20),
                         padding: EdgeInsets.all(20),
                         decoration: const BoxDecoration(
@@ -2452,8 +2425,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20,
-                                          color: Theme
-                                              .of(context)
+                                          color: Theme.of(context)
                                               .colorScheme
                                               .primary)),
                                   Spacer(),
@@ -2472,74 +2444,71 @@ class LandingPage extends GetWidget<LandingPageController> {
 
                               GetBuilder<LandingPageController>(
                                   builder: (logic) {
-                                    return SizedBox(
-                                      height: 100,
-                                      child: ListView.builder(
-                                          scrollDirection: Axis.horizontal,
-                                          itemCount: controller
+                                return SizedBox(
+                                  height: 100,
+                                  child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: controller
                                               .favoriteRecipientsResponse
                                               ?.recipients
                                               ?.length ??
-                                              0,
-                                          itemBuilder: (context, pos) {
-                                            return InkWell(
-                                              onTap: () {
-                                                Destination d = Destination(
-                                                    id: controller
-                                                        .favoriteRecipientsResponse!
-                                                        .recipients![pos]
-                                                        .targetGctid,
-                                                    value: controller
-                                                        .favoriteRecipientsResponse!
-                                                        .recipients![pos]
-                                                        .targetName);
-                                                controller
-                                                    .toSaveMyRoutingSettings =
-                                                    d;
-                                                controller
-                                                    .textEditingControllerTorouting
-                                                    .text = d.value!;
-                                                controller
-                                                    .textEditingControllerTo
-                                                    .text = d.value!;
-                                                print(
-                                                    "0000000000000000000000000000");
-                                                logic.update();
-                                              },
-                                              child: Row(
-                                                children: [
-                                                  Container(
-                                                    padding: EdgeInsets.only(
-                                                        right: 8, left: 8),
-                                                    decoration: BoxDecoration(
-                                                        shape: BoxShape.circle,
-                                                        color: Theme
-                                                            .of(context)
-                                                            .colorScheme
-                                                            .primary,
-                                                        image: DecorationImage(
-                                                            image: AssetImage(
-                                                              "assets/images/pr.jpg",
-                                                            ),
-                                                            fit: BoxFit.cover)),
-                                                    height: 75,
-                                                    width: 75,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 4,
-                                                  ),
-                                                  Text(controller
-                                                      .favoriteRecipientsResponse!
-                                                      .recipients![pos]
-                                                      .targetName!)
-                                                ],
+                                          0,
+                                      itemBuilder: (context, pos) {
+                                        return InkWell(
+                                          onTap: () {
+                                            Destination d = Destination(
+                                                id: controller
+                                                    .favoriteRecipientsResponse!
+                                                    .recipients![pos]
+                                                    .targetGctid,
+                                                value: controller
+                                                    .favoriteRecipientsResponse!
+                                                    .recipients![pos]
+                                                    .targetName);
+                                            controller.toSaveMyRoutingSettings =
+                                                d;
+                                            controller
+                                                .textEditingControllerTorouting
+                                                .text = d.value!;
+                                            controller.textEditingControllerTo
+                                                .text = d.value!;
+                                            print(
+                                                "0000000000000000000000000000");
+                                            logic.update();
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    right: 8, left: 8),
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary,
+                                                    image: DecorationImage(
+                                                        image: AssetImage(
+                                                          "assets/images/pr.jpg",
+                                                        ),
+                                                        fit: BoxFit.cover)),
+                                                height: 75,
+                                                width: 75,
                                               ),
-                                            );
+                                              SizedBox(
+                                                width: 4,
+                                              ),
+                                              Text(controller
+                                                  .favoriteRecipientsResponse!
+                                                  .recipients![pos]
+                                                  .targetName!)
+                                            ],
+                                          ),
+                                        );
 
-                                            //  CircleAvatar(backgroundColor: Colors.red,backgroundImage: AssetImage("assets/images/pr.jpg",),,radius: 30,);
-                                          }),
-                                    );
-                                  }),
+                                        //  CircleAvatar(backgroundColor: Colors.red,backgroundImage: AssetImage("assets/images/pr.jpg",),,radius: 30,);
+                                      }),
+                                );
+                              }),
 
                               SizedBox(
                                 height: 3,
@@ -2549,9 +2518,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                                   Expanded(
                                     child: TypeAheadField<Destination>(
                                       textFieldConfiguration:
-                                      TextFieldConfiguration(
+                                          TextFieldConfiguration(
                                         controller:
-                                        controller.textEditingControllerTo,
+                                            controller.textEditingControllerTo,
                                         // autofocus: true,
                                         // style: DefaultTextStyle.of(context)
                                         //     .style
@@ -2562,10 +2531,9 @@ class LandingPage extends GetWidget<LandingPageController> {
                                       ),
                                       suggestionsCallback: (pattern) async {
                                         return controller.users.where(
-                                                (element) =>
-                                                element.value!
-                                                    .toLowerCase()
-                                                    .contains(
+                                            (element) => element.value!
+                                                .toLowerCase()
+                                                .contains(
                                                     pattern.toLowerCase()));
 
                                         //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
@@ -2575,9 +2543,9 @@ class LandingPage extends GetWidget<LandingPageController> {
 
                                         return // Te(v.originalName!);
 
-                                          ListTile(
-                                            title: FilterText(v.value!),
-                                          );
+                                            ListTile(
+                                          title: FilterText(v.value!),
+                                        );
                                       },
                                       onSuggestionSelected: (suggestion) {
                                         Destination v = suggestion;
@@ -2612,11 +2580,10 @@ class LandingPage extends GetWidget<LandingPageController> {
                                   child: Container(
                                       height: 60,
                                       padding:
-                                      EdgeInsets.only(right: 8, left: 8),
+                                          EdgeInsets.only(right: 8, left: 8),
                                       decoration: BoxDecoration(
                                           border: Border.all(
-                                              color: Theme
-                                                  .of(context)
+                                              color: Theme.of(context)
                                                   .colorScheme
                                                   .primary),
                                           borderRadius: const BorderRadius.all(
@@ -2643,11 +2610,10 @@ class LandingPage extends GetWidget<LandingPageController> {
                                   child: Container(
                                       height: 60,
                                       padding:
-                                      EdgeInsets.only(right: 8, left: 8),
+                                          EdgeInsets.only(right: 8, left: 8),
                                       decoration: BoxDecoration(
                                           border: Border.all(
-                                              color: Theme
-                                                  .of(context)
+                                              color: Theme.of(context)
                                                   .colorScheme
                                                   .primary),
                                           borderRadius: const BorderRadius.all(
@@ -2662,8 +2628,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                                           labelText: "end".tr,
                                         ),
                                       )
-                                    //   Center(child: Text(controller.toDocDate))
-                                  ),
+                                      //   Center(child: Text(controller.toDocDate))
+                                      ),
                                 ),
                               ),
                               //  Text("reason".tr),
@@ -2672,8 +2638,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                   padding: EdgeInsets.only(right: 16, left: 16),
                                   decoration: BoxDecoration(
                                       border: Border.all(
-                                          color: Theme
-                                              .of(context)
+                                          color: Theme.of(context)
                                               .colorScheme
                                               .primary),
                                       borderRadius: const BorderRadius.all(
@@ -2686,14 +2651,14 @@ class LandingPage extends GetWidget<LandingPageController> {
                                       labelText: "reason".tr,
                                     ),
                                   )
-                                //   Center(child: Text(controller.toDocDate))
-                              ),
+                                  //   Center(child: Text(controller.toDocDate))
+                                  ),
                               SizedBox(
                                 height: 10,
                               ),
                               Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   Expanded(
                                     child: Container(
@@ -2701,8 +2666,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                           left: 0, right: 0, top: 0, bottom: 0),
                                       height: 60,
                                       decoration: BoxDecoration(
-                                          color: Theme
-                                              .of(context)
+                                          color: Theme.of(context)
                                               .colorScheme
                                               .primary,
                                           borderRadius: const BorderRadius.all(
@@ -2710,55 +2674,53 @@ class LandingPage extends GetWidget<LandingPageController> {
                                       child: ElevatedButton(
                                         onPressed: () {
                                           MyTransferRoutingDtoSend mytr =
-                                          MyTransferRoutingDtoSend(
-                                              Name: controller
-                                                  .toSaveMyRoutingSettings!
-                                                  .value!,
-                                              GctId: controller
-                                                  .toSaveMyRoutingSettings!
-                                                  .id,
-                                              NameAr: controller
-                                                  .toSaveMyRoutingSettings!
-                                                  .value,
-                                              CrtComments: controller
-                                                  .textEditingControllerToroutingReson
-                                                  .text,
-                                              CrtFromDate: controller
-                                                  .textEditingControllerFromDate
-                                                  .text
-                                                  .replaceAll("-", "/"),
-                                              CrtId: controller
-                                                  .getMyRoutingSettingsModel
-                                                  ?.routing
-                                                  ?.crtId ??
-                                                  0,
-                                              // controller.getMyRoutingSettingsModel.routing,
-                                              CrtToDate: controller
-                                                  .textEditingControllerToDate
-                                                  .text
-                                                  .replaceAll("-", "/"),
-                                              CrtToGctid:
-                                              controller
-                                                  .toSaveMyRoutingSettings!.id,
-                                              DoRouting: true);
+                                              MyTransferRoutingDtoSend(
+                                                  Name: controller
+                                                      .toSaveMyRoutingSettings!
+                                                      .value!,
+                                                  GctId: controller
+                                                      .toSaveMyRoutingSettings!
+                                                      .id,
+                                                  NameAr: controller
+                                                      .toSaveMyRoutingSettings!
+                                                      .value,
+                                                  CrtComments: controller
+                                                      .textEditingControllerToroutingReson
+                                                      .text,
+                                                  CrtFromDate: controller
+                                                      .textEditingControllerFromDate
+                                                      .text
+                                                      .replaceAll("-", "/"),
+                                                  CrtId: controller
+                                                          .getMyRoutingSettingsModel
+                                                          ?.routing
+                                                          ?.crtId ??
+                                                      0,
+                                                  // controller.getMyRoutingSettingsModel.routing,
+                                                  CrtToDate: controller
+                                                      .textEditingControllerToDate
+                                                      .text
+                                                      .replaceAll("-", "/"),
+                                                  CrtToGctid:
+                                                      controller.toSaveMyRoutingSettings!.id,
+                                                  DoRouting: true);
 
                                           MyTransferRoutingRequestDto d =
-                                          MyTransferRoutingRequestDto(
-                                              Token: controller
-                                                  .secureStorage
-                                                  .token()!,
-                                              routing: mytr);
+                                              MyTransferRoutingRequestDto(
+                                                  Token: controller
+                                                      .secureStorage
+                                                      .token()!,
+                                                  routing: mytr);
                                           u.showLoaderDialog(context);
                                           controller
                                               .postSaveMyRoutingSettingsApi(
-                                              data: d, context: context);
+                                                  data: d, context: context);
 
                                           Get.back();
                                         },
                                         child: Text(
                                           "Save".tr,
-                                          style: Theme
-                                              .of(context)
+                                          style: Theme.of(context)
                                               .textTheme
                                               .headline2!
                                               .copyWith(color: Colors.white),
@@ -2776,8 +2738,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                           left: 0, right: 0, top: 0, bottom: 0),
                                       height: 60,
                                       decoration: BoxDecoration(
-                                          color: Theme
-                                              .of(context)
+                                          color: Theme.of(context)
                                               .colorScheme
                                               .primary,
                                           borderRadius: const BorderRadius.all(
@@ -2790,16 +2751,15 @@ class LandingPage extends GetWidget<LandingPageController> {
                                             "Token": controller.secureStorage
                                                 .token(),
                                             "Language":
-                                            Get.locale?.languageCode == "en"
-                                                ? "en"
-                                                : "ar"
+                                                Get.locale?.languageCode == "en"
+                                                    ? "en"
+                                                    : "ar"
                                           }, context: context);
                                           Get.back();
                                         },
                                         child: Text(
                                           "حذف".tr,
-                                          style: Theme
-                                              .of(context)
+                                          style: Theme.of(context)
                                               .textTheme
                                               .headline2!
                                               .copyWith(color: Colors.white),
@@ -2839,8 +2799,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                     child: Text(
                       "myDelegations".tr,
                       textAlign: TextAlign.center,
-                      style: Theme
-                          .of(context)
+                      style: Theme.of(context)
                           .textTheme
                           .headline3!
                           .copyWith(color: Colors.grey.shade600),
@@ -2966,8 +2925,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                     child: Text(
                       "Basket".tr,
                       textAlign: TextAlign.center,
-                      style: Theme
-                          .of(context)
+                      style: Theme.of(context)
                           .textTheme
                           .headline3!
                           .copyWith(color: Colors.grey.shade600),
@@ -2983,18 +2941,13 @@ class LandingPage extends GetWidget<LandingPageController> {
               ///open url and go to userGuideUrl
               //  controller.data.userGuideUrl
 
-              Get
-                  .find<WebViewPageController>()
-                  .isPdf = true;
+              Get.find<WebViewPageController>().isPdf = true;
 
-              Get
-                  .find<WebViewPageController>()
-                  .url =
+              Get.find<WebViewPageController>().url =
                   controller.data?.userGuideUrl;
 
               print(
-                  "controller.data?.userGuideUrl =>${controller.data
-                      ?.userGuideUrl}");
+                  "controller.data?.userGuideUrl =>${controller.data?.userGuideUrl}");
               Get.toNamed(
                 "WebViewPage",
               );
@@ -3023,8 +2976,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                     child: Text(
                       "userGuide".tr,
                       textAlign: TextAlign.center,
-                      style: Theme
-                          .of(context)
+                      style: Theme.of(context)
                           .textTheme
                           .headline3!
                           .copyWith(color: Colors.grey.shade600),
@@ -3038,8 +2990,7 @@ class LandingPage extends GetWidget<LandingPageController> {
             onTap: () {
               showDialog(
                   context: context,
-                  builder: (context) =>
-                      AlertDialog(
+                  builder: (context) => AlertDialog(
                           title: Text("selectAppColor".tr,
                               style: TextStyle(fontSize: 20)),
                           content: Container(
@@ -3050,105 +3001,96 @@ class LandingPage extends GetWidget<LandingPageController> {
                                 children: [
                                   buildColorPicker(),
                                   Padding(
-                                      padding: EdgeInsets.only(
-                                          top: 30, bottom: 10),
+                                      padding:
+                                          EdgeInsets.only(top: 30, bottom: 10),
                                       child: Text("selectAppLanguage".tr,
                                           style: TextStyle(fontSize: 20))),
                                   Padding(
                                     padding: const EdgeInsets.only(
                                         top: 8.0, bottom: 8, left: 8, right: 8),
-                                    child: Row(
-                                        children: [
-                                          Expanded(
-                                              child: Container(
-                                                padding: const EdgeInsets.only(
-                                                    left: 0,
-                                                    right: 0,
-                                                    top: 0,
-                                                    bottom: 0),
-                                                height: 60,
-                                                decoration: BoxDecoration(
-                                                    color: appLocale == "ar"?
-                                                    Theme
-                                                        .of(context)
-                                                        .colorScheme
-                                                        .primary
-                                                    : Colors.grey.shade500,
-                                                    borderRadius: const BorderRadius
-                                                        .all(
-                                                        Radius.circular(6))),
-                                                child: ElevatedButton(
-                                                  onPressed: () {
-                                                    var locale = const Locale(
-                                                        'ar', 'AR');
-                                                    SecureStorage secureStorage =
-                                                    SecureStorage();
+                                    child: Row(children: [
+                                      Expanded(
+                                          child: Container(
+                                        padding: const EdgeInsets.only(
+                                            left: 0,
+                                            right: 0,
+                                            top: 0,
+                                            bottom: 0),
+                                        height: 60,
+                                        decoration: BoxDecoration(
+                                            color: appLocale == "ar"
+                                                ? Theme.of(context)
+                                                    .colorScheme
+                                                    .primary
+                                                : Colors.grey.shade500,
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(6))),
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            var locale =
+                                                const Locale('ar', 'AR');
+                                            SecureStorage secureStorage =
+                                                SecureStorage();
 
-                                                    secureStorage
-                                                        .writeSecureData(
-                                                        AllStringConst.AppLan,
-                                                        "ar");
-                                                    Get.updateLocale(locale);
-                                                  },
-                                                  child: Text(
-                                                    "العربية",
-                                                    style: Theme
-                                                        .of(context)
-                                                        .textTheme
-                                                        .headline2!
-                                                        .copyWith(
-                                                        color: Colors.white),
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                ),
-                                              )),
-                                          SizedBox(width: 10,),
-                                          Expanded(
-                                              child: Container(
-                                                padding: const EdgeInsets.only(
-                                                    left: 0,
-                                                    right: 0,
-                                                    top: 0,
-                                                    bottom: 0),
-                                                height: 60,
-                                                decoration: BoxDecoration(
-                                                    color: appLocale == "en"?
-                                                    Theme
-                                                        .of(context)
-                                                        .colorScheme
-                                                        .primary
-                                                    : Theme
-                                                        .of(context)
-                                                        .colorScheme.secondary,
-                                                    borderRadius: const BorderRadius
-                                                        .all(
-                                                        Radius.circular(6))),
-                                                child: ElevatedButton(
-                                                  onPressed: () {
-                                                    var locale = const Locale(
-                                                        'en', 'US');
-                                                    SecureStorage secureStorage =
-                                                    SecureStorage();
+                                            secureStorage.writeSecureData(
+                                                AllStringConst.AppLan, "ar");
+                                            Get.updateLocale(locale);
+                                          },
+                                          child: Text(
+                                            "العربية",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline2!
+                                                .copyWith(color: Colors.white),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      )),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Expanded(
+                                          child: Container(
+                                        padding: const EdgeInsets.only(
+                                            left: 0,
+                                            right: 0,
+                                            top: 0,
+                                            bottom: 0),
+                                        height: 60,
+                                        decoration: BoxDecoration(
+                                            color: appLocale == "en"
+                                                ? Theme.of(context)
+                                                    .colorScheme
+                                                    .primary
+                                                : Theme.of(context)
+                                                    .colorScheme
+                                                    .secondary,
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(6))),
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            var locale =
+                                                const Locale('en', 'US');
+                                            SecureStorage secureStorage =
+                                                SecureStorage();
 
-                                                    secureStorage
-                                                        .writeSecureData(
-                                                        AllStringConst.AppLan,
-                                                        "en");
-                                                    Get.updateLocale(locale);
-                                                  },
-                                                  child: Text(
-                                                    "English",
-                                                    style: Theme
-                                                        .of(context)
-                                                        .textTheme
-                                                        .headline2!
-                                                        .copyWith(
-                                                        color: Colors.white),
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                ),
-                                              ))
-                                        ]),
+                                            secureStorage.writeSecureData(
+                                                AllStringConst.AppLan, "en");
+                                            Get.updateLocale(locale);
+                                          },
+                                          child: Text(
+                                            "English",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline2!
+                                                .copyWith(color: Colors.white),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ))
+                                    ]),
                                   ),
                                 ]),
                           ),
@@ -3158,19 +3100,15 @@ class LandingPage extends GetWidget<LandingPageController> {
                                 SecureStorage secureStorage = SecureStorage();
                                 secureStorage.writeSecureData(
                                     AllStringConst.AppColor,
-                                    Get
-                                        .find<MController>()
-                                        .appcolor
-                                        .value);
+                                    Get.find<MController>().appcolor.value);
                                 Navigator.of(context).pop();
                               },
                               child: Text(
                                 "save".tr,
                                 style: TextStyle(
-                                    fontSize: 20, color: Theme
-                                    .of(context)
-                                    .colorScheme
-                                    .primary),
+                                    fontSize: 20,
+                                    color:
+                                        Theme.of(context).colorScheme.primary),
                               ),
                             ),
                           ]));
@@ -3198,8 +3136,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                     child: Text(
                       "appTheme".tr,
                       textAlign: TextAlign.center,
-                      style: Theme
-                          .of(context)
+                      style: Theme.of(context)
                           .textTheme
                           .headline3!
                           .copyWith(color: Colors.grey.shade600),
@@ -3244,8 +3181,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                     child: Text(
                       "logout".tr,
                       textAlign: TextAlign.center,
-                      style: Theme
-                          .of(context)
+                      style: Theme.of(context)
                           .textTheme
                           .headline3!
                           .copyWith(color: Colors.grey.shade600),

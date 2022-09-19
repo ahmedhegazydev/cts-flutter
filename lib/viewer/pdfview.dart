@@ -10,19 +10,20 @@ import 'package:pdfx/pdfx.dart';
 //import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 import './MoveableStackItem.dart';
 import './controllers/viewerController.dart';
-import './measureSize.dart';
 import './pageContainer.dart';
 import './static/AnnotationTypes.dart';
 
 class PDFView extends StatefulWidget {
-  PDFView(
-      {Key? key,
-      // required this.screenWidth,
-      // required this.screenHeight,
-      required this.url,
-      required this.color})
-      : super(key: key);
+  PDFView({
+    Key? key,
+    // required this.screenWidth,
+    // required this.screenHeight,
+    required this.url,
+    required this.color,
+    required this.size,
+  }) : super(key: key);
 
+  Size size;
   String url;
   Color color;
   @override
@@ -45,10 +46,10 @@ class _PDFViewState extends State<PDFView> {
   }
 
   List<PdfPageImage> pages = [];
-  double pageWidth = 200;
-  double pageHeigt = 200;
-  double opageWidth = 200;
-  double opageHeigt = 200;
+  double dpageWidth = 0;
+  double dpageHeigt = 0;
+//   double opageWidth = 200;
+//   double opageHeigt = 200;
   // double screenWidth = 0;
   // double screenHeight = 0;
   Size myChildSize = Size.zero;
@@ -64,18 +65,23 @@ class _PDFViewState extends State<PDFView> {
     for (int i = 1; i <= document.pagesCount; i++) {
       final page = await document.getPage(i);
 
-      pageHeigt = page.height.toDouble();
-      pageWidth = page.width.toDouble();
-      opageHeigt = page.height.toDouble();
-      opageWidth = page.width.toDouble();
-      var aspect = screenWidthViewer / pageWidth;
+      dpageHeigt = page.height.toDouble();
+      dpageWidth = page.width.toDouble();
+      // opageHeigt = page.height.toDouble();
+      // opageWidth = page.width.toDouble();
+      var aspect = dpageWidth / widget.size.width;
 
-      pageHeigt = pageHeigt * aspect;
-      pageWidth = pageWidth * aspect;
+      // pageHeigt = pageHeigt * aspect;
+      // pageWidth = pageWidth * aspect;
 
-      calculateDimensions2();
-      final pageImage = await page.render(width: pageWidth, height: pageHeigt);
+      // calculateDimensions2();
+      final pageImage = await page.render(
+          width: widget.size.width, height: dpageHeigt / aspect);
       pages.add(pageImage!);
+      ViewerController.to.setScreenWidthAndHeight(
+          widget.size.width, widget.size.height / aspect);
+
+      ViewerController.to.screenHeight.value = widget.size.height / aspect;
       // ViewerController.to.addAnnotationList([]);
     }
     ViewerController.to.setupLists(document.pagesCount);
@@ -83,9 +89,9 @@ class _PDFViewState extends State<PDFView> {
   }
 
   //final ViewerController c = Get.find();
-  double screenWidthViewer = 300;
+  // double screenWidthViewer = 300;
 
-  double screenHeightViewer = 300;
+  // double screenHeightViewer = 300;
 
   // final double screenWidth;
   List<Widget> movableItems = [];
@@ -136,116 +142,80 @@ class _PDFViewState extends State<PDFView> {
   @override
   Widget build(BuildContext context) {
     // ViewerController.to.setScreenWidthAndHeight(pageWidth, pageHeigt);
-    //screenWidth = MediaQuery.of(context).size.width;
-    //screenHeight = MediaQuery.of(context).size.height;
+    // screenWidthViewer = MediaQuery.of(context).size.width;
+    // screenHeightViewer = MediaQuery.of(context).size.height;
     if (pages.isEmpty) {
-      return MeasureSize(
-        //setScreenWidthAndHeight
-        onChange: (size) {
-          //  setState(() {
-
-          calculateDimensions(size);
-          //});
-        },
-        child: Container(
-          // width: double.maxFinite,
-          //child: Expanded(child: CupertinoActivityIndicator(animating: true)),
-          color: Colors.grey[200],
-        ),
+      return Container(
+        child: CircularProgressIndicator.adaptive(),
+        // width: double.maxFinite,
+        //child: Expanded(child: CupertinoActivityIndicator(animating: true)),
+        color: Colors.grey[200],
       );
     } else {
-      return MeasureSize(
-        //setScreenWidthAndHeight
-        onChange: (size) {
-          //  setState(() {
-          calculateDimensions(size);
-          //});
-        },
-        child: Scaffold(
-            body: GetX<ViewerController>(
-              builder: (s) => InteractiveViewer(
-                scaleEnabled: s.selectedActionIndex.value == 0,
-                panEnabled: s.selectedActionIndex.value == 0,
-                minScale: 1.0,
-                maxScale: 4.0,
-                child: SingleChildScrollView(
-                  physics: s.selectedActionIndex.value != 0
-                      ? const NeverScrollableScrollPhysics()
-                      : const ScrollPhysics(),
-                  child: PDFColumn(
-                    pages: pages,
-                  ),
-                ),
-                //   ),
+      return Scaffold(
+        body: GetX<ViewerController>(
+          builder: (s) => InteractiveViewer(
+            scaleEnabled: s.selectedActionIndex.value == 0,
+            panEnabled: s.selectedActionIndex.value == 0,
+            minScale: 1.0,
+            maxScale: 4.0,
+            child: SingleChildScrollView(
+              physics: s.selectedActionIndex.value != 0
+                  ? const NeverScrollableScrollPhysics()
+                  : const ScrollPhysics(),
+              child: PDFColumn(
+                pages: pages,
               ),
             ),
-            // floatingActionButton: ExpandableFab(
-            //   distance: 112.0,
-            //   children: [
-            //     ActionButton(
-            //       onPressed: () => _showAction(context, 0),
-            //       icon: const Icon(Icons.text_fields),
-            //     ),
-            //     ActionButton(
-            //       onPressed: () => _showAction(context, 1),
-            //       icon: const Icon(Icons.draw),
-            //     ),
-            //     ActionButton(
-            //       onPressed: () => _showAction(context, 2),
-            //       icon: const Icon(Icons.format_shapes),
-            //     ),
-            //   ],
-            // ),
-            bottomNavigationBar: Obx(
-              () => BottomNavigationBar(
-                items: const <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.back_hand),
-                    label: 'view',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.edit),
-                    label: 'edit',
-                  ),
-                  // BottomNavigationBarItem(
-                  //   icon: Icon(Icons.add),
-                  //   label: 'annotation',
-                  // ),
-                ],
-                currentIndex: ViewerController.to.selectedActionIndex.value,
-                selectedItemColor: ViewerController.to.themeColor,
-                onTap: _onItemTapped,
-              ),
-            )),
+            //   ),
+          ),
+        ),
+        // bottomNavigationBar: Obx(
+        //   () => BottomNavigationBar(
+        //     items: const <BottomNavigationBarItem>[
+        //       BottomNavigationBarItem(
+        //         icon: Icon(Icons.back_hand),
+        //         label: 'view',
+        //       ),
+        //       BottomNavigationBarItem(
+        //         icon: Icon(Icons.edit),
+        //         label: 'edit',
+        //       ),
+        //       // BottomNavigationBarItem(
+        //       //   icon: Icon(Icons.add),
+        //       //   label: 'annotation',
+        //       // ),
+        //     ],
+        //     currentIndex: ViewerController.to.selectedActionIndex.value,
+        //     selectedItemColor: ViewerController.to.themeColor,
+        //     onTap: _onItemTapped,
+        //   ),
+        // ),
       );
     }
   }
 
-  void calculateDimensions(Size size) {
-    print(size);
-    myChildSize = size;
-    screenWidthViewer = size.width;
-    screenHeightViewer = size.height;
-    var aspect = screenWidthViewer / pageWidth;
+  // void calculateDimensions(Size size) {
+  //   print(size);
+  //   myChildSize = size;
+  //   // screenWidthViewer = size.width;
+  //   // screenHeightViewer = size.height;
+  //   // var aspect = screenWidthViewer / pageWidth;
 
-    // pageHeigt = pageHeigt * aspect;
-    // pageWidth = screenWidthViewer;
-    ViewerController.to.setScreenWidthAndHeight(
-        screenWidthViewer, screenHeightViewer * aspect);
+  //   // pageHeigt = pageHeigt * aspect;
+  //   // pageWidth = screenWidthViewer;
+  // }
 
-    ViewerController.to.screenHeight.value = screenHeightViewer * aspect;
-  }
+  // void calculateDimensions2() {
+  //   var aspect = screenWidthViewer / opageWidth;
 
-  void calculateDimensions2() {
-    var aspect = screenWidthViewer / opageWidth;
+  //   // pageHeigt = pageHeigt * aspect;
+  //   // pageWidth = screenWidthViewer;
+  //   ViewerController.to.setScreenWidthAndHeight(
+  //       screenWidthViewer, screenHeightViewer * aspect * 1.6);
 
-    // pageHeigt = pageHeigt * aspect;
-    // pageWidth = screenWidthViewer;
-    ViewerController.to.setScreenWidthAndHeight(
-        screenWidthViewer, screenHeightViewer * aspect * 1.6);
-
-    ViewerController.to.screenHeight.value = screenHeightViewer * aspect;
-  }
+  //   ViewerController.to.screenHeight.value = screenHeightViewer * aspect;
+  // }
 }
 
 class PDFColumn extends StatelessWidget {
@@ -257,30 +227,42 @@ class PDFColumn extends StatelessWidget {
   @override
   @override
   Widget build(BuildContext context) {
-    return MeasureSize(
-        //setScreenWidthAndHeight
-        onChange: (size) {
-          //  setState(() {
-          print(size);
-          //});
-        },
-        child: Container(
-          // color: Colors.green,
-          child: Column(
-            children: List.generate(
-              pages.length,
-              (index) {
-                // print("---------");
-                // var bytes = base64Encode(pages[index].bytes);
-                // print(bytes);
-                return PageContainer(
-                  image: MemoryImage(pages[index].bytes),
-                  pageNumber: index,
-                );
+    return Container(
+      // color: Colors.green,
+      child: Column(
+        children: List.generate(
+          pages.length,
+          (index) {
+            // print("---------");
+            // var bytes = base64Encode(pages[index].bytes);
+            // print(bytes);
+            return GestureDetector(
+              onPanStart: ((details) => print(details)),
+              onTap: () {
+                print('On Tap ');
               },
-            ),
-          ),
-        ));
+              onDoubleTap: () {
+                ViewerController.to.selectedActionIndex.value = 0;
+
+                ViewerController.to.setEditable(false);
+              },
+              onTapUp: (details) {
+                print('On Tap Up');
+                print(details);
+              },
+              onTapCancel: () => print('On Tap Cancel'),
+              onTapDown: (details) {
+                print(details);
+              },
+              child: PageContainer(
+                image: MemoryImage(pages[index].bytes),
+                pageNumber: index,
+              ),
+            );
+          },
+        ),
+      ),
+    );
   }
 }
 

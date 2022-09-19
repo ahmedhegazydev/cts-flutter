@@ -5,8 +5,8 @@ import '../utility/all_const.dart';
 import '../utility/storage.dart';
 
 class MController extends GetxController {
-  Color pickerColor = Color(0x0d2b40);
-  Color currentColor = Color(0x0d2b40);
+  Color pickerColor = Color.fromARGB(255, 6, 94, 107);
+  Color currentColor = Color.fromARGB(255, 6, 94, 107);
   Color appcolor = AppColor;
   bool changeColorImmediately = false;
 

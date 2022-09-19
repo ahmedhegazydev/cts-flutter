@@ -87,7 +87,7 @@ class DocumentController extends GetxController {
   Destination? userWillAddToOpenTransferWindow;
 
   SecureStorage secureStorage = SecureStorage();
-   CanOpenDocumentModel? canOpenDocumentModel;
+  CanOpenDocumentModel? canOpenDocumentModel;
   final record = FlutterSoundRecorder();
 
 //Map<int,String>folder={};
@@ -258,7 +258,6 @@ class DocumentController extends GetxController {
       //     //canOpenDocumentModel!.correspondence!.docDueDate!,
       //     voiceNote: audioFileBes64!,
       //     voiceNoteExt: "m4a");
-
     });
 
     List<multipletransfersSend.TransferNode> transfers = [];
@@ -279,15 +278,18 @@ class DocumentController extends GetxController {
     //     transferId: transferId,
     //     transfers: transfers);
 
-
     transfarForMany.clear();
     usersWillSendTo.clear();
     _multipleTransfersAPI.post(multipleTransfers.toMap()).then((value) {
       DefaultOnSuccessResult defaultOnSuccessResult =
           value as DefaultOnSuccessResult;
       Get.find<LandingPageController>().getDashboardStats(context: context);
-      Get.find<InboxController>().     getCorrespondencesData(context: context,inboxId:  Get.find<InboxController>().inboxId ,pageSize:20,showThumbnails: false );
-Get.back();
+      Get.find<InboxController>().getCorrespondencesData(
+          context: context,
+          inboxId: Get.find<InboxController>().inboxId,
+          pageSize: 20,
+          showThumbnails: false);
+      Get.back();
       Get.snackbar("", "تم التنفيذ بنجاح");
     });
   }
@@ -350,7 +352,6 @@ Get.back();
             pdfUrlFile,
             controller: pdfViewerController,
             onPageChanged: (v) {
-
               for (int i = 0; i < pdfAndSingannotation.length; i++) {
                 if (int.parse(pdfAndSingannotation[i].page!) ==
                     v.newPageNumber) {
@@ -379,9 +380,7 @@ Get.back();
 
           if (saveAttAchmentItemAnnotationsData!.attachments![i].annotations!
               .contains("[]")) {
-
           } else {
-
             Map<dynamic, dynamic> dat = jsonDecode(
                 saveAttAchmentItemAnnotationsData!
                     .attachments![i].annotations!);
@@ -410,16 +409,6 @@ Get.back();
                   saveAttAchmentItemAnnotationsData!.attachments![i].uRL!;
             });
           }
-          // log(saveAttAchmentItemAnnotationsData.toString());
-          // // String d=saveAttAchmentItemAnnotationsresalt!.annotations!..replaceAll(new RegExp(r'[^\w\s]+'),'');
-          // print("ddddddddddddddddddddddd=>  ${saveAttAchmentItemAnnotationsresalt?.annotations}");
-          //
-          //          Map<String,dynamic>dat=jsonDecode(saveAttAchmentItemAnnotationsresalt?.annotations??"");
-          //
-          //
-          //     //   DocumentAnnotations a=DocumentAnnotations.fromJson(jsonDecode( saveAttAchmentItemAnnotationsresalt!.annotations!));
-          //
-          //          //update();
         }
       }
     });
@@ -431,25 +420,23 @@ Get.back();
 
     pdfAndSing.clear();
     singpic.clear();
-    // pdfUrlFile =
-    //     'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
-    pdfAndSing.add(SfPdfViewer.network(
-      pdfUrlFile
-      //   saveAttAchmentItemAnnotationsresalt!.uRL!
-      // oragnalFileDoc??""
-      ,
-      controller: pdfViewerController,
-      // key: pdfViewerkey,
-    ));
+
+    pdfAndSing.clear();
+    pdfAndSingData.clear();
+
+    // pdfAndSing.add(
+    //   PDFView(
+    //       url: oragnalFileDocpdfUrlFile,
+    //       color: Get.find<MController>().appcolor),
+    // );
+    pdfAndSingData.add(oragnalFileDocpdfUrlFile);
     update();
   }
 
   //تحديث كان ابن فيل وجلب جميع البيانات الخاصه بلملف
   updatecanOpenDocumentModel(CanOpenDocumentModel data) {
-
-
-
-    print("CanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModel");
+    print(
+        "CanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModel");
     print("canOpenDocumentModel.toJson()  =>${canOpenDocumentModel!.toJson()}");
 
     canOpenDocumentModel = data;
@@ -461,6 +448,7 @@ Get.back();
 
         pdfViewerkey = GlobalKey();
         pdfAndSing.clear();
+        pdfAndSingData.clear();
         // pdfAndSing.add(SfPdfViewer.network(
         //   oragnalFileDocpdfUrlFile,
         //   controller: pdfViewerController,
@@ -469,11 +457,12 @@ Get.back();
         //   color: Colors.red,
         // ));
 
-        pdfAndSing.add(
-          PDFView(
-              url: oragnalFileDocpdfUrlFile,
-              color: Get.find<MController>().appcolor),
-        );
+        // pdfAndSing.add(
+        //   PDFView(
+        //       url: oragnalFileDocpdfUrlFile,
+        //       color: Get.find<MController>().appcolor),
+        // );
+        pdfAndSingData.add(oragnalFileDocpdfUrlFile);
 
         log(element.annotations!);
         Map<String, dynamic> dat = jsonDecode(element.annotations!);
@@ -558,7 +547,9 @@ Get.back();
 
   Map<String, dynamic>? logindata;
   Map<GlobalKey, String> singpic = {};
+
   List<Widget> pdfAndSing = [];
+  List<String> pdfAndSingData = [];
 
   //لسته الامضاء القادمه مع الملف
   List<Annotation> pdfAndSingannotation = [];
@@ -583,11 +574,11 @@ Get.back();
     update();
   }
 
-  addWidgetToPdfAndSing(Widget pic) {
-    pdfAndSing.add(pic);
-    print("pdfAndSing.lengthpdfAndSing.length=>   ${pdfAndSing.length}");
-    update();
-  }
+  // addWidgetToPdfAndSing(Widget pic) {
+  //   pdfAndSing.add(pic);
+  //   print("pdfAndSing.lengthpdfAndSing.length=>   ${pdfAndSing.length}");
+  //   update();
+  // }
 
   List<MultiSignatures> multiSignatures = [];
   final SignatureController controller = SignatureController(
@@ -782,7 +773,6 @@ Get.back();
 //
 //   }
 
-
   @override
   void onReady() {
     super.onReady();
@@ -826,7 +816,7 @@ Get.back();
   @override
   void onInit() {
     super.onInit();
-  //  initRecorder();
+    //  initRecorder();
 
     genratG2GExportDto();
     g2GInfoForExport();
@@ -978,7 +968,6 @@ Get.back();
       required transferId,
       required exportAction,
       required context}) async {
-
     IsAlreadyExportedAsPaperworkAPI _alreadyExportedAsPaperworkAPI =
         IsAlreadyExportedAsPaperworkAPI(null);
 
@@ -1144,8 +1133,7 @@ Get.back();
             //   Get.back();
             // Navigator.of(context).pop();
           });
-    }
-    else if (canExportAsPaperworkModel?.request != null) {
+    } else if (canExportAsPaperworkModel?.request != null) {
       getSwitchMethod(
           exportAction: exportAction,
           transferId: transferId,
@@ -1563,7 +1551,7 @@ Get.back();
   }
 
   Future recordMathod({required id}) async {
-   await initRecorder();
+    await initRecorder();
     await record.openRecorder();
     //  await record.startRecorder(toFile: "audio");
     appDocDir = await getApplicationDocumentsDirectory();

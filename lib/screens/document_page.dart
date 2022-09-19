@@ -331,6 +331,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                     GestureDetector(
                       onTap: () {
                         Get.find<WebViewPageController>().isPdf = false;
+                        Get.find<WebViewPageController>().title = "tracking".tr;
 
                         Get.find<WebViewPageController>().url = controller
                             .canOpenDocumentModel

@@ -94,8 +94,8 @@ class InboxPage extends GetWidget<InboxController> {
                         // controller.getData
                         //     ? const Center(child: CircularProgressIndicator())
                         //     :
-                        controller.isAllOrNot
-                            ? Expanded(
+                        controller.isAllOrNot?
+                        Expanded(
                           child: CustomListView(
                             function: controller.onRefresh(),
                             correspondences:
@@ -113,10 +113,9 @@ class InboxPage extends GetWidget<InboxController> {
                             functionComplet: () {},
                           ),
                         )
-                            : Expanded(
+                        : Expanded(
                           child: _buildTopInboxMenu(context),
                         ),
-
                         //line separator
                         Container(
                           decoration: BoxDecoration(
@@ -669,9 +668,11 @@ class InboxPage extends GetWidget<InboxController> {
                     : Column(
                   children: [
                     Visibility(
-                        visible: true, child: _filterMail(context)),
+                        visible: controller.allCorrespondences.isNotEmpty,
+                        child: _filterMail(context)),
                     Expanded(
-                      child: CustomListView(
+                      child: controller.allCorrespondences.isNotEmpty ?
+                      CustomListView(
                         function: controller.onRefresh(),
                         correspondences: controller.allCorrespondences,
                         scrollController: controller.scrollController,
@@ -685,7 +686,8 @@ class InboxPage extends GetWidget<InboxController> {
                         functionReply: () {},
                         functionTrunsfer: () {},
                         functionComplet: () {},
-                      ),
+                      )
+                          : Center(child: Text('noData'.tr, style: TextStyle(fontSize: 20, color:Colors.grey.shade500))),
                     ),
                   ],
                 )),
@@ -695,9 +697,11 @@ class InboxPage extends GetWidget<InboxController> {
                     : Column(
                   children: [
                     Visibility(
-                        visible: true, child: _filterMail(context)),
+                        visible: controller.allCorrespondences.isNotEmpty,
+                        child: _filterMail(context)),
                     Expanded(
-                      child: CustomListView(
+                      child: controller.allCorrespondences.isNotEmpty ?
+                      CustomListView(
                         function: controller.onRefresh(),
                         correspondences: controller.allCorrespondences,
                         scrollController: controller.scrollController,
@@ -711,7 +715,8 @@ class InboxPage extends GetWidget<InboxController> {
                         functionReply: () {},
                         functionTrunsfer: () {},
                         functionComplet: () {},
-                      ),
+                      )
+                          : Center(child: Text('noData'.tr, style: TextStyle(fontSize: 20, color:Colors.grey.shade500))),
                     ),
                   ],
                 )),
@@ -721,9 +726,11 @@ class InboxPage extends GetWidget<InboxController> {
                     : Column(
                   children: [
                     Visibility(
-                        visible: true, child: _filterMail(context)),
+                        visible: controller.allCorrespondences.isNotEmpty,
+                        child: _filterMail(context)),
                     Expanded(
-                      child: CustomListView(
+                      child: controller.allCorrespondences.isNotEmpty ?
+                      CustomListView(
                         function: controller.onRefresh(),
                         correspondences: controller.allCorrespondences,
                         scrollController: controller.scrollController,
@@ -737,7 +744,8 @@ class InboxPage extends GetWidget<InboxController> {
                         functionReply: () {},
                         functionTrunsfer: () {},
                         functionComplet: () {},
-                      ),
+                      )
+                          : Center(child: Text('noData'.tr, style: TextStyle(fontSize: 20, color:Colors.grey.shade500),)),
                     ),
                   ],
                 )),

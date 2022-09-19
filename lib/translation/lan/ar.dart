@@ -137,5 +137,6 @@ const Map<String, String> ar = {
   "AddToBasketSucceess": "تم الاضافه الي المحفظه بنجاح",
   "selectAppColor": "اختر لون التطبيق",
   "selectAppLanguage": "اختر لغة التطبيق",
-  "chooseaperson": "اختر شخصاً"
+  "chooseaperson": "اختر شخصاً",
+  "noData": "لا يوجد بيانات"
 };

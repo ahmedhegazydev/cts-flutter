@@ -10,6 +10,7 @@ class WebViewPage extends GetWidget<WebViewPageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text(controller.title),
           iconTheme: IconThemeData(
             color: Colors.white, //change your color here
           ),

@@ -141,5 +141,6 @@ const Map<String, String> en = {
   "AddToBasketSucceess": "The correspondence add to basket successfully",
   "chooseaperson":"choose a person",
   "selectAppColor": "Select application color",
-  "selectAppLanguage": "Select Application language"
+  "selectAppLanguage": "Select Application language",
+  "noData": "No Data Found"
 };

@@ -20,6 +20,12 @@ import '../utility/storage.dart';
 import 'dart:io';
 
 class SearchController extends GetxController {
+
+
+
+
+
+
   FindRecipientModel? findRecipientModel;
 
   List<Destination> users = [];
@@ -61,8 +67,14 @@ class SearchController extends GetxController {
   TextEditingController textEditingControllerReferenceNumber3 =
       TextEditingController();
   TextEditingController textEditingControllerSubject = TextEditingController();
+
+  //اول اربع اختيارات من الاشخاص
+  //=============================================================================
   TextEditingController textEditingControllerFrom = TextEditingController();
   TextEditingController textEditingControllerTo = TextEditingController();
+  TextEditingController textEditingControllerFrom2 = TextEditingController();
+  TextEditingController textEditingControllerTo2 = TextEditingController();
+  //=====================================================
   TextEditingController textEditingControllerTransferFrom =
       TextEditingController();
   TextEditingController textEditingControllerTransferTo =
@@ -72,7 +84,7 @@ class SearchController extends GetxController {
       TextEditingController();
   TextEditingController textEditingControllerToDocDate =
       TextEditingController();
-
+//=======================================================
   TextEditingController textEditingControllerDocData = TextEditingController();
 
   TextEditingController textEditingControllerdocCountrieVal =
@@ -126,8 +138,8 @@ class SearchController extends GetxController {
     textEditingControllerReferenceNumber2.clear();
     textEditingControllerReferenceNumber3.clear();
     textEditingControllerSubject.clear();
-    textEditingControllerFrom.clear();
-    textEditingControllerTo.clear();
+    textEditingControllerFrom2.clear();
+    textEditingControllerTo2.clear();
     textEditingControllerTransferFrom.clear();
     textEditingControllerTransferTo.clear();
     textEditingControllerDocData.clear();
@@ -193,9 +205,9 @@ class SearchController extends GetxController {
 
   }
 
-  getAllData(context) {
-    getFindRecipientData(context  );
-    getData(context: context);
+  getAllData( ) {
+    getFindRecipientData(null  );
+    getallneedData();
   }
 
 // لسته الافراد الي اختار منهم في البحث
@@ -205,8 +217,10 @@ class SearchController extends GetxController {
   }
 
 //الحصور علي جميع الافراد
-  getFindRecipientData(context ) async {
-    final FindRecipient _findRecipient = FindRecipient(context!);
+  Future getFindRecipientData(context ) async {
+    print("/الحصور علي جميع الافراد");
+
+    final FindRecipient _findRecipient = FindRecipient(context);
     _findRecipient.data =
         "Token=${_secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     await _findRecipient.getData().then((value) {
@@ -217,18 +231,23 @@ class SearchController extends GetxController {
     update();
   }
 
-  getData({context}) async {
-    final GetLookupsApi _getLookupsApi = GetLookupsApi(context);
-    print("i get ");
+  Future getallneedData({context}) async {
+    final GetLookupsApi _getLookupsApi = GetLookupsApi( context);
+
     _getLookupsApi.data =
         "Token=${_secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     await _getLookupsApi.getData().then((value) {
-      print("this is data $value");
+     // print("this is data $value");
       getLookupsModel = value as GetLookupsModel;
 
       countries = getLookupsModel.docCountries ?? [];
       classifications = getLookupsModel.classifications ?? [];
       primaryClassifications = getLookupsModel.primaryClassifications ?? [];
+
+
+      print("this is data ${countries?.length}");
+      print("this is data ${classifications?.length}");
+      print("this is data ${primaryClassifications?.length}");
     });
     update();
   }

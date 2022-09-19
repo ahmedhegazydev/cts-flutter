@@ -17,7 +17,7 @@ class SearchPage extends GetWidget<SearchController> {
 
     String year = DateTime.now().toString().substring(0, 4);
     controller.context = context;
-    controller.getFindRecipientData(context) ;
+
     return Scaffold(
       appBar: AppBar(title: Text("appTitle".tr), centerTitle: true),
       body: Padding(
@@ -120,190 +120,190 @@ class SearchPage extends GetWidget<SearchController> {
             const SizedBox(
               height: 8,
             ),
-            Row(
-              children: [
-                // Expanded(
-                //   flex: 4,
-                //   child: CustomRowSearch(
-                //     hint: "From",
-                //     textEditingController: controller.textEditingControllerFrom,
-                //     icon1: Icons.person,
-                //     icon2: Icons.account_balance,
-                //     icon3: Icons.clear,
-                //     onClick1: () {
-                //
-                //     },
-                //     onClick2: () {
-                //
-                //     },
-                //     onClick3: () {
-                //
-                //     },
-                //   ),
-                // ),
-
-
-                Expanded(flex: 4,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TypeAheadField<Destination>(
-                          textFieldConfiguration: TextFieldConfiguration(
-                            // controller: controller
-                            //     .textEditingControllerclassificationsVal,
-                            // autofocus: true,
-                            // style: DefaultTextStyle.of(context)
-                            //     .style
-                            //     .copyWith(fontStyle: FontStyle.italic),
-                            decoration:
-                              InputDecoration(border: OutlineInputBorder(),
-                                labelText: 'From'.tr),
-                          ),
-                          suggestionsCallback: (pattern) async {
-                            return controller.users.where((element) =>
-                                element.value!
-                                    .toLowerCase()
-                                    .contains(pattern.toLowerCase()));
-
-                            //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
-                          },
-                          itemBuilder: (context, suggestion) {
-                            Destination v = suggestion;
-
-                            return // Te(v.originalName!);
-
-
-                              ListTile(
-                                title: FilterText(v.value!),
-                              );
-                          },
-                          onSuggestionSelected: (suggestion) {
-                            Destination v = suggestion;
-                            controller.textEditingControllerClassificationsVal.text =
-                                v.value ?? "";
-
-
-
-                            // v
-                            // .cLASNAMEDISPLAY;
-                            // Navigator.of(context).push(MaterialPageRoute(
-                            //     builder: (context) => ProductPage(product: suggestion)
-                            // ));
-                          },
-                        ),
-                      ),
-                      SizedBox(width: 2,),
-                      CustomButtonWithIcon(icon: Icons.person,onClick: (){
-                        controller.listOfUser(0);
-                      },)
-                      ,
-                      SizedBox(width: 2,),
-                      CustomButtonWithIcon(icon:Icons.account_balance,onClick: (){
-                        controller.listOfUser(2);
-                      },)
-                      ,
-                      SizedBox(width: 2,),
-                      CustomButtonWithIcon(icon: Icons.clear,onClick: (){
-                        controller.listOfUser(0);
-                      },)],
-                  ),
-                ),
-
-
-                Expanded(flex: 1, child: SizedBox()),
-
-                Expanded(flex: 4,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TypeAheadField<Destination>(
-                          textFieldConfiguration: TextFieldConfiguration(
-                            // controller: controller
-                            //     .textEditingControllerclassificationsVal,
-                            // autofocus: true,
-                            // style: DefaultTextStyle.of(context)
-                            //     .style
-                            //     .copyWith(fontStyle: FontStyle.italic),
-                            decoration:
-                              InputDecoration(border: OutlineInputBorder(),
-                                labelText: 'To'.tr),
-                          ),
-                          suggestionsCallback: (pattern) async {
-                            return controller.users.where((element) =>
-                                element.value!
-                                    .toLowerCase()
-                                    .contains(pattern.toLowerCase()));
-
-                            //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
-                          },
-                          itemBuilder: (context, suggestion) {
-                            Destination v = suggestion;
-
-                            return // Te(v.originalName!);
-
-
-                              ListTile(
-                                title: FilterText(v.value!),
-                              );
-                          },
-                          onSuggestionSelected: (suggestion) {
-                            Destination v = suggestion;
-                            controller.textEditingControllerClassificationsVal.text =
-                                v.value ?? "";
-
-
-
-                            // v
-                            // .cLASNAMEDISPLAY;
-                            // Navigator.of(context).push(MaterialPageRoute(
-                            //     builder: (context) => ProductPage(product: suggestion)
-                            // ));
-                          },
-                        ),
-                      ),
-                      SizedBox(width: 2,),
-                      CustomButtonWithIcon(icon: Icons.person,onClick: (){
-                        controller.listOfUser(0);
-                      },)
-                      ,
-                      SizedBox(width: 2,),
-                      CustomButtonWithIcon(icon:Icons.account_balance,onClick: (){
-                        controller.listOfUser(2);
-                      },)
-                      ,
-                      SizedBox(width: 2,),
-                      CustomButtonWithIcon(icon: Icons.clear,onClick: (){
-                        controller.listOfUser(0);
-                      },)],
-                  ),
-                ),
-                // Expanded(
-                //   flex: 4,
-                //   child: CustomRowSearch(
-                //     hint: "To",
-                //     textEditingController: controller.textEditingControllerTo,
-                //     icon1: Icons.add,
-                //     icon2: Icons.add,
-                //     icon3: Icons.clear,
-                //     onClick1: () {
-                //
-                //
-                //     },
-                //     onClick2: () {
-                //
-                //
-                //     },
-                //     onClick3: () {
-                //
-                //
-                //     },
-                //   ),
-                // ),
-              ],
-            ),
-            const SizedBox(
-              height: 8,
-            ),
+            // Row(
+            //   children: [
+            //     // Expanded(
+            //     //   flex: 4,
+            //     //   child: CustomRowSearch(
+            //     //     hint: "From",
+            //     //     textEditingController: controller.textEditingControllerFrom,
+            //     //     icon1: Icons.person,
+            //     //     icon2: Icons.account_balance,
+            //     //     icon3: Icons.clear,
+            //     //     onClick1: () {
+            //     //
+            //     //     },
+            //     //     onClick2: () {
+            //     //
+            //     //     },
+            //     //     onClick3: () {
+            //     //
+            //     //     },
+            //     //   ),
+            //     // ),
+            //
+            //
+            //     Expanded(flex: 4,
+            //       child: Row(
+            //         children: [
+            //           Expanded(
+            //             child: TypeAheadField<Destination>(
+            //               textFieldConfiguration: TextFieldConfiguration(
+            //                 controller: controller
+            //                     . textEditingControllerFrom,
+            //                 // autofocus: true,
+            //                 // style: DefaultTextStyle.of(context)
+            //                 //     .style
+            //                 //     .copyWith(fontStyle: FontStyle.italic),
+            //                 decoration:
+            //                   InputDecoration(border: OutlineInputBorder(),
+            //                     labelText: 'From'.tr),
+            //               ),
+            //               suggestionsCallback: (pattern) async {
+            //                 return controller.users.where((element) =>
+            //                     element.value!
+            //                         .toLowerCase()
+            //                         .contains(pattern.toLowerCase()));
+            //
+            //                 //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
+            //               },
+            //               itemBuilder: (context, suggestion) {
+            //                 Destination v = suggestion;
+            //
+            //                 return // Te(v.originalName!);
+            //
+            //
+            //                   ListTile(
+            //                     title: FilterText(v.value!),
+            //                   );
+            //               },
+            //               onSuggestionSelected: (suggestion) {
+            //                 Destination v = suggestion;
+            //                 controller.textEditingControllerFrom.text =
+            //                     v.value ?? "";
+            //
+            //
+            //
+            //                 // v
+            //                 // .cLASNAMEDISPLAY;
+            //                 // Navigator.of(context).push(MaterialPageRoute(
+            //                 //     builder: (context) => ProductPage(product: suggestion)
+            //                 // ));
+            //               },
+            //             ),
+            //           ),
+            //           SizedBox(width: 2,),
+            //           CustomButtonWithIcon(icon: Icons.person,onClick: (){
+            //             controller.listOfUser(0);
+            //           },)
+            //           ,
+            //           SizedBox(width: 2,),
+            //           CustomButtonWithIcon(icon:Icons.account_balance,onClick: (){
+            //             controller.listOfUser(2);
+            //           },)
+            //           ,
+            //           SizedBox(width: 2,),
+            //           CustomButtonWithIcon(icon: Icons.clear,onClick: (){
+            //             controller.listOfUser(0);
+            //           },)],
+            //       ),
+            //     ),
+            //
+            //
+            //     Expanded(flex: 1, child: SizedBox()),
+            //
+            //     Expanded(flex: 4,
+            //       child: Row(
+            //         children: [
+            //           Expanded(
+            //             child: TypeAheadField<Destination>(
+            //               textFieldConfiguration: TextFieldConfiguration(
+            //                 controller: controller
+            //                     .textEditingControllerTo,
+            //                 // autofocus: true,
+            //                 // style: DefaultTextStyle.of(context)
+            //                 //     .style
+            //                 //     .copyWith(fontStyle: FontStyle.italic),
+            //                 decoration:
+            //                   InputDecoration(border: OutlineInputBorder(),
+            //                     labelText: 'To'.tr),
+            //               ),
+            //               suggestionsCallback: (pattern) async {
+            //                 return controller.users.where((element) =>
+            //                     element.value!
+            //                         .toLowerCase()
+            //                         .contains(pattern.toLowerCase()));
+            //
+            //                 //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
+            //               },
+            //               itemBuilder: (context, suggestion) {
+            //                 Destination v = suggestion;
+            //
+            //                 return // Te(v.originalName!);
+            //
+            //
+            //                   ListTile(
+            //                     title: FilterText(v.value!),
+            //                   );
+            //               },
+            //               onSuggestionSelected: (suggestion) {
+            //                 Destination v = suggestion;
+            //                 controller.textEditingControllerTo.text =
+            //                     v.value ?? "";
+            //
+            //
+            //
+            //                 // v
+            //                 // .cLASNAMEDISPLAY;
+            //                 // Navigator.of(context).push(MaterialPageRoute(
+            //                 //     builder: (context) => ProductPage(product: suggestion)
+            //                 // ));
+            //               },
+            //             ),
+            //           ),
+            //           SizedBox(width: 2,),
+            //           CustomButtonWithIcon(icon: Icons.person,onClick: (){
+            //             controller.listOfUser(0);
+            //           },)
+            //           ,
+            //           SizedBox(width: 2,),
+            //           CustomButtonWithIcon(icon:Icons.account_balance,onClick: (){
+            //             controller.listOfUser(2);
+            //           },)
+            //           ,
+            //           SizedBox(width: 2,),
+            //           CustomButtonWithIcon(icon: Icons.clear,onClick: (){
+            //             controller.listOfUser(0);
+            //           },)],
+            //       ),
+            //     ),
+            //     // Expanded(
+            //     //   flex: 4,
+            //     //   child: CustomRowSearch(
+            //     //     hint: "To",
+            //     //     textEditingController: controller.textEditingControllerTo,
+            //     //     icon1: Icons.add,
+            //     //     icon2: Icons.add,
+            //     //     icon3: Icons.clear,
+            //     //     onClick1: () {
+            //     //
+            //     //
+            //     //     },
+            //     //     onClick2: () {
+            //     //
+            //     //
+            //     //     },
+            //     //     onClick3: () {
+            //     //
+            //     //
+            //     //     },
+            //     //   ),
+            //     // ),
+            //   ],
+            // ),
+            // const SizedBox(
+            //   height: 8,
+            // ),
             Row(
               children: [
                 Expanded(flex: 4,
@@ -313,7 +313,7 @@ class SearchPage extends GetWidget<SearchController> {
                         child: TypeAheadField<Destination>(
                           textFieldConfiguration: TextFieldConfiguration(
                             controller: controller
-                                .textEditingControllerFrom,
+                                .textEditingControllerFrom2,
                             // autofocus: true,
                             // style: DefaultTextStyle.of(context)
                             //     .style
@@ -342,7 +342,7 @@ class SearchPage extends GetWidget<SearchController> {
                           },
                           onSuggestionSelected: (suggestion) {
                             Destination v = suggestion;
-                            controller.textEditingControllerFrom.text =
+                            controller.textEditingControllerFrom2.text =
                                 v.value ?? "";
 controller.from=v;
 
@@ -380,7 +380,7 @@ controller.from=v;
                         child: TypeAheadField<Destination>(
                           textFieldConfiguration: TextFieldConfiguration(
                             controller: controller
-                                .textEditingControllerTo,
+                                .textEditingControllerTo2,
                             // autofocus: true,
                             // style: DefaultTextStyle.of(context)
                             //     .style
@@ -409,7 +409,7 @@ controller.from=v;
                           },
                           onSuggestionSelected: (suggestion) {
                             Destination v = suggestion;
-                            controller.textEditingControllerTo.text =
+                            controller.textEditingControllerTo2.text =
                                 v.value ?? "";
                             controller.to=v;
 

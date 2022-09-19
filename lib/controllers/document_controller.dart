@@ -986,19 +986,19 @@ print("i call getIsAlreadyExportedAsPaperwork88888888888888888888888888888888888
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
 IsAlreadyExportedAsPaperworkModel  isAlreadyExportedAsPaperworkModel = await _alreadyExportedAsPaperworkAPI
         .getData() as IsAlreadyExportedAsPaperworkModel;
-    if (isAlreadyExportedAsPaperworkModel?.transferTo != null) {
+    if (isAlreadyExportedAsPaperworkModel.transferTo != null) {
       userWillAddToOpenTransferWindow = Destination(
-          value: isAlreadyExportedAsPaperworkModel?.transferTo!.structureName,
-          id: isAlreadyExportedAsPaperworkModel?.transferTo!.id);
+          value: isAlreadyExportedAsPaperworkModel.transferTo!.structureName,
+          id: isAlreadyExportedAsPaperworkModel.transferTo!.id);
       usersWillSendTo.clear();
       addTousersWillSendTo(user: userWillAddToOpenTransferWindow!);
     }
 
 
-    if (isAlreadyExportedAsPaperworkModel?.isConfirm ?? false) {
+    if (isAlreadyExportedAsPaperworkModel.isConfirm ?? false) {
       showDilog(
           context: context,
-          massge: isAlreadyExportedAsPaperworkModel!.message!,
+          massge: isAlreadyExportedAsPaperworkModel.message!,
           no: () {
             //  Navigator.of(context).pop();
             getSwitchMethod(
@@ -1006,8 +1006,8 @@ IsAlreadyExportedAsPaperworkModel  isAlreadyExportedAsPaperworkModel = await _al
                 transferId: transferId,
                 correspondenceId: correspondenceId,
                 context: context,
-                name: isAlreadyExportedAsPaperworkModel?.noMethod ??
-                    isAlreadyExportedAsPaperworkModel!.noMethod2!);
+                name: isAlreadyExportedAsPaperworkModel.noMethod ??
+                    isAlreadyExportedAsPaperworkModel.noMethod2!);
             Get.back();
           },
           yes: () {
@@ -1022,27 +1022,27 @@ IsAlreadyExportedAsPaperworkModel  isAlreadyExportedAsPaperworkModel = await _al
                 transferId: transferId,
                 correspondenceId: correspondenceId,
                 context: context,
-                name: isAlreadyExportedAsPaperworkModel?.yesMethod ??
+                name: isAlreadyExportedAsPaperworkModel.yesMethod ??
                     isAlreadyExportedAsPaperworkModel!.yesMethod2!);
             //   Get.back();
             // Navigator.of(context).pop();
           });
     }
-    else if (isAlreadyExportedAsPaperworkModel?.request != null) {
+    else if (isAlreadyExportedAsPaperworkModel.request != null) {
       print("i get isAlreadyExportedAsPaperworkModel?.isConfirm == false");
       getSwitchMethod(
           exportAction: exportAction,
           transferId: transferId,
           correspondenceId: correspondenceId,
           context: context,
-          name: isAlreadyExportedAsPaperworkModel!.request!);
+          name: isAlreadyExportedAsPaperworkModel.request!);
 
-      print(isAlreadyExportedAsPaperworkModel?.request);
+      print(isAlreadyExportedAsPaperworkModel.request);
       //  Get.back();
 
     }
     else {
-      Get.snackbar("", isAlreadyExportedAsPaperworkModel?.message??"");
+      Get.snackbar("", isAlreadyExportedAsPaperworkModel.message??"");
 
       // getSwitchMethod(
       //     exportAction: exportAction,

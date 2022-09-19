@@ -4470,6 +4470,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                   children: [
                     TableRowInkWell(
                       onTap: () {
+                        Get.find<SearchController>().getAllData();
                         Get.toNamed("SearchPage");
                       },
                       child: _buildOtherFoldersRows(
@@ -4698,8 +4699,11 @@ class LandingPage extends GetWidget<LandingPageController> {
                   children: [
                     TableRowInkWell(
                       onTap: () {
-                        Get.put(SearchController()).getAllData(context);
-                        Get.toNamed("SearchPage");
+
+                        Get.find<SearchController>().getAllData();
+
+
+                Get.toNamed("SearchPage");
                       },
                       child: _buildOtherFoldersRows(
                           context,

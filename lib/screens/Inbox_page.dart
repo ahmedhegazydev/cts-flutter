@@ -5,11 +5,11 @@ import 'package:get/get.dart';
 import '../controllers/document_controller.dart';
 import '../controllers/inbox_controller.dart';
 import '../controllers/landing_page_controller.dart';
-import '../services/apis/reply_with_voice_note_api.dart';
+
+import '../models/CorrespondencesModel.dart';
 import '../services/json_model/find_recipient_model.dart';
-import '../services/json_model/login_model.dart';
-import '../services/json_model/reply_with_voicenote_model.dart';
-import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
+import '../services/json_model/login_model.dart' as login;
+
 import '../utility/all_const.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
@@ -355,6 +355,18 @@ class InboxPage extends GetWidget<InboxController> {
                 ),
               ),
             ),
+
+
+
+
+
+
+
+
+
+
+
+
             // SizedBox(
             //   width: 16,
             // ),
@@ -384,6 +396,131 @@ class InboxPage extends GetWidget<InboxController> {
         SizedBox(
           width: 16,
         ),
+        Flexible(
+          child: GetBuilder<InboxController>(
+              autoRemove: false,
+              builder: (logic) {
+                return Container(
+                  // height: 50,
+                  // width: 50,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                          width: 1,
+                          color: Theme.of(context).colorScheme.primary)),
+                  child: Flexible(
+                    child: DropdownButton<Privacies>(
+                      value: controller.selectPrivacies,
+                      icon: const Icon(Icons.arrow_downward),
+                      hint: Row(
+                        children: [
+                        Icon(
+                        Icons.warning,
+                        color: Colors.white,
+                      ),
+                          Text("privacies".tr),
+                        ],
+                      ),
+                      iconSize: 24,
+                      elevation: 16,
+                      underline: SizedBox(),
+                      onChanged: controller.updateselectPrivacies,
+                      items: controller.correspondencesModel?.privacies
+                          ?.map<DropdownMenuItem<Privacies>>(
+                              (Privacies value) {
+                            return DropdownMenuItem<Privacies>(
+                              value: value,
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Icon(
+                                    Icons.warning,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(Get.locale?.languageCode == "en" ?
+                                   "${ value.Text}":      "${ value.TextAr}",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline1!
+                                        .copyWith(color: Colors.black, fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }).toList(),
+                    ),
+                  ),
+                );
+              }),
+        ),
+
+        // Flexible(
+        //   child: GetBuilder<InboxController>(
+        //       autoRemove: false,
+        //       builder: (logic) {
+        //         return Container(
+        //           // height: 50,
+        //           // width: 50,
+        //           decoration: BoxDecoration(
+        //               borderRadius: BorderRadius.circular(10),
+        //               border: Border.all(
+        //                   width: 1,
+        //                   color: Theme.of(context).colorScheme.primary)),
+        //           child: Flexible(
+        //             child: DropdownButton<Priorities>(
+        //               value: controller.selectPriorities,
+        //               icon: const Icon(Icons.arrow_downward),
+        //               hint: Row(
+        //                 children: [
+        //                   Icon(
+        //                     Icons.warning,
+        //                     color: Colors.white,
+        //                   ),
+        //                   Text("privacies".tr),
+        //                 ],
+        //               ),
+        //               iconSize: 24,
+        //               elevation: 16,
+        //               underline: SizedBox(),
+        //               onChanged: controller.updateselectPriorities,
+        //               items: controller.listPriorities
+        //                   .map<DropdownMenuItem<Priorities>>(
+        //                       (Priorities value) {
+        //                     return DropdownMenuItem<Priorities>(
+        //                       value: controller.selectPriorities,
+        //                       child: Row(
+        //                         children: [
+        //                           SizedBox(
+        //                             width: 8,
+        //                           ),
+        //                           Icon(
+        //                             Icons.warning,
+        //                             color: Colors.white,
+        //                           ),
+        //                           SizedBox(
+        //                             width: 10,
+        //                           ),
+        //                           Text(Get.locale?.languageCode == "en" ?
+        //                           "${ value.Text}":      "${ value.TextAr}",
+        //                             style: Theme.of(context)
+        //                                 .textTheme
+        //                                 .headline1!
+        //                                 .copyWith(color: Colors.black, fontSize: 16),
+        //                           ),
+        //                         ],
+        //                       ),
+        //                     );
+        //                   }).toList(),
+        //             ),
+        //           ),
+        //         );
+        //       }),
+        // ),
         Container(
           padding: EdgeInsets.only(right: 8, left: 8),
           height: size.height * .03,
@@ -1585,7 +1722,7 @@ class InboxPage extends GetWidget<InboxController> {
                                                     height: 40,
                                                     color: Colors.grey[300],
                                                     child: DropdownButton<
-                                                        CustomActions>(
+                                                        login.CustomActions>(
                                                       alignment:
                                                           Alignment.topRight,
                                                       value: logic.getactions(
@@ -1599,7 +1736,7 @@ class InboxPage extends GetWidget<InboxController> {
 
                                                       underline: SizedBox(),
                                                       hint: Text("اختار"),
-                                                      onChanged: (CustomActions?
+                                                      onChanged: (login.CustomActions?
                                                           newValue) {
                                                         controller.setactions(
                                                             logic
@@ -1613,11 +1750,11 @@ class InboxPage extends GetWidget<InboxController> {
                                                           .customActions
                                                           ?.map<
                                                                   DropdownMenuItem<
-                                                                      CustomActions>>(
-                                                              (CustomActions
+                                                                      login.CustomActions>>(
+                                                              (login.CustomActions
                                                                   value) {
                                                         return DropdownMenuItem<
-                                                            CustomActions>(
+                                                            login. CustomActions>(
                                                           value: value,
                                                           child:
                                                               Text(value.name!),

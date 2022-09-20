@@ -143,5 +143,5 @@ const Map<String, String> en = {
   "selectAppColor": "Select application color",
   "selectAppLanguage": "Select Application language",
   "noData": "No Data Found"
-  ,"registerDate":"Register Date"
+  ,"registerDate":"Register Date"  ,"privacies":"الخصوصية"
 };

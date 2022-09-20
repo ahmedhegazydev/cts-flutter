@@ -12,7 +12,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
-
+import '../models/CorrespondencesModel.dart' as tt;
 import '../models/CorrespondencesModel.dart';
 import '../services/apis/basket/add_documents_to_basket_api.dart';
 import '../services/apis/basket/add_edit_basket_result _api.dart';
@@ -252,6 +252,37 @@ bool isUrgentClicked = false;
 
 // GetCorrespondencesAllModel? getCorrespondencesAllModel;
   CorrespondencesModel? correspondencesModel;
+  Privacies? selectPrivacies;
+
+  updateselectPrivacies(Privacies? p){
+    selectPrivacies=p;
+    update();
+  }
+
+List<tt.Priorities>listPriorities=[];
+  tt.Priorities? selectPriorities;
+
+  updateselectPriorities( tt.Priorities? p){
+    selectPriorities=p;
+    update();
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   // List<Correspondences> correspondences = [];
   List<Correspondences> allCorrespondences = [];
@@ -510,7 +541,8 @@ bool isUrgentClicked = false;
     print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
     _correspondencesApi.getData().then((value) {
       correspondencesModel = value as CorrespondencesModel;
-
+      listPriorities=correspondencesModel!.priorities!;
+print("correspondencesModel =>   ${listPriorities.length}");
       correspondencesModel?.inbox?.correspondences?.forEach((element) {
         UserFilter user=      UserFilter(userId: element.fromUserId!, name: element.fromUser!);
 
@@ -579,6 +611,8 @@ bool isUrgentClicked = false;
       print("i get alll _getCorrespondencesAllAPI");
       //getCorrespondencesAllModel = value as GetCorrespondencesAllModel;
       correspondencesModel =value as CorrespondencesModel;
+      listPriorities=correspondencesModel!.priorities!;
+      print("correspondencesModel =>   ${listPriorities.length}");
       correspondencesModel?.inbox?.correspondences?.forEach((element) {
         UserFilter user=      UserFilter(userId: element.fromUserId!, name: element.fromUser!);
 if(!userFilter.contains(user)){

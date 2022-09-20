@@ -142,6 +142,7 @@ const Map<String, String> en = {
   "chooseaperson":"choose a person",
   "selectAppColor": "Select application color",
   "selectAppLanguage": "Select Application language",
-  "noData": "No Data Found"
-  ,"registerDate":"Register Date"  ,"privacies":"الخصوصية"
+  "noData": "No Data Found",
+  "registerDate": "Register Date",
+  "settings": "Settings "
 };

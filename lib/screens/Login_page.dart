@@ -652,22 +652,22 @@ class LoginPage extends GetWidget<LoginController> {
                             SizedBox(
                               height: 30,
                             ),
-                            Container(
-                              // color: Colors.red,
-                              //  width: double.infinity,
-                              padding: const EdgeInsets.all(0),
-                              child: Text(
-                                "appTitle".tr,
-                                // textAlign: TextAlign.center,
-                                textDirection: Get.locale?.languageCode == "en"
-                                    ? TextDirection.ltr
-                                    : TextDirection.rtl,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline1!
-                                    .copyWith(),
-                              ),
-                            ),
+                            // Container(
+                            //   // color: Colors.red,
+                            //   //  width: double.infinity,
+                            //   padding: const EdgeInsets.all(0),
+                            //   child: Text(
+                            //     "appTitle".tr,
+                            //     // textAlign: TextAlign.center,
+                            //     textDirection: Get.locale?.languageCode == "en"
+                            //         ? TextDirection.ltr
+                            //         : TextDirection.rtl,
+                            //     style: Theme.of(context)
+                            //         .textTheme
+                            //         .headline1!
+                            //         .copyWith(),
+                            //   ),
+                            // ),
                             orientation == Orientation.landscape
                                 ? SizedBox(
                                     height: 30,

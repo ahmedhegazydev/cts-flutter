@@ -64,57 +64,61 @@ class DocumentPage extends GetWidget<DocumentController> {
             }));
   }
 
+  showExportDialog(BuildContext context) {
+    Get.defaultDialog(
+      title: "export".tr,
+      radius: 5,
+      content: Column(
+        children: [
+          ListTile(
+            leading: Icon(Icons.receipt),
+            title: Text("paperExport".tr),
+            onTap: () {
+              controller.getIsAlreadyExportedAsPaperwork(
+                  context: context,
+                  correspondenceId:
+                      controller.correspondences.correspondenceId!,
+                  transferId: controller.correspondences.transferId!,
+                  exportAction: "paper");
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.attachment),
+            title: Text("electronicExport".tr),
+            onTap: () {
+              controller.isAlreadyExportedAsTransfer(
+                  context: context,
+                  correspondenceId:
+                      controller.correspondences.correspondenceId!,
+                  transferId: controller.correspondences.transferId!,
+                  exportAction: "electronic");
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.print),
+            title: Text("paperAndElectronicExport".tr),
+            onTap: () {
+              controller.isAlreadyExportedAsTransfer(
+                  context: context,
+                  correspondenceId:
+                      controller.correspondences.correspondenceId!,
+                  transferId: controller.correspondences.transferId!,
+                  exportAction: "paperAndelectronic");
+              print("paperAndElectronicExport");
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   ExpandableFab _buildFAB(BuildContext context) {
     return ExpandableFab(
       distance: 122.0,
       children: [
         ActionButton(
           onPressed: () {
-            Get.defaultDialog(
-              title: "export".tr,
-              radius: 50,
-              content: Column(
-                children: [
-                  ListTile(
-                    leading: Icon(Icons.receipt),
-                    title: Text("paperExport".tr),
-                    onTap: () {
-                      controller.getIsAlreadyExportedAsPaperwork(
-                          context: context,
-                          correspondenceId:
-                              controller.correspondences.correspondenceId!,
-                          transferId: controller.correspondences.transferId!,
-                          exportAction: "paper");
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.attachment),
-                    title: Text("electronicExport".tr),
-                    onTap: () {
-                      controller.isAlreadyExportedAsTransfer(
-                          context: context,
-                          correspondenceId:
-                              controller.correspondences.correspondenceId!,
-                          transferId: controller.correspondences.transferId!,
-                          exportAction: "electronic");
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.print),
-                    title: Text("paperAndElectronicExport".tr),
-                    onTap: () {
-                      controller.isAlreadyExportedAsTransfer(
-                          context: context,
-                          correspondenceId:
-                              controller.correspondences.correspondenceId!,
-                          transferId: controller.correspondences.transferId!,
-                          exportAction: "paperAndelectronic");
-                      print("paperAndElectronicExport");
-                    },
-                  ),
-                ],
-              ),
-            );
+            showExportDialog(context);
           },
           icon: const Icon(Icons.upload),
         ),
@@ -135,10 +139,15 @@ class DocumentPage extends GetWidget<DocumentController> {
   }
 
   AppBar _buildAppBar(BuildContext context) {
+    var title = "appTitle".tr;
+    var ref = controller.correspondences.gridInfo![2].value;
+    if (ref != null && ref != "") {
+      title = ref;
+    }
     return AppBar(
       toolbarHeight: 100,
       title: Text(
-        "appTitle".tr,
+        title,
         style: Theme.of(context)
             .textTheme
             .headline1!
@@ -322,7 +331,12 @@ class DocumentPage extends GetWidget<DocumentController> {
                   GestureDetector(
                     onTap: () {
                       Get.find<WebViewPageController>().isPdf = false;
-
+                      print(controller.correspondences.gridInfo![2].value);
+                      var ref = controller.correspondences.gridInfo![2].value;
+                      if (ref != null && ref != "")
+                        Get.find<WebViewPageController>().title = ref;
+                      else
+                        Get.find<WebViewPageController>().title = "tracking".tr;
                       Get.find<WebViewPageController>().url = controller
                           .canOpenDocumentModel
                           ?.correspondence!

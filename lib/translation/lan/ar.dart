@@ -138,7 +138,9 @@ const Map<String, String> ar = {
   "selectAppColor": "اختر لون التطبيق",
   "selectAppLanguage": "اختر لغة التطبيق",
   "chooseaperson": "اختر شخصاً",
-  "noData": "لا يوجد بيانات"
-,"registerDate":"تاريخ التسجيل"
+  "noData": "لا يوجد بيانات",
+  "registerDate": "تاريخ التسجيل",
+  "settings": "الاعدادات "
+
   ,"privacies":"الخصوصية"
 };

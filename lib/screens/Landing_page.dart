@@ -766,17 +766,34 @@ class LandingPage extends GetWidget<LandingPageController> {
           color: Colors.transparent,
           child: Column(
             children: [
-              Container(
-                color: Colors.transparent,
-                width: double.infinity,
-                // height: 100,
-                child: Text(
-                  "appTitle".tr,
-                  style: Theme.of(contex).textTheme.headline1!.copyWith(
-                        fontSize: u.calculateFontSize(60, contex),
-                      ),
-                  textAlign: TextAlign.start,
-                ),
+              Row(
+                children: [
+                  Image.asset(
+                    // width: orientation == Orientation.landscape
+                    //     ? size.width * .348
+                    //     : size.width * .51,
+                    'assets/images/Logo_qar.png',
+                    height: 60,
+
+                    //
+                  ),
+                  SizedBox(
+                    width: 50,
+                  ),
+                  Container(
+                    color: Colors.transparent,
+                    //width: double.infinity,
+                    //height: 100,
+
+                    child: Text(
+                      "appTitle".tr,
+                      style: Theme.of(contex).textTheme.headline1!.copyWith(
+                            fontSize: u.calculateFontSize(50, contex),
+                          ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
               ),
               SizedBox(
                 height: 15,
@@ -790,7 +807,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       "  ${secureStorage.readSecureData(AllStringConst.FirstName)} ${secureStorage.readSecureData(AllStringConst.LastName)}",
                   style: Theme.of(contex).textTheme.headline2!.copyWith(
                         color: Colors.grey,
-                        fontSize: u.calculateFontSize(30, contex),
+                        fontSize: u.calculateFontSize(28, contex),
                       ),
                   textAlign: TextAlign.start,
                 ),
@@ -3839,7 +3856,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                           color: Colors.grey,
                                           // fontFamily: "Bahij_light",
                                           fontSize:
-                                              u.calculateFontSize(30, context),
+                                              u.calculateFontSize(20, context),
                                         ),
                                     textAlign: TextAlign.center,
                                   ),
@@ -3857,7 +3874,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                         .copyWith(
                                           fontFamily: "Bahij_bold",
                                           fontSize:
-                                              u.calculateFontSize(80, context),
+                                              u.calculateFontSize(50, context),
                                         ),
                                     textAlign: TextAlign.center,
                                   ),
@@ -3919,7 +3936,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                         .copyWith(
                                           color: Colors.grey,
                                           fontSize:
-                                              u.calculateFontSize(30, context),
+                                              u.calculateFontSize(20, context),
                                         ),
                                     textAlign: TextAlign.center,
                                   ),
@@ -3937,7 +3954,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                         .copyWith(
                                           fontFamily: "Bahij_bold",
                                           fontSize:
-                                              u.calculateFontSize(80, context),
+                                              u.calculateFontSize(50, context),
                                         ),
                                     textAlign: TextAlign.center,
                                   ),
@@ -3972,7 +3989,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       child: Container(
                         height: 150,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Colors.white70,
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(6),
                               topRight: Radius.circular(6),
@@ -4009,7 +4026,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                       .copyWith(
                                         color: Colors.grey,
                                         fontSize:
-                                            u.calculateFontSize(30, context),
+                                            u.calculateFontSize(20, context),
                                       ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -4027,7 +4044,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                       .copyWith(
                                         fontFamily: "Bahij_bold",
                                         fontSize:
-                                            u.calculateFontSize(80, context),
+                                            u.calculateFontSize(50, context),
                                       ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -4049,7 +4066,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       child: Container(
                         height: 150,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Colors.white70,
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(6),
                               topRight: Radius.circular(6),
@@ -4083,7 +4100,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                       .copyWith(
                                         color: Colors.grey,
                                         fontSize:
-                                            u.calculateFontSize(30, context),
+                                            u.calculateFontSize(20, context),
                                       ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -4100,7 +4117,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                       .copyWith(
                                         fontFamily: "Bahij_bold",
                                         fontSize:
-                                            u.calculateFontSize(40, context),
+                                            u.calculateFontSize(30, context),
                                       ),
                                   textAlign: TextAlign.center,
                                 ),

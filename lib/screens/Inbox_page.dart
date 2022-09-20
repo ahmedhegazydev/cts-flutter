@@ -79,15 +79,6 @@ class InboxPage extends GetWidget<InboxController> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.max,
         children: [
-          //side bar
-          // orientation == Orientation.landscape
-          //     ? Container(
-          //         width: 200,
-          //         height: size.height,
-          //         color: Colors.grey.shade300,
-          //         child: _buildSideMenu(context),
-          //       )
-          //     : Container(),
           Expanded(
             child: Container(
               // width: size.infinity,
@@ -98,23 +89,6 @@ class InboxPage extends GetWidget<InboxController> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  //top bar
-                  // Container(
-                  //   width: double.infinity,
-                  //   height: 100,
-                  //   decoration: BoxDecoration(
-                  //     color: Theme.of(context).colorScheme.primary,
-                  //   ),
-                  //   child: _buildTopBar(context),
-                  // ),
-
-                  //inbox menu (filters with inbox type or with purpose -- depends on the configuration)
-                  //and correspondences table view container
-                  // Container(
-                  //   width: double.infinity,
-                  //   height: 10,
-                  //   color: Colors.transparent,
-                  // ),
                   Expanded(
                     child: Column(
                       children: [
@@ -157,10 +131,9 @@ class InboxPage extends GetWidget<InboxController> {
                       ],
                     ),
                   ),
-
-                  orientation == Orientation.portrait
-                      ? _buildBotomMenuInboxes(context)
-                      : SizedBox()
+                  // orientation == Orientation.portrait
+                  //     ? _buildBotomMenuInboxes(context)
+                  //     : SizedBox()
                 ],
               ),
             ),
@@ -418,11 +391,11 @@ class InboxPage extends GetWidget<InboxController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: [
-        Container(
-          width: 10,
-          height: double.infinity,
-          color: Colors.grey.shade400,
-        ),
+        // Container(
+        //   width: 10,
+        //   height: double.infinity,
+        //   color: Colors.grey.shade400,
+        // ),
         Expanded(
           child: Column(
             children: [
@@ -438,26 +411,29 @@ class InboxPage extends GetWidget<InboxController> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Text(
-                      "hello".tr,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline2!
-                          .copyWith(color: Colors.grey, fontSize: 14),
-                      textAlign: TextAlign.start,
-                    ),
-                    FittedBox(
-                      child: Text(
-                        //  "hello".tr +
-                        "${secureStorage.readSecureData(AllStringConst.FirstName)} ${secureStorage.readSecureData(AllStringConst.LastName)}",
-                        style: Theme.of(context).textTheme.headline2!.copyWith(
-                            color: createMaterialColor(
-                              const Color.fromRGBO(77, 77, 77, 1),
-                            ),
-                            fontSize: 20),
-                        textAlign: TextAlign.start,
-                      ),
-                    ),
+                    // Text(
+                    //   "hello".tr,
+                    //   style: Theme.of(context)
+                    //       .textTheme
+                    //       .headline2!
+                    //       .copyWith(color: Colors.grey, fontSize: 14),
+                    //   textAlign: TextAlign.start,
+                    // ),
+                    // SizedBox(
+                    //   height: 100,
+                    // ),
+                    // FittedBox(
+                    //   child: Text(
+                    //     //  "hello".tr +
+                    //     "${secureStorage.readSecureData(AllStringConst.FirstName)} ${secureStorage.readSecureData(AllStringConst.LastName)}",
+                    //     style: Theme.of(context).textTheme.headline2!.copyWith(
+                    //         color: createMaterialColor(
+                    //           const Color.fromRGBO(77, 77, 77, 1),
+                    //         ),
+                    //         fontSize: 20),
+                    //     textAlign: TextAlign.start,
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

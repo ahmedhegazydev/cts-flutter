@@ -141,4 +141,6 @@ const Map<String, String> ar = {
   "noData": "لا يوجد بيانات",
   "registerDate": "تاريخ التسجيل",
   "settings": "الاعدادات "
+
+  ,"privacies":"الخصوصية"
 };

@@ -91,36 +91,35 @@ class SignaturePage extends GetView<SignaturePageController> {
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                         Expanded(child: Column(children: [ Row(
-                           children: [
-                             Text(
-                               "توقيعي",
-                               style: TextStyle(fontWeight: FontWeight.bold),
-                             ),
-                           ],
-                         ),
-                           SizedBox(
-                             height: 20,
-                           ),
-                           GetBuilder<SignaturePageController>(builder: (logic) {
-                             return Container(height: 100,
-                               padding: EdgeInsets.all(8),
-                               color: Colors.grey.withOpacity(.5),
-                               child: CachedMemoryImage(
-                                 uniqueKey: "defaultsignature",
-                                 errorWidget: const Text('Error'),
-                                 bytes: dataFromBase64String(controller
-                                     .secureStorage
-                                     .readSecureData(AllStringConst.Signature)),
-                                 placeholder: const CircularProgressIndicator(),
-                               ),
-                             );
-                           }),
-
-                         ],))
-,
-                          Expanded(child: Column(children: [
-                            Row(
+                    Row(
+                    children: [
+                    Text(
+                    "توقيعي",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    ],
+                  ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    GetBuilder<SignaturePageController>(builder: (logic) {
+                      return Container(height: 100,
+                        padding: EdgeInsets.all(8),
+                        color: Colors.grey.withOpacity(.5),
+                        child: CachedMemoryImage(
+                          uniqueKey: "defaultsignature",
+                          errorWidget: const Text('Error'),
+                          bytes: dataFromBase64String(controller
+                              .secureStorage
+                              .readSecureData(AllStringConst.Signature)),
+                          placeholder: const CircularProgressIndicator(),
+                        ),
+                      );
+                    }),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
                             children: [
                               Text(
                                 "اخري",
@@ -128,54 +127,43 @@ class SignaturePage extends GetView<SignaturePageController> {
                               ),
                             ],
                           ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            GetBuilder<SignaturePageController>(builder: (logic) {
-                              return
+                          SizedBox(
+                            height: 20,
+                          ),
+                          GetBuilder<SignaturePageController>(builder: (logic) {
+                            return
 
-                                Expanded(
-                                    child: GetBuilder<SignaturePageController>(
-                                        assignId: true,
-                                        builder: (logic) {
-                                          return ListView.builder(
+                              Expanded(
+                                  child: GetBuilder<SignaturePageController>(
+                                      assignId: true,
+                                      builder: (logic) {
+                                        return ListView.builder(
 
-                                            itemCount: controller.multiSignatures.length,
+                                          itemCount: controller.multiSignatures.length,
 
-                                            itemBuilder: (BuildContext context, int index) {
-                                              return Padding(
-                                                padding: const EdgeInsets.only(bottom: 8.0),
-                                                child: Container(height: 100,
-                                                  padding: EdgeInsets.all(8),
-                                                  color: Colors.grey.withOpacity(.5),
-                                                  child: CachedMemoryImage(fit: BoxFit.fill,
-                                                    uniqueKey: index.toString(),
-                                                    errorWidget: const Text('Error'),
-                                                    bytes: dataFromBase64String(controller
-                                                        .multiSignatures[index].signature),
-                                                    placeholder:
-                                                    const CircularProgressIndicator(),
-                                                  ),
+                                          itemBuilder: (BuildContext context, int index) {
+                                            return Padding(
+                                              padding: const EdgeInsets.only(bottom: 8.0),
+                                              child: Container(height: 100,
+                                                padding: EdgeInsets.all(8),
+                                                color: Colors.grey.withOpacity(.5),
+                                                child: CachedMemoryImage(fit: BoxFit.fill,
+                                                  uniqueKey: index.toString(),
+                                                  errorWidget: const Text('Error'),
+                                                  bytes: dataFromBase64String(controller
+                                                      .multiSignatures[index].signature),
+                                                  placeholder:
+                                                  const CircularProgressIndicator(),
                                                 ),
-                                              );
-                                            },
-                                          );
-                                        })
-//    new ListView.builder(
-//        itemCount: controller.multiSignatures.length,
-//        itemBuilder: (context, pos) {
-//          return Padding(
-//            padding: const EdgeInsets.all(8.0),
-//            child: Image.memory(dataFromBase64String(controller
-//                .multiSignatures[pos].signature)),
-//          );
-//        }
-//        )
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      })
 
-                                );
-                            }),
 
-                          ],))
+                              );
+                          }),
                         ]),
                   ),
                 )),

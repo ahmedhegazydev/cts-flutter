@@ -55,45 +55,55 @@ import 'landing_page_controller.dart';
 class InboxController extends GetxController {
   //ده عشان لو اختار من الشاشه بره كل الصادر و الوارد نخفي شاشاه التاب الي فيها صادر ووارد
   bool isAllOrNot = false;
-  List<UserFilter>userFilter=[];
+  List<UserFilter> userFilter = [];
   UserFilter? selectUserFilter;
-updateselectUserFilter(UserFilter? data){
-  selectUserFilter=data;
-   filteredFormUserIdCorrespondences = allCorrespondences
-      .where((content) => content.fromUserId == data?.userId)
-      .toList();
-if(filteredFormUserIdCorrespondences.isNotEmpty){
-  // allCorrespondences.clear();
-  allCorrespondences = (filteredFormUserIdCorrespondences);
-  if(unread){
-    allCorrespondences = allCorrespondences
-        .where((content) => content.isNew == true)
-        .toList();
-  }
-  if(isUrgentClicked){
-    var filteredUrgentPriorities = correspondencesModel?.priorities
-        ?.where((content) => content.Value == 3)
-        .toList();
-    allCorrespondences = allCorrespondences
-        .where((content) => content.priorityId == filteredUrgentPriorities![0].Value.toString())
-        .toList();
-  }
-}else{
-  allCorrespondences  = filteredFormUserIdCorrespondencesTemp;
-  if(unread){
-    allCorrespondences.addAll(allCorrespondencesTempFilterUnread);
-  }
-  if(isUrgentClicked){
-    allCorrespondences.addAll(filteredUrgentCorrespondencesTemp);
-  }
-}
-  update();
-}
 
+  updateselectUserFilter(UserFilter? data) {
+    selectUserFilter = data;
 
+    if (data != null && data.isStructure) {
+      filteredFormUserIdCorrespondences = allCorrespondences
+          .where((content) =>
+              content.fromStructure!.toLowerCase() == data.name.toLowerCase())
+          .toList();
+    } else {
+      filteredFormUserIdCorrespondences = allCorrespondences
+          .where((content) => content.fromUserId == data?.userId)
+          .toList();
+    }
+
+    if (filteredFormUserIdCorrespondences.isNotEmpty) {
+      // allCorrespondences.clear();
+      allCorrespondences = (filteredFormUserIdCorrespondences);
+      if (unread) {
+        allCorrespondences = allCorrespondences
+            .where((content) => content.isNew == true)
+            .toList();
+      }
+      if (isUrgentClicked) {
+        var filteredUrgentPriorities = correspondencesModel?.priorities
+            ?.where((content) => content.Value == 3)
+            .toList();
+        allCorrespondences = allCorrespondences
+            .where((content) =>
+                content.priorityId ==
+                filteredUrgentPriorities![0].Value.toString())
+            .toList();
+      }
+    } else {
+      allCorrespondences = filteredFormUserIdCorrespondencesTemp;
+      if (unread) {
+        allCorrespondences.addAll(allCorrespondencesTempFilterUnread);
+      }
+      if (isUrgentClicked) {
+        allCorrespondences.addAll(filteredUrgentCorrespondencesTemp);
+      }
+    }
+    update();
+  }
 
   String? purposeId;
-bool isUrgentClicked = false;
+  bool isUrgentClicked = false;
   TextEditingController textEditingControllerFilter = TextEditingController();
   BuildContext? context;
   FetchBasketListModel? fetchBasketListModel;
@@ -111,27 +121,32 @@ bool isUrgentClicked = false;
     var filteredUrgentPriorities = correspondencesModel?.priorities
         ?.where((content) => content.Value == 3)
         .toList();
-    if(filteredUrgentPriorities?.isNotEmpty == true){
-
-      if(isUrgentClicked == true){
-        if(unread == true){
+    if (filteredUrgentPriorities?.isNotEmpty == true) {
+      if (isUrgentClicked == true) {
+        if (unread == true) {
           filteredUrgentCorrespondences = filteredAllCorrespondencesByUnread
-              .where((content) => content.priorityId == filteredUrgentPriorities![0].Value.toString())
+              .where((content) =>
+                  content.priorityId ==
+                  filteredUrgentPriorities![0].Value.toString())
               .toList();
-        }else{
+        } else {
           filteredUrgentCorrespondences = allCorrespondences
-              .where((content) => content.priorityId == filteredUrgentPriorities![0].Value.toString())
+              .where((content) =>
+                  content.priorityId ==
+                  filteredUrgentPriorities![0].Value.toString())
               .toList();
         }
         allCorrespondences = filteredUrgentCorrespondences;
-      }else{
-        if(unread == true){
+      } else {
+        if (unread == true) {
           allCorrespondences = filteredAllCorrespondencesByUnread
-              .where((content) => content.priorityId == filteredUrgentPriorities![0].Value.toString())
+              .where((content) =>
+                  content.priorityId ==
+                  filteredUrgentPriorities![0].Value.toString())
               .toList();
           // allCorrespondences = filteredUrgentCorrespondences;
-        }else
-        allCorrespondences = filteredUrgentCorrespondencesTemp;
+        } else
+          allCorrespondences = filteredUrgentCorrespondencesTemp;
       }
     }
     update();
@@ -328,28 +343,26 @@ bool isUrgentClicked = false;
     // listOfUser(0);
   }
 
-
   updateUnread(v) {
     unread = v;
-    if(v == true){
-      if(isUrgentClicked){
+    if (v == true) {
+      if (isUrgentClicked) {
         filteredAllCorrespondencesByUnread = filteredUrgentCorrespondences
             .where((content) => content.isNew == v)
             .toList();
-      }else{
-        filteredAllCorrespondencesByUnread = allCorrespondences
-            .where((content) => content.isNew == v)
-            .toList();
+      } else {
+        filteredAllCorrespondencesByUnread =
+            allCorrespondences.where((content) => content.isNew == v).toList();
       }
       allCorrespondences = filteredAllCorrespondencesByUnread;
-    }else{
-      if(isUrgentClicked){
+    } else {
+      if (isUrgentClicked) {
         allCorrespondences = filteredUrgentCorrespondences
             .where((content) => content.isNew == v)
             .toList();
         // allCorrespondences =  allCorrespondencesTempFilterUnread;
-      }else
-      allCorrespondences =  allCorrespondencesTempFilterUnread;
+      } else
+        allCorrespondences = allCorrespondencesTempFilterUnread;
     }
     update();
   }
@@ -512,12 +525,23 @@ bool isUrgentClicked = false;
       correspondencesModel = value as CorrespondencesModel;
 
       correspondencesModel?.inbox?.correspondences?.forEach((element) {
-        UserFilter user=      UserFilter(userId: element.fromUserId!, name: element.fromUser!);
+        UserFilter user = UserFilter(
+            userId: element.fromUserId!,
+            name: element.fromUser!,
+            isStructure: false);
 
-        if(!userFilter.contains(user)){
+        UserFilter structure = UserFilter(
+            userId: element.fromUserId!,
+            name: element.fromStructure!,
+            isStructure: true);
+
+        if (!userFilter.contains(user)) {
           userFilter.add(user);
         }
 
+        if (!userFilter.contains(structure)) {
+          userFilter.add(structure);
+        }
       });
 
       if (addToList) {
@@ -535,7 +559,7 @@ bool isUrgentClicked = false;
 
       //For filter by unRead check box
       allCorrespondencesTempFilterUnread = allCorrespondences;
-      if(unread == true){
+      if (unread == true) {
         var filtered = allCorrespondences
             .where((content) => content.isNew == true)
             .toList();
@@ -578,22 +602,32 @@ bool isUrgentClicked = false;
       // Navigator.pop(context);
       print("i get alll _getCorrespondencesAllAPI");
       //getCorrespondencesAllModel = value as GetCorrespondencesAllModel;
-      correspondencesModel =value as CorrespondencesModel;
+      correspondencesModel = value as CorrespondencesModel;
       correspondencesModel?.inbox?.correspondences?.forEach((element) {
-        UserFilter user=      UserFilter(userId: element.fromUserId!, name: element.fromUser!);
-if(!userFilter.contains(user)){
+        UserFilter user = UserFilter(
+            userId: element.fromUserId!,
+            name: element.fromUser!,
+            isStructure: false);
 
-  userFilter.add(user);
-}
+        UserFilter structure = UserFilter(
+            userId: element.fromUserId!,
+            name: element.fromStructure!,
+            isStructure: true);
 
+        if (!userFilter.contains(user)) {
+          userFilter.add(user);
+        }
+
+        if (!userFilter.contains(structure)) {
+          userFilter.add(structure);
+        }
       });
 
       if (addToList) {
         allCorrespondences
             .addAll(correspondencesModel?.inbox?.correspondences ?? []);
       } else {
-        allCorrespondences =
-            correspondencesModel?.inbox?.correspondences ?? [];
+        allCorrespondences = correspondencesModel?.inbox?.correspondences ?? [];
       }
 
       int listLength =
@@ -1104,8 +1138,7 @@ if(!userFilter.contains(user)){
 
 //=====================================================================================
 
-
-  List<Recipients> listfavoriteUser=[];
+  List<Recipients> listfavoriteUser = [];
   Recipients? selectlistfavoriteUser;
 
   //Favorites user
@@ -1120,7 +1153,7 @@ if(!userFilter.contains(user)){
       Navigator.pop(context);
       if (value != null) {
         favoriteRecipientsResponse = value as ListFavoriteRecipientsResponse;
-        listfavoriteUser=favoriteRecipientsResponse?.recipients??[];
+        listfavoriteUser = favoriteRecipientsResponse?.recipients ?? [];
       } else {
         Get.snackbar("", "err".tr);
       }
@@ -1190,29 +1223,25 @@ if(!userFilter.contains(user)){
     }
   }
 
+  getBasketInbox(
+      {required context,
+      required int id,
+      int pageSize = 20,
+      int pageNumber = 0}) {
+    GetBasketInboxApi getBasketInboxApi = GetBasketInboxApi(context);
 
-  getBasketInbox( {
-    required context, required int id,int pageSize=20,int pageNumber=0}){
-    GetBasketInboxApi getBasketInboxApi=GetBasketInboxApi(context);
-
-
-
-    getBasketInboxApi.data="token=${secureStorage.token()}&basketId=$id&pageNumber=$pageNumber&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
-
+    getBasketInboxApi.data =
+        "token=${secureStorage.token()}&basketId=$id&pageNumber=$pageNumber&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
 
     getBasketInboxApi.getData().then((value) {
-      if(value!=null){
+      if (value != null) {
+        GetBasketInboxModel getBasketInboxModel = value as GetBasketInboxModel;
 
-        GetBasketInboxModel       getBasketInboxModel=value as GetBasketInboxModel;
-
-
-        allCorrespondences
-            .addAll(getBasketInboxModel?.correspondences?? []);
-        if((getBasketInboxModel?.correspondences?.length??0)<pageSize){
-          haveMoreData=false;
+        allCorrespondences.addAll(getBasketInboxModel?.correspondences ?? []);
+        if ((getBasketInboxModel?.correspondences?.length ?? 0) < pageSize) {
+          haveMoreData = false;
         }
-
-      }else{
+      } else {
         Get.snackbar("", "err".tr);
       }
 
@@ -1230,13 +1259,16 @@ if(!userFilter.contains(user)){
     update();
   }
 }
-class UserFilter  extends Equatable{
+
+class UserFilter extends Equatable {
   int userId;
   String name;
+  bool isStructure;
 
-  UserFilter({required this.userId,required this.name});
+  UserFilter(
+      {required this.userId, required this.name, required this.isStructure});
 
   @override
   // TODO: implement props
-  List<Object?> get props => [userId,name];
+  List<Object?> get props => [userId, name, isStructure];
 }

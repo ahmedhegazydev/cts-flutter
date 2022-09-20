@@ -342,6 +342,7 @@ class SearchPage extends GetWidget<SearchController> {
                           },
                           onSuggestionSelected: (suggestion) {
                             Destination v = suggestion;
+                            controller.fromDestination=suggestion;
                             controller.textEditingControllerFrom2.text =
                                 v.value ?? "";
 controller.from=v;
@@ -412,7 +413,7 @@ controller.from=v;
                             controller.textEditingControllerTo2.text =
                                 v.value ?? "";
                             controller.to=v;
-
+                            controller.toDestination=suggestion;
 
                             // v
                             // .cLASNAMEDISPLAY;
@@ -750,7 +751,7 @@ controller.from=v;
                       controller.textEditingControllerClassificationsVal.text =
                           v.cLASNAMEDISPLAY ?? "";
 
-
+controller.classificationsVal=suggestion;
                       controller.serachData["Classification"] = suggestion.id;
                           // v
                           // .cLASNAMEDISPLAY;
@@ -894,7 +895,7 @@ controller.from=v;
               height: 8,
             ),
             Container(
-                padding: EdgeInsets.only(right: 8, left: 8),
+
                 decoration: BoxDecoration(
                     border:
                     Border.all(color: Theme
@@ -902,13 +903,31 @@ controller.from=v;
                         .colorScheme
                         .primary),
                     borderRadius: const BorderRadius.all(Radius.circular(6))),
-                child: TextField(
-                  controller: controller.textEditingControllerDocData,
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: 'Document Data',
+                child:  InkWell(onTap: () {
+                  controller.selecttextrRegisterDate(context: context);
+                },
+                  child: Container(
+                      height: 60,
+                      padding: EdgeInsets.only(right: 8, left: 8),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Theme
+                                  .of(context)
+                                  .colorScheme
+                                  .primary),
+                          borderRadius: const BorderRadius.all(
+                              Radius.circular(6))),
+                      child:
+                      TextField(enabled: false,
+                        controller: controller.textEditingControllerRegisterDate,
+                        decoration:   InputDecoration(
+                          border: UnderlineInputBorder(),
+                          labelText: 'registerDate'.tr,
+                        ),
+                      )
+                    //   Center(child: Text(controller.toDocDate))
                   ),
-                )),
+                ),),
             SizedBox(
               height: 8,
             ),

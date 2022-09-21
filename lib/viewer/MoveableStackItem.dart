@@ -311,14 +311,13 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
         left: xPosition,
         child: GestureDetector(
           behavior: HitTestBehavior.translucent,
-          onTapDown: (details) {
+          onDoubleTap: () {
             if (s.viewerIsEditable.value) return;
-            s.selectedActionIndex.value = 0;
+            s.selectedActionIndex.value = 1;
 
             s.setEditable(true);
-            FocusScope.of(context).requestFocus();
-            print(details);
           },
+          onTapDown: (details) {},
           onTapUp: (details) {
             setState(() {
               isEditing = !isEditing;
@@ -400,6 +399,14 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
         );
 
       case AnnotationBaseTypes.signature:
+        return Container(
+          width: width,
+          height: height,
+          color: color,
+          child: widget.uiimage,
+        );
+
+      case AnnotationBaseTypes.image:
         return Container(
           width: width,
           height: height,

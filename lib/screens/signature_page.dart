@@ -8,15 +8,6 @@ import '../utility/all_const.dart';
 import '../utility/all_string_const.dart';
 import '../utility/utilitie.dart';
 
-import 'package:cached_memory_image/cached_image_base64_manager.dart';
-import 'package:cached_memory_image/cached_image_manager.dart';
-import 'package:cached_memory_image/cached_memory_image.dart';
-import 'package:cached_memory_image/provider/cached_memory_image_placeholder_provider.dart';
-import 'package:cached_memory_image/provider/cached_memory_image_provider.dart';
-import 'package:flutter/material.dart';
-
-import '../widgets/custom_button.dart';
-
 class SignaturePage extends GetView<SignaturePageController> {
   const SignaturePage({Key? key}) : super(key: key);
 
@@ -24,62 +15,33 @@ class SignaturePage extends GetView<SignaturePageController> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: AppBar(
-            actions: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(5),
-                child: Text("addsing".tr,
-                    style: TextStyle(
-                        // fontFamily: 'Roboto',
-                        fontSize: 20,
-                        color: Colors.white
-                        // letterSpacing: 0.15,
-                        // fontWeight: FontWeight.w500,
-                        // color: _themeData!.colorScheme.onSurface
-                        //     .withOpacity(0.87),
-                        )),
-              ),
-              Spacer(),
-              Padding(
-                  padding: EdgeInsets.all(5),
-                  child: InkWell(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: Icon(
-                        Icons.close,
-                        color: Colors.white,
-                        size: 30,
-                      ))),
-              // Padding(
-              //     padding: EdgeInsets.all(5),
-              //     child: InkWell(
-              //         onTap: () {
-              //           controller.controller.clear();
-              //         },
-              //         child: Icon(
-              //           Icons.delete,
-              //           size: 30,
-              //           color: Colors.white,
-              //         ))),
-              // Padding(
-              //     padding: EdgeInsets.all(5),
-              //     child: InkWell(
-              //         onTap: () {
-              //           controller.saveSign(context);
-              //         },
-              //         child: Icon(
-              //           Icons.save,
-              //           color: Colors.white,
-              //           size: 30,
-              //         ))),
-            ],
-            // title: Text(
-            //   "addsing".tr,
-            //   style: TextStyle(color: Colors.white),
-            // ),
-            leading: SizedBox(),
-            centerTitle: true),
+        appBar: AppBar(actions: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(5),
+            child: Text("addsing".tr,
+                style: TextStyle(
+                    // fontFamily: 'Roboto',
+                    fontSize: 20,
+                    color: Colors.white
+                    // letterSpacing: 0.15,
+                    // fontWeight: FontWeight.w500,
+                    // color: _themeData!.colorScheme.onSurface
+                    //     .withOpacity(0.87),
+                    )),
+          ),
+          Spacer(),
+          Padding(
+              padding: EdgeInsets.all(5),
+              child: InkWell(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: Icon(
+                    Icons.close,
+                    color: Colors.white,
+                    size: 30,
+                  ))),
+        ], leading: SizedBox(), centerTitle: true),
         body: Row(
           children: [
             Expanded(
@@ -91,31 +53,32 @@ class SignaturePage extends GetView<SignaturePageController> {
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                    Row(
-                    children: [
-                    Text(
-                    "توقيعي",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    ],
-                  ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    GetBuilder<SignaturePageController>(builder: (logic) {
-                      return Container(height: 100,
-                        padding: EdgeInsets.all(8),
-                        color: Colors.grey.withOpacity(.5),
-                        child: CachedMemoryImage(
-                          uniqueKey: "defaultsignature",
-                          errorWidget: const Text('Error'),
-                          bytes: dataFromBase64String(controller
-                              .secureStorage
-                              .readSecureData(AllStringConst.Signature)),
-                          placeholder: const CircularProgressIndicator(),
-                        ),
-                      );
-                    }),
+                          Row(
+                            children: [
+                              Text(
+                                "توقيعي",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          GetBuilder<SignaturePageController>(builder: (logic) {
+                            return Container(
+                              height: 100,
+                              padding: EdgeInsets.all(8),
+                              color: Colors.grey.withOpacity(.5),
+                              child: CachedMemoryImage(
+                                uniqueKey: "defaultsignature",
+                                errorWidget: const Text('Error'),
+                                bytes: dataFromBase64String(controller
+                                    .secureStorage
+                                    .readSecureData(AllStringConst.Signature)),
+                                placeholder: const CircularProgressIndicator(),
+                              ),
+                            );
+                          }),
                           SizedBox(
                             height: 20,
                           ),
@@ -131,38 +94,40 @@ class SignaturePage extends GetView<SignaturePageController> {
                             height: 20,
                           ),
                           GetBuilder<SignaturePageController>(builder: (logic) {
-                            return
-
-                              Expanded(
-                                  child: GetBuilder<SignaturePageController>(
-                                      assignId: true,
-                                      builder: (logic) {
-                                        return ListView.builder(
-
-                                          itemCount: controller.multiSignatures.length,
-
-                                          itemBuilder: (BuildContext context, int index) {
-                                            return Padding(
-                                              padding: const EdgeInsets.only(bottom: 8.0),
-                                              child: Container(height: 100,
-                                                padding: EdgeInsets.all(8),
-                                                color: Colors.grey.withOpacity(.5),
-                                                child: CachedMemoryImage(fit: BoxFit.fill,
-                                                  uniqueKey: index.toString(),
-                                                  errorWidget: const Text('Error'),
-                                                  bytes: dataFromBase64String(controller
-                                                      .multiSignatures[index].signature),
-                                                  placeholder:
-                                                  const CircularProgressIndicator(),
-                                                ),
+                            return Expanded(
+                                child: GetBuilder<SignaturePageController>(
+                                    assignId: true,
+                                    builder: (logic) {
+                                      return ListView.builder(
+                                        itemCount:
+                                            controller.multiSignatures.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 8.0),
+                                            child: Container(
+                                              height: 100,
+                                              padding: EdgeInsets.all(8),
+                                              color:
+                                                  Colors.grey.withOpacity(.5),
+                                              child: CachedMemoryImage(
+                                                fit: BoxFit.fill,
+                                                uniqueKey: index.toString(),
+                                                errorWidget:
+                                                    const Text('Error'),
+                                                bytes: dataFromBase64String(
+                                                    controller
+                                                        .multiSignatures[index]
+                                                        .signature),
+                                                placeholder:
+                                                    const CircularProgressIndicator(),
                                               ),
-                                            );
-                                          },
-                                        );
-                                      })
-
-
-                              );
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    }));
                           }),
                         ]),
                   ),
@@ -187,11 +152,15 @@ class SignaturePage extends GetView<SignaturePageController> {
                   SizedBox(
                     height: 20,
                   ),
-                  Container( 
+                  Container(
                       width: double.infinity,
                       height: size.height * .4,
-                      child: Signature(backgroundColor: Colors.grey.withOpacity(.5),
+                      child: Signature(
+                        //dynamicPressureSupported: true,
+                        backgroundColor: Colors.grey.withOpacity(.5),
                         controller: controller.controller,
+                        width: size.width * 0.7,
+                        height: size.height * .4,
                       )),
                   SizedBox(
                     height: 20,
@@ -199,32 +168,42 @@ class SignaturePage extends GetView<SignaturePageController> {
                   Row(
                     children: [
                       Spacer(),
-                      Container(
-                        child: Center(
-                            child: Text(
-                          "محو التوقيع",
-                          style: TextStyle(color: Colors.white),
-                        )),
-                        height: 50,
-                        width: size.width * .1,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(3),
-                            color: RedColor),
+                      InkWell(
+                        onTap: () {
+                          controller.controller.clear();
+                        },
+                        child: Container(
+                          child: Center(
+                              child: Text(
+                            "محو التوقيع",
+                            style: TextStyle(color: Colors.white),
+                          )),
+                          height: 50,
+                          width: size.width * .1,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(3),
+                              color: RedColor),
+                        ),
                       ),
                       SizedBox(
                         width: 20,
                       ),
-                      Container(
-                        child: Center(
-                            child: Text(
-                          "متابعة",
-                          style: TextStyle(color: Colors.white),
-                        )),
-                        height: 50,
-                        width: size.width * .1,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(3),
-                            color: AppColor),
+                      InkWell(
+                        onTap: () {
+                          controller.saveSign(context);
+                        },
+                        child: Container(
+                          child: Center(
+                              child: Text(
+                            "متابعة",
+                            style: TextStyle(color: Colors.white),
+                          )),
+                          height: 50,
+                          width: size.width * .1,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(3),
+                              color: AppColor),
+                        ),
                       ),
                     ],
                   )

@@ -101,4 +101,26 @@ class ViewerController extends GetxController {
     }
     annotationToAdd = AnnotationBaseTypes.none;
   }
+
+  creatAndAddAnnotationOnLoad(
+      {required double width,
+      required double height,
+      required double originX,
+      required double originY,
+      required int page,
+      required Image image}) {
+    var uuid = const Uuid();
+    var v1 = uuid.v1();
+    var x = originX - width / 2;
+    var y = originY - height / 2;
+
+    var annotation = AnnotationObject(x, y, 100, 40, "ann", page, v1);
+    // ViewerController.to.annotations[page].add(MoveableStackItem(100, 50, x, y));
+    allAnnotations.add(annotation);
+    var annotationWidget = MoveableStackItem.withUIImage(
+        width, height, x, y, v1, image, AnnotationBaseTypes.image, page);
+    annotations[page].add(annotationWidget);
+
+    annotationToAdd = AnnotationBaseTypes.none;
+  }
 }

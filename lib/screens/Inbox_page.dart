@@ -78,8 +78,6 @@ class InboxPage extends GetWidget<InboxController> {
         children: [
           Expanded(
             child: Container(
-              // width: size.infinity,
-              // height: double.infinity,
               color: Colors.white,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -89,9 +87,6 @@ class InboxPage extends GetWidget<InboxController> {
                   Expanded(
                     child: Column(
                       children: [
-                        // controller.getData
-                        //     ? const Center(child: CircularProgressIndicator())
-                        //     :
                         controller.isAllOrNot
                             ? Expanded(
                                 child: CustomListView(
@@ -100,11 +95,8 @@ class InboxPage extends GetWidget<InboxController> {
                                       controller.allCorrespondences,
                                   scrollController: controller.scrollController,
                                   haveMoreData: controller.haveMoreData,
-                                  onClickItem: () {
-                                    //     Get.toNamed("/DocumentPage");
-                                  },
+                                  onClickItem: () {},
                                   functionSummary: () {},
-                                  //allCorrespondences: controller.allCorrespondences,
                                   customActions: controller.customActions,
                                   functionReply: () {},
                                   functionTrunsfer: () {},
@@ -161,13 +153,6 @@ class InboxPage extends GetWidget<InboxController> {
           ),
         ),
         Seperator(),
-        // Container(
-        //   child: Center(
-        //       child: Text(
-        //     "sender".tr,
-        //     style: TextStyle(fontSize: 16, color: Colors.black.withOpacity(.7)),
-        //   )),
-        // ),
         Flexible(
           child: GetBuilder<InboxController>(
               autoRemove: false,
@@ -228,15 +213,15 @@ class InboxPage extends GetWidget<InboxController> {
               }),
         ),
         Seperator(),
-        Container(
-          padding: EdgeInsets.only(right: 8, left: 8),
-          height: size.height * .03,
-          width: 1,
-          color: Colors.grey,
-        ),
-        SizedBox(
-          width: 16,
-        ),
+        // Container(
+        //   padding: EdgeInsets.only(right: 8, left: 8),
+        //   height: size.height * .03,
+        //   width: 1,
+        //   color: Colors.grey,
+        // ),
+        // SizedBox(
+        //   width: 16,
+        // ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -246,16 +231,13 @@ class InboxPage extends GetWidget<InboxController> {
                     .setIsUrgentFilterClicked(!controller.isUrgentClicked);
               },
               child: Container(
-                width: 160, padding: EdgeInsets.all(8),
+                width: 160,
+                padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
                     color: controller.isUrgentClicked
                         ? AppColor
                         : Colors.grey[400],
-                    // color: Colors.grey[200],
                     borderRadius: BorderRadius.circular(8)),
-                // margin: EdgeInsets.only(right: 8, left: 8),
-                //   height: size.height * .03,
-                ////width: 1,
                 child: IntrinsicHeight(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

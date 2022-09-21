@@ -1,19 +1,10 @@
-import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
-
-import 'package:cts/models/DocumentModel.dart';
-import 'package:cts/screens/resize_sing.dart';
 import 'package:cts/screens/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/public/flutter_sound_player.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-//import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
-
 import 'package:get/get.dart';
 import 'package:signature/signature.dart';
-
-//import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -23,21 +14,14 @@ import '../controllers/main_controller.dart';
 import '../controllers/web_view_controller.dart';
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/inopendocModel/g2g/g2g_Info_for_export_model.dart';
-import '../services/json_model/inopendocModel/g2g/g2g_export_dto.dart';
-import '../services/json_model/inopendocModel/save_document_annotation_model.dart';
 import '../services/json_model/login_model.dart';
 import '../utility/all_const.dart';
-import '../utility/all_string_const.dart';
-import '../utility/storage.dart';
 import '../utility/utilitie.dart';
 import '../viewer/controllers/viewerController.dart';
 import '../viewer/pdfview.dart';
-import '../viewer/static/AnnotationTypes.dart';
 import '../widgets/Custom_button_with_image.dart';
 import '../widgets/custom_button_with_icon.dart';
-import '../widgets/custom_side_button_menu.dart';
 import 'dart:developer';
-import 'package:cts/models/DocumentModel.dart' as DocModel;
 
 class DocumentPage extends GetWidget<DocumentController> {
   bool portraitIsActive = false;
@@ -131,7 +115,7 @@ class DocumentPage extends GetWidget<DocumentController> {
           icon: const Icon(Icons.edit),
         ),
         ActionButton(
-          onPressed: () => _popUpMenu(context),
+          onPressed: () => _popUpMenuTransfer(context),
           icon: const Icon(Icons.send),
         ),
       ],
@@ -207,177 +191,147 @@ class DocumentPage extends GetWidget<DocumentController> {
           //autoRemove: false,
           autoRemove: false,
           builder: (logic) {
+            var children2 = [
+              const SizedBox(
+                width: 4,
+                height: 50,
+              ),
+              //transferButton(context),
+              Container(
+                height: 30,
+                width: 1,
+                color: Colors.grey[800],
+              ),
+              PopupMenuButton(
+                elevation: 4,
+                child: CustomButtonWithImage(
+                  image: 'assets/images/up_arrow.png',
+                  label: "export".tr,
+                ),
+                itemBuilder: (BuildContext context) {
+                  return [
+                    PopupMenuItem(
+                      child: Text("paperExport".tr),
+                      onTap: () {
+                        controller.getIsAlreadyExportedAsPaperwork(
+                            context: context,
+                            correspondenceId:
+                                controller.correspondences.correspondenceId!,
+                            transferId: controller.correspondences.transferId!,
+                            exportAction: "paper");
+                      },
+                    ),
+                    PopupMenuItem(
+                      child: Text("electronicExport".tr),
+                      onTap: () {
+                        controller.isAlreadyExportedAsTransfer(
+                            context: context,
+                            correspondenceId:
+                                controller.correspondences.correspondenceId!,
+                            transferId: controller.correspondences.transferId!,
+                            exportAction: "electronic");
+                        print("electronicExport");
+                      },
+                    ),
+                    PopupMenuItem(
+                      child: Text("paperAndElectronicExport".tr),
+                      onTap: () {
+                        controller.isAlreadyExportedAsTransfer(
+                            context: context,
+                            correspondenceId:
+                                controller.correspondences.correspondenceId!,
+                            transferId: controller.correspondences.transferId!,
+                            exportAction: "paperAndelectronic");
+                        print("paperAndElectronicExport");
+                      },
+                    ),
+                  ];
+                },
+              ),
+              Container(
+                height: 30,
+                width: 1,
+                color: Colors.grey[800],
+              ),
+              GestureDetector(
+                child: CustomButtonWithImage(
+                  // onClick: () {},
+                  image: 'assets/images/ending.png',
+                  label: "ending".tr,
+                ),
+                onTap: () {
+                  print("ending");
+                  // showLoaderDialog(context);
+                  completeClick(context);
+                },
+              ),
+              Container(
+                height: 30,
+                width: 1,
+                color: Colors.grey[800],
+              ),
+              GestureDetector(
+                child: CustomButtonWithImage(
+                  // onClick: () {},
+                  label: "marking".tr,
+                  image: 'assets/images/A.png',
+                ),
+                onTap: () async {
+                  String url =
+                      "https://intaliocom-my.sharepoint.com/:w:/r/personal/izzat_hajj_intalio_com/_layouts/15/Doc.aspx?sourcedoc=%7B433EEEF0-A155-4F05-B1BF-B9FBEEF77575%7D&file=5833639______%20____%20____%20(1).docx&action=default&mobileredirect=true";
+                  final Uri toLaunch = Uri.parse("ms-word:ofe|u|$url|a|App");
+
+                  final bool nativeAppLaunchSucceeded = await launchUrl(
+                    toLaunch,
+                    mode: LaunchMode.externalApplication,
+                  );
+                  print("was able to launch ? $nativeAppLaunchSucceeded");
+                },
+              ),
+              Container(
+                height: 30,
+                width: 1,
+                color: Colors.grey[800],
+              ),
+              GestureDetector(
+                onTap: () {
+                  Get.find<WebViewPageController>().isPdf = false;
+                  print(controller.correspondences.gridInfo![2].value);
+                  var ref = controller.correspondences.gridInfo![2].value;
+                  if (ref != null && ref != "")
+                    Get.find<WebViewPageController>().title = ref;
+                  else
+                    Get.find<WebViewPageController>().title = "tracking".tr;
+                  Get.find<WebViewPageController>().url = controller
+                      .canOpenDocumentModel?.correspondence!.visualTrackingUrl!;
+                  Get.toNamed(
+                    "WebViewPage",
+                  );
+                },
+                child: CustomButtonWithImage(
+                  // onClick: () {},
+                  image: 'assets/images/track.png',
+                  label: "tracking".tr,
+                ),
+              ),
+              if (controller.notoragnalFileDoc)
+                GestureDetector(
+                  onTap: () {
+                    controller.backTooragnalFileDocpdf();
+                  },
+                  child: Icon(
+                    Icons.home,
+                    size: 40,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+            ];
             var singleChildScrollView = SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 mainAxisSize: MainAxisSize.max,
-                children: [
-                  const SizedBox(
-                    width: 4,
-                    height: 50,
-                  ),
-
-                  InkWell(
-                    onTap: () {
-                      _popUpMenu(context);
-                    },
-                    child: CustomButtonWithImage(
-                      //onClick: () {},
-                      image: 'assets/images/refer.png',
-                      label: "refer".tr,
-                    ),
-                  ),
-                  Container(
-                    height: 30,
-                    width: 1,
-                    color: Colors.grey[800],
-                  ),
-                  PopupMenuButton(
-                    elevation: 4,
-                    child: CustomButtonWithImage(
-                      image: 'assets/images/up_arrow.png',
-                      label: "export".tr,
-                    ),
-                    itemBuilder: (BuildContext context) {
-                      return [
-                        PopupMenuItem(
-                          child: Text("paperExport".tr),
-                          onTap: () {
-                            controller.getIsAlreadyExportedAsPaperwork(
-                                context: context,
-                                correspondenceId: controller
-                                    .correspondences.correspondenceId!,
-                                transferId:
-                                    controller.correspondences.transferId!,
-                                exportAction: "paper");
-                          },
-                        ),
-                        PopupMenuItem(
-                          child: Text("electronicExport".tr),
-                          onTap: () {
-                            controller.isAlreadyExportedAsTransfer(
-                                context: context,
-                                correspondenceId: controller
-                                    .correspondences.correspondenceId!,
-                                transferId:
-                                    controller.correspondences.transferId!,
-                                exportAction: "electronic");
-                            print("electronicExport");
-                          },
-                        ),
-                        PopupMenuItem(
-                          child: Text("paperAndElectronicExport".tr),
-                          onTap: () {
-                            controller.isAlreadyExportedAsTransfer(
-                                context: context,
-                                correspondenceId: controller
-                                    .correspondences.correspondenceId!,
-                                transferId:
-                                    controller.correspondences.transferId!,
-                                exportAction: "paperAndelectronic");
-                            print("paperAndElectronicExport");
-                          },
-                        ),
-                      ];
-                    },
-                  ),
-                  Container(
-                    height: 30,
-                    width: 1,
-                    color: Colors.grey[800],
-                  ),
-                  GestureDetector(
-                    child: CustomButtonWithImage(
-                      // onClick: () {},
-                      image: 'assets/images/ending.png',
-                      label: "ending".tr,
-                    ),
-                    onTap: () {
-                      print("ending");
-                      // showLoaderDialog(context);
-                      completeClick(context);
-                    },
-                  ),
-                  Container(
-                    height: 30,
-                    width: 1,
-                    color: Colors.grey[800],
-                  ),
-                  GestureDetector(
-                    child: CustomButtonWithImage(
-                      // onClick: () {},
-                      label: "marking".tr,
-                      image: 'assets/images/A.png',
-                    ),
-                    onTap: () async {
-                      String url =
-                          "https://intaliocom-my.sharepoint.com/:w:/r/personal/izzat_hajj_intalio_com/_layouts/15/Doc.aspx?sourcedoc=%7B433EEEF0-A155-4F05-B1BF-B9FBEEF77575%7D&file=5833639______%20____%20____%20(1).docx&action=default&mobileredirect=true";
-                      final Uri toLaunch =
-                          Uri.parse("ms-word:ofe|u|$url|a|App");
-
-                      final bool nativeAppLaunchSucceeded = await launchUrl(
-                        toLaunch,
-                        mode: LaunchMode.externalApplication,
-                      );
-                      print("was able to launch ? $nativeAppLaunchSucceeded");
-                    },
-                  ),
-                  Container(
-                    height: 30,
-                    width: 1,
-                    color: Colors.grey[800],
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Get.find<WebViewPageController>().isPdf = false;
-                      print(controller.correspondences.gridInfo![2].value);
-                      var ref = controller.correspondences.gridInfo![2].value;
-                      if (ref != null && ref != "")
-                        Get.find<WebViewPageController>().title = ref;
-                      else
-                        Get.find<WebViewPageController>().title = "tracking".tr;
-                      Get.find<WebViewPageController>().url = controller
-                          .canOpenDocumentModel
-                          ?.correspondence!
-                          .visualTrackingUrl!;
-                      Get.toNamed(
-                        "WebViewPage",
-                      );
-                    },
-                    child: CustomButtonWithImage(
-                      // onClick: () {},
-                      image: 'assets/images/track.png',
-                      label: "tracking".tr,
-                    ),
-                  ),
-                  // Container(
-                  //   height: 30,
-                  //   width: 1,
-                  //   color: Colors.grey[800],
-                  // ),
-                  // CustomButtonWithImage(
-                  //   //    onClick: () {},
-                  //   image: 'assets/images/referrals.png',
-                  //   label: "referrals".tr,
-                  // ),
-                  // Container(
-                  //   height: 30,
-                  //   width: 1,
-                  //   color: Colors.grey[800],
-                  // ),
-                  if (controller.notoragnalFileDoc)
-                    GestureDetector(
-                      onTap: () {
-                        controller.backTooragnalFileDocpdf();
-                      },
-                      child: Icon(
-                        Icons.home,
-                        size: 40,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    ),
-                ],
+                children: children2,
               ),
             );
             return singleChildScrollView;
@@ -393,250 +347,244 @@ class DocumentPage extends GetWidget<DocumentController> {
 
   Expanded _MetadataSideMenu(BuildContext context) {
     return Expanded(
-      child: IntrinsicHeight(
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-                flex: 2,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "data".tr,
+      child: Padding(
+        padding: const EdgeInsets.all(28.0),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    height: 50,
+                  )
+
+                  //action":
+                ],
+              ),
+              Text(
+                "action".tr,
+              ),
+              const Divider(
+                thickness: 1,
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CTSActionButton('assets/images/refer.png', "refer".tr, () {
+                    _popUpMenuTransfer(context);
+                  }),
+                  CTSActionButton('assets/images/up_arrow.png', "export".tr,
+                      () {
+                    showExportDialog(context);
+                  })
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "data".tr,
+                  ),
+                ],
+              ),
+              const Divider(
+                thickness: 1,
+              ),
+
+              Wrap(
+                // mainAxisAlignment:
+                //     MainAxisAlignment
+                //         .spaceAround,
+                children: [
+                  if (controller.correspondences.priorityId == "1")
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Container(
+                        width: 100,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 0,
+                              color: Colors.transparent,
                             ),
-                            Image.asset(
-                              'assets/images/metadata.png',
-                              height: 20,
-                              width: 20,
-                              fit: BoxFit.fill,
-                            )
-                          ],
-                        ),
-                        const Divider(
-                          thickness: 1,
-                        ),
-
-                        Wrap(
-                          // mainAxisAlignment:
-                          //     MainAxisAlignment
-                          //         .spaceAround,
-                          children: [
-                            if (controller.correspondences.priorityId == "1")
-                              Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Container(
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                        width: 0,
-                                        color: Colors.transparent,
-                                      ),
-                                      borderRadius: BorderRadius.circular(5)),
-                                  child: Center(
-                                    child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(Icons.warning, color: RedColor),
-                                          SizedBox(
-                                            width: 8,
-                                          ),
-                                          if (controller
-                                                  .correspondences.priorityId ==
-                                              "1")
-                                            Text(
-                                              "veryimportant".tr,
-                                              style: TextStyle(color: RedColor),
-                                            ),
-                                        ]),
-                                  ),
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Center(
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.warning, color: RedColor),
+                                SizedBox(
+                                  width: 8,
                                 ),
-                              ),
-
-                            if (controller.correspondences.showLock ?? false)
-                              Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Container(
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                        width: 1,
-                                        color: Colors.transparent,
-                                      ),
-                                      borderRadius: BorderRadius.circular(5)),
-                                  child: Center(
-                                    child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(Icons.lock),
-                                          SizedBox(
-                                            width: 4,
-                                          ),
-                                          Text("secret".tr),
-                                        ]),
+                                if (controller.correspondences.priorityId ==
+                                    "1")
+                                  Text(
+                                    "veryimportant".tr,
+                                    style: TextStyle(color: RedColor),
                                   ),
-                                ),
-                              ),
-                            SizedBox(
-                              width: 4,
+                              ]),
+                        ),
+                      ),
+                    ),
+
+                  if (controller.correspondences.showLock ?? false)
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Container(
+                        width: 100,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 1,
+                              color: Colors.transparent,
                             ),
-
-                            Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Container(
-                                width: 100,
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                      width: 1,
-                                      color: Colors.transparent,
-                                    ),
-                                    borderRadius: BorderRadius.circular(5)),
-                                child: Center(
-                                  child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                            controller.correspondences.isLocked!
-                                                ? Icons.lock
-                                                : Icons.lock_open,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary),
-                                        SizedBox(
-                                          width: 4,
-                                        ),
-                                        if (controller
-                                                .correspondences.isLocked ??
-                                            false)
-                                          Text("closed".tr,
-                                              style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .primary)),
-                                      ]),
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Center(
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.lock),
+                                SizedBox(
+                                  width: 4,
                                 ),
+                                Text("secret".tr),
+                              ]),
+                        ),
+                      ),
+                    ),
+                  SizedBox(
+                    width: 4,
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Container(
+                      width: 100,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 1,
+                            color: Colors.transparent,
+                          ),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Center(
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                  controller.correspondences.isLocked!
+                                      ? Icons.lock
+                                      : Icons.lock_open,
+                                  color: Theme.of(context).colorScheme.primary),
+                              SizedBox(
+                                width: 4,
                               ),
-                            ),
-
-                            //   correspondences[pos].priorityId
-                            //  correspondences[pos].purposeId
-
-                            // Text("sender".tr),
-                            // SizedBox(
-                            //   width: 4,
-                            // ),
-                            // Text(
-                            //     correspondences[pos]
-                            //         .fromUser ??
-                            //         ""),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        _itemSideMenu(
-                            context: context,
-                            title: "title".tr,
-                            data:
-                                controller.correspondences.gridInfo![0].value ??
-                                    ""),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        _itemSideMenu(
-                            context: context,
-                            title: "sender1".tr,
-                            data: controller.correspondences.fromUser ?? ""),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        _itemSideMenu(
-                            context: context,
-                            title: "assignedFrom".tr,
-                            data:
-                                controller.correspondences.metadata![3].value!),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        _itemSideMenu(
-                            context: context,
-                            title: "referDate".tr,
-                            data:
-                                controller.correspondences.gridInfo![3].value!),
-                        SizedBox(
-                          height: 8,
-                        ),
-
-                        //    if(controller!.canOpenDocumentModel?.attachments?.hasVoice??false)
-                        Text("assignmentNotes".tr),
-                        // if(controller!.canOpenDocumentModel?.attachments?.hasVoice??false)
-                        //  Text(controller.correspondences.comments ?? ""),
-                        Text(controller.canOpenDocumentModel?.correspondence
-                                ?.comments ??
-                            ""),
-
-                        if (controller
-                                .canOpenDocumentModel?.attachments?.hasVoice ??
-                            false)
-                          Container(
-                              height: 40,
-                              color: Colors.grey[300],
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SizedBox(
-                                    width: 4,
-                                  ),
-                                  Expanded(
-                                      child: Container(
-                                    height: 1,
-                                    color: Colors.grey,
-                                  )),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: InkWell(
-                                      onTap: () async {
-                                        print("object");
-
-                                        /// هنشغل ملف الصوت هنا
-                                        FlutterSoundPlayer audioPlayer =
-                                            FlutterSoundPlayer();
-
-                                        audioPlayer!.openPlayer();
-                                        String filePath =
-                                            await createFileFromString(
-                                                controller.canOpenDocumentModel
-                                                    ?.attachments?.voiceNote);
-
-                                        print(filePath);
-                                        await audioPlayer!
-                                            .startPlayer(fromURI: filePath);
-                                      },
-                                      child: Icon(Icons.play_arrow,
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary),
-                                    ),
-                                  )
-                                ],
-                              )),
-                      ],
+                              if (controller.correspondences.isLocked ?? false)
+                                Text("closed".tr,
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary)),
+                            ]),
+                      ),
                     ),
                   ),
-                ))
-          ],
+
+                  //   correspondences[pos].priorityId
+                  //  correspondences[pos].purposeId
+
+                  // Text("sender".tr),
+                  // SizedBox(
+                  //   width: 4,
+                  // ),
+                  // Text(
+                  //     correspondences[pos]
+                  //         .fromUser ??
+                  //         ""),
+                ],
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              _itemSideMenu(
+                  context: context,
+                  title: "title".tr,
+                  data: controller.correspondences.gridInfo![0].value ?? ""),
+              SizedBox(
+                height: 8,
+              ),
+              _itemSideMenu(
+                  context: context,
+                  title: "sender1".tr,
+                  data: controller.correspondences.fromUser ?? ""),
+              SizedBox(
+                height: 8,
+              ),
+              _itemSideMenu(
+                  context: context,
+                  title: "assignedFrom".tr,
+                  data: controller.correspondences.metadata![3].value!),
+              SizedBox(
+                height: 8,
+              ),
+              _itemSideMenu(
+                  context: context,
+                  title: "referDate".tr,
+                  data: controller.correspondences.gridInfo![3].value!),
+              SizedBox(
+                height: 8,
+              ),
+
+              //    if(controller!.canOpenDocumentModel?.attachments?.hasVoice??false)
+              Text("assignmentNotes".tr),
+              // if(controller!.canOpenDocumentModel?.attachments?.hasVoice??false)
+              //  Text(controller.correspondences.comments ?? ""),
+              Text(controller.canOpenDocumentModel?.correspondence?.comments ??
+                  ""),
+
+              if (controller.canOpenDocumentModel?.attachments?.hasVoice ??
+                  false)
+                Container(
+                    height: 40,
+                    color: Colors.grey[300],
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Expanded(
+                            child: Container(
+                          height: 1,
+                          color: Colors.grey,
+                        )),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: InkWell(
+                            onTap: () async {
+                              print("object");
+
+                              /// هنشغل ملف الصوت هنا
+                              FlutterSoundPlayer audioPlayer =
+                                  FlutterSoundPlayer();
+
+                              audioPlayer!.openPlayer();
+                              String filePath = await createFileFromString(
+                                  controller.canOpenDocumentModel?.attachments
+                                      ?.voiceNote);
+
+                              print(filePath);
+                              await audioPlayer!.startPlayer(fromURI: filePath);
+                            },
+                            child: Icon(Icons.play_arrow,
+                                color: Theme.of(context).colorScheme.primary),
+                          ),
+                        )
+                      ],
+                    )),
+            ],
+          ),
         ),
       ),
     );
@@ -833,39 +781,7 @@ class DocumentPage extends GetWidget<DocumentController> {
     );
   }
 
-  _buildTopBar(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-        padding: const EdgeInsets.all(10),
-        height: 100,
-        width: size.width,
-        color: Get.find<MController>().appcolor,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "appTitle".tr,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline1!
-                  .copyWith(color: Colors.white, fontSize: 25),
-              textAlign: TextAlign.start,
-            ),
-            InkWell(
-              onTap: () {
-                Get.back();
-              },
-              child: Image.asset(
-                'assets/images/menu.png',
-                height: 50,
-                width: 50,
-              ),
-            ),
-          ],
-        ));
-  }
-
-  _popUpMenu(context) async {
+  _popUpMenuTransfer(context) async {
     await controller.listFavoriteRecipients(context: context);
     showDialog(
         context: context,
@@ -1313,72 +1229,6 @@ class DocumentPage extends GetWidget<DocumentController> {
             ],
           );
         });
-
-    // showCupertinoDialog(
-    //     context: context,
-    //     builder: (context) => CupertinoAlertDialog(
-    //           title: Row(//mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //               children: [
-    //             Image.asset(
-    //               'assets/images/refer.png'
-    //               //
-    //               ,
-    //               height: 20,
-    //               width: 20,
-    //             ),
-    //             const SizedBox(
-    //               width: 8,
-    //             ),
-    //             Text(
-    //               "refer".tr,
-    //               style: Theme.of(context).textTheme.headline3!.copyWith(
-    //                     color: createMaterialColor(
-    //                       const Color.fromRGBO(77, 77, 77, 1),
-    //                     ),
-    //                     fontSize: 15,
-    //                   ),
-    //               textAlign: TextAlign.center,
-    //               overflow: TextOverflow.ellipsis,
-    //             ),
-    //             const Spacer(),
-    //             Image.asset(
-    //               'assets/images/close_button.png',
-    //               width: 20,
-    //               height: 20,
-    //             ),
-    //           ]),
-    //           content: Container(width: MediaQuery.of(context).size.width*.8,
-    //             child: Column(
-    //                 crossAxisAlignment: CrossAxisAlignment.start,
-    //                 children: [
-    //                   const SizedBox(
-    //                     height: 20,
-    //                   ),
-    //                   Text("referTo".tr),
-    //                   Container(
-    //                       height: 100,
-    //                       child: Row(
-    //                         children: [
-    //
-    //                      Expanded(child: ListView.builder(scrollDirection: Axis.horizontal,itemCount: 10,itemBuilder: (context,pos){
-    //                        return Container(
-    //                          height: 30,
-    //                          width: 30,
-    //                          decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.green),
-    //                        );
-    //                      }))  , Padding(
-    //                             padding: const EdgeInsets.all(8.0),
-    //                             child: Container(
-    //                               height: 30,
-    //                               width: 30,
-    //                               decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.red),
-    //                             ),
-    //                           ), ],
-    //                       ))
-    //                 ]),
-    //           ),
-    //           actions: [],
-    //         ));
   }
 
 // الاحاله القديمة//
@@ -1556,17 +1406,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                             "",
                                                         maxLines: 3,
                                                         softWrap: true,
-                                                      )
-
-                                                      //
-                                                      // Container(
-                                                      //   height: 50,
-                                                      //   width: 50,
-                                                      //   decoration: const BoxDecoration(
-                                                      //       shape: BoxShape.circle,
-                                                      //       color: Colors.green),
-                                                      // ),
-                                                      ),
+                                                      )),
                                                 ],
                                               ),
                                             ),
@@ -1595,245 +1435,6 @@ class DocumentPage extends GetWidget<DocumentController> {
                     const Divider(
                       color: Colors.grey,
                     ),
-                    // SizedBox(
-                    //     width: MediaQuery.of(context).size.width * .8,
-                    //     height: 300, // MediaQuery.of(context).size.height * .5,
-                    //     child: GetBuilder<DocumentController>(
-                    //       //   assignId: true,//tag: "user",
-                    //       builder: (logic) {
-                    //         return //Text(logic.filterWord);
-                    //
-                    //             ListView.builder(
-                    //                 scrollDirection: Axis.vertical,
-                    //                 itemCount:
-                    //                     controller.usersWillSendTo.length,
-                    //                 itemBuilder: (context, pos) {
-                    //                   return //Text(controller.filterWord);
-                    //
-                    //                       Padding(
-                    //                     padding: const EdgeInsets.all(8.0),
-                    //                     child: Container(
-                    //                       color: Colors.grey[200],
-                    //                       child: Column(children: [
-                    //                         Row(
-                    //                             crossAxisAlignment:
-                    //                                 CrossAxisAlignment.center,
-                    //                             children: [
-                    //                               Padding(
-                    //                                 padding:
-                    //                                     const EdgeInsets.all(
-                    //                                         8.0),
-                    //                                 child: Text(logic
-                    //                                         .usersWillSendTo[
-                    //                                             pos]
-                    //                                         .value ??
-                    //                                     ""),
-                    //                                 // child: Container(
-                    //                                 //   height: 50,
-                    //                                 //   width: 50,
-                    //                                 //   // decoration: const BoxDecoration(
-                    //                                 //   //   shape: BoxShape.circle,
-                    //                                 //   //   color: Colors.grey,
-                    //                                 //   // ),
-                    //                                 // ),
-                    //                               ),
-                    //                               SizedBox(
-                    //                                 width: 8,
-                    //                               ),
-                    //                               Text(
-                    //                                 "name",
-                    //                                 style: Theme.of(context)
-                    //                                     .textTheme
-                    //                                     .headline3!
-                    //                                     .copyWith(
-                    //                                       color:
-                    //                                           createMaterialColor(
-                    //                                         const Color
-                    //                                                 .fromRGBO(
-                    //                                             77, 77, 77, 1),
-                    //                                       ),
-                    //                                       fontSize: 15,
-                    //                                     ),
-                    //                                 textAlign: TextAlign.center,
-                    //                                 overflow:
-                    //                                     TextOverflow.ellipsis,
-                    //                               ),
-                    //                               Spacer(),
-                    //                               GestureDetector(
-                    //                                 onTap: () {
-                    //                                   print(
-                    //                                       "i deeeeeeeeeeeeeeeeeeeeeeee");
-                    //                                   controller.transfarForMany
-                    //                                       .remove(logic
-                    //                                           .usersWillSendTo[
-                    //                                               pos]
-                    //                                           .id);
-                    //                                   logic.delTousersWillSendTo(
-                    //                                       user: logic
-                    //                                               .usersWillSendTo[
-                    //                                           pos]);
-                    //                                 },
-                    //                                 child: Image.asset(
-                    //                                   'assets/images/close_button.png',
-                    //                                   width: 20,
-                    //                                   height: 20,
-                    //                                 ),
-                    //                               ),
-                    //                             ]),
-                    //                         SizedBox(
-                    //                           height: 4,
-                    //                         ),
-                    //                         Row(
-                    //                           children: [
-                    //                             Expanded(
-                    //                               child: Text("action".tr),
-                    //                             ),
-                    //                             SizedBox(
-                    //                               width: 10,
-                    //                             ),
-                    //                             Expanded(
-                    //                               child: Text("audioNotes".tr),
-                    //                             )
-                    //                           ],
-                    //                         ),
-                    //                         Row(
-                    //                           children: [
-                    //                             Expanded(
-                    //                               child: Container(
-                    //                                 height: 40,
-                    //                                 color: Colors.grey[300],
-                    //                                 child: DropdownButton<
-                    //                                     CustomActions>(
-                    //                                   alignment:
-                    //                                       Alignment.topRight,
-                    //                                   value: logic.getactions(
-                    //                                       logic
-                    //                                           .usersWillSendTo[
-                    //                                               pos]
-                    //                                           .id),
-                    //                                   icon: const Icon(
-                    //                                       Icons.arrow_downward),
-                    //                                   elevation: 16,
-                    //                                   style: const TextStyle(
-                    //                                       color: Colors
-                    //                                           .deepPurple),
-                    //                                   underline: Container(
-                    //                                     height: 2,
-                    //                                     color: Colors
-                    //                                         .deepPurpleAccent,
-                    //                                   ),
-                    //                                   hint: Text("اختار"),
-                    //                                   onChanged: (CustomActions?
-                    //                                       newValue) {
-                    //                                     controller.setactions(
-                    //                                         logic
-                    //                                             .usersWillSendTo[
-                    //                                                 pos]
-                    //                                             .id,
-                    //                                         newValue!);
-                    //                                     //  dropdownValue = newValue!;
-                    //                                   },
-                    //                                   items: controller
-                    //                                       .customActions
-                    //                                       ?.map<
-                    //                                               DropdownMenuItem<
-                    //                                                   CustomActions>>(
-                    //                                           (CustomActions
-                    //                                               value) {
-                    //                                     return DropdownMenuItem<
-                    //                                         CustomActions>(
-                    //                                       value: value,
-                    //                                       child:
-                    //                                           Text(value.name!),
-                    //                                     );
-                    //                                   }).toList(),
-                    //                                 ),
-                    //                               ),
-                    //                             ),
-                    //                             const SizedBox(
-                    //                               width: 10,
-                    //                             ),
-                    //                             Expanded(
-                    //                               child: Container(
-                    //                                   height: 40,
-                    //                                   color: Colors.grey[300],
-                    //                                   child: Row(
-                    //                                     mainAxisAlignment:
-                    //                                         MainAxisAlignment
-                    //                                             .spaceBetween,
-                    //                                     children: [
-                    //                                       GestureDetector(
-                    //                                         onTap: () async {
-                    //                                           ///To Do Start and stop rec
-                    //                                           controller
-                    //                                                   .recording
-                    //                                               ? controller.stopForMany(
-                    //                                                   id: logic
-                    //                                                       .usersWillSendTo[
-                    //                                                           pos]
-                    //                                                       .id!)
-                    //                                               : controller
-                    //                                                   .recordForMany();
-                    //                                         },
-                    //                                         child: Padding(
-                    //                                           padding:
-                    //                                               const EdgeInsets
-                    //                                                   .all(8.0),
-                    //                                           child: GetBuilder<
-                    //                                                   DocumentController>(
-                    //                                               builder:
-                    //                                                   (logic) {
-                    //                                             return Icon(controller
-                    //                                                     .recording
-                    //                                                 ? Icons.stop
-                    //                                                 : Icons
-                    //                                                     .mic);
-                    //                                           }),
-                    //                                         ),
-                    //                                       ),
-                    //                                       Padding(
-                    //                                         padding:
-                    //                                             const EdgeInsets
-                    //                                                 .all(8.0),
-                    //                                         child: InkWell(
-                    //                                           onTap: () {
-                    //                                             controller
-                    //                                                 .playRec();
-                    //                                           },
-                    //                                           child: Icon(Icons
-                    //                                               .play_arrow),
-                    //                                         ),
-                    //                                       )
-                    //                                     ],
-                    //                                   )),
-                    //                             )
-                    //                           ],
-                    //                         ),
-                    //                         SizedBox(
-                    //                           height: 8,
-                    //                         ),
-                    //                         Container(
-                    //                           child: TextFormField(
-                    //                             onChanged: (v) {
-                    //                               controller.setNots(
-                    //                                   id: logic
-                    //                                       .usersWillSendTo[pos]
-                    //                                       .id!,
-                    //                                   not: v);
-                    //                             },
-                    //                             maxLines: 4,
-                    //                           ),
-                    //                           color: Colors.grey[300],
-                    //                         ),
-                    //                         SizedBox(
-                    //                           height: 8,
-                    //                         ),
-                    //                       ]),
-                    //                     ),
-                    //                   );
-                    //                 });
-                    //       },
-                    //     ))
                   ]),
             ),
             actions: <Widget>[
@@ -1846,72 +1447,6 @@ class DocumentPage extends GetWidget<DocumentController> {
             ],
           );
         });
-
-    // showCupertinoDialog(
-    //     context: context,
-    //     builder: (context) => CupertinoAlertDialog(
-    //           title: Row(//mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //               children: [
-    //             Image.asset(
-    //               'assets/images/refer.png'
-    //               //
-    //               ,
-    //               height: 20,
-    //               width: 20,
-    //             ),
-    //             const SizedBox(
-    //               width: 8,
-    //             ),
-    //             Text(
-    //               "refer".tr,
-    //               style: Theme.of(context).textTheme.headline3!.copyWith(
-    //                     color: createMaterialColor(
-    //                       const Color.fromRGBO(77, 77, 77, 1),
-    //                     ),
-    //                     fontSize: 15,
-    //                   ),
-    //               textAlign: TextAlign.center,
-    //               overflow: TextOverflow.ellipsis,
-    //             ),
-    //             const Spacer(),
-    //             Image.asset(
-    //               'assets/images/close_button.png',
-    //               width: 20,
-    //               height: 20,
-    //             ),
-    //           ]),
-    //           content: Container(width: MediaQuery.of(context).size.width*.8,
-    //             child: Column(
-    //                 crossAxisAlignment: CrossAxisAlignment.start,
-    //                 children: [
-    //                   const SizedBox(
-    //                     height: 20,
-    //                   ),
-    //                   Text("referTo".tr),
-    //                   Container(
-    //                       height: 100,
-    //                       child: Row(
-    //                         children: [
-    //
-    //                      Expanded(child: ListView.builder(scrollDirection: Axis.horizontal,itemCount: 10,itemBuilder: (context,pos){
-    //                        return Container(
-    //                          height: 30,
-    //                          width: 30,
-    //                          decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.green),
-    //                        );
-    //                      }))  , Padding(
-    //                             padding: const EdgeInsets.all(8.0),
-    //                             child: Container(
-    //                               height: 30,
-    //                               width: 30,
-    //                               decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.red),
-    //                             ),
-    //                           ), ],
-    //                       ))
-    //                 ]),
-    //           ),
-    //           actions: [],
-    //         ));
   }
 
   _popUpMenuhasAttachments(context) {
@@ -1979,25 +1514,6 @@ class DocumentPage extends GetWidget<DocumentController> {
                         ),
                       ),
                     );
-                    // return GestureDetector(onTap: (){
-                    //   _popShowAttachments(context);
-                    // },
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.all(8.0),
-                    //     child: Card(
-                    //         elevation: 8,
-                    //         child: Column(
-                    //           children: [
-                    //             Container(child: Text(),)
-                    //             Expanded(
-                    //                 child: Padding(
-                    //                   padding: const EdgeInsets.all(8.0),
-                    //                   child: Text(Get.find<DocumentController>() .canOpenDocumentModel?.attachments?.attachments?[pos].fileName??""),
-                    //                 ))
-                    //           ],
-                    //         )),
-                    //   ),
-                    // );
                   }),
             ),
             actions: <Widget>[
@@ -2010,72 +1526,6 @@ class DocumentPage extends GetWidget<DocumentController> {
             ],
           );
         });
-
-    // showCupertinoDialog(
-    //     context: context,
-    //     builder: (context) => CupertinoAlertDialog(
-    //           title: Row(//mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //               children: [
-    //             Image.asset(
-    //               'assets/images/refer.png'
-    //               //
-    //               ,
-    //               height: 20,
-    //               width: 20,
-    //             ),
-    //             const SizedBox(
-    //               width: 8,
-    //             ),
-    //             Text(
-    //               "refer".tr,
-    //               style: Theme.of(context).textTheme.headline3!.copyWith(
-    //                     color: createMaterialColor(
-    //                       const Color.fromRGBO(77, 77, 77, 1),
-    //                     ),
-    //                     fontSize: 15,
-    //                   ),
-    //               textAlign: TextAlign.center,
-    //               overflow: TextOverflow.ellipsis,
-    //             ),
-    //             const Spacer(),
-    //             Image.asset(
-    //               'assets/images/close_button.png',
-    //               width: 20,
-    //               height: 20,
-    //             ),
-    //           ]),
-    //           content: Container(width: MediaQuery.of(context).size.width*.8,
-    //             child: Column(
-    //                 crossAxisAlignment: CrossAxisAlignment.start,
-    //                 children: [
-    //                   const SizedBox(
-    //                     height: 20,
-    //                   ),
-    //                   Text("referTo".tr),
-    //                   Container(
-    //                       height: 100,
-    //                       child: Row(
-    //                         children: [
-    //
-    //                      Expanded(child: ListView.builder(scrollDirection: Axis.horizontal,itemCount: 10,itemBuilder: (context,pos){
-    //                        return Container(
-    //                          height: 30,
-    //                          width: 30,
-    //                          decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.green),
-    //                        );
-    //                      }))  , Padding(
-    //                             padding: const EdgeInsets.all(8.0),
-    //                             child: Container(
-    //                               height: 30,
-    //                               width: 30,
-    //                               decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.red),
-    //                             ),
-    //                           ), ],
-    //                       ))
-    //                 ]),
-    //           ),
-    //           actions: [],
-    //         ));
   }
 
   _popShowAttachments(context) {
@@ -2099,72 +1549,6 @@ class DocumentPage extends GetWidget<DocumentController> {
             ],
           );
         });
-
-    // showCupertinoDialog(
-    //     context: context,
-    //     builder: (context) => CupertinoAlertDialog(
-    //           title: Row(//mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //               children: [
-    //             Image.asset(
-    //               'assets/images/refer.png'
-    //               //
-    //               ,
-    //               height: 20,
-    //               width: 20,
-    //             ),
-    //             const SizedBox(
-    //               width: 8,
-    //             ),
-    //             Text(
-    //               "refer".tr,
-    //               style: Theme.of(context).textTheme.headline3!.copyWith(
-    //                     color: createMaterialColor(
-    //                       const Color.fromRGBO(77, 77, 77, 1),
-    //                     ),
-    //                     fontSize: 15,
-    //                   ),
-    //               textAlign: TextAlign.center,
-    //               overflow: TextOverflow.ellipsis,
-    //             ),
-    //             const Spacer(),
-    //             Image.asset(
-    //               'assets/images/close_button.png',
-    //               width: 20,
-    //               height: 20,
-    //             ),
-    //           ]),
-    //           content: Container(width: MediaQuery.of(context).size.width*.8,
-    //             child: Column(
-    //                 crossAxisAlignment: CrossAxisAlignment.start,
-    //                 children: [
-    //                   const SizedBox(
-    //                     height: 20,
-    //                   ),
-    //                   Text("referTo".tr),
-    //                   Container(
-    //                       height: 100,
-    //                       child: Row(
-    //                         children: [
-    //
-    //                      Expanded(child: ListView.builder(scrollDirection: Axis.horizontal,itemCount: 10,itemBuilder: (context,pos){
-    //                        return Container(
-    //                          height: 30,
-    //                          width: 30,
-    //                          decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.green),
-    //                        );
-    //                      }))  , Padding(
-    //                             padding: const EdgeInsets.all(8.0),
-    //                             child: Container(
-    //                               height: 30,
-    //                               width: 30,
-    //                               decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.red),
-    //                             ),
-    //                           ), ],
-    //                       ))
-    //                 ]),
-    //           ),
-    //           actions: [],
-    //         ));
   }
 
   final List<_HomeItem> items = List.generate(
@@ -2218,10 +1602,6 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                 TextFieldConfiguration(
                                               controller: controller
                                                   .textEditingControllerToParent,
-                                              // autofocus: true,
-                                              // style: DefaultTextStyle.of(context)
-                                              //     .style
-                                              //     .copyWith(fontStyle: FontStyle.italic),
                                               decoration: const InputDecoration(
                                                   border: OutlineInputBorder(),
                                                   labelText: 'To'),
@@ -2348,31 +1728,6 @@ class DocumentPage extends GetWidget<DocumentController> {
                                 )),
                           ],
                         ),
-                        // Container(height: 150,
-                        //   decoration: BoxDecoration(
-                        //       border: Border.all(width: 1)),
-                        //   child:
-                        //
-                        //   ListView.builder(
-                        //       scrollDirection: Axis.horizontal,
-                        //       itemCount: controller.toDepartmentList.length,
-                        //       itemBuilder: (context, pos) {
-                        //         return Padding(
-                        //           padding: const EdgeInsets.all(8.0),
-                        //           child: Card(
-                        //               elevation: 8,
-                        //               child: Column(
-                        //                 children: [
-                        //                 Text(controller.toDepartmentList[pos].parentName!)
-                        //                 ],
-                        //               )),
-                        //         );
-                        //       }),
-                        //
-                        //
-                        //
-                        //
-                        // ),
                         SizedBox(
                           height: 20,
                         ),
@@ -2405,10 +1760,6 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                 TextFieldConfiguration(
                                               controller: controller
                                                   .textEditingControllerToccParent,
-                                              // autofocus: true,
-                                              // style: DefaultTextStyle.of(context)
-                                              //     .style
-                                              //     .copyWith(fontStyle: FontStyle.italic),
                                               decoration: const InputDecoration(
                                                   border: OutlineInputBorder(),
                                                   labelText: 'To'),
@@ -2423,8 +1774,6 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                       .toLowerCase()
                                                       .contains(pattern
                                                           .toLowerCase()));
-
-                                              //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
                                             },
                                             itemBuilder: (context, suggestion) {
                                               Parents v = suggestion;
@@ -2442,11 +1791,6 @@ class DocumentPage extends GetWidget<DocumentController> {
                                               controller
                                                   .textEditingControllerToccParent
                                                   .text = v.parentName!;
-                                              // v
-                                              // .cLASNAMEDISPLAY;
-                                              // Navigator.of(context).push(MaterialPageRoute(
-                                              //     builder: (context) => ProductPage(product: suggestion)
-                                              // ));
                                             },
                                           ),
                                         )
@@ -2536,23 +1880,6 @@ class DocumentPage extends GetWidget<DocumentController> {
                                 )),
                           ],
                         ),
-                        // Container(height: 150,
-                        //   child: ListView.builder(
-                        //       scrollDirection: Axis.horizontal,
-                        //       itemCount: controller.cctoDepartmentList.length,
-                        //       itemBuilder: (context, pos) {
-                        //         return Padding(
-                        //           padding: const EdgeInsets.all(8.0),
-                        //           child: Card(
-                        //               elevation: 8,
-                        //               child: Column(
-                        //                 children: [
-                        //                   Text(controller.cctoDepartmentList[pos].parentName!)
-                        //                 ],
-                        //               )),
-                        //         );
-                        //       }),
-                        // ),
                         SizedBox(
                           height: 20,
                         ),
@@ -2623,27 +1950,19 @@ class DocumentPage extends GetWidget<DocumentController> {
                                             width: double.infinity,
                                             decoration: BoxDecoration(
                                                 border: Border.all(width: 1)),
-                                            child:
-                                                // Text(
-                                                //     "${controller.g2gInfoForExportModel?.attachments!.length}"
-                                                //     // "Ahmed "
-                                                // )
-                                                ListView.builder(
-                                                    // scrollDirection: Axis.horizontal,
-                                                    //   itemCount: 1,
-                                                    itemCount: controller
-                                                        .g2gInfoForExportModel
-                                                        ?.attachments!
-                                                        .length,
-                                                    itemBuilder:
-                                                        (context, pos) {
-                                                      // return Tile(items![pos], controller.deleteItem);
-                                                      return Tile(
-                                                          controller
-                                                              .g2gInfoForExportModel!
-                                                              .attachments![pos],
-                                                          controller.deleteItem);
-                                                    }),
+                                            child: ListView.builder(
+                                                itemCount: controller
+                                                    .g2gInfoForExportModel
+                                                    ?.attachments!
+                                                    .length,
+                                                itemBuilder: (context, pos) {
+                                                  // return Tile(items![pos], controller.deleteItem);
+                                                  return Tile(
+                                                      controller
+                                                          .g2gInfoForExportModel!
+                                                          .attachments![pos],
+                                                      controller.deleteItem);
+                                                }),
                                           ),
                                         ),
                                       ],
@@ -2670,106 +1989,8 @@ class DocumentPage extends GetWidget<DocumentController> {
             ],
           );
         });
-
-    // showCupertinoDialog(
-    //     context: context,
-    //     builder: (context) => CupertinoAlertDialog(
-    //           title: Row(//mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //               children: [
-    //             Image.asset(
-    //               'assets/images/refer.png'
-    //               //
-    //               ,
-    //               height: 20,
-    //               width: 20,
-    //             ),
-    //             const SizedBox(
-    //               width: 8,
-    //             ),
-    //             Text(
-    //               "refer".tr,
-    //               style: Theme.of(context).textTheme.headline3!.copyWith(
-    //                     color: createMaterialColor(
-    //                       const Color.fromRGBO(77, 77, 77, 1),
-    //                     ),
-    //                     fontSize: 15,
-    //                   ),
-    //               textAlign: TextAlign.center,
-    //               overflow: TextOverflow.ellipsis,
-    //             ),
-    //             const Spacer(),
-    //             Image.asset(
-    //               'assets/images/close_button.png',
-    //               width: 20,
-    //               height: 20,
-    //             ),
-    //           ]),
-    //           content: Container(width: MediaQuery.of(context).size.width*.8,
-    //             child: Column(
-    //                 crossAxisAlignment: CrossAxisAlignment.start,
-    //                 children: [
-    //                   const SizedBox(
-    //                     height: 20,
-    //                   ),
-    //                   Text("referTo".tr),
-    //                   Container(
-    //                       height: 100,
-    //                       child: Row(
-    //                         children: [
-    //
-    //                      Expanded(child: ListView.builder(scrollDirection: Axis.horizontal,itemCount: 10,itemBuilder: (context,pos){
-    //                        return Container(
-    //                          height: 30,
-    //                          width: 30,
-    //                          decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.green),
-    //                        );
-    //                      }))  , Padding(
-    //                             padding: const EdgeInsets.all(8.0),
-    //                             child: Container(
-    //                               height: 30,
-    //                               width: 30,
-    //                               decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.red),
-    //                             ),
-    //                           ), ],
-    //                       ))
-    //                 ]),
-    //           ),
-    //           actions: [],
-    //         ));
   }
 }
-
-//
-// Column(
-// children: [
-// Container(height: 300,
-// width: double.infinity,
-// child: Signature(controller: controller.controller,)),
-// Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,children: [
-// InkWell(onTap: () {
-// controller.controller.clear();
-// }, child: Icon(Icons.clear,size: 50,)),
-// InkWell(onTap: () {}, child: Icon(Icons.save,size: 50,)),
-// ],),
-// Divider(color: Colors.grey)
-// , Expanded(
-// child: GetBuilder<SignaturePageController>(
-// assignId: true,
-// builder: (logic) {
-// return ListView.builder(
-// itemCount: controller.multiSignatures.length,
-// itemBuilder: (context, pos) {
-// return Padding(
-// padding: const EdgeInsets.all(8.0),
-// child: Image.memory(dataFromBase64String(controller
-//     .multiSignatures[pos].signature)),
-// );
-// });
-// },
-// ),
-// )
-// ],
-// )
 
 class Tile extends StatefulWidget {
   // final DocModel.AttachmentsList item;
@@ -2780,6 +2001,38 @@ class Tile extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => _TileState(item, delete);
+}
+
+class CTSActionButton extends StatelessWidget {
+  final String image;
+  final String name;
+  final VoidCallback action;
+  const CTSActionButton(this.image, this.name, this.action, {Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        action();
+      },
+      child: Column(
+        children: [
+          CircleAvatar(
+            child: Image.asset(
+              color: Colors.white,
+              image,
+              height: 20,
+              width: 20,
+            ),
+          ),
+          Text(
+            name,
+          )
+        ],
+      ),
+    );
+  }
 }
 
 class _TileState extends State<Tile> {

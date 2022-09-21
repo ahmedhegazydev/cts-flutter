@@ -172,10 +172,16 @@ class LandingPage extends GetWidget<LandingPageController> {
   Future<void> showAllBasketsDialog(BuildContext context) async {
     u.showLoaderDialog(context);
     await inboxController.getFetchBasketList(context: context);
-    showDialog(
+    showBasketView(context);
+  }
+
+  Future<dynamic> showBasketView(BuildContext context) {
+    return showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(" "),
+        title: Text(
+          "Basket".tr,
+        ),
         content: Padding(
           padding: const EdgeInsets.all(2.0),
           child: Container(
@@ -184,15 +190,6 @@ class LandingPage extends GetWidget<LandingPageController> {
             // color: Colors.grey[200],
             child: Column(
               children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 400,
-                      color: Colors.pink,
-                      height: 2,
-                    )
-                  ],
-                ),
                 GetBuilder<LandingPageController>(builder: (logic) {
                   return Expanded(
                     child: ReorderableListView(

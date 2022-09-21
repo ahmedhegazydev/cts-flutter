@@ -315,7 +315,6 @@ class DocumentPage extends GetWidget<DocumentController> {
                         ),
                       ),
                     ),
-
                   if (controller.correspondences.showLock ?? false)
                     Padding(
                       padding: const EdgeInsets.all(4.0),
@@ -343,7 +342,6 @@ class DocumentPage extends GetWidget<DocumentController> {
                   SizedBox(
                     width: 4,
                   ),
-
                   Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Container(
@@ -376,18 +374,6 @@ class DocumentPage extends GetWidget<DocumentController> {
                       ),
                     ),
                   ),
-
-                  //   correspondences[pos].priorityId
-                  //  correspondences[pos].purposeId
-
-                  // Text("sender".tr),
-                  // SizedBox(
-                  //   width: 4,
-                  // ),
-                  // Text(
-                  //     correspondences[pos]
-                  //         .fromUser ??
-                  //         ""),
                 ],
               ),
               SizedBox(
@@ -432,43 +418,44 @@ class DocumentPage extends GetWidget<DocumentController> {
               if (controller.canOpenDocumentModel?.attachments?.hasVoice ??
                   false)
                 Container(
-                    height: 40,
-                    color: Colors.grey[300],
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: 4,
+                  height: 40,
+                  color: Colors.grey[300],
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: 4,
+                      ),
+                      Expanded(
+                          child: Container(
+                        height: 1,
+                        color: Colors.grey,
+                      )),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          onTap: () async {
+                            print("object");
+
+                            /// هنشغل ملف الصوت هنا
+                            FlutterSoundPlayer audioPlayer =
+                                FlutterSoundPlayer();
+
+                            audioPlayer!.openPlayer();
+                            String filePath = await createFileFromString(
+                                controller.canOpenDocumentModel?.attachments
+                                    ?.voiceNote);
+
+                            print(filePath);
+                            await audioPlayer!.startPlayer(fromURI: filePath);
+                          },
+                          child: Icon(Icons.play_arrow,
+                              color: Theme.of(context).colorScheme.primary),
                         ),
-                        Expanded(
-                            child: Container(
-                          height: 1,
-                          color: Colors.grey,
-                        )),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: InkWell(
-                            onTap: () async {
-                              print("object");
-
-                              /// هنشغل ملف الصوت هنا
-                              FlutterSoundPlayer audioPlayer =
-                                  FlutterSoundPlayer();
-
-                              audioPlayer!.openPlayer();
-                              String filePath = await createFileFromString(
-                                  controller.canOpenDocumentModel?.attachments
-                                      ?.voiceNote);
-
-                              print(filePath);
-                              await audioPlayer!.startPlayer(fromURI: filePath);
-                            },
-                            child: Icon(Icons.play_arrow,
-                                color: Theme.of(context).colorScheme.primary),
-                          ),
-                        )
-                      ],
-                    )),
+                      )
+                    ],
+                  ),
+                ),
             ],
           ),
         ),

@@ -1,25 +1,18 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:cts/models/DocumentModel.dart' as DocModel;
 import 'package:cts/services/apis/inside_doc/g2g/eport_using_g2g_api.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
-import 'dart:ui' as ui;
 
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:signature/signature.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../models/CorrespondencesModel.dart';
-import '../models/DocumentModel.dart';
-import '../screens/resize_sing.dart';
 import '../services/apis/favorites/ListFavoriteRecipients_api.dart';
 import '../services/apis/find_recipient_api.dart';
 import '../services/apis/inOpenDocument/GetAttachmentItem_api.dart';
@@ -38,12 +31,10 @@ import '../services/apis/inside_doc/get_user_routing_api.dart';
 import '../services/apis/inside_doc/is_already_exported_as_paperwork_api.dart';
 import '../services/apis/inside_doc/is_already_exported_as_transfer_api.dart';
 import '../services/apis/multiple_transfers_api.dart';
-import '../services/apis/save_document_annotations_api.dart';
 import '../services/json_model/can_open_document_model.dart';
 import '../services/json_model/default_on_success_result.dart';
 import '../services/json_model/favorites/list_all/ListFavoriteRecipients_response.dart';
 import '../services/json_model/find_recipient_model.dart';
-import '../services/json_model/get_correspondences_model.dart';
 import '../services/json_model/get_document_links_model.dart';
 import '../services/json_model/get_document_logs_model.dart';
 import '../services/json_model/get_document_receivers_model.dart';
@@ -56,7 +47,6 @@ import '../services/json_model/inopendocModel/check_for_empty_structure_recipien
 import '../services/json_model/inopendocModel/g2g/export_usign_g2g_model.dart';
 import '../services/json_model/inopendocModel/g2g/g2g_Info_for_export_model.dart';
 import '../services/json_model/inopendocModel/g2g/g2g_export_dto.dart';
-import '../services/json_model/inopendocModel/g2g/g2g_export_dto.dart';
 import '../services/json_model/inopendocModel/g2g/g2g_receive_or_reject_dto.dart';
 import '../services/json_model/inopendocModel/get_attachment_item_model.dart';
 import '../services/json_model/inopendocModel/get_user_routing_model.dart';
@@ -65,23 +55,19 @@ import '../services/json_model/inopendocModel/getatt_achments_model.dart'
 import '../services/json_model/inopendocModel/getatt_achments_model.dart';
 import '../services/json_model/inopendocModel/is_already_exported_as_paperwork_model.dart';
 import '../services/json_model/inopendocModel/is_already_exported_as_transfer_model.dart';
-import '../services/json_model/inopendocModel/multiple_transfers_model.dart';
 import '../services/json_model/inopendocModel/save_document_annotation_model.dart';
 import '../services/json_model/login_model.dart';
 import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
 import '../services/models/multiple_transfers_model_send.dart'
     as multipletransfersSend;
-import '../services/models/signature_info.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
 import '../utility/utilitie.dart';
-import '../viewer/pdfview.dart';
 import '../widgets/custom_button_with_icon.dart';
 import 'inbox_controller.dart';
 import 'package:flutter/services.dart' as rootBundel;
 
 import 'landing_page_controller.dart';
-import 'main_controller.dart';
 
 class DocumentController extends GetxController {
   Destination? userWillAddToOpenTransferWindow;
@@ -95,10 +81,7 @@ class DocumentController extends GetxController {
 
   String oragnalFileDocpdfUrlFile = "";
 
-  //  'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
   String pdfUrlFile = "";
-
-  // 'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
   bool openAttachment = false;
   AttachmentsList? isOriginalMailAttachmentsList;
   Map<String, List<AttachmentsList>> folder2 = {};
@@ -124,8 +107,6 @@ class DocumentController extends GetxController {
   List<DepartmentList> toDepartmentList = [];
 
   List<DepartmentList> cctoDepartmentList = [];
-  PdfViewerController? pdfViewerController = PdfViewerController();
-  GlobalKey? pdfViewerkey;
 
   updateopenAttashment(String link) {
     openAttachment = true;
@@ -174,63 +155,6 @@ class DocumentController extends GetxController {
     });
   }
 
-//open the AttachmentItem
-//   getAttachmentItemlocal(
-//       {documentId, transferId, attachmentId, required BuildContext context}) async {
-//
-//     notoragnalFileDoc=true;
-//
-//     final jsondata = await rootBundel.rootBundle.loadString(
-//         "assets/json/getattachmentitem.json");
-//
-//     getAttAchmentItem = GetAttAchmentItem.fromJson(json.decode(jsondata));
-//     print("g2gInfoForExportModel?.toJson()=>  ${g2gInfoForExportModel
-//         ?.toJson()}");
-//
-//     pdfUrlFile=   getAttAchmentItem!.attachment!.uRL!;
-//
-// update();
-//
-//
-//     // showDialog(
-//     //     context: context,
-//     //     builder: (BuildContext context) {
-//     //       return AlertDialog(
-//     //         title: Text(getAttAchmentItem!.attachment!.fileName!),
-//     //         content: SizedBox(
-//     //             height: MediaQuery
-//     //                 .of(context)
-//     //                 .size
-//     //                 .height * .7,
-//     //             width: MediaQuery
-//     //                 .of(context)
-//     //                 .size
-//     //                 .width * .7,
-//     //             child: SfPdfViewer.network(
-//     //               //'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf'
-//     //                 getAttAchmentItem!.attachment!.uRL!
-//     //
-//     //             )),
-//     //         actions: <Widget>[
-//     //           TextButton(
-//     //             onPressed: () {
-//     //               Navigator.of(context).pop();
-//     //             },
-//     //             child: Text("Ok"),
-//     //           ),
-//     //         ],
-//     //       );
-//     //     });
-//   }
-
-  // [OperationContract]
-  // [WebGet(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
-  // UriTemplate = "GetAttachmentItem?)]
-  // GetAttachmentItemResult GetAttachmentItem(string Token, string documentId, string transferId, string attachmentId, string language);
-  //
-
-//=============================================================================================
-
   multipleTransferspost({context, correspondenceId, transferId}) {
     //
     MultipleTransfersAPI _multipleTransfersAPI = MultipleTransfersAPI(context);
@@ -247,17 +171,6 @@ class DocumentController extends GetxController {
       multiTransferNode[key]?.purposeId =
           canOpenDocumentModel!.correspondence!.purposeId;
       multiTransferNode[key]?.voiceNotePrivate = false;
-
-      // multipletransfersSend.TransferNode transferNode =
-      // multipletransfersSend.TransferNode(
-      //     destinationId: key.toString(),note: ,voiceNotePrivate: ,
-      //     purposeId:
-      //         canOpenDocumentModel!.correspondence!.correspondenceId!,
-      //     //value.correspondencesId!,
-      //     dueDate: canOpenDocumentModel!.correspondence!.docDueDate!,
-      //     //canOpenDocumentModel!.correspondence!.docDueDate!,
-      //     voiceNote: audioFileBes64!,
-      //     voiceNoteExt: "m4a");
     });
 
     List<multipletransfersSend.TransferNode> transfers = [];
@@ -298,125 +211,8 @@ class DocumentController extends GetxController {
 
   SaveDocumentAnnotationModel? postSaveDocumentAnnotationsModel;
 
-  Future getSaveDocAnnotationsData(
-      {context,
-      userId,
-      correspondenceId,
-      transferId,
-      attachmentId,
-      isOriginalMail, //(string) input should “true” or “false”
-      required List<DocumentAnnotations>
-          documentAnnotationsString, //string converted from array contains the details of annotations)
-      delegateGctId //string) input “0”
-
-      }) async {
-    final SaveDocumentAnnotationsAPI _saveDocumentAnnotationsApi =
-        SaveDocumentAnnotationsAPI(context);
-    // pdfViewerkey=null;
-    postSaveDocumentAnnotationsModel = SaveDocumentAnnotationModel(
-        Language: Get.locale?.languageCode == "en" ? "en" : "ar",
-        DocumentUrl: oragnalFileDocpdfUrlFile,
-        AttachmentId: attachmentId.toString(),
-        CorrespondenceId: correspondenceId,
-        DelegateGctId: delegateGctId,
-        documentAnnotationsString: documentAnnotationsString,
-        IsOriginalMail: isOriginalMail,
-        Token: secureStorage.token(),
-        UserId: userId,
-        TransferId: transferId);
-    //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
-
-    //  print("postSaveDocumentAnnotationsModel?.toMap() =>${jsonEncode(postSaveDocumentAnnotationsModel?.toMap())}");
-
-    await _saveDocumentAnnotationsApi
-        .post(postSaveDocumentAnnotationsModel?.toMap())
-        .then((value) {
-      // print("value =>   ${value}");
-      saveAttAchmentItemAnnotationsData = value as GetattAchmentsModel;
-      for (int i = 0;
-          i < (saveAttAchmentItemAnnotationsData?.attachments?.length ?? 0);
-          i++) {
-        if (saveAttAchmentItemAnnotationsData!.attachments![i].attachmentId ==
-            getAttAchmentItem!.attachment!.attachmentId) {
-          pdfUrlFile = saveAttAchmentItemAnnotationsData!.attachments![i]
-              .uRL!; //"http://www.africau.edu/images/default/sample.pdf";
-          print(pdfUrlFile);
-          saveAttAchmentItemAnnotationsresalt =
-              saveAttAchmentItemAnnotationsData!.attachments![i];
-          pdfAndSing.clear();
-          singpic.clear();
-          pdfAndSingannotation.clear();
-          pdfUrlFile = saveAttAchmentItemAnnotationsData!.attachments![i].uRL!;
-          //   pdfUrlFile = 'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf';
-          pdfAndSing.add(SfPdfViewer.network(
-            pdfUrlFile,
-            controller: pdfViewerController,
-            onPageChanged: (v) {
-              for (int i = 0; i < pdfAndSingannotation.length; i++) {
-                if (int.parse(pdfAndSingannotation[i].page!) ==
-                    v.newPageNumber) {
-                  List<int> list = pdfAndSingannotation[i].imageByte!.codeUnits;
-                  final Uint8List? data = Uint8List.fromList(list);
-                  pdfAndSingannotationShowOrHide.add(
-                    Positioned(
-                      top: double.tryParse(pdfAndSingannotation[i].y!),
-                      left: double.tryParse(pdfAndSingannotation[i].x!),
-                      child: Image.memory(
-                        data!,
-                        fit: BoxFit.fill,
-                        width: double.tryParse(pdfAndSingannotation[i].width!),
-                        height:
-                            double.tryParse(pdfAndSingannotation[i].height!),
-                      ),
-                    ),
-                  );
-                }
-              }
-              // pdfAndSingannotation
-              //   v.newPageNumber
-            },
-            //  key: pdfViewerkey,
-          ));
-
-          if (saveAttAchmentItemAnnotationsData!.attachments![i].annotations!
-              .contains("[]")) {
-          } else {
-            Map<dynamic, dynamic> dat = jsonDecode(
-                saveAttAchmentItemAnnotationsData!
-                    .attachments![i].annotations!);
-            dat.forEach((key, value) async {
-              print("--------------------------------------------");
-              Annotation annotation = Annotation.fromJson(value[0]);
-              List<int> list = annotation.imageByte!.codeUnits;
-              final Uint8List? data = Uint8List.fromList(list);
-              print("the data is $data");
-
-              pdfAndSingannotation.add(annotation);
-              // pdfAndSingannotation.add(
-              //   Positioned(
-              //     top: double.tryParse(annotation.y!),
-              //     left: double.tryParse(annotation.x!),
-              //     child: Image.memory(
-              //       data!,
-              //       fit: BoxFit.fill,
-              //       width: double.tryParse(annotation.width!),
-              //       height: double.tryParse(annotation.height!),
-              //     ),
-              //   ),
-              // );
-
-              pdfUrlFile =
-                  saveAttAchmentItemAnnotationsData!.attachments![i].uRL!;
-            });
-          }
-        }
-      }
-    });
-  }
-
   backTooragnalFileDocpdf() {
     notoragnalFileDoc = false;
-    // pdfViewerkey=null;
 
     pdfAndSing.clear();
     singpic.clear();
@@ -424,11 +220,6 @@ class DocumentController extends GetxController {
     pdfAndSing.clear();
     pdfAndSingData.clear();
 
-    // pdfAndSing.add(
-    //   PDFView(
-    //       url: oragnalFileDocpdfUrlFile,
-    //       color: Get.find<MController>().appcolor),
-    // );
     pdfAndSingData.add(oragnalFileDocpdfUrlFile);
     update();
   }
@@ -446,7 +237,6 @@ class DocumentController extends GetxController {
         oragnalFileDocpdfUrlFile = element.uRL!;
         isOriginalMailAttachmentsList = element;
 
-        pdfViewerkey = GlobalKey();
         pdfAndSing.clear();
         pdfAndSingData.clear();
 
@@ -460,7 +250,6 @@ class DocumentController extends GetxController {
 
         loopableData.forEach((elementa) {
           ViewerAnnotation daa = ViewerAnnotation.fromMap(elementa[0]);
-
           annotations.add(daa);
         });
 
@@ -481,11 +270,6 @@ class DocumentController extends GetxController {
     });
     print("folder2=>${folder2.length}");
     print("folder2=>${folder2}");
-    // for(int i=0;i< ( canOpenDocumentModel?.attachments?.attachments?.length??0);i++){
-    //   folder[i]=canOpenDocumentModel!.attachments!.attachments![i]!.folderName!;
-    //
-    //
-    // }
 
     for (int i = 0; i < pdfAndSingannotation.length; i++) {
       List<int> list = pdfAndSingannotation[i].imageByte!.codeUnits;
@@ -556,12 +340,6 @@ class DocumentController extends GetxController {
     pdfAndSingopenattachment.add(pic);
     update();
   }
-
-  // addWidgetToPdfAndSing(Widget pic) {
-  //   pdfAndSing.add(pic);
-  //   print("pdfAndSing.lengthpdfAndSing.length=>   ${pdfAndSing.length}");
-  //   update();
-  // }
 
   List<MultiSignatures> multiSignatures = [];
   final SignatureController controller = SignatureController(
@@ -706,56 +484,6 @@ class DocumentController extends GetxController {
 
   Map<String, String> actions = {};
 
-  //Map<String,String>actions={};
-  // FlutterSoundPlayer? mPlayer ;
-
-// Future record()async{
-//   appDocDir = await getApplicationDocumentsDirectory();
-//   _directoryPath=appDocDir!.path+ '/' + DateTime.now().millisecondsSinceEpoch.toString() +
-//       '.aac';
-//
-//   await audioRecord!.startRecorder(toFile:_directoryPath);
-// File aaa=File(_directoryPath);
-// print(aaa);
-// }
-//   Future stop()async{
-//     await audioRecord!.stopRecorder();
-//
-//
-//     print(_directoryPath);
-//
-//   //  print(audioRecorder.stopRecorderCompleted(state, success, url));
-//   //  play();
-//  //   _writeFileToStorage();
-//    // print();
-//
-//   }
-//
-//   //   void _writeFileToStorage() async {
-//   //   _createDirectory();
-//   //   _createFile();
-//   // }
-//   // Future play()async{
-//   //   await mPlayer.openAudioSession();
-//   await mPlayer!.stopPlayer();
-//   //  // await mPlayer.nowPlaying(track);
-//   //   Track a=Track(trackPath: _directoryPath );
-//   //
-//   //   await mPlayer.nowPlaying(a );
-//   // }
-//
-//
-//
-//   void play() async {
-//     await mPlayer.startPlayer(
-//         fromURI: _directoryPath,
-//         codec: Codec.mp3,
-//         whenFinished: () {
-//
-//         });
-//
-//   }
-
   @override
   void onReady() {
     super.onReady();
@@ -768,33 +496,6 @@ class DocumentController extends GetxController {
       multiSignatures = data.multiSignatures ?? [];
     }
   }
-
-//
-//   Future initRecord()async{
-//   audioRecord=FlutterSoundRecorder();
-//
-//   final stats=await Permission.microphone.request();
-//   await Permission.storage.request();
-//   await Permission.manageExternalStorage.request();
-//   if(stats !=PermissionStatus.granted){
-//     throw RecordingPermissionException("Microphone Permission");
-//
-//   }
-//   //mPlayer = FlutterSoundPlayer();
-//  await audioRecord!.openAudioSession();
-//   await audioRecord!.stopPlayer();
-
-//
-//
-// }
-// void closeRecord(){
-//   audioRecord!.closeAudioSession();
-//
-//   audioRecord=null;
-//
-// }
-
-  /// get all Transfer about doc
 
   @override
   void onInit() {
@@ -2040,75 +1741,8 @@ class DocumentController extends GetxController {
             ],
           );
         });
-
-    // showCupertinoDialog(
-    //     context: context,
-    //     builder: (context) => CupertinoAlertDialog(
-    //           title: Row(//mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //               children: [
-    //             Image.asset(
-    //               'assets/images/refer.png'
-    //               //
-    //               ,
-    //               height: 20,
-    //               width: 20,
-    //             ),
-    //             const SizedBox(
-    //               width: 8,
-    //             ),
-    //             Text(
-    //               "refer".tr,
-    //               style: Theme.of(context).textTheme.headline3!.copyWith(
-    //                     color: createMaterialColor(
-    //                       const Color.fromRGBO(77, 77, 77, 1),
-    //                     ),
-    //                     fontSize: 15,
-    //                   ),
-    //               textAlign: TextAlign.center,
-    //               overflow: TextOverflow.ellipsis,
-    //             ),
-    //             const Spacer(),
-    //             Image.asset(
-    //               'assets/images/close_button.png',
-    //               width: 20,
-    //               height: 20,
-    //             ),
-    //           ]),
-    //           content: Container(width: MediaQuery.of(context).size.width*.8,
-    //             child: Column(
-    //                 crossAxisAlignment: CrossAxisAlignment.start,
-    //                 children: [
-    //                   const SizedBox(
-    //                     height: 20,
-    //                   ),
-    //                   Text("referTo".tr),
-    //                   Container(
-    //                       height: 100,
-    //                       child: Row(
-    //                         children: [
-    //
-    //                      Expanded(child: ListView.builder(scrollDirection: Axis.horizontal,itemCount: 10,itemBuilder: (context,pos){
-    //                        return Container(
-    //                          height: 30,
-    //                          width: 30,
-    //                          decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.green),
-    //                        );
-    //                      }))  , Padding(
-    //                             padding: const EdgeInsets.all(8.0),
-    //                             child: Container(
-    //                               height: 30,
-    //                               width: 30,
-    //                               decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.red),
-    //                             ),
-    //                           ), ],
-    //                       ))
-    //                 ]),
-    //           ),
-    //           actions: [],
-    //         ));
   }
 
-// الاحاله القديمة//
   _popUpMenuMore(context) {
     showDialog(
         context: context,
@@ -2267,29 +1901,19 @@ class DocumentController extends GetxController {
                                                                 "${a?[0][0]} ${a?[0][0] ?? ""}"))),
                                                   ),
                                                   Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 2.0,
-                                                              bottom: 2,
-                                                              right: 8,
-                                                              left: 8),
-                                                      child: Text(
-                                                        logic.users[pos]
-                                                                .value ??
-                                                            "",
-                                                        maxLines: 3,
-                                                        softWrap: true,
-                                                      )
-
-                                                      //
-                                                      // Container(
-                                                      //   height: 50,
-                                                      //   width: 50,
-                                                      //   decoration: const BoxDecoration(
-                                                      //       shape: BoxShape.circle,
-                                                      //       color: Colors.green),
-                                                      // ),
-                                                      ),
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 2.0,
+                                                            bottom: 2,
+                                                            right: 8,
+                                                            left: 8),
+                                                    child: Text(
+                                                      logic.users[pos].value ??
+                                                          "",
+                                                      maxLines: 3,
+                                                      softWrap: true,
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
                                             ),
@@ -2318,245 +1942,6 @@ class DocumentController extends GetxController {
                     const Divider(
                       color: Colors.grey,
                     ),
-                    // SizedBox(
-                    //     width: MediaQuery.of(context).size.width * .8,
-                    //     height: 300, // MediaQuery.of(context).size.height * .5,
-                    //     child: GetBuilder<DocumentController>(
-                    //       //   assignId: true,//tag: "user",
-                    //       builder: (logic) {
-                    //         return //Text(logic.filterWord);
-                    //
-                    //             ListView.builder(
-                    //                 scrollDirection: Axis.vertical,
-                    //                 itemCount:
-                    //                     controller.usersWillSendTo.length,
-                    //                 itemBuilder: (context, pos) {
-                    //                   return //Text(controller.filterWord);
-                    //
-                    //                       Padding(
-                    //                     padding: const EdgeInsets.all(8.0),
-                    //                     child: Container(
-                    //                       color: Colors.grey[200],
-                    //                       child: Column(children: [
-                    //                         Row(
-                    //                             crossAxisAlignment:
-                    //                                 CrossAxisAlignment.center,
-                    //                             children: [
-                    //                               Padding(
-                    //                                 padding:
-                    //                                     const EdgeInsets.all(
-                    //                                         8.0),
-                    //                                 child: Text(logic
-                    //                                         .usersWillSendTo[
-                    //                                             pos]
-                    //                                         .value ??
-                    //                                     ""),
-                    //                                 // child: Container(
-                    //                                 //   height: 50,
-                    //                                 //   width: 50,
-                    //                                 //   // decoration: const BoxDecoration(
-                    //                                 //   //   shape: BoxShape.circle,
-                    //                                 //   //   color: Colors.grey,
-                    //                                 //   // ),
-                    //                                 // ),
-                    //                               ),
-                    //                               SizedBox(
-                    //                                 width: 8,
-                    //                               ),
-                    //                               Text(
-                    //                                 "name",
-                    //                                 style: Theme.of(context)
-                    //                                     .textTheme
-                    //                                     .headline3!
-                    //                                     .copyWith(
-                    //                                       color:
-                    //                                           createMaterialColor(
-                    //                                         const Color
-                    //                                                 .fromRGBO(
-                    //                                             77, 77, 77, 1),
-                    //                                       ),
-                    //                                       fontSize: 15,
-                    //                                     ),
-                    //                                 textAlign: TextAlign.center,
-                    //                                 overflow:
-                    //                                     TextOverflow.ellipsis,
-                    //                               ),
-                    //                               Spacer(),
-                    //                               GestureDetector(
-                    //                                 onTap: () {
-                    //                                   print(
-                    //                                       "i deeeeeeeeeeeeeeeeeeeeeeee");
-                    //                                   controller.transfarForMany
-                    //                                       .remove(logic
-                    //                                           .usersWillSendTo[
-                    //                                               pos]
-                    //                                           .id);
-                    //                                   logic.delTousersWillSendTo(
-                    //                                       user: logic
-                    //                                               .usersWillSendTo[
-                    //                                           pos]);
-                    //                                 },
-                    //                                 child: Image.asset(
-                    //                                   'assets/images/close_button.png',
-                    //                                   width: 20,
-                    //                                   height: 20,
-                    //                                 ),
-                    //                               ),
-                    //                             ]),
-                    //                         SizedBox(
-                    //                           height: 4,
-                    //                         ),
-                    //                         Row(
-                    //                           children: [
-                    //                             Expanded(
-                    //                               child: Text("action".tr),
-                    //                             ),
-                    //                             SizedBox(
-                    //                               width: 10,
-                    //                             ),
-                    //                             Expanded(
-                    //                               child: Text("audioNotes".tr),
-                    //                             )
-                    //                           ],
-                    //                         ),
-                    //                         Row(
-                    //                           children: [
-                    //                             Expanded(
-                    //                               child: Container(
-                    //                                 height: 40,
-                    //                                 color: Colors.grey[300],
-                    //                                 child: DropdownButton<
-                    //                                     CustomActions>(
-                    //                                   alignment:
-                    //                                       Alignment.topRight,
-                    //                                   value: logic.getactions(
-                    //                                       logic
-                    //                                           .usersWillSendTo[
-                    //                                               pos]
-                    //                                           .id),
-                    //                                   icon: const Icon(
-                    //                                       Icons.arrow_downward),
-                    //                                   elevation: 16,
-                    //                                   style: const TextStyle(
-                    //                                       color: Colors
-                    //                                           .deepPurple),
-                    //                                   underline: Container(
-                    //                                     height: 2,
-                    //                                     color: Colors
-                    //                                         .deepPurpleAccent,
-                    //                                   ),
-                    //                                   hint: Text("اختار"),
-                    //                                   onChanged: (CustomActions?
-                    //                                       newValue) {
-                    //                                     controller.setactions(
-                    //                                         logic
-                    //                                             .usersWillSendTo[
-                    //                                                 pos]
-                    //                                             .id,
-                    //                                         newValue!);
-                    //                                     //  dropdownValue = newValue!;
-                    //                                   },
-                    //                                   items: controller
-                    //                                       .customActions
-                    //                                       ?.map<
-                    //                                               DropdownMenuItem<
-                    //                                                   CustomActions>>(
-                    //                                           (CustomActions
-                    //                                               value) {
-                    //                                     return DropdownMenuItem<
-                    //                                         CustomActions>(
-                    //                                       value: value,
-                    //                                       child:
-                    //                                           Text(value.name!),
-                    //                                     );
-                    //                                   }).toList(),
-                    //                                 ),
-                    //                               ),
-                    //                             ),
-                    //                             const SizedBox(
-                    //                               width: 10,
-                    //                             ),
-                    //                             Expanded(
-                    //                               child: Container(
-                    //                                   height: 40,
-                    //                                   color: Colors.grey[300],
-                    //                                   child: Row(
-                    //                                     mainAxisAlignment:
-                    //                                         MainAxisAlignment
-                    //                                             .spaceBetween,
-                    //                                     children: [
-                    //                                       GestureDetector(
-                    //                                         onTap: () async {
-                    //                                           ///To Do Start and stop rec
-                    //                                           controller
-                    //                                                   .recording
-                    //                                               ? controller.stopForMany(
-                    //                                                   id: logic
-                    //                                                       .usersWillSendTo[
-                    //                                                           pos]
-                    //                                                       .id!)
-                    //                                               : controller
-                    //                                                   .recordForMany();
-                    //                                         },
-                    //                                         child: Padding(
-                    //                                           padding:
-                    //                                               const EdgeInsets
-                    //                                                   .all(8.0),
-                    //                                           child: GetBuilder<
-                    //                                                   DocumentController>(
-                    //                                               builder:
-                    //                                                   (logic) {
-                    //                                             return Icon(controller
-                    //                                                     .recording
-                    //                                                 ? Icons.stop
-                    //                                                 : Icons
-                    //                                                     .mic);
-                    //                                           }),
-                    //                                         ),
-                    //                                       ),
-                    //                                       Padding(
-                    //                                         padding:
-                    //                                             const EdgeInsets
-                    //                                                 .all(8.0),
-                    //                                         child: InkWell(
-                    //                                           onTap: () {
-                    //                                             controller
-                    //                                                 .playRec();
-                    //                                           },
-                    //                                           child: Icon(Icons
-                    //                                               .play_arrow),
-                    //                                         ),
-                    //                                       )
-                    //                                     ],
-                    //                                   )),
-                    //                             )
-                    //                           ],
-                    //                         ),
-                    //                         SizedBox(
-                    //                           height: 8,
-                    //                         ),
-                    //                         Container(
-                    //                           child: TextFormField(
-                    //                             onChanged: (v) {
-                    //                               controller.setNots(
-                    //                                   id: logic
-                    //                                       .usersWillSendTo[pos]
-                    //                                       .id!,
-                    //                                   not: v);
-                    //                             },
-                    //                             maxLines: 4,
-                    //                           ),
-                    //                           color: Colors.grey[300],
-                    //                         ),
-                    //                         SizedBox(
-                    //                           height: 8,
-                    //                         ),
-                    //                       ]),
-                    //                     ),
-                    //                   );
-                    //                 });
-                    //       },
-                    //     ))
                   ]),
             ),
             actions: <Widget>[
@@ -2569,72 +1954,6 @@ class DocumentController extends GetxController {
             ],
           );
         });
-
-    // showCupertinoDialog(
-    //     context: context,
-    //     builder: (context) => CupertinoAlertDialog(
-    //           title: Row(//mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //               children: [
-    //             Image.asset(
-    //               'assets/images/refer.png'
-    //               //
-    //               ,
-    //               height: 20,
-    //               width: 20,
-    //             ),
-    //             const SizedBox(
-    //               width: 8,
-    //             ),
-    //             Text(
-    //               "refer".tr,
-    //               style: Theme.of(context).textTheme.headline3!.copyWith(
-    //                     color: createMaterialColor(
-    //                       const Color.fromRGBO(77, 77, 77, 1),
-    //                     ),
-    //                     fontSize: 15,
-    //                   ),
-    //               textAlign: TextAlign.center,
-    //               overflow: TextOverflow.ellipsis,
-    //             ),
-    //             const Spacer(),
-    //             Image.asset(
-    //               'assets/images/close_button.png',
-    //               width: 20,
-    //               height: 20,
-    //             ),
-    //           ]),
-    //           content: Container(width: MediaQuery.of(context).size.width*.8,
-    //             child: Column(
-    //                 crossAxisAlignment: CrossAxisAlignment.start,
-    //                 children: [
-    //                   const SizedBox(
-    //                     height: 20,
-    //                   ),
-    //                   Text("referTo".tr),
-    //                   Container(
-    //                       height: 100,
-    //                       child: Row(
-    //                         children: [
-    //
-    //                      Expanded(child: ListView.builder(scrollDirection: Axis.horizontal,itemCount: 10,itemBuilder: (context,pos){
-    //                        return Container(
-    //                          height: 30,
-    //                          width: 30,
-    //                          decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.green),
-    //                        );
-    //                      }))  , Padding(
-    //                             padding: const EdgeInsets.all(8.0),
-    //                             child: Container(
-    //                               height: 30,
-    //                               width: 30,
-    //                               decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.red),
-    //                             ),
-    //                           ), ],
-    //                       ))
-    //                 ]),
-    //           ),
-    //           actions: [],
-    //         ));
   }
 }
 
@@ -2670,22 +1989,11 @@ showDilog(
           ),
           actions: <Widget>[
             TextButton(
-              onPressed: yes
-              //     () {
-              //
-              // }
-
-              ,
+              onPressed: yes,
               child: Text("Yes"),
             ),
             TextButton(
-              onPressed: no
-              //     () {
-              //
-              //
-              //   //Navigator.of(context).pop();
-              // }
-              ,
+              onPressed: no,
               child: Text("No"),
             ),
           ],
@@ -2712,102 +2020,7 @@ extension UtilListExtension on List {
     }
   }
 }
-//
-// String _fileName = 'Recording_';
-// String _fileExtension = '.aac';
-// String _directoryPath = '/storage/emulated/0/SoundRecorder';
-// class Recorder {
-//   FlutterSoundRecorder? _recorder;
-//   bool _isRecorderInitialized = false;
-//   bool get isRecording => _recorder!.isRecording;
-//
-//   Future init() async {
-//     _recorder = FlutterSoundRecorder();
-//     //final directory = "/sdcard/downloads/";
-//     //Directory? extStorageDir = await getExternalStorageDirectory();
-//     //String _path = directory.path;
-//
-//     final status = await Permission.microphone.request();
-//     if (status != PermissionStatus.granted) {
-//       throw RecordingPermissionException('Recording permission required.');
-//     }
-//
-//     await _recorder!.openAudioSession();
-// await _recorder!.stopPlayer();
 
-//     _isRecorderInitialized = true;
-//   }
-//
-//   // void _writeFileToStorage() async {
-//   //   File audiofile = File('$_path/$_fileName');
-//   //   Uint8List bytes = await audiofile.readAsBytes();
-//   //   audiofile.writeAsBytes(bytes);
-//   // }
-//
-//   void dispose() {
-//     _recorder!.closeAudioSession();
-//     _recorder = null;
-//     _isRecorderInitialized = false;
-//   }
-//
-//   Future record() async {
-//     if (!_isRecorderInitialized) {
-//       return;
-//     }
-//     print('recording....');
-//     await _recorder!.startRecorder(
-//       toFile: '$_fileName',
-//       //codec: Codec.aacMP4,
-//     );
-//   }
-//
-//   Future stop() async {
-//     if (!_isRecorderInitialized) {
-//       return;
-//     }
-//     await _recorder!.stopRecorder();
-//     _writeFileToStorage();
-//     print('stopped....');
-//   }
-//
-//   Future toggleRecording() async {
-//     if (_recorder!.isStopped) {
-//       await record();
-//     } else {
-//       await stop();
-//     }
-//   }
-//
-//
-//
-//   void _createFile() async {
-//     var _completeFileName = "oo";//await generateFileName();
-//     File(_directoryPath + '/' + _completeFileName)
-//         .create(recursive: true)
-//         .then((File file) async {
-//       //write to file
-//       Uint8List bytes = await file.readAsBytes();
-//       file.writeAsBytes(bytes);
-//       print(file.path);
-//     });
-//   }
-//
-//   void _createDirectory() async {
-//     bool isDirectoryCreated = await Directory(_directoryPath).exists();
-//     if (!isDirectoryCreated) {
-//       Directory(_directoryPath).create()
-//       // The created directory is returned as a Future.
-//           .then((Directory directory) {
-//         print(directory.path);
-//       });
-//     }
-//   }
-//
-//   void _writeFileToStorage() async {
-//     _createDirectory();
-//     _createFile();
-//   }
-// }
 class ViewerAnnotation {
   String? id;
   String? page;

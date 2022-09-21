@@ -131,9 +131,7 @@ class InboxController extends GetxController {
               .toList();
         } else {
           filteredUrgentCorrespondences = allCorrespondences
-              .where((content) =>
-                  content.priorityId ==
-                  filteredUrgentPriorities![0].Value.toString())
+              .where((content) => content.priorityId == "3")
               .toList();
         }
         allCorrespondences = filteredUrgentCorrespondences;
@@ -269,35 +267,18 @@ class InboxController extends GetxController {
   CorrespondencesModel? correspondencesModel;
   Privacies? selectPrivacies;
 
-  updateselectPrivacies(Privacies? p){
-    selectPrivacies=p;
+  updateselectPrivacies(Privacies? p) {
+    selectPrivacies = p;
     update();
   }
 
-List<tt.Priorities>listPriorities=[];
+  List<tt.Priorities> listPriorities = [];
   tt.Priorities? selectPriorities;
 
-  updateselectPriorities( tt.Priorities? p){
-    selectPriorities=p;
+  updateselectPriorities(tt.Priorities? p) {
+    selectPriorities = p;
     update();
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   // List<Correspondences> correspondences = [];
   List<Correspondences> allCorrespondences = [];
@@ -554,8 +535,8 @@ List<tt.Priorities>listPriorities=[];
     print("yor  request this url  =>  ${_correspondencesApi.apiUrl()}");
     _correspondencesApi.getData().then((value) {
       correspondencesModel = value as CorrespondencesModel;
-      listPriorities=correspondencesModel!.priorities!;
-print("correspondencesModel =>   ${listPriorities.length}");
+      listPriorities = correspondencesModel!.priorities!;
+      print("correspondencesModel =>   ${listPriorities.length}");
       correspondencesModel?.inbox?.correspondences?.forEach((element) {
         UserFilter user = UserFilter(
             userId: element.fromUserId!,
@@ -635,8 +616,8 @@ print("correspondencesModel =>   ${listPriorities.length}");
       print("i get alll _getCorrespondencesAllAPI");
       //getCorrespondencesAllModel = value as GetCorrespondencesAllModel;
       correspondencesModel = value as CorrespondencesModel;
-      correspondencesModel =value as CorrespondencesModel;
-      listPriorities=correspondencesModel!.priorities!;
+      correspondencesModel = value as CorrespondencesModel;
+      listPriorities = correspondencesModel!.priorities!;
       print("correspondencesModel =>   ${listPriorities.length}");
       correspondencesModel?.inbox?.correspondences?.forEach((element) {
         UserFilter user = UserFilter(

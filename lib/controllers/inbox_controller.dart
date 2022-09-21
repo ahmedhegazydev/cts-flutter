@@ -19,6 +19,7 @@ import '../services/apis/basket/add_edit_basket_result _api.dart';
 import '../services/apis/basket/getFetchBasketList_api.dart';
 import '../services/apis/basket/get_gasket_inbox_api.dart';
 import '../services/apis/basket/remove_basket_api.dart';
+import '../services/apis/basket/reorder_baskets_result _api.dart';
 import '../services/apis/can_open_document.dart';
 import '../services/apis/complete_in_correspondence_api.dart';
 import '../services/apis/favorites/ListFavoriteRecipients_api.dart';
@@ -33,6 +34,7 @@ import '../services/json_model/basket/add_edit_basket_flag_model.dart';
 import '../services/json_model/basket/fetch_basket_list_model.dart';
 import '../services/json_model/basket/get_basket_inbox_model.dart';
 import '../services/json_model/basket/remove_basket_request_model.dart';
+import '../services/json_model/basket/reorder_baskets_request_model.dart';
 import '../services/json_model/can_open_document_model.dart';
 import '../services/json_model/default_on_success_result.dart';
 import '../services/json_model/favorites/list_all/ListFavoriteRecipients_response.dart';
@@ -57,6 +59,11 @@ class InboxController extends GetxController {
   bool isAllOrNot = false;
   List<UserFilter> userFilter = [];
   UserFilter? selectUserFilter;
+  bool isSavingOrder = false;
+  TextEditingController textEditingControllerEnglishName =
+  TextEditingController();
+  TextEditingController textEditingControllerArabicName =
+  TextEditingController();
 
   updateselectUserFilter(UserFilter? data) {
     selectUserFilter = data;
@@ -1291,6 +1298,100 @@ print("correspondencesModel =>   ${listPriorities.length}");
     allCorrespondences = filteredUrgentCorrespondencesTemp;
     //or
     // allCorrespondences = filteredFormUserIdCorrespondencesTemp;
+    update();
+  }
+
+
+
+
+
+
+  Future reOrderBaskets({context, baskets}) async {
+    ReOrderBasketsApi _postReorderBasketsApi = ReOrderBasketsApi(context);
+    ReorderBasketsRequest reorderBasketsRequest = ReorderBasketsRequest(
+      baskets: baskets,
+      language: Get.locale?.languageCode == "en" ? "en" : "ar",
+      token: secureStorage.token()!,
+    );
+    await _postReorderBasketsApi
+        .post(reorderBasketsRequest.toMap())
+        .then((value) {
+      print(value);
+      Navigator.pop(context);
+    });
+    update();
+  }
+
+  Future removeBasket(
+      {context, basketId, required Function? onSuccess(String message)}) async {
+    PostRemoveBasketApi _postRemoveBasketApi = PostRemoveBasketApi(context);
+    RemoveBasketRequest removeBasketRequest = RemoveBasketRequest(
+      basketId: basketId,
+      language: Get.locale?.languageCode == "en" ? "en" : "ar",
+      token: secureStorage.token(),
+    );
+    await _postRemoveBasketApi.post(removeBasketRequest.toMap()).then((value) {
+      Navigator.pop(context);
+      // Get.back();
+      // onSuccess(value.toString());
+      showTopSnackBar(
+        context,
+        CustomSnackBar.success(
+          backgroundColor: Colors.lightGreen,
+          icon: Container(),
+          message:
+          "BasketDeletedSuccess".tr,
+        ),
+      );
+
+    });
+    getFetchBasketList(context: context);
+    //  update();
+  }
+
+  Future addEditBasket({context, required Baskets basket}) async {
+    AddEditBasketFlagApi _addEditBasketFlagApi = AddEditBasketFlagApi(context);
+    BasketDto basketDto = new BasketDto(
+        Color: basket.color,
+        Name: basket.name,
+        NameAr: basket.nameAr,
+        ID: 0,
+        //=========
+        CanBeReOrder: false,
+        OrderBy: basket.orderBy,
+        AdminIsDeleted: false,
+        isDeleted: false,
+        UserGctId: 0);
+    AddEditBasketFlagModel addEditBasketFlagModel = AddEditBasketFlagModel(
+      token: secureStorage.token(),
+      language: Get.locale?.languageCode == "en" ? "en" : "ar",
+      basketFlag: basketDto,
+    );
+    await _addEditBasketFlagApi
+        .post(addEditBasketFlagModel.toMap())
+        .then((value) {
+      Navigator.pop(context);
+      Navigator.pop(context);
+      showTopSnackBar(
+        context,
+        CustomSnackBar.success(
+          backgroundColor: Colors.lightGreen,
+          icon: Container(),
+          message:
+          "BasketAddedSuccess".tr,
+        ),
+      );
+
+      // showLoaderDialog(context);
+      // getFetchBasketList(context: context);
+
+    });
+    update();
+
+  }
+
+  setSavingOrder(bool saving) {
+    this.isSavingOrder = saving;
     update();
   }
 }

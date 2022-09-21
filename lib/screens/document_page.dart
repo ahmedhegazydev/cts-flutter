@@ -174,6 +174,7 @@ class DocumentPage extends GetWidget<DocumentController> {
               color: Colors.amber,
               child: controller.pdfAndSingData.length > 0
                   ? PDFView(
+                      originalAnnotations: controller.annotations,
                       url: controller.pdfAndSingData.first,
                       color: Get.find<MController>().appcolor,
                       size: s)
@@ -185,163 +186,22 @@ class DocumentPage extends GetWidget<DocumentController> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       //  mainAxisSize: MainAxisSize.max,
-      children: [
-        // _buildTopBar(context),
-        GetBuilder<DocumentController>(
-          //autoRemove: false,
-          autoRemove: false,
-          builder: (logic) {
-            var children2 = [
-              const SizedBox(
-                width: 4,
-                height: 50,
-              ),
-              //transferButton(context),
-              Container(
-                height: 30,
-                width: 1,
-                color: Colors.grey[800],
-              ),
-              PopupMenuButton(
-                elevation: 4,
-                child: CustomButtonWithImage(
-                  image: 'assets/images/up_arrow.png',
-                  label: "export".tr,
-                ),
-                itemBuilder: (BuildContext context) {
-                  return [
-                    PopupMenuItem(
-                      child: Text("paperExport".tr),
-                      onTap: () {
-                        controller.getIsAlreadyExportedAsPaperwork(
-                            context: context,
-                            correspondenceId:
-                                controller.correspondences.correspondenceId!,
-                            transferId: controller.correspondences.transferId!,
-                            exportAction: "paper");
-                      },
-                    ),
-                    PopupMenuItem(
-                      child: Text("electronicExport".tr),
-                      onTap: () {
-                        controller.isAlreadyExportedAsTransfer(
-                            context: context,
-                            correspondenceId:
-                                controller.correspondences.correspondenceId!,
-                            transferId: controller.correspondences.transferId!,
-                            exportAction: "electronic");
-                        print("electronicExport");
-                      },
-                    ),
-                    PopupMenuItem(
-                      child: Text("paperAndElectronicExport".tr),
-                      onTap: () {
-                        controller.isAlreadyExportedAsTransfer(
-                            context: context,
-                            correspondenceId:
-                                controller.correspondences.correspondenceId!,
-                            transferId: controller.correspondences.transferId!,
-                            exportAction: "paperAndelectronic");
-                        print("paperAndElectronicExport");
-                      },
-                    ),
-                  ];
-                },
-              ),
-              Container(
-                height: 30,
-                width: 1,
-                color: Colors.grey[800],
-              ),
-              GestureDetector(
-                child: CustomButtonWithImage(
-                  // onClick: () {},
-                  image: 'assets/images/ending.png',
-                  label: "ending".tr,
-                ),
-                onTap: () {
-                  print("ending");
-                  // showLoaderDialog(context);
-                  completeClick(context);
-                },
-              ),
-              Container(
-                height: 30,
-                width: 1,
-                color: Colors.grey[800],
-              ),
-              GestureDetector(
-                child: CustomButtonWithImage(
-                  // onClick: () {},
-                  label: "marking".tr,
-                  image: 'assets/images/A.png',
-                ),
-                onTap: () async {
-                  String url =
-                      "https://intaliocom-my.sharepoint.com/:w:/r/personal/izzat_hajj_intalio_com/_layouts/15/Doc.aspx?sourcedoc=%7B433EEEF0-A155-4F05-B1BF-B9FBEEF77575%7D&file=5833639______%20____%20____%20(1).docx&action=default&mobileredirect=true";
-                  final Uri toLaunch = Uri.parse("ms-word:ofe|u|$url|a|App");
+      children: [documentViewer],
+    );
+  }
 
-                  final bool nativeAppLaunchSucceeded = await launchUrl(
-                    toLaunch,
-                    mode: LaunchMode.externalApplication,
-                  );
-                  print("was able to launch ? $nativeAppLaunchSucceeded");
-                },
-              ),
-              Container(
-                height: 30,
-                width: 1,
-                color: Colors.grey[800],
-              ),
-              GestureDetector(
-                onTap: () {
-                  Get.find<WebViewPageController>().isPdf = false;
-                  print(controller.correspondences.gridInfo![2].value);
-                  var ref = controller.correspondences.gridInfo![2].value;
-                  if (ref != null && ref != "")
-                    Get.find<WebViewPageController>().title = ref;
-                  else
-                    Get.find<WebViewPageController>().title = "tracking".tr;
-                  Get.find<WebViewPageController>().url = controller
-                      .canOpenDocumentModel?.correspondence!.visualTrackingUrl!;
-                  Get.toNamed(
-                    "WebViewPage",
-                  );
-                },
-                child: CustomButtonWithImage(
-                  // onClick: () {},
-                  image: 'assets/images/track.png',
-                  label: "tracking".tr,
-                ),
-              ),
-              if (controller.notoragnalFileDoc)
-                GestureDetector(
-                  onTap: () {
-                    controller.backTooragnalFileDocpdf();
-                  },
-                  child: Icon(
-                    Icons.home,
-                    size: 40,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-            ];
-            var singleChildScrollView = SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                mainAxisSize: MainAxisSize.max,
-                children: children2,
-              ),
-            );
-            return singleChildScrollView;
-          },
-        ),
-
-        //ACTIONS
-
-        documentViewer
-      ],
+  void _openVisualTracking() {
+    Get.find<WebViewPageController>().isPdf = false;
+    print(controller.correspondences.gridInfo![2].value);
+    var ref = controller.correspondences.gridInfo![2].value;
+    if (ref != null && ref != "")
+      Get.find<WebViewPageController>().title = ref;
+    else
+      Get.find<WebViewPageController>().title = "tracking".tr;
+    Get.find<WebViewPageController>().url =
+        controller.canOpenDocumentModel?.correspondence!.visualTrackingUrl!;
+    Get.toNamed(
+      "WebViewPage",
     );
   }
 
@@ -380,8 +240,33 @@ class DocumentPage extends GetWidget<DocumentController> {
                   CTSActionButton('assets/images/up_arrow.png', "export".tr,
                       () {
                     showExportDialog(context);
-                  })
+                  }),
+                  CTSActionButton('assets/images/ending.png', "ending".tr, () {
+                    completeClick(context);
+                  }),
+                  CTSActionButton('assets/images/A.png', "marking".tr,
+                      () async {
+                    String url =
+                        "https://intaliocom-my.sharepoint.com/:w:/r/personal/izzat_hajj_intalio_com/_layouts/15/Doc.aspx?sourcedoc=%7B433EEEF0-A155-4F05-B1BF-B9FBEEF77575%7D&file=5833639______%20____%20____%20(1).docx&action=default&mobileredirect=true";
+                    final Uri toLaunch = Uri.parse("ms-word:ofe|u|$url|a|App");
+
+                    final bool nativeAppLaunchSucceeded = await launchUrl(
+                      toLaunch,
+                      mode: LaunchMode.externalApplication,
+                    );
+                  }),
+                  CTSActionButton('assets/images/track.png', "tracking".tr, () {
+                    _openVisualTracking();
+                  }),
+                  if (controller.notoragnalFileDoc)
+                    CTSActionButton('assets/images/track.png', "tracking".tr,
+                        () {
+                      controller.backTooragnalFileDocpdf();
+                    }),
                 ],
+              ),
+              SizedBox(
+                height: 150,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -391,6 +276,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                   ),
                 ],
               ),
+
               const Divider(
                 thickness: 1,
               ),

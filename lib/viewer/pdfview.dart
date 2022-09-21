@@ -8,6 +8,8 @@ import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:internet_file/internet_file.dart';
 import 'package:pdfx/pdfx.dart';
 //import 'package:native_pdf_renderer/native_pdf_renderer.dart';
+import '../controllers/document_controller.dart';
+import '../utility/utilitie.dart';
 import './MoveableStackItem.dart';
 import './controllers/viewerController.dart';
 import './pageContainer.dart';
@@ -18,11 +20,13 @@ class PDFView extends StatefulWidget {
     Key? key,
     // required this.screenWidth,
     // required this.screenHeight,
+    required this.originalAnnotations,
     required this.url,
     required this.color,
     required this.size,
   }) : super(key: key);
 
+  List<ViewerAnnotation> originalAnnotations;
   Size size;
   String url;
   Color color;
@@ -38,6 +42,29 @@ class _PDFViewState extends State<PDFView> {
     ViewerController.to.themeColor = widget.color;
     Future.delayed(const Duration(milliseconds: 200), () {
       preparePDF().then((data) {
+        widget.originalAnnotations.forEach((element) {
+          double width = double.tryParse(element.width!) ?? 0;
+          double height = double.tryParse(element.height!) ?? 0;
+          double x = double.tryParse(element.X!) ?? 0;
+          double y = double.tryParse(element.Y!) ?? 0;
+          int page = int.tryParse(element.page!) ?? 1;
+          page = page - 1;
+          //
+          String imageBytes =
+              element.imageByte!.replaceAll("data:image/png;base64,", "");
+          ViewerController.to.creatAndAddAnnotationOnLoad(
+            width: width,
+            height: height,
+            image: Image.memory(
+              dataFromBase64String(imageBytes),
+              fit: BoxFit.fill,
+            ),
+            originX: x,
+            originY: y,
+            page: page,
+          );
+        });
+
         setState(() {
           pages = data;
         });
@@ -48,10 +75,6 @@ class _PDFViewState extends State<PDFView> {
   List<PdfPageImage> pages = [];
   double dpageWidth = 0;
   double dpageHeigt = 0;
-//   double opageWidth = 200;
-//   double opageHeigt = 200;
-  // double screenWidth = 0;
-  // double screenHeight = 0;
   Size myChildSize = Size.zero;
 
   preparePDF() async {
@@ -67,14 +90,7 @@ class _PDFViewState extends State<PDFView> {
 
       dpageHeigt = page.height.toDouble();
       dpageWidth = page.width.toDouble();
-      // opageHeigt = page.height.toDouble();
-      // opageWidth = page.width.toDouble();
       var aspect = dpageWidth / widget.size.width;
-
-      // pageHeigt = pageHeigt * aspect;
-      // pageWidth = pageWidth * aspect;
-
-      // calculateDimensions2();
       final pageImage = await page.render(
           width: widget.size.width, height: dpageHeigt / aspect);
       pages.add(pageImage!);
@@ -82,7 +98,6 @@ class _PDFViewState extends State<PDFView> {
           widget.size.width, widget.size.height / aspect);
 
       ViewerController.to.screenHeight.value = widget.size.height / aspect;
-      // ViewerController.to.addAnnotationList([]);
     }
     ViewerController.to.setupLists(document.pagesCount);
     return pages;
@@ -141,14 +156,9 @@ class _PDFViewState extends State<PDFView> {
 
   @override
   Widget build(BuildContext context) {
-    // ViewerController.to.setScreenWidthAndHeight(pageWidth, pageHeigt);
-    // screenWidthViewer = MediaQuery.of(context).size.width;
-    // screenHeightViewer = MediaQuery.of(context).size.height;
     if (pages.isEmpty) {
       return Container(
         child: CircularProgressIndicator.adaptive(),
-        // width: double.maxFinite,
-        //child: Expanded(child: CupertinoActivityIndicator(animating: true)),
         color: Colors.grey[200],
       );
     } else {
@@ -170,52 +180,9 @@ class _PDFViewState extends State<PDFView> {
             //   ),
           ),
         ),
-        // bottomNavigationBar: Obx(
-        //   () => BottomNavigationBar(
-        //     items: const <BottomNavigationBarItem>[
-        //       BottomNavigationBarItem(
-        //         icon: Icon(Icons.back_hand),
-        //         label: 'view',
-        //       ),
-        //       BottomNavigationBarItem(
-        //         icon: Icon(Icons.edit),
-        //         label: 'edit',
-        //       ),
-        //       // BottomNavigationBarItem(
-        //       //   icon: Icon(Icons.add),
-        //       //   label: 'annotation',
-        //       // ),
-        //     ],
-        //     currentIndex: ViewerController.to.selectedActionIndex.value,
-        //     selectedItemColor: ViewerController.to.themeColor,
-        //     onTap: _onItemTapped,
-        //   ),
-        // ),
       );
     }
   }
-
-  // void calculateDimensions(Size size) {
-  //   print(size);
-  //   myChildSize = size;
-  //   // screenWidthViewer = size.width;
-  //   // screenHeightViewer = size.height;
-  //   // var aspect = screenWidthViewer / pageWidth;
-
-  //   // pageHeigt = pageHeigt * aspect;
-  //   // pageWidth = screenWidthViewer;
-  // }
-
-  // void calculateDimensions2() {
-  //   var aspect = screenWidthViewer / opageWidth;
-
-  //   // pageHeigt = pageHeigt * aspect;
-  //   // pageWidth = screenWidthViewer;
-  //   ViewerController.to.setScreenWidthAndHeight(
-  //       screenWidthViewer, screenHeightViewer * aspect * 1.6);
-
-  //   ViewerController.to.screenHeight.value = screenHeightViewer * aspect;
-  // }
 }
 
 class PDFColumn extends StatelessWidget {
@@ -233,9 +200,6 @@ class PDFColumn extends StatelessWidget {
         children: List.generate(
           pages.length,
           (index) {
-            // print("---------");
-            // var bytes = base64Encode(pages[index].bytes);
-            // print(bytes);
             return GestureDetector(
               onPanStart: ((details) => print(details)),
               onTap: () {

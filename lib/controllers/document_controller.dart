@@ -449,39 +449,22 @@ class DocumentController extends GetxController {
         pdfViewerkey = GlobalKey();
         pdfAndSing.clear();
         pdfAndSingData.clear();
-        // pdfAndSing.add(SfPdfViewer.network(
-        //   oragnalFileDocpdfUrlFile,
-        //   controller: pdfViewerController,
-        // ));
-        // pdfAndSing.add(Container(
-        //   color: Colors.red,
-        // ));
 
-        // pdfAndSing.add(
-        //   PDFView(
-        //       url: oragnalFileDocpdfUrlFile,
-        //       color: Get.find<MController>().appcolor),
-        // );
+        annotations.clear();
+
         pdfAndSingData.add(oragnalFileDocpdfUrlFile);
 
-        log(element.annotations!);
         Map<String, dynamic> dat = jsonDecode(element.annotations!);
-        print("77777777777777777=>     ${dat.values.toList()}");
 
-        ViewerAnnotation daa = ViewerAnnotation.fromMap(dat);
-        print("88888888=>     ${daa.toMap()}");
-        // Positioned(
-        //   top: double.tryParse(dat["Y"]),
-        //   left: double.tryParse(dat["X"]),
-        //   child: Image.memory(
-        //     dat["ImageByte"],
-        //     fit: BoxFit.fill,
-        //     width: double.tryParse(dat["Width"]),
-        //     height:
-        //     double.tryParse(dat["Height"]),
-        //   ),
-        // );
-        //
+        var loopableData = dat.values.toList();
+
+        loopableData.forEach((elementa) {
+          ViewerAnnotation daa = ViewerAnnotation.fromMap(elementa[0]);
+
+          annotations.add(daa);
+        });
+
+        //var r = dat.values.toList().first[0];
 
         update();
       }
@@ -550,7 +533,7 @@ class DocumentController extends GetxController {
 
   List<Widget> pdfAndSing = [];
   List<String> pdfAndSingData = [];
-
+  List<ViewerAnnotation> annotations = [];
   //لسته الامضاء القادمه مع الملف
   List<Annotation> pdfAndSingannotation = [];
   List<Widget> pdfAndSingannotationShowOrHide = [];
@@ -2858,37 +2841,37 @@ class ViewerAnnotation {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': this.id,
-      'page': this.page,
+      'Id': this.id,
+      'Page': this.page,
       'X': this.X,
       'Y': this.Y,
-      'type': this.type,
-      'width': this.width,
-      'height': this.height,
-      'imageByte': this.imageByte,
-      'imageName': this.imageName,
-      'text': this.text,
-      'readonly': this.readonly,
-      'userId': this.userId,
-      'hidden': this.hidden,
+      'Type': this.type,
+      'Width': this.width,
+      'Height': this.height,
+      'ImageByte': this.imageByte,
+      'ImageName': this.imageName,
+      'Text': this.text,
+      'Readonly': this.readonly,
+      'UserId': this.userId,
+      'Hidden': this.hidden,
     };
   }
 
   factory ViewerAnnotation.fromMap(Map<String, dynamic> map) {
     return ViewerAnnotation(
-      id: map['id'],
-      page: map['page'],
+      id: map['Id'],
+      page: map['Page'],
       X: map['X'],
       Y: map['Y'],
-      type: map['type'],
-      width: map['width'],
-      height: map['height'],
-      imageByte: map['imageByte'],
-      imageName: map['imageName'],
-      text: map['text'],
-      readonly: map['readonly'],
-      userId: map['userId'],
-      hidden: map['hidden'],
+      type: map['Type'],
+      width: map['Width'],
+      height: map['Height'],
+      imageByte: map['ImageByte'],
+      imageName: map['ImageName'],
+      text: map['Text'],
+      readonly: map['Readonly'],
+      userId: map['UserId'],
+      hidden: map['Hidden'],
     );
   }
 }

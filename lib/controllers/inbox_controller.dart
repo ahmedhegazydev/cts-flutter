@@ -201,7 +201,10 @@ class InboxController extends GetxController {
     getFetchBasketListApi.data =
         "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     await getFetchBasketListApi.getData().then((value) {
-      Navigator.pop(context);
+      if(context!=null){
+        Navigator.pop(context);
+      }
+
       // Get.back();
       fetchBasketListModel = value as FetchBasketListModel;
       // fetchBasketListModel?.baskets?.forEach((element) {

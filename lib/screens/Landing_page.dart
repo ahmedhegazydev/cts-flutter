@@ -626,21 +626,21 @@ class LandingPage extends GetWidget<LandingPageController> {
               ),
               //Icon(Icons.menu),
               Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Image.asset(
                   'assets/images/Logo_qar.png',
-                  height: 60,
+                  height: 40,
                 ),
               ),
               SizedBox(
-                width: 50,
+                width: 40,
               ),
               Container(
                 color: Colors.transparent,
                 child: Text(
                   "appTitle".tr,
                   style: Theme.of(contex).textTheme.headline1!.copyWith(
-                        fontSize: u.calculateFontSize(40, contex),
+                        fontSize: u.calculateFontSize(30, contex),
                       ),
                   textAlign: TextAlign.center,
                 ),
@@ -648,7 +648,7 @@ class LandingPage extends GetWidget<LandingPageController> {
             ],
           ),
           SizedBox(
-            height: 15,
+            height: 10,
           ),
           Container(
             color: Colors.transparent,
@@ -1718,15 +1718,17 @@ class LandingPage extends GetWidget<LandingPageController> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Flexible(
-            flex: 4,
-            child: Container(
-              color: Colors.transparent,
-              padding:
-                  EdgeInsets.only(left: 80, right: 80, top: 10, bottom: 10),
-              child: _buildInfoBox(context),
-            ),
-          ),
+          _buildDataBoxDateTransfers(
+              context, EdgeInsets.only(left: 80, right: 80, top: 1, bottom: 1)),
+          // Flexible(
+          //   flex: 4,
+          //   child: Container(
+          //     color: Colors.transparent,
+          //     padding:
+          //         EdgeInsets.only(left: 80, right: 80, top: 10, bottom: 10),
+          //     child: _buildInfoBox(context),
+          //   ),
+          // ),
           // Flexible(
           //   flex: 3,
           //   child: Container(
@@ -2413,201 +2415,210 @@ class LandingPage extends GetWidget<LandingPageController> {
               SizedBox(
                 width: 20,
               ),
-              Flexible(
-                flex: 3,
-                child: Container(
-                  child: SizedBox(
-                    height: 180,
-                    child: Expanded(
-                        child: Padding(
-                            padding: EdgeInsets.only(
-                                left: 5, right: 5, top: 0, bottom: 10),
-                            child: _buildInfoBox(context))),
-                  ),
-                ),
-              ),
+              _buildDataBoxDateTransfers(context,
+                  EdgeInsets.only(left: 20, right: 20, top: 1, bottom: 1)),
+              // Flexible(
+              //   flex: 3,
+              //   child: Row(
+              //     //  direction: Axis.vertical,
+              //     children: [
+              //       Expanded(child: _buildInfoBox(context)),
+              //     ],
+              //   ),
+              // ),
               Flexible(
                 flex: 1,
                 child: Container(
                   child: SizedBox(
                     height: 180,
-                    child: Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            left: 5, right: 5, top: 0, bottom: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Flexible(
-                              flex: 1,
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    left: 0, right: 0, top: 0, bottom: 0),
-                                child: Container(
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(6),
-                                        topRight: Radius.circular(6),
-                                        bottomLeft: Radius.circular(6),
-                                        bottomRight: Radius.circular(6)),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.25),
-                                        spreadRadius: 6,
-                                        blurRadius: 6,
-                                        offset: Offset(0, 0),
-                                      ),
-                                    ],
-                                  ),
-                                  child: InkWell(
-                                    onTap: () {
-                                      openInbox(
-                                          boxid: 0,
-                                          context: context,
-                                          nodeId: 20094);
-                                    },
+                    child: Flex(
+                      direction: Axis.horizontal,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                left: 5, right: 5, top: 0, bottom: 10),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Flexible(
+                                  flex: 1,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 0, right: 0, top: 0, bottom: 0),
                                     child: Container(
-                                      color: Colors.transparent,
-                                      width: double.infinity,
-                                      height: double.infinity,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Flexible(
-                                            flex: 1,
-                                            child: Text(
-                                              "pendingCorrespondences".tr,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline2!
-                                                  .copyWith(
-                                                    color: Colors.grey,
-                                                    fontSize:
-                                                        u.calculateFontSize(
-                                                            20, context),
-                                                  ),
-                                              textAlign: TextAlign.center,
-                                            ),
+                                      height: 100,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(6),
+                                            topRight: Radius.circular(6),
+                                            bottomLeft: Radius.circular(6),
+                                            bottomRight: Radius.circular(6)),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.grey.withOpacity(0.25),
+                                            spreadRadius: 6,
+                                            blurRadius: 6,
+                                            offset: Offset(0, 0),
                                           ),
-                                          Flexible(
-                                            flex: 1,
-                                            child: Text(
-                                              Get.find<LandingPageController>()
-                                                  .dashboardStatsResultModel!
-                                                  .forActionCount
-                                                  .toString(),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline3!
-                                                  .copyWith(
-                                                    fontFamily: "Bahij_bold",
-                                                    fontSize:
-                                                        u.calculateFontSize(
-                                                            50, context),
-                                                  ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          )
                                         ],
                                       ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Flexible(
-                              flex: 1,
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    left: 0, right: 0, top: 0, bottom: 0),
-                                child: Container(
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(6),
-                                        topRight: Radius.circular(6),
-                                        bottomLeft: Radius.circular(6),
-                                        bottomRight: Radius.circular(6)),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.25),
-                                        spreadRadius: 6,
-                                        blurRadius: 6,
-                                        offset: Offset(0, 0),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Container(
-                                    color: Colors.transparent,
-                                    width: double.infinity,
-                                    height: double.infinity,
-                                    child: InkWell(
-                                      onTap: () async {
-                                        await showAllBasketsDialog(context);
-                                        // openInbox(boxid: 0, context: context, nodeId: 20094);
-                                      },
-                                      child: Container(
-                                        color: Colors.transparent,
-                                        width: double.infinity,
-                                        height: double.infinity,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Flexible(
-                                              flex: 1,
-                                              child: Text(
-                                                "Basket".tr,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline2!
-                                                    .copyWith(
+                                      child: InkWell(
+                                        onTap: () {
+                                          openInbox(
+                                              boxid: 0,
+                                              context: context,
+                                              nodeId: 20094);
+                                        },
+                                        child: Container(
+                                          color: Colors.transparent,
+                                          width: double.infinity,
+                                          height: double.infinity,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Flexible(
+                                                flex: 1,
+                                                child: Text(
+                                                  "pendingCorrespondences".tr,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline2!
+                                                      .copyWith(
                                                         color: Colors.grey,
                                                         fontSize:
                                                             u.calculateFontSize(
-                                                                16, context)),
-                                                textAlign: TextAlign.center,
+                                                                20, context),
+                                                      ),
+                                                  textAlign: TextAlign.center,
+                                                ),
                                               ),
-                                            ),
-                                            Flexible(
-                                                flex: 2,
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      12.0),
-                                                  child: Icon(
-                                                    Icons.wallet,
-                                                    color: Theme.of(context)
-                                                        .textTheme
-                                                        .headline2!
-                                                        .color,
-                                                  ),
-                                                )),
-                                          ],
+                                              Flexible(
+                                                flex: 1,
+                                                child: Text(
+                                                  Get.find<
+                                                          LandingPageController>()
+                                                      .dashboardStatsResultModel!
+                                                      .forActionCount
+                                                      .toString(),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline3!
+                                                      .copyWith(
+                                                        fontFamily:
+                                                            "Bahij_bold",
+                                                        fontSize:
+                                                            u.calculateFontSize(
+                                                                50, context),
+                                                      ),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Flexible(
+                                  flex: 1,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 0, right: 0, top: 0, bottom: 0),
+                                    child: Container(
+                                      height: 100,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(6),
+                                            topRight: Radius.circular(6),
+                                            bottomLeft: Radius.circular(6),
+                                            bottomRight: Radius.circular(6)),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.grey.withOpacity(0.25),
+                                            spreadRadius: 6,
+                                            blurRadius: 6,
+                                            offset: Offset(0, 0),
+                                          ),
+                                        ],
+                                      ),
+                                      child: Container(
+                                        color: Colors.transparent,
+                                        width: double.infinity,
+                                        height: double.infinity,
+                                        child: InkWell(
+                                          onTap: () async {
+                                            await showAllBasketsDialog(context);
+                                            // openInbox(boxid: 0, context: context, nodeId: 20094);
+                                          },
+                                          child: Container(
+                                            color: Colors.transparent,
+                                            width: double.infinity,
+                                            height: double.infinity,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Flexible(
+                                                  flex: 1,
+                                                  child: Text(
+                                                    "Basket".tr,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .headline2!
+                                                        .copyWith(
+                                                            color: Colors.grey,
+                                                            fontSize: u
+                                                                .calculateFontSize(
+                                                                    16,
+                                                                    context)),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                ),
+                                                Flexible(
+                                                    flex: 2,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              12.0),
+                                                      child: Icon(
+                                                        Icons.wallet,
+                                                        color: Theme.of(context)
+                                                            .textTheme
+                                                            .headline2!
+                                                            .color,
+                                                      ),
+                                                    )),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
                 ),
@@ -2617,183 +2628,195 @@ class LandingPage extends GetWidget<LandingPageController> {
                 child: Container(
                   child: SizedBox(
                     height: 180,
-                    child: Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            left: 5, right: 5, top: 0, bottom: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Flexible(
-                              flex: 1,
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    left: 0, right: 0, top: 0, bottom: 0),
-                                child: Container(
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(6),
-                                        topRight: Radius.circular(6),
-                                        bottomLeft: Radius.circular(6),
-                                        bottomRight: Radius.circular(6)),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.25),
-                                        spreadRadius: 6,
-                                        blurRadius: 6,
-                                        offset: Offset(0, 0),
-                                      ),
-                                    ],
-                                  ),
-                                  child: InkWell(
-                                    onTap: () {
-                                      openInbox(
-                                          boxid: 0,
-                                          context: context,
-                                          nodeId: 20094);
-                                    },
+                    child: Flex(
+                      direction: Axis.horizontal,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                left: 5, right: 5, top: 0, bottom: 10),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Flexible(
+                                  flex: 1,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 0, right: 0, top: 0, bottom: 0),
                                     child: Container(
-                                      color: Colors.transparent,
-                                      width: double.infinity,
-                                      height: double.infinity,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Flexible(
-                                            flex: 1,
-                                            child: Text(
-                                              "unreadCorrespondences".tr,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline2!
-                                                  .copyWith(
-                                                    color: Colors.grey,
-                                                    // fontFamily: "Bahij_light",
-                                                    fontSize:
-                                                        u.calculateFontSize(
-                                                            20, context),
-                                                  ),
-                                              textAlign: TextAlign.center,
-                                            ),
+                                      height: 100,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(6),
+                                            topRight: Radius.circular(6),
+                                            bottomLeft: Radius.circular(6),
+                                            bottomRight: Radius.circular(6)),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.grey.withOpacity(0.25),
+                                            spreadRadius: 6,
+                                            blurRadius: 6,
+                                            offset: Offset(0, 0),
                                           ),
-                                          Flexible(
-                                            flex: 1,
-                                            child: Text(
-                                              Get.find<LandingPageController>()
-                                                  .dashboardStatsResultModel!
-                                                  .unreadCount
-                                                  .toString(),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline3!
-                                                  .copyWith(
-                                                    fontFamily: "Bahij_bold",
-                                                    fontSize:
-                                                        u.calculateFontSize(
-                                                            50, context),
-                                                  ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          )
                                         ],
                                       ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Flexible(
-                              flex: 1,
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    left: 0, right: 0, top: 0, bottom: 0),
-                                child: Container(
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(6),
-                                        topRight: Radius.circular(6),
-                                        bottomLeft: Radius.circular(6),
-                                        bottomRight: Radius.circular(6)),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.25),
-                                        spreadRadius: 6,
-                                        blurRadius: 6,
-                                        offset: Offset(0, 0),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Container(
-                                    color: Colors.transparent,
-                                    width: double.infinity,
-                                    height: double.infinity,
-                                    child: InkWell(
-                                      onTap: () {
-                                        _scaffoldKey.currentState?.openDrawer();
-                                      },
-                                      child: Container(
-                                        color: Colors.transparent,
-                                        width: double.infinity,
-                                        height: double.infinity,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Flexible(
-                                              flex: 1,
-                                              child: Text(
-                                                "settings".tr,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline2!
-                                                    .copyWith(
+                                      child: InkWell(
+                                        onTap: () {
+                                          openInbox(
+                                              boxid: 0,
+                                              context: context,
+                                              nodeId: 20094);
+                                        },
+                                        child: Container(
+                                          color: Colors.transparent,
+                                          width: double.infinity,
+                                          height: double.infinity,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Flexible(
+                                                flex: 1,
+                                                child: Text(
+                                                  "unreadCorrespondences".tr,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline2!
+                                                      .copyWith(
                                                         color: Colors.grey,
+                                                        // fontFamily: "Bahij_light",
                                                         fontSize:
                                                             u.calculateFontSize(
-                                                                16, context)),
-                                                textAlign: TextAlign.center,
+                                                                20, context),
+                                                      ),
+                                                  textAlign: TextAlign.center,
+                                                ),
                                               ),
-                                            ),
-                                            Flexible(
-                                                flex: 2,
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      12.0),
-                                                  child: Icon(
-                                                    Icons.settings,
-                                                    color: Theme.of(context)
-                                                        .textTheme
-                                                        .headline2!
-                                                        .color,
-                                                  ),
-                                                )),
-                                          ],
+                                              Flexible(
+                                                flex: 1,
+                                                child: Text(
+                                                  Get.find<
+                                                          LandingPageController>()
+                                                      .dashboardStatsResultModel!
+                                                      .unreadCount
+                                                      .toString(),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline3!
+                                                      .copyWith(
+                                                        fontFamily:
+                                                            "Bahij_bold",
+                                                        fontSize:
+                                                            u.calculateFontSize(
+                                                                50, context),
+                                                      ),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Flexible(
+                                  flex: 1,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 0, right: 0, top: 0, bottom: 0),
+                                    child: Container(
+                                      height: 100,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(6),
+                                            topRight: Radius.circular(6),
+                                            bottomLeft: Radius.circular(6),
+                                            bottomRight: Radius.circular(6)),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.grey.withOpacity(0.25),
+                                            spreadRadius: 6,
+                                            blurRadius: 6,
+                                            offset: Offset(0, 0),
+                                          ),
+                                        ],
+                                      ),
+                                      child: Container(
+                                        color: Colors.transparent,
+                                        width: double.infinity,
+                                        height: double.infinity,
+                                        child: InkWell(
+                                          onTap: () {
+                                            _scaffoldKey.currentState
+                                                ?.openDrawer();
+                                          },
+                                          child: Container(
+                                            color: Colors.transparent,
+                                            width: double.infinity,
+                                            height: double.infinity,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Flexible(
+                                                  flex: 1,
+                                                  child: Text(
+                                                    "settings".tr,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .headline2!
+                                                        .copyWith(
+                                                            color: Colors.grey,
+                                                            fontSize: u
+                                                                .calculateFontSize(
+                                                                    16,
+                                                                    context)),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                ),
+                                                Flexible(
+                                                    flex: 2,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              12.0),
+                                                      child: Icon(
+                                                        Icons.settings,
+                                                        color: Theme.of(context)
+                                                            .textTheme
+                                                            .headline2!
+                                                            .color,
+                                                      ),
+                                                    )),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
                 ),
@@ -2804,6 +2827,169 @@ class LandingPage extends GetWidget<LandingPageController> {
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  Flexible _buildDataBoxDateTransfers(
+      BuildContext context, EdgeInsetsGeometry padding) {
+    return Flexible(
+      flex: 3,
+      child: Padding(
+        padding: padding,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white70.withOpacity(0.25),
+            borderRadius: BorderRadius.all(
+              Radius.circular(6),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.25),
+                spreadRadius: 6,
+                blurRadius: 6,
+                offset: Offset(0, 0),
+              ),
+            ],
+          ),
+          height: 180,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Flexible(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Flexible(
+                      flex: 3,
+                      child: Text(
+                        u.calculateDate("dd", 'en'),
+                        style: Theme.of(context).textTheme.headline3!.copyWith(
+                            fontSize: u.calculateFontSize(45, context)),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Flexible(
+                      flex: 2,
+                      child: Text(
+                        u.calculateDate("MMMM", u.getLocaleCode(context)) +
+                            " " +
+                            u.calculateDate("yyyy", 'en'),
+                        style: Theme.of(context).textTheme.headline2!.copyWith(
+                              color: Colors.grey.shade600,
+                              fontSize: 15,
+                              fontFamily: "Bahij_light",
+                            ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Flexible(
+                      flex: 3,
+                      child: Text(
+                        u.calculateDate("hh:mm", 'en'),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline3!
+                            .copyWith(color: Colors.grey, fontSize: 24),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Flexible(
+                      flex: 2,
+                      child: Text(
+                        " " + u.calculateDate("a", 'en'),
+                        style: Theme.of(context).textTheme.headline3!.copyWith(
+                            color: Colors.grey.shade400, fontSize: 24),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              FractionallySizedBox(
+                heightFactor: 0.7,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade400,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(4),
+                    ),
+                  ),
+                  width: 0.5,
+                ),
+              ),
+              Flexible(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Flexible(
+                      flex: 1,
+                      child: Text(
+                        "myTransfersInMonth".tr +
+                            " " +
+                            u.calculateDate(
+                                'MMMM', Get.locale?.languageCode ?? "en"),
+                        style: Theme.of(context).textTheme.headline2!.copyWith(
+                            color: Colors.grey,
+                            fontSize: u.calculateFontSize(16, context)),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: Text(
+                        Get.find<LandingPageController>()
+                                .dashboardStatsResultModel
+                                ?.transferredFromMeCount
+                                ?.toString() ??
+                            "",
+                        style: Theme.of(context).textTheme.headline3!.copyWith(
+                              fontSize: 24,
+                              fontFamily: "Bahij_bold",
+                            ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: Text(
+                        "mostMyTransferWentTo".tr,
+                        style: Theme.of(context).textTheme.headline2!.copyWith(
+                            color: Colors.grey,
+                            fontSize: u.calculateFontSize(16, context)),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: Text(
+                        Get.find<LandingPageController>()
+                                .dashboardStatsResultModel
+                                ?.mostTransfersWentTo ??
+                            "",
+                        style: Theme.of(context).textTheme.headline3!.copyWith(
+                            fontSize: 16,
+                            fontFamily: "Bahij_bold",
+                            height:
+                                2.1 // the height between text, default is null
+                            ),
+                        textAlign: TextAlign.center,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

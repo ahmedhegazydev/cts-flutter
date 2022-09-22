@@ -1484,17 +1484,16 @@ class DocumentPage extends GetWidget<DocumentController> {
                                               return controller
                                                   .g2gInfoForExportModel!
                                                   .parents!
-                                                  .where((element) => element
-                                                      .parentName!
-                                                      .toLowerCase()
-                                                      .contains(pattern
-                                                          .toLowerCase()));
-
-                                              //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
+                                                  .where(
+                                                (element) => element.parentName!
+                                                    .toLowerCase()
+                                                    .contains(
+                                                      pattern.toLowerCase(),
+                                                    ),
+                                              );
                                             },
                                             itemBuilder: (context, suggestion) {
                                               Parents v = suggestion;
-
                                               return // Te(v.originalName!);
 
                                                   ListTile(

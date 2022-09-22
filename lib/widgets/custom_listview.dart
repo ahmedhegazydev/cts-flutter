@@ -1483,17 +1483,23 @@ class CustomListView extends GetView<InboxController> {
                                       print(basket.iD);
                                     }
                                   : null,
-                              onTap: () {
-                                Get.find<InboxController>().clearFilter();
-                                Get.find<InboxController>().isAllOrNot = true;
-                                Get.find<InboxController>().getBasketInbox(
-                                  context: context,
-                                  id: basket.iD!,
-                                );
-                                Get.find<InboxController>().selectUserFilter =
-                                null;
-                                Get.find<InboxController>().userFilter.clear();
-                                Get.toNamed("/InboxPage");
+                              onTap: () async{
+                                // Get.find<InboxController>().clearFilter();
+                                // Get.find<InboxController>().isAllOrNot = true;
+                                // Get.find<InboxController>().getBasketInbox(
+                                //   context: context,
+                                //   id: basket.iD!,
+                                // );
+                                // Get.find<InboxController>().selectUserFilter =
+                                // null;
+                                // Get.find<InboxController>().userFilter.clear();
+                                // Get.toNamed("/InboxPage");
+
+
+                                await Get.find<InboxController>().addDocumentsToBasket(
+                                    context:
+                                    context,
+                                    basketId: basket.iD);
                               },
                               //: null,
                               //  enabled: !(basket.canBeReOrder ?? false),

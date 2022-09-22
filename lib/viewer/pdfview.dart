@@ -1,16 +1,12 @@
 import 'dart:convert';
 import 'dart:typed_data';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:internet_file/internet_file.dart';
 import 'package:pdfx/pdfx.dart';
 //import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 import '../controllers/document_controller.dart';
 import '../utility/utilitie.dart';
-import './MoveableStackItem.dart';
 import './controllers/viewerController.dart';
 import './pageContainer.dart';
 import './static/AnnotationTypes.dart';
@@ -94,63 +90,16 @@ class _PDFViewState extends State<PDFView> {
       final pageImage = await page.render(
           width: widget.size.width, height: dpageHeigt / aspect);
       pages.add(pageImage!);
-      ViewerController.to.setScreenWidthAndHeight(
-          widget.size.width, widget.size.height / aspect);
+      ViewerController.to
+          .setScreenWidthAndHeight(widget.size.width, dpageHeigt / aspect);
 
-      ViewerController.to.screenHeight.value = widget.size.height / aspect;
+      // ViewerController.to.screenHeight.value = widget.size.height / aspect;
     }
     ViewerController.to.setupLists(document.pagesCount);
     return pages;
   }
 
-  //final ViewerController c = Get.find();
-  // double screenWidthViewer = 300;
-
-  // double screenHeightViewer = 300;
-
-  // final double screenWidth;
   List<Widget> movableItems = [];
-
-  void _showAction(BuildContext context, int index) {
-    var annotation = AnnotationBaseTypes.none;
-    switch (index) {
-      case 0:
-        annotation = AnnotationBaseTypes.text;
-        break;
-      case 1:
-        annotation = AnnotationBaseTypes.handWrite;
-        break;
-      case 2:
-        annotation = AnnotationBaseTypes.shape;
-        break;
-    }
-    ViewerController.to.prepareToAddAnnotationOnTap(annotation);
-    // showDialog<void>(
-    //   context: context,
-    //   builder: (context) {
-    //     return AlertDialog(
-    //       content: Text(_actionTitles[index]),
-    //       actions: [
-    //         TextButton(
-    //           onPressed: () => Navigator.of(context).pop(),
-    //           child: const Text('CLOSE'),
-    //         ),
-    //       ],
-    //     );
-    //   },
-    // );
-  }
-
-  void _onItemTapped(int index) {
-    // setState(() {
-    ViewerController.to.selectedActionIndex.value = index;
-    if (index == 1) {
-      ViewerController.to.setEditable(true);
-    } else {
-      ViewerController.to.setEditable(false);
-    }
-    // });
-  }
 
   // Size myChildSize = Size.zero;
 
@@ -159,9 +108,14 @@ class _PDFViewState extends State<PDFView> {
     if (pages.isEmpty) {
       return Container(
         child: CircularProgressIndicator.adaptive(),
-        color: Colors.grey[200],
+        color: Colors.grey[100],
       );
     } else {
+      // return SingleChildScrollView(
+      //   child: PDFColumn(
+      //     pages: pages,
+      //   ),
+      // );
       return Scaffold(
         body: GetX<ViewerController>(
           builder: (s) => InteractiveViewer(
@@ -175,9 +129,9 @@ class _PDFViewState extends State<PDFView> {
                   : const ScrollPhysics(),
               child: PDFColumn(
                 pages: pages,
+                size: widget.size,
               ),
             ),
-            //   ),
           ),
         ),
       );
@@ -189,38 +143,52 @@ class PDFColumn extends StatelessWidget {
   const PDFColumn({
     Key? key,
     required this.pages,
+    required this.size,
   }) : super(key: key);
+  final Size size;
   final List<PdfPageImage> pages;
   @override
   @override
   Widget build(BuildContext context) {
     return Container(
-      // color: Colors.green,
+      //  color: Colors.green,
       child: Column(
         children: List.generate(
           pages.length,
           (index) {
-            return GestureDetector(
-              onPanStart: ((details) => print(details)),
-              onTap: () {
-                print('On Tap ');
-              },
-              onDoubleTap: () {
-                ViewerController.to.selectedActionIndex.value = 0;
-
-                ViewerController.to.setEditable(false);
-              },
-              onTapUp: (details) {
-                print('On Tap Up');
-                print(details);
-              },
-              onTapCancel: () => print('On Tap Cancel'),
-              onTapDown: (details) {
-                print(details);
-              },
-              child: PageContainer(
-                image: MemoryImage(pages[index].bytes),
-                pageNumber: index,
+            return Container(
+              child: GestureDetector(
+                onPanStart: ((details) => print(details)),
+                onTap: () {
+                  print('On Tap ');
+                },
+                onDoubleTap: () {
+                  ViewerController.to.selectedActionIndex.value = 0;
+                  ViewerController.to.setEditable(false);
+                },
+                onTapUp: (details) {
+                  print('On Tap Up');
+                  print(details);
+                },
+                onTapCancel: () => print('On Tap Cancel'),
+                onTapDown: (details) {
+                  print(details);
+                },
+                child: Container(
+                  child: SizedBox(
+                    // width: size.width,
+                    child: Container(
+                      //  color: Colors.pink,
+                      child: PageContainer(
+                        image: Image.memory(
+                          pages[index].bytes,
+                          //  width: 2100,
+                        ),
+                        pageNumber: index,
+                      ),
+                    ),
+                  ),
+                ),
               ),
             );
           },
@@ -229,6 +197,51 @@ class PDFColumn extends StatelessWidget {
     );
   }
 }
+
+// class PDFColumn extends StatelessWidget {
+//   const PDFColumn({
+//     Key? key,
+//     required this.pages,
+//   }) : super(key: key);
+//   final List<PdfPageImage> pages;
+//   @override
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: List.generate(
+//         pages.length,
+//         (index) {
+//           return GestureDetector(
+//             onPanStart: ((details) => print(details)),
+//             onTap: () {
+//               print('On Tap ');
+//             },
+//             onDoubleTap: () {
+//               ViewerController.to.selectedActionIndex.value = 0;
+
+//               ViewerController.to.setEditable(false);
+//             },
+//             onTapUp: (details) {
+//               print('On Tap Up');
+//               print(details);
+//             },
+//             onTapCancel: () => print('On Tap Cancel'),
+//             onTapDown: (details) {
+//               print(details);
+//             },
+//             child: PageContainer(
+//               image: Image.memory(pages[index].bytes),
+//               // Image.asset(
+//               //     fit: BoxFit.cover,
+//               //     "assets/images/background_R.png"), // MemoryImage(pages[index].bytes),
+//               pageNumber: index,
+//             ),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
 
 String uint8ListTob64(Uint8List uint8list) {
   String base64String = base64Encode(uint8list);

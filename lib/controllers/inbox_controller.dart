@@ -61,9 +61,9 @@ class InboxController extends GetxController {
   UserFilter? selectUserFilter;
   bool isSavingOrder = false;
   TextEditingController textEditingControllerEnglishName =
-  TextEditingController();
+      TextEditingController();
   TextEditingController textEditingControllerArabicName =
-  TextEditingController();
+      TextEditingController();
 
   updateselectUserFilter(UserFilter? data) {
     selectUserFilter = data;
@@ -1282,11 +1282,6 @@ class InboxController extends GetxController {
     update();
   }
 
-
-
-
-
-
   Future reOrderBaskets({context, baskets}) async {
     ReOrderBasketsApi _postReorderBasketsApi = ReOrderBasketsApi(context);
     ReorderBasketsRequest reorderBasketsRequest = ReorderBasketsRequest(
@@ -1320,11 +1315,9 @@ class InboxController extends GetxController {
         CustomSnackBar.success(
           backgroundColor: Colors.lightGreen,
           icon: Container(),
-          message:
-          "BasketDeletedSuccess".tr,
+          message: "BasketDeletedSuccess".tr,
         ),
       );
-
     });
     getFetchBasketList(context: context);
     //  update();
@@ -1358,17 +1351,14 @@ class InboxController extends GetxController {
         CustomSnackBar.success(
           backgroundColor: Colors.lightGreen,
           icon: Container(),
-          message:
-          "BasketAddedSuccess".tr,
+          message: "BasketAddedSuccess".tr,
         ),
       );
 
       // showLoaderDialog(context);
       // getFetchBasketList(context: context);
-
     });
     update();
-
   }
 
   setSavingOrder(bool saving) {

@@ -5,6 +5,7 @@ import 'package:cts/screens/web_view_page.dart';
 import 'package:cts/screens/filter/FilterSideScreen.dart';
 import 'package:cts/utility/Extenstions.dart';
 import 'package:cts/utility/all_string_const.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get.dart';
@@ -22,6 +23,7 @@ import 'bindings/signatuer_bindings.dart';
 import 'controllers/main_controller.dart';
 import 'data/SettingsFields.dart';
 import 'db/cts_database.dart';
+import 'firebase_options.dart';
 import 'middleware/auth_middleware.dart';
 import 'screens/Inbox_page.dart';
 import 'screens/Landing_page.dart';
@@ -36,48 +38,17 @@ import 'viewer/controllers/viewerController.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await GetStorage.init();
   SecureStorage secureStorage = SecureStorage();
-  // Map <dynamic,dynamic>?a=secureStorage.readSecureJsonData("p") ;
-  // LoginModel data=LoginModel.fromJson(a!);
-  // print("000000");
-  // print(data.customActions );
-  // print("000000");
-  //var bb=json.decode(a.toString());
-// secureStorage.deleteSecureData(AllStringConst.Token);
 
   print(
       "secureStorage.deleteSecureData(AllStringConst.Token)   =>     ${secureStorage.deleteSecureData(AllStringConst.Token)}");
-  // String? appLan = secureStorage.readSecureData(AllStringConst.AppLan);
-  // if (appLan == null) {
-  //   print("theeeeeeeeeeeeeeeeeeeee=>  appLan");
-  //   Get.updateLocale(Locale('ar', 'AR'));
-  // } else {
-  //   if (appLan == "ar") {
-  //     print(
-  //         "================================>  arrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-  //     Get.updateLocale(Locale('ar', 'AR'));
-  //   } else {
-  //     print(
-  //         "================================>  ennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
-  //     Get.updateLocale(Locale('en', 'US'));
-  //   }
-  // }
 
-  //Get.put(SecureStorage());
   Get.put(MController());
-  // SharedPreferences.setMockInitialValues({});
 
-  // runApp(
-  //   RestartWidget(
-  //     child: MyApp(),
-  //   ),
-  // );
-  // runApp(
-  //   Phoenix(
-  //     child: MyApp(),
-  //   ),
-  // );
   runApp(MyApp());
 }
 
@@ -190,7 +161,7 @@ class MyApp extends StatelessWidget {
           GetPage(
               name: "/DocumentPage",
               page: () => DocumentPage(),
-           //  binding: DocumentBinding(),
+              //  binding: DocumentBinding(),
               transition: Transition.rightToLeft),
           GetPage(
               name: "/OpenPDFFile",
@@ -205,7 +176,6 @@ class MyApp extends StatelessWidget {
           GetPage(
               name: "/SearchPageResult",
               page: () => SearchPageResult(),
-
               transition: Transition.rightToLeft),
           GetPage(
               name: "/WebViewPage",

@@ -5,7 +5,6 @@ import 'package:flutter_sound/public/flutter_sound_player.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
 import 'package:signature/signature.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/document_controller.dart';
@@ -19,7 +18,6 @@ import '../utility/all_const.dart';
 import '../utility/utilitie.dart';
 import '../viewer/controllers/viewerController.dart';
 import '../viewer/pdfview.dart';
-import '../widgets/Custom_button_with_image.dart';
 import '../widgets/custom_button_with_icon.dart';
 import 'dart:developer';
 
@@ -160,34 +158,40 @@ class DocumentPage extends GetWidget<DocumentController> {
   /// ToDo get the print
   _buildBody(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
-    Size size = MediaQuery.of(context).size;
-    var v = controller.correspondences.toJson();
-    log(v.toString());
-    Size s = Size(size.width, size.height - 150);
+
+    // return PDFView(
+    //     originalAnnotations: controller.annotations,
+    //     url: controller.pdfAndSingData.first,
+    //     color: Get.find<MController>().appcolor,
+    //     size: s);
     var documentViewer = GetBuilder<DocumentController>(
         autoRemove: false,
         builder: (logic) {
-          return SizedBox(
-            width: size.width,
-            height: size.height - 199,
-            child: Container(
-              color: Colors.amber,
-              child: controller.pdfAndSingData.length > 0
-                  ? PDFView(
+          Size size = MediaQuery.of(context).size;
+          var v = controller.correspondences.toJson();
+          log(v.toString());
+          Size s = Size(size.width, size.height);
+          return controller.pdfAndSingData.length > 0
+              ? SizedBox(
+                  width: size.width,
+                  height: size.height - 100,
+                  child: PDFView(
                       originalAnnotations: controller.annotations,
                       url: controller.pdfAndSingData.first,
                       color: Get.find<MController>().appcolor,
-                      size: s)
-                  : CircularProgressIndicator.adaptive(),
-            ),
-          );
+                      size: s),
+                )
+              : CircularProgressIndicator.adaptive(
+                  backgroundColor: Colors.lime,
+                );
         });
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      //  mainAxisSize: MainAxisSize.max,
-      children: [documentViewer],
-    );
+    return documentViewer;
+    // Column(
+    //   mainAxisAlignment: MainAxisAlignment.start,
+    //   crossAxisAlignment: CrossAxisAlignment.stretch,
+    //   //  mainAxisSize: MainAxisSize.max,
+    //   children: [documentViewer],
+    // );
   }
 
   void _openVisualTracking() {
@@ -1322,108 +1326,6 @@ class DocumentPage extends GetWidget<DocumentController> {
         });
   }
 
-  _popUpMenuhasAttachments(context) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          print(
-              " Get.find<DocumentController>() .canOpenDocumentModel?.attachments?.attachments?.length=>${Get.find<DocumentController>().canOpenDocumentModel?.attachments?.attachments?.length}");
-          return AlertDialog(
-            title: Text("Attachments"),
-            content: SizedBox(
-              height: 150,
-              width: MediaQuery.of(context).size.width * .7,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: controller.folder2.length,
-                  itemBuilder: (context, pos) {
-                    String key = controller.folder2.keys.elementAt(pos);
-
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * .3,
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                  width: double.infinity,
-                                  color: Theme.of(context).colorScheme.primary,
-                                  child: Text(key)),
-                            ),
-                            Expanded(
-                              child: ListView.builder(
-                                  itemCount: controller.folder2[key]!.length,
-                                  itemBuilder: (context, indx) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          // Get.find<DocumentController>()
-                                          //     .getAttachmentItemlocal(
-                                          //     context: context);
-                                          controller.getAttachmentItem(
-                                              context: context,
-                                              transferId: controller
-                                                  .folder2[key]![pos]
-                                                  .transferId,
-                                              attachmentId: controller
-                                                  .folder2[key]![pos]
-                                                  .attachmentId,
-                                              documentId: controller
-                                                  .folder2[key]![pos].docId);
-
-                                          Get.back();
-                                          //  _popShowAttachments(context);
-                                        },
-                                        child: Text(controller
-                                            .folder2[key]![indx].fileName!),
-                                      ),
-                                    );
-                                  }),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  }),
-            ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text("Ok"),
-              ),
-            ],
-          );
-        });
-  }
-
-  _popShowAttachments(context) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text("Attachments"),
-            content: SizedBox(
-                height: MediaQuery.of(context).size.height * .7,
-                width: MediaQuery.of(context).size.width * .7,
-                child: SfPdfViewer.network(
-                    'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf')),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text("Ok"),
-              ),
-            ],
-          );
-        });
-  }
-
   final List<_HomeItem> items = List.generate(
     5,
     (i) => _HomeItem(
@@ -1484,17 +1386,16 @@ class DocumentPage extends GetWidget<DocumentController> {
                                               return controller
                                                   .g2gInfoForExportModel!
                                                   .parents!
-                                                  .where((element) => element
-                                                      .parentName!
-                                                      .toLowerCase()
-                                                      .contains(pattern
-                                                          .toLowerCase()));
-
-                                              //  return  await  CitiesService.getSuggestions(pattern);.getSuggestions(pattern);
+                                                  .where(
+                                                (element) => element.parentName!
+                                                    .toLowerCase()
+                                                    .contains(
+                                                      pattern.toLowerCase(),
+                                                    ),
+                                              );
                                             },
                                             itemBuilder: (context, suggestion) {
                                               Parents v = suggestion;
-
                                               return // Te(v.originalName!);
 
                                                   ListTile(

@@ -131,87 +131,88 @@ class InboxPage extends GetWidget<InboxController> {
 
   Widget _filterMail(context) {
     Size size = MediaQuery.of(context).size;
+
+    // return Container(
+    //   color: RedColor,
+    // );
+
     return Row(
       children: [
-        Container(
-          padding: EdgeInsets.only(right: 8, left: 8),
-          child: Center(
-            child: Row(
-              children: [
-                GetBuilder<InboxController>(
-                    autoRemove: false,
-                    builder: (logic) {
-                      return Checkbox(
-                          value: controller.unread,
-                          onChanged: controller.updateUnread);
-                    }),
-                Text("unread".tr,
-                    style: TextStyle(
-                        fontSize: 16, color: Colors.black.withOpacity(.7)))
-              ],
-            ),
+        // Container(
+        //   padding: EdgeInsets.only(right: 8, left: 8),
+        //   child: Center(
+        //     child: Row(
+        //       children: [],
+        //     ),
+        //   ),
+        // ),
+        GetBuilder<InboxController>(
+            autoRemove: false,
+            builder: (logic) {
+              return Checkbox(
+                  value: controller.unread, onChanged: controller.updateUnread);
+            }),
+        Text(
+          "unread".tr,
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.black.withOpacity(.7),
           ),
         ),
         Seperator(),
-        Flexible(
-          child: GetBuilder<InboxController>(
-              autoRemove: false,
-              builder: (logic) {
-                return Container(
-                  // height: 50,
-                  // width: 50,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                          width: 1,
-                          color: Theme.of(context).colorScheme.primary)),
-                  child: Flexible(
-                    child: DropdownButton<UserFilter>(
-                      value: controller.selectUserFilter,
-                      icon: const Icon(Icons.arrow_downward),
-                      hint: Row(
+        GetBuilder<InboxController>(
+            autoRemove: false,
+            builder: (logic) {
+              return Container(
+                // height: 50,
+                // width: 50,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                        width: 1,
+                        color: Theme.of(context).colorScheme.primary)),
+                child: DropdownButton<UserFilter>(
+                  value: controller.selectUserFilter,
+                  icon: const Icon(Icons.arrow_downward),
+                  hint: Row(
+                    children: [
+                      Container(
+                          //width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  image: AssetImage("assets/images/pr.jpg")))),
+                      Text(
+                        "sender".tr,
+                      ),
+                    ],
+                  ),
+                  iconSize: 24,
+                  elevation: 16,
+                  underline: SizedBox(),
+                  onChanged: controller.updateselectUserFilter,
+                  items: controller.userFilter
+                      .map<DropdownMenuItem<UserFilter>>((UserFilter value) {
+                    return DropdownMenuItem<UserFilter>(
+                      value: value,
+                      child: Row(
                         children: [
-                          Container(
-                              //width: 50,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                      image:
-                                          AssetImage("assets/images/pr.jpg")))),
-                          Text(
-                            "sender".tr,
+                          Visibility(
+                            visible: value.isStructure,
+                            child: Container(
+                                width: 50,
+                                height: 50,
+                                child: Icon(Icons.account_balance)),
                           ),
+                          Text(value.name),
                         ],
                       ),
-                      iconSize: 24,
-                      elevation: 16,
-                      underline: SizedBox(),
-                      onChanged: controller.updateselectUserFilter,
-                      items: controller.userFilter
-                          .map<DropdownMenuItem<UserFilter>>(
-                              (UserFilter value) {
-                        return DropdownMenuItem<UserFilter>(
-                          value: value,
-                          child: Row(
-                            children: [
-                              Visibility(
-                                visible: value.isStructure,
-                                child: Container(
-                                    width: 50,
-                                    height: 50,
-                                    child: Icon(Icons.account_balance)),
-                              ),
-                              Text(value.name),
-                            ],
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                );
-              }),
-        ),
+                    );
+                  }).toList(),
+                ),
+              );
+            }),
         Seperator(),
         // Container(
         //   padding: EdgeInsets.only(right: 8, left: 8),
@@ -222,49 +223,46 @@ class InboxPage extends GetWidget<InboxController> {
         // SizedBox(
         //   width: 16,
         // ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            GestureDetector(
-              onTap: () {
-                controller
-                    .setIsUrgentFilterClicked(!controller.isUrgentClicked);
-              },
-              child: Container(
-                width: 160,
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                    color: controller.isUrgentClicked
-                        ? AppColor
-                        : Colors.grey[400],
-                    borderRadius: BorderRadius.circular(8)),
-                child: IntrinsicHeight(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Icon(
-                        Icons.warning,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        "urgent".tr,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline1!
-                            .copyWith(color: Colors.white, fontSize: 16),
-                      ),
-                    ],
+        GestureDetector(
+          onTap: () {
+            controller.setIsUrgentFilterClicked(!controller.isUrgentClicked);
+          },
+          child: Container(
+            width: 160,
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+                color: controller.isUrgentClicked ? AppColor : Colors.grey[400],
+                borderRadius: BorderRadius.circular(8)),
+            child: IntrinsicHeight(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 8,
                   ),
-                ),
+                  Icon(
+                    Icons.warning,
+                    color: Colors.white,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "urgent".tr,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline1!
+                        .copyWith(color: Colors.white, fontSize: 16),
+                  ),
+                ],
               ),
             ),
-          ],
+          ),
+        ),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [],
         ),
         SizedBox(
           width: 16,
@@ -409,7 +407,7 @@ class InboxPage extends GetWidget<InboxController> {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       child: DefaultTabController(
-        length: 3,
+        length: 1,
         child: ContainedTabBarView(
           tabs: [
             Text(
@@ -453,31 +451,61 @@ class InboxPage extends GetWidget<InboxController> {
                               visible:
                                   true, //controller.allCorrespondences.isNotEmpty,
                               child: _filterMail(context)),
-                          Expanded(
-                            child: controller.allCorrespondences.isNotEmpty
-                                ? CustomListView(
-                                    function: controller.onRefresh(),
-                                    correspondences:
-                                        controller.allCorrespondences,
-                                    scrollController:
-                                        controller.scrollController,
-                                    haveMoreData: controller.haveMoreData,
-                                    onClickItem: () {
-                                      //     Get.toNamed("/DocumentPage");
-                                    },
-                                    functionSummary: () {},
-                                    //allCorrespondences: controller.allCorrespondences,
-                                    customActions: controller.customActions,
-                                    functionReply: () {},
-                                    functionTrunsfer: () {},
-                                    functionComplet: () {},
-                                  )
-                                : Center(
-                                    child: Text('noData'.tr,
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            color: Colors.grey.shade500))),
-                          ),
+                          controller.allCorrespondences.isNotEmpty
+                              ? CustomListView(
+                                  function: controller.onRefresh(),
+                                  correspondences:
+                                      controller.allCorrespondences,
+                                  scrollController: controller.scrollController,
+                                  haveMoreData: controller.haveMoreData,
+                                  onClickItem: () {
+                                    //     Get.toNamed("/DocumentPage");
+                                  },
+                                  functionSummary: () {},
+                                  //allCorrespondences: controller.allCorrespondences,
+                                  customActions: controller.customActions,
+                                  functionReply: () {},
+                                  functionTrunsfer: () {},
+                                  functionComplet: () {},
+                                )
+                              : Center(
+                                  child: Text('noData'.tr,
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.grey.shade500))),
+                        ],
+                      )),
+            Center(
+                child: controller.getData
+                    ? const Center(child: CircularProgressIndicator())
+                    : Column(
+                        children: [
+                          Visibility(
+                              visible:
+                                  true, // controller.allCorrespondences.isNotEmpty,
+                              child: _filterMail(context)),
+                          controller.allCorrespondences.isNotEmpty
+                              ? CustomListView(
+                                  function: controller.onRefresh(),
+                                  correspondences:
+                                      controller.allCorrespondences,
+                                  scrollController: controller.scrollController,
+                                  haveMoreData: controller.haveMoreData,
+                                  onClickItem: () {
+                                    Get.toNamed("/DocumentPage");
+                                  },
+                                  functionSummary: () {},
+                                  //allCorrespondences: controller.allCorrespondences,
+                                  customActions: controller.customActions,
+                                  functionReply: () {},
+                                  functionTrunsfer: () {},
+                                  functionComplet: () {},
+                                )
+                              : Center(
+                                  child: Text('noData'.tr,
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.grey.shade500))),
                         ],
                       )),
             Center(
@@ -488,68 +516,30 @@ class InboxPage extends GetWidget<InboxController> {
                           Visibility(
                               visible: controller.allCorrespondences.isNotEmpty,
                               child: _filterMail(context)),
-                          Expanded(
-                            child: controller.allCorrespondences.isNotEmpty
-                                ? CustomListView(
-                                    function: controller.onRefresh(),
-                                    correspondences:
-                                        controller.allCorrespondences,
-                                    scrollController:
-                                        controller.scrollController,
-                                    haveMoreData: controller.haveMoreData,
-                                    onClickItem: () {
-                                      Get.toNamed("/DocumentPage");
-                                    },
-                                    functionSummary: () {},
-                                    //allCorrespondences: controller.allCorrespondences,
-                                    customActions: controller.customActions,
-                                    functionReply: () {},
-                                    functionTrunsfer: () {},
-                                    functionComplet: () {},
-                                  )
-                                : Center(
-                                    child: Text('noData'.tr,
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            color: Colors.grey.shade500))),
-                          ),
-                        ],
-                      )),
-            Center(
-                child: controller.getData
-                    ? const Center(child: CircularProgressIndicator())
-                    : Column(
-                        children: [
-                          Visibility(
-                              visible: controller.allCorrespondences.isNotEmpty,
-                              child: _filterMail(context)),
-                          Expanded(
-                            child: controller.allCorrespondences.isNotEmpty
-                                ? CustomListView(
-                                    function: controller.onRefresh(),
-                                    correspondences:
-                                        controller.allCorrespondences,
-                                    scrollController:
-                                        controller.scrollController,
-                                    haveMoreData: controller.haveMoreData,
-                                    onClickItem: () {
-                                      Get.toNamed("/DocumentPage");
-                                    },
-                                    functionSummary: () {},
-                                    //allCorrespondences: [],
-                                    customActions: [],
-                                    functionReply: () {},
-                                    functionTrunsfer: () {},
-                                    functionComplet: () {},
-                                  )
-                                : Center(
-                                    child: Text(
-                                    'noData'.tr,
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.grey.shade500),
-                                  )),
-                          ),
+                          controller.allCorrespondences.isNotEmpty
+                              ? CustomListView(
+                                  function: controller.onRefresh(),
+                                  correspondences:
+                                      controller.allCorrespondences,
+                                  scrollController: controller.scrollController,
+                                  haveMoreData: controller.haveMoreData,
+                                  onClickItem: () {
+                                    Get.toNamed("/DocumentPage");
+                                  },
+                                  functionSummary: () {},
+                                  //allCorrespondences: [],
+                                  customActions: [],
+                                  functionReply: () {},
+                                  functionTrunsfer: () {},
+                                  functionComplet: () {},
+                                )
+                              : Center(
+                                  child: Text(
+                                  'noData'.tr,
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.grey.shade500),
+                                )),
                         ],
                       )),
           ],

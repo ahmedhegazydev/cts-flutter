@@ -108,7 +108,7 @@ class _PDFViewState extends State<PDFView> {
     if (pages.isEmpty) {
       return Container(
         child: CircularProgressIndicator.adaptive(),
-        color: Colors.red[200],
+        color: Colors.grey[100],
       );
     } else {
       // return SingleChildScrollView(
@@ -178,7 +178,7 @@ class PDFColumn extends StatelessWidget {
                   child: SizedBox(
                     // width: size.width,
                     child: Container(
-                      color: Colors.pink,
+                      //  color: Colors.pink,
                       child: PageContainer(
                         image: Image.memory(
                           pages[index].bytes,

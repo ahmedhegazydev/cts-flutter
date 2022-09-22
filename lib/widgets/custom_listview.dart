@@ -811,88 +811,88 @@ class CustomListView extends GetView<InboxController> {
                                                   context);
                                               await Get.find<InboxController>()
                                                   .getFetchBasketList(
-                                                      context: context);
+                                                      context: null);
                                               print(
                                                   "Get.find<InboxController>().getFetchBasketList()");
-                                              showDialog(
-                                                context: context,
-                                                builder: (ctx) => AlertDialog(
-                                                  title: Text(" "),
-                                                  content: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Container(
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            .3,
-                                                        color: Colors.grey[200],
-                                                        child: ListView.builder(
-                                                            itemCount: Get.find<
-                                                                    InboxController>()
-                                                                .fetchBasketListModel
-                                                                ?.baskets
-                                                                ?.length,
-                                                            itemBuilder:
-                                                                (context, pos) {
-                                                              return InkWell(
-                                                                onTap:
-                                                                    () async {
-                                                                  Get.find<
-                                                                          InboxController>()
-                                                                      .listSelectCorrespondences
-                                                                      .add(int.parse(
-                                                                          correspondences[pos]
-                                                                              .correspondenceId!));
-
-                                                                  await Get.find<InboxController>().addDocumentsToBasket(
-                                                                      context:
-                                                                          context,
-                                                                      basketId: Get.find<
-                                                                              InboxController>()
-                                                                          .fetchBasketListModel
-                                                                          ?.baskets?[
-                                                                              pos]
-                                                                          .iD);
-                                                                  Get.back();
-                                                                },
-                                                                child: Card(
-                                                                  elevation: 10,
-                                                                  color: Get.find<
-                                                                          InboxController>()
-                                                                      .fetchBasketListModel
-                                                                      ?.baskets?[
-                                                                          pos]
-                                                                      .color
-                                                                      ?.toColor(),
-                                                                  child: Column(
-                                                                      children: [
-                                                                        Text(Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].name ??
-                                                                            ""),
-                                                                        Text(Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].nameAr ??
-                                                                            ""),
-                                                                        Text(
-                                                                            "color :${Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].color}")
-                                                                      ]),
-                                                                ),
-                                                              );
-                                                            })),
-                                                  ),
-                                                  actions: <Widget>[
-                                                    TextButton(
-                                                      onPressed: () async {
-                                                        /// ToDo send Replay
-                                                        print(
-                                                            "77777777777777777777777777777777777777777777777777");
-                                                        Navigator.of(ctx).pop();
-                                                      },
-                                                      child: Text("Ok"),
-                                                    ),
-                                                  ],
-                                                ),
-                                              );
+                                              // showDialog(
+                                              //   context: context,
+                                              //   builder: (ctx) => AlertDialog(
+                                              //     title: Text(" "),
+                                              //     content: Padding(
+                                              //       padding:
+                                              //           const EdgeInsets.all(
+                                              //               8.0),
+                                              //       child: Container(
+                                              //           width: MediaQuery.of(
+                                              //                       context)
+                                              //                   .size
+                                              //                   .width *
+                                              //               .3,
+                                              //           color: Colors.grey[200],
+                                              //           child: ListView.builder(
+                                              //               itemCount: Get.find<
+                                              //                       InboxController>()
+                                              //                   .fetchBasketListModel
+                                              //                   ?.baskets
+                                              //                   ?.length,
+                                              //               itemBuilder:
+                                              //                   (context, pos) {
+                                              //                 return InkWell(
+                                              //                   onTap:
+                                              //                       () async {
+                                              //                     Get.find<
+                                              //                             InboxController>()
+                                              //                         .listSelectCorrespondences
+                                              //                         .add(int.parse(
+                                              //                             correspondences[pos]
+                                              //                                 .correspondenceId!));
+                                              //
+                                              //                     await Get.find<InboxController>().addDocumentsToBasket(
+                                              //                         context:
+                                              //                             context,
+                                              //                         basketId: Get.find<
+                                              //                                 InboxController>()
+                                              //                             .fetchBasketListModel
+                                              //                             ?.baskets?[
+                                              //                                 pos]
+                                              //                             .iD);
+                                              //                     Get.back();
+                                              //                   },
+                                              //                   child: Card(
+                                              //                     elevation: 10,
+                                              //                     color: Get.find<
+                                              //                             InboxController>()
+                                              //                         .fetchBasketListModel
+                                              //                         ?.baskets?[
+                                              //                             pos]
+                                              //                         .color
+                                              //                         ?.toColor(),
+                                              //                     child: Column(
+                                              //                         children: [
+                                              //                           Text(Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].name ??
+                                              //                               ""),
+                                              //                           Text(Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].nameAr ??
+                                              //                               ""),
+                                              //                           Text(
+                                              //                               "color :${Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].color}")
+                                              //                         ]),
+                                              //                   ),
+                                              //                 );
+                                              //               })),
+                                              //     ),
+                                              //     actions: <Widget>[
+                                              //       TextButton(
+                                              //         onPressed: () async {
+                                              //           /// ToDo send Replay
+                                              //           print(
+                                              //               "77777777777777777777777777777777777777777777777777");
+                                              //           Navigator.of(ctx).pop();
+                                              //         },
+                                              //         child: Text("Ok"),
+                                              //       ),
+                                              //     ],
+                                              //   ),
+                                              // );
                                             }
                                           }),
                                 ],
@@ -1466,17 +1466,13 @@ class CustomListView extends GetView<InboxController> {
                                 print(basket.iD);
                               }
                                   : null,
-                              onTap: () {
-                                Get.find<InboxController>().clearFilter();
-                                Get.find<InboxController>().isAllOrNot = true;
-                                Get.find<InboxController>().getBasketInbox(
-                                  context: context,
-                                  id: basket.iD!,
-                                );
-                                Get.find<InboxController>().selectUserFilter =
-                                null;
-                                Get.find<InboxController>().userFilter.clear();
-                                Get.toNamed("/InboxPage");
+                              onTap: () async{
+          await Get.find<InboxController>().addDocumentsToBasket(
+          context:
+          context,
+          basketId: basket.iD);
+
+
                               },
                               //: null,
                               //  enabled: !(basket.canBeReOrder ?? false),

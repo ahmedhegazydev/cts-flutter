@@ -824,88 +824,91 @@ class CustomListView extends GetView<InboxController> {
                                                 //correspondences[pos].
 
                                               } else if (v == 5) {
+                                                // await showAllBasketsDialog(
+                                                //     context);
+                                                // await Get.find<
+                                                //         InboxController>()
+                                                //     .getFetchBasketList(
+                                                //         context: context);
+                                                // print(
+                                                //     "Get.find<InboxController>().getFetchBasketList()");
+                                                // showDialog(
+                                                //   context: context,
+                                                //   builder: (ctx) => AlertDialog(
+                                                //     title: Text(" "),
+                                                //     content: Padding(
+                                                //       padding:
+                                                //           const EdgeInsets.all(
+                                                //               8.0),
+                                                //       child: Container(
+                                                //           width: MediaQuery.of(
+                                                //                       context)
+                                                //                   .size
+                                                //                   .width *
+                                                //               .3,
+                                                //           color:
+                                                //               Colors.grey[200],
+                                                //           child:
+                                                //               ListView.builder(
+                                                //                   itemCount: Get
+                                                //                           .find<
+                                                //                               InboxController>()
+                                                //                       .fetchBasketListModel
+                                                //                       ?.baskets
+                                                //                       ?.length,
+                                                //                   itemBuilder:
+                                                //                       (context,
+                                                //                           pos) {
+                                                //                     return InkWell(
+                                                //                       onTap:
+                                                //                           () async {
+                                                //                         Get.find<InboxController>()
+                                                //                             .listSelectCorrespondences
+                                                //                             .add(int.parse(correspondences[pos].correspondenceId!));
+
+                                                //                         await Get.find<InboxController>().addDocumentsToBasket(
+                                                //                             context:
+                                                //                                 context,
+                                                //                             basketId:
+                                                //                                 Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].iD);
+                                                //                         Get.back();
+                                                //                       },
+                                                //                       child:
+                                                //                           Card(
+                                                //                         elevation:
+                                                //                             10,
+                                                //                         color: Get.find<InboxController>()
+                                                //                             .fetchBasketListModel
+                                                //                             ?.baskets?[pos]
+                                                //                             .color
+                                                //                             ?.toColor(),
+                                                //                         child: Column(
+                                                //                             children: [
+                                                //                               Text(Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].name ?? ""),
+                                                //                               Text(Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].nameAr ?? ""),
+                                                //                               Text("color :${Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].color}")
+                                                //                             ]),
+                                                //                       ),
+                                                //                     );
+                                                //                   })),
+                                                //     ),
+                                                //     actions: <Widget>[
+                                                //       TextButton(
+                                                //         onPressed: () async {
+                                                //           /// ToDo send Replay
+                                                //           print(
+                                                //               "77777777777777777777777777777777777777777777777777");
+                                                //           Navigator.of(ctx)
+                                                //               .pop();
+                                                //         },
+                                                //         child: Text("Ok"),
+                                                //       ),
+                                                //     ],
+                                                //   ),
+                                                // );
+
                                                 await showAllBasketsDialog(
                                                     context);
-                                                await Get.find<
-                                                        InboxController>()
-                                                    .getFetchBasketList(
-                                                        context: context);
-                                                print(
-                                                    "Get.find<InboxController>().getFetchBasketList()");
-                                                showDialog(
-                                                  context: context,
-                                                  builder: (ctx) => AlertDialog(
-                                                    title: Text(" "),
-                                                    content: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: Container(
-                                                          width: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              .3,
-                                                          color:
-                                                              Colors.grey[200],
-                                                          child:
-                                                              ListView.builder(
-                                                                  itemCount: Get
-                                                                          .find<
-                                                                              InboxController>()
-                                                                      .fetchBasketListModel
-                                                                      ?.baskets
-                                                                      ?.length,
-                                                                  itemBuilder:
-                                                                      (context,
-                                                                          pos) {
-                                                                    return InkWell(
-                                                                      onTap:
-                                                                          () async {
-                                                                        Get.find<InboxController>()
-                                                                            .listSelectCorrespondences
-                                                                            .add(int.parse(correspondences[pos].correspondenceId!));
-
-                                                                        await Get.find<InboxController>().addDocumentsToBasket(
-                                                                            context:
-                                                                                context,
-                                                                            basketId:
-                                                                                Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].iD);
-                                                                        Get.back();
-                                                                      },
-                                                                      child:
-                                                                          Card(
-                                                                        elevation:
-                                                                            10,
-                                                                        color: Get.find<InboxController>()
-                                                                            .fetchBasketListModel
-                                                                            ?.baskets?[pos]
-                                                                            .color
-                                                                            ?.toColor(),
-                                                                        child: Column(
-                                                                            children: [
-                                                                              Text(Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].name ?? ""),
-                                                                              Text(Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].nameAr ?? ""),
-                                                                              Text("color :${Get.find<InboxController>().fetchBasketListModel?.baskets?[pos].color}")
-                                                                            ]),
-                                                                      ),
-                                                                    );
-                                                                  })),
-                                                    ),
-                                                    actions: <Widget>[
-                                                      TextButton(
-                                                        onPressed: () async {
-                                                          /// ToDo send Replay
-                                                          print(
-                                                              "77777777777777777777777777777777777777777777777777");
-                                                          Navigator.of(ctx)
-                                                              .pop();
-                                                        },
-                                                        child: Text("Ok"),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                );
                                               }
                                             }),
                                   ],
@@ -932,7 +935,7 @@ class CustomListView extends GetView<InboxController> {
           ),
         ),
       ),
-      ),
+      // ),
     );
   }
 
@@ -1438,9 +1441,6 @@ class CustomListView extends GetView<InboxController> {
     );
   }
 
-
-
-
   Future<void> showAllBasketsDialog(BuildContext context) async {
     u.showLoaderDialog(context);
     await inboxController.getFetchBasketList(context: context);
@@ -1469,7 +1469,7 @@ class CustomListView extends GetView<InboxController> {
                       //    padding: const EdgeInsets.symmetric(horizontal: 40),
                       children: <Widget>[
                         for (final basket
-                        in inboxController.fetchBasketListModel!.baskets!)
+                            in inboxController.fetchBasketListModel!.baskets!)
                           Card(
                             key: ValueKey(basket),
                             child: ListTile(
@@ -1479,8 +1479,8 @@ class CustomListView extends GetView<InboxController> {
 
                               onLongPress: !(basket.canBeReOrder ?? false)
                                   ? () {
-                                print(basket.iD);
-                              }
+                                      print(basket.iD);
+                                    }
                                   : null,
                               onTap: () {
                                 Get.find<InboxController>().clearFilter();
@@ -1490,7 +1490,7 @@ class CustomListView extends GetView<InboxController> {
                                   id: basket.iD!,
                                 );
                                 Get.find<InboxController>().selectUserFilter =
-                                null;
+                                    null;
                                 Get.find<InboxController>().userFilter.clear();
                                 Get.toNamed("/InboxPage");
                               },
@@ -1504,18 +1504,18 @@ class CustomListView extends GetView<InboxController> {
                               ),
                               trailing: (basket.canBeReOrder ?? false)
                                   ? IconButton(
-                                icon: Icon(
-                                  Icons.delete_outline,
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .headline2
-                                      ?.color,
-                                ),
-                                onPressed: () {
-                                  _showMyDialogDeleteConfirm(
-                                      context, basket);
-                                },
-                              )
+                                      icon: Icon(
+                                        Icons.delete_outline,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .headline2
+                                            ?.color,
+                                      ),
+                                      onPressed: () {
+                                        _showMyDialogDeleteConfirm(
+                                            context, basket);
+                                      },
+                                    )
                                   : null,
 
                               visualDensity: VisualDensity.comfortable,
@@ -1548,13 +1548,13 @@ class CustomListView extends GetView<InboxController> {
                         controller.setSavingOrder(true);
                         print("onReorderEnd = $index");
                         if (inboxController.fetchBasketListModel!
-                            .baskets![index].canBeReOrder ==
+                                .baskets![index].canBeReOrder ==
                             false) {
                           showTopSnackBar(
                             context,
                             CustomSnackBar.error(
                               message:
-                              "${inboxController.fetchBasketListModel!.baskets![index].name} canBeReOrder = false",
+                                  "${inboxController.fetchBasketListModel!.baskets![index].name} canBeReOrder = false",
                             ),
                           );
                         } else {
@@ -1605,30 +1605,6 @@ class CustomListView extends GetView<InboxController> {
       ),
     );
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   Widget buildHorizontalListViewCircleColors(BuildContext context) {
     List<Color> colorArray = [

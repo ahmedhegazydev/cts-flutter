@@ -1,16 +1,12 @@
 import 'dart:convert';
 import 'dart:typed_data';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:internet_file/internet_file.dart';
 import 'package:pdfx/pdfx.dart';
 //import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 import '../controllers/document_controller.dart';
 import '../utility/utilitie.dart';
-import './MoveableStackItem.dart';
 import './controllers/viewerController.dart';
 import './pageContainer.dart';
 import './static/AnnotationTypes.dart';
@@ -103,12 +99,6 @@ class _PDFViewState extends State<PDFView> {
     return pages;
   }
 
-  //final ViewerController c = Get.find();
-  // double screenWidthViewer = 300;
-
-  // double screenHeightViewer = 300;
-
-  // final double screenWidth;
   List<Widget> movableItems = [];
 
   void _showAction(BuildContext context, int index) {
@@ -125,31 +115,6 @@ class _PDFViewState extends State<PDFView> {
         break;
     }
     ViewerController.to.prepareToAddAnnotationOnTap(annotation);
-    // showDialog<void>(
-    //   context: context,
-    //   builder: (context) {
-    //     return AlertDialog(
-    //       content: Text(_actionTitles[index]),
-    //       actions: [
-    //         TextButton(
-    //           onPressed: () => Navigator.of(context).pop(),
-    //           child: const Text('CLOSE'),
-    //         ),
-    //       ],
-    //     );
-    //   },
-    // );
-  }
-
-  void _onItemTapped(int index) {
-    // setState(() {
-    ViewerController.to.selectedActionIndex.value = index;
-    if (index == 1) {
-      ViewerController.to.setEditable(true);
-    } else {
-      ViewerController.to.setEditable(false);
-    }
-    // });
   }
 
   // Size myChildSize = Size.zero;

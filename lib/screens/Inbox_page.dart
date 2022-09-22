@@ -1,13 +1,19 @@
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../controllers/inbox_controller.dart';
 import '../controllers/landing_page_controller.dart';
+import '../controllers/my_cart/create_basket_controller.dart';
+import '../services/json_model/basket/fetch_basket_list_model.dart';
 import '../utility/all_const.dart';
 import '../utility/storage.dart';
 import '../utility/utilitie.dart';
+import '../widgets/custom_button.dart';
 import '../widgets/custom_listview.dart';
-
+import '../utility/utilitie.dart' as u;
+import 'package:cts/utility/Extenstions.dart';
 class InboxPage extends GetWidget<InboxController> {
   SecureStorage secureStorage = Get.put(SecureStorage());
 
@@ -769,6 +775,484 @@ class InboxPage extends GetWidget<InboxController> {
         ),
       ),
     );
+  }
+
+
+
+
+  Future<void> showAllBasketsDialog(BuildContext context) async {
+    u.showLoaderDialog(context);
+    await controller.getFetchBasketList(context: context);
+    showBasketView(context);
+  }
+
+  Future<dynamic> showBasketView(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(
+          "Basket".tr,
+        ),
+        content: Padding(
+          padding: const EdgeInsets.all(2.0),
+          child: Container(
+            width: MediaQuery.of(context).size.width * .6,
+            height: MediaQuery.of(context).size.height * .6,
+            // color: Colors.grey[200],
+            child: Column(
+              children: [
+                GetBuilder<LandingPageController>(builder: (logic) {
+                  return Expanded(
+                    child: ReorderableListView(
+                      buildDefaultDragHandles: true,
+                      //    padding: const EdgeInsets.symmetric(horizontal: 40),
+                      children: <Widget>[
+                        for (final basket
+                        in controller.fetchBasketListModel!.baskets!)
+                          Card(
+                            key: ValueKey(basket),
+                            child: ListTile(
+                              contentPadding: EdgeInsets.all(8),
+                              dense: false,
+                              // shape: ,
+
+                              onLongPress: !(basket.canBeReOrder ?? false)
+                                  ? () {
+                                print(basket.iD);
+                              }
+                                  : null,
+                              onTap: () {
+                                Get.find<InboxController>().clearFilter();
+                                Get.find<InboxController>().isAllOrNot = true;
+                                Get.find<InboxController>().getBasketInbox(
+                                  context: context,
+                                  id: basket.iD!,
+                                );
+                                Get.find<InboxController>().selectUserFilter =
+                                null;
+                                Get.find<InboxController>().userFilter.clear();
+                                Get.toNamed("/InboxPage");
+                              },
+                              //: null,
+                              //  enabled: !(basket.canBeReOrder ?? false),
+                              enableFeedback: !(basket.canBeReOrder ?? false),
+                              leading: Icon(
+                                Icons.wallet,
+                                color: basket.color?.toColor(),
+                                size: 50,
+                              ),
+                              trailing: (basket.canBeReOrder ?? false)
+                                  ? IconButton(
+                                icon: Icon(
+                                  Icons.delete_outline,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .headline2
+                                      ?.color,
+                                ),
+                                onPressed: () {
+                                  _showMyDialogDeleteConfirm(
+                                      context, basket);
+                                },
+                              )
+                                  : null,
+
+                              visualDensity: VisualDensity.comfortable,
+                              title: Text(
+                                basket.nameAr ?? "",
+                                style: Theme.of(context).textTheme.headline1,
+                              ),
+                              //    subtitle: Text(basket.nameAr ?? ""),
+                              style: ListTileStyle.list,
+                            ),
+                          ),
+                      ],
+                      onReorder: (int oldIndex, int newIndex) {
+                        print("onReorder = $oldIndex - $newIndex");
+                        if (oldIndex < newIndex) {
+                          newIndex -= 1;
+                        }
+                        final Baskets item = controller
+                            .fetchBasketListModel!.baskets!
+                            .removeAt(oldIndex);
+                        controller.fetchBasketListModel!.baskets!
+                            .insert(newIndex, item);
+                      },
+                      onReorderStart: (int index) {
+                        //0-1-2-....
+                        print("onReorderStart = $index");
+                        controller.setOldIndex(index);
+                      },
+                      onReorderEnd: (int index) {
+                        controller.setSavingOrder(true);
+                        print("onReorderEnd = $index");
+                        if (controller.fetchBasketListModel!
+                            .baskets![index].canBeReOrder ==
+                            false) {
+                          showTopSnackBar(
+                            context,
+                            CustomSnackBar.error(
+                              message:
+                              "${controller.fetchBasketListModel!.baskets![index].name} canBeReOrder = false",
+                            ),
+                          );
+                        } else {
+                          if (controller.oldIndex != index) {
+                            u.showLoaderDialog(context);
+                            print(
+                                controller.fetchBasketListModel?.toJson());
+                            controller.reOrderBaskets(
+                                context: context,
+                                baskets: controller
+                                    .fetchBasketListModel!.baskets);
+                          }
+                        }
+                      },
+                    ),
+                  );
+                }),
+              ],
+            ),
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () async {
+              Navigator.of(ctx).pop();
+            },
+            child: Text("Ok".tr),
+          ),
+          // Visibility(
+          //     visible: controller.isSavingOrder,
+          //     child: FlatButton(
+          //       onPressed: () async {
+          //         // Navigator.of(ctx).pop();
+          //         // Get.to(BasketPage());
+          //       },
+          //       child: Text("Save Order"),
+          //     )),
+          TextButton(
+            onPressed: () async {
+              //هنا هنكريت الباسكت
+
+              showInputDialog(
+                  context, 'CreateNewBasket'.tr, 'default inpit', 'message');
+            },
+            child: Text("new Basket".tr),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+  Future<void> _showMyDialogDeleteConfirm(
+      BuildContext context, Baskets basket) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          // title: Text('AlertDialog Title'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Text('SureToDelete'.tr),
+                // Text('Would you like to confirm this message?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Confirm'.tr),
+              onPressed: () {
+                u.showLoaderDialog(context);
+                controller.removeBasket(
+                  context: context,
+                  basketId: basket.iD,
+                  onSuccess: (String message) {
+                    // Navigator.pop(context);
+                    // Get.back();
+                    // showAllBasketsDialog(context);
+                    return null;
+                  },
+                );
+                controller.fetchBasketListModel!.baskets?.remove(basket);
+                controller.update();
+                print('Confirmed');
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Cancel'.tr),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+  Future<String?> showInputDialog(
+      BuildContext context, String title, String defaultInput, String message) {
+    var textController = TextEditingController(text: defaultInput);
+    var content = Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Form(
+            child: Column(
+              children: [
+                Container(
+                  // padding: EdgeInsets.only(right: 10, left: 10),
+                  padding: EdgeInsets.all(10),
+                  child: Container(
+                      padding: EdgeInsets.only(right: 8, left: 8),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Theme.of(context).colorScheme.primary),
+                          borderRadius: const BorderRadius.all(Radius.circular(6))),
+                      child: TextField(
+                        controller: controller.textEditingControllerEnglishName,
+                        decoration: InputDecoration(
+                          border: UnderlineInputBorder(),
+                          labelText: "english_name".tr,
+                        ),
+                      )),
+                ),
+                Container(
+                  // padding: EdgeInsets.only(right: 10, left: 10),
+                  padding: EdgeInsets.all(10),
+                  child: Container(
+                      padding: EdgeInsets.only(right: 8, left: 8),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Theme.of(context).colorScheme.primary),
+                          borderRadius: const BorderRadius.all(Radius.circular(6))),
+                      child: TextField(
+                        controller: controller.textEditingControllerArabicName,
+                        decoration: InputDecoration(
+                          border: UnderlineInputBorder(),
+                          labelText: "arabic_name".tr,
+                        ),
+                      )),
+                ),
+                Container(
+                  padding: EdgeInsets.only(right: 10, left: 10),
+                  width: MediaQuery.of(context).size.width * .3,
+                  child: ElevatedButton(
+                      onPressed: () {
+                        // inboxController.applyFilter();
+                        // Navigator.pop(context);
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: Text(
+                                "pick your Color".tr,
+                              ),
+                              content: Container(
+                                width: MediaQuery.of(context).size.width * .3,
+                                height: MediaQuery.of(context).size.height * .5,
+                                child: Column(children: [
+                                  buildHorizontalListViewCircleColors(context),
+
+                                  // ColorPicker(
+                                  //   pickerColor:
+                                  //       Get.find<CreateBasketController>()
+                                  //           .pickerColor,
+                                  //   onColorChanged: (Color color) {
+                                  //     Get.find<CreateBasketController>()
+                                  //         .setPickerColor(color);
+                                  //   },
+                                  // ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.only(
+                                  //       top: 8.0, bottom: 8, right: 20, left: 20),
+                                  //   child: Row(children: []),
+                                  // ),
+                                  // Container(
+                                  //   width: MediaQuery.of(context).size.width * .7,
+                                  //   padding: const EdgeInsets.only(
+                                  //       left: 0, right: 0, top: 0, bottom: 0),
+                                  //   height: 60,
+                                  //   decoration: BoxDecoration(
+                                  //       color:
+                                  //       Theme.of(context).colorScheme.primary,
+                                  //       borderRadius: const BorderRadius.all(
+                                  //           Radius.circular(6))),
+                                  //   child: ElevatedButton(
+                                  //       onPressed: () {
+                                  //         // Get.find<SecureStorage>().writeSecureData(
+                                  //         //     AllStringConst.AppColor,
+                                  //         //     Get.find<MController>().appcolor.value);
+                                  //         Navigator.of(context).pop();
+                                  //       },
+                                  //       child: GestureDetector(
+                                  //         onTap: () {},
+                                  //         child: Text(
+                                  //           "save".tr,
+                                  //           textAlign: TextAlign.center,
+                                  //         ),
+                                  //       )),
+                                  // )
+                                ]),
+                              ),
+                            ));
+                      },
+                      child: GetBuilder<CreateBasketController>(
+                        init: CreateBasketController(),
+                        builder: (_) {
+                          return Text("pick your Color".tr,
+                              style: TextStyle(
+                                // backgroundColor: _.pickerColor,
+                                  color: _.pickerColor));
+                        },
+                      )),
+                ),
+                Container(
+                  height: 40,
+                  padding: EdgeInsets.only(right: 10, left: 10),
+                  width: MediaQuery.of(context).size.width * .3,
+                  child: CustomButton(
+                      name: 'register'.tr,
+                      onPressed: () {
+                        //filter max
+
+                        u.showLoaderDialog(context);
+                        // controller.createNewBasket();
+
+                        var basket = Baskets(
+                            color: Get.find<CreateBasketController>()
+                                .pickerColor
+                                .toHex(),
+                            canBeReOrder: true,
+                            orderBy: 0,
+                            nameAr: controller.textEditingControllerArabicName.text,
+                            name: controller.textEditingControllerEnglishName.text);
+                        controller.fetchBasketListModel!.baskets?.add(basket);
+
+                        controller.addEditBasket(context: context, basket: basket);
+                      }),
+                ),
+              ],
+              // ),
+              // );
+              // }
+            ))
+      ],
+    );
+    // var content = CreateNewBasket();
+
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        var mediaQuery = MediaQuery.of(context);
+
+        return AnimatedContainer(
+          padding: mediaQuery.padding,
+          duration: const Duration(milliseconds: 300),
+          child: AlertDialog(
+            title: Text(title),
+            content: content,
+            scrollable: true,
+          ),
+        );
+      },
+    );
+  }
+
+  Widget buildHorizontalListViewCircleColors(BuildContext context) {
+    List<Color> colorArray = [
+      Color(0xFFFF6633),
+      Color(0xFFFFB399),
+      Color(0xFFFF33FF),
+      Color(0xFFFFFF99),
+      Color(0xFF00B3E6),
+      Color(0xFFE6B333),
+      Color(0xFF3366E6),
+      Color(0xFF999966),
+      Color(0xFF99FF99),
+      Color(0xFFB34D4D),
+      Color(0xFF80B300),
+      Color(0xFF809900),
+      Color(0xFFE6B3B3),
+      Color(0xFF6680B3),
+      Color(0xFF66991A),
+      Color(0xFFFF99E6),
+      Color(0xFFCCFF1A),
+      Color(0xFFFF1A66),
+      Color(0xFFE6331A),
+      Color(0xFF33FFCC),
+      Color(0xFF66994D),
+      Color(0xFFB366CC),
+      Color(0xFF4D8000),
+      Color(0xFFB33300),
+      Color(0xFFCC80CC),
+      Color(0xFF66664D),
+      Color(0xFF991AFF),
+      Color(0xFFE666FF),
+      Color(0xFF4DB3FF),
+      Color(0xFF1AB399),
+      Color(0xFFE666B3),
+      Color(0xFF33991A),
+      Color(0xFFCC9999),
+      Color(0xFFB3B31A),
+      Color(0xFF00E680),
+      Color(0xFF4D8066),
+      Color(0xFF809980),
+      Color(0xFFE6FF80),
+      Color(0xFF1AFF33),
+      Color(0xFF999933),
+      Color(0xFFFF3380),
+      Color(0xFFCCCC00),
+      Color(0xFF66E64D),
+      Color(0xFF4D80CC),
+      Color(0xFF9900B3),
+      Color(0xFFE64D66),
+      Color(0xFF4DB380),
+      Color(0xFFFF4D4D),
+      Color(0xFF99E6E6),
+      Color(0xFF6666FF)
+    ];
+    return Container(
+        width: MediaQuery.of(context).size.width * .3,
+        height: MediaQuery.of(context).size.height * .5,
+        // height: 100,
+        child:
+        // ListView(
+        //   scrollDirection: Axis.horizontal,
+        //   children: <Widget>[
+        //     Container(
+        //       width: 60,
+        //       height: 60,
+        //       // child: Icon(CustomIcons.option, size: 20,),
+        //       decoration: BoxDecoration(
+        //           shape: BoxShape.circle,
+        //           color: Color(0xFFe0f2f1)),
+        //     ),
+        //
+        //   ],
+        // ),
+        GridView.builder(
+          gridDelegate:
+          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 6),
+          itemBuilder: (_, index) => Center(
+              child: GestureDetector(
+                child: Container(
+                  width: 60,
+                  height: 60,
+                  // child: Icon(CustomIcons.option, size: 20,),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, color: colorArray[index]),
+                ),
+                onTap: () {
+                  var selectedColor = colorArray[index];
+                  Get.find<CreateBasketController>().setPickerColor(selectedColor);
+                  Navigator.pop(context);
+                },
+              )),
+          itemCount: colorArray.length,
+        ));
   }
 }
 

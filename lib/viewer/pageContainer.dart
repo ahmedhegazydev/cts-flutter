@@ -8,20 +8,10 @@ class PageContainer extends StatelessWidget {
     Key? key,
     required this.image,
     required this.pageNumber,
-    // required this.width,
-    // required this.height,
-    // required this.screenHeight,
-    // required this.screenWidth,
   }) : super(key: key);
 
-  // final List<Widget> movableItems;
-  // final double width;
-  // final double height;
-  final MemoryImage image;
+  final Image image;
   final int pageNumber;
-
-  // final double screenWidth;
-  // final double screenHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -31,91 +21,58 @@ class PageContainer extends StatelessWidget {
       velocityRange: 4.0,
     );
 
-    //final signature =
-    // return Container(
-    //   color: Colors.red,
-    //   // child: HandSignature(
-    //   //   control: control,
-    //   //   color: Colors.blueGrey,
-    //   //   width: 1.0,
-    //   //   maxWidth: 10.0,
-    //   //   type: SignatureDrawType.shape,
-    //   // ),
-    // );
     final theme = Theme.of(context);
-    return GetX<ViewerController>(
-        builder: (s) => GestureDetector(
-              onTapDown: (details) {},
-              onTapCancel: () {
-                print("Cancel tap");
-              },
-              onTapUp: (details) {
-                if (ViewerController.to.checkIfAddingAnnotation()) {
-                  var x = details.localPosition.dx;
-                  var y = details.localPosition.dy;
-                  ViewerController.to
-                      .creatAndAddAnnotationOnTap(120, 60, x, y, pageNumber);
-                }
-              },
-              child: SizedBox(
-                width: s.screenWidth.value,
-                height: s.screenHeight.value,
-                child: Stack(children: [
-                  //  SizedBox(
-                  //    child:
-                  Image(
-                    image: image,
-                  ),
-                  //  ),
-                  GetX<ViewerController>(
-                    builder: (s) => Stack(
-                      children: s.annotations[pageNumber],
-                    ),
-                  ),
-                  GetX<ViewerController>(
-                    builder: (s) => s.selectedActionIndex.value == 99
-                        ? HandSignature(
-                            control: control,
-                            color: Colors.blue,
-                            width: 1.0,
-                            maxWidth: 5.0,
-                            type: SignatureDrawType.arc,
-                            onPointerDown: () {
-                              print("pt down");
-                            },
-                            onPointerUp: () {
-                              // ExportCanvasToImage(control);
-                            },
-                            viewWidth: s.screenWidth.value,
-                            viewHeight: s.screenHeight.value,
-                          )
-                        : Container(),
-                  ),
-                  GetX<ViewerController>(
-                    builder: (s) => s.selectedActionIndex.value == 99
-                        ? Material(
-                            shape: const CircleBorder(),
-                            clipBehavior: Clip.antiAlias,
-                            color: theme.colorScheme.secondary,
-                            elevation: 4.0,
-                            child: IconButton(
-                              onPressed: () {
-                                ExportCanvasToImage(control);
-                              },
-                              icon: Icon(
-                                Icons.save,
-                                // color: Colors.black,
-                                //size: 32,
-                              ),
-                            ),
-                            //  color: theme.colorScheme.onSecondary,
-                          )
-                        : const Text(""),
-                  ),
-                ]),
-              ),
-            ));
+    return GetX<ViewerController>(builder: (s) => buildPage(s, control, theme));
     //  return
+  }
+
+  Widget buildPage(
+      ViewerController s, HandSignatureControl control, ThemeData theme) {
+    // return SizedBox(
+    //   width: s.screenWidth.value,
+    //   height: s.screenHeight.value,
+    //   child: image,
+    // );
+    // return SizedBox(
+    //   width: s.screenWidth.value,
+    //   height: s.screenHeight.value,
+    //   child: Stack(children: [
+    //     image,
+    //     // ...s.annotations[pageNumber],
+    //     // GetX<ViewerController>(
+    //     //   builder: (s) => Stack(
+    //     //     children: s.annotations[pageNumber],
+    //     //   ),
+    //     // ),
+    //   ]),
+    // );
+    return GestureDetector(
+      onTapDown: (details) {},
+      onTapCancel: () {
+        print("Cancel tap");
+      },
+      onTapUp: (details) {
+        if (ViewerController.to.checkIfAddingAnnotation()) {
+          var x = details.localPosition.dx;
+          var y = details.localPosition.dy;
+          ViewerController.to
+              .creatAndAddAnnotationOnTap(120, 60, x, y, pageNumber);
+        }
+      },
+      child: SizedBox(
+        width: s.screenWidth.value,
+        height: s.screenHeight.value,
+        child: Stack(children: [
+          image,
+          ...s.annotations[pageNumber],
+          // GetX<ViewerController>(
+          //   builder: (s) => Stack(
+          //     children: s.annotations[pageNumber],
+          //   ),
+          // ),
+        ]),
+      ),
+    );
   }
 
   void ExportCanvasToImage(HandSignatureControl control) {

@@ -2,22 +2,17 @@ import 'package:cts/data/SettingsFields.dart';
 import 'package:cts/utility/Extenstions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get.dart';
 
 import '../controllers/login_controller.dart';
 import '../controllers/main_controller.dart';
 import '../db/cts_database.dart';
-import '../main.dart';
-import '../utility/all_const.dart';
 import '../utility/all_string_const.dart';
-import '../utility/device_size.dart';
 import '../utility/storage.dart';
 import '../utility/utilitie.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_image_button.dart';
 import '../widgets/custom_input_text_filed.dart';
-import 'package:restart_app/restart_app.dart';
 
 class LoginPage extends GetWidget<LoginController> {
   // create some values
@@ -59,6 +54,41 @@ class LoginPage extends GetWidget<LoginController> {
                     width: double.infinity,
                     height: double.infinity,
                     color: Colors.transparent,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(0),
+                            child: Image.asset(
+                              'assets/images/logo-new.png',
+                              height: 130,
+
+                              //
+                            ),
+                          ),
+                          SizedBox(
+                            height: 50,
+                          ),
+                          Container(
+                            // color: Colors.red,
+                            //  width: double.infinity,
+                            padding: const EdgeInsets.all(0),
+                            child: Text(
+                              "appTitle".tr,
+                              // textAlign: TextAlign.center,
+                              textDirection: Get.locale?.languageCode == "en"
+                                  ? TextDirection.ltr
+                                  : TextDirection.rtl,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline1!
+                                  .copyWith(),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
                 Flexible(
@@ -77,64 +107,41 @@ class LoginPage extends GetWidget<LoginController> {
 
     return SafeArea(
       child: Scaffold(
-        body:
-//|| DeviceSize.isTablet(context)
-//                DeviceSize.isPortrait(context) ==
-//                    Orientation.portrait
-            //
-            orientation == Orientation.portrait
-                ? Container(
-                    child: Column(
-                      children: [
-                        Expanded(child: logForm(context)),
-                        Expanded(
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            child: Padding(
-                                padding: EdgeInsets.only(bottom: 20),
-                                child: Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Image.asset(
-                                      "assets/images/login_background.png"
-                                      // returnImageNameBasedOnDirection(
-                                      //     "assets/images/background", context, "png"
-
-                                      //),
-                                      ),
-                                )),
-                          ),
-                        ),
-                      ],
+        body: orientation == Orientation.portrait
+            ? Container(
+                child: Column(
+                  children: [
+                    Expanded(child: logForm(context)),
+                    Expanded(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: Padding(
+                            padding: EdgeInsets.only(bottom: 20),
+                            child: Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Image.asset(
+                                "assets/images/login_background.png",
+                              ),
+                            )),
+                      ),
                     ),
-                  )
-                : landscapeBody(context),
+                  ],
+                ),
+              )
+            : landscapeBody(context),
         floatingActionButton: showFab
             ? Row(
-                // crossAxisAlignment: CrossAxisAlignment.start,
-                // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                // verticalDirection: VerticalDirection.up,
-                // textBaseline: TextBaseline.alphabetic,
                 textDirection: TextDirection.rtl,
                 // mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Spacer(),
                   Align(
-                    // alignment: Get.locale=="en" ?  Alignment.bottomRight : Alignment.bottomLeft,
-                    // alignment:  Alignment.bottomRight,
                     alignment: Alignment.bottomLeft,
                     child: Row(
                       children: [
-                        // SizedBox(
-                        //   // width:  Get.locale=="en"? 0 : 110,
-                        //   width: 110,
-                        //   // width:  0,
-                        // ) ,
                         FloatingActionButton(
                             onPressed: () {
                               getSavedBaseUrlFormDatabase();
-
-                              // String? link =           controller.secureStorage.readSecureData(   AllStringConst.BaseUrl)??"";
-                              // controller.baseUrl.text=link;
                               showDialog(
                                   context: context,
                                   builder: (context) => AlertDialog(
@@ -239,12 +246,6 @@ class LoginPage extends GetWidget<LoginController> {
                                                                       .AppLan,
                                                                   "ar");
 
-                                                          // final settings = SettingItem(
-                                                          //   baseUrl: controller.baseUrl.text,
-                                                          //   language: "ar",
-                                                          // );
-                                                          // await saveSettingsIntoDatabase(settings);
-
                                                           Get.updateLocale(
                                                               locale);
                                                         },
@@ -326,63 +327,6 @@ class LoginPage extends GetWidget<LoginController> {
                                                   )
                                                 ]),
                                               ),
-                                              //
-                                              // Container(
-                                              //   width: MediaQuery.of(context)
-                                              //           .size
-                                              //           .width *
-                                              //       .7,
-                                              //   padding: const EdgeInsets.only(
-                                              //       left: 0,
-                                              //       right: 0,
-                                              //       top: 0,
-                                              //       bottom: 0),
-                                              //   height: 60,
-                                              //   decoration: BoxDecoration(
-                                              //       color: Theme.of(context)
-                                              //           .colorScheme
-                                              //           .primary,
-                                              //       borderRadius:
-                                              //           BorderRadius.all(
-                                              //               Radius.circular(6))),
-                                              //   child: ElevatedButton(
-                                              //     onPressed: () async {
-                                              //       controller.secureStorage
-                                              //           .writeSecureData(
-                                              //               AllStringConst
-                                              //                   .BaseUrl,
-                                              //               controller
-                                              //                   .baseUrl.text);
-                                              //
-                                              //       // final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-                                              //       // final SharedPreferences prefs = await _prefs;
-                                              //       // prefs.setString(AllStringConst.BaseUrl, controller.baseUrl.text);
-                                              //
-                                              //       final settings = SettingItem(
-                                              //           baseUrl: controller
-                                              //               .baseUrl.text,
-                                              //           language: "ar",
-                                              //           color: "");
-                                              //       await saveSettingsIntoDatabase(
-                                              //           settings);
-                                              //
-                                              //       // Restart.restartApp();
-                                              //       // Phoenix.rebirth(context);
-                                              //       Navigator.of(context).pop();
-                                              //       // RestartWidget.restartApp(
-                                              //       //     context);
-                                              //     },
-                                              //     child: Text(
-                                              //       "Save Settings".tr,
-                                              //       style: Theme.of(context)
-                                              //           .textTheme
-                                              //           .headline2!
-                                              //           .copyWith(
-                                              //               color: Colors.white),
-                                              //       textAlign: TextAlign.center,
-                                              //     ),
-                                              //   ),
-                                              // )
                                             ]),
                                           ),
                                           actions: <Widget>[
@@ -464,73 +408,6 @@ class LoginPage extends GetWidget<LoginController> {
                                           width: size.width / 1.5,
                                           child: Column(children: [
                                             buildColorPicker(),
-                                            // SizedBox(
-                                            //   height: 30,
-                                            // ),
-                                            // Container(
-                                            //   width:
-                                            //       MediaQuery.of(context).size.width *
-                                            //           .7,
-                                            //   padding: const EdgeInsets.only(
-                                            //       left: 0,
-                                            //       right: 0,
-                                            //       top: 0,
-                                            //       bottom: 0),
-                                            //   height: 60,
-                                            //   decoration: BoxDecoration(
-                                            //       color: Theme.of(context)
-                                            //           .colorScheme
-                                            //           .primary,
-                                            //       borderRadius:
-                                            //           const BorderRadius.all(
-                                            //               Radius.circular(6))),
-                                            //   child: ElevatedButton(
-                                            //     onPressed: () async {
-                                            //       controller.secureStorage
-                                            //           .writeSecureData(
-                                            //               AllStringConst.AppColor,
-                                            //               Get.find<MController>()
-                                            //                   .appcolor
-                                            //                   .value);
-                                            //
-                                            //       final settingObj = SettingItem(
-                                            //           baseUrl:
-                                            //               controller.baseUrl.text,
-                                            //           language: "ar",
-                                            //           color: pickerColor.toHex());
-                                            //       List<SettingItem> settingItems =
-                                            //           await CtsSettingsDatabase
-                                            //               .instance
-                                            //               .readAllNotes();
-                                            //       if (settingItems.isEmpty) {
-                                            //         // final settings = SettingItem(
-                                            //         //   baseUrl: controller.baseUrl.text,
-                                            //         //   language: controller.baseUrl.text,
-                                            //         // );
-                                            //         await CtsSettingsDatabase.instance
-                                            //             .create(settingObj);
-                                            //       } else {
-                                            //         var settingItem = settingItems[0];
-                                            //         settingItem = settingItem.copy(
-                                            //           // baseUrl:  settingObj.baseUrl,
-                                            //           // language: settingObj.language,
-                                            //           color: settingObj.color,
-                                            //         );
-                                            //         await CtsSettingsDatabase.instance
-                                            //             .update(settingItem);
-                                            //       }
-                                            //       Navigator.of(context).pop();
-                                            //     },
-                                            //     child: Text(
-                                            //       "save".tr,
-                                            //       style: Theme.of(context)
-                                            //           .textTheme
-                                            //           .headline2!
-                                            //           .copyWith(color: Colors.white),
-                                            //       textAlign: TextAlign.center,
-                                            //     ),
-                                            //   ),
-                                            // )
                                           ])),
                                       actions: <Widget>[
                                         TextButton(
@@ -643,7 +520,8 @@ class LoginPage extends GetWidget<LoginController> {
                     // Spacer(),
                     Padding(
                         padding: orientation == Orientation.landscape
-                            ? EdgeInsets.only(right: 60, left: 60)
+                            ? EdgeInsets.only(
+                                right: 60, left: 60, top: 10, bottom: 10)
                             : EdgeInsets.only(right: 20, left: 20),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -652,22 +530,6 @@ class LoginPage extends GetWidget<LoginController> {
                             SizedBox(
                               height: 30,
                             ),
-                            // Container(
-                            //   // color: Colors.red,
-                            //   //  width: double.infinity,
-                            //   padding: const EdgeInsets.all(0),
-                            //   child: Text(
-                            //     "appTitle".tr,
-                            //     // textAlign: TextAlign.center,
-                            //     textDirection: Get.locale?.languageCode == "en"
-                            //         ? TextDirection.ltr
-                            //         : TextDirection.rtl,
-                            //     style: Theme.of(context)
-                            //         .textTheme
-                            //         .headline1!
-                            //         .copyWith(),
-                            //   ),
-                            // ),
                             orientation == Orientation.landscape
                                 ? SizedBox(
                                     height: 30,
@@ -721,7 +583,7 @@ class LoginPage extends GetWidget<LoginController> {
                                     SizedBox(
                                       width:
                                           orientation == Orientation.landscape
-                                              ? size.width * .348
+                                              ? size.width * .248
                                               : size.width * .51,
                                       child: CustomButton(
                                           onPressed: controller.logIngRequst,
@@ -742,38 +604,38 @@ class LoginPage extends GetWidget<LoginController> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 50),
-                            Container(
-                              // color: Colors.red,
-                              //  width: double.infinity,
-                              padding: const EdgeInsets.all(0),
-                              child: Text(
-                                "appTitle".tr,
-                                // textAlign: TextAlign.center,
-                                textDirection: Get.locale?.languageCode == "en"
-                                    ? TextDirection.ltr
-                                    : TextDirection.rtl,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline1!
-                                    .copyWith(),
-                              ),
-                            ),
-                            SizedBox(height: 20),
-                            Container(
-                              // color: Colors.red,
-                              //  width: double.infinity,
-                              padding: const EdgeInsets.all(0),
-                              child: Image.asset(
-                                // width: orientation == Orientation.landscape
-                                //     ? size.width * .348
-                                //     : size.width * .51,
-                                'assets/images/logo-new.png',
-                                height: 100,
+                            // SizedBox(height: 50),
+                            // Container(
+                            //   // color: Colors.red,
+                            //   //  width: double.infinity,
+                            //   padding: const EdgeInsets.all(0),
+                            //   child: Text(
+                            //     "appTitle".tr,
+                            //     // textAlign: TextAlign.center,
+                            //     textDirection: Get.locale?.languageCode == "en"
+                            //         ? TextDirection.ltr
+                            //         : TextDirection.rtl,
+                            //     style: Theme.of(context)
+                            //         .textTheme
+                            //         .headline1!
+                            //         .copyWith(),
+                            //   ),
+                            // ),
+                            // SizedBox(height: 20),
+                            // Container(
+                            //   // color: Colors.red,
+                            //   //  width: double.infinity,
+                            //   padding: const EdgeInsets.all(0),
+                            //   child: Image.asset(
+                            //     // width: orientation == Orientation.landscape
+                            //     //     ? size.width * .348
+                            //     //     : size.width * .51,
+                            //     'assets/images/logo-new.png',
+                            //     height: 100,
 
-                                //
-                              ),
-                            ),
+                            //     //
+                            //   ),
+                            // ),
                           ],
                         )),
                     Spacer(),

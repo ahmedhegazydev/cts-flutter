@@ -1,4 +1,3 @@
-import 'package:cts/utility/all_string_const.dart';
 import 'package:cts/utility/storage.dart';
 
 class SettingsApp {

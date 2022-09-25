@@ -1,15 +1,13 @@
 import 'package:cts/services/abstract_json_resource.dart';
 
-import '../../../../models/DocumentModel.dart';
-
-class ExportUsingG2gModel extends AbstractJsonResource{
+class ExportUsingG2gModel extends AbstractJsonResource {
   String? errorMessage;
   int? status;
 
-  ExportUsingG2gModel(
-      {this.errorMessage,
-        this.status,
-      });
+  ExportUsingG2gModel({
+    this.errorMessage,
+    this.status,
+  });
 
   ExportUsingG2gModel.fromJson(Map<String, dynamic> json) {
     errorMessage = json['ErrorMessage'];
@@ -22,6 +20,4 @@ class ExportUsingG2gModel extends AbstractJsonResource{
     data['Status'] = this.status;
     return data;
   }
-
 }
-

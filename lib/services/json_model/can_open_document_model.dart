@@ -1,7 +1,6 @@
 import 'package:cts/services/abstract_json_resource.dart';
 
 import '../../models/CorrespondencesModel.dart';
-import '../../models/DocumentModel.dart';
 
 class CanOpenDocumentModel extends AbstractJsonResource {
   String? errorMessage;

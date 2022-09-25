@@ -1,9 +1,8 @@
 import 'package:cts/services/abstract_json_resource.dart';
-import 'package:cts/services/api_manager.dart';
 
 import 'my_transfer_routing_dto_model.dart';
 
-class GetMyRoutingSettingsModel extends AbstractJsonResource{
+class GetMyRoutingSettingsModel extends AbstractJsonResource {
   String? errorMessage;
   int? status;
   MyTransferRoutingDtoSend? routing;

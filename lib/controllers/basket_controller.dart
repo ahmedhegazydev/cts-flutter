@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 import '../services/apis/basket/get_gasket_inbox_api.dart';
 import '../services/apis/find_recipient_api.dart';
@@ -17,24 +16,25 @@ class BasketController extends GetxController {
   ScrollController scrollController = ScrollController();
   // int index = 0;
   int? basketId;
-  int pageSize =20;
-  int pageNumber=0;
-  TextEditingController textEditingControllerFromDocDate = TextEditingController();
-  TextEditingController textEditingControllerToDocDate = TextEditingController();
-  TextEditingController textEditingControllerSearch= TextEditingController();
+  int pageSize = 20;
+  int pageNumber = 0;
+  TextEditingController textEditingControllerFromDocDate =
+      TextEditingController();
+  TextEditingController textEditingControllerToDocDate =
+      TextEditingController();
+  TextEditingController textEditingControllerSearch = TextEditingController();
   GetBasketInboxModel? getBasketInboxModel;
   int? valueOfRadio = 1;
-  bool? alwes=false;
-  setValueOfRadio(int? v){
-    valueOfRadio=v;
-    update();
-  }
-  setalwes( bool? v){
-    alwes=v;
+  bool? alwes = false;
+  setValueOfRadio(int? v) {
+    valueOfRadio = v;
     update();
   }
 
-
+  setalwes(bool? v) {
+    alwes = v;
+    update();
+  }
 
   Future<void> selectFromDocDate({required BuildContext context}) async {
     final DateTime? pickedDate = await showDatePicker(
@@ -43,10 +43,11 @@ class BasketController extends GetxController {
         firstDate: DateTime(2000),
         lastDate: DateTime(2050));
     if (pickedDate != null) {
-      textEditingControllerFromDocDate.text = pickedDate.toString().substring(0, 10);
+      textEditingControllerFromDocDate.text =
+          pickedDate.toString().substring(0, 10);
 
-      var outputFormat = DateFormat('dd/MM/yyyy');
-      var outputDate = outputFormat.format(pickedDate);
+      // var outputFormat = DateFormat('dd/MM/yyyy');
+      // var outputDate = outputFormat.format(pickedDate);
       //fromDocDate.toString();
       update();
     }
@@ -59,14 +60,14 @@ class BasketController extends GetxController {
         firstDate: DateTime(2000),
         lastDate: DateTime(2050));
     if (pickedDate != null) {
-      textEditingControllerToDocDate.text = pickedDate.toString().substring(0, 10);
-      var outputFormat = DateFormat('dd/MM/yyyy');
-      var outputDate = outputFormat.format(pickedDate);
+      textEditingControllerToDocDate.text =
+          pickedDate.toString().substring(0, 10);
+      // var outputFormat = DateFormat('dd/MM/yyyy');
+      // var outputDate = outputFormat.format(pickedDate);
 
       update();
     }
   }
-
 
   @override
   void onClose() {
@@ -74,65 +75,63 @@ class BasketController extends GetxController {
     scrollController.dispose();
   }
 
-  _scrollListener() {
-    if (scrollController.offset >= scrollController.position.maxScrollExtent &&
-        !scrollController.position.outOfRange) {
-      pageNumber++;
+  // _scrollListener() {
+  //   if (scrollController.offset >= scrollController.position.maxScrollExtent &&
+  //       !scrollController.position.outOfRange) {
+  //     pageNumber++;
 
-      if (haveMoreData) {
-        getBasketInbox(
-            context: context,
-            id: basketId!,pageSize: pageNumber );
-        print("reach the bottom");
-      }
-    }
-    if (scrollController.offset <= scrollController.position.minScrollExtent &&
-        !scrollController.position.outOfRange) {
-      print("reach the top");
-    }
-  }
+  //     if (haveMoreData) {
+  //       getBasketInbox(context: context, id: basketId!, pageSize: pageNumber);
+  //       print("reach the bottom");
+  //     }
+  //   }
+  //   if (scrollController.offset <= scrollController.position.minScrollExtent &&
+  //       !scrollController.position.outOfRange) {
+  //     print("reach the top");
+  //   }
+  // }
 
+  getBasketInbox(
+      {required context,
+      required int id,
+      int pageSize = 20,
+      int pageNumber = 0}) {
+    GetBasketInboxApi getBasketInboxApi = GetBasketInboxApi(context);
 
-
-
-  getBasketInbox( {
-    required context, required int id,int pageSize=20,int pageNumber=0}){
-    GetBasketInboxApi getBasketInboxApi=GetBasketInboxApi(context);
-
-
-
-    getBasketInboxApi.data="token=${secureStorage.token()}&basketId=$id&pageNumber=$pageNumber&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
-
+    getBasketInboxApi.data =
+        "token=${secureStorage.token()}&basketId=$id&pageNumber=$pageNumber&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
 
     getBasketInboxApi.getData().then((value) {
+      getBasketInboxModel = value as GetBasketInboxModel;
 
-getBasketInboxModel=value as GetBasketInboxModel;
+      if ((getBasketInboxModel?.correspondences?.length ?? 0) < pageSize) {
+        haveMoreData = false;
+      }
 
-if((getBasketInboxModel?.correspondences?.length??0)<pageSize){
-  haveMoreData=false;
-}
-
- ("data=>   ${getBasketInboxModel?.toJson()}   =>  ${getBasketInboxModel?.correspondences?.length}");
-update();
+      ("data=>   ${getBasketInboxModel?.toJson()}   =>  ${getBasketInboxModel?.correspondences?.length}");
+      update();
       // print(a.toJson());
     });
   }
 
+  getFindRecipientData({context}) {
+    final FindRecipient _findRecipient = FindRecipient(context);
+    print("this is unbox getAllDatagetAllData ");
+    _findRecipient.data =
+        "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+    _findRecipient.getData().then((value) {
+      findRecipientModel = value as FindRecipientModel;
+      listOfUser(0);
+      print(
+          "findRecipientModel?.toJson()             =>    ${findRecipientModel?.toJson()}");
+    });
+  }
 
-getFindRecipientData({context}){
-  final FindRecipient _findRecipient = FindRecipient(context);
-  print("this is unbox getAllDatagetAllData ");
-  _findRecipient.data="Token=${secureStorage.token()}&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
-  _findRecipient.getData().then((value) {
-    findRecipientModel=value as FindRecipientModel;
-    listOfUser(0);
-     print("findRecipientModel?.toJson()             =>    ${findRecipientModel?.toJson()}" );
-  });
-}
   setFindRecipientData(FindRecipientModel findRecipientModel) {
     this.findRecipientModel = findRecipientModel;
     listOfUser(0);
   }
+
   listOfUser(int pos) {
     users = findRecipientModel?.sections?[pos].destination ?? [];
     update();

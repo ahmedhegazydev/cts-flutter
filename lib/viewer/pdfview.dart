@@ -21,10 +21,10 @@ class PDFView extends StatefulWidget {
     required this.size,
   }) : super(key: key);
 
-  List<ViewerAnnotation> originalAnnotations;
-  Size size;
-  String url;
-  Color color;
+  final List<ViewerAnnotation> originalAnnotations;
+  final Size size;
+  final String url;
+  final Color color;
   @override
   State<PDFView> createState() => _PDFViewState();
 }
@@ -444,7 +444,7 @@ class ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    //final theme = Theme.of(context);
     return Material(
       shape: const CircleBorder(),
       clipBehavior: Clip.antiAlias,

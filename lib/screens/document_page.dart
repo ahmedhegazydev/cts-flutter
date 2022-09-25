@@ -1,3 +1,4 @@
+//import 'dart:js';
 import 'dart:typed_data';
 import 'package:cts/screens/search_page.dart';
 import 'package:flutter/material.dart';
@@ -256,17 +257,11 @@ class DocumentPage extends GetWidget<DocumentController> {
                   CTSActionButton('assets/images/ending.png', "ending".tr, () {
                     completeClick(context);
                   }),
-                  CTSActionButton('assets/images/A.png', "marking".tr,
-                      () async {
-                    String url =
-                        "https://intaliocom-my.sharepoint.com/:w:/r/personal/izzat_hajj_intalio_com/_layouts/15/Doc.aspx?sourcedoc=%7B433EEEF0-A155-4F05-B1BF-B9FBEEF77575%7D&file=5833639______%20____%20____%20(1).docx&action=default&mobileredirect=true";
-                    final Uri toLaunch = Uri.parse("ms-word:ofe|u|$url|a|App");
-
-                    final bool nativeAppLaunchSucceeded = await launchUrl(
-                      toLaunch,
-                      mode: LaunchMode.externalApplication,
-                    );
-                  }),
+                  if (controller.canOpenInOffice())
+                    CTSActionButton('assets/images/A.png', "marking".tr,
+                        () async {
+                      await openInOffice(context);
+                    }),
                   CTSActionButton('assets/images/track.png', "tracking".tr, () {
                     _openVisualTracking();
                   }),
@@ -510,6 +505,19 @@ class DocumentPage extends GetWidget<DocumentController> {
         ),
       ),
     );
+  }
+
+  Future<void> openInOffice(BuildContext context) async {
+    var fileURL =
+        await controller.prepareOpenDocumentInOffice(context: context);
+    if (fileURL.isNotEmpty) {
+      final Uri toLaunch = Uri.parse("ms-word:ofe|u|$fileURL|a|App");
+
+      final bool nativeAppLaunchSucceeded = await launchUrl(
+        toLaunch,
+        mode: LaunchMode.externalApplication,
+      );
+    }
   }
 
   Future<dynamic> completeClick(BuildContext context) {

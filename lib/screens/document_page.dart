@@ -210,6 +210,14 @@ class DocumentPage extends GetWidget<DocumentController> {
   }
 
   Expanded _MetadataSideMenu(BuildContext context) {
+    var cm = Get.find<InboxController>().correspondencesModel;
+    int priorityID = int.parse(controller.correspondences.priorityId!);
+    var priority =
+        cm?.priorities?.where((element) => element.Value == priorityID).first;
+    int privacyID = int.parse(controller.correspondences.privacyId!);
+    var privacy =
+        cm?.privacies?.where((element) => element.Value == privacyID).first;
+
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(28.0),
@@ -290,62 +298,99 @@ class DocumentPage extends GetWidget<DocumentController> {
                 //     MainAxisAlignment
                 //         .spaceAround,
                 children: [
-                  if (controller.correspondences.priorityId == "1")
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Container(
-                        width: 100,
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                              width: 0,
-                              color: Colors.transparent,
-                            ),
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Center(
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.warning, color: RedColor),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                if (controller.correspondences.priorityId ==
-                                    "1")
-                                  Text(
-                                    "veryimportant".tr,
-                                    style: TextStyle(color: RedColor),
-                                  ),
-                              ]),
-                        ),
+                  // if (controller.correspondences.priorityId == "1")
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Container(
+                      width: 100,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 0,
+                            color: Colors.transparent,
+                          ),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Center(
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.priority_high,
+                                  color:
+                                      controller.correspondences.priorityId ==
+                                              "3"
+                                          ? AppColor
+                                          : RedColor),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                Get.locale?.languageCode == "en"
+                                    ? priority!.Text!
+                                    : priority!.TextAr!,
+                                //     "veryimportant".tr,
+                                style: TextStyle(color: AppColor),
+                              ),
+                            ]),
                       ),
                     ),
-                  if (controller.correspondences.showLock ?? false)
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Container(
-                        width: 100,
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                              width: 1,
-                              color: Colors.transparent,
-                            ),
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Center(
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.lock),
-                                SizedBox(
-                                  width: 4,
-                                ),
-                                Text("secret".tr),
-                              ]),
-                        ),
-                      ),
-                    ),
-                  SizedBox(
-                    width: 4,
                   ),
+
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Container(
+                      width: 100,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 0,
+                            color: Colors.transparent,
+                          ),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Center(
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.warning, color: AppColor),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                Get.locale?.languageCode == "en"
+                                    ? privacy!.Text!
+                                    : privacy!.TextAr!,
+                                //     "veryimportant".tr,
+                                style: TextStyle(color: AppColor),
+                              ),
+                            ]),
+                      ),
+                    ),
+                  ),
+
+                  // if (controller.correspondences.showLock)
+                  //   Padding(
+                  //     padding: const EdgeInsets.all(4.0),
+                  //     child: Container(
+                  //       width: 100,
+                  //       decoration: BoxDecoration(
+                  //           border: Border.all(
+                  //             width: 1,
+                  //             color: Colors.transparent,
+                  //           ),
+                  //           borderRadius: BorderRadius.circular(5)),
+                  //       child: Center(
+                  //         child: Row(
+                  //             mainAxisAlignment: MainAxisAlignment.center,
+                  //             children: [
+                  //               Icon(Icons.lock),
+                  //               SizedBox(
+                  //                 width: 4,
+                  //               ),
+                  //               Text("secret".tr),
+                  //             ]),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // SizedBox(
+                  //   width: 4,
+                  // ),
                   Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Container(

@@ -5,7 +5,6 @@ import 'package:cts/screens/web_view_page.dart';
 import 'package:cts/screens/filter/FilterSideScreen.dart';
 import 'package:cts/utility/Extenstions.dart';
 import 'package:cts/utility/all_string_const.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get.dart';
@@ -23,7 +22,6 @@ import 'bindings/signatuer_bindings.dart';
 import 'controllers/main_controller.dart';
 import 'data/SettingsFields.dart';
 import 'db/cts_database.dart';
-import 'firebase_options.dart';
 import 'middleware/auth_middleware.dart';
 import 'screens/Inbox_page.dart';
 import 'screens/Landing_page.dart';
@@ -38,9 +36,7 @@ import 'viewer/controllers/viewerController.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+
   await GetStorage.init();
   SecureStorage secureStorage = SecureStorage();
 

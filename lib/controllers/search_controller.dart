@@ -20,12 +20,6 @@ import '../utility/storage.dart';
 import 'dart:io';
 
 class SearchController extends GetxController {
-
-
-
-
-
-
   FindRecipientModel? findRecipientModel;
 
   List<Destination> users = [];
@@ -36,7 +30,6 @@ class SearchController extends GetxController {
   bool getSerchData = false;
 
   BuildContext? context;
-
 
   SearchCorrespondencesModel? searchCorrespondencesModel;
 
@@ -73,9 +66,9 @@ class SearchController extends GetxController {
   TextEditingController textEditingControllerFrom = TextEditingController();
   TextEditingController textEditingControllerTo = TextEditingController();
   TextEditingController textEditingControllerFrom2 = TextEditingController();
-  Destination? fromDestination ;
+  Destination? fromDestination;
   TextEditingController textEditingControllerTo2 = TextEditingController();
-  Destination? toDestination ;
+  Destination? toDestination;
   //=====================================================
   TextEditingController textEditingControllerTransferFrom =
       TextEditingController();
@@ -88,7 +81,7 @@ class SearchController extends GetxController {
       TextEditingController();
 
   TextEditingController textEditingControllerRegisterDate =
-  TextEditingController();
+      TextEditingController();
 //=======================================================
   TextEditingController textEditingControllerDocData = TextEditingController();
 
@@ -153,13 +146,8 @@ class SearchController extends GetxController {
     textEditingControllerClassificationsVal.clear();
     textEditingControllerprimaryClassificationsVal.clear();
 
-
-
-
-   classificationsVal=null;
-  primaryClassificationval=null;
-
-
+    classificationsVal = null;
+    primaryClassificationval = null;
   }
 
   Future<void> selectFromDocDate({required BuildContext context}) async {
@@ -200,19 +188,6 @@ class SearchController extends GetxController {
     }
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
   Future<void> selecttextrRegisterDate({required BuildContext context}) async {
     final DateTime? pickedDate = await showDatePicker(
         context: context,
@@ -231,22 +206,10 @@ class SearchController extends GetxController {
     }
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
   @override
   void onReady() {
     super.onReady();
-  //  getAllData(context);
+    //  getAllData(context);
   }
 
   @override
@@ -262,11 +225,10 @@ class SearchController extends GetxController {
     statuses = data.transferData?.statuses;
     privacies = data.transferData?.privacies;
     priorities = data.transferData?.priorities;
-
   }
 
-  getAllData( ) {
-    getFindRecipientData(null  );
+  getAllData() {
+    getFindRecipientData(null);
     getallneedData();
   }
 
@@ -277,7 +239,7 @@ class SearchController extends GetxController {
   }
 
 //الحصور علي جميع الافراد
-  Future getFindRecipientData(context ) async {
+  Future getFindRecipientData(context) async {
     print("/الحصور علي جميع الافراد");
 
     final FindRecipient _findRecipient = FindRecipient(context);
@@ -292,22 +254,17 @@ class SearchController extends GetxController {
   }
 
   Future getallneedData({context}) async {
-    final GetLookupsApi _getLookupsApi = GetLookupsApi( context);
+    final GetLookupsApi _getLookupsApi = GetLookupsApi(context);
 
     _getLookupsApi.data =
         "Token=${_secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     await _getLookupsApi.getData().then((value) {
-     // print("this is data $value");
+      // print("this is data $value");
       getLookupsModel = value as GetLookupsModel;
 
       countries = getLookupsModel.docCountries ?? [];
       classifications = getLookupsModel.classifications ?? [];
       primaryClassifications = getLookupsModel.primaryClassifications ?? [];
-
-
-      print("this is data ${countries?.length}");
-      print("this is data ${classifications?.length}");
-      print("this is data ${primaryClassifications?.length}");
     });
     update();
   }
@@ -351,9 +308,9 @@ class SearchController extends GetxController {
     // }
 
     String cr =
-        "ReferenceNumber:${textEditingControllerReferenceNumber1.text}/${textEditingControllerReferenceNumber2.text}/${textEditingControllerReferenceNumber2.text};%23Subject:${textEditingControllerSubject.text??""};%23From:${from?.id??""};%23To:${to?.id??""};%23TransferFrom:${fromDestination?.id??""};%23TransferTo:${toDestination?.id??""};%23Privacy:${privacieVal?.id??""};%23Priority:${prioritieVal?.id??""};%23Status:${statuseVal?.id??""};%23Country:${countrieVal?.id??""};%23Classification:${classificationsVal?.id??""};%23PrimaryClassification:${primaryClassificationval?.iD??""};%23FromDocumentDate:${textEditingControllerFromDocDate.text};%23ToDocumentDate:${textEditingControllerToDocDate.text};%23RegisterDate:${textEditingControllerRegisterDate.text};%23";
+        "ReferenceNumber:${textEditingControllerReferenceNumber1.text}/${textEditingControllerReferenceNumber2.text}/${textEditingControllerReferenceNumber2.text};%23Subject:${textEditingControllerSubject.text};%23From:${from?.id ?? ""};%23To:${to?.id ?? ""};%23TransferFrom:${fromDestination?.id ?? ""};%23TransferTo:${toDestination?.id ?? ""};%23Privacy:${privacieVal?.id ?? ""};%23Priority:${prioritieVal?.id ?? ""};%23Status:${statuseVal?.id ?? ""};%23Country:${countrieVal?.id ?? ""};%23Classification:${classificationsVal?.id ?? ""};%23PrimaryClassification:${primaryClassificationval?.iD ?? ""};%23FromDocumentDate:${textEditingControllerFromDocDate.text};%23ToDocumentDate:${textEditingControllerToDocDate.text};%23RegisterDate:${textEditingControllerRegisterDate.text};%23";
     final SearchCorrespondencesApi _searchCorrespondencesApi =
-    SearchCorrespondencesApi(context!);
+        SearchCorrespondencesApi(context!);
     print(cr);
     _searchCorrespondencesApi.post({
       "Token": "${_secureStorage.token()}",

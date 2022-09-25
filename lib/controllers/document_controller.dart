@@ -1290,7 +1290,7 @@ class DocumentController extends GetxController {
         token: secureStorage.token()!,
         documentId: attachment.docId,
         attachmentId: attachment.attachmentId,
-        siteId: editOfficeDetails!.siteId,
+        siteId: editOfficeDetails.siteId,
         webId: editOfficeDetails.webId,
         fileId: editOfficeDetails.fileId);
     RequestEditInOfficeAPI api = RequestEditInOfficeAPI(context);

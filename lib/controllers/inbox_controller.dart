@@ -201,7 +201,7 @@ class InboxController extends GetxController {
     getFetchBasketListApi.data =
         "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     await getFetchBasketListApi.getData().then((value) {
-      if(context!=null){
+      if (context != null) {
         Navigator.pop(context);
       }
 
@@ -1263,8 +1263,8 @@ class InboxController extends GetxController {
       if (value != null) {
         GetBasketInboxModel getBasketInboxModel = value as GetBasketInboxModel;
 
-        allCorrespondences.addAll(getBasketInboxModel?.correspondences ?? []);
-        if ((getBasketInboxModel?.correspondences?.length ?? 0) < pageSize) {
+        allCorrespondences.addAll(getBasketInboxModel.correspondences ?? []);
+        if ((getBasketInboxModel.correspondences?.length ?? 0) < pageSize) {
           haveMoreData = false;
         }
       } else {

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:internet_file/internet_file.dart';
 import 'package:pdfx/pdfx.dart';
-//import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 import '../controllers/document_controller.dart';
 import '../utility/utilitie.dart';
 import './controllers/viewerController.dart';

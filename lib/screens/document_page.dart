@@ -485,13 +485,13 @@ class DocumentPage extends GetWidget<DocumentController> {
                             FlutterSoundPlayer audioPlayer =
                                 FlutterSoundPlayer();
 
-                            audioPlayer!.openPlayer();
+                            audioPlayer.openPlayer();
                             String filePath = await createFileFromString(
                                 controller.canOpenDocumentModel?.attachments
                                     ?.voiceNote);
 
                             print(filePath);
-                            await audioPlayer!.startPlayer(fromURI: filePath);
+                            await audioPlayer.startPlayer(fromURI: filePath);
                           },
                           child: Icon(Icons.play_arrow,
                               color: Theme.of(context).colorScheme.primary),

@@ -16,7 +16,6 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import 'package:intl/intl.dart';
@@ -57,17 +56,16 @@ String getLocaleCode(BuildContext context) {
 bool isDirectionRTLForBackArrow(BuildContext context) {
   return Bidi.isRtlLanguage(
       // Localizations.localeOf(context).languageCode
-    Get.locale?.languageCode == "en" ? "ar" : "en"
-    // Get.locale?.languageCode
-  );
+      Get.locale?.languageCode == "en" ? "ar" : "en"
+      // Get.locale?.languageCode
+      );
 }
 
 bool isDirectionRTL(BuildContext context) {
-  return Bidi.isRtlLanguage(
-      Localizations.localeOf(context).languageCode
+  return Bidi.isRtlLanguage(Localizations.localeOf(context).languageCode
       // Get.locale?.languageCode == "en" ? "ar" : "en"
       // Get.locale?.languageCode
-  );
+      );
 }
 
 String returnImageNameBasedOnDirection(
@@ -150,20 +148,14 @@ Future<String?> audiobase64String({File? file}) async {
   return fileString;
 }
 
-
 Future<String> createFileFromString(data) async {
   final encodedStr = data;
   Uint8List bytes = base64.decode(encodedStr);
   String dir = (await getApplicationDocumentsDirectory()).path;
-  File file = File(
-      "$dir/" + "voice"+ ".aac");
+  File file = File("$dir/" + "voice" + ".aac");
   await file.writeAsBytes(bytes);
   return file.path;
 }
-
-
-
-
 
 //
 // Future<String?>  audiobase64String({  File? file})async{
@@ -186,7 +178,8 @@ showLoaderDialog(BuildContext context) {
     content: new Row(
       children: [
         CircularProgressIndicator(),
-        Container(margin: EdgeInsets.only(left: 7), child: Text("Loading...".tr)),
+        Container(
+            margin: EdgeInsets.only(left: 7), child: Text("Loading...".tr)),
       ],
     ),
   );

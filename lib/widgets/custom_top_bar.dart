@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class CustomTopBar extends StatelessWidget {
-
-String appTitle;
-VoidCallback onTap;
-String path;
-CustomTopBar({required this.appTitle, required this.onTap,this.path=   'assets/images/menu.png'});
+  final String appTitle;
+  final VoidCallback onTap;
+  final String path;
+  CustomTopBar(
+      {required this.appTitle,
+      required this.onTap,
+      this.path = 'assets/images/menu.png'});
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -20,10 +22,10 @@ CustomTopBar({required this.appTitle, required this.onTap,this.path=   'assets/i
             mainAxisSize: MainAxisSize.max,
             children: [
               Container(
-                padding:
-                const EdgeInsets.only(left: 30, right: 30, top: 0, bottom: 0),
+                padding: const EdgeInsets.only(
+                    left: 30, right: 30, top: 0, bottom: 0),
                 child: Text(
-                 appTitle,
+                  appTitle,
                   style: Theme.of(context)
                       .textTheme
                       .headline1!
@@ -42,7 +44,7 @@ CustomTopBar({required this.appTitle, required this.onTap,this.path=   'assets/i
             color: Colors.transparent,
             child: Image(
               image: AssetImage(
-             path,
+                path,
               ),
               fit: BoxFit.contain,
               width: double.infinity,
@@ -53,6 +55,4 @@ CustomTopBar({required this.appTitle, required this.onTap,this.path=   'assets/i
       ],
     );
   }
-
-
 }

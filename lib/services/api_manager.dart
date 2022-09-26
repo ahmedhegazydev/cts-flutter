@@ -19,8 +19,10 @@ abstract class ApiManager {
 
   // late Future<String> baseUrl;
   // late SettingItem settingItem;
+  // late String storageBaseUrl =
+  //  "http://139.99.149.12:9091/EverSuite.CTS.Mobile/CMS.svc";
   late String storageBaseUrl =
-      "http://139.99.149.12:9091/EverSuite.CTS.Mobile/CMS.svc";
+      "http://192.168.20.237:89/Eversuite.CTS.Mobile/CMS.svc";
   late List<SettingItem> settingItems;
 
   ApiManager({BuildContext? context}) {

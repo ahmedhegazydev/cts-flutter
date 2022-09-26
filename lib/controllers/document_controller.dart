@@ -3,6 +3,8 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cts/services/apis/inside_doc/g2g/eport_using_g2g_api.dart';
+import 'package:cts/services/apis/request_edit_in_office_api.dart';
+import 'package:cts/services/json_model/request_edit_in_office_model.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
@@ -32,7 +34,6 @@ import '../services/apis/inside_doc/is_already_exported_as_paperwork_api.dart';
 import '../services/apis/inside_doc/is_already_exported_as_transfer_api.dart';
 import '../services/apis/multiple_transfers_api.dart';
 import '../services/json_model/can_open_document_model.dart';
-import '../services/json_model/default_on_success_result.dart';
 import '../services/json_model/favorites/list_all/ListFavoriteRecipients_response.dart';
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_document_links_model.dart';
@@ -194,8 +195,6 @@ class DocumentController extends GetxController {
     transfarForMany.clear();
     usersWillSendTo.clear();
     _multipleTransfersAPI.post(multipleTransfers.toMap()).then((value) {
-      DefaultOnSuccessResult defaultOnSuccessResult =
-          value as DefaultOnSuccessResult;
       Get.find<LandingPageController>().getDashboardStats(context: context);
       Get.find<InboxController>().getCorrespondencesData(
           context: context,
@@ -1260,6 +1259,42 @@ class DocumentController extends GetxController {
       // print("listFavoriteRecipientsApi  =>${favoriteRecipientsResponse?.recipients[0].targetPhotoBs64.isEmpty}");
     });
     update();
+  }
+
+  bool canOpenInOffice() {
+    if (canOpenDocumentModel == null) return false;
+    var attachment = canOpenDocumentModel!.attachments!.attachments![0];
+    var editOfficeDetails = attachment.editOfficeDetails!;
+    if (editOfficeDetails.spUrl == null ||
+        editOfficeDetails.spUrl!.isEmpty ||
+        editOfficeDetails.isEditable == false) {
+      return false;
+    }
+    return true;
+  }
+
+  Future<String> prepareOpenDocumentInOffice({context}) async {
+    var attachment = canOpenDocumentModel!.attachments!.attachments![0];
+    var editOfficeDetails = attachment.editOfficeDetails!;
+
+    if (editOfficeDetails.spUrl == null ||
+        editOfficeDetails.isEditable == false) {
+      return "";
+    }
+
+    RequestEditInOfficeModel model = RequestEditInOfficeModel(
+        language: Get.locale?.languageCode == "en" ? "en" : "ar",
+        token: secureStorage.token()!,
+        documentId: attachment.docId,
+        attachmentId: attachment.attachmentId,
+        siteId: editOfficeDetails.siteId,
+        webId: editOfficeDetails.webId,
+        fileId: editOfficeDetails.fileId);
+    RequestEditInOfficeAPI api = RequestEditInOfficeAPI(context);
+
+    var value = await api.post(model.toMap()); //.then((value) {
+    //  DefaultOnSuccessResult res = value as DefaultOnSuccessResult;
+    return editOfficeDetails.spUrl!;
   }
 
 //التسجيل الجديد

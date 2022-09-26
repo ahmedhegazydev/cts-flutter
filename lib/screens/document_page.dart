@@ -1,3 +1,4 @@
+//import 'dart:js';
 import 'dart:typed_data';
 import 'package:cts/screens/search_page.dart';
 import 'package:flutter/material.dart';
@@ -210,6 +211,14 @@ class DocumentPage extends GetWidget<DocumentController> {
   }
 
   Expanded _MetadataSideMenu(BuildContext context) {
+    var cm = Get.find<InboxController>().correspondencesModel;
+    int priorityID = int.parse(controller.correspondences.priorityId!);
+    var priority =
+        cm?.priorities?.where((element) => element.Value == priorityID).first;
+    int privacyID = int.parse(controller.correspondences.privacyId!);
+    var privacy =
+        cm?.privacies?.where((element) => element.Value == privacyID).first;
+
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(28.0),
@@ -248,17 +257,11 @@ class DocumentPage extends GetWidget<DocumentController> {
                   CTSActionButton('assets/images/ending.png', "ending".tr, () {
                     completeClick(context);
                   }),
-                  CTSActionButton('assets/images/A.png', "marking".tr,
-                      () async {
-                    String url =
-                        "https://intaliocom-my.sharepoint.com/:w:/r/personal/izzat_hajj_intalio_com/_layouts/15/Doc.aspx?sourcedoc=%7B433EEEF0-A155-4F05-B1BF-B9FBEEF77575%7D&file=5833639______%20____%20____%20(1).docx&action=default&mobileredirect=true";
-                    final Uri toLaunch = Uri.parse("ms-word:ofe|u|$url|a|App");
-
-                    final bool nativeAppLaunchSucceeded = await launchUrl(
-                      toLaunch,
-                      mode: LaunchMode.externalApplication,
-                    );
-                  }),
+                  if (controller.canOpenInOffice())
+                    CTSActionButton('assets/images/A.png', "marking".tr,
+                        () async {
+                      await openInOffice(context);
+                    }),
                   CTSActionButton('assets/images/track.png', "tracking".tr, () {
                     _openVisualTracking();
                   }),
@@ -290,62 +293,99 @@ class DocumentPage extends GetWidget<DocumentController> {
                 //     MainAxisAlignment
                 //         .spaceAround,
                 children: [
-                  if (controller.correspondences.priorityId == "1")
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Container(
-                        width: 100,
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                              width: 0,
-                              color: Colors.transparent,
-                            ),
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Center(
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.warning, color: RedColor),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                if (controller.correspondences.priorityId ==
-                                    "1")
-                                  Text(
-                                    "veryimportant".tr,
-                                    style: TextStyle(color: RedColor),
-                                  ),
-                              ]),
-                        ),
+                  // if (controller.correspondences.priorityId == "1")
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Container(
+                      width: 100,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 0,
+                            color: Colors.transparent,
+                          ),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Center(
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.priority_high,
+                                  color:
+                                      controller.correspondences.priorityId ==
+                                              "3"
+                                          ? AppColor
+                                          : RedColor),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                Get.locale?.languageCode == "en"
+                                    ? priority!.Text!
+                                    : priority!.TextAr!,
+                                //     "veryimportant".tr,
+                                style: TextStyle(color: AppColor),
+                              ),
+                            ]),
                       ),
                     ),
-                  if (controller.correspondences.showLock ?? false)
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Container(
-                        width: 100,
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                              width: 1,
-                              color: Colors.transparent,
-                            ),
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Center(
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.lock),
-                                SizedBox(
-                                  width: 4,
-                                ),
-                                Text("secret".tr),
-                              ]),
-                        ),
-                      ),
-                    ),
-                  SizedBox(
-                    width: 4,
                   ),
+
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Container(
+                      width: 100,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 0,
+                            color: Colors.transparent,
+                          ),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Center(
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.warning, color: AppColor),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                Get.locale?.languageCode == "en"
+                                    ? privacy!.Text!
+                                    : privacy!.TextAr!,
+                                //     "veryimportant".tr,
+                                style: TextStyle(color: AppColor),
+                              ),
+                            ]),
+                      ),
+                    ),
+                  ),
+
+                  // if (controller.correspondences.showLock)
+                  //   Padding(
+                  //     padding: const EdgeInsets.all(4.0),
+                  //     child: Container(
+                  //       width: 100,
+                  //       decoration: BoxDecoration(
+                  //           border: Border.all(
+                  //             width: 1,
+                  //             color: Colors.transparent,
+                  //           ),
+                  //           borderRadius: BorderRadius.circular(5)),
+                  //       child: Center(
+                  //         child: Row(
+                  //             mainAxisAlignment: MainAxisAlignment.center,
+                  //             children: [
+                  //               Icon(Icons.lock),
+                  //               SizedBox(
+                  //                 width: 4,
+                  //               ),
+                  //               Text("secret".tr),
+                  //             ]),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // SizedBox(
+                  //   width: 4,
+                  // ),
                   Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Container(
@@ -445,13 +485,13 @@ class DocumentPage extends GetWidget<DocumentController> {
                             FlutterSoundPlayer audioPlayer =
                                 FlutterSoundPlayer();
 
-                            audioPlayer!.openPlayer();
+                            audioPlayer.openPlayer();
                             String filePath = await createFileFromString(
                                 controller.canOpenDocumentModel?.attachments
                                     ?.voiceNote);
 
                             print(filePath);
-                            await audioPlayer!.startPlayer(fromURI: filePath);
+                            await audioPlayer.startPlayer(fromURI: filePath);
                           },
                           child: Icon(Icons.play_arrow,
                               color: Theme.of(context).colorScheme.primary),
@@ -465,6 +505,19 @@ class DocumentPage extends GetWidget<DocumentController> {
         ),
       ),
     );
+  }
+
+  Future<void> openInOffice(BuildContext context) async {
+    var fileURL =
+        await controller.prepareOpenDocumentInOffice(context: context);
+    if (fileURL.isNotEmpty) {
+      final Uri toLaunch = Uri.parse("ms-word:ofe|u|$fileURL|a|App");
+
+      final bool nativeAppLaunchSucceeded = await launchUrl(
+        toLaunch,
+        mode: LaunchMode.externalApplication,
+      );
+    }
   }
 
   Future<dynamic> completeClick(BuildContext context) {

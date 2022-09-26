@@ -1,9 +1,8 @@
 import 'package:cts/services/abstract_json_resource.dart';
 
 import '../../models/CorrespondencesModel.dart';
-import '../../models/DocumentModel.dart';
 
-class CanOpenDocumentModel extends AbstractJsonResource{
+class CanOpenDocumentModel extends AbstractJsonResource {
   String? errorMessage;
   int? status;
   bool? allow;
@@ -12,10 +11,10 @@ class CanOpenDocumentModel extends AbstractJsonResource{
 
   CanOpenDocumentModel(
       {this.errorMessage,
-        this.status,
-        this.allow,
-        this.attachments,
-        this.correspondence});
+      this.status,
+      this.allow,
+      this.attachments,
+      this.correspondence});
 
   CanOpenDocumentModel.fromJson(Map<String, dynamic> json) {
     errorMessage = json['ErrorMessage'];
@@ -134,39 +133,39 @@ class Correspondence {
 
   Correspondence(
       {this.canRequestDueDate,
-        this.categoryId,
-        this.clickableLock,
-        this.comments,
-        this.controlList,
-        this.correspondenceId,
-        this.docDueDate,
-        this.docDueDays,
-        this.fromStructure,
-        this.fromUser,
-        this.fromUserId,
-        this.gridInfo,
-        this.hasAttachments,
-        this.hasAttachmentsToBeDelivered,
-        this.hasSummaries,
-        this.inboxId,
-        this.isCC,
-        this.isForGuideline,
-        this.isHighPriority,
-        this.isLocked,
-        this.isNew,
-        this.isShareable,
-        this.metadata,
-        this.priorityId,
-        this.privacyId,
-        this.purposeId,
-        this.showLock,
-        this.status,
-        this.thumbnailUrl,
-        this.transferId,
-        this.tsfDueDate,
-        this.type,
-        this.visualTrackingUrl,
-        this.isTransferedToContact});
+      this.categoryId,
+      this.clickableLock,
+      this.comments,
+      this.controlList,
+      this.correspondenceId,
+      this.docDueDate,
+      this.docDueDays,
+      this.fromStructure,
+      this.fromUser,
+      this.fromUserId,
+      this.gridInfo,
+      this.hasAttachments,
+      this.hasAttachmentsToBeDelivered,
+      this.hasSummaries,
+      this.inboxId,
+      this.isCC,
+      this.isForGuideline,
+      this.isHighPriority,
+      this.isLocked,
+      this.isNew,
+      this.isShareable,
+      this.metadata,
+      this.priorityId,
+      this.privacyId,
+      this.purposeId,
+      this.showLock,
+      this.status,
+      this.thumbnailUrl,
+      this.transferId,
+      this.tsfDueDate,
+      this.type,
+      this.visualTrackingUrl,
+      this.isTransferedToContact});
 
   Correspondence.fromJson(Map<String, dynamic> json) {
     canRequestDueDate = json['CanRequestDueDate'];
@@ -370,7 +369,6 @@ class GridInfo {
   }
 }
 
-
 class Attachments {
   Attachments({
     this.errorMessage,
@@ -491,6 +489,7 @@ class AttachmentsList {
     return data;
   }
 }
+
 class EditOfficeDetails {
   EditOfficeDetails({
     this.fileId,
@@ -503,26 +502,26 @@ class EditOfficeDetails {
     this.spUrl,
     this.webId,
   });
-  late final Null fileId;
+  late final String? fileId;
   late final bool? isEditable;
-  late final Null localUrl;
-  late final Null name;
-  late final Null siteId;
-  late final Null spFrameUrl;
-  late final Null spLocation;
-  late final Null spUrl;
-  late final Null webId;
+  late final String? localUrl;
+  late final String? name;
+  late final String? siteId;
+  late final String? spFrameUrl;
+  late final String? spLocation;
+  late final String? spUrl;
+  late final String? webId;
 
   EditOfficeDetails.fromJson(Map<String, dynamic> json) {
-    fileId = null;
+    fileId = json['fileId'];
     isEditable = json['isEditable'];
-    localUrl = null;
-    name = null;
-    siteId = null;
-    spFrameUrl = null;
-    spLocation = null;
-    spUrl = null;
-    webId = null;
+    localUrl = json['localUrl'];
+    name = json['name'];
+    siteId = json['siteId'];
+    spFrameUrl = json['spFrameUrl'];
+    spLocation = json['spLocation'];
+    spUrl = json['spUrl'];
+    webId = json['webId '];
   }
 
   Map<String, dynamic> toJson() {

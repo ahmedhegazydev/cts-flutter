@@ -1,21 +1,20 @@
-import 'package:cts/utility/all_string_const.dart';
 import 'package:cts/utility/storage.dart';
 
 class SettingsApp {
   static SecureStorage secureStorage = new SecureStorage();
 
-  static const String baseUrl = 'http://139.99.149.12:9091/EverSuite.CTS.Mobile/CMS.svc';
-  // static const String baseUrl = 'http://192.168.1.7:9091/Mobility/CMS.svc';
+  // static const String baseUrl = 'http://139.99.149.12:9091/EverSuite.CTS.Mobile/CMS.svc';
+  static const String baseUrl =
+      'http://192.168.20.237:89/Eversuite.CTS.Mobile/CMS.svc';
 
   SettingsApp() {}
 
   static const String loginUrl = baseUrl + "/Login?";
   static const String FindRecipientUrl = baseUrl + "/FindRecipient?";
 
-  static const String GetCorrespondencesUrl = baseUrl +
-      "/GetCorrespondencesWithTreeNodeId?"; //http://192.168.1.4:9091/Mobility/CMS.svc/GetCorrespondences?Token=oeXQq9ZIRfxAu8ixipXg&inboxId=1&index=0&pageSize=20&language=ar&showThumbnails=false
-  static const String CanOpenDocumentUrl = baseUrl +
-      "/CanOpenDocument?"; //192.168.1.4:9091/Mobility/CMS.svc/CanOpenDocument?Token=vDVPA43sENTpfmLujnJO&correspondenceId=2966766&transferId=5688958&language=ar
+  static const String GetCorrespondencesUrl =
+      baseUrl + "/GetCorrespondencesWithTreeNodeId?";
+  static const String CanOpenDocumentUrl = baseUrl + "/CanOpenDocument?";
   static const String ReplyWithVoiceNoteUrl =
       baseUrl + "/ReplyWithVoiceNote"; //
 
@@ -46,10 +45,7 @@ class SettingsApp {
   static const String PostRemoveItemsFromBasketUrl =
       baseUrl + "/RemoveItemsFromBasket"; //
   static const String PostRemoveBasketUrl = baseUrl + "/RemoveBasket"; //
-  static const String GetBasketInboxUrl = baseUrl +
-      "/GetBasketInbox?"; //?token={token}&basketId={basketId}&pageNumber={pageNumber}&pageSize={pageSize}&language={language}"
-
-//new
+  static const String GetBasketInboxUrl = baseUrl + "/GetBasketInbox?";
   static const String GetIsAlreadyExportedAsPaperworkUrl = baseUrl +
       "/IsAlreadyExportedAsPaperwork?"; //?Token={Token}&exportAction={exportAction}&correspondenceId={correspondenceId}&transferId={transferId}&language={language}&&exportAction=
 
@@ -87,14 +83,14 @@ class SettingsApp {
   static const String PostUploadAttachmentUrl = baseUrl + "/UploadAttachment";
 
   //mofa-favorite-recipients-api
-  static const String ListFavoriteRecipientsUrl = baseUrl + "/ListFavoriteRecipients?"; //
-  static const String RemoveFavoriteRecipientsUrl = baseUrl + "/RemoveFavoriteRecipients?"; //
-  static const String AddFavoriteRecipientsUrl = baseUrl + "/AddFavoriteRecipients?"; //
-
+  static const String ListFavoriteRecipientsUrl =
+      baseUrl + "/ListFavoriteRecipients?"; //
+  static const String RemoveFavoriteRecipientsUrl =
+      baseUrl + "/RemoveFavoriteRecipients?"; //
+  static const String AddFavoriteRecipientsUrl =
+      baseUrl + "/AddFavoriteRecipients?"; //
 
   //==========================================
-
-
 
   static const String GetMyRoutingSettingsUrl =
       baseUrl + "/GetMyRoutingSettings?"; //Token={Token}&GctId={GctId}")

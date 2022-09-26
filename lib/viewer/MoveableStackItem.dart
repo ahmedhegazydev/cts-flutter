@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:uuid/uuid.dart';
+
 import './controllers/viewerController.dart';
 import './static/AnnotationTypes.dart';
 

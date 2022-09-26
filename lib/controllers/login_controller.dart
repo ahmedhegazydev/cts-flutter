@@ -16,8 +16,9 @@ import 'landing_page_controller.dart';
 class LoginController extends GetxController {
   TextEditingController userName = TextEditingController();
   TextEditingController baseUrl = TextEditingController(
-      // text: 'http://192.168.1.6:9091/Mobility/CMS.svc'
-      text: 'http://139.99.149.12:9091/EverSuite.CTS.Mobile/CMS.svc');
+    text: 'http://192.168.20.237:89/Eversuite.CTS.Mobile/CMS.svc',
+    //text: 'http://139.99.149.12:9091/EverSuite.CTS.Mobile/CMS.svc'
+  );
   BuildContext? context;
   TextEditingController passWord = TextEditingController();
   Validators validators = Validators();
@@ -95,8 +96,8 @@ class LoginController extends GetxController {
               AllStringConst.DepartmentName, loginModel.departmentName);
           await secureStorage.writeSecureData(
               AllStringConst.Pincode, loginModel.pincode);
-          await secureStorage.writeSecureData(
-              AllStringConst.Signature, loginModel.signature);
+          // await secureStorage.writeSecureData(
+          //   AllStringConst.Signature, loginModel.signature);
           await secureStorage.writeSecureData(
               AllStringConst.SignatureId, loginModel.signatureId);
           await secureStorage.writeSecureData(

@@ -1,11 +1,6 @@
 import 'package:cts/services/abstract_json_resource.dart';
 
-import '../../../../models/DocumentModel.dart';
-
-class G2GInfoForExportModel extends AbstractJsonResource{
-
-
-
+class G2GInfoForExportModel extends AbstractJsonResource {
   String? errorMessage;
   int? status;
   // List<Attachments>? attachments;
@@ -15,10 +10,10 @@ class G2GInfoForExportModel extends AbstractJsonResource{
 
   G2GInfoForExportModel(
       {this.errorMessage,
-        this.status,
-        this.attachments,
-        this.departmentList,
-        this.parents});
+      this.status,
+      this.attachments,
+      this.departmentList,
+      this.parents});
 
   G2GInfoForExportModel.fromJson(Map<String, dynamic> json) {
     errorMessage = json['ErrorMessage'];
@@ -66,7 +61,6 @@ class G2GInfoForExportModel extends AbstractJsonResource{
     return data;
   }
 }
-
 
 class AttachmentsG2gInfoExport {
   AttachmentsG2gInfoExport({
@@ -207,23 +201,23 @@ class DepartmentList {
 
   DepartmentList(
       {this.iD,
-        this.childG2GID,
-        this.childG2GParent,
-        this.childGCTID,
-        this.childGeid,
-        this.childMapTo,
-        this.childName,
-        this.childRedirectTo,
-        this.childRedirectToGCTIDonReceive,
-        this.isCC,
-        this.parentG2GID,
-        this.parentGCTID,
-        this.parentGeid,
-        this.parentMapTo,
-        this.parentName,
-        this.parentParent,
-        this.parentRedirectTo,
-        this.parentRedirectToGCTIDonReceive});
+      this.childG2GID,
+      this.childG2GParent,
+      this.childGCTID,
+      this.childGeid,
+      this.childMapTo,
+      this.childName,
+      this.childRedirectTo,
+      this.childRedirectToGCTIDonReceive,
+      this.isCC,
+      this.parentG2GID,
+      this.parentGCTID,
+      this.parentGeid,
+      this.parentMapTo,
+      this.parentName,
+      this.parentParent,
+      this.parentRedirectTo,
+      this.parentRedirectToGCTIDonReceive});
 
   DepartmentList.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
@@ -294,23 +288,23 @@ class Parents {
 
   Parents(
       {this.iD,
-        this.childG2GID,
-        this.childG2GParent,
-        this.childGCTID,
-        this.childGeid,
-        this.childMapTo,
-        this.childName,
-        this.childRedirectTo,
-        this.childRedirectToGCTIDonReceive,
-        this.isCC,
-        this.parentG2GID,
-        this.parentGCTID,
-        this.parentGeid,
-        this.parentMapTo,
-        this.parentName,
-        this.parentParent,
-        this.parentRedirectTo,
-        this.parentRedirectToGCTIDonReceive});
+      this.childG2GID,
+      this.childG2GParent,
+      this.childGCTID,
+      this.childGeid,
+      this.childMapTo,
+      this.childName,
+      this.childRedirectTo,
+      this.childRedirectToGCTIDonReceive,
+      this.isCC,
+      this.parentG2GID,
+      this.parentGCTID,
+      this.parentGeid,
+      this.parentMapTo,
+      this.parentName,
+      this.parentParent,
+      this.parentRedirectTo,
+      this.parentRedirectToGCTIDonReceive});
 
   Parents.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];

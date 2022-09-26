@@ -5,7 +5,7 @@ class CustomButtonWithIcon extends StatelessWidget {
 
 final IconData icon;
 final VoidCallback onClick;
-
+Color? color;
   @override
   Widget build(BuildContext context) {
     return InkWell(onTap: onClick,
@@ -17,9 +17,9 @@ final VoidCallback onClick;
                 .primary,
             borderRadius:
             const BorderRadius.all(Radius.circular(6))),
-      child: Center(child: Icon(icon)),),
+      child: Center(child: color==null?Icon(icon):Icon(icon,color: color,)),),
     );
   }
 
-CustomButtonWithIcon({required this.icon,required this.onClick});
+CustomButtonWithIcon({required this.icon,required this.onClick,this.color});
 }

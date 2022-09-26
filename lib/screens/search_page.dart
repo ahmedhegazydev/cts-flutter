@@ -349,7 +349,7 @@ class SearchPage extends GetWidget<SearchController> {
                         width: 2,
                       ),
                       CustomButtonWithIcon(
-                        icon: Icons.person,
+                        icon: Icons.person,color: Colors.white,
                         onClick: () {
                           controller.listOfUser(0);
                         },
@@ -358,7 +358,7 @@ class SearchPage extends GetWidget<SearchController> {
                         width: 2,
                       ),
                       CustomButtonWithIcon(
-                        icon: Icons.account_balance,
+                        icon: Icons.account_balance,color: Colors.white,
                         onClick: () {
                           controller.listOfUser(2);
                         },
@@ -367,7 +367,7 @@ class SearchPage extends GetWidget<SearchController> {
                         width: 2,
                       ),
                       CustomButtonWithIcon(
-                        icon: Icons.clear,
+                        icon: Icons.clear,color: Colors.white,
                         onClick: () {
                           controller.listOfUser(0);
                         },
@@ -428,7 +428,7 @@ class SearchPage extends GetWidget<SearchController> {
                       SizedBox(
                         width: 2,
                       ),
-                      CustomButtonWithIcon(
+                      CustomButtonWithIcon(color: Colors.white,
                         icon: Icons.person,
                         onClick: () {
                           controller.listOfUser(0);
@@ -437,7 +437,7 @@ class SearchPage extends GetWidget<SearchController> {
                       SizedBox(
                         width: 2,
                       ),
-                      CustomButtonWithIcon(
+                      CustomButtonWithIcon(color: Colors.white,
                         icon: Icons.account_balance,
                         onClick: () {
                           controller.listOfUser(2);
@@ -446,7 +446,7 @@ class SearchPage extends GetWidget<SearchController> {
                       SizedBox(
                         width: 2,
                       ),
-                      CustomButtonWithIcon(
+                      CustomButtonWithIcon(color: Colors.white,
                         icon: Icons.clear,
                         onClick: () {
                           controller.listOfUser(0);

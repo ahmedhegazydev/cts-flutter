@@ -917,7 +917,7 @@ class SearchPage extends GetWidget<SearchController> {
                           child: CustomButton(
                               name: 'search'.tr,
                               onPressed: () {
-                                controller.searchCorrespondences();
+                                controller.searchCorrespondences(context);
                               }),
                         );
                 }),

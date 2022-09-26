@@ -269,7 +269,7 @@ class SearchController extends GetxController {
     update();
   }
 
-  searchCorrespondences() {
+  searchCorrespondences(BuildContext context) {
     getSerchData = true;
     update();
     // String rf = "";

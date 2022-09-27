@@ -48,6 +48,7 @@ import '../utility/Extenstions.dart';
 import '../utility/storage.dart';
 
 import '../utility/utilitie.dart';
+import '../viewer/controllers/viewerController.dart';
 import 'document_controller.dart';
 import 'package:flutter/services.dart' as rootBundel;
 import '../services/models/multiple_transfers_model_send.dart'
@@ -724,6 +725,7 @@ class InboxController extends GetxController {
         //     transferId: transferId,
         //     correspondenceId: correspondenceId);
 
+        //  ViewerController.to.allAnnotations.clear();
         Get.toNamed("/DocumentPage");
       } else {
         Get.snackbar("", "canotopen".tr);
@@ -736,6 +738,8 @@ class InboxController extends GetxController {
     //
     //    Get.find<DocumentController>().gatAllDataAboutDOC(docId:  docId, transferId: transferId, correspondenceId: correspondenceId);
     //   Get.find<DocumentController>().loadPdf();
+
+    // ViewerController.to.allAnnotations.clear();
     Get.toNamed("/DocumentPage");
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/search_page_result_controller.dart';
+import '../viewer/controllers/viewerController.dart';
 import '../widgets/custom_listview.dart';
 
 class SearchPageResult extends GetWidget<SearchPageResultController> {
@@ -9,25 +10,24 @@ class SearchPageResult extends GetWidget<SearchPageResultController> {
 
   @override
   Widget build(BuildContext context) {
-
     return SafeArea(
       child: Scaffold(
-        body:
-
-
-        CustomListView(//allCorrespondences: controller.correspondences,
-            customActions: controller.customActions,functionComplet: (){},functionReply: (){},functionSummary: (){},functionTrunsfer: (){},
+        body: CustomListView(
+            //allCorrespondences: controller.correspondences,
+            customActions: controller.customActions,
+            functionComplet: () {},
+            functionReply: () {},
+            functionSummary: () {},
+            functionTrunsfer: () {},
             function: controller.onRefresh(),
             correspondences: controller.correspondences,
             haveMoreData: false,
             onClickItem: () {
-
-
               ///
               ///
+              ///
+              // ViewerController.to.allAnnotations.clear();
               Get.toNamed("/DocumentPage");
-
-
             },
             scrollController: controller.scrollController),
       ),

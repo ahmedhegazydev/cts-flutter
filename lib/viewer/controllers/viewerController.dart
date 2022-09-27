@@ -18,6 +18,9 @@ class ViewerController extends GetxController {
   RxDouble screenWidth = 0.0.obs;
   RxDouble screenHeight = 0.0.obs;
 
+  double pagewidth = 0;
+  double pageheight = 0;
+
   setScreenWidthAndHeight(double screenWidthNew, double screenHeightNew) {
     screenWidth.value = screenWidthNew;
     screenWidth.refresh();
@@ -39,6 +42,10 @@ class ViewerController extends GetxController {
 
   RxList<AnnotationObject> allAnnotations = <AnnotationObject>[].obs;
 
+  getAllAnnotations() {
+    return allAnnotations.toList();
+  }
+
   setupLists(int pageCount) {
     annotations = [];
     for (int i = 0; i < pageCount; i++) {
@@ -57,13 +64,18 @@ class ViewerController extends GetxController {
 
   AnnotationBaseTypes annotationToAdd = AnnotationBaseTypes.none;
   Image? annotationImage;
+  String? base64;
+  String? annTypeID;
   prepareToAddAnnotationOnTap(AnnotationBaseTypes type) {
     annotationToAdd = type;
   }
 
-  prepareToAddSignatureAnnotationOnTap(Image image) {
+  prepareToAddSignatureAnnotationOnTap(
+      Image image, String base64, String type) {
     annotationToAdd = AnnotationBaseTypes.signature;
     annotationImage = image;
+    this.base64 = base64;
+    annTypeID = type;
   }
 
   creatAndAddAnnotationOnDraw(double width, double height, double originX,
@@ -73,6 +85,10 @@ class ViewerController extends GetxController {
     var x = originX;
     var y = originY;
     var annotation = AnnotationObject(x, y, 100, 40, "ann", page, v1);
+
+    annotation.parentHeight = pageheight.toInt();
+    annotation.parentWidth = pagewidth.toInt();
+
     // ViewerController.to.annotations[page].add(MoveableStackItem(100, 50, x, y));
     allAnnotations.add(annotation);
     var annotationWidget = MoveableStackItem.withImage(
@@ -87,7 +103,10 @@ class ViewerController extends GetxController {
     var x = originX - width / 2;
     var y = originY - height / 2;
 
-    var annotation = AnnotationObject(x, y, 100, 40, "ann", page, v1);
+    var annotation = AnnotationObject(x, y, 100, 40, annTypeID!, page, v1);
+    annotation.imagebase64str = base64;
+    annotation.parentHeight = pageheight.toInt();
+    annotation.parentWidth = pagewidth.toInt();
     // ViewerController.to.annotations[page].add(MoveableStackItem(100, 50, x, y));
     allAnnotations.add(annotation);
     if (annotationToAdd == AnnotationBaseTypes.signature) {
@@ -108,13 +127,19 @@ class ViewerController extends GetxController {
       required double originX,
       required double originY,
       required int page,
-      required Image image}) {
+      required Image image,
+      required String type,
+      required String base64}) {
     var uuid = const Uuid();
     var v1 = uuid.v1();
     var x = originX - width / 2;
     var y = originY - height / 2;
 
-    var annotation = AnnotationObject(x, y, 100, 40, "ann", page, v1);
+    var annotation =
+        AnnotationObject(x, y, width.toInt(), height.toInt(), type, page, v1);
+    annotation.imagebase64str = base64;
+    annotation.parentHeight = pageheight.toInt();
+    annotation.parentWidth = pagewidth.toInt();
     // ViewerController.to.annotations[page].add(MoveableStackItem(100, 50, x, y));
     allAnnotations.add(annotation);
     var annotationWidget = MoveableStackItem.withUIImage(

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -33,6 +34,7 @@ import '../services/apis/inside_doc/get_user_routing_api.dart';
 import '../services/apis/inside_doc/is_already_exported_as_paperwork_api.dart';
 import '../services/apis/inside_doc/is_already_exported_as_transfer_api.dart';
 import '../services/apis/multiple_transfers_api.dart';
+import '../services/apis/save_document_annotations_api.dart';
 import '../services/json_model/can_open_document_model.dart';
 import '../services/json_model/favorites/list_all/ListFavoriteRecipients_response.dart';
 import '../services/json_model/find_recipient_model.dart';
@@ -58,6 +60,7 @@ import '../services/json_model/inopendocModel/is_already_exported_as_paperwork_m
 import '../services/json_model/inopendocModel/is_already_exported_as_transfer_model.dart';
 import '../services/json_model/inopendocModel/save_document_annotation_model.dart';
 import '../services/json_model/login_model.dart';
+import '../services/json_model/save_document_annotation_model.dart';
 import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
 import '../services/models/multiple_transfers_model_send.dart'
     as multipletransfersSend;
@@ -209,6 +212,42 @@ class DocumentController extends GetxController {
 //=====================================================================================
 
   SaveDocumentAnnotationModel? postSaveDocumentAnnotationsModel;
+
+  Future SaveDocAnnotationsData({
+    required BuildContext context,
+    required String userId,
+    required String correspondenceId,
+    required String transferId,
+    required String attachmentId,
+    required String isOriginalMail,
+    required String documentAnnotationsString,
+    required String delegateGctId,
+  }) async {
+    final SaveDocumentAnnotationsAPI _saveDocumentAnnotationsApi =
+        SaveDocumentAnnotationsAPI(context);
+    postSaveDocumentAnnotationsModel = SaveDocumentAnnotationModel(
+      AttachmentId: attachmentId.toString(),
+      CorrespondenceId: correspondenceId,
+      DelegateGctId: delegateGctId,
+      DocumentAnnotationsString: documentAnnotationsString,
+      IsOriginalMail: isOriginalMail,
+      Token: secureStorage.token()!,
+      UserId: userId,
+      TransferId: transferId,
+      DocumentPagesString: '',
+      DocumentUrl: '',
+      Language: 'en',
+      UnSign: 'false',
+    );
+
+    log(jsonEncode(postSaveDocumentAnnotationsModel?.toMap()));
+    await _saveDocumentAnnotationsApi
+        .post(postSaveDocumentAnnotationsModel?.toMap())
+        .then((value) {
+      log("saveannotations res");
+      log(jsonEncode(value));
+    });
+  }
 
   backTooragnalFileDocpdf() {
     notoragnalFileDoc = false;
@@ -1263,6 +1302,8 @@ class DocumentController extends GetxController {
 
   bool canOpenInOffice() {
     if (canOpenDocumentModel == null) return false;
+    if (canOpenDocumentModel!.attachments!.attachments!.length == 0)
+      return false;
     var attachment = canOpenDocumentModel!.attachments!.attachments![0];
     var editOfficeDetails = attachment.editOfficeDetails!;
     if (editOfficeDetails.spUrl == null ||
@@ -2061,11 +2102,11 @@ class ViewerAnnotation {
   String? page;
   String? X;
   String? Y;
-  String? type;
+  String type;
   String? width;
   String? height;
-  String? imageByte;
-  String? imageName;
+  String imageByte;
+  String imageName;
   String? text;
   bool? readonly;
   String? userId;
@@ -2076,11 +2117,11 @@ class ViewerAnnotation {
     this.page,
     this.X,
     this.Y,
-    this.type,
+    this.type = "",
     this.width,
     this.height,
-    this.imageByte,
-    this.imageName,
+    this.imageByte = "",
+    this.imageName = "",
     this.text,
     this.readonly,
     this.userId,

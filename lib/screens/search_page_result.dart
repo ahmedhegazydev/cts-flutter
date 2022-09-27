@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/search_page_result_controller.dart';
+import '../viewer/controllers/viewerController.dart';
 import '../widgets/custom_listview.dart';
 
 class SearchPageResult extends GetWidget<SearchPageResultController> {
@@ -11,7 +12,9 @@ class SearchPageResult extends GetWidget<SearchPageResultController> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Container(height: MediaQuery.of(context).size.height,width:MediaQuery.of(context).size.width ,
+        body: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
           child: CustomListView(
               //allCorrespondences: controller.correspondences,
               customActions: controller.customActions,

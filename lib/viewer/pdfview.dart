@@ -48,16 +48,17 @@ class _PDFViewState extends State<PDFView> {
           String imageBytes =
               element.imageByte!.replaceAll("data:image/png;base64,", "");
           ViewerController.to.creatAndAddAnnotationOnLoad(
-            width: width,
-            height: height,
-            image: Image.memory(
-              dataFromBase64String(imageBytes),
-              fit: BoxFit.fill,
-            ),
-            originX: x,
-            originY: y,
-            page: page,
-          );
+              width: width,
+              height: height,
+              image: Image.memory(
+                dataFromBase64String(imageBytes),
+                fit: BoxFit.fill,
+              ),
+              originX: x,
+              originY: y,
+              page: page,
+              base64: element.imageByte,
+              type: element.type);
         });
 
         setState(() {
@@ -85,6 +86,8 @@ class _PDFViewState extends State<PDFView> {
 
       dpageHeigt = page.height.toDouble();
       dpageWidth = page.width.toDouble();
+      ViewerController.to.pageheight = dpageHeigt;
+      ViewerController.to.pagewidth = dpageWidth;
       var aspect = dpageWidth / widget.size.width;
       final pageImage = await page.render(
           width: widget.size.width, height: dpageHeigt / aspect);

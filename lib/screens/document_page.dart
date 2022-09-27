@@ -1,4 +1,5 @@
 //import 'dart:js';
+import 'dart:convert';
 import 'dart:typed_data';
 import 'package:cts/screens/search_page.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/inopendocModel/g2g/g2g_Info_for_export_model.dart';
 import '../services/json_model/login_model.dart';
 import '../utility/all_const.dart';
+import '../utility/all_string_const.dart';
 import '../utility/utilitie.dart';
 import '../viewer/controllers/viewerController.dart';
 import '../viewer/pdfview.dart';
@@ -99,6 +101,43 @@ class DocumentPage extends GetWidget<DocumentController> {
     return ExpandableFab(
       distance: 122.0,
       children: [
+        ActionButton(
+          onPressed: () async {
+            var all = ViewerController.to.allAnnotations.toList();
+            var sall = ViewerController.to.movableItems.toJson();
+            List<Map> data = [];
+            all.forEach((element) {
+              data.add(element.toMap());
+            });
+            print(data);
+            Map<String, List<Map>> updated = {"1": data};
+            var stringData = jsonEncode(updated);
+            //log(jsonEncode(updated));
+            log(stringData);
+            //  var stringAnnotations = stringData.replaceAll('"', '"\\');
+
+            await controller.SaveDocAnnotationsData(
+                context: context,
+                attachmentId: controller
+                    .isOriginalMailAttachmentsList!.attachmentId
+                    .toString(),
+                correspondenceId: controller
+                    .canOpenDocumentModel!.correspondence!.correspondenceId!,
+                delegateGctId: "0",
+                documentAnnotationsString: stringData,
+                isOriginalMail: controller
+                    .isOriginalMailAttachmentsList!.isOriginalMail!
+                    .toString(),
+                transferId: controller
+                    .canOpenDocumentModel!.correspondence!.transferId!,
+                userId: controller.secureStorage
+                    .readIntSecureData(AllStringConst.UserId)
+                    .toString());
+
+            // log(updated);
+          },
+          icon: const Icon(Icons.print),
+        ),
         ActionButton(
           onPressed: () {
             showExportDialog(context);
@@ -614,15 +653,19 @@ class DocumentPage extends GetWidget<DocumentController> {
 
                             final Uint8List? data =
                                 await controller.controller.toPngBytes();
+                            String base64String = base64Encode(data!);
                             ViewerController.to
                                 .prepareToAddSignatureAnnotationOnTap(
                                     Image.memory(
-                              data!,
-                              fit: BoxFit.fill,
-                              key: key,
-                              width: 100,
-                              height: 100,
-                            ));
+                                      data!,
+                                      fit: BoxFit.fill,
+                                      key: key,
+                                      width: 100,
+                                      height: 100,
+                                    ),
+                                    base64String,
+                                    "7");
+                            var ann = ViewerController.to.allAnnotations.value;
 
                             Get.back();
                           },
@@ -652,15 +695,18 @@ class DocumentPage extends GetWidget<DocumentController> {
 
                                 final Uint8List? data =
                                     await controller.controller.toPngBytes();
+                                String base64String = base64Encode(data!);
                                 ViewerController.to
                                     .prepareToAddSignatureAnnotationOnTap(
                                         Image.memory(
-                                  data!,
-                                  fit: BoxFit.fill,
-                                  key: key,
-                                  width: 100,
-                                  height: 100,
-                                ));
+                                          data!,
+                                          fit: BoxFit.fill,
+                                          key: key,
+                                          width: 100,
+                                          height: 100,
+                                        ),
+                                        base64String,
+                                        "8");
                                 Get.back();
                               },
                               child: Image.memory(dataFromBase64String(

@@ -89,7 +89,7 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
       right: 0,
       child: GestureDetector(
         onTap: () {
-          print("closeeeee ");
+          print("close");
         },
         child: Container(
           width: 20,
@@ -154,9 +154,32 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
     );
   }
 
+  void updateParentObject() {
+    if (ViewerController.to.allAnnotations.length > 0) {
+      ViewerController.to.allAnnotations
+          .where((p0) => p0.uuid == widget.uuid)
+          .first
+          .width = width.toInt();
+      ViewerController.to.allAnnotations
+          .where((p0) => p0.uuid == widget.uuid)
+          .first
+          .height = height.toInt();
+      ViewerController.to.allAnnotations
+          .where((p0) => p0.uuid == widget.uuid)
+          .first
+          .x = xPosition;
+      ViewerController.to.allAnnotations
+          .where((p0) => p0.uuid == widget.uuid)
+          .first
+          .y = yPosition;
+    }
+  }
+
   void validateConstraints() {
     if (height < minHeight) height = minHeight;
     if (width < minWidth) width = minWidth;
+
+    updateParentObject();
   }
 
   Widget dragButtonTR() {
@@ -352,6 +375,8 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
               } else {
                 yPosition = ViewerController.to.screenHeight.value - height;
               }
+
+              updateParentObject();
             });
           },
           child: Stack(children: [

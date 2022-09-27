@@ -12,6 +12,7 @@ class SearchPageResult extends GetWidget<SearchPageResultController> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: _buildAppBar(context),
         body: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
@@ -33,6 +34,32 @@ class SearchPageResult extends GetWidget<SearchPageResultController> {
               scrollController: controller.scrollController),
         ),
       ),
+    );
+  }
+
+  AppBar _buildAppBar(BuildContext context) {
+    return AppBar(
+      toolbarHeight: 100,
+      title: Text(
+        "appTitle".tr,
+        style: Theme.of(context)
+            .textTheme
+            .headline1!
+            .copyWith(color: Colors.white, fontSize: 25),
+        textAlign: TextAlign.start,
+      ),
+      actions: <Widget>[
+        SizedBox(
+          width: 100,
+        ),
+        IconButton(
+          icon: const Icon(Icons.navigate_next),
+          tooltip: 'back',
+          onPressed: () {
+            Get.back();
+          },
+        ),
+      ],
     );
   }
 }

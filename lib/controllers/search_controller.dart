@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:cts/controllers/search_page_result_controller.dart';
 
 import 'package:flutter/material.dart';
@@ -311,10 +314,10 @@ class SearchController extends GetxController {
         "ReferenceNumber:${textEditingControllerReferenceNumber1.text}/${textEditingControllerReferenceNumber2.text}/${textEditingControllerReferenceNumber2.text};%23Subject:${textEditingControllerSubject.text};%23From:${from?.id ?? ""};%23To:${to?.id ?? ""};%23TransferFrom:${fromDestination?.id ?? ""};%23TransferTo:${toDestination?.id ?? ""};%23Privacy:${privacieVal?.id ?? ""};%23Priority:${prioritieVal?.id ?? ""};%23Status:${statuseVal?.id ?? ""};%23Country:${countrieVal?.id ?? ""};%23Classification:${classificationsVal?.id ?? ""};%23PrimaryClassification:${primaryClassificationval?.iD ?? ""};%23FromDocumentDate:${textEditingControllerFromDocDate.text};%23ToDocumentDate:${textEditingControllerToDocDate.text};%23RegisterDate:${textEditingControllerRegisterDate.text};%23";
     final SearchCorrespondencesApi _searchCorrespondencesApi =
         SearchCorrespondencesApi(context!);
-    print(cr);
+    log(cr);
     _searchCorrespondencesApi.post({
       "Token": "${_secureStorage.token()}",
-      "Criteria": cr,
+      "Criteria": "",
       "IsAdvanced": 1,
       "Language": Get.locale?.languageCode == "en" ? "en" : "ar"
     }).then((value) {

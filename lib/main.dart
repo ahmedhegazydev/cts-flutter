@@ -6,6 +6,7 @@ import 'package:cts/screens/filter/FilterSideScreen.dart';
 import 'package:cts/utility/Extenstions.dart';
 import 'package:cts/utility/all_string_const.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -44,8 +45,17 @@ void main() async {
       "secureStorage.deleteSecureData(AllStringConst.Token)   =>     ${secureStorage.deleteSecureData(AllStringConst.Token)}");
 
   Get.put(MController());
-
+  if (isPhone()) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]).then((value) => runApp(MyApp()));
+  }
   runApp(MyApp());
+}
+
+bool isPhone() {
+  final data = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
+  return data.size.shortestSide < 600;
 }
 
 class RestartWidget extends StatefulWidget {

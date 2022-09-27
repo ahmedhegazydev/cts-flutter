@@ -190,7 +190,7 @@ class CustomListView extends GetView<InboxController> {
                                                           FontWeight.bold)),
                                             ],
                                           ),
-                                          buildPriorities(pos, context, r!)
+                                          buildPriorities(pos, context)
                                         ],
                                       ),
                                     ),
@@ -941,11 +941,12 @@ class CustomListView extends GetView<InboxController> {
     );
   }
 
-  Padding buildPriorities(
-      int pos, BuildContext context, CorrespondencesModel cm) {
+  Padding buildPriorities(int pos, BuildContext context) {
+    var ic = Get.find<InboxController>();
+    var cm = ic.correspondencesModel;
     int priorityID = int.parse(correspondences[pos].priorityId!);
     var priority =
-        cm.priorities!.where((element) => element.Value == priorityID).first;
+        cm!.priorities!.where((element) => element.Value == priorityID).first;
     int privacyID = int.parse(correspondences[pos].privacyId!);
     var privacy =
         cm.privacies!.where((element) => element.Value == privacyID).first;

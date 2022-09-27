@@ -285,7 +285,7 @@ class InboxController extends GetxController {
 
   List<tt.Priorities> listPriorities = [];
   tt.Priorities? selectPriorities;
-Map<int,tt.Priorities>mapOfPriorities={};
+  Map<int, tt.Priorities> mapOfPriorities = {};
   updateselectPriorities(tt.Priorities? p) {
     selectPriorities = p;
     update();
@@ -549,7 +549,7 @@ Map<int,tt.Priorities>mapOfPriorities={};
       listPriorities = correspondencesModel!.priorities!;
       listPriorities.forEach((element) {
         print("elementelement  =>${element.TextAr}");
-        mapOfPriorities[element.Value!]=element;
+        mapOfPriorities[element.Value!] = element;
       });
       print("correspondencesModel =>   ${listPriorities.length}");
       correspondencesModel?.inbox?.correspondences?.forEach((element) {

@@ -11,15 +11,13 @@ import '../widgets/custom_button_with_icon.dart';
 import 'package:get/get.dart';
 
 class SearchPage extends GetWidget<SearchController> {
-//  TextEditingController a = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     String year = DateTime.now().toString().substring(0, 4);
     controller.context = context;
 
     return Scaffold(
-      appBar: AppBar(title: Text("appTitle".tr), centerTitle: true),
+      appBar: _buildAppBar(context),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: GetBuilder<SearchController>(builder: (logic) {
@@ -349,7 +347,8 @@ class SearchPage extends GetWidget<SearchController> {
                         width: 2,
                       ),
                       CustomButtonWithIcon(
-                        icon: Icons.person,color: Colors.white,
+                        icon: Icons.person,
+                        color: Colors.white,
                         onClick: () {
                           controller.listOfUser(0);
                         },
@@ -358,7 +357,8 @@ class SearchPage extends GetWidget<SearchController> {
                         width: 2,
                       ),
                       CustomButtonWithIcon(
-                        icon: Icons.account_balance,color: Colors.white,
+                        icon: Icons.account_balance,
+                        color: Colors.white,
                         onClick: () {
                           controller.listOfUser(2);
                         },
@@ -367,7 +367,8 @@ class SearchPage extends GetWidget<SearchController> {
                         width: 2,
                       ),
                       CustomButtonWithIcon(
-                        icon: Icons.clear,color: Colors.white,
+                        icon: Icons.clear,
+                        color: Colors.white,
                         onClick: () {
                           controller.listOfUser(0);
                         },
@@ -428,7 +429,8 @@ class SearchPage extends GetWidget<SearchController> {
                       SizedBox(
                         width: 2,
                       ),
-                      CustomButtonWithIcon(color: Colors.white,
+                      CustomButtonWithIcon(
+                        color: Colors.white,
                         icon: Icons.person,
                         onClick: () {
                           controller.listOfUser(0);
@@ -437,7 +439,8 @@ class SearchPage extends GetWidget<SearchController> {
                       SizedBox(
                         width: 2,
                       ),
-                      CustomButtonWithIcon(color: Colors.white,
+                      CustomButtonWithIcon(
+                        color: Colors.white,
                         icon: Icons.account_balance,
                         onClick: () {
                           controller.listOfUser(2);
@@ -446,7 +449,8 @@ class SearchPage extends GetWidget<SearchController> {
                       SizedBox(
                         width: 2,
                       ),
-                      CustomButtonWithIcon(color: Colors.white,
+                      CustomButtonWithIcon(
+                        color: Colors.white,
                         icon: Icons.clear,
                         onClick: () {
                           controller.listOfUser(0);
@@ -931,6 +935,32 @@ class SearchPage extends GetWidget<SearchController> {
           ]);
         }),
       ),
+    );
+  }
+
+  AppBar _buildAppBar(BuildContext context) {
+    return AppBar(
+      toolbarHeight: 100,
+      title: Text(
+        "appTitle".tr,
+        style: Theme.of(context)
+            .textTheme
+            .headline1!
+            .copyWith(color: Colors.white, fontSize: 25),
+        textAlign: TextAlign.start,
+      ),
+      actions: <Widget>[
+        SizedBox(
+          width: 100,
+        ),
+        IconButton(
+          icon: const Icon(Icons.navigate_next),
+          tooltip: 'back',
+          onPressed: () {
+            Get.back();
+          },
+        ),
+      ],
     );
   }
 }

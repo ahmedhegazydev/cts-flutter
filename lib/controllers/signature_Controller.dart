@@ -10,8 +10,10 @@ import '../services/json_model/login_model.dart';
 import '../services/json_model/signature_Info_model.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
+import '../utility/utilitie.dart';
 
 class SignaturePageController extends GetxController {
+  bool saveSing=false;
   Map<String, dynamic>? logindata;
   List<MultiSignatures> multiSignatures = [];
   final SecureStorage secureStorage = SecureStorage();
@@ -30,11 +32,19 @@ class SignaturePageController extends GetxController {
     update();
   }
 
-  updateSignature({context, required SignatureInfoModel signatureInfoModel}) {
+  updateSignature({context, required SignatureInfoModel signatureInfoModel}) async{
+    saveSing=true;
+    update();
     UpdateSignatureApi _updateSignatureApi = UpdateSignatureApi(context);
-    _updateSignatureApi.post(signatureInfoModel.toMap()).then((value) {
+  await  _updateSignatureApi.post(signatureInfoModel.toMap()).then((value) {
+    saveSing=false;
+    update();
       print(value);
     });
+
+    saveSing=false;
+    update();
+
   }
 
   @override
@@ -53,6 +63,7 @@ class SignaturePageController extends GetxController {
   saveSign(context) async {
     print("9999999999999999999999999999999");
     final Uint8List? data = await controller.toPngBytes();
+
     SignatureInfoModel _signatureInfoModel = SignatureInfoModel(
         signature: base64.encode(data!),
         Token: secureStorage.token()!,

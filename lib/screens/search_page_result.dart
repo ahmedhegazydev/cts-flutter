@@ -12,24 +12,26 @@ class SearchPageResult extends GetWidget<SearchPageResultController> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: CustomListView(
-            //allCorrespondences: controller.correspondences,
-            customActions: controller.customActions,
-            functionComplet: () {},
-            functionReply: () {},
-            functionSummary: () {},
-            functionTrunsfer: () {},
-            function: controller.onRefresh(),
-            correspondences: controller.correspondences,
-            haveMoreData: false,
-            onClickItem: () {
-              ///
-              ///
-              ///
-              // ViewerController.to.allAnnotations.clear();
-              Get.toNamed("/DocumentPage");
-            },
-            scrollController: controller.scrollController),
+        body: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: CustomListView(
+              //allCorrespondences: controller.correspondences,
+              customActions: controller.customActions,
+              functionComplet: () {},
+              functionReply: () {},
+              functionSummary: () {},
+              functionTrunsfer: () {},
+              function: controller.onRefresh(),
+              correspondences: controller.correspondences,
+              haveMoreData: false,
+              onClickItem: () {
+                ///
+                ///
+                Get.toNamed("/DocumentPage");
+              },
+              scrollController: controller.scrollController),
+        ),
       ),
     );
   }

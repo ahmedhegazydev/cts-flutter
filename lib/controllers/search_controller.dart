@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cts/controllers/search_page_result_controller.dart';
 
 import 'package:flutter/material.dart';
@@ -18,7 +20,9 @@ import '../services/models/LoginModel.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
 import 'dart:io';
+import 'package:flutter/services.dart' as rootBundel;
 
+import 'inbox_controller.dart';
 class SearchController extends GetxController {
   FindRecipientModel? findRecipientModel;
 
@@ -336,9 +340,7 @@ class SearchController extends GetxController {
         ///
       }
 
-      print("pp");
-      print(searchCorrespondencesModel?.toJson());
-      print("pp");
+
       getSerchData = false;
       update();
     });
@@ -378,5 +380,34 @@ class SearchController extends GetxController {
     // await   audioPlayer!.openAudioSession();
     await audioPlayer!.stopPlayer();
     await audioPlayer!.startPlayer(fromURI: _directoryPath);
+  }
+
+
+
+
+  // تحميل الجسون وتجربه عمليه وهميه للبحث
+  jsonSE()async{
+    final  jsondata=await rootBundel.rootBundle.loadString("assets/json/search.json");
+    searchCorrespondencesModel =  SearchCorrespondencesModel.fromJson(json.decode(jsondata));
+    print("searchCorrespondencesModel  =>${searchCorrespondencesModel?.toJson()}");
+
+    if ((searchCorrespondencesModel?.correspondences?.length ?? 0) < 1) {
+      Get.snackbar("", "emptylist".tr);
+    } else {
+
+
+     // Get.find<InboxController>().correspondencesModel=;
+      Get.find<SearchPageResultController>().correspondences =
+          searchCorrespondencesModel?.correspondences! ?? [];
+      print(Get.find<SearchPageResultController>().correspondences.length);
+print(" Get.find<SearchPageResultController>().correspondences=>  ${ Get.find<SearchPageResultController>().correspondences.length}");
+      print(" searchCorrespondencesModel?.correspondences!=>  ${ searchCorrespondencesModel?.correspondences!}");
+     Get.toNamed("SearchPageResult");
+
+      /// ToDo go to list of reslt
+      ///
+      ///
+    }
+
   }
 }

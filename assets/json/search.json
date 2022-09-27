@@ -1,0 +1,2437 @@
+{
+  "ErrorMessage": null,
+  "Status": 1,
+  "Correspondences": [
+    {
+      "CanRequestDueDate": false,
+      "CategoryId": "7",
+      "ClickableLock": true,
+      "Comments": "",
+      "ControlList": {
+        "CustomToolbarItems": null,
+        "ToolbarItems": [
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "MetaData",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": null,
+                  "Name": "ShowAttachments",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "Attachments",
+            "QuickAction": false
+          },
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "Transfer",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "ØªÙØ§ØµÙŠÙ„ Ø§Ù„Ø§Ø¬Ø±Ø§Ø¡Ø§Øª",
+                  "Name": "ViewActionLogs",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Receivers",
+                  "Name": "ViewReceivers",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Transfers",
+                  "Name": "ViewTransfers",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "More",
+            "QuickAction": false
+          }
+        ]
+      },
+      "CorrespondenceId": "2966767",
+      "DocDueDate": null,
+      "DocDueDays": 0,
+      "FromStructure": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ",
+      "FromUser": " jaber kouki | Ø¥Ø¯Ø§Ø±Ø© Ù†Ø¸Ù… Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª ",
+      "FromUserId": 0,
+      "GridInfo": [
+        {
+          "Label": "Subject",
+          "Value": "hbjbhbk"
+        },
+        {
+          "Label": "From User",
+          "Value": "Ø¥Ø¯Ø§Ø±Ø© Ù†Ø¸Ù… Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª | jaber kouki"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000183/9"
+        },
+        {
+          "Label": "Date",
+          "Value": "10/21/2019"
+        }
+      ],
+      "HasAttachments": false,
+      "HasAttachmentsToBeDelivered": false,
+      "HasSummaries": false,
+      "InboxId": null,
+      "IsCC": false,
+      "IsForGuideline": false,
+      "IsHighPriority": false,
+      "IsLocked": true,
+      "IsNew": false,
+      "IsShareable": true,
+      "Metadata": [
+        {
+          "Label": "Date",
+          "Value": "10/21/2019"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000183/9"
+        },
+        {
+          "Label": "Subject",
+          "Value": "hbjbhbk"
+        },
+        {
+          "Label": "From User",
+          "Value": "Ø¥Ø¯Ø§Ø±Ø© Ù†Ø¸Ù… Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª | jaber kouki"
+        },
+        {
+          "Label": "To",
+          "Value": "Ø§Ù„Ù‚Ù†ØµÙ„ÙŠØ© Ø§Ù„Ø¹Ø§Ù…Ø© Ù„Ø¯ÙˆÙ„Ø© Ù‚Ø·Ø± / Ø¯Ø¨ÙŠ"
+        },
+        {
+          "Label": "Purpose",
+          "Value": "Ù„Ù„ØªØ¹Ø¯ÙŠÙ„"
+        },
+        {
+          "Label": "Instructions From Sender",
+          "Value": ""
+        },
+        {
+          "Label": "PrivacyLevel",
+          "Value": "Ø®Ø§Øµ"
+        },
+        {
+          "Label": "PriorityLevel",
+          "Value": "Ø¹Ø§Ø¯ÙŠ"
+        },
+        {
+          "Label": "Registered By",
+          "Value": "Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        }
+      ],
+      "PriorityId": "1",
+      "PrivacyId": "1",
+      "PurposeId": "18",
+      "ShowLock": false,
+      "Status": 1,
+      "ThumbnailUrl": "",
+      "TransferId": "5689973",
+      "TsfDueDate": null,
+      "Type": "",
+      "VisualTrackingUrl": null,
+      "isTransferedToContact": true
+    },
+    {
+      "CanRequestDueDate": false,
+      "CategoryId": "7",
+      "ClickableLock": true,
+      "Comments": "",
+      "ControlList": {
+        "CustomToolbarItems": null,
+        "ToolbarItems": [
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "MetaData",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": null,
+                  "Name": "ShowAttachments",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "Attachments",
+            "QuickAction": false
+          },
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "Transfer",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "ØªÙØ§ØµÙŠÙ„ Ø§Ù„Ø§Ø¬Ø±Ø§Ø¡Ø§Øª",
+                  "Name": "ViewActionLogs",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Receivers",
+                  "Name": "ViewReceivers",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Transfers",
+                  "Name": "ViewTransfers",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "More",
+            "QuickAction": false
+          }
+        ]
+      },
+      "CorrespondenceId": "2966766",
+      "DocDueDate": null,
+      "DocDueDays": 0,
+      "FromStructure": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ",
+      "FromUser": " jaber kouki | Ø¥Ø¯Ø§Ø±Ø© Ù†Ø¸Ù… Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª ",
+      "FromUserId": 0,
+      "GridInfo": [
+        {
+          "Label": "Subject",
+          "Value": "Test Hilal"
+        },
+        {
+          "Label": "From User",
+          "Value": "Ø¥Ø¯Ø§Ø±Ø© Ù†Ø¸Ù… Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª | jaber kouki"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000182/9"
+        },
+        {
+          "Label": "Date",
+          "Value": "9/2/2019"
+        }
+      ],
+      "HasAttachments": true,
+      "HasAttachmentsToBeDelivered": false,
+      "HasSummaries": false,
+      "InboxId": null,
+      "IsCC": false,
+      "IsForGuideline": false,
+      "IsHighPriority": false,
+      "IsLocked": true,
+      "IsNew": false,
+      "IsShareable": true,
+      "Metadata": [
+        {
+          "Label": "Date",
+          "Value": "9/2/2019"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000182/9"
+        },
+        {
+          "Label": "Subject",
+          "Value": "Test Hilal"
+        },
+        {
+          "Label": "From User",
+          "Value": "Ø¥Ø¯Ø§Ø±Ø© Ù†Ø¸Ù… Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª | jaber kouki"
+        },
+        {
+          "Label": "To",
+          "Value": "Ø¥Ø¯Ø§Ø±Ø© Ø§Ù„Ø´Ø¤ÙˆÙ† Ø§Ù„Ø§ÙØ±ÙŠÙ‚ÙŠØ©"
+        },
+        {
+          "Label": "Purpose",
+          "Value": "Ù„Ø§Ø¬Ø±Ø§Ø¡ Ø§Ù„Ù„Ø§Ø²Ù…"
+        },
+        {
+          "Label": "Instructions From Sender",
+          "Value": ""
+        },
+        {
+          "Label": "PrivacyLevel",
+          "Value": "Ø®Ø§Øµ"
+        },
+        {
+          "Label": "PriorityLevel",
+          "Value": "Ø¹Ø§Ø¯ÙŠ"
+        },
+        {
+          "Label": "Registered By",
+          "Value": "Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        }
+      ],
+      "PriorityId": "1",
+      "PrivacyId": "1",
+      "PurposeId": "19",
+      "ShowLock": false,
+      "Status": 1,
+      "ThumbnailUrl": "",
+      "TransferId": "5688960",
+      "TsfDueDate": null,
+      "Type": "",
+      "VisualTrackingUrl": null,
+      "isTransferedToContact": true
+    },
+    {
+      "CanRequestDueDate": false,
+      "CategoryId": "7",
+      "ClickableLock": true,
+      "Comments": "",
+      "ControlList": {
+        "CustomToolbarItems": null,
+        "ToolbarItems": [
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "MetaData",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": null,
+                  "Name": "ShowAttachments",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "Attachments",
+            "QuickAction": false
+          },
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "Transfer",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "ØªÙØ§ØµÙŠÙ„ Ø§Ù„Ø§Ø¬Ø±Ø§Ø¡Ø§Øª",
+                  "Name": "ViewActionLogs",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Receivers",
+                  "Name": "ViewReceivers",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Transfers",
+                  "Name": "ViewTransfers",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "More",
+            "QuickAction": false
+          }
+        ]
+      },
+      "CorrespondenceId": "2966765",
+      "DocDueDate": null,
+      "DocDueDays": 0,
+      "FromStructure": "test324234",
+      "FromUser": " Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ | ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ ",
+      "FromUserId": 0,
+      "GridInfo": [
+        {
+          "Label": "Subject",
+          "Value": "testing"
+        },
+        {
+          "Label": "From User",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ | Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000181/9"
+        },
+        {
+          "Label": "Date",
+          "Value": "8/6/2019"
+        }
+      ],
+      "HasAttachments": false,
+      "HasAttachmentsToBeDelivered": false,
+      "HasSummaries": false,
+      "InboxId": null,
+      "IsCC": false,
+      "IsForGuideline": false,
+      "IsHighPriority": false,
+      "IsLocked": true,
+      "IsNew": false,
+      "IsShareable": true,
+      "Metadata": [
+        {
+          "Label": "Date",
+          "Value": "8/6/2019"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000181/9"
+        },
+        {
+          "Label": "Subject",
+          "Value": "testing"
+        },
+        {
+          "Label": "From User",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ | Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        },
+        {
+          "Label": "To",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ"
+        },
+        {
+          "Label": "Purpose",
+          "Value": "Ù„Ù„Ø¹Ù„Ù… Ùˆ Ø§Ù„Ø§Ø·Ù„Ø§Ø¹"
+        },
+        {
+          "Label": "Instructions From Sender",
+          "Value": ""
+        },
+        {
+          "Label": "PrivacyLevel",
+          "Value": "Ø®Ø§Øµ"
+        },
+        {
+          "Label": "PriorityLevel",
+          "Value": "Ø¹Ø§Ø¯ÙŠ"
+        },
+        {
+          "Label": "Registered By",
+          "Value": "Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        }
+      ],
+      "PriorityId": "1",
+      "PrivacyId": "1",
+      "PurposeId": "7",
+      "ShowLock": false,
+      "Status": 1,
+      "ThumbnailUrl": "",
+      "TransferId": "5689959",
+      "TsfDueDate": null,
+      "Type": "",
+      "VisualTrackingUrl": null,
+      "isTransferedToContact": true
+    },
+    {
+      "CanRequestDueDate": false,
+      "CategoryId": "7",
+      "ClickableLock": true,
+      "Comments": "",
+      "ControlList": {
+        "CustomToolbarItems": null,
+        "ToolbarItems": [
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "MetaData",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": null,
+                  "Name": "ShowAttachments",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "Attachments",
+            "QuickAction": false
+          },
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "Transfer",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "ØªÙØ§ØµÙŠÙ„ Ø§Ù„Ø§Ø¬Ø±Ø§Ø¡Ø§Øª",
+                  "Name": "ViewActionLogs",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Receivers",
+                  "Name": "ViewReceivers",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Transfers",
+                  "Name": "ViewTransfers",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "More",
+            "QuickAction": false
+          }
+        ]
+      },
+      "CorrespondenceId": "2966764",
+      "DocDueDate": null,
+      "DocDueDays": 0,
+      "FromStructure": "test xx",
+      "FromUser": " jaber kouki | Ø¥Ø¯Ø§Ø±Ø© Ù†Ø¸Ù… Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª ",
+      "FromUserId": 0,
+      "GridInfo": [
+        {
+          "Label": "Subject",
+          "Value": "test"
+        },
+        {
+          "Label": "From User",
+          "Value": "Ø¥Ø¯Ø§Ø±Ø© Ù†Ø¸Ù… Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª | jaber kouki"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000180/9"
+        },
+        {
+          "Label": "Date",
+          "Value": "8/6/2019"
+        }
+      ],
+      "HasAttachments": false,
+      "HasAttachmentsToBeDelivered": false,
+      "HasSummaries": false,
+      "InboxId": null,
+      "IsCC": false,
+      "IsForGuideline": false,
+      "IsHighPriority": false,
+      "IsLocked": true,
+      "IsNew": false,
+      "IsShareable": true,
+      "Metadata": [
+        {
+          "Label": "Date",
+          "Value": "8/6/2019"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000180/9"
+        },
+        {
+          "Label": "Subject",
+          "Value": "test"
+        },
+        {
+          "Label": "From User",
+          "Value": "Ø¥Ø¯Ø§Ø±Ø© Ù†Ø¸Ù… Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª | jaber kouki"
+        },
+        {
+          "Label": "To",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ"
+        },
+        {
+          "Label": "Purpose",
+          "Value": "Ù„Ø§Ø¬Ø±Ø§Ø¡ Ø§Ù„Ù„Ø§Ø²Ù…"
+        },
+        {
+          "Label": "Instructions From Sender",
+          "Value": ""
+        },
+        {
+          "Label": "PrivacyLevel",
+          "Value": "Ø®Ø§Øµ"
+        },
+        {
+          "Label": "PriorityLevel",
+          "Value": "Ø¹Ø§Ø¯ÙŠ"
+        },
+        {
+          "Label": "Registered By",
+          "Value": "Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        }
+      ],
+      "PriorityId": "1",
+      "PrivacyId": "1",
+      "PurposeId": "19",
+      "ShowLock": false,
+      "Status": 1,
+      "ThumbnailUrl": "",
+      "TransferId": "5686950",
+      "TsfDueDate": null,
+      "Type": "",
+      "VisualTrackingUrl": null,
+      "isTransferedToContact": true
+    },
+    {
+      "CanRequestDueDate": false,
+      "CategoryId": "7",
+      "ClickableLock": true,
+      "Comments": "",
+      "ControlList": {
+        "CustomToolbarItems": null,
+        "ToolbarItems": [
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "MetaData",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": null,
+                  "Name": "ShowAttachments",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "Attachments",
+            "QuickAction": false
+          },
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "Transfer",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "ØªÙØ§ØµÙŠÙ„ Ø§Ù„Ø§Ø¬Ø±Ø§Ø¡Ø§Øª",
+                  "Name": "ViewActionLogs",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Receivers",
+                  "Name": "ViewReceivers",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Transfers",
+                  "Name": "ViewTransfers",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "More",
+            "QuickAction": false
+          }
+        ]
+      },
+      "CorrespondenceId": "2966763",
+      "DocDueDate": null,
+      "DocDueDays": 0,
+      "FromStructure": "test23232",
+      "FromUser": " Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ | ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ ",
+      "FromUserId": 0,
+      "GridInfo": [
+        {
+          "Label": "Subject",
+          "Value": "test"
+        },
+        {
+          "Label": "From User",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ | Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000179/9"
+        },
+        {
+          "Label": "Date",
+          "Value": "8/6/2019"
+        }
+      ],
+      "HasAttachments": false,
+      "HasAttachmentsToBeDelivered": false,
+      "HasSummaries": false,
+      "InboxId": null,
+      "IsCC": false,
+      "IsForGuideline": false,
+      "IsHighPriority": false,
+      "IsLocked": true,
+      "IsNew": false,
+      "IsShareable": true,
+      "Metadata": [
+        {
+          "Label": "Date",
+          "Value": "8/6/2019"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000179/9"
+        },
+        {
+          "Label": "Subject",
+          "Value": "test"
+        },
+        {
+          "Label": "From User",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ | Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        },
+        {
+          "Label": "To",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ"
+        },
+        {
+          "Label": "Purpose",
+          "Value": "Ù„Ù„ØªÙˆÙ‚ÙŠØ¹"
+        },
+        {
+          "Label": "Instructions From Sender",
+          "Value": ""
+        },
+        {
+          "Label": "PrivacyLevel",
+          "Value": "Ø®Ø§Øµ"
+        },
+        {
+          "Label": "PriorityLevel",
+          "Value": "Ø¹Ø§Ø¯ÙŠ"
+        },
+        {
+          "Label": "Registered By",
+          "Value": "Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        }
+      ],
+      "PriorityId": "1",
+      "PrivacyId": "1",
+      "PurposeId": "21",
+      "ShowLock": false,
+      "Status": 1,
+      "ThumbnailUrl": "",
+      "TransferId": "5686933",
+      "TsfDueDate": null,
+      "Type": "",
+      "VisualTrackingUrl": null,
+      "isTransferedToContact": true
+    },
+    {
+      "CanRequestDueDate": false,
+      "CategoryId": "7",
+      "ClickableLock": true,
+      "Comments": "",
+      "ControlList": {
+        "CustomToolbarItems": null,
+        "ToolbarItems": [
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "MetaData",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": null,
+                  "Name": "ShowAttachments",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "Attachments",
+            "QuickAction": false
+          },
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "Transfer",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "ØªÙØ§ØµÙŠÙ„ Ø§Ù„Ø§Ø¬Ø±Ø§Ø¡Ø§Øª",
+                  "Name": "ViewActionLogs",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Receivers",
+                  "Name": "ViewReceivers",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Transfers",
+                  "Name": "ViewTransfers",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "More",
+            "QuickAction": false
+          }
+        ]
+      },
+      "CorrespondenceId": "2966762",
+      "DocDueDate": null,
+      "DocDueDays": 0,
+      "FromStructure": "test xx",
+      "FromUser": " Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ | ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ ",
+      "FromUserId": 0,
+      "GridInfo": [
+        {
+          "Label": "Subject",
+          "Value": "Test"
+        },
+        {
+          "Label": "From User",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ | Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000178/9"
+        },
+        {
+          "Label": "Date",
+          "Value": "8/6/2019"
+        }
+      ],
+      "HasAttachments": true,
+      "HasAttachmentsToBeDelivered": false,
+      "HasSummaries": false,
+      "InboxId": null,
+      "IsCC": false,
+      "IsForGuideline": false,
+      "IsHighPriority": false,
+      "IsLocked": true,
+      "IsNew": false,
+      "IsShareable": true,
+      "Metadata": [
+        {
+          "Label": "Date",
+          "Value": "8/6/2019"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000178/9"
+        },
+        {
+          "Label": "Subject",
+          "Value": "Test"
+        },
+        {
+          "Label": "From User",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ | Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        },
+        {
+          "Label": "To",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ"
+        },
+        {
+          "Label": "Purpose",
+          "Value": "Ù„Ù„Ø¹Ù„Ù… Ùˆ Ø§Ù„Ø§Ø·Ù„Ø§Ø¹"
+        },
+        {
+          "Label": "Instructions From Sender",
+          "Value": ""
+        },
+        {
+          "Label": "PrivacyLevel",
+          "Value": "Ø®Ø§Øµ"
+        },
+        {
+          "Label": "PriorityLevel",
+          "Value": "Ø¹Ø§Ø¯ÙŠ"
+        },
+        {
+          "Label": "Registered By",
+          "Value": "Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        }
+      ],
+      "PriorityId": "1",
+      "PrivacyId": "1",
+      "PurposeId": "7",
+      "ShowLock": false,
+      "Status": 1,
+      "ThumbnailUrl": "",
+      "TransferId": "5689958",
+      "TsfDueDate": null,
+      "Type": "",
+      "VisualTrackingUrl": null,
+      "isTransferedToContact": true
+    },
+    {
+      "CanRequestDueDate": false,
+      "CategoryId": "7",
+      "ClickableLock": true,
+      "Comments": "",
+      "ControlList": {
+        "CustomToolbarItems": null,
+        "ToolbarItems": [
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "MetaData",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": null,
+                  "Name": "ShowAttachments",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "Attachments",
+            "QuickAction": false
+          },
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "Transfer",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "ØªÙØ§ØµÙŠÙ„ Ø§Ù„Ø§Ø¬Ø±Ø§Ø¡Ø§Øª",
+                  "Name": "ViewActionLogs",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Receivers",
+                  "Name": "ViewReceivers",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Transfers",
+                  "Name": "ViewTransfers",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "More",
+            "QuickAction": false
+          }
+        ]
+      },
+      "CorrespondenceId": "2966761",
+      "DocDueDate": null,
+      "DocDueDays": 0,
+      "FromStructure": "test23232",
+      "FromUser": " jaber kouki | Ø¥Ø¯Ø§Ø±Ø© Ù†Ø¸Ù… Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª ",
+      "FromUserId": 0,
+      "GridInfo": [
+        {
+          "Label": "Subject",
+          "Value": "test"
+        },
+        {
+          "Label": "From User",
+          "Value": "Ø¥Ø¯Ø§Ø±Ø© Ù†Ø¸Ù… Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª | jaber kouki"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000177/9"
+        },
+        {
+          "Label": "Date",
+          "Value": "8/6/2019"
+        }
+      ],
+      "HasAttachments": false,
+      "HasAttachmentsToBeDelivered": false,
+      "HasSummaries": false,
+      "InboxId": null,
+      "IsCC": false,
+      "IsForGuideline": false,
+      "IsHighPriority": false,
+      "IsLocked": true,
+      "IsNew": true,
+      "IsShareable": true,
+      "Metadata": [
+        {
+          "Label": "Date",
+          "Value": "8/6/2019"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000177/9"
+        },
+        {
+          "Label": "Subject",
+          "Value": "test"
+        },
+        {
+          "Label": "From User",
+          "Value": "Ø¥Ø¯Ø§Ø±Ø© Ù†Ø¸Ù… Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª | jaber kouki"
+        },
+        {
+          "Label": "To",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ"
+        },
+        {
+          "Label": "Purpose",
+          "Value": "Ù„Ø§Ø¬Ø±Ø§Ø¡ Ø§Ù„Ù„Ø§Ø²Ù…"
+        },
+        {
+          "Label": "Instructions From Sender",
+          "Value": ""
+        },
+        {
+          "Label": "PrivacyLevel",
+          "Value": "Ø®Ø§Øµ"
+        },
+        {
+          "Label": "PriorityLevel",
+          "Value": "Ø¹Ø§Ø¯ÙŠ"
+        },
+        {
+          "Label": "Registered By",
+          "Value": "Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        }
+      ],
+      "PriorityId": "1",
+      "PrivacyId": "1",
+      "PurposeId": "19",
+      "ShowLock": false,
+      "Status": 1,
+      "ThumbnailUrl": "",
+      "TransferId": "5686955",
+      "TsfDueDate": null,
+      "Type": "",
+      "VisualTrackingUrl": null,
+      "isTransferedToContact": true
+    },
+    {
+      "CanRequestDueDate": false,
+      "CategoryId": "7",
+      "ClickableLock": true,
+      "Comments": "",
+      "ControlList": {
+        "CustomToolbarItems": null,
+        "ToolbarItems": [
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "MetaData",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": null,
+                  "Name": "ShowAttachments",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "Attachments",
+            "QuickAction": false
+          },
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "Transfer",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "ØªÙØ§ØµÙŠÙ„ Ø§Ù„Ø§Ø¬Ø±Ø§Ø¡Ø§Øª",
+                  "Name": "ViewActionLogs",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Receivers",
+                  "Name": "ViewReceivers",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Transfers",
+                  "Name": "ViewTransfers",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "More",
+            "QuickAction": false
+          }
+        ]
+      },
+      "CorrespondenceId": "2966760",
+      "DocDueDate": null,
+      "DocDueDays": 0,
+      "FromStructure": "test xx",
+      "FromUser": " jaber kouki | Ø¥Ø¯Ø§Ø±Ø© Ù†Ø¸Ù… Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª ",
+      "FromUserId": 0,
+      "GridInfo": [
+        {
+          "Label": "Subject",
+          "Value": "test"
+        },
+        {
+          "Label": "From User",
+          "Value": "Ø¥Ø¯Ø§Ø±Ø© Ù†Ø¸Ù… Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª | jaber kouki"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000176/9"
+        },
+        {
+          "Label": "Date",
+          "Value": "8/6/2019"
+        }
+      ],
+      "HasAttachments": false,
+      "HasAttachmentsToBeDelivered": false,
+      "HasSummaries": false,
+      "InboxId": null,
+      "IsCC": false,
+      "IsForGuideline": false,
+      "IsHighPriority": false,
+      "IsLocked": true,
+      "IsNew": false,
+      "IsShareable": true,
+      "Metadata": [
+        {
+          "Label": "Date",
+          "Value": "8/6/2019"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000176/9"
+        },
+        {
+          "Label": "Subject",
+          "Value": "test"
+        },
+        {
+          "Label": "From User",
+          "Value": "Ø¥Ø¯Ø§Ø±Ø© Ù†Ø¸Ù… Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª | jaber kouki"
+        },
+        {
+          "Label": "To",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ"
+        },
+        {
+          "Label": "Purpose",
+          "Value": "Ù„Ø§Ø¬Ø±Ø§Ø¡ Ø§Ù„Ù„Ø§Ø²Ù…"
+        },
+        {
+          "Label": "Instructions From Sender",
+          "Value": ""
+        },
+        {
+          "Label": "PrivacyLevel",
+          "Value": "Ø®Ø§Øµ"
+        },
+        {
+          "Label": "PriorityLevel",
+          "Value": "Ø¹Ø§Ø¯ÙŠ"
+        },
+        {
+          "Label": "Registered By",
+          "Value": "Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        }
+      ],
+      "PriorityId": "1",
+      "PrivacyId": "1",
+      "PurposeId": "19",
+      "ShowLock": false,
+      "Status": 1,
+      "ThumbnailUrl": "",
+      "TransferId": "5686894",
+      "TsfDueDate": null,
+      "Type": "",
+      "VisualTrackingUrl": null,
+      "isTransferedToContact": true
+    },
+    {
+      "CanRequestDueDate": false,
+      "CategoryId": "1",
+      "ClickableLock": true,
+      "Comments": "",
+      "ControlList": {
+        "CustomToolbarItems": null,
+        "ToolbarItems": [
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "MetaData",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": null,
+                  "Name": "ShowAttachments",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "Attachments",
+            "QuickAction": false
+          },
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "Transfer",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "ØªÙØ§ØµÙŠÙ„ Ø§Ù„Ø§Ø¬Ø±Ø§Ø¡Ø§Øª",
+                  "Name": "ViewActionLogs",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Receivers",
+                  "Name": "ViewReceivers",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Transfers",
+                  "Name": "ViewTransfers",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "More",
+            "QuickAction": false
+          }
+        ]
+      },
+      "CorrespondenceId": "2966759",
+      "DocDueDate": null,
+      "DocDueDays": 0,
+      "FromStructure": "test",
+      "FromUser": " Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ | ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ ",
+      "FromUserId": 0,
+      "GridInfo": [
+        {
+          "Label": "Subject",
+          "Value": "testing"
+        },
+        {
+          "Label": "From User",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ | Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000010/1"
+        },
+        {
+          "Label": "Date",
+          "Value": "8/6/2019"
+        }
+      ],
+      "HasAttachments": true,
+      "HasAttachmentsToBeDelivered": false,
+      "HasSummaries": false,
+      "InboxId": null,
+      "IsCC": false,
+      "IsForGuideline": false,
+      "IsHighPriority": false,
+      "IsLocked": true,
+      "IsNew": false,
+      "IsShareable": true,
+      "Metadata": [
+        {
+          "Label": "Date",
+          "Value": "8/6/2019"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000010/1"
+        },
+        {
+          "Label": "Subject",
+          "Value": "testing"
+        },
+        {
+          "Label": "From User",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ | Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        },
+        {
+          "Label": "To",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ"
+        },
+        {
+          "Label": "Purpose",
+          "Value": "Ù„Ù„ØªØ¹Ø¯ÙŠÙ„"
+        },
+        {
+          "Label": "Instructions From Sender",
+          "Value": ""
+        },
+        {
+          "Label": "PrivacyLevel",
+          "Value": "Ø®Ø§Øµ"
+        },
+        {
+          "Label": "PriorityLevel",
+          "Value": "Ø¹Ø§Ø¯ÙŠ"
+        },
+        {
+          "Label": "Registered By",
+          "Value": "Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        }
+      ],
+      "PriorityId": "1",
+      "PrivacyId": "1",
+      "PurposeId": "18",
+      "ShowLock": false,
+      "Status": 1,
+      "ThumbnailUrl": "",
+      "TransferId": "5686925",
+      "TsfDueDate": null,
+      "Type": "",
+      "VisualTrackingUrl": null,
+      "isTransferedToContact": true
+    },
+    {
+      "CanRequestDueDate": false,
+      "CategoryId": "7",
+      "ClickableLock": true,
+      "Comments": "",
+      "ControlList": {
+        "CustomToolbarItems": null,
+        "ToolbarItems": [
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "MetaData",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": null,
+                  "Name": "ShowAttachments",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "Attachments",
+            "QuickAction": false
+          },
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "Transfer",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "ØªÙØ§ØµÙŠÙ„ Ø§Ù„Ø§Ø¬Ø±Ø§Ø¡Ø§Øª",
+                  "Name": "ViewActionLogs",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Receivers",
+                  "Name": "ViewReceivers",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Transfers",
+                  "Name": "ViewTransfers",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "More",
+            "QuickAction": false
+          }
+        ]
+      },
+      "CorrespondenceId": "2966757",
+      "DocDueDate": null,
+      "DocDueDays": 0,
+      "FromStructure": "Ù…ÙƒØªØ¨ ÙˆØ²ÙŠØ± Ø§Ù„Ø®Ø§Ø±Ø¬ÙŠØ©",
+      "FromUser": " Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ | ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ ",
+      "FromUserId": 0,
+      "GridInfo": [
+        {
+          "Label": "Subject",
+          "Value": "testing"
+        },
+        {
+          "Label": "From User",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ | Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000175/9"
+        },
+        {
+          "Label": "Date",
+          "Value": "4/29/2019"
+        }
+      ],
+      "HasAttachments": false,
+      "HasAttachmentsToBeDelivered": false,
+      "HasSummaries": false,
+      "InboxId": null,
+      "IsCC": false,
+      "IsForGuideline": false,
+      "IsHighPriority": false,
+      "IsLocked": true,
+      "IsNew": true,
+      "IsShareable": true,
+      "Metadata": [
+        {
+          "Label": "Date",
+          "Value": "4/29/2019"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000175/9"
+        },
+        {
+          "Label": "Subject",
+          "Value": "testing"
+        },
+        {
+          "Label": "From User",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ | Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        },
+        {
+          "Label": "To",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ"
+        },
+        {
+          "Label": "Purpose",
+          "Value": "Ù„Ø§Ø¬Ø±Ø§Ø¡ Ø§Ù„Ù„Ø§Ø²Ù…"
+        },
+        {
+          "Label": "Instructions From Sender",
+          "Value": ""
+        },
+        {
+          "Label": "PrivacyLevel",
+          "Value": "Ø®Ø§Øµ"
+        },
+        {
+          "Label": "PriorityLevel",
+          "Value": "Ø¹Ø§Ø¯ÙŠ"
+        },
+        {
+          "Label": "Registered By",
+          "Value": "Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        }
+      ],
+      "PriorityId": "1",
+      "PrivacyId": "1",
+      "PurposeId": "19",
+      "ShowLock": false,
+      "Status": 1,
+      "ThumbnailUrl": "",
+      "TransferId": "5686907",
+      "TsfDueDate": null,
+      "Type": "",
+      "VisualTrackingUrl": null,
+      "isTransferedToContact": true
+    },
+    {
+      "CanRequestDueDate": false,
+      "CategoryId": "7",
+      "ClickableLock": true,
+      "Comments": "",
+      "ControlList": {
+        "CustomToolbarItems": null,
+        "ToolbarItems": [
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "MetaData",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": null,
+                  "Name": "ShowAttachments",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "Attachments",
+            "QuickAction": false
+          },
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "Transfer",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "ØªÙØ§ØµÙŠÙ„ Ø§Ù„Ø§Ø¬Ø±Ø§Ø¡Ø§Øª",
+                  "Name": "ViewActionLogs",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Receivers",
+                  "Name": "ViewReceivers",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Transfers",
+                  "Name": "ViewTransfers",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "More",
+            "QuickAction": false
+          }
+        ]
+      },
+      "CorrespondenceId": "2966756",
+      "DocDueDate": null,
+      "DocDueDays": 0,
+      "FromStructure": "Ù…ÙƒØªØ¨ ÙˆØ²ÙŠØ± Ø§Ù„Ø®Ø§Ø±Ø¬ÙŠØ©",
+      "FromUser": " Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ | ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ ",
+      "FromUserId": 0,
+      "GridInfo": [
+        {
+          "Label": "Subject",
+          "Value": "ss"
+        },
+        {
+          "Label": "From User",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ | Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000174/9"
+        },
+        {
+          "Label": "Date",
+          "Value": "4/29/2019"
+        }
+      ],
+      "HasAttachments": true,
+      "HasAttachmentsToBeDelivered": false,
+      "HasSummaries": false,
+      "InboxId": null,
+      "IsCC": false,
+      "IsForGuideline": false,
+      "IsHighPriority": false,
+      "IsLocked": true,
+      "IsNew": false,
+      "IsShareable": true,
+      "Metadata": [
+        {
+          "Label": "Date",
+          "Value": "4/29/2019"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000174/9"
+        },
+        {
+          "Label": "Subject",
+          "Value": "ss"
+        },
+        {
+          "Label": "From User",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ | Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        },
+        {
+          "Label": "To",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ"
+        },
+        {
+          "Label": "Purpose",
+          "Value": "Ù„Ø§Ø¬Ø±Ø§Ø¡ Ø§Ù„Ù„Ø§Ø²Ù…"
+        },
+        {
+          "Label": "Instructions From Sender",
+          "Value": ""
+        },
+        {
+          "Label": "PrivacyLevel",
+          "Value": "Ø®Ø§Øµ"
+        },
+        {
+          "Label": "PriorityLevel",
+          "Value": "Ø¹Ø§Ø¯ÙŠ"
+        },
+        {
+          "Label": "Registered By",
+          "Value": "Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        }
+      ],
+      "PriorityId": "1",
+      "PrivacyId": "1",
+      "PurposeId": "19",
+      "ShowLock": false,
+      "Status": 1,
+      "ThumbnailUrl": "",
+      "TransferId": "5686901",
+      "TsfDueDate": null,
+      "Type": "",
+      "VisualTrackingUrl": null,
+      "isTransferedToContact": true
+    },
+    {
+      "CanRequestDueDate": false,
+      "CategoryId": "7",
+      "ClickableLock": true,
+      "Comments": "",
+      "ControlList": {
+        "CustomToolbarItems": null,
+        "ToolbarItems": [
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "MetaData",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": null,
+                  "Name": "ShowAttachments",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "Attachments",
+            "QuickAction": false
+          },
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "Transfer",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "ØªÙØ§ØµÙŠÙ„ Ø§Ù„Ø§Ø¬Ø±Ø§Ø¡Ø§Øª",
+                  "Name": "ViewActionLogs",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Receivers",
+                  "Name": "ViewReceivers",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Transfers",
+                  "Name": "ViewTransfers",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "More",
+            "QuickAction": false
+          }
+        ]
+      },
+      "CorrespondenceId": "2966755",
+      "DocDueDate": null,
+      "DocDueDays": 0,
+      "FromStructure": "Ø¥Ø¯Ø§Ø±Ø©  Ø§Ù„Ø´Ø¤ÙˆÙ† Ø§Ù„Ø§Ø³ÙŠÙˆÙŠØ©",
+      "FromUser": " jaber kouki | Ø¥Ø¯Ø§Ø±Ø© Ù†Ø¸Ù… Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª ",
+      "FromUserId": 0,
+      "GridInfo": [
+        {
+          "Label": "Subject",
+          "Value": "sss"
+        },
+        {
+          "Label": "From User",
+          "Value": "Ø¥Ø¯Ø§Ø±Ø© Ù†Ø¸Ù… Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª | jaber kouki"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000173/9"
+        },
+        {
+          "Label": "Date",
+          "Value": "4/29/2019"
+        }
+      ],
+      "HasAttachments": false,
+      "HasAttachmentsToBeDelivered": false,
+      "HasSummaries": false,
+      "InboxId": null,
+      "IsCC": false,
+      "IsForGuideline": false,
+      "IsHighPriority": false,
+      "IsLocked": true,
+      "IsNew": false,
+      "IsShareable": true,
+      "Metadata": [
+        {
+          "Label": "Date",
+          "Value": "4/29/2019"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000173/9"
+        },
+        {
+          "Label": "Subject",
+          "Value": "sss"
+        },
+        {
+          "Label": "From User",
+          "Value": "Ø¥Ø¯Ø§Ø±Ø© Ù†Ø¸Ù… Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª | jaber kouki"
+        },
+        {
+          "Label": "To",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ"
+        },
+        {
+          "Label": "Purpose",
+          "Value": "Ù„Ø§Ø¬Ø±Ø§Ø¡ Ø§Ù„Ù„Ø§Ø²Ù…"
+        },
+        {
+          "Label": "Instructions From Sender",
+          "Value": ""
+        },
+        {
+          "Label": "PrivacyLevel",
+          "Value": "Ø®Ø§Øµ"
+        },
+        {
+          "Label": "PriorityLevel",
+          "Value": "Ø¹Ø§Ø¯ÙŠ"
+        },
+        {
+          "Label": "Registered By",
+          "Value": "Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        }
+      ],
+      "PriorityId": "1",
+      "PrivacyId": "1",
+      "PurposeId": "19",
+      "ShowLock": false,
+      "Status": 1,
+      "ThumbnailUrl": "",
+      "TransferId": "5686816",
+      "TsfDueDate": null,
+      "Type": "",
+      "VisualTrackingUrl": null,
+      "isTransferedToContact": true
+    },
+    {
+      "CanRequestDueDate": false,
+      "CategoryId": "7",
+      "ClickableLock": true,
+      "Comments": "",
+      "ControlList": {
+        "CustomToolbarItems": null,
+        "ToolbarItems": [
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "MetaData",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": null,
+                  "Name": "ShowAttachments",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "Attachments",
+            "QuickAction": false
+          },
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "Transfer",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "ØªÙØ§ØµÙŠÙ„ Ø§Ù„Ø§Ø¬Ø±Ø§Ø¡Ø§Øª",
+                  "Name": "ViewActionLogs",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Receivers",
+                  "Name": "ViewReceivers",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Transfers",
+                  "Name": "ViewTransfers",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "More",
+            "QuickAction": false
+          }
+        ]
+      },
+      "CorrespondenceId": "2966751",
+      "DocDueDate": null,
+      "DocDueDays": 0,
+      "FromStructure": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ",
+      "FromUser": " Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ | ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ ",
+      "FromUserId": 0,
+      "GridInfo": [
+        {
+          "Label": "Subject",
+          "Value": "test"
+        },
+        {
+          "Label": "From User",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ | Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000169/9"
+        },
+        {
+          "Label": "Date",
+          "Value": "4/15/2019"
+        }
+      ],
+      "HasAttachments": true,
+      "HasAttachmentsToBeDelivered": false,
+      "HasSummaries": false,
+      "InboxId": null,
+      "IsCC": false,
+      "IsForGuideline": false,
+      "IsHighPriority": false,
+      "IsLocked": true,
+      "IsNew": false,
+      "IsShareable": true,
+      "Metadata": [
+        {
+          "Label": "Date",
+          "Value": "4/15/2019"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000169/9"
+        },
+        {
+          "Label": "Subject",
+          "Value": "test"
+        },
+        {
+          "Label": "From User",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ | Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        },
+        {
+          "Label": "To",
+          "Value": "Ø¥Ø¯Ø§Ø±Ø© Ù†Ø¸Ù… Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª"
+        },
+        {
+          "Label": "Purpose",
+          "Value": "Ù„Ù„Ø¹Ù„Ù… Ùˆ Ø§Ù„Ø§Ø·Ù„Ø§Ø¹"
+        },
+        {
+          "Label": "Instructions From Sender",
+          "Value": ""
+        },
+        {
+          "Label": "PrivacyLevel",
+          "Value": "Ø®Ø§Øµ"
+        },
+        {
+          "Label": "PriorityLevel",
+          "Value": "Ø¹Ø§Ø¯ÙŠ"
+        },
+        {
+          "Label": "Registered By",
+          "Value": "Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        }
+      ],
+      "PriorityId": "1",
+      "PrivacyId": "1",
+      "PurposeId": "7",
+      "ShowLock": false,
+      "Status": 1,
+      "ThumbnailUrl": "",
+      "TransferId": "5686947",
+      "TsfDueDate": null,
+      "Type": "",
+      "VisualTrackingUrl": null,
+      "isTransferedToContact": true
+    },
+    {
+      "CanRequestDueDate": false,
+      "CategoryId": "7",
+      "ClickableLock": true,
+      "Comments": "",
+      "ControlList": {
+        "CustomToolbarItems": null,
+        "ToolbarItems": [
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "MetaData",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": null,
+                  "Name": "ShowAttachments",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "Attachments",
+            "QuickAction": false
+          },
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "Transfer",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "ØªÙØ§ØµÙŠÙ„ Ø§Ù„Ø§Ø¬Ø±Ø§Ø¡Ø§Øª",
+                  "Name": "ViewActionLogs",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Receivers",
+                  "Name": "ViewReceivers",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Transfers",
+                  "Name": "ViewTransfers",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "More",
+            "QuickAction": false
+          }
+        ]
+      },
+      "CorrespondenceId": "2966750",
+      "DocDueDate": null,
+      "DocDueDays": 0,
+      "FromStructure": "Ø¥Ø¯Ø§Ø±Ø© Ù†Ø¸Ù… Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª",
+      "FromUser": " Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ | ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ ",
+      "FromUserId": 0,
+      "GridInfo": [
+        {
+          "Label": "Subject",
+          "Value": "test"
+        },
+        {
+          "Label": "From User",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ | Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000168/9"
+        },
+        {
+          "Label": "Date",
+          "Value": "4/15/2019"
+        }
+      ],
+      "HasAttachments": true,
+      "HasAttachmentsToBeDelivered": false,
+      "HasSummaries": false,
+      "InboxId": null,
+      "IsCC": false,
+      "IsForGuideline": false,
+      "IsHighPriority": false,
+      "IsLocked": false,
+      "IsNew": false,
+      "IsShareable": true,
+      "Metadata": [
+        {
+          "Label": "Date",
+          "Value": "4/15/2019"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000168/9"
+        },
+        {
+          "Label": "Subject",
+          "Value": "test"
+        },
+        {
+          "Label": "From User",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ | Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        },
+        {
+          "Label": "To",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ"
+        },
+        {
+          "Label": "Purpose",
+          "Value": "Ù„Ù„Ø¹Ù„Ù… Ùˆ Ø§Ù„Ø§Ø·Ù„Ø§Ø¹"
+        },
+        {
+          "Label": "Instructions From Sender",
+          "Value": ""
+        },
+        {
+          "Label": "PrivacyLevel",
+          "Value": "Ø®Ø§Øµ"
+        },
+        {
+          "Label": "PriorityLevel",
+          "Value": "Ø¹Ø§Ø¯ÙŠ"
+        },
+        {
+          "Label": "Registered By",
+          "Value": "Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        }
+      ],
+      "PriorityId": "1",
+      "PrivacyId": "1",
+      "PurposeId": "7",
+      "ShowLock": true,
+      "Status": 1,
+      "ThumbnailUrl": "",
+      "TransferId": "5689974",
+      "TsfDueDate": null,
+      "Type": "",
+      "VisualTrackingUrl": null,
+      "isTransferedToContact": false
+    },
+    {
+      "CanRequestDueDate": false,
+      "CategoryId": "7",
+      "ClickableLock": false,
+      "Comments": "",
+      "ControlList": {
+        "CustomToolbarItems": null,
+        "ToolbarItems": [
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "MetaData",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": null,
+                  "Name": "ShowAttachments",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "Attachments",
+            "QuickAction": false
+          },
+          {
+            "Children": null,
+            "Display": true,
+            "Label": null,
+            "Name": "Transfer",
+            "QuickAction": false
+          },
+          {
+            "Children": {
+              "CustomToolbarItems": null,
+              "ToolbarItems": [
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "ØªÙØ§ØµÙŠÙ„ Ø§Ù„Ø§Ø¬Ø±Ø§Ø¡Ø§Øª",
+                  "Name": "ViewActionLogs",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Receivers",
+                  "Name": "ViewReceivers",
+                  "QuickAction": false
+                },
+                {
+                  "Children": null,
+                  "Display": true,
+                  "Label": "View Transfers",
+                  "Name": "ViewTransfers",
+                  "QuickAction": false
+                }
+              ]
+            },
+            "Display": true,
+            "Label": null,
+            "Name": "More",
+            "QuickAction": false
+          }
+        ]
+      },
+      "CorrespondenceId": "2966749",
+      "DocDueDate": null,
+      "DocDueDays": 0,
+      "FromStructure": "Ø¥Ø¯Ø§Ø±Ø© Ù†Ø¸Ù… Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª",
+      "FromUser": " Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ | ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ ",
+      "FromUserId": 0,
+      "GridInfo": [
+        {
+          "Label": "Subject",
+          "Value": "ggg"
+        },
+        {
+          "Label": "From User",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ | Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000167/9"
+        },
+        {
+          "Label": "Date",
+          "Value": "4/15/2019"
+        }
+      ],
+      "HasAttachments": false,
+      "HasAttachmentsToBeDelivered": false,
+      "HasSummaries": false,
+      "InboxId": null,
+      "IsCC": true,
+      "IsForGuideline": false,
+      "IsHighPriority": false,
+      "IsLocked": true,
+      "IsNew": false,
+      "IsShareable": true,
+      "Metadata": [
+        {
+          "Label": "Date",
+          "Value": "4/15/2019"
+        },
+        {
+          "Label": "Ref#",
+          "Value": "2019/0000167/9"
+        },
+        {
+          "Label": "Subject",
+          "Value": "ggg"
+        },
+        {
+          "Label": "From User",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ | Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        },
+        {
+          "Label": "To",
+          "Value": "ÙˆØ­Ø¯Ø© ØªØ¬Ø±Ø¨Ø© Ø§Ù„Ø§Ø±Ø´ÙŠÙ"
+        },
+        {
+          "Label": "Purpose",
+          "Value": "Ù†Ø³Ø®Ø©"
+        },
+        {
+          "Label": "Instructions From Sender",
+          "Value": ""
+        },
+        {
+          "Label": "PrivacyLevel",
+          "Value": "Ø®Ø§Øµ"
+        },
+        {
+          "Label": "PriorityLevel",
+          "Value": "Ø¹Ø§Ø¯ÙŠ"
+        },
+        {
+          "Label": "Registered By",
+          "Value": "Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"
+        }
+      ],
+      "PriorityId": "1",
+      "PrivacyId": "1",
+      "PurposeId": "22",
+      "ShowLock": false,
+      "Status": 1,
+      "ThumbnailUrl": "",
+      "TransferId": "5686842",
+      "TsfDueDate": null,
+      "Type": "",
+      "VisualTrackingUrl": null,
+      "isTransferedToContact": true
+    }
+  ],
+  "Total": 15
+}

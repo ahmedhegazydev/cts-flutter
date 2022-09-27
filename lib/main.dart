@@ -129,7 +129,7 @@ class MyApp extends StatelessWidget {
                   ? savedColor_
                   : Get.find<MController>().appcolor),
         ),
-        initialRoute: "/LoginPage",
+        initialRoute: "/SearchPage",
         // initialRoute: "/Landing",
         getPages: [
           GetPage(

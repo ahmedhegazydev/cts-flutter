@@ -41,7 +41,6 @@ import '../services/json_model/favorites/remove/RemoveFavoriteRecipients_request
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/get_correspondences_model.dart';
 
-
 import '../services/json_model/get_my_routing_settings_model.dart';
 import '../services/json_model/login_model.dart';
 import '../services/json_model/my_transfer_routing_dto_model.dart';
@@ -50,8 +49,8 @@ import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
 import 'document_controller.dart';
 import 'package:flutter/services.dart' as rootBundel;
-class LandingPageController extends GetxController {
 
+class LandingPageController extends GetxController {
   bool isSavingOrder = false;
   bool setSelectSuggestion = false;
 
@@ -60,13 +59,11 @@ class LandingPageController extends GetxController {
   TextEditingController textEditingControllerArabicName =
       TextEditingController();
 
-
-
   TextEditingController textEditingControllerTo = TextEditingController();
-  TextEditingController textEditingControllerTorouting = TextEditingController();
-  TextEditingController textEditingControllerToroutingReson = TextEditingController();
-
-
+  TextEditingController textEditingControllerTorouting =
+      TextEditingController();
+  TextEditingController textEditingControllerToroutingReson =
+      TextEditingController();
 
   List<Destination> users = [];
   List<Destination> selectFavusers = [];
@@ -76,12 +73,12 @@ class LandingPageController extends GetxController {
 
   int? oldIndex = 0;
   int? newIndex = 0;
-  setOldIndex(int oldIndex){
+  setOldIndex(int oldIndex) {
     this.oldIndex = oldIndex;
     update();
   }
 
-  setNewIndex(int newIndex){
+  setNewIndex(int newIndex) {
     this.newIndex = newIndex;
     update();
   }
@@ -97,25 +94,21 @@ class LandingPageController extends GetxController {
   LoginModel? data;
   BuildContext? context;
 
-
   //Favorites
   ListFavoriteRecipientsResponse? favoriteRecipientsResponse;
-
-
 
   setSavingOrder(bool saving) {
     this.isSavingOrder = saving;
     update();
   }
 
-  Future  getFindRecipientData({required context}) async {
+  Future getFindRecipientData({required context}) async {
     final FindRecipient _findRecipient = FindRecipient(context);
     _findRecipient.data =
-    "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+        "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     await _findRecipient.getData().then((value) {
       findRecipientModel = value as FindRecipientModel;
       listOfUser(0);
-
     });
     update();
   }
@@ -129,11 +122,6 @@ class LandingPageController extends GetxController {
     if (!selectFavusers.contains(destination)) {
       selectFavusers.add(destination);
 
-
-
-
-
-
       update();
     }
   }
@@ -143,33 +131,31 @@ class LandingPageController extends GetxController {
     update();
   }
 
-
-
-  SaveMyRoutingSettingsusers(Destination destination){
+  SaveMyRoutingSettingsusers(Destination destination) {
     selectFavusers.remove(destination);
     update();
   }
 
   DashboardStatsResultModel? dashboardStatsResultModel;
-  getDashboardStats({context}){
+  getDashboardStats({context}) {
+    DashboardStatsResultApi dashboardStatsResultApi = DashboardStatsResultApi();
+    dashboardStatsResultApi.data =
+        "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+    print(dashboardStatsResultApi.apiUrl());
+    print(dashboardStatsResultApi.apiUrl() +
+        "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}");
 
-    DashboardStatsResultApi  dashboardStatsResultApi=DashboardStatsResultApi( );
-    dashboardStatsResultApi.data= "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     dashboardStatsResultApi.getData().then((value) {
+      dashboardStatsResultModel = value as DashboardStatsResultModel;
 
-      dashboardStatsResultModel =value as DashboardStatsResultModel;
-
-update();
+      update();
     });
   }
-
 
   @override
   void onInit() {
     super.onInit();
-
   }
-
 
   @override
   void onReady() {
@@ -177,10 +163,10 @@ update();
     // if(context == null){
     //   context = NavigationService.navigatorKey.currentContext;
     // }
-   getDashboardStats();
+    getDashboardStats();
 
     _logindata = secureStorage.readSecureJsonData(AllStringConst.LogInData);
-    if(_logindata != null){
+    if (_logindata != null) {
       data = LoginModel.fromJson(_logindata!);
     }
 
@@ -190,10 +176,10 @@ update();
     //context: null && not required ->  for not showing progress dialog
     getFindRecipientData(context: null);
     listFavoriteRecipients(context: null);
-    Get.put<DocumentController>(DocumentController()).getFindRecipientData(context: null);
+    Get.put<DocumentController>(DocumentController())
+        .getFindRecipientData(context: null);
 
     // getDashboardStatsLocalJson();
-
   }
 
   String userName() {
@@ -229,17 +215,14 @@ update();
         CustomSnackBar.success(
           backgroundColor: Colors.lightGreen,
           icon: Container(),
-          message:
-          "BasketAddedSuccess".tr,
+          message: "BasketAddedSuccess".tr,
         ),
       );
 
       // showLoaderDialog(context);
-       // getFetchBasketList(context: context);
-
+      // getFetchBasketList(context: context);
     });
     update();
-
   }
 
   Future reOrderBaskets({context, baskets}) async {
@@ -252,8 +235,8 @@ update();
     await _postReorderBasketsApi
         .post(reorderBasketsRequest.toMap())
         .then((value) {
-          print(value);
-          Navigator.pop(context);
+      print(value);
+      Navigator.pop(context);
     });
     update();
   }
@@ -275,47 +258,38 @@ update();
         CustomSnackBar.success(
           backgroundColor: Colors.lightGreen,
           icon: Container(),
-          message:
-          "BasketDeletedSuccess".tr,
+          message: "BasketDeletedSuccess".tr,
         ),
       );
-
     });
     getFetchBasketList(context: context);
-  //  update();
+    //  update();
   }
 
-  TextEditingController textEditingControllerFromDate =
-      TextEditingController();
+  TextEditingController textEditingControllerFromDate = TextEditingController();
   DateTime? pickedDateselectFromDocDate;
   Future<void> selectFromDocDate({required BuildContext context}) async {
-    pickedDateselectFromDocDate  = await showDatePicker(
+    pickedDateselectFromDocDate = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(2000),
         lastDate: DateTime(2050));
     if (pickedDateselectFromDocDate != null) {
-
-if(DateTime.now().day.compareTo(pickedDateselectFromDocDate!.day)==0||DateTime.now().day.compareTo(pickedDateselectFromDocDate!.day)>0){
-print("object");
-  Get.snackbar("", "تاريخ البداء لا يمكن ان يكون اقل من اليوم");
-
-
-
-
-}else{
-  var outputFormat = DateFormat('dd/MM/yyyy');
-  var outputDate = outputFormat.format(pickedDateselectFromDocDate!);
-  textEditingControllerFromDate.text =
-      outputDate.toString().substring(0, 10);
-  update();
-}
-
+      if (DateTime.now().day.compareTo(pickedDateselectFromDocDate!.day) == 0 ||
+          DateTime.now().day.compareTo(pickedDateselectFromDocDate!.day) > 0) {
+        print("object");
+        Get.snackbar("", "تاريخ البداء لا يمكن ان يكون اقل من اليوم");
+      } else {
+        var outputFormat = DateFormat('dd/MM/yyyy');
+        var outputDate = outputFormat.format(pickedDateselectFromDocDate!);
+        textEditingControllerFromDate.text =
+            outputDate.toString().substring(0, 10);
+        update();
+      }
     }
   }
 
-  TextEditingController textEditingControllerToDate =
-      TextEditingController();
+  TextEditingController textEditingControllerToDate = TextEditingController();
   Future<void> selectToDocDate({required BuildContext context}) async {
     final DateTime? pickedDate = await showDatePicker(
         context: context,
@@ -323,92 +297,88 @@ print("object");
         firstDate: DateTime(2000),
         lastDate: DateTime(2050));
     if (pickedDate != null) {
-if( pickedDateselectFromDocDate==null){
-  return;
-}
-if(pickedDate.compareTo(pickedDateselectFromDocDate!)==0||pickedDate.compareTo(pickedDateselectFromDocDate!)<0){
+      if (pickedDateselectFromDocDate == null) {
+        return;
+      }
+      if (pickedDate.compareTo(pickedDateselectFromDocDate!) == 0 ||
+          pickedDate.compareTo(pickedDateselectFromDocDate!) < 0) {
+        Get.snackbar("", "لا يمكن ان يكون تاريخ البدا اكبر من تاريخ الانتهاء");
+      } else {
+        var outputFormat = DateFormat('dd/MM/yyyy');
+        var outputDate = outputFormat.format(pickedDate);
+        textEditingControllerToDate.text =
+            outputDate.toString().substring(0, 10);
 
- Get.snackbar("", "لا يمكن ان يكون تاريخ البدا اكبر من تاريخ الانتهاء");
-}else{
-  var outputFormat = DateFormat('dd/MM/yyyy');
-  var outputDate = outputFormat.format(pickedDate);
-  textEditingControllerToDate.text =
-      outputDate.toString().substring(0, 10);
-
-  update();
-}
-
+        update();
+      }
     }
   }
 
-
-
-
-
-
-
   MyTransferRoutingDto? getMyRoutingSettingsModel;
-  getMyRoutingsettings(context){
-    GetMyRoutingsettingsApi getMyRoutingsettingsApi=GetMyRoutingsettingsApi(context);
-    getMyRoutingsettingsApi.data="Token=${secureStorage.token()}";
+  getMyRoutingsettings(context) {
+    GetMyRoutingsettingsApi getMyRoutingsettingsApi =
+        GetMyRoutingsettingsApi(context);
+    getMyRoutingsettingsApi.data = "Token=${secureStorage.token()}";
     getMyRoutingsettingsApi.getData().then((value) {
+      getMyRoutingSettingsModel = value as MyTransferRoutingDto;
 
-      getMyRoutingSettingsModel=value as MyTransferRoutingDto;
+      textEditingControllerTo.text =
+          getMyRoutingSettingsModel?.routing?.name ?? "";
+      textEditingControllerToDate.text =
+          getMyRoutingSettingsModel?.routing?.crtToDate ?? "";
+      textEditingControllerFromDate.text =
+          getMyRoutingSettingsModel?.routing?.crtFromDate ?? "";
+      textEditingControllerTorouting.text =
+          getMyRoutingSettingsModel?.routing?.name ?? "";
+      textEditingControllerToroutingReson.text =
+          getMyRoutingSettingsModel?.routing?.crtComments ?? "";
+      print(
+          "getMyRoutingSettingsModel?.routing?.name=> ${getMyRoutingSettingsModel?.routing?.name}");
+      print(
+          "getMyRoutingSettingsModel?.routing?.crtToDate=> ${getMyRoutingSettingsModel?.routing?.crtToDate}");
+      print(
+          "getMyRoutingSettingsModel?.routing?.crtFromDate=> ${getMyRoutingSettingsModel?.routing?.crtFromDate}");
+      print(
+          "getMyRoutingSettingsModel?.routing?.crtComments?.name=> ${getMyRoutingSettingsModel?.routing?.crtComments}");
 
-      textEditingControllerTo.text=getMyRoutingSettingsModel?.routing?.name??"";
-      textEditingControllerToDate.text=getMyRoutingSettingsModel?.routing?.crtToDate??"";
-      textEditingControllerFromDate.text=getMyRoutingSettingsModel?.routing?.crtFromDate??"";
-    textEditingControllerTorouting.text=getMyRoutingSettingsModel?.routing?.name??"";
-      textEditingControllerToroutingReson.text=getMyRoutingSettingsModel?.routing?.crtComments??"";
-print("getMyRoutingSettingsModel?.routing?.name=> ${getMyRoutingSettingsModel?.routing?.name}");
-      print("getMyRoutingSettingsModel?.routing?.crtToDate=> ${getMyRoutingSettingsModel?.routing?.crtToDate}");
-      print("getMyRoutingSettingsModel?.routing?.crtFromDate=> ${getMyRoutingSettingsModel?.routing?.crtFromDate}");
-      print("getMyRoutingSettingsModel?.routing?.crtComments?.name=> ${getMyRoutingSettingsModel?.routing?.crtComments}");
-
-
-    //  update();
-
+      //  update();
     });
   }
 
-  Future postSaveMyRoutingSettingsApi({required MyTransferRoutingRequestDto  data,context})async{
-    SaveMyRoutingSettingsApi getMyRoutingsettingsApi=SaveMyRoutingSettingsApi(context);
+  Future postSaveMyRoutingSettingsApi(
+      {required MyTransferRoutingRequestDto data, context}) async {
+    SaveMyRoutingSettingsApi getMyRoutingsettingsApi =
+        SaveMyRoutingSettingsApi(context);
 
-
-
-  await  getMyRoutingsettingsApi.post(data.toMap()).then((value) {
-Navigator.pop(context);
-showTopSnackBar(
-  context,
-  CustomSnackBar.success(
-    backgroundColor: Colors.lightGreen,
-    icon: Container(),
-    message:
-    "DoneDelegation".tr,
-  ),
-);
-    });
-  }
-  Future removeMyRoutingSettings({  data,context})async{
-    RemoveMyRoutingSettingsApi removeMyRoutingSettingsApi=RemoveMyRoutingSettingsApi(context);
-
-
-
-
-  await  removeMyRoutingSettingsApi.post(data ).then((value) {
+    await getMyRoutingsettingsApi.post(data.toMap()).then((value) {
       Navigator.pop(context);
       showTopSnackBar(
         context,
         CustomSnackBar.success(
           backgroundColor: Colors.lightGreen,
           icon: Container(),
-          message:
-          "DeletedDelegation".tr,
+          message: "DoneDelegation".tr,
         ),
       );
     });
   }
 
+  Future removeMyRoutingSettings({data, context}) async {
+    RemoveMyRoutingSettingsApi removeMyRoutingSettingsApi =
+        RemoveMyRoutingSettingsApi(context);
+
+    await removeMyRoutingSettingsApi.post(data).then((value) {
+      Navigator.pop(context);
+      showTopSnackBar(
+        context,
+        CustomSnackBar.success(
+          backgroundColor: Colors.lightGreen,
+          icon: Container(),
+          message: "DeletedDelegation".tr,
+        ),
+      );
+    });
+  }
 
   // getDashboardStatsLocalJson() async {
   //   final jsondata = await rootBundel.rootBundle
@@ -426,21 +396,20 @@ showTopSnackBar(
     ListFavoriteRecipientsApi listFavoriteRecipientsApi =
         ListFavoriteRecipientsApi(context);
     listFavoriteRecipientsApi.data =
-    "Token=${secureStorage.token()}&Language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
-    await listFavoriteRecipientsApi
-        .getData()
-        .then((value) {
-          if(setSelectSuggestion){
-            Navigator.pop(context);
-          }
-          if(value!=null){
-            favoriteRecipientsResponse = value as ListFavoriteRecipientsResponse;
-          }else{
-            Get.snackbar("", "err".tr);
-          }
-     // print("listFavoriteRecipientsApi  =>${favoriteRecipientsResponse?.recipients[0].targetPhotoBs64.isEmpty}");
+        "Token=${secureStorage.token()}&Language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+    await listFavoriteRecipientsApi.getData().then((value) {
+      if (setSelectSuggestion) {
+        Navigator.pop(context);
+      }
+      if (value != null) {
+        favoriteRecipientsResponse = value as ListFavoriteRecipientsResponse;
+      } else {
+        Get.snackbar("", "err".tr);
+      }
+      // print("listFavoriteRecipientsApi  =>${favoriteRecipientsResponse?.recipients[0].targetPhotoBs64.isEmpty}");
     });
- update(); }
+    update();
+  }
 
   Future removeFavoriteRecipients({context, favoriteRecipients}) async {
     RemoveFavoriteRecipientsApi removeFavoriteRecipientsApi =
@@ -454,7 +423,7 @@ showTopSnackBar(
     await removeFavoriteRecipientsApi
         .post(reorderBasketsRequest.toMap())
         .then((value) {
-          Navigator.pop(context);
+      Navigator.pop(context);
       showTopSnackBar(
         context,
         CustomSnackBar.success(
@@ -466,18 +435,17 @@ showTopSnackBar(
           // ),
           // backgroundColor: "#94C973".toColor(),
           icon: Container(),
-          message:
-          "DeletedSuccess".tr,
+          message: "DeletedSuccess".tr,
         ),
       );
-      listFavoriteRecipients( context: context);
+      listFavoriteRecipients(context: context);
 
       print(value);
       print("removeFavoriteRecipientsApi");
     });
   }
 
-  Future addFavoriteRecipients({context,required int addFavorite}) async {
+  Future addFavoriteRecipients({context, required int addFavorite}) async {
     AddFavoriteRecipientsApi addFavoriteRecipientsApi =
         AddFavoriteRecipientsApi(context);
     AddFavoriteRecipientsRequest addFavoriteRequest =
@@ -489,19 +457,16 @@ showTopSnackBar(
     await addFavoriteRecipientsApi
         .post(addFavoriteRequest.toMap())
         .then((value) {
-          Navigator.pop(context);
+      Navigator.pop(context);
 
-          showLoaderDialog(context);
-          setSelectSuggestion = true;
-      listFavoriteRecipients( context: context);
+      showLoaderDialog(context);
+      setSelectSuggestion = true;
+      listFavoriteRecipients(context: context);
 
       print(value);
       print("addFavoriteRecipientsApi");
     });
   }
-
-
-
 
   FetchBasketListModel? fetchBasketListModel;
   GetBasketInboxModel? getBasketInboxModel;
@@ -509,23 +474,21 @@ showTopSnackBar(
     print(
         "getFetchBasketListgetFetchBasketListgetFetchBasketListgetFetchBasketList");
     GetFetchBasketListApi getFetchBasketListApi =
-    GetFetchBasketListApi(context);
+        GetFetchBasketListApi(context);
     getFetchBasketListApi.data =
-    "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+        "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     await getFetchBasketListApi.getData().then((value) {
+      Navigator.pop(context!);
 
-     Navigator.pop(context!);
-
-      if(value!=null){
+      if (value != null) {
         fetchBasketListModel = value as FetchBasketListModel;
         // fetchBasketListModel?.baskets?.forEach((element) {
         //   element.orderBy = Random().nextInt(100);
         // });
         fetchBasketListModel?.baskets?.sort();
-      }else{
+      } else {
         // Get.snackbar("", "err".tr);
       }
-
 
       update();
       print(fetchBasketListModel?.toJson());
@@ -534,29 +497,26 @@ showTopSnackBar(
     update();
   }
 
+  getBasketInbox(
+      {required context,
+      required int id,
+      int pageSize = 20,
+      int pageNumber = 0}) {
+    GetBasketInboxApi getBasketInboxApi = GetBasketInboxApi(context);
 
-
-  getBasketInbox( {
-    required context, required int id,int pageSize=20,int pageNumber=0}){
-    GetBasketInboxApi getBasketInboxApi=GetBasketInboxApi(context);
-
-
-
-    getBasketInboxApi.data="token=${secureStorage.token()}&basketId=$id&pageNumber=$pageNumber&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
-
+    getBasketInboxApi.data =
+        "token=${secureStorage.token()}&basketId=$id&pageNumber=$pageNumber&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
 
     getBasketInboxApi.getData().then((value) {
-if(value!=null){
+      if (value != null) {
+        getBasketInboxModel = value as GetBasketInboxModel;
 
-  getBasketInboxModel=value as GetBasketInboxModel;
-
-  if((getBasketInboxModel?.correspondences?.length??0)<pageSize){
-    // haveMoreData=false;
-  }
-
-}else{
-  Get.snackbar("", "err".tr);
-}
+        if ((getBasketInboxModel?.correspondences?.length ?? 0) < pageSize) {
+          // haveMoreData=false;
+        }
+      } else {
+        Get.snackbar("", "err".tr);
+      }
 
       update();
       // print(a.toJson());
@@ -564,9 +524,7 @@ if(value!=null){
   }
 
   void setSelectSuggest(bool setSelectSuggestion) {
-    this.setSelectSuggestion =  setSelectSuggestion;
+    this.setSelectSuggestion = setSelectSuggestion;
     update();
   }
-
-
 }

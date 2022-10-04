@@ -46,7 +46,7 @@ class _PDFViewState extends State<PDFView> {
           page = page - 1;
           //
           String imageBytes =
-              element.imageByte!.replaceAll("data:image/png;base64,", "");
+              element.imageByte.replaceAll("data:image/png;base64,", "");
           ViewerController.to.creatAndAddAnnotationOnLoad(
               width: width,
               height: height,

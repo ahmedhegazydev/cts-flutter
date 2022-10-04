@@ -23,8 +23,6 @@ import '../utility/storage.dart';
 import 'dart:io';
 import 'package:flutter/services.dart' as rootBundel;
 
-import 'inbox_controller.dart';
-
 class SearchController extends GetxController {
   FindRecipientModel? findRecipientModel;
 
@@ -313,14 +311,25 @@ class SearchController extends GetxController {
     //   serachData["           "] = textEditingControllerDocData.text;
     // }
 
+    String ref =
+        "ReferenceNumber:${textEditingControllerReferenceNumber1.text}/${textEditingControllerReferenceNumber2.text}/${textEditingControllerReferenceNumber3.text}";
+
+    // if (textEditingControllerReferenceNumber2.text.isNotEmpty) {
+    //   ref += "";
+    //   if (textEditingControllerReferenceNumber3.text.isNotEmpty) {
+    //     ref += "";
+    //   }
+    // }
+
     String cr =
-        "ReferenceNumber:${textEditingControllerReferenceNumber1.text}/${textEditingControllerReferenceNumber2.text}/${textEditingControllerReferenceNumber2.text};%23Subject:${textEditingControllerSubject.text};%23From:${from?.id ?? ""};%23To:${to?.id ?? ""};%23TransferFrom:${fromDestination?.id ?? ""};%23TransferTo:${toDestination?.id ?? ""};%23Privacy:${privacieVal?.id ?? ""};%23Priority:${prioritieVal?.id ?? ""};%23Status:${statuseVal?.id ?? ""};%23Country:${countrieVal?.id ?? ""};%23Classification:${classificationsVal?.id ?? ""};%23PrimaryClassification:${primaryClassificationval?.iD ?? ""};%23FromDocumentDate:${textEditingControllerFromDocDate.text};%23ToDocumentDate:${textEditingControllerToDocDate.text};%23RegisterDate:${textEditingControllerRegisterDate.text};%23";
+        "${ref};%23Subject:${textEditingControllerSubject.text};%23From:${from?.id ?? ""};%23To:${to?.id ?? ""};%23TransferFrom:${fromDestination?.id ?? ""};%23TransferTo:${toDestination?.id ?? ""};%23Privacy:${privacieVal?.id ?? ""};%23Priority:${prioritieVal?.id ?? ""};%23Status:${statuseVal?.id ?? ""};%23Country:${countrieVal?.id ?? ""};%23Classification:${classificationsVal?.id ?? ""};%23PrimaryClassification:${primaryClassificationval?.iD ?? ""};%23FromDocumentDate:${textEditingControllerFromDocDate.text};%23ToDocumentDate:${textEditingControllerToDocDate.text};%23RegisterDate:${textEditingControllerRegisterDate.text};%23";
+
     final SearchCorrespondencesApi _searchCorrespondencesApi =
-        SearchCorrespondencesApi(context!);
+        SearchCorrespondencesApi(context);
     log(cr);
     _searchCorrespondencesApi.post({
       "Token": "${_secureStorage.token()}",
-      "Criteria": "",
+      "Criteria": cr,
       "IsAdvanced": 1,
       "Language": Get.locale?.languageCode == "en" ? "en" : "ar"
     }).then((value) {

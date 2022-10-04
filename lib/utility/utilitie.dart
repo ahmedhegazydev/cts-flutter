@@ -100,6 +100,7 @@ double calculateWidth(double nb, BuildContext context) {
 double calculateFontSize(double nb, BuildContext context) {
   //the development was done on ipad 12 pro, the width in landscape is 1366
   double width = MediaQuery.of(context).size.width;
+  print(width);
   return (width * nb) / 1366;
 }
 

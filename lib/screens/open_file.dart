@@ -1,8 +1,3 @@
-
-
-
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,24 +9,24 @@ class OpenPDFFile extends GetWidget<OpenPdfFileController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body:_buildBody(context) ,);
+    return Scaffold(
+      body: _buildBody(context),
+    );
   }
-
 
   _buildBody(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
     Size _size = MediaQuery.of(context).size;
     return Row(
-
       children: [
         //side bar
         orientation == Orientation.landscape
             ? Container(
-          width: _size.width*.2,
-          height: _size.height,
-          color: Colors.grey.shade300,
-          child: _buildSideMenu(context),
-        )
+                width: _size.width * .2,
+                height: _size.height,
+                color: Colors.grey.shade300,
+                child: _buildSideMenu(context),
+              )
             : Container(),
         Expanded(
           child: Column(
@@ -41,7 +36,6 @@ class OpenPDFFile extends GetWidget<OpenPdfFileController> {
             children: [
               //top bar
               Container(
-
                 height: 110,
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.primary,
@@ -82,16 +76,19 @@ class OpenPDFFile extends GetWidget<OpenPdfFileController> {
   }
 
   _buildTopInboxMenu(BuildContext context) {
-return Container();
+    return Container();
   }
 }
+
 _buildSideMenuInboxes(BuildContext context) {
   return Column(
     children: [
-
-      _buildSideMenuFolders(context, "comment".tr,
-        "assets/images/comment.png",   )
-      ,SizedBox(
+      _buildSideMenuFolders(
+        context,
+        "comment".tr,
+        "assets/images/comment.png",
+      ),
+      SizedBox(
         height: calculateHeight(80, context),
         child: Align(
           alignment: isDirectionRTL(context)
@@ -100,17 +97,16 @@ _buildSideMenuInboxes(BuildContext context) {
           child: Text(
             "signature".tr,
             style: Theme.of(context).textTheme.headline1!.copyWith(
-              color: createMaterialColor(
-                const Color.fromRGBO(100, 100, 100, 1),
-              ),
-              fontSize: 20,
-            ),
+                  color: createMaterialColor(
+                    const Color.fromRGBO(100, 100, 100, 1),
+                  ),
+                  fontSize: 20,
+                ),
             textAlign: TextAlign.start,
           ),
         ),
       ),
       SizedBox(
-
         height: 80,
         child: Align(
           alignment: isDirectionRTL(context)
@@ -119,16 +115,17 @@ _buildSideMenuInboxes(BuildContext context) {
           child: Text(
             "marking".tr,
             style: Theme.of(context).textTheme.headline1!.copyWith(
-              color: createMaterialColor(
-                Color.fromRGBO(100, 100, 100, 1),
-              ),
-              fontSize: 20,
-            ),
+                  color: createMaterialColor(
+                    Color.fromRGBO(100, 100, 100, 1),
+                  ),
+                  fontSize: 20,
+                ),
             textAlign: TextAlign.start,
           ),
         ),
-      ), SizedBox(
-        width:100,
+      ),
+      SizedBox(
+        width: 100,
         height: 80,
         child: Align(
           alignment: isDirectionRTL(context)
@@ -149,20 +146,19 @@ _buildSideMenuInboxes(BuildContext context) {
   );
 }
 
-
 _buildSideMenuFolders(BuildContext context, String title, String iconTitle) {
   return Column(
-
     children: [
-      SizedBox(width: 50,
+      SizedBox(
+        width: 50,
         height: 50,
-
         child: Image.asset(
-          iconTitle,fit: BoxFit.fill,height: 50,width: 50
-          ,
+          iconTitle,
+          fit: BoxFit.fill,
+          height: 50,
+          width: 50,
         ),
       ),
-
       Text(
         title,
         style: Theme.of(context)
@@ -174,27 +170,24 @@ _buildSideMenuFolders(BuildContext context, String title, String iconTitle) {
     ],
   );
 }
+
 _buildSideMenu(context) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
     mainAxisSize: MainAxisSize.min,
     children: [
-
       Expanded(
         child: Column(
-          children: [
-
-            _buildSideMenuInboxes(context)
-
-          ],
+          children: [_buildSideMenuInboxes(context)],
         ),
       )
     ],
   );
 }
+
 _buildTopBar(BuildContext context) {
-  return  Row(
+  return Row(
     mainAxisAlignment: MainAxisAlignment.start,
     // crossAxisAlignment: CrossAxisAlignment.stretch,
     // mainAxisSize: MainAxisSize.max,
@@ -206,14 +199,14 @@ _buildTopBar(BuildContext context) {
           // mainAxisSize: MainAxisSize.max,
           children: [
             Container(
-              padding: const EdgeInsets.only(
-                  left: 30, right: 30, top: 0, bottom: 0),
+              padding:
+                  const EdgeInsets.only(left: 30, right: 30, top: 0, bottom: 0),
               child: Text(
                 "appTitle".tr,
                 style: Theme.of(context)
                     .textTheme
                     .headline1!
-                    .copyWith(color: Colors.white, fontSize: 25),
+                    .copyWith(color: Colors.white, fontSize: 20),
                 textAlign: TextAlign.start,
               ),
             ),
@@ -225,21 +218,20 @@ _buildTopBar(BuildContext context) {
           Get.back();
         },
         child: Container(
-          width: 120,
-         // height: double.infinity,
-          color: Colors.transparent,
-          child:   Image.asset('assets/images/menu.png')
+            width: 120,
+            // height: double.infinity,
+            color: Colors.transparent,
+            child: Image.asset('assets/images/menu.png')
 
-
-          // Image(
-          //   image: AssetImage(
-          //     ,
-          //   ),
-          //   fit: BoxFit.contain,
-          //   width: double.infinity,
-          //   height: double.infinity,
-          // ),
-        ),
+            // Image(
+            //   image: AssetImage(
+            //     ,
+            //   ),
+            //   fit: BoxFit.contain,
+            //   width: double.infinity,
+            //   height: double.infinity,
+            // ),
+            ),
       ),
     ],
   );

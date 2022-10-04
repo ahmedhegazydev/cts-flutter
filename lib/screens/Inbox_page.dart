@@ -48,7 +48,7 @@ class InboxPage extends GetWidget<InboxController> {
         style: Theme.of(context)
             .textTheme
             .headline1!
-            .copyWith(color: Colors.white, fontSize: 25),
+            .copyWith(color: Colors.white, fontSize: 20),
         textAlign: TextAlign.start,
       ),
       actions: <Widget>[
@@ -133,21 +133,14 @@ class InboxPage extends GetWidget<InboxController> {
 
   Widget _filterMail(context) {
     Size size = MediaQuery.of(context).size;
-
-    // return Container(
-    //   color: RedColor,
-    // );
-
+    if (size.width < 500) {
+      return Container(
+        width: 10,
+        height: 10,
+      );
+    }
     return Row(
       children: [
-        // Container(
-        //   padding: EdgeInsets.only(right: 8, left: 8),
-        //   child: Center(
-        //     child: Row(
-        //       children: [],
-        //     ),
-        //   ),
-        // ),
         GetBuilder<InboxController>(
             autoRemove: false,
             builder: (logic) {
@@ -435,7 +428,7 @@ class InboxPage extends GetWidget<InboxController> {
             ),
           ],
           tabBarProperties: TabBarProperties(
-            width: MediaQuery.of(context).size.width * .3,
+            // width: MediaQuery.of(context).size.width * .3,
             height: 70.0,
             indicatorColor: Theme.of(context).colorScheme.primary,
             indicatorWeight: 5.0,

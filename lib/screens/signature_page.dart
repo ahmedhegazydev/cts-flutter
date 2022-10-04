@@ -13,23 +13,22 @@ class SignaturePage extends GetView<SignaturePageController> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
+    // controller.controller
     return Scaffold(
         appBar: AppBar(actions: <Widget>[
           Padding(
             padding: EdgeInsets.all(5),
             child: Text("addsing".tr,
                 style: TextStyle(
-                  // fontFamily: 'Roboto',
+                    // fontFamily: 'Roboto',
                     fontSize: 20,
                     color: Colors.white
-                  // letterSpacing: 0.15,
-                  // fontWeight: FontWeight.w500,
-                  // color: _themeData!.colorScheme.onSurface
-                  //     .withOpacity(0.87),
-                )),
+                    // letterSpacing: 0.15,
+                    // fontWeight: FontWeight.w500,
+                    // color: _themeData!.colorScheme.onSurface
+                    //     .withOpacity(0.87),
+                    )),
           ),
           Spacer(),
           Padding(
@@ -46,94 +45,7 @@ class SignaturePage extends GetView<SignaturePageController> {
         ], leading: SizedBox(), centerTitle: true),
         body: Row(
           children: [
-            Expanded(
-                flex: 1,
-                child: Container(
-                  child: Padding(
-                    padding:
-                    const EdgeInsets.only(top: 20.0, right: 10, left: 10),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                "توقيعي",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          GetBuilder<SignaturePageController>(builder: (logic) {
-                            return Container(
-                              height: 100,
-                              padding: EdgeInsets.all(8),
-                              color: Colors.grey.withOpacity(.5),
-                              child: CachedMemoryImage(
-                                uniqueKey: "defaultsignature",
-                                errorWidget: const Text('Error'),
-                                bytes: dataFromBase64String(controller
-                                    .secureStorage
-                                    .readSecureData(AllStringConst.Signature)),
-                                placeholder: const CircularProgressIndicator(),
-                              ),
-                            );
-                          }),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                "اخري",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          GetBuilder<SignaturePageController>(builder: (logic) {
-                            return Expanded(
-                                child: GetBuilder<SignaturePageController>(
-                                    assignId: true,
-                                    builder: (logic) {
-                                      return ListView.builder(
-                                        itemCount:
-                                        controller.multiSignatures.length,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 8.0),
-                                            child: Container(
-                                              height: 100,
-                                              padding: EdgeInsets.all(8),
-                                              color:
-                                              Colors.grey.withOpacity(.5),
-                                              child: CachedMemoryImage(
-                                                fit: BoxFit.fill,
-                                                uniqueKey: index.toString(),
-                                                errorWidget:
-                                                const Text('Error'),
-                                                bytes: dataFromBase64String(
-                                                    controller
-                                                        .multiSignatures[index]
-                                                        .signature),
-                                                placeholder:
-                                                const CircularProgressIndicator(),
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    }));
-                          }),
-                        ]),
-                  ),
-                )),
+            Expanded(flex: 1, child: buildSavedSignaturesBar()),
             SizedBox(
               width: size.width * .05,
             ),
@@ -177,9 +89,9 @@ class SignaturePage extends GetView<SignaturePageController> {
                         child: Container(
                           child: Center(
                               child: Text(
-                                "محو التوقيع",
-                                style: TextStyle(color: Colors.white),
-                              )),
+                            "محو التوقيع",
+                            style: TextStyle(color: Colors.white),
+                          )),
                           height: 50,
                           width: size.width * .1,
                           decoration: BoxDecoration(
@@ -190,28 +102,31 @@ class SignaturePage extends GetView<SignaturePageController> {
                       SizedBox(
                         width: 20,
                       ),
-
-                        GetBuilder<SignaturePageController>(builder: (logic) {
-                   return    logic.saveSing? SizedBox(height: 50,
-                          width: 50,
-                          child: Center(child: CircularProgressIndicator(),))
-                        : InkWell(
-                          onTap: () {
-                            controller.saveSign(context);
-                          },
-                          child: Container(
-                            child: Center(
-                                child: Text(
-                                  "متابعة",
-                                  style: TextStyle(color: Colors.white),
-                                )),
-                            height: 50,
-                            width: size.width * .1,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(3),
-                                color: AppColor),
-                          ),
-                        );
+                      GetBuilder<SignaturePageController>(builder: (logic) {
+                        return logic.saveSing
+                            ? SizedBox(
+                                height: 50,
+                                width: 50,
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ))
+                            : InkWell(
+                                onTap: () {
+                                  controller.saveSign(context);
+                                },
+                                child: Container(
+                                  child: Center(
+                                      child: Text(
+                                    "متابعة",
+                                    style: TextStyle(color: Colors.white),
+                                  )),
+                                  height: 50,
+                                  width: size.width * .1,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(3),
+                                      color: AppColor),
+                                ),
+                              );
                       }),
                     ],
                   )
@@ -220,6 +135,98 @@ class SignaturePage extends GetView<SignaturePageController> {
             ),
           ],
         ));
+  }
+
+  Container buildSavedSignaturesBar() {
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 20.0, right: 10, left: 10),
+        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+          Row(
+            children: [
+              Text(
+                "توقيعي",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          buildDefaultSignature(),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            children: [
+              Text(
+                "اخري",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          buildList(),
+        ]),
+      ),
+    );
+  }
+
+  buildDefaultSignature() {
+    var signature =
+        controller.secureStorage.readSecureData(AllStringConst.Signature);
+    if (signature != null && signature.isNotEmpty)
+      return GetBuilder<SignaturePageController>(builder: (logic) {
+        return Container(
+          height: 100,
+          padding: EdgeInsets.all(8),
+          color: Colors.grey.withOpacity(.5),
+          child: CachedMemoryImage(
+            uniqueKey: "defaultsignature",
+            errorWidget: const Text('Error'),
+            bytes: dataFromBase64String(signature),
+            placeholder: const CircularProgressIndicator(),
+          ),
+        );
+      });
+
+    return Container(
+      height: 100,
+    );
+  }
+
+  GetBuilder<SignaturePageController> buildList() {
+    return GetBuilder<SignaturePageController>(builder: (logic) {
+      return Expanded(
+          child: GetBuilder<SignaturePageController>(
+              assignId: true,
+              builder: (logic) {
+                return ListView.builder(
+                  itemCount: controller.multiSignatures.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    var signature2 =
+                        controller.multiSignatures[index].signature;
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Container(
+                        height: 100,
+                        padding: EdgeInsets.all(8),
+                        color: Colors.grey.withOpacity(.5),
+                        child: CachedMemoryImage(
+                          fit: BoxFit.fill,
+                          uniqueKey: index.toString(),
+                          errorWidget: const Text('Error'),
+                          bytes: dataFromBase64String(signature2),
+                          placeholder: const CircularProgressIndicator(),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }));
+    });
   }
 }
 

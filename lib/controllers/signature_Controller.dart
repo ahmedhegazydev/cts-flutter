@@ -13,7 +13,7 @@ import '../utility/storage.dart';
 import '../utility/utilitie.dart';
 
 class SignaturePageController extends GetxController {
-  bool saveSing=false;
+  bool saveSing = false;
   Map<String, dynamic>? logindata;
   List<MultiSignatures> multiSignatures = [];
   final SecureStorage secureStorage = SecureStorage();
@@ -26,25 +26,25 @@ class SignaturePageController extends GetxController {
   );
 
   replaceSing(sin) {
-    // newSing.clear();
-    // newSing.add(sin);
+    newSing.clear();
+    newSing.add(sin);
 
     update();
   }
 
-  updateSignature({context, required SignatureInfoModel signatureInfoModel}) async{
-    saveSing=true;
+  updateSignature(
+      {context, required SignatureInfoModel signatureInfoModel}) async {
+    saveSing = true;
     update();
     UpdateSignatureApi _updateSignatureApi = UpdateSignatureApi(context);
-  await  _updateSignatureApi.post(signatureInfoModel.toMap()).then((value) {
-    saveSing=false;
-    update();
+    await _updateSignatureApi.post(signatureInfoModel.toMap()).then((value) {
+      saveSing = false;
+      update();
       print(value);
     });
 
-    saveSing=false;
+    saveSing = false;
     update();
-
   }
 
   @override
@@ -62,12 +62,16 @@ class SignaturePageController extends GetxController {
 
   saveSign(context) async {
     print("9999999999999999999999999999999");
+    if (controller.points.isEmpty) {
+      controller.clear();
+      return;
+    }
     final Uint8List? data = await controller.toPngBytes();
 
     SignatureInfoModel _signatureInfoModel = SignatureInfoModel(
         signature: base64.encode(data!),
         Token: secureStorage.token()!,
-        SignatureId: multiSignatures[0].cNTGctId.toString());
+        SignatureId: "");
 
     updateSignature(context: context, signatureInfoModel: _signatureInfoModel);
 

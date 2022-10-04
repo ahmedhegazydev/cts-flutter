@@ -636,7 +636,7 @@ class MyPocketsScreen extends GetWidget<InboxController> {
                     style: Theme.of(context)
                         .textTheme
                         .headline1!
-                        .copyWith(color: Colors.white, fontSize: 25),
+                        .copyWith(color: Colors.white, fontSize: 20),
                     textAlign: TextAlign.start,
                   ),
                 ),

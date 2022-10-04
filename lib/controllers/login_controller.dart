@@ -96,8 +96,8 @@ class LoginController extends GetxController {
               AllStringConst.DepartmentName, loginModel.departmentName);
           await secureStorage.writeSecureData(
               AllStringConst.Pincode, loginModel.pincode);
-          // await secureStorage.writeSecureData(
-          //   AllStringConst.Signature, loginModel.signature);
+          await secureStorage.writeSecureData(
+              AllStringConst.Signature, loginModel.signature);
           await secureStorage.writeSecureData(
               AllStringConst.SignatureId, loginModel.signatureId);
           await secureStorage.writeSecureData(

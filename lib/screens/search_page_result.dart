@@ -45,7 +45,7 @@ class SearchPageResult extends GetWidget<SearchPageResultController> {
         style: Theme.of(context)
             .textTheme
             .headline1!
-            .copyWith(color: Colors.white, fontSize: 25),
+            .copyWith(color: Colors.white, fontSize: 20),
         textAlign: TextAlign.start,
       ),
       actions: <Widget>[

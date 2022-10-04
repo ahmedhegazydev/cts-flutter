@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:cts/db/cts_database.dart';
 import 'package:cts/utility/utilitie.dart';
@@ -98,7 +99,7 @@ abstract class ApiManager {
       storageBaseUrl = settingItems[0].baseUrl;
       print("storageBaseUrl = " + storageBaseUrl);
     }
-
+    log(jsonEncode(dataToPost));
     //showLoaderDialog(context!);
     await dioSingleton.dio
         .post(checkIfSavedSettingsBasUrl(storageBaseUrl),

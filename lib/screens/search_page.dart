@@ -921,8 +921,8 @@ class SearchPage extends GetWidget<SearchController> {
                           child: CustomButton(
                               name: 'search'.tr,
                               onPressed: () {
-                             //   controller.searchCorrespondences(context);
-                                controller.jsonSE();
+                                controller.searchCorrespondences(context);
+                                //  controller.jsonSE();
                               }),
                         );
                 }),
@@ -947,7 +947,7 @@ class SearchPage extends GetWidget<SearchController> {
         style: Theme.of(context)
             .textTheme
             .headline1!
-            .copyWith(color: Colors.white, fontSize: 25),
+            .copyWith(color: Colors.white, fontSize: 20),
         textAlign: TextAlign.start,
       ),
       actions: <Widget>[

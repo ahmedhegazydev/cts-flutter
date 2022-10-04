@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
-import 'dart:ui' as ui;
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +21,6 @@ import '../services/apis/basket/reorder_baskets_result _api.dart';
 import '../services/apis/can_open_document.dart';
 import '../services/apis/complete_in_correspondence_api.dart';
 import '../services/apis/favorites/ListFavoriteRecipients_api.dart';
-import '../services/apis/find_recipient_api.dart';
 import '../services/apis/get_correspondences_all_api.dart';
 import '../services/apis/get_correspondences_api.dart';
 
@@ -39,18 +36,13 @@ import '../services/json_model/can_open_document_model.dart';
 import '../services/json_model/default_on_success_result.dart';
 import '../services/json_model/favorites/list_all/ListFavoriteRecipients_response.dart';
 import '../services/json_model/find_recipient_model.dart';
-import '../services/json_model/get_correspondences_all_model.dart';
-import '../services/json_model/inopendocModel/multiple_transfers_model.dart';
 import '../services/json_model/login_model.dart';
 import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
 import '../utility/all_string_const.dart';
-import '../utility/Extenstions.dart';
 import '../utility/storage.dart';
 
 import '../utility/utilitie.dart';
-import '../viewer/controllers/viewerController.dart';
 import 'document_controller.dart';
-import 'package:flutter/services.dart' as rootBundel;
 import '../services/models/multiple_transfers_model_send.dart'
     as multipletransfersSend;
 import 'landing_page_controller.dart';
@@ -486,21 +478,21 @@ class InboxController extends GetxController {
     await record.openRecorder();
   }
 
-  _scrollListener({required context}) {
-    if (scrollController.offset >= scrollController.position.maxScrollExtent &&
-        !scrollController.position.outOfRange) {
-      index++;
-      addToList = true;
-      if (haveMoreData) {
-        getCorrespondencesData(context: context, inboxId: inboxId);
-        print("reach the bottom");
-      }
-    }
-    if (scrollController.offset <= scrollController.position.minScrollExtent &&
-        !scrollController.position.outOfRange) {
-      print("reach the top");
-    }
-  }
+  // _scrollListener({required context}) {
+  //   if (scrollController.offset >= scrollController.position.maxScrollExtent &&
+  //       !scrollController.position.outOfRange) {
+  //     index++;
+  //     addToList = true;
+  //     if (haveMoreData) {
+  //       getCorrespondencesData(context: context, inboxId: inboxId);
+  //       print("reach the bottom");
+  //     }
+  //   }
+  //   if (scrollController.offset <= scrollController.position.minScrollExtent &&
+  //       !scrollController.position.outOfRange) {
+  //     print("reach the top");
+  //   }
+  // }
 
   applyFilter() {
     update();
@@ -596,7 +588,7 @@ class InboxController extends GetxController {
 
       int listLength =
           correspondencesModel?.inbox?.correspondences?.length ?? 0;
-      var v = correspondencesModel?.toJson();
+      //  var v = correspondencesModel?.toJson();
       if (listLength < pageSize) {
         haveMoreData = false;
       }

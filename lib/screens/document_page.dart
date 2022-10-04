@@ -104,7 +104,7 @@ class DocumentPage extends GetWidget<DocumentController> {
         ActionButton(
           onPressed: () async {
             var all = ViewerController.to.allAnnotations.toList();
-            var sall = ViewerController.to.movableItems.toJson();
+            //       var sall = ViewerController.to.movableItems.toJson();
             List<Map> data = [];
             all.forEach((element) {
               data.add(element.toMap());
@@ -173,7 +173,7 @@ class DocumentPage extends GetWidget<DocumentController> {
         style: Theme.of(context)
             .textTheme
             .headline1!
-            .copyWith(color: Colors.white, fontSize: 25),
+            .copyWith(color: Colors.white, fontSize: 20),
         textAlign: TextAlign.start,
       ),
       actions: <Widget>[
@@ -249,7 +249,7 @@ class DocumentPage extends GetWidget<DocumentController> {
     );
   }
 
-  Expanded _MetadataSideMenu(BuildContext context) {
+  _MetadataSideMenu(BuildContext context) {
     var cm = Get.find<InboxController>().correspondencesModel;
     int priorityID = int.parse(controller.correspondences.priorityId!);
     var priority =
@@ -258,289 +258,253 @@ class DocumentPage extends GetWidget<DocumentController> {
     var privacy =
         cm?.privacies?.where((element) => element.Value == privacyID).first;
 
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(28.0),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    height: 50,
-                  )
+    return Padding(
+      padding: const EdgeInsets.all(28.0),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  height: 50,
+                )
 
-                  //action":
-                ],
-              ),
-              Text(
-                "action".tr,
-              ),
-              const Divider(
-                thickness: 1,
-              ),
+                //action":
+              ],
+            ),
+            Text(
+              "action".tr,
+            ),
+            const Divider(
+              thickness: 1,
+            ),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CTSActionButton('assets/images/refer.png', "refer".tr, () {
-                    _popUpMenuTransfer(context);
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CTSActionButton('assets/images/refer.png', "refer".tr, () {
+                  _popUpMenuTransfer(context);
+                }),
+                CTSActionButton('assets/images/up_arrow.png', "export".tr, () {
+                  showExportDialog(context);
+                }),
+                CTSActionButton('assets/images/ending.png', "ending".tr, () {
+                  completeClick(context);
+                }),
+                if (controller.canOpenInOffice())
+                  CTSActionButton('assets/images/A.png', "marking".tr,
+                      () async {
+                    await openInOffice(context);
                   }),
-                  CTSActionButton('assets/images/up_arrow.png', "export".tr,
-                      () {
-                    showExportDialog(context);
-                  }),
-                  CTSActionButton('assets/images/ending.png', "ending".tr, () {
-                    completeClick(context);
-                  }),
-                  if (controller.canOpenInOffice())
-                    CTSActionButton('assets/images/A.png', "marking".tr,
-                        () async {
-                      await openInOffice(context);
-                    }),
+                CTSActionButton('assets/images/track.png', "tracking".tr, () {
+                  _openVisualTracking();
+                }),
+                if (controller.notoragnalFileDoc)
                   CTSActionButton('assets/images/track.png', "tracking".tr, () {
-                    _openVisualTracking();
+                    controller.backTooragnalFileDocpdf();
                   }),
-                  if (controller.notoragnalFileDoc)
-                    CTSActionButton('assets/images/track.png', "tracking".tr,
-                        () {
-                      controller.backTooragnalFileDocpdf();
-                    }),
-                ],
-              ),
-              SizedBox(
-                height: 150,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "data".tr,
-                  ),
-                ],
-              ),
+              ],
+            ),
 
-              const Divider(
-                thickness: 1,
-              ),
+            SizedBox(
+              height: 50,
+            ),
 
-              Wrap(
-                // mainAxisAlignment:
-                //     MainAxisAlignment
-                //         .spaceAround,
-                children: [
-                  // if (controller.correspondences.priorityId == "1")
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Container(
-                      width: 100,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 0,
-                            color: Colors.transparent,
-                          ),
-                          borderRadius: BorderRadius.circular(5)),
-                      child: Center(
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.priority_high,
-                                  color:
-                                      controller.correspondences.priorityId ==
-                                              "3"
-                                          ? AppColor
-                                          : RedColor),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Text(
-                                Get.locale?.languageCode == "en"
-                                    ? priority!.Text!
-                                    : priority!.TextAr!,
-                                //     "veryimportant".tr,
-                                style: TextStyle(color: AppColor),
-                              ),
-                            ]),
-                      ),
-                    ),
-                  ),
+            Text(
+              "data".tr,
+            ),
 
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Container(
-                      width: 100,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 0,
-                            color: Colors.transparent,
-                          ),
-                          borderRadius: BorderRadius.circular(5)),
-                      child: Center(
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.warning, color: AppColor),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Text(
-                                Get.locale?.languageCode == "en"
-                                    ? privacy!.Text!
-                                    : privacy!.TextAr!,
-                                //     "veryimportant".tr,
-                                style: TextStyle(color: AppColor),
-                              ),
-                            ]),
-                      ),
-                    ),
-                  ),
+            const Divider(
+              thickness: 1,
+            ),
 
-                  // if (controller.correspondences.showLock)
-                  //   Padding(
-                  //     padding: const EdgeInsets.all(4.0),
-                  //     child: Container(
-                  //       width: 100,
-                  //       decoration: BoxDecoration(
-                  //           border: Border.all(
-                  //             width: 1,
-                  //             color: Colors.transparent,
-                  //           ),
-                  //           borderRadius: BorderRadius.circular(5)),
-                  //       child: Center(
-                  //         child: Row(
-                  //             mainAxisAlignment: MainAxisAlignment.center,
-                  //             children: [
-                  //               Icon(Icons.lock),
-                  //               SizedBox(
-                  //                 width: 4,
-                  //               ),
-                  //               Text("secret".tr),
-                  //             ]),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // SizedBox(
-                  //   width: 4,
-                  // ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Container(
-                      width: 100,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 1,
-                            color: Colors.transparent,
-                          ),
-                          borderRadius: BorderRadius.circular(5)),
-                      child: Center(
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                  controller.correspondences.isLocked!
-                                      ? Icons.lock
-                                      : Icons.lock_open,
-                                  color: Theme.of(context).colorScheme.primary),
-                              SizedBox(
-                                width: 4,
-                              ),
-                              if (controller.correspondences.isLocked ?? false)
-                                Text("closed".tr,
-                                    style: TextStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary)),
-                            ]),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              _itemSideMenu(
-                  context: context,
-                  title: "title".tr,
-                  data: controller.correspondences.gridInfo![0].value ?? ""),
-              SizedBox(
-                height: 8,
-              ),
-              _itemSideMenu(
-                  context: context,
-                  title: "sender1".tr,
-                  data: controller.correspondences.fromUser ?? ""),
-              SizedBox(
-                height: 8,
-              ),
-              _itemSideMenu(
-                  context: context,
-                  title: "assignedFrom".tr,
-                  data: controller.correspondences.metadata![3].value!),
-              SizedBox(
-                height: 8,
-              ),
-              _itemSideMenu(
-                  context: context,
-                  title: "referDate".tr,
-                  data: controller.correspondences.gridInfo![3].value!),
-              SizedBox(
-                height: 8,
-              ),
-
-              //    if(controller!.canOpenDocumentModel?.attachments?.hasVoice??false)
-              Text("assignmentNotes".tr),
-              // if(controller!.canOpenDocumentModel?.attachments?.hasVoice??false)
-              //  Text(controller.correspondences.comments ?? ""),
-              Text(controller.canOpenDocumentModel?.correspondence?.comments ??
-                  ""),
-
-              if (controller.canOpenDocumentModel?.attachments?.hasVoice ??
-                  false)
-                Container(
-                  height: 40,
-                  color: Colors.grey[300],
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 4,
-                      ),
-                      Expanded(
-                          child: Container(
-                        height: 1,
-                        color: Colors.grey,
-                      )),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: InkWell(
-                          onTap: () async {
-                            print("object");
-
-                            /// هنشغل ملف الصوت هنا
-                            FlutterSoundPlayer audioPlayer =
-                                FlutterSoundPlayer();
-
-                            audioPlayer.openPlayer();
-                            String filePath = await createFileFromString(
-                                controller.canOpenDocumentModel?.attachments
-                                    ?.voiceNote);
-
-                            print(filePath);
-                            await audioPlayer.startPlayer(fromURI: filePath);
-                          },
-                          child: Icon(Icons.play_arrow,
-                              color: Theme.of(context).colorScheme.primary),
+            Wrap(
+              // mainAxisAlignment:
+              //     MainAxisAlignment
+              //         .spaceAround,
+              children: [
+                // if (controller.correspondences.priorityId == "1")
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Container(
+                    width: 100,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 0,
+                          color: Colors.transparent,
                         ),
-                      )
-                    ],
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Center(
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.priority_high,
+                                color:
+                                    controller.correspondences.priorityId == "3"
+                                        ? AppColor
+                                        : RedColor),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Text(
+                              Get.locale?.languageCode == "en"
+                                  ? priority!.Text!
+                                  : priority!.TextAr!,
+                              //     "veryimportant".tr,
+                              style: TextStyle(color: AppColor),
+                            ),
+                          ]),
+                    ),
                   ),
                 ),
-            ],
-          ),
+
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Container(
+                    width: 100,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 0,
+                          color: Colors.transparent,
+                        ),
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Center(
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.warning, color: AppColor),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Text(
+                              Get.locale?.languageCode == "en"
+                                  ? privacy!.Text!
+                                  : privacy!.TextAr!,
+                              //     "veryimportant".tr,
+                              style: TextStyle(color: AppColor),
+                            ),
+                          ]),
+                    ),
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Container(
+                    width: 100,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 1,
+                          color: Colors.transparent,
+                        ),
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Center(
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                                controller.correspondences.isLocked!
+                                    ? Icons.lock
+                                    : Icons.lock_open,
+                                color: Theme.of(context).colorScheme.primary),
+                            SizedBox(
+                              width: 4,
+                            ),
+                            if (controller.correspondences.isLocked ?? false)
+                              Text("closed".tr,
+                                  style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary)),
+                          ]),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            SizedBox(
+              height: 8,
+            ),
+            _itemSideMenu(
+                context: context,
+                title: "title".tr,
+                data: controller.correspondences.gridInfo![0].value ?? ""),
+            SizedBox(
+              height: 8,
+            ),
+            _itemSideMenu(
+                context: context,
+                title: "sender1".tr,
+                data: controller.correspondences.fromUser ?? ""),
+            SizedBox(
+              height: 8,
+            ),
+            _itemSideMenu(
+                context: context,
+                title: "assignedFrom".tr,
+                data: controller.correspondences.metadata![3].value!),
+            SizedBox(
+              height: 8,
+            ),
+            _itemSideMenu(
+                context: context,
+                title: "referDate".tr,
+                data: controller.correspondences.gridInfo![3].value!),
+            SizedBox(
+              height: 8,
+            ),
+
+            //    if(controller!.canOpenDocumentModel?.attachments?.hasVoice??false)
+            Text("assignmentNotes".tr),
+            // if(controller!.canOpenDocumentModel?.attachments?.hasVoice??false)
+            //  Text(controller.correspondences.comments ?? ""),
+            Text(controller.canOpenDocumentModel?.correspondence?.comments ??
+                ""),
+
+            if (controller.canOpenDocumentModel?.attachments?.hasVoice ?? false)
+              Container(
+                height: 40,
+                color: Colors.grey[300],
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: 4,
+                    ),
+                    Expanded(
+                        child: Container(
+                      height: 1,
+                      color: Colors.grey,
+                    )),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () async {
+                          print("object");
+
+                          /// هنشغل ملف الصوت هنا
+                          FlutterSoundPlayer audioPlayer = FlutterSoundPlayer();
+
+                          audioPlayer.openPlayer();
+                          String filePath = await createFileFromString(
+                              controller.canOpenDocumentModel?.attachments
+                                  ?.voiceNote);
+
+                          print(filePath);
+                          await audioPlayer.startPlayer(fromURI: filePath);
+                        },
+                        child: Icon(Icons.play_arrow,
+                            color: Theme.of(context).colorScheme.primary),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+          ],
         ),
       ),
     );
@@ -657,7 +621,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                             ViewerController.to
                                 .prepareToAddSignatureAnnotationOnTap(
                                     Image.memory(
-                                      data!,
+                                      data,
                                       fit: BoxFit.fill,
                                       key: key,
                                       width: 100,
@@ -665,7 +629,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                     ),
                                     base64String,
                                     "7");
-                            var ann = ViewerController.to.allAnnotations.value;
+                            //             var ann = ViewerController.to.allAnnotations.value;
 
                             Get.back();
                           },
@@ -699,7 +663,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                 ViewerController.to
                                     .prepareToAddSignatureAnnotationOnTap(
                                         Image.memory(
-                                          data!,
+                                          data,
                                           fit: BoxFit.fill,
                                           key: key,
                                           width: 100,

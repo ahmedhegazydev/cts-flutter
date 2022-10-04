@@ -104,90 +104,104 @@ class CustomListView extends GetView<InboxController> {
                                         children: [
                                           Row(
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                                CrossAxisAlignment.end,
                                             mainAxisAlignment:
-                                                MainAxisAlignment.start,
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Container(
-                                                    height: 20,
-                                                    width: 20,
-                                                    decoration: BoxDecoration(
-                                                        color: Theme.of(context)
-                                                            .colorScheme
-                                                            .primary,
-                                                        shape:
-                                                            BoxShape.circle)),
-                                              ),
                                               Flexible(
-                                                child: Text(
-                                                    correspondences[pos]
-                                                            .gridInfo?[0]
-                                                            .value ??
-                                                        "",
-                                                    softWrap: true,
-                                                    maxLines: 2,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                        color: Colors.black
-                                                            .withOpacity(.7),
-                                                        fontSize: 20,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
+                                                flex: 1,
+                                                child: Row(
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Container(
+                                                          height: 15,
+                                                          width: 15,
+                                                          decoration: BoxDecoration(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .colorScheme
+                                                                  .primary,
+                                                              shape: BoxShape
+                                                                  .circle)),
+                                                    ),
+                                                    Text(
+                                                      correspondences[pos]
+                                                              .gridInfo?[0]
+                                                              .value ??
+                                                          "",
+                                                      softWrap: true,
+                                                      maxLines: 2,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                          color: Colors.black
+                                                              .withOpacity(.7),
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Text(
+                                                correspondences[pos]
+                                                        .gridInfo?[3]
+                                                        .value ??
+                                                    "",
+                                                //   softWrap: true,
+                                                //      maxLines: 3,
+                                                style: TextStyle(
+                                                    color: Colors.black
+                                                        .withOpacity(.4),
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 14),
                                               ),
                                             ],
                                           ),
-                                          SizedBox(
-                                            height: 8,
-                                          ),
+                                          // SizedBox(
+                                          //   height: 2,
+                                          // ),
                                           Row(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
                                             children: [
-                                              Container(
-                                                  height: 20,
-                                                  width: 20,
-                                                  decoration: BoxDecoration(
-                                                      shape: BoxShape.circle)),
-                                              SizedBox(
-                                                width: 8,
+                                              // Container(
+                                              //   height: 15,
+                                              //   width: 15,
+                                              //   decoration: BoxDecoration(
+                                              //       shape: BoxShape.circle),
+                                              // ),
+                                              // SizedBox(
+                                              //   width: 2,
+                                              // ),
+                                              Text(
+                                                "sender".tr,
+                                                style: TextStyle(
+                                                  color: Colors.black
+                                                      .withOpacity(.5),
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 12,
+                                                ),
                                               ),
-                                              Text("sender".tr,
-                                                  style: TextStyle(
-                                                      color: Colors.black
-                                                          .withOpacity(.5),
-                                                      fontWeight:
-                                                          FontWeight.bold)),
                                               SizedBox(
                                                 width: 4,
                                               ),
                                               Text(
-                                                  correspondences[pos]
-                                                          .fromUser ??
-                                                      "",
-                                                  style: TextStyle(
-                                                      color: Colors.black
-                                                          .withOpacity(.5),
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                              Spacer(),
-                                              Text(
-                                                  correspondences[pos]
-                                                          .gridInfo?[3]
-                                                          .value ??
-                                                      "",
-                                                  softWrap: true,
-                                                  maxLines: 3,
-                                                  style: TextStyle(
-                                                      color: Colors.black
-                                                          .withOpacity(.4),
-                                                      fontWeight:
-                                                          FontWeight.bold)),
+                                                correspondences[pos].fromUser ??
+                                                    "",
+                                                style: TextStyle(
+                                                  color: Colors.black
+                                                      .withOpacity(.5),
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                              //       Spacer(),
                                             ],
                                           ),
                                           buildPriorities(pos, context)
@@ -954,41 +968,38 @@ class CustomListView extends GetView<InboxController> {
       padding: const EdgeInsets.all(8.0),
       child: Row(
         children: [
-          SizedBox(
-            width: 50,
+          Icon(
+            Icons.priority_high,
+            color:
+                correspondences[pos].priorityId != "3" ? AppColor : Colors.red,
+            size: 25,
           ),
 
-          //   if (correspondences[pos].priorityId == "3")
-          Icon(Icons.priority_high,
-              color: correspondences[pos].priorityId != "3"
-                  ? AppColor
-                  : Colors.red),
-          SizedBox(
-            width: 4,
-          ),
-          // if (correspondences[pos].priorityId == "3")
           Text(
             Get.locale?.languageCode == "en"
                 ? priority.Text!
                 : priority.TextAr!,
             //     "veryimportant".tr,
             style: TextStyle(
-                color: correspondences[pos].priorityId != "3"
-                    ? AppColor
-                    : RedColor),
+              color:
+                  correspondences[pos].priorityId != "3" ? AppColor : RedColor,
+              fontSize: 10,
+            ),
           ),
           SizedBox(
-            width: 50,
+            width: 10,
           ),
-          Icon(Icons.warning, color: AppColor),
-          SizedBox(
-            width: 4,
+          Icon(
+            Icons.warning,
+            color: AppColor,
+            size: 25,
           ),
-
           Text(
             Get.locale?.languageCode == "en" ? privacy.Text! : privacy.TextAr!,
-            //     "veryimportant".tr,
-            style: TextStyle(color: AppColor),
+            style: TextStyle(
+              color: AppColor,
+              fontSize: 10,
+            ),
           ),
 
           // if (correspondences[pos].priorityId == "3")

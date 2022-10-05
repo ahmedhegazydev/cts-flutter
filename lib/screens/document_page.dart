@@ -625,20 +625,19 @@ class DocumentPage extends GetWidget<DocumentController> {
                           return GestureDetector(
                             onTap: () async {
                               final key = GlobalKey();
-
-                              final Uint8List? data =
-                                  await controller.controller.toPngBytes();
-                              String base64String = base64Encode(data!);
+                              final Uint8List? data = base64Decode(
+                                  controller.multiSignatures[index].signature!);
                               ViewerController.to
                                   .prepareToAddSignatureAnnotationOnTap(
                                       Image.memory(
-                                        data,
+                                        data!,
                                         fit: BoxFit.fill,
                                         key: key,
                                         width: 100,
                                         height: 100,
                                       ),
-                                      base64String,
+                                      controller
+                                          .multiSignatures[index].signature!,
                                       "8");
                               Get.back();
                             },
@@ -726,7 +725,6 @@ class DocumentPage extends GetWidget<DocumentController> {
                         //     ViewerController.to.prepareToAddAnnotationOnTap(
                         //     AnnotationBaseTypes.signature);
                         final key = GlobalKey();
-
                         final Uint8List? data =
                             await controller.controller.toPngBytes();
                         String base64String = base64Encode(data!);
@@ -742,7 +740,6 @@ class DocumentPage extends GetWidget<DocumentController> {
                                 base64String,
                                 "7");
                         //             var ann = ViewerController.to.allAnnotations.value;
-
                         Get.back();
                       },
                       child: Icon(

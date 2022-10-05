@@ -140,7 +140,8 @@ const Map<String, String> ar = {
   "chooseaperson": "اختر شخصاً",
   "noData": "لا يوجد بيانات",
   "registerDate": "تاريخ التسجيل",
-  "settings": "الاعدادات "
-
-  ,"privacies":"الخصوصية"
+  "settings": "الاعدادات ",
+  "privacies": "الخصوصية",
+  "chooseSign": "اختر التوقيع",
+  "close": "إلغاء"
 };

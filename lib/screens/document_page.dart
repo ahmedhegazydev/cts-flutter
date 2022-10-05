@@ -576,122 +576,187 @@ class DocumentPage extends GetWidget<DocumentController> {
     );
   }
 
+// signature design
   Future<void> clickOnSign(BuildContext context) async {
     print("object");
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(" "),
-        content: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            height: MediaQuery.of(context).size.height * .5,
-            width: MediaQuery.of(context).size.width * .5,
-            color: Colors.grey[200],
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                      height: 300,
-                      width: double.infinity,
-                      child: Signature(
-                        controller: controller.controller,
-                      )),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      InkWell(
-                          onTap: () {
-                            controller.controller.clear();
-                          },
-                          child: Icon(
-                            Icons.clear,
-                            size: 50,
-                          )),
-                      InkWell(
-                          onTap: () async {
-                            //     ViewerController.to.prepareToAddAnnotationOnTap(
-                            //     AnnotationBaseTypes.signature);
-                            final key = GlobalKey();
-
-                            final Uint8List? data =
-                                await controller.controller.toPngBytes();
-                            String base64String = base64Encode(data!);
-                            ViewerController.to
-                                .prepareToAddSignatureAnnotationOnTap(
-                                    Image.memory(
-                                      data,
-                                      fit: BoxFit.fill,
-                                      key: key,
-                                      width: 100,
-                                      height: 100,
-                                    ),
-                                    base64String,
-                                    "7");
-                            //             var ann = ViewerController.to.allAnnotations.value;
-
-                            Get.back();
-                          },
-                          child: Icon(
-                            Icons.save,
-                            size: 50,
-                          )),
-                    ],
+        content: Row(
+          children: [
+            IconButton(
+              onPressed: () {
+                // open new signature pad
+                Get.close(1);
+                newSignaturePad(context);
+              },
+              icon: Icon(
+                Icons.add_circle_rounded,
+                color: Theme.of(context).colorScheme.primary,
+                size: 50,
+              ),
+            ),
+            Wrap(
+              direction: Axis.vertical,
+              children: [
+                Text(
+                  "chooseSign".tr,
+                  style: TextStyle(
+                    fontSize: 18,
                   ),
-                  Divider(color: Colors.grey),
-                  Expanded(
-                    child: GetBuilder<DocumentController>(
-                      assignId: true,
-                      autoRemove: false,
-                      builder: (logic) {
-                        return GridView.builder(
-                          itemCount: controller.multiSignatures.length,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 4.0,
-                                  mainAxisSpacing: 4.0),
-                          itemBuilder: (BuildContext context, int index) {
-                            return GestureDetector(
-                              onTap: () async {
-                                final key = GlobalKey();
+                ),
+                SizedBox(height: 10),
+                Container(
+                  height: MediaQuery.of(context).size.height * .375,
+                  width: MediaQuery.of(context).size.width * .5,
+                  color: Colors.grey[200],
+                  child: GetBuilder<DocumentController>(
+                    assignId: true,
+                    autoRemove: false,
+                    builder: (logic) {
+                      return GridView.builder(
+                        itemCount: controller.multiSignatures.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 6.0,
+                          mainAxisSpacing: 6.0,
+                        ),
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                            onTap: () async {
+                              final key = GlobalKey();
 
-                                final Uint8List? data =
-                                    await controller.controller.toPngBytes();
-                                String base64String = base64Encode(data!);
-                                ViewerController.to
-                                    .prepareToAddSignatureAnnotationOnTap(
-                                        Image.memory(
-                                          data,
-                                          fit: BoxFit.fill,
-                                          key: key,
-                                          width: 100,
-                                          height: 100,
-                                        ),
-                                        base64String,
-                                        "8");
-                                Get.back();
-                              },
-                              child: Image.memory(dataFromBase64String(
-                                  controller.multiSignatures[index].signature)),
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  )
-                ]),
-          ),
+                              final Uint8List? data =
+                                  await controller.controller.toPngBytes();
+                              String base64String = base64Encode(data!);
+                              ViewerController.to
+                                  .prepareToAddSignatureAnnotationOnTap(
+                                      Image.memory(
+                                        data,
+                                        fit: BoxFit.fill,
+                                        key: key,
+                                        width: 100,
+                                        height: 100,
+                                      ),
+                                      base64String,
+                                      "8");
+                              Get.back();
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.grey[400]!,
+                                ),
+                              ),
+                              child: Image.memory(
+                                dataFromBase64String(controller
+                                    .multiSignatures[index].signature),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                )
+              ],
+            ),
+          ],
         ),
         actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              Get.back();
-            },
-            child: Text("Ok"),
+          Center(
+            child: SizedBox(
+              width: 150,
+              child: ElevatedButton(
+                onPressed: () {
+                  Get.back();
+                },
+                child: Text("close".tr),
+              ),
+            ),
           ),
         ],
+      ),
+    );
+  }
+
+  newSignaturePad(BuildContext context) {
+    Orientation orientation = MediaQuery.of(context).orientation;
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        content: Container(
+          height: orientation == Orientation.landscape
+              ? MediaQuery.of(context).size.height * .5
+              : MediaQuery.of(context).size.height * .35,
+          width: MediaQuery.of(context).size.width * .8,
+          color: Colors.grey[200],
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 300,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey[700]!),
+                ),
+                child: Signature(
+                  controller: controller.controller,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        controller.controller.clear();
+                      },
+                      child: Icon(
+                        Icons.clear,
+                        size: 40,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    SizedBox(width: 40),
+                    InkWell(
+                      onTap: () async {
+                        //     ViewerController.to.prepareToAddAnnotationOnTap(
+                        //     AnnotationBaseTypes.signature);
+                        final key = GlobalKey();
+
+                        final Uint8List? data =
+                            await controller.controller.toPngBytes();
+                        String base64String = base64Encode(data!);
+                        ViewerController.to
+                            .prepareToAddSignatureAnnotationOnTap(
+                                Image.memory(
+                                  data,
+                                  fit: BoxFit.fill,
+                                  key: key,
+                                  width: 100,
+                                  height: 100,
+                                ),
+                                base64String,
+                                "7");
+                        //             var ann = ViewerController.to.allAnnotations.value;
+
+                        Get.back();
+                      },
+                      child: Icon(
+                        Icons.save,
+                        size: 40,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

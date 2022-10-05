@@ -64,5 +64,7 @@
 "urgent":"Urgent",
 "topUrgent":"Top Urgent",
 "emptyInboxList":"empty mail list",
-"referDate":"Refer Date"
+"referDate":"Refer Date",
+"chooseSign":"Choose Signature",
+"close":"Close"
 }

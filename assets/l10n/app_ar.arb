@@ -64,5 +64,7 @@
 "urgent":"عاجل",
 "topUrgent":"عاجل للغاية",
 "emptyInboxList":"قائمة البريد فارغة",
-"referDate":"تاريخ الاحاله"
+"referDate":"تاريخ الاحاله",
+"chooseSign":"اختر التوقيع",
+"close":"إلغاء"
 }

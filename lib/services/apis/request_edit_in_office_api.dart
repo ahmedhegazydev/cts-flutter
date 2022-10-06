@@ -11,7 +11,7 @@ class RequestEditInOfficeAPI extends ApiManager {
   RequestEditInOfficeAPI(BuildContext context) : super(context: context);
   @override
   String apiUrl() {
-    return SettingsApp.PostAddDocumentsToBasketUrl + data;
+    return SettingsApp.PostPrepareOfficeFile;
   }
 
   @override

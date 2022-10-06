@@ -45,6 +45,7 @@ class SettingsApp {
   static const String PostRemoveItemsFromBasketUrl =
       baseUrl + "/RemoveItemsFromBasket"; //
   static const String PostRemoveBasketUrl = baseUrl + "/RemoveBasket"; //
+  static const String PostPrepareOfficeFile = baseUrl + "/PrepareOfficeFile";
   static const String GetBasketInboxUrl = baseUrl + "/GetBasketInbox?";
   static const String GetIsAlreadyExportedAsPaperworkUrl = baseUrl +
       "/IsAlreadyExportedAsPaperwork?"; //?Token={Token}&exportAction={exportAction}&correspondenceId={correspondenceId}&transferId={transferId}&language={language}&&exportAction=

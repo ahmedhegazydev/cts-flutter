@@ -7,6 +7,8 @@ import 'package:flutter_sound/public/flutter_sound_player.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
 import 'package:signature/signature.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/document_controller.dart';
@@ -294,9 +296,12 @@ class DocumentPage extends GetWidget<DocumentController> {
                 CTSActionButton('assets/images/ending.png', "ending".tr, () {
                   completeClick(context);
                 }),
+                // edit
                 if (controller.canOpenInOffice())
                   CTSActionButton('assets/images/A.png', "marking".tr,
                       () async {
+                    // loader
+                    showLoaderDialog(context);
                     await openInOffice(context);
                   }),
                 CTSActionButton('assets/images/track.png', "tracking".tr, () {
@@ -520,6 +525,13 @@ class DocumentPage extends GetWidget<DocumentController> {
         toLaunch,
         mode: LaunchMode.externalApplication,
       );
+      if (!nativeAppLaunchSucceeded) {
+        // show error alert
+        showTopSnackBar(
+          context,
+          CustomSnackBar.error(message: "Error".tr),
+        );
+      }
     }
   }
 

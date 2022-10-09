@@ -2860,7 +2860,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                       child: Text(
                         u.calculateDate("dd", 'en'),
                         style: Theme.of(context).textTheme.headline3!.copyWith(
-                            fontSize: u.calculateFontSize(45, context)),
+                            fontSize: u.calculateFontSize(25, context)),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -2872,7 +2872,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                             u.calculateDate("yyyy", 'en'),
                         style: Theme.of(context).textTheme.headline2!.copyWith(
                               color: Colors.grey.shade600,
-                              fontSize: u.calculateFontSize(45, context),
+                              fontSize: u.calculateFontSize(25, context),
                               fontFamily: "Bahij_light",
                             ),
                         textAlign: TextAlign.center,
@@ -2884,7 +2884,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                         u.calculateDate("hh:mm", 'en'),
                         style: Theme.of(context).textTheme.headline3!.copyWith(
                               color: Colors.grey,
-                              fontSize: u.calculateFontSize(50, context),
+                              fontSize: u.calculateFontSize(25, context),
                             ),
                         textAlign: TextAlign.center,
                       ),
@@ -2895,7 +2895,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                         " " + u.calculateDate("a", 'en'),
                         style: Theme.of(context).textTheme.headline3!.copyWith(
                               color: Colors.grey.shade400,
-                              fontSize: u.calculateFontSize(50, context),
+                              fontSize: u.calculateFontSize(25, context),
                             ),
                       ),
                     ),
@@ -2930,7 +2930,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                         style: Theme.of(context).textTheme.headline2!.copyWith(
                               color: Colors.grey,
                               fontSize: u.calculateFontSize(
-                                35,
+                                25,
                                 context,
                               ),
                             ),
@@ -2946,7 +2946,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                 ?.toString() ??
                             "",
                         style: Theme.of(context).textTheme.headline3!.copyWith(
-                              fontSize: u.calculateFontSize(45, context),
+                              fontSize: u.calculateFontSize(25, context),
                               fontFamily: "Bahij_bold",
                             ),
                         textAlign: TextAlign.center,
@@ -2961,7 +2961,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                         "mostMyTransferWentTo".tr,
                         style: Theme.of(context).textTheme.headline2!.copyWith(
                             color: Colors.grey,
-                            fontSize: u.calculateFontSize(35, context)),
+                            fontSize: u.calculateFontSize(25, context)),
                         textAlign: TextAlign.center,
                       ),
                     ),

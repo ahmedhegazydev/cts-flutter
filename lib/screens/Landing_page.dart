@@ -1919,8 +1919,12 @@ class LandingPage extends GetWidget<LandingPageController> {
                       ),
                       child: InkWell(
                         onTap: () {
+                          var id = Get.find<LandingPageController>()
+                              .dashboardStatsResultModel
+                              ?.unreadNode
+                              ?.nodeId;
                           Get.find<InboxController>().updateUnread(true);
-                          openInbox(boxid: 0, context: context, nodeId: 20097);
+                          openInbox(boxid: 0, context: context, nodeId: id!);
                         },
                         child: Container(
                           color: Colors.transparent,
@@ -1934,7 +1938,12 @@ class LandingPage extends GetWidget<LandingPageController> {
                               Flexible(
                                 flex: 1,
                                 child: Text(
-                                  "unreadCorrespondences".tr,
+                                  Get.find<LandingPageController>()
+                                          .dashboardStatsResultModel
+                                          ?.unreadNode
+                                          ?.titleAr
+                                          ?.toString() ??
+                                      "",
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline2!
@@ -1951,7 +1960,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                                 child: Text(
                                   Get.find<LandingPageController>()
                                           .dashboardStatsResultModel
-                                          ?.unreadCount
+                                          ?.unreadNode
+                                          ?.count
                                           ?.toString() ??
                                       "",
                                   style: Theme.of(context)
@@ -1964,17 +1974,6 @@ class LandingPage extends GetWidget<LandingPageController> {
                                   textAlign: TextAlign.center,
                                 ),
                               ),
-                              // Flexible(
-                              //   flex: 1,
-                              //   child: Image(
-                              //     image: AssetImage(
-                              //       "assets/images/arrow_L.png",
-                              //     ),
-                              //     fit: BoxFit.contain,
-                              //     //  width: 20,
-                              //     //   height: double.infinity,
-                              //   ),
-                              // )
                             ],
                           ),
                         ),
@@ -2003,7 +2002,11 @@ class LandingPage extends GetWidget<LandingPageController> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          openInbox(boxid: 0, context: context, nodeId: 20094);
+                          var id = Get.find<LandingPageController>()
+                              .dashboardStatsResultModel
+                              ?.forActionNode
+                              ?.nodeId;
+                          openInbox(boxid: 0, context: context, nodeId: id!);
                         },
                         child: Container(
                           color: Colors.transparent,
@@ -2017,7 +2020,12 @@ class LandingPage extends GetWidget<LandingPageController> {
                               Flexible(
                                 flex: 1,
                                 child: Text(
-                                  "pendingCorrespondences".tr,
+                                  Get.find<LandingPageController>()
+                                          .dashboardStatsResultModel
+                                          ?.forActionNode
+                                          ?.titleAr
+                                          ?.toString() ??
+                                      "",
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline2!
@@ -2033,7 +2041,8 @@ class LandingPage extends GetWidget<LandingPageController> {
                                 child: Text(
                                   Get.find<LandingPageController>()
                                           .dashboardStatsResultModel
-                                          ?.forActionCount
+                                          ?.forActionNode
+                                          ?.count
                                           ?.toString() ??
                                       ""
                                   //controller.data?.transferData.sections[].destination
@@ -2229,177 +2238,177 @@ class LandingPage extends GetWidget<LandingPageController> {
     );
   }
 
-  Container _buildInfoBox(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white70.withOpacity(0.25),
-        borderRadius: BorderRadius.all(
-          Radius.circular(6),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.25),
-            spreadRadius: 6,
-            blurRadius: 6,
-            offset: Offset(0, 0),
-          ),
-        ],
-      ),
-      child: Flexible(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Flexible(
-              flex: 1,
-              child: Container(
-                color: Colors.transparent,
-                width: double.infinity,
-                height: double.infinity,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Flexible(
-                      flex: 3,
-                      child: Text(
-                        u.calculateDate("dd", 'en'),
-                        style: Theme.of(context).textTheme.headline3!.copyWith(
-                            fontSize: u.calculateFontSize(45, context)),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Flexible(
-                      flex: 2,
-                      child: Text(
-                        u.calculateDate("MMMM", u.getLocaleCode(context)) +
-                            " " +
-                            u.calculateDate("yyyy", 'en'),
-                        style: Theme.of(context).textTheme.headline2!.copyWith(
-                              color: Colors.grey.shade600,
-                              fontSize: 15,
-                              fontFamily: "Bahij_light",
-                            ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Flexible(
-                      flex: 3,
-                      child: Text(
-                        u.calculateDate("hh:mm", 'en'),
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline3!
-                            .copyWith(color: Colors.grey, fontSize: 24),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Flexible(
-                      flex: 2,
-                      child: Text(
-                        " " + u.calculateDate("a", 'en'),
-                        style: Theme.of(context).textTheme.headline3!.copyWith(
-                            color: Colors.grey.shade400, fontSize: 24),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            FractionallySizedBox(
-              heightFactor: 0.7,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade400,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(4),
-                  ),
-                ),
-                width: 0.5,
-              ),
-            ),
-            Flexible(
-              flex: 2,
-              child: Container(
-                color: Colors.transparent,
-                width: double.infinity,
-                height: double.infinity,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Flexible(
-                      flex: 1,
-                      child: Text(
-                        "myTransfersInMonth".tr +
-                            " " +
-                            u.calculateDate(
-                                'MMMM', Get.locale?.languageCode ?? "en"),
-                        style: Theme.of(context).textTheme.headline2!.copyWith(
-                            color: Colors.grey,
-                            fontSize: u.calculateFontSize(16, context)),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Flexible(
-                      flex: 1,
-                      child: Text(
-                        Get.find<LandingPageController>()
-                                .dashboardStatsResultModel
-                                ?.transferredFromMeCount
-                                ?.toString() ??
-                            "",
-                        style: Theme.of(context).textTheme.headline3!.copyWith(
-                              fontSize: 24,
-                              fontFamily: "Bahij_bold",
-                            ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Flexible(
-                      flex: 1,
-                      child: Text(
-                        "mostMyTransferWentTo".tr,
-                        style: Theme.of(context).textTheme.headline2!.copyWith(
-                            color: Colors.grey,
-                            fontSize: u.calculateFontSize(16, context)),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Flexible(
-                      flex: 1,
-                      child: Text(
-                        Get.find<LandingPageController>()
-                                .dashboardStatsResultModel
-                                ?.mostTransfersWentTo ??
-                            "",
-                        style: Theme.of(context).textTheme.headline3!.copyWith(
-                            fontSize: 16,
-                            fontFamily: "Bahij_bold",
-                            height:
-                                2.1 // the height between text, default is null
-                            ),
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  // Container _buildInfoBox(BuildContext context) {
+  //   return Container(
+  //     decoration: BoxDecoration(
+  //       color: Colors.white70.withOpacity(0.25),
+  //       borderRadius: BorderRadius.all(
+  //         Radius.circular(6),
+  //       ),
+  //       boxShadow: [
+  //         BoxShadow(
+  //           color: Colors.grey.withOpacity(0.25),
+  //           spreadRadius: 6,
+  //           blurRadius: 6,
+  //           offset: Offset(0, 0),
+  //         ),
+  //       ],
+  //     ),
+  //     child: Flexible(
+  //       child: Row(
+  //         mainAxisAlignment: MainAxisAlignment.center,
+  //         crossAxisAlignment: CrossAxisAlignment.center,
+  //         mainAxisSize: MainAxisSize.max,
+  //         children: [
+  //           Flexible(
+  //             flex: 1,
+  //             child: Container(
+  //               color: Colors.transparent,
+  //               width: double.infinity,
+  //               height: double.infinity,
+  //               child: Column(
+  //                 mainAxisAlignment: MainAxisAlignment.center,
+  //                 crossAxisAlignment: CrossAxisAlignment.center,
+  //                 mainAxisSize: MainAxisSize.max,
+  //                 children: [
+  //                   Flexible(
+  //                     flex: 3,
+  //                     child: Text(
+  //                       u.calculateDate("dd", 'en'),
+  //                       style: Theme.of(context).textTheme.headline3!.copyWith(
+  //                           fontSize: u.calculateFontSize(45, context)),
+  //                       textAlign: TextAlign.center,
+  //                     ),
+  //                   ),
+  //                   Flexible(
+  //                     flex: 2,
+  //                     child: Text(
+  //                       u.calculateDate("MMMM", u.getLocaleCode(context)) +
+  //                           " " +
+  //                           u.calculateDate("yyyy", 'en'),
+  //                       style: Theme.of(context).textTheme.headline2!.copyWith(
+  //                             color: Colors.grey.shade600,
+  //                             fontSize: 15,
+  //                             fontFamily: "Bahij_light",
+  //                           ),
+  //                       textAlign: TextAlign.center,
+  //                     ),
+  //                   ),
+  //                   Flexible(
+  //                     flex: 3,
+  //                     child: Text(
+  //                       u.calculateDate("hh:mm", 'en'),
+  //                       style: Theme.of(context)
+  //                           .textTheme
+  //                           .headline3!
+  //                           .copyWith(color: Colors.grey, fontSize: 24),
+  //                       textAlign: TextAlign.center,
+  //                     ),
+  //                   ),
+  //                   Flexible(
+  //                     flex: 2,
+  //                     child: Text(
+  //                       " " + u.calculateDate("a", 'en'),
+  //                       style: Theme.of(context).textTheme.headline3!.copyWith(
+  //                           color: Colors.grey.shade400, fontSize: 24),
+  //                     ),
+  //                   ),
+  //                   SizedBox(
+  //                     height: 10,
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //           ),
+  //           FractionallySizedBox(
+  //             heightFactor: 0.7,
+  //             child: Container(
+  //               decoration: BoxDecoration(
+  //                 color: Colors.grey.shade400,
+  //                 borderRadius: BorderRadius.all(
+  //                   Radius.circular(4),
+  //                 ),
+  //               ),
+  //               width: 0.5,
+  //             ),
+  //           ),
+  //           Flexible(
+  //             flex: 2,
+  //             child: Container(
+  //               color: Colors.transparent,
+  //               width: double.infinity,
+  //               height: double.infinity,
+  //               child: Column(
+  //                 mainAxisAlignment: MainAxisAlignment.center,
+  //                 crossAxisAlignment: CrossAxisAlignment.center,
+  //                 mainAxisSize: MainAxisSize.max,
+  //                 children: [
+  //                   Flexible(
+  //                     flex: 1,
+  //                     child: Text(
+  //                       "myTransfersInMonth".tr +
+  //                           " " +
+  //                           u.calculateDate(
+  //                               'MMMM', Get.locale?.languageCode ?? "en"),
+  //                       style: Theme.of(context).textTheme.headline2!.copyWith(
+  //                           color: Colors.grey,
+  //                           fontSize: u.calculateFontSize(16, context)),
+  //                       textAlign: TextAlign.center,
+  //                     ),
+  //                   ),
+  //                   Flexible(
+  //                     flex: 1,
+  //                     child: Text(
+  //                       Get.find<LandingPageController>()
+  //                               .dashboardStatsResultModel
+  //                               ?.transferredFromMeCount
+  //                               ?.toString() ??
+  //                           "",
+  //                       style: Theme.of(context).textTheme.headline3!.copyWith(
+  //                             fontSize: 24,
+  //                             fontFamily: "Bahij_bold",
+  //                           ),
+  //                       textAlign: TextAlign.center,
+  //                     ),
+  //                   ),
+  //                   SizedBox(
+  //                     height: 10,
+  //                   ),
+  //                   Flexible(
+  //                     flex: 1,
+  //                     child: Text(
+  //                       "mostMyTransferWentTo".tr,
+  //                       style: Theme.of(context).textTheme.headline2!.copyWith(
+  //                           color: Colors.grey,
+  //                           fontSize: u.calculateFontSize(16, context)),
+  //                       textAlign: TextAlign.center,
+  //                     ),
+  //                   ),
+  //                   Flexible(
+  //                     flex: 1,
+  //                     child: Text(
+  //                       Get.find<LandingPageController>()
+  //                               .dashboardStatsResultModel
+  //                               ?.mostTransfersWentTo ??
+  //                           "",
+  //                       style: Theme.of(context).textTheme.headline3!.copyWith(
+  //                           fontSize: 16,
+  //                           fontFamily: "Bahij_bold",
+  //                           height:
+  //                               2.1 // the height between text, default is null
+  //                           ),
+  //                       textAlign: TextAlign.center,
+  //                     ),
+  //                   )
+  //                 ],
+  //               ),
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   portiraitDashboard(BuildContext context) {
     return AnimatedSwitcher(
@@ -2460,10 +2469,15 @@ class LandingPage extends GetWidget<LandingPageController> {
                                       ),
                                       child: InkWell(
                                         onTap: () {
+                                          var id =
+                                              Get.find<LandingPageController>()
+                                                  .dashboardStatsResultModel
+                                                  ?.forActionNode
+                                                  ?.nodeId;
                                           openInbox(
                                               boxid: 0,
                                               context: context,
-                                              nodeId: 20094);
+                                              nodeId: id!);
                                         },
                                         child: Container(
                                           color: Colors.transparent,
@@ -2479,7 +2493,12 @@ class LandingPage extends GetWidget<LandingPageController> {
                                               Flexible(
                                                 flex: 1,
                                                 child: Text(
-                                                  "pendingCorrespondences".tr,
+                                                  Get.find<LandingPageController>()
+                                                          .dashboardStatsResultModel
+                                                          ?.forActionNode
+                                                          ?.titleAr
+                                                          ?.toString() ??
+                                                      "",
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .headline2!
@@ -2495,11 +2514,12 @@ class LandingPage extends GetWidget<LandingPageController> {
                                               Flexible(
                                                 flex: 1,
                                                 child: Text(
-                                                  Get.find<
-                                                          LandingPageController>()
-                                                      .dashboardStatsResultModel!
-                                                      .forActionCount
-                                                      .toString(),
+                                                  Get.find<LandingPageController>()
+                                                          .dashboardStatsResultModel
+                                                          ?.forActionNode
+                                                          ?.count
+                                                          ?.toString() ??
+                                                      "",
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .headline3!
@@ -2657,10 +2677,15 @@ class LandingPage extends GetWidget<LandingPageController> {
                                       ),
                                       child: InkWell(
                                         onTap: () {
+                                          var id =
+                                              Get.find<LandingPageController>()
+                                                  .dashboardStatsResultModel
+                                                  ?.forActionNode
+                                                  ?.nodeId!;
                                           openInbox(
                                               boxid: 0,
                                               context: context,
-                                              nodeId: 20094);
+                                              nodeId: id!);
                                         },
                                         child: Container(
                                           color: Colors.transparent,
@@ -2676,7 +2701,12 @@ class LandingPage extends GetWidget<LandingPageController> {
                                               Flexible(
                                                 flex: 1,
                                                 child: Text(
-                                                  "unreadCorrespondences".tr,
+                                                  Get.find<LandingPageController>()
+                                                          .dashboardStatsResultModel
+                                                          ?.forActionNode
+                                                          ?.titleAr
+                                                          ?.toString() ??
+                                                      "",
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .headline2!
@@ -2693,11 +2723,12 @@ class LandingPage extends GetWidget<LandingPageController> {
                                               Flexible(
                                                 flex: 1,
                                                 child: Text(
-                                                  Get.find<
-                                                          LandingPageController>()
-                                                      .dashboardStatsResultModel!
-                                                      .unreadCount
-                                                      .toString(),
+                                                  Get.find<LandingPageController>()
+                                                          .dashboardStatsResultModel
+                                                          ?.unreadNode
+                                                          ?.count
+                                                          ?.toString() ??
+                                                      "",
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .headline3!
@@ -2974,7 +3005,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                             " ? ",
                         //"???",
                         style: Theme.of(context).textTheme.headline3!.copyWith(
-                              fontSize: u.calculateFontSize(10, context),
+                              fontSize: u.calculateFontSize(20, context),
                               fontFamily: "Bahij_bold",
                               //height: 2.1 // the height between text, default is null
                             ),

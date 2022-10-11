@@ -530,15 +530,18 @@ class DocumentPage extends GetWidget<DocumentController> {
     Navigator.of(context).pop();
     if (fileURL.isNotEmpty) {
       final Uri toLaunch = Uri.parse("ms-word:ofe|u|$fileURL|a|App");
+      Navigator.pop(context);
       final bool nativeAppLaunchSucceeded = await launchUrl(
         toLaunch,
         mode: LaunchMode.externalApplication,
       );
+
       if (!nativeAppLaunchSucceeded) {
+        // Navigator.pop(context);
         // show error alert
         showTopSnackBar(
           context,
-          CustomSnackBar.error(message: "Error".tr),
+          CustomSnackBar.error(message: "tryAgainLater".tr),
         );
       }
     }

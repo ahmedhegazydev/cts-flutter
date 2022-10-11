@@ -10,7 +10,6 @@ import 'package:signature/signature.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../controllers/document_controller.dart';
 import '../controllers/inbox_controller.dart';
 import '../controllers/main_controller.dart';
@@ -147,7 +146,10 @@ class DocumentPage extends GetWidget<DocumentController> {
           icon: const Icon(Icons.upload),
         ),
         ActionButton(
-          onPressed: () => completeClick(context),
+          onPressed: () {
+            showLoaderDialog(context);
+            completeClick(context);
+          },
           icon: const Icon(Icons.archive),
         ),
         ActionButton(
@@ -155,7 +157,10 @@ class DocumentPage extends GetWidget<DocumentController> {
           icon: const Icon(Icons.edit),
         ),
         ActionButton(
-          onPressed: () => _popUpMenuTransfer(context),
+          onPressed: () {
+            showLoaderDialog(context);
+            _popUpMenuTransfer(context);
+          },
           icon: const Icon(Icons.send),
         ),
       ],
@@ -288,12 +293,16 @@ class DocumentPage extends GetWidget<DocumentController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CTSActionButton('assets/images/refer.png', "refer".tr, () {
+                  // loader
+                  showLoaderDialog(context);
                   _popUpMenuTransfer(context);
                 }),
                 CTSActionButton('assets/images/up_arrow.png', "export".tr, () {
                   showExportDialog(context);
                 }),
                 CTSActionButton('assets/images/ending.png', "ending".tr, () {
+                  // loader
+                  showLoaderDialog(context);
                   completeClick(context);
                 }),
                 // edit
@@ -518,9 +527,9 @@ class DocumentPage extends GetWidget<DocumentController> {
   Future<void> openInOffice(BuildContext context) async {
     var fileURL =
         await controller.prepareOpenDocumentInOffice(context: context);
+    Navigator.of(context).pop();
     if (fileURL.isNotEmpty) {
       final Uri toLaunch = Uri.parse("ms-word:ofe|u|$fileURL|a|App");
-
       final bool nativeAppLaunchSucceeded = await launchUrl(
         toLaunch,
         mode: LaunchMode.externalApplication,
@@ -536,6 +545,7 @@ class DocumentPage extends GetWidget<DocumentController> {
   }
 
   Future<dynamic> completeClick(BuildContext context) {
+    Navigator.of(context).pop();
     return showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -797,6 +807,7 @@ class DocumentPage extends GetWidget<DocumentController> {
 
   _popUpMenuTransfer(context) async {
     await controller.listFavoriteRecipients(context: context);
+    Navigator.of(context).pop();
     showDialog(
         context: context,
         builder: (BuildContext context) {

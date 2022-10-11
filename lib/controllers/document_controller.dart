@@ -5,6 +5,7 @@ import 'dart:typed_data';
 
 import 'package:cts/services/apis/inside_doc/g2g/eport_using_g2g_api.dart';
 import 'package:cts/services/apis/request_edit_in_office_api.dart';
+import 'package:cts/services/apis/request_refresh_edit_in_office_api.dart';
 import 'package:cts/services/json_model/request_edit_in_office_model.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -76,11 +77,12 @@ import 'landing_page_controller.dart';
 class DocumentController extends GetxController {
   Destination? userWillAddToOpenTransferWindow;
 
+  RxInt documentEditedInOfficeId = 0.obs;
+
   SecureStorage secureStorage = SecureStorage();
   CanOpenDocumentModel? canOpenDocumentModel;
   final record = FlutterSoundRecorder();
 
-//Map<int,String>folder={};
   bool notoragnalFileDoc = false;
 
   String oragnalFileDocpdfUrlFile = "";
@@ -1314,6 +1316,29 @@ class DocumentController extends GetxController {
     return true;
   }
 
+  Future<bool> refreshOffice({context}) async {
+    var attachment = canOpenDocumentModel!.attachments!.attachments![0];
+    var editOfficeDetails = attachment.editOfficeDetails!;
+
+    if (editOfficeDetails.spUrl == null ||
+        editOfficeDetails.isEditable == false) {
+      return false;
+    }
+    RequestEditInOfficeModel model = RequestEditInOfficeModel(
+        language: Get.locale?.languageCode == "en" ? "en" : "ar",
+        token: secureStorage.token()!,
+        documentId: attachment.docId,
+        attachmentId: attachment.attachmentId,
+        siteId: editOfficeDetails.siteId,
+        webId: editOfficeDetails.webId,
+        fileId: editOfficeDetails.fileId);
+    RequestRefreshEditInOfficeAPI api = RequestRefreshEditInOfficeAPI(context);
+    var value = await api.post(model.toMap()); //.then((value) {
+    //  DefaultOnSuccessResult res = value as DefaultOnSuccessResult;
+    documentEditedInOfficeId.value = 0;
+    return true;
+  }
+
   Future<String> prepareOpenDocumentInOffice({context}) async {
     var attachment = canOpenDocumentModel!.attachments!.attachments![0];
     var editOfficeDetails = attachment.editOfficeDetails!;
@@ -1323,6 +1348,7 @@ class DocumentController extends GetxController {
       return "";
     }
 
+    documentEditedInOfficeId.value = attachment.attachmentId ?? 0;
     RequestEditInOfficeModel model = RequestEditInOfficeModel(
         language: Get.locale?.languageCode == "en" ? "en" : "ar",
         token: secureStorage.token()!,
@@ -1338,8 +1364,7 @@ class DocumentController extends GetxController {
     return editOfficeDetails.spUrl!;
   }
 
-//التسجيل الجديد
-
+  //التسجيل الجديد
   setNots({required int id, String? not}) {
     multiTransferNode[id]?.note = not;
   }

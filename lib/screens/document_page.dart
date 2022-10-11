@@ -138,7 +138,7 @@ class DocumentPage extends GetWidget<DocumentController> {
 
             // log(updated);
           },
-          icon: const Icon(Icons.print),
+          icon: const Icon(Icons.save),
         ),
         ActionButton(
           onPressed: () {
@@ -206,28 +206,45 @@ class DocumentPage extends GetWidget<DocumentController> {
     //     url: controller.pdfAndSingData.first,
     //     color: Get.find<MController>().appcolor,
     //     size: s);
-    var documentViewer = GetBuilder<DocumentController>(
-        autoRemove: false,
-        builder: (logic) {
-          Size size = MediaQuery.of(context).size;
-          var v = controller.correspondences.toJson();
-          log(v.toString());
-          Size s = Size(size.width, size.height);
-          return controller.pdfAndSingData.length > 0
-              ? SizedBox(
-                  width: size.width,
-                  height: size.height - 100,
-                  child: PDFView(
-                      originalAnnotations: controller.annotations,
-                      url: controller.pdfAndSingData.first,
-                      color: Get.find<MController>().appcolor,
-                      size: s),
-                )
-              : CircularProgressIndicator.adaptive(
-                  backgroundColor: Colors.lime,
-                );
-        });
-    return documentViewer;
+
+    // var documentViewer = GetBuilder<DocumentController>(
+    //     autoRemove: false,
+    //     builder: (logic) {
+    // print(controller.documentEditedInOfficeId);
+    Size size = MediaQuery.of(context).size;
+    // var v = controller.correspondences.toJson();
+
+    Size s = Size(size.width, size.height);
+    if (controller.documentEditedInOfficeId.value != 0) {
+      return Center(
+        child: IconButton(
+          onPressed: () async {
+            showLoaderDialog(context);
+            await controller.refreshOffice(context: context);
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.refresh,
+          ),
+        ),
+      );
+    }
+    return controller.pdfAndSingData.length > 0
+        ? SizedBox(
+            width: size.width,
+            height: size.height - 100,
+            child: PDFView(
+                originalAnnotations: controller.annotations,
+                url: controller.pdfAndSingData.first,
+                color: Get.find<MController>().appcolor,
+                size: s),
+          )
+        : CircularProgressIndicator.adaptive(
+            backgroundColor: Colors.lime,
+          );
+    //  });
+
+    //  return documentViewer;
     // Column(
     //   mainAxisAlignment: MainAxisAlignment.start,
     //   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -527,12 +544,19 @@ class DocumentPage extends GetWidget<DocumentController> {
       );
 
       if (!nativeAppLaunchSucceeded) {
+        final bool otherLaunchSucceeded = await launchUrl(
+          toLaunch,
+        );
         // Navigator.pop(context);
         // show error alert
-        showTopSnackBar(
-          context,
-          CustomSnackBar.error(message: "tryAgainLater".tr),
-        );
+        if (!otherLaunchSucceeded) {
+          showTopSnackBar(
+            context,
+            CustomSnackBar.error(
+              message: "tryAgainLater".tr,
+            ),
+          );
+        }
       }
     }
   }
@@ -541,7 +565,41 @@ class DocumentPage extends GetWidget<DocumentController> {
     return showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(" "),
+        title: Row(//mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+          Image.asset(
+            'assets/images/ending.png'
+            //
+            ,
+            height: 20,
+            width: 20,
+          ),
+          const SizedBox(
+            width: 8,
+          ),
+          Text(
+            "ending".tr,
+            style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                color: Colors.black.withOpacity(.5),
+                fontSize: 18,
+                fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+          ),
+          const Spacer(),
+          InkWell(
+            onTap: () {
+              controller.filterWord = "";
+              Navigator.pop(context);
+            },
+            child: Image.asset(
+              'assets/images/close_button.png',
+              width: 30,
+              height: 30,
+            ),
+          ),
+        ]),
+        // title: Text(" "),
         content: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
@@ -583,7 +641,9 @@ class DocumentPage extends GetWidget<DocumentController> {
               Get.find<InboxController>()
                   .completeInCorrespondence(context: context, data: data);
             },
-            child: Text("Ok"),
+            child: Text(
+              "ending".tr,
+            ),
           ),
         ],
       ),
@@ -1240,7 +1300,9 @@ class DocumentPage extends GetWidget<DocumentController> {
                           .correspondence!.correspondenceId);
                   Navigator.pop(context);
                 },
-                child: Text("Ok"),
+                child: Text(
+                  "refer".tr,
+                ),
               ),
             ],
           );

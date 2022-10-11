@@ -162,7 +162,7 @@ class DocumentController extends GetxController {
     });
   }
 
-  multipleTransferspost({context, correspondenceId, transferId}) {
+  multipleTransferspost({context, correspondenceId, transferId}) async {
     //
     MultipleTransfersAPI _multipleTransfersAPI = MultipleTransfersAPI(context);
     recordingMap.forEach((key, value) async {
@@ -208,6 +208,12 @@ class DocumentController extends GetxController {
           pageSize: 20,
           showThumbnails: false);
       Get.back();
+
+      Navigator.pop(context);
+      //Get.back(closeOverlays: true);
+      //  Get.back();
+      Get.offAllNamed("/InboxPage");
+
       CustomSnackBar.success(
         icon: Container(),
         backgroundColor: Colors.lightGreen,

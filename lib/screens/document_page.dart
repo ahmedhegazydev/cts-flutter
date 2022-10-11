@@ -41,7 +41,9 @@ class DocumentPage extends GetWidget<DocumentController> {
                     ? Center(
                         child: CircularProgressIndicator(),
                       )
-                    : _buildBody(context),
+                    : Obx(
+                        () => _buildBody(context),
+                      ),
                 drawer: _buildDrawer(context),
                 floatingActionButtonLocation:
                     FloatingActionButtonLocation.miniStartFloat,
@@ -203,7 +205,7 @@ class DocumentPage extends GetWidget<DocumentController> {
   }
 
   /// ToDo get the print
-  _buildBody(BuildContext context) {
+  Widget _buildBody(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
 
     // return PDFView(
@@ -262,12 +264,14 @@ class DocumentPage extends GetWidget<DocumentController> {
     Get.find<WebViewPageController>().isPdf = false;
     print(controller.correspondences.gridInfo![2].value);
     var ref = controller.correspondences.gridInfo![2].value;
+    var url =
+        controller.canOpenDocumentModel?.correspondence!.visualTrackingUrl!;
+
     if (ref != null && ref != "")
       Get.find<WebViewPageController>().title = ref;
     else
       Get.find<WebViewPageController>().title = "tracking".tr;
-    Get.find<WebViewPageController>().url =
-        controller.canOpenDocumentModel?.correspondence!.visualTrackingUrl!;
+    Get.find<WebViewPageController>().url = url;
     Get.toNamed(
       "WebViewPage",
     );
@@ -649,8 +653,8 @@ class DocumentPage extends GetWidget<DocumentController> {
 
               // Navigator.of(ctx).pop();
               showLoaderDialog(context);
-              // await Get.find<InboxController>()
-              //     .completeInCorrespondence(context: context, data: data);
+              await Get.find<InboxController>()
+                  .completeInCorrespondence(context: context, data: data);
               Navigator.pop(context);
               //Get.back(closeOverlays: true);
               //  Get.back();
@@ -1223,10 +1227,6 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                           GestureDetector(
                                                             onTap: () async {
                                                               ///To Do Start and stop rec
-                                                              ///
-                                                              ///
-                                                              ///
-                                                              // controller.canOpenDocumentModel.correspondence.docDueDate
                                                               controller.record
                                                                       .isRecording
                                                                   ? controller
@@ -1326,6 +1326,22 @@ class DocumentPage extends GetWidget<DocumentController> {
                       correspondenceId: controller.canOpenDocumentModel!
                           .correspondence!.correspondenceId);
                   Navigator.pop(context);
+
+                  Navigator.pop(context);
+                  //Get.back(closeOverlays: true);
+                  //  Get.back();
+                  Get.offAllNamed("/InboxPage");
+
+                  // Get.offNamed("InboxPage"); //.  Get.toNamed("/InboxPage");
+                  // Ge
+                  showTopSnackBar(
+                    context,
+                    CustomSnackBar.success(
+                      icon: Container(),
+                      backgroundColor: Colors.lightGreen,
+                      message: "EndedSuccess".tr,
+                    ),
+                  );
                 },
                 child: Text(
                   "refer".tr,

@@ -15,6 +15,7 @@ import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:signature/signature.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 
 import '../models/CorrespondencesModel.dart';
 import '../services/apis/favorites/ListFavoriteRecipients_api.dart';
@@ -207,7 +208,12 @@ class DocumentController extends GetxController {
           pageSize: 20,
           showThumbnails: false);
       Get.back();
-      Get.snackbar("", "تم التنفيذ بنجاح");
+      CustomSnackBar.success(
+        icon: Container(),
+        backgroundColor: Colors.lightGreen,
+        message: "EndedSuccess".tr,
+      );
+      //   Get.snackbar("", "تم التنفيذ بنجاح");
     });
   }
 

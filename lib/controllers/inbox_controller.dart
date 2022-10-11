@@ -966,16 +966,17 @@ class InboxController extends GetxController {
           pageSize: 20,
           showThumbnails: false);
 
-      Navigator.pop(context);
-      Get.back();
-      showTopSnackBar(
-        context,
-        CustomSnackBar.success(
-          icon: Container(),
-          backgroundColor: Colors.lightGreen,
-          message: "EndedSuccess".tr,
-        ),
-      );
+      // Navigator.pop(context);
+      // Get.back();
+
+      // showTopSnackBar(
+      //   context,
+      //   CustomSnackBar.success(
+      //     icon: Container(),
+      //     backgroundColor: Colors.lightGreen,
+      //     message: "EndedSuccess".tr,
+      //   ),
+      // );
     });
   }
 

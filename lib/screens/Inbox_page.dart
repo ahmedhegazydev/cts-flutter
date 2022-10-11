@@ -59,6 +59,7 @@ class InboxPage extends GetWidget<InboxController> {
           icon: const Icon(Icons.navigate_next),
           tooltip: 'back',
           onPressed: () {
+            Get.offAllNamed("/Landing");
             Get.back();
           },
         ),

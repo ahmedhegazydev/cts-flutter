@@ -640,17 +640,32 @@ class DocumentPage extends GetWidget<DocumentController> {
         ),
         actions: <Widget>[
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               print(Get.find<InboxController>().completeCustomActions?.name);
               print(Get.find<InboxController>().completeCustomActions?.icon);
 
               String data =
                   'Token=${Get.find<InboxController>().secureStorage.token()}&correspondenceId=${controller.canOpenDocumentModel!.correspondence!.correspondenceId}&transferId=${controller.canOpenDocumentModel!.correspondence!.transferId}&actionType=Complete&note=${Get.find<InboxController>().completeNote}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}';
 
-              Navigator.of(ctx).pop();
+              // Navigator.of(ctx).pop();
               showLoaderDialog(context);
-              Get.find<InboxController>()
-                  .completeInCorrespondence(context: context, data: data);
+              // await Get.find<InboxController>()
+              //     .completeInCorrespondence(context: context, data: data);
+              Navigator.pop(context);
+              //Get.back(closeOverlays: true);
+              //  Get.back();
+              Get.offAllNamed("/InboxPage");
+
+              // Get.offNamed("InboxPage"); //.  Get.toNamed("/InboxPage");
+              // Ge
+              showTopSnackBar(
+                context,
+                CustomSnackBar.success(
+                  icon: Container(),
+                  backgroundColor: Colors.lightGreen,
+                  message: "EndedSuccess".tr,
+                ),
+              );
             },
             child: Text(
               "ending".tr,

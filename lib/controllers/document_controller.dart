@@ -1380,7 +1380,6 @@ class DocumentController extends GetxController {
     recordingMap[id] = _directoryPath;
     await record.startRecorder(codec: _codec, toFile: _directoryPath);
     update(["record"]);
-    // print(recordingMap);
     update();
   }
 

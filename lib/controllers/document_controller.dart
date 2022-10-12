@@ -162,6 +162,7 @@ class DocumentController extends GetxController {
   multipleTransferspost({context, correspondenceId, transferId}) {
     //
     MultipleTransfersAPI _multipleTransfersAPI = MultipleTransfersAPI(context);
+    // check
     recordingMap.forEach((key, value) async {
       print("key====>$key");
       print("key====>${value}");
@@ -1379,6 +1380,8 @@ class DocumentController extends GetxController {
     recordingMap[id] = _directoryPath;
     await record.startRecorder(codec: _codec, toFile: _directoryPath);
     update(["record"]);
+    // print(recordingMap);
+    update();
   }
 
   Future stopMathod() async {

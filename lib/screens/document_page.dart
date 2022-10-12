@@ -249,6 +249,7 @@ class DocumentPage extends GetWidget<DocumentController> {
       Get.find<WebViewPageController>().title = ref;
     else
       Get.find<WebViewPageController>().title = "tracking".tr;
+    // check
     Get.find<WebViewPageController>().url =
         controller.canOpenDocumentModel?.correspondence!.visualTrackingUrl!;
     Get.toNamed(
@@ -809,6 +810,7 @@ class DocumentPage extends GetWidget<DocumentController> {
   }
 
   _popUpMenuTransfer(context) async {
+    // print(controller.customActions);
     await controller.listFavoriteRecipients(context: context);
     Navigator.of(context).pop();
     showDialog(
@@ -1147,6 +1149,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                         children: [
                                                           GestureDetector(
                                                             onTap: () async {
+                                                              // check start recording method
                                                               ///To Do Start and stop rec
                                                               ///
                                                               ///
@@ -1191,6 +1194,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                                     .all(8.0),
                                                             child: InkWell(
                                                               onTap: () {
+                                                                // check record
                                                                 controller.playMathod(
                                                                     id: logic
                                                                         .usersWillSendTo[

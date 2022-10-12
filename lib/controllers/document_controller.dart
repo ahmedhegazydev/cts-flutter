@@ -77,7 +77,7 @@ import 'landing_page_controller.dart';
 
 class DocumentController extends GetxController {
   Destination? userWillAddToOpenTransferWindow;
-
+  RxBool isPlayingAudio = false.obs;
   RxInt documentEditedInOfficeId = 0.obs;
 
   SecureStorage secureStorage = SecureStorage();
@@ -165,12 +165,13 @@ class DocumentController extends GetxController {
   multipleTransferspost({context, correspondenceId, transferId}) async {
     //
     MultipleTransfersAPI _multipleTransfersAPI = MultipleTransfersAPI(context);
-    recordingMap.forEach((key, value) async {
-      print("key====>$key");
-      print("key====>${value}");
 
+    int countOfNodes = recordingMap.length;
+    for (var entry in recordingMap.entries) {
+      var key = entry.key;
+      var value = entry.value;
+      //  recordingMap.forEach((key, value)  {
       String? audioFileBes64 = await audiobase64String(file: File(value));
-
       multiTransferNode[key]?.voiceNote = audioFileBes64;
       multiTransferNode[key]?.voiceNoteExt = "m4a";
       multiTransferNode[key]?.voiceNotePrivate = false;
@@ -178,7 +179,8 @@ class DocumentController extends GetxController {
       multiTransferNode[key]?.purposeId =
           canOpenDocumentModel!.correspondence!.purposeId;
       multiTransferNode[key]?.voiceNotePrivate = false;
-    });
+    }
+    ;
 
     List<multipletransfersSend.TransferNode> transfers = [];
     multiTransferNode.forEach((key, value) {
@@ -191,12 +193,6 @@ class DocumentController extends GetxController {
             correspondenceId: correspondenceId,
             token: secureStorage.token()!,
             transferId: transferId);
-
-    // MultipleTransfersModel multipleTransfersModel = MultipleTransfersModel(
-    //     token: secureStorage.token()!,
-    //     correspondenceId: correspondenceId,
-    //     transferId: transferId,
-    //     transfers: transfers);
 
     transfarForMany.clear();
     usersWillSendTo.clear();
@@ -1430,7 +1426,12 @@ class DocumentController extends GetxController {
     audioPlayer = FlutterSoundPlayer();
     audioPlayer!.openPlayer();
     if (recordingMap[id] != null) {
-      await audioPlayer!.startPlayer(fromURI: recordingMap[id]);
+      isPlayingAudio.value = true;
+      await audioPlayer!.startPlayer(
+          fromURI: recordingMap[id],
+          whenFinished: () {
+            isPlayingAudio.value = false;
+          });
     } else {
       Get.snackbar("", "nofiletoopen".tr);
     }
@@ -1787,16 +1788,32 @@ class DocumentController extends GetxController {
                                                             padding:
                                                                 const EdgeInsets
                                                                     .all(8.0),
-                                                            child: InkWell(
-                                                              onTap: () {
-                                                                playMathod(
-                                                                    id: logic
-                                                                        .usersWillSendTo[
-                                                                            pos]
-                                                                        .id);
-                                                              },
-                                                              child: Icon(Icons
-                                                                  .play_arrow),
+                                                            child: Obx(
+                                                              () => InkWell(
+                                                                onTap: () {
+                                                                  if (!isPlayingAudio
+                                                                      .value) {
+                                                                    playMathod(
+                                                                        id: logic
+                                                                            .usersWillSendTo[pos]
+                                                                            .id);
+                                                                  } else {
+                                                                    isPlayingAudio
+                                                                            .value =
+                                                                        false;
+                                                                    audioPlayer!
+                                                                        .stopPlayer();
+                                                                  }
+                                                                },
+                                                                child: Icon(
+                                                                  isPlayingAudio
+                                                                          .value
+                                                                      ? Icons
+                                                                          .stop
+                                                                      : Icons
+                                                                          .play_arrow,
+                                                                ),
+                                                              ),
                                                             ),
                                                           )
                                                         ],
@@ -1842,11 +1859,12 @@ class DocumentController extends GetxController {
                   ///send to many
 
                   multipleTransferspost(
-                      context: context,
-                      transferId:
-                          canOpenDocumentModel!.correspondence!.transferId!,
-                      correspondenceId: canOpenDocumentModel!
-                          .correspondence!.correspondenceId);
+                    context: context,
+                    transferId:
+                        canOpenDocumentModel!.correspondence!.transferId!,
+                    correspondenceId:
+                        canOpenDocumentModel!.correspondence!.correspondenceId,
+                  );
                   Navigator.pop(context);
                 },
                 child: Text("Ok"),

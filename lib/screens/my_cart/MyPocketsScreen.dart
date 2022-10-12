@@ -1452,6 +1452,9 @@ class _ListView1State extends State<ListView1> {
 //  Get.find<DocumentController>().loadPdf();
 
                       //ViewerController.to.allAnnotations.clear();
+                      Get.find<DocumentController>()
+                          .documentEditedInOfficeId
+                          .value = 0;
                       Get.toNamed("/DocumentPage");
                     },
                     child: SizedBox(

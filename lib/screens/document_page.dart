@@ -515,25 +515,39 @@ class DocumentPage extends GetWidget<DocumentController> {
                       height: 1,
                       color: Colors.grey,
                     )),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: InkWell(
-                        onTap: () async {
-                          print("object");
+                    Obx(
+                      () => Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          onTap: () async {
+                            print("object");
+                            if (!controller.isPlayingAudio.value) {
+                              controller.isPlayingAudio.toggle();
+                              FlutterSoundPlayer audioPlayer =
+                                  FlutterSoundPlayer();
 
-                          /// هنشغل ملف الصوت هنا
-                          FlutterSoundPlayer audioPlayer = FlutterSoundPlayer();
+                              audioPlayer.openPlayer();
+                              var base64 = controller.canOpenDocumentModel
+                                  ?.attachments?.voiceNote!;
 
-                          audioPlayer.openPlayer();
-                          String filePath = await createFileFromString(
-                              controller.canOpenDocumentModel?.attachments
-                                  ?.voiceNote);
-
-                          print(filePath);
-                          await audioPlayer.startPlayer(fromURI: filePath);
-                        },
-                        child: Icon(Icons.play_arrow,
-                            color: Theme.of(context).colorScheme.primary),
+                              await audioPlayer.startPlayer(
+                                fromDataBuffer: base64Decode(base64!),
+                                whenFinished: () {
+                                  controller.isPlayingAudio.toggle();
+                                },
+                              );
+                            } else {
+                              controller.isPlayingAudio.value = false;
+                              controller.audioPlayer!.stopPlayer();
+                            }
+                          },
+                          child: Icon(
+                            controller.isPlayingAudio.value
+                                ? Icons.stop
+                                : Icons.play_arrow,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
                       ),
                     )
                   ],
@@ -548,6 +562,7 @@ class DocumentPage extends GetWidget<DocumentController> {
   Future<void> openInOffice(BuildContext context) async {
     var fileURL =
         await controller.prepareOpenDocumentInOffice(context: context);
+    await Future.delayed(Duration(seconds: 3));
     Navigator.of(context).pop();
     if (fileURL.isNotEmpty) {
       final Uri toLaunch = Uri.parse("ms-word:ofe|u|$fileURL|a|App");
@@ -1264,16 +1279,35 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                             padding:
                                                                 const EdgeInsets
                                                                     .all(8.0),
-                                                            child: InkWell(
-                                                              onTap: () {
-                                                                controller.playMathod(
-                                                                    id: logic
-                                                                        .usersWillSendTo[
-                                                                            pos]
-                                                                        .id);
-                                                              },
-                                                              child: Icon(Icons
-                                                                  .play_arrow),
+                                                            child: Obx(
+                                                              () => InkWell(
+                                                                onTap: () {
+                                                                  if (!controller
+                                                                      .isPlayingAudio
+                                                                      .value)
+                                                                    controller.playMathod(
+                                                                        id: logic
+                                                                            .usersWillSendTo[pos]
+                                                                            .id);
+                                                                  else {
+                                                                    controller
+                                                                        .isPlayingAudio
+                                                                        .value = false;
+                                                                    controller
+                                                                        .audioPlayer!
+                                                                        .stopPlayer();
+                                                                  }
+                                                                },
+                                                                child: Icon(
+                                                                  controller
+                                                                          .isPlayingAudio
+                                                                          .value
+                                                                      ? Icons
+                                                                          .stop
+                                                                      : Icons
+                                                                          .play_arrow,
+                                                                ),
+                                                              ),
                                                             ),
                                                           )
                                                         ],

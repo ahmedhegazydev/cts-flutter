@@ -696,6 +696,7 @@ class InboxController extends GetxController {
       required docId,
       required correspondenceId,
       required transferId}) async {
+    Get.put(DocumentController());
     CanOpenDocumentApi canOpenDocumentApi = CanOpenDocumentApi(context);
 
     print("canOpenDoc canOpenDoc canOpenDoc canOpenDoc");
@@ -722,6 +723,7 @@ class InboxController extends GetxController {
         //     correspondenceId: correspondenceId);
 
         //  ViewerController.to.allAnnotations.clear();
+        Get.find<DocumentController>().documentEditedInOfficeId.value = 0;
         Get.toNamed("/DocumentPage");
       } else {
         Get.snackbar("", "canotopen".tr);
@@ -736,6 +738,7 @@ class InboxController extends GetxController {
     //   Get.find<DocumentController>().loadPdf();
 
     // ViewerController.to.allAnnotations.clear();
+    Get.find<DocumentController>().documentEditedInOfficeId.value = 0;
     Get.toNamed("/DocumentPage");
   }
 
@@ -966,16 +969,17 @@ class InboxController extends GetxController {
           pageSize: 20,
           showThumbnails: false);
 
-      Navigator.pop(context);
-      Get.back();
-      showTopSnackBar(
-        context,
-        CustomSnackBar.success(
-          icon: Container(),
-          backgroundColor: Colors.lightGreen,
-          message: "EndedSuccess".tr,
-        ),
-      );
+      // Navigator.pop(context);
+      // Get.back();
+
+      // showTopSnackBar(
+      //   context,
+      //   CustomSnackBar.success(
+      //     icon: Container(),
+      //     backgroundColor: Colors.lightGreen,
+      //     message: "EndedSuccess".tr,
+      //   ),
+      // );
     });
   }
 

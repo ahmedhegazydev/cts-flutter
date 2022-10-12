@@ -10,7 +10,6 @@ import '../services/json_model/login_model.dart';
 import '../services/json_model/signature_Info_model.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
-import '../utility/utilitie.dart';
 
 class SignaturePageController extends GetxController {
   bool saveSing = false;

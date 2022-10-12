@@ -722,7 +722,56 @@ class CustomListView extends GetView<InboxController> {
                                                 showDialog(
                                                   context: context,
                                                   builder: (ctx) => AlertDialog(
-                                                    title: Text(" "),
+                                                    title: Row(
+                                                        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Image.asset(
+                                                            'assets/images/ending.png'
+                                                            //
+                                                            ,
+                                                            height: 20,
+                                                            width: 20,
+                                                          ),
+                                                          const SizedBox(
+                                                            width: 8,
+                                                          ),
+                                                          Text(
+                                                            "ending".tr,
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .headlineMedium!
+                                                                .copyWith(
+                                                                    color: Colors
+                                                                        .black
+                                                                        .withOpacity(
+                                                                            .5),
+                                                                    fontSize:
+                                                                        18,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                          ),
+                                                          const Spacer(),
+                                                          InkWell(
+                                                            onTap: () {
+                                                              controller
+                                                                  .filterWord = "";
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
+                                                            child: Image.asset(
+                                                              'assets/images/close_button.png',
+                                                              width: 30,
+                                                              height: 30,
+                                                            ),
+                                                          ),
+                                                        ]),
                                                     content: Padding(
                                                       padding:
                                                           const EdgeInsets.all(
@@ -811,7 +860,9 @@ class CustomListView extends GetView<InboxController> {
                                                                   showThumbnails:
                                                                       false);
                                                         },
-                                                        child: Text("Ok"),
+                                                        child: Text(
+                                                          "ending".tr,
+                                                        ),
                                                       ),
                                                     ],
                                                   ),
@@ -1800,116 +1851,6 @@ class CustomListView extends GetView<InboxController> {
                             color: Colors.black.withOpacity(.5),
                             fontSize: 18,
                             fontWeight: FontWeight.bold)),
-                    // Container(
-                    //   height: 100,
-                    //   width: MediaQuery.of(context).size.width * .8,
-                    //   child: GetBuilder<InboxController>(//autoRemove: false,
-                    //
-                    //       builder: (logic) {
-                    //     return ListView.builder(
-                    //         scrollDirection: Axis.horizontal,
-                    //         itemCount: (controller.favoriteRecipientsResponse
-                    //                     ?.recipients?.length ??
-                    //                 0) +
-                    //             1,
-                    //         itemBuilder: (context, pos) {
-                    //           if (pos ==
-                    //               (controller.favoriteRecipientsResponse
-                    //                       ?.recipients?.length ??
-                    //                   0)) {
-                    //             return InkWell(
-                    //               onTap: () {
-                    //                 _popUpMenuMore(context);
-                    //               },
-                    //               child: Container(
-                    //                 padding: EdgeInsets.all(8),
-                    //                 child: Icon(Icons.add,
-                    //                     size: 30, color: Colors.white),
-                    //                 decoration: BoxDecoration(
-                    //                   shape: BoxShape.circle,
-                    //                   color:
-                    //                       Theme.of(context).colorScheme.primary,
-                    //                 ),
-                    //                 height: 75,
-                    //                 width: 75,
-                    //               ),
-                    //             );
-                    //           } else {
-                    //             return Padding(
-                    //               padding: const EdgeInsets.all(8.0),
-                    //               child: InkWell(
-                    //                 onTap: () {
-                    //                   Destination user = Destination(
-                    //                       value: controller
-                    //                           .favoriteRecipientsResponse!
-                    //                           .recipients![pos]
-                    //                           .targetName,
-                    //                       id: controller
-                    //                           .favoriteRecipientsResponse!
-                    //                           .recipients![pos]
-                    //                           .targetGctid);
-                    //                   controller.addTousersWillSendTo(
-                    //                       user: user, thepos: thepos);
-                    //                 },
-                    //                 child: Card(
-                    //                   elevation: 8,
-                    //                   child: Row(
-                    //                     children: [
-                    //                       controller
-                    //                               .favoriteRecipientsResponse!
-                    //                               .recipients![pos]
-                    //                               .targetPhotoBs64!
-                    //                               .trim()
-                    //                               .isEmpty
-                    //                           ? Container(
-                    //                               padding: EdgeInsets.all(8),
-                    //                               decoration: BoxDecoration(
-                    //                                   shape: BoxShape.circle,
-                    //                                   color: Theme.of(context)
-                    //                                       .colorScheme
-                    //                                       .primary,
-                    //                                   image: DecorationImage(
-                    //                                       image: AssetImage(
-                    //                                         "assets/images/pr.jpg",
-                    //                                       ),
-                    //                                       fit: BoxFit.cover)),
-                    //                               height: 75,
-                    //                               width: 75,
-                    //                             )
-                    //                           : Container(
-                    //                               padding: EdgeInsets.all(8),
-                    //                               decoration: BoxDecoration(
-                    //                                   shape: BoxShape.circle,
-                    //                                   color: Theme.of(context)
-                    //                                       .colorScheme
-                    //                                       .primary,
-                    //                                   image: DecorationImage(
-                    //                                       image: MemoryImage(
-                    //                                           dataFromBase64String(controller
-                    //                                               .favoriteRecipientsResponse!
-                    //                                               .recipients![
-                    //                                                   pos]
-                    //                                               .targetPhotoBs64!)),
-                    //                                       fit: BoxFit.cover)),
-                    //                               height: 75,
-                    //                               width: 75,
-                    //                             ),
-                    //                       Text(controller
-                    //                           .favoriteRecipientsResponse!
-                    //                           .recipients![pos]
-                    //                           .targetName!)
-                    //                     ],
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //             );
-                    //           }
-                    //
-                    //           //  CircleAvatar(backgroundColor: Colors.red,backgroundImage: AssetImage("assets/images/pr.jpg",),,radius: 30,);
-                    //         });
-                    //   }),
-                    // ),
-
                     Row(
                       children: [
                         GetBuilder<InboxController>(
@@ -1995,7 +1936,6 @@ class CustomListView extends GetView<InboxController> {
                         ),
                       ],
                     ),
-
                     const Divider(
                       color: Colors.grey,
                     ),
@@ -2267,7 +2207,7 @@ class CustomListView extends GetView<InboxController> {
                           .allCorrespondences[thepos].correspondenceId);
                   Navigator.pop(context);
                 },
-                child: Text("Ok"),
+                child: Text("refer".tr),
               ),
             ],
           );

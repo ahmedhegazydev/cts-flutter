@@ -1,3 +1,4 @@
+import 'package:cts/controllers/inbox_controller.dart';
 import 'package:get/get.dart';
 
 import '../controllers/basket_controller.dart';
@@ -9,10 +10,11 @@ import '../controllers/web_view_controller.dart';
 class LandingPageBinding extends Bindings {
   @override
   void dependencies() {
-     Get.put( LandingPageController(),permanent: true) ;
-     Get.put(CreateBasketController(),permanent: true);
-     Get.put(SearchController(),permanent: true);
-     Get.put(WebViewPageController());
-     Get.lazyPut(()=>  BasketController(),fenix: true) ;
+    Get.put(LandingPageController(), permanent: true);
+    Get.put(CreateBasketController(), permanent: true);
+    Get.put(SearchController(), permanent: true);
+    Get.put(InboxController(), permanent: true);
+    Get.put(WebViewPageController());
+    Get.lazyPut(() => BasketController(), fenix: true);
   }
 }

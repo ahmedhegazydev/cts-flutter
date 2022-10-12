@@ -1,3 +1,4 @@
+import 'package:cts/controllers/document_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,6 +30,9 @@ class SearchPageResult extends GetWidget<SearchPageResultController> {
               onClickItem: () {
                 ///
                 ///
+                Get.put(DocumentController());
+                Get.find<DocumentController>().documentEditedInOfficeId.value =
+                    0;
                 Get.toNamed("/DocumentPage");
               },
               scrollController: controller.scrollController),

@@ -5,6 +5,7 @@ import 'dart:typed_data';
 
 import 'package:cts/services/apis/inside_doc/g2g/eport_using_g2g_api.dart';
 import 'package:cts/services/apis/request_edit_in_office_api.dart';
+import 'package:cts/services/apis/request_refresh_edit_in_office_api.dart';
 import 'package:cts/services/json_model/request_edit_in_office_model.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:signature/signature.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 
 import '../models/CorrespondencesModel.dart';
 import '../services/apis/favorites/ListFavoriteRecipients_api.dart';
@@ -75,12 +77,13 @@ import 'landing_page_controller.dart';
 
 class DocumentController extends GetxController {
   Destination? userWillAddToOpenTransferWindow;
+  RxBool isPlayingAudio = false.obs;
+  RxInt documentEditedInOfficeId = 0.obs;
 
   SecureStorage secureStorage = SecureStorage();
   CanOpenDocumentModel? canOpenDocumentModel;
   final record = FlutterSoundRecorder();
 
-//Map<int,String>folder={};
   bool notoragnalFileDoc = false;
 
   String oragnalFileDocpdfUrlFile = "";
@@ -159,7 +162,7 @@ class DocumentController extends GetxController {
     });
   }
 
-  multipleTransferspost({context, correspondenceId, transferId}) {
+  multipleTransferspost({context, correspondenceId, transferId}) async {
     //
     MultipleTransfersAPI _multipleTransfersAPI = MultipleTransfersAPI(context);
     // check
@@ -167,15 +170,20 @@ class DocumentController extends GetxController {
       print("key====>$key");
       print("key====>${value}");
 
-      String? audioFileBes64 = await audiobase64String(file: File(value));
-
-      multiTransferNode[key]?.voiceNote = audioFileBes64;
-      multiTransferNode[key]?.voiceNoteExt = "m4a";
-      multiTransferNode[key]?.voiceNotePrivate = false;
-      multiTransferNode[key]?.destinationId = key.toString();
-      multiTransferNode[key]?.purposeId =
-          canOpenDocumentModel!.correspondence!.purposeId;
-      multiTransferNode[key]?.voiceNotePrivate = false;
+      int countOfNodes = recordingMap.length;
+      for (var entry in recordingMap.entries) {
+        var key = entry.key;
+        var value = entry.value;
+        //  recordingMap.forEach((key, value)  {
+        String? audioFileBes64 = await audiobase64String(file: File(value));
+        multiTransferNode[key]?.voiceNote = audioFileBes64;
+        multiTransferNode[key]?.voiceNoteExt = "m4a";
+        multiTransferNode[key]?.voiceNotePrivate = false;
+        multiTransferNode[key]?.destinationId = key.toString();
+        multiTransferNode[key]?.purposeId =
+            canOpenDocumentModel!.correspondence!.purposeId;
+        multiTransferNode[key]?.voiceNotePrivate = false;
+      }
     });
 
     List<multipletransfersSend.TransferNode> transfers = [];
@@ -190,12 +198,6 @@ class DocumentController extends GetxController {
             token: secureStorage.token()!,
             transferId: transferId);
 
-    // MultipleTransfersModel multipleTransfersModel = MultipleTransfersModel(
-    //     token: secureStorage.token()!,
-    //     correspondenceId: correspondenceId,
-    //     transferId: transferId,
-    //     transfers: transfers);
-
     transfarForMany.clear();
     usersWillSendTo.clear();
     _multipleTransfersAPI.post(multipleTransfers.toMap()).then((value) {
@@ -206,7 +208,18 @@ class DocumentController extends GetxController {
           pageSize: 20,
           showThumbnails: false);
       Get.back();
-      Get.snackbar("", "تم التنفيذ بنجاح");
+
+      Navigator.pop(context);
+      //Get.back(closeOverlays: true);
+      //  Get.back();
+      Get.offAllNamed("/InboxPage");
+
+      CustomSnackBar.success(
+        icon: Container(),
+        backgroundColor: Colors.lightGreen,
+        message: "EndedSuccess".tr,
+      );
+      //   Get.snackbar("", "تم التنفيذ بنجاح");
     });
   }
 
@@ -1315,6 +1328,29 @@ class DocumentController extends GetxController {
     return true;
   }
 
+  Future<String> refreshOffice({context}) async {
+    var attachment = canOpenDocumentModel!.attachments!.attachments![0];
+    var editOfficeDetails = attachment.editOfficeDetails!;
+
+    if (editOfficeDetails.spUrl == null ||
+        editOfficeDetails.isEditable == false) {
+      return "";
+    }
+    RequestEditInOfficeModel model = RequestEditInOfficeModel(
+        language: Get.locale?.languageCode == "en" ? "en" : "ar",
+        token: secureStorage.token()!,
+        documentId: attachment.docId,
+        attachmentId: attachment.attachmentId,
+        siteId: editOfficeDetails.siteId,
+        webId: editOfficeDetails.webId,
+        fileId: editOfficeDetails.fileId);
+    RequestRefreshEditInOfficeAPI api = RequestRefreshEditInOfficeAPI(context);
+    var value = await api.post(model.toMap()); //.then((value) {
+    //  DefaultOnSuccessResult res = value as DefaultOnSuccessResult;
+    documentEditedInOfficeId.value = 0;
+    return editOfficeDetails.spUrl!;
+  }
+
   Future<String> prepareOpenDocumentInOffice({context}) async {
     var attachment = canOpenDocumentModel!.attachments!.attachments![0];
     var editOfficeDetails = attachment.editOfficeDetails!;
@@ -1324,6 +1360,7 @@ class DocumentController extends GetxController {
       return "";
     }
 
+    documentEditedInOfficeId.value = attachment.attachmentId ?? 0;
     RequestEditInOfficeModel model = RequestEditInOfficeModel(
         language: Get.locale?.languageCode == "en" ? "en" : "ar",
         token: secureStorage.token()!,
@@ -1339,8 +1376,7 @@ class DocumentController extends GetxController {
     return editOfficeDetails.spUrl!;
   }
 
-//التسجيل الجديد
-
+  //التسجيل الجديد
   setNots({required int id, String? not}) {
     multiTransferNode[id]?.note = not;
   }
@@ -1395,7 +1431,12 @@ class DocumentController extends GetxController {
     audioPlayer = FlutterSoundPlayer();
     audioPlayer!.openPlayer();
     if (recordingMap[id] != null) {
-      await audioPlayer!.startPlayer(fromURI: recordingMap[id]);
+      isPlayingAudio.value = true;
+      await audioPlayer!.startPlayer(
+          fromURI: recordingMap[id],
+          whenFinished: () {
+            isPlayingAudio.value = false;
+          });
     } else {
       Get.snackbar("", "nofiletoopen".tr);
     }
@@ -1752,16 +1793,32 @@ class DocumentController extends GetxController {
                                                             padding:
                                                                 const EdgeInsets
                                                                     .all(8.0),
-                                                            child: InkWell(
-                                                              onTap: () {
-                                                                playMathod(
-                                                                    id: logic
-                                                                        .usersWillSendTo[
-                                                                            pos]
-                                                                        .id);
-                                                              },
-                                                              child: Icon(Icons
-                                                                  .play_arrow),
+                                                            child: Obx(
+                                                              () => InkWell(
+                                                                onTap: () {
+                                                                  if (!isPlayingAudio
+                                                                      .value) {
+                                                                    playMathod(
+                                                                        id: logic
+                                                                            .usersWillSendTo[pos]
+                                                                            .id);
+                                                                  } else {
+                                                                    isPlayingAudio
+                                                                            .value =
+                                                                        false;
+                                                                    audioPlayer!
+                                                                        .stopPlayer();
+                                                                  }
+                                                                },
+                                                                child: Icon(
+                                                                  isPlayingAudio
+                                                                          .value
+                                                                      ? Icons
+                                                                          .stop
+                                                                      : Icons
+                                                                          .play_arrow,
+                                                                ),
+                                                              ),
                                                             ),
                                                           )
                                                         ],
@@ -1807,11 +1864,12 @@ class DocumentController extends GetxController {
                   ///send to many
 
                   multipleTransferspost(
-                      context: context,
-                      transferId:
-                          canOpenDocumentModel!.correspondence!.transferId!,
-                      correspondenceId: canOpenDocumentModel!
-                          .correspondence!.correspondenceId);
+                    context: context,
+                    transferId:
+                        canOpenDocumentModel!.correspondence!.transferId!,
+                    correspondenceId:
+                        canOpenDocumentModel!.correspondence!.correspondenceId,
+                  );
                   Navigator.pop(context);
                 },
                 child: Text("Ok"),

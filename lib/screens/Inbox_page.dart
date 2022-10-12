@@ -1,4 +1,5 @@
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
+import 'package:cts/controllers/document_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -59,6 +60,7 @@ class InboxPage extends GetWidget<InboxController> {
           icon: const Icon(Icons.navigate_next),
           tooltip: 'back',
           onPressed: () {
+            Get.offAllNamed("/Landing");
             Get.back();
           },
         ),
@@ -487,6 +489,9 @@ class InboxPage extends GetWidget<InboxController> {
                                   scrollController: controller.scrollController,
                                   haveMoreData: controller.haveMoreData,
                                   onClickItem: () {
+                                    Get.find<DocumentController>()
+                                        .documentEditedInOfficeId
+                                        .value = 0;
                                     //   ViewerController.to.allAnnotations.clear();
                                     Get.toNamed("/DocumentPage");
                                   },
@@ -521,6 +526,9 @@ class InboxPage extends GetWidget<InboxController> {
                                   haveMoreData: controller.haveMoreData,
                                   onClickItem: () {
                                     //        ViewerController.to.allAnnotations.clear();
+                                    Get.find<DocumentController>()
+                                        .documentEditedInOfficeId
+                                        .value = 0;
                                     Get.toNamed("/DocumentPage");
                                   },
                                   functionSummary: () {},

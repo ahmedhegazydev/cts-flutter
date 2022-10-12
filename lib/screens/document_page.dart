@@ -41,7 +41,9 @@ class DocumentPage extends GetWidget<DocumentController> {
                     ? Center(
                         child: CircularProgressIndicator(),
                       )
-                    : _buildBody(context),
+                    : Obx(
+                        () => _buildBody(context),
+                      ),
                 drawer: _buildDrawer(context),
                 floatingActionButtonLocation:
                     FloatingActionButtonLocation.miniStartFloat,
@@ -137,7 +139,7 @@ class DocumentPage extends GetWidget<DocumentController> {
 
             // log(updated);
           },
-          icon: const Icon(Icons.print),
+          icon: const Icon(Icons.save),
         ),
         ActionButton(
           onPressed: () {
@@ -203,7 +205,7 @@ class DocumentPage extends GetWidget<DocumentController> {
   }
 
   /// ToDo get the print
-  _buildBody(BuildContext context) {
+  Widget _buildBody(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
 
     // return PDFView(
@@ -211,28 +213,67 @@ class DocumentPage extends GetWidget<DocumentController> {
     //     url: controller.pdfAndSingData.first,
     //     color: Get.find<MController>().appcolor,
     //     size: s);
-    var documentViewer = GetBuilder<DocumentController>(
-        autoRemove: false,
-        builder: (logic) {
-          Size size = MediaQuery.of(context).size;
-          var v = controller.correspondences.toJson();
-          log(v.toString());
-          Size s = Size(size.width, size.height);
-          return controller.pdfAndSingData.length > 0
-              ? SizedBox(
-                  width: size.width,
-                  height: size.height - 100,
-                  child: PDFView(
-                      originalAnnotations: controller.annotations,
-                      url: controller.pdfAndSingData.first,
-                      color: Get.find<MController>().appcolor,
-                      size: s),
-                )
-              : CircularProgressIndicator.adaptive(
-                  backgroundColor: Colors.lime,
+
+    // var documentViewer = GetBuilder<DocumentController>(
+    //     autoRemove: false,
+    //     builder: (logic) {
+    // print(controller.documentEditedInOfficeId);
+    Size size = MediaQuery.of(context).size;
+    // var v = controller.correspondences.toJson();
+
+    Size s = Size(size.width, size.height);
+    if (controller.documentEditedInOfficeId.value != 0) {
+      return Center(
+        child: IconButton(
+          onPressed: () async {
+            showLoaderDialog(context);
+            var fileURL = await controller.refreshOffice(context: context);
+            await Future.delayed(Duration(seconds: 3));
+            Navigator.of(context).pop();
+            if (fileURL.isNotEmpty) {
+              final Uri toLaunch = Uri.parse("ms-word:ofe|u|$fileURL|a|App");
+              final bool nativeAppLaunchSucceeded = await launchUrl(
+                toLaunch,
+                mode: LaunchMode.externalApplication,
+              );
+
+              if (!nativeAppLaunchSucceeded) {
+                final bool otherLaunchSucceeded = await launchUrl(
+                  toLaunch,
                 );
-        });
-    return documentViewer;
+                if (!otherLaunchSucceeded) {
+                  showTopSnackBar(
+                    context,
+                    CustomSnackBar.error(
+                      message: "tryAgainLater".tr,
+                    ),
+                  );
+                }
+              }
+            }
+          },
+          icon: Icon(
+            Icons.refresh,
+          ),
+        ),
+      );
+    }
+    return controller.pdfAndSingData.length > 0
+        ? SizedBox(
+            width: size.width,
+            height: size.height - 100,
+            child: PDFView(
+                originalAnnotations: controller.annotations,
+                url: controller.pdfAndSingData.first,
+                color: Get.find<MController>().appcolor,
+                size: s),
+          )
+        : CircularProgressIndicator.adaptive(
+            backgroundColor: Colors.lime,
+          );
+    //  });
+
+    //  return documentViewer;
     // Column(
     //   mainAxisAlignment: MainAxisAlignment.start,
     //   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -245,12 +286,14 @@ class DocumentPage extends GetWidget<DocumentController> {
     Get.find<WebViewPageController>().isPdf = false;
     print(controller.correspondences.gridInfo![2].value);
     var ref = controller.correspondences.gridInfo![2].value;
+    var url =
+        controller.canOpenDocumentModel?.correspondence!.visualTrackingUrl!;
+
     if (ref != null && ref != "")
       Get.find<WebViewPageController>().title = ref;
     else
       Get.find<WebViewPageController>().title = "tracking".tr;
-    Get.find<WebViewPageController>().url =
-        controller.canOpenDocumentModel?.correspondence!.visualTrackingUrl!;
+    Get.find<WebViewPageController>().url = url;
     Get.toNamed(
       "WebViewPage",
     );
@@ -494,25 +537,39 @@ class DocumentPage extends GetWidget<DocumentController> {
                       height: 1,
                       color: Colors.grey,
                     )),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: InkWell(
-                        onTap: () async {
-                          print("object");
+                    Obx(
+                      () => Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          onTap: () async {
+                            print("object");
+                            if (!controller.isPlayingAudio.value) {
+                              controller.isPlayingAudio.toggle();
+                              FlutterSoundPlayer audioPlayer =
+                                  FlutterSoundPlayer();
 
-                          /// هنشغل ملف الصوت هنا
-                          FlutterSoundPlayer audioPlayer = FlutterSoundPlayer();
+                              audioPlayer.openPlayer();
+                              var base64 = controller.canOpenDocumentModel
+                                  ?.attachments?.voiceNote!;
 
-                          audioPlayer.openPlayer();
-                          String filePath = await createFileFromString(
-                              controller.canOpenDocumentModel?.attachments
-                                  ?.voiceNote);
-
-                          print(filePath);
-                          await audioPlayer.startPlayer(fromURI: filePath);
-                        },
-                        child: Icon(Icons.play_arrow,
-                            color: Theme.of(context).colorScheme.primary),
+                              await audioPlayer.startPlayer(
+                                fromDataBuffer: base64Decode(base64!),
+                                whenFinished: () {
+                                  controller.isPlayingAudio.toggle();
+                                },
+                              );
+                            } else {
+                              controller.isPlayingAudio.value = false;
+                              controller.audioPlayer!.stopPlayer();
+                            }
+                          },
+                          child: Icon(
+                            controller.isPlayingAudio.value
+                                ? Icons.stop
+                                : Icons.play_arrow,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
                       ),
                     )
                   ],
@@ -527,6 +584,7 @@ class DocumentPage extends GetWidget<DocumentController> {
   Future<void> openInOffice(BuildContext context) async {
     var fileURL =
         await controller.prepareOpenDocumentInOffice(context: context);
+    await Future.delayed(Duration(seconds: 3));
     Navigator.of(context).pop();
     if (fileURL.isNotEmpty) {
       final Uri toLaunch = Uri.parse("ms-word:ofe|u|$fileURL|a|App");
@@ -537,12 +595,19 @@ class DocumentPage extends GetWidget<DocumentController> {
       );
 
       if (!nativeAppLaunchSucceeded) {
+        final bool otherLaunchSucceeded = await launchUrl(
+          toLaunch,
+        );
         // Navigator.pop(context);
         // show error alert
-        showTopSnackBar(
-          context,
-          CustomSnackBar.error(message: "tryAgainLater".tr),
-        );
+        if (!otherLaunchSucceeded) {
+          showTopSnackBar(
+            context,
+            CustomSnackBar.error(
+              message: "tryAgainLater".tr,
+            ),
+          );
+        }
       }
     }
   }
@@ -552,7 +617,41 @@ class DocumentPage extends GetWidget<DocumentController> {
     return showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(" "),
+        title: Row(//mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+          Image.asset(
+            'assets/images/ending.png'
+            //
+            ,
+            height: 20,
+            width: 20,
+          ),
+          const SizedBox(
+            width: 8,
+          ),
+          Text(
+            "ending".tr,
+            style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                color: Colors.black.withOpacity(.5),
+                fontSize: 18,
+                fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+          ),
+          const Spacer(),
+          InkWell(
+            onTap: () {
+              controller.filterWord = "";
+              Navigator.pop(context);
+            },
+            child: Image.asset(
+              'assets/images/close_button.png',
+              width: 30,
+              height: 30,
+            ),
+          ),
+        ]),
+        // title: Text(" "),
         content: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
@@ -582,19 +681,36 @@ class DocumentPage extends GetWidget<DocumentController> {
         ),
         actions: <Widget>[
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               print(Get.find<InboxController>().completeCustomActions?.name);
               print(Get.find<InboxController>().completeCustomActions?.icon);
 
               String data =
                   'Token=${Get.find<InboxController>().secureStorage.token()}&correspondenceId=${controller.canOpenDocumentModel!.correspondence!.correspondenceId}&transferId=${controller.canOpenDocumentModel!.correspondence!.transferId}&actionType=Complete&note=${Get.find<InboxController>().completeNote}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}';
 
-              Navigator.of(ctx).pop();
+              // Navigator.of(ctx).pop();
               showLoaderDialog(context);
-              Get.find<InboxController>()
+              await Get.find<InboxController>()
                   .completeInCorrespondence(context: context, data: data);
+              Navigator.pop(context);
+              //Get.back(closeOverlays: true);
+              //  Get.back();
+              Get.offAllNamed("/InboxPage");
+
+              // Get.offNamed("InboxPage"); //.  Get.toNamed("/InboxPage");
+              // Ge
+              showTopSnackBar(
+                context,
+                CustomSnackBar.success(
+                  icon: Container(),
+                  backgroundColor: Colors.lightGreen,
+                  message: "EndedSuccess".tr,
+                ),
+              );
             },
-            child: Text("Ok"),
+            child: Text(
+              "ending".tr,
+            ),
           ),
         ],
       ),
@@ -1148,10 +1264,6 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                           GestureDetector(
                                                             onTap: () async {
                                                               ///To Do Start and stop rec
-                                                              ///
-                                                              ///
-                                                              ///
-                                                              // controller.canOpenDocumentModel.correspondence.docDueDate
                                                               controller.record
                                                                       .isRecording
                                                                   ? controller
@@ -1189,16 +1301,35 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                             padding:
                                                                 const EdgeInsets
                                                                     .all(8.0),
-                                                            child: InkWell(
-                                                              onTap: () {
-                                                                controller.playMathod(
-                                                                    id: logic
-                                                                        .usersWillSendTo[
-                                                                            pos]
-                                                                        .id);
-                                                              },
-                                                              child: Icon(Icons
-                                                                  .play_arrow),
+                                                            child: Obx(
+                                                              () => InkWell(
+                                                                onTap: () {
+                                                                  if (!controller
+                                                                      .isPlayingAudio
+                                                                      .value)
+                                                                    controller.playMathod(
+                                                                        id: logic
+                                                                            .usersWillSendTo[pos]
+                                                                            .id);
+                                                                  else {
+                                                                    controller
+                                                                        .isPlayingAudio
+                                                                        .value = false;
+                                                                    controller
+                                                                        .audioPlayer!
+                                                                        .stopPlayer();
+                                                                  }
+                                                                },
+                                                                child: Icon(
+                                                                  controller
+                                                                          .isPlayingAudio
+                                                                          .value
+                                                                      ? Icons
+                                                                          .stop
+                                                                      : Icons
+                                                                          .play_arrow,
+                                                                ),
+                                                              ),
                                                             ),
                                                           )
                                                         ],
@@ -1251,8 +1382,26 @@ class DocumentPage extends GetWidget<DocumentController> {
                       correspondenceId: controller.canOpenDocumentModel!
                           .correspondence!.correspondenceId);
                   Navigator.pop(context);
+
+                  Navigator.pop(context);
+                  //Get.back(closeOverlays: true);
+                  //  Get.back();
+                  Get.offAllNamed("/InboxPage");
+
+                  // Get.offNamed("InboxPage"); //.  Get.toNamed("/InboxPage");
+                  // Ge
+                  showTopSnackBar(
+                    context,
+                    CustomSnackBar.success(
+                      icon: Container(),
+                      backgroundColor: Colors.lightGreen,
+                      message: "EndedSuccess".tr,
+                    ),
+                  );
                 },
-                child: Text("Ok"),
+                child: Text(
+                  "refer".tr,
+                ),
               ),
             ],
           );

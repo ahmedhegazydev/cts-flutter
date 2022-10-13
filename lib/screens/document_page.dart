@@ -25,7 +25,6 @@ import '../viewer/controllers/viewerController.dart';
 import '../viewer/pdfview.dart';
 import '../widgets/custom_button_with_icon.dart';
 import 'dart:developer';
-import 'package:share_plus/share_plus.dart';
 
 class DocumentPage extends GetWidget<DocumentController> {
   bool portraitIsActive = false;
@@ -565,8 +564,7 @@ class DocumentPage extends GetWidget<DocumentController> {
     var fileURL =
         await controller.prepareOpenDocumentInOffice(context: context);
     await Future.delayed(Duration(seconds: 1));
-    fileURL =
-        "https://ecm-uat.mofa.gov.qa:444/sites/temp-office/Shared%20Documents/25648235/5726929_اجازة مرضية.docx";
+    //fileURL =  "https://ecm-uat.mofa.gov.qa:444/sites/temp-office/Shared%20Documents/25648235/5726929_اجازة مرضية.docx";
     Navigator.of(context).pop();
     if (fileURL.isNotEmpty) {
       final Uri toLaunch = Uri.parse("ms-word:ofv|u|$fileURL|a|App");

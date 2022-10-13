@@ -414,73 +414,117 @@ class DocumentController extends GetxController {
 
   GetDocumentTransfersModel? getDocumentTransfersModel;
 
-  //9/7/2022
-  // ظظ الشغل الي اتكلم فيه حسين//
 //==================================================================================================
-  getDocumentAuditLogsdata({required context, required String docId}) {
+  Future<GetDocumentLogsModel?> getDocumentAuditLogsdata(
+      {required context, required String docId}) async {
     final GetDocumentAuditLogsApi _getDocumentAuditLogsApi =
         GetDocumentAuditLogsApi(context);
     _getDocumentAuditLogsApi.data =
         "Token=${secureStorage.token()}&docId=$docId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
 
-    _getDocumentAuditLogsApi.getData().then((value) {
-      getDocumentLogsModel = value as GetDocumentLogsModel;
-    });
+    var value = await _getDocumentAuditLogsApi.getData();
+    getDocumentLogsModel = value as GetDocumentLogsModel;
+    return getDocumentLogsModel;
   }
 
-  getDocumentLinksdata({required context, correspondenceId, transferId}) {
+  Future<GetDocumentLinksModel?> getDocumentLinksdata(
+      {required context, correspondenceId, transferId}) async {
     final GetDocumentLinksApi _getDocumentLinksApi =
         GetDocumentLinksApi(context);
     _getDocumentLinksApi.data =
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
 
-    _getDocumentLinksApi.getData().then((value) {
-      getDocumentLinksModel = value as GetDocumentLinksModel;
-    });
+    var value = await _getDocumentLinksApi.getData();
+    getDocumentLinksModel = value as GetDocumentLinksModel;
+    return getDocumentLinksModel;
   }
 
-  getDocumentReceiversdata({required context, correspondenceId, transferId}) {
+  Future<GetDocumentReceiversModel?> getDocumentReceiversdata(
+      {required context, correspondenceId, transferId}) async {
     final GetDocumentReceiversApi _getDocumentReceiversApi =
         GetDocumentReceiversApi(context);
     _getDocumentReceiversApi.data =
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
 
-    _getDocumentReceiversApi.getData().then((value) {
-      getDocumentReceiversModel = value as GetDocumentReceiversModel;
-    });
+    var value = await _getDocumentReceiversApi.getData(); //.then((value) {
+    getDocumentReceiversModel = value as GetDocumentReceiversModel;
+    return getDocumentReceiversModel;
+    //});
   }
 
-  getDocumentTransfersdata({required context, correspondenceId, transferId}) {
+  Future<GetDocumentTransfersModel?> getDocumentTransfersdata(
+      {required context, correspondenceId, transferId}) async {
     final GetDocumentTransfersApi _getDocumentTransfersApi =
         GetDocumentTransfersApi(context);
     _getDocumentTransfersApi.data =
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}"; //"Token=${secureStorage.token()}&docId=$id&language=${Get.locale?.languageCode=="en"?"en":"ar"}";
-    _getDocumentTransfersApi.getData().then((value) {
-      getDocumentTransfersModel = value as GetDocumentTransfersModel;
-    });
+    var value = await _getDocumentTransfersApi.getData(); //.then((value) {
+    getDocumentTransfersModel = value as GetDocumentTransfersModel;
+    return getDocumentTransfersModel;
+    //});
   }
 
-  gatAllDataAboutDOC(
-      {required context,
-      required String docId,
-      required String transferId,
-      required String correspondenceId}) {
-    print("gatAllDataAboutDOC");
-    getDocumentAuditLogsdata(context: context, docId: docId);
-    getDocumentTransfersdata(
-        context: context,
-        transferId: transferId,
-        correspondenceId: correspondenceId);
-    getDocumentReceiversdata(
+  Future<GetDocumentReceiversModel?> getRecieversData(context) async {
+    var transferId = canOpenDocumentModel!.correspondence!.transferId!;
+    var correspondenceId =
+        canOpenDocumentModel!.correspondence!.correspondenceId;
+    return await getDocumentReceiversdata(
         context: context,
         correspondenceId: correspondenceId,
         transferId: transferId);
-    getDocumentLinksdata(
-        context: context,
-        transferId: transferId,
-        correspondenceId: correspondenceId);
-    print("*" * 10);
   }
+
+  Future<GetDocumentLinksModel?> getLinks(context) async {
+    var transferId = canOpenDocumentModel!.correspondence!.transferId!;
+    var correspondenceId =
+        canOpenDocumentModel!.correspondence!.correspondenceId;
+    return await getDocumentLinksdata(
+        context: context,
+        correspondenceId: correspondenceId,
+        transferId: transferId);
+  }
+
+  Future<GetDocumentLogsModel?> getAuditLog(context) async {
+    var correspondenceId =
+        canOpenDocumentModel!.correspondence!.correspondenceId;
+    return await getDocumentAuditLogsdata(
+      context: context,
+      docId: correspondenceId!,
+    );
+  }
+
+  Future<GetDocumentTransfersModel?> getTransfersData(context) async {
+    var transferId = canOpenDocumentModel!.correspondence!.transferId!;
+    var correspondenceId =
+        canOpenDocumentModel!.correspondence!.correspondenceId!;
+    return await getDocumentTransfersdata(
+      context: context,
+      correspondenceId: correspondenceId,
+      transferId: transferId,
+    );
+  }
+
+  // gatAllDataAboutDOC(
+  //     {required context,
+  //     //   required String docId,
+  //     required String transferId,
+  //     required String correspondenceId}) {
+  //   print("gatAllDataAboutDOC");
+  //   getDocumentAuditLogsdata(context: context, docId: correspondenceId);
+  //   getDocumentTransfersdata(
+  //       context: context,
+  //       transferId: transferId,
+  //       correspondenceId: correspondenceId);
+  //   getDocumentReceiversdata(
+  //       context: context,
+  //       correspondenceId: correspondenceId,
+  //       transferId: transferId);
+  //   getDocumentLinksdata(
+  //       context: context,
+  //       transferId: transferId,
+  //       correspondenceId: correspondenceId);
+  //   print("*" * 10);
+  // }
 
 //==================================================================================================
 //===============================================

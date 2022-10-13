@@ -274,6 +274,8 @@ class DocumentController extends GetxController {
 
   //تحديث كان ابن فيل وجلب جميع البيانات الخاصه بلملف
   updatecanOpenDocumentModel(CanOpenDocumentModel data) {
+    pdfAndSing.clear();
+    pdfAndSingData.clear();
     print(
         "CanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModel");
     print("canOpenDocumentModel.toJson()  =>${canOpenDocumentModel!.toJson()}");

@@ -705,6 +705,9 @@ class InboxController extends GetxController {
 
     print(canOpenDocumentApi.data);
     print("canOpenDocumentApi.data");
+    //DocumentController
+    Get.find<DocumentController>().pdfAndSing.clear();
+    Get.find<DocumentController>().pdfAndSingData.clear();
     canOpenDocumentApi.getData().then((value) {
       canOpenDocumentModel = value as CanOpenDocumentModel;
 

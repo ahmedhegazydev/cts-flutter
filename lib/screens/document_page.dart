@@ -1,4 +1,5 @@
 //import 'dart:js';
+import 'dart:io';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:cts/screens/search_page.dart';
@@ -24,11 +25,12 @@ import '../viewer/controllers/viewerController.dart';
 import '../viewer/pdfview.dart';
 import '../widgets/custom_button_with_icon.dart';
 import 'dart:developer';
+import 'package:share_plus/share_plus.dart';
 
 class DocumentPage extends GetWidget<DocumentController> {
   bool portraitIsActive = false;
   List<Widget> list = [];
-
+  Rect? rect;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -562,11 +564,24 @@ class DocumentPage extends GetWidget<DocumentController> {
   Future<void> openInOffice(BuildContext context) async {
     var fileURL =
         await controller.prepareOpenDocumentInOffice(context: context);
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 1));
+    fileURL =
+        "https://ecm-uat.mofa.gov.qa:444/sites/temp-office/Shared%20Documents/25648235/5726929_اجازة مرضية.docx";
     Navigator.of(context).pop();
     if (fileURL.isNotEmpty) {
-      final Uri toLaunch = Uri.parse("ms-word:ofe|u|$fileURL|a|App");
+      final Uri toLaunch = Uri.parse("ms-word:ofv|u|$fileURL|a|App");
       Navigator.pop(context);
+      final box = context.findRenderObject() as RenderBox?;
+      final Size size = MediaQuery.of(context).size;
+      // final files = <XFile>[];
+      // files.add(XFile(fileURL, name: "dc"));
+      // await Share.share(fileURL,
+      //     sharePositionOrigin:
+      //         Rect.fromLTWH(0, 0, size.width, size.height / 2));
+      // await Share.shareXFiles(files,
+      //     sharePositionOrigin:
+      //         Rect.fromLTWH(0, 0, size.width, size.height / 2));
+      //Rect.fromLTWH(box.left + 40, box.top + 20, 2, 2));
       final bool nativeAppLaunchSucceeded = await launchUrl(
         toLaunch,
         mode: LaunchMode.externalApplication,

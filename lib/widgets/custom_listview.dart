@@ -78,7 +78,7 @@ class CustomListView extends GetView<InboxController> {
                           onTap: () {
                             Get.find<InboxController>().canOpenDoc(
                                 context: context,
-                                docId: correspondences[pos].purposeId,
+                                // docId: correspondences[pos].purposeId,
                                 correspondenceId:
                                     correspondences[pos].correspondenceId,
                                 transferId: correspondences[pos].transferId);

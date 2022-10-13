@@ -693,7 +693,7 @@ class InboxController extends GetxController {
 
   Future canOpenDoc(
       {required context,
-      required docId,
+      // required docId,
       required correspondenceId,
       required transferId}) async {
     Get.put(DocumentController());

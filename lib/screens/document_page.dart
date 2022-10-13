@@ -228,30 +228,16 @@ class DocumentPage extends GetWidget<DocumentController> {
         child: IconButton(
           onPressed: () async {
             showLoaderDialog(context);
-            var fileURL = await controller.refreshOffice(context: context);
-            await Future.delayed(Duration(seconds: 3));
-            Navigator.of(context).pop();
-            if (fileURL.isNotEmpty) {
-              final Uri toLaunch = Uri.parse("ms-word:ofe|u|$fileURL|a|App");
-              final bool nativeAppLaunchSucceeded = await launchUrl(
-                toLaunch,
-                mode: LaunchMode.externalApplication,
-              );
+            await controller.refreshOffice(context: context);
 
-              if (!nativeAppLaunchSucceeded) {
-                final bool otherLaunchSucceeded = await launchUrl(
-                  toLaunch,
-                );
-                if (!otherLaunchSucceeded) {
-                  showTopSnackBar(
-                    context,
-                    CustomSnackBar.error(
-                      message: "tryAgainLater".tr,
-                    ),
-                  );
-                }
-              }
-            }
+            await Get.find<InboxController>().canOpenDoc(
+                context: context,
+                correspondenceId: controller
+                    .canOpenDocumentModel!.correspondence!.correspondenceId,
+                transferId: controller
+                    .canOpenDocumentModel!.correspondence!.transferId);
+            await Future.delayed(Duration(seconds: 1));
+            Navigator.of(context).pop();
           },
           icon: Icon(
             Icons.refresh,
@@ -259,19 +245,24 @@ class DocumentPage extends GetWidget<DocumentController> {
         ),
       );
     }
-    return controller.pdfAndSingData.length > 0
-        ? SizedBox(
-            width: size.width,
-            height: size.height - 100,
-            child: PDFView(
-                originalAnnotations: controller.annotations,
-                url: controller.pdfAndSingData.first,
-                color: Get.find<MController>().appcolor,
-                size: s),
-          )
-        : CircularProgressIndicator.adaptive(
-            backgroundColor: Colors.lime,
-          );
+    if (controller.pdfAndSingData.length > 0) {
+      print("fi data ");
+      print(controller.pdfAndSingData.first);
+      return SizedBox(
+        width: size.width,
+        height: size.height - 100,
+        child: PDFView(
+            originalAnnotations: controller.annotations,
+            url: controller.pdfAndSingData.first,
+            color: Get.find<MController>().appcolor,
+            size: s),
+      );
+    }
+    return Center(
+      child: CircularProgressIndicator.adaptive(
+        backgroundColor: Colors.black,
+      ),
+    );
     //  });
 
     //  return documentViewer;

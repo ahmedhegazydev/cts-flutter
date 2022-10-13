@@ -478,41 +478,58 @@ class DocumentPage extends GetWidget<DocumentController> {
             SizedBox(
               height: 8,
             ),
-            _itemSideMenu(
-                context: context,
-                title: "title".tr,
-                data: controller.correspondences.gridInfo![0].value ?? ""),
-            SizedBox(
-              height: 8,
-            ),
-            _itemSideMenu(
-                context: context,
-                title: "sender1".tr,
-                data: controller.correspondences.fromUser ?? ""),
-            SizedBox(
-              height: 8,
-            ),
-            _itemSideMenu(
-                context: context,
-                title: "assignedFrom".tr,
-                data: controller.correspondences.metadata![3].value!),
-            SizedBox(
-              height: 8,
-            ),
-            _itemSideMenu(
-                context: context,
-                title: "referDate".tr,
-                data: controller.correspondences.gridInfo![3].value!),
-            SizedBox(
-              height: 8,
-            ),
 
-            //    if(controller!.canOpenDocumentModel?.attachments?.hasVoice??false)
-            Text("assignmentNotes".tr),
-            // if(controller!.canOpenDocumentModel?.attachments?.hasVoice??false)
-            //  Text(controller.correspondences.comments ?? ""),
-            Text(controller.canOpenDocumentModel?.correspondence?.comments ??
-                ""),
+            ...List.generate(controller.correspondences!.metadata!.length,
+                (index) {
+              var item = controller.correspondences!.metadata![index];
+              return _itemSideMenu(
+                context: context,
+                title: item.label!,
+                data: item.value ?? "",
+              );
+              // return Text(controller.correspondences!.metadata!.length[index]
+              //     .toString());
+            }),
+
+            // controller.correspondences.metadata!.forEach((element) {
+
+            // })
+
+            // _itemSideMenu(
+            //     context: context,
+            //     title: "title".tr,
+            //     data: controller.correspondences.gridInfo![0].value ?? ""),
+            // SizedBox(
+            //   height: 8,
+            // ),
+            // _itemSideMenu(
+            //     context: context,
+            //     title: "sender1".tr,
+            //     data: controller.correspondences.fromUser ?? ""),
+            // SizedBox(
+            //   height: 8,
+            // ),
+            // _itemSideMenu(
+            //     context: context,
+            //     title: "assignedFrom".tr,
+            //     data: controller.correspondences.metadata![3].value!),
+            // SizedBox(
+            //   height: 8,
+            // ),
+            // _itemSideMenu(
+            //     context: context,
+            //     title: "referDate".tr,
+            //     data: controller.correspondences.gridInfo![3].value!),
+            // SizedBox(
+            //   height: 8,
+            // ),
+
+            // //    if(controller!.canOpenDocumentModel?.attachments?.hasVoice??false)
+            // Text("assignmentNotes".tr),
+            // // if(controller!.canOpenDocumentModel?.attachments?.hasVoice??false)
+            // //  Text(controller.correspondences.comments ?? ""),
+            // Text(controller.canOpenDocumentModel?.correspondence?.comments ??
+            //     ""),
 
             if (controller.canOpenDocumentModel?.attachments?.hasVoice ?? false)
               Container(

@@ -228,8 +228,30 @@ class DocumentPage extends GetWidget<DocumentController> {
         child: IconButton(
           onPressed: () async {
             showLoaderDialog(context);
-            await controller.refreshOffice(context: context);
-            Navigator.pop(context);
+            var fileURL = await controller.refreshOffice(context: context);
+            await Future.delayed(Duration(seconds: 3));
+            Navigator.of(context).pop();
+            if (fileURL.isNotEmpty) {
+              final Uri toLaunch = Uri.parse("ms-word:ofe|u|$fileURL|a|App");
+              final bool nativeAppLaunchSucceeded = await launchUrl(
+                toLaunch,
+                mode: LaunchMode.externalApplication,
+              );
+
+              if (!nativeAppLaunchSucceeded) {
+                final bool otherLaunchSucceeded = await launchUrl(
+                  toLaunch,
+                );
+                if (!otherLaunchSucceeded) {
+                  showTopSnackBar(
+                    context,
+                    CustomSnackBar.error(
+                      message: "tryAgainLater".tr,
+                    ),
+                  );
+                }
+              }
+            }
           },
           icon: Icon(
             Icons.refresh,

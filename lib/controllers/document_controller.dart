@@ -165,22 +165,26 @@ class DocumentController extends GetxController {
   multipleTransferspost({context, correspondenceId, transferId}) async {
     //
     MultipleTransfersAPI _multipleTransfersAPI = MultipleTransfersAPI(context);
+    // check
+    recordingMap.forEach((key, value) async {
+      print("key====>$key");
+      print("key====>${value}");
 
-    int countOfNodes = recordingMap.length;
-    for (var entry in recordingMap.entries) {
-      var key = entry.key;
-      var value = entry.value;
-      //  recordingMap.forEach((key, value)  {
-      String? audioFileBes64 = await audiobase64String(file: File(value));
-      multiTransferNode[key]?.voiceNote = audioFileBes64;
-      multiTransferNode[key]?.voiceNoteExt = "m4a";
-      multiTransferNode[key]?.voiceNotePrivate = false;
-      multiTransferNode[key]?.destinationId = key.toString();
-      multiTransferNode[key]?.purposeId =
-          canOpenDocumentModel!.correspondence!.purposeId;
-      multiTransferNode[key]?.voiceNotePrivate = false;
-    }
-    ;
+      int countOfNodes = recordingMap.length;
+      for (var entry in recordingMap.entries) {
+        var key = entry.key;
+        var value = entry.value;
+        //  recordingMap.forEach((key, value)  {
+        String? audioFileBes64 = await audiobase64String(file: File(value));
+        multiTransferNode[key]?.voiceNote = audioFileBes64;
+        multiTransferNode[key]?.voiceNoteExt = "m4a";
+        multiTransferNode[key]?.voiceNotePrivate = false;
+        multiTransferNode[key]?.destinationId = key.toString();
+        multiTransferNode[key]?.purposeId =
+            canOpenDocumentModel!.correspondence!.purposeId;
+        multiTransferNode[key]?.voiceNotePrivate = false;
+      }
+    });
 
     List<multipletransfersSend.TransferNode> transfers = [];
     multiTransferNode.forEach((key, value) {
@@ -1326,13 +1330,13 @@ class DocumentController extends GetxController {
     return true;
   }
 
-  Future<bool> refreshOffice({context}) async {
+  Future<String> refreshOffice({context}) async {
     var attachment = canOpenDocumentModel!.attachments!.attachments![0];
     var editOfficeDetails = attachment.editOfficeDetails!;
 
     if (editOfficeDetails.spUrl == null ||
         editOfficeDetails.isEditable == false) {
-      return false;
+      return "";
     }
     RequestEditInOfficeModel model = RequestEditInOfficeModel(
         language: Get.locale?.languageCode == "en" ? "en" : "ar",
@@ -1346,7 +1350,7 @@ class DocumentController extends GetxController {
     var value = await api.post(model.toMap()); //.then((value) {
     //  DefaultOnSuccessResult res = value as DefaultOnSuccessResult;
     documentEditedInOfficeId.value = 0;
-    return true;
+    return editOfficeDetails.spUrl!;
   }
 
   Future<String> prepareOpenDocumentInOffice({context}) async {
@@ -1414,6 +1418,7 @@ class DocumentController extends GetxController {
     recordingMap[id] = _directoryPath;
     await record.startRecorder(codec: _codec, toFile: _directoryPath);
     update(["record"]);
+    update();
   }
 
   Future stopMathod() async {

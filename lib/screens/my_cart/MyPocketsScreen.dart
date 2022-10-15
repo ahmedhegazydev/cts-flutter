@@ -1441,14 +1441,14 @@ class _ListView1State extends State<ListView1> {
                       Get.find<DocumentController>().correspondences =
                           logic.getBasketInboxModel!.correspondences![pos];
 
-                      Get.find<DocumentController>().gatAllDataAboutDOC(
-                          context: context,
-                          docId: logic.getBasketInboxModel!
-                              .correspondences![pos].purposeId!,
-                          correspondenceId: logic.getBasketInboxModel!
-                              .correspondences![pos].correspondenceId!,
-                          transferId: logic.getBasketInboxModel!
-                              .correspondences![pos].transferId!);
+                      // Get.find<DocumentController>().gatAllDataAboutDOC(
+                      //     context: context,
+                      //     docId: logic.getBasketInboxModel!
+                      //         .correspondences![pos].purposeId!,
+                      //     correspondenceId: logic.getBasketInboxModel!
+                      //         .correspondences![pos].correspondenceId!,
+                      //     transferId: logic.getBasketInboxModel!
+                      //         .correspondences![pos].transferId!);
 //  Get.find<DocumentController>().loadPdf();
 
                       //ViewerController.to.allAnnotations.clear();

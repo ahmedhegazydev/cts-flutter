@@ -323,7 +323,6 @@ class DocumentPage extends GetWidget<DocumentController> {
             const Divider(
               thickness: 1,
             ),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -357,19 +356,38 @@ class DocumentPage extends GetWidget<DocumentController> {
                   }),
               ],
             ),
-
             SizedBox(
               height: 50,
             ),
-
             Text(
               "data".tr,
             ),
-
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CTSActionButton('assets/images/track.png', "Audit", () async {
+                  await clickOnSHowAuditLog(context);
+                }),
+                CTSActionButton('assets/images/track.png', "TransferData", () {
+                  clickOnSHowTransferData(context);
+                }),
+                CTSActionButton('assets/images/track.png', "Links", () {
+                  getDocumentLinks(context);
+                }),
+                CTSActionButton('assets/images/track.png', "Recievers", () {
+                  clickOnRecieversData(context);
+                }),
+              ],
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            Text(
+              "data".tr,
+            ),
             const Divider(
               thickness: 1,
             ),
-
             Wrap(
               // mainAxisAlignment:
               //     MainAxisAlignment
@@ -474,11 +492,9 @@ class DocumentPage extends GetWidget<DocumentController> {
                 ),
               ],
             ),
-
             SizedBox(
               height: 8,
             ),
-
             ...List.generate(controller.correspondences!.metadata!.length,
                 (index) {
               var item = controller.correspondences!.metadata![index];
@@ -487,50 +503,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                 title: item.label!,
                 data: item.value ?? "",
               );
-              // return Text(controller.correspondences!.metadata!.length[index]
-              //     .toString());
             }),
-
-            // controller.correspondences.metadata!.forEach((element) {
-
-            // })
-
-            // _itemSideMenu(
-            //     context: context,
-            //     title: "title".tr,
-            //     data: controller.correspondences.gridInfo![0].value ?? ""),
-            // SizedBox(
-            //   height: 8,
-            // ),
-            // _itemSideMenu(
-            //     context: context,
-            //     title: "sender1".tr,
-            //     data: controller.correspondences.fromUser ?? ""),
-            // SizedBox(
-            //   height: 8,
-            // ),
-            // _itemSideMenu(
-            //     context: context,
-            //     title: "assignedFrom".tr,
-            //     data: controller.correspondences.metadata![3].value!),
-            // SizedBox(
-            //   height: 8,
-            // ),
-            // _itemSideMenu(
-            //     context: context,
-            //     title: "referDate".tr,
-            //     data: controller.correspondences.gridInfo![3].value!),
-            // SizedBox(
-            //   height: 8,
-            // ),
-
-            // //    if(controller!.canOpenDocumentModel?.attachments?.hasVoice??false)
-            // Text("assignmentNotes".tr),
-            // // if(controller!.canOpenDocumentModel?.attachments?.hasVoice??false)
-            // //  Text(controller.correspondences.comments ?? ""),
-            // Text(controller.canOpenDocumentModel?.correspondence?.comments ??
-            //     ""),
-
             if (controller.canOpenDocumentModel?.attachments?.hasVoice ?? false)
               Container(
                 height: 40,
@@ -585,6 +558,202 @@ class DocumentPage extends GetWidget<DocumentController> {
                 ),
               ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> clickOnRecieversData(BuildContext context) async {
+    showLoaderDialog(context);
+    var result = await controller.getRecieversData(context);
+    Navigator.of(context).pop();
+    if (result == null) return;
+    var data = result.documentReceivers!;
+    //var data = controller.getDocumentTransfersModel!.documentTransfers;
+    var dialogImage = Image.asset(
+      'assets/images/ending.png',
+      height: 20,
+      width: 20,
+    );
+    var dialogTitle = "Transfers";
+    List<DataColumn> columns = [
+      DataColumn(label: Text('name')),
+      DataColumn(label: Text('structure')),
+      DataColumn(label: Text('date')),
+    ];
+    List<DataRow> rows = List<DataRow>.generate(
+      data.length,
+      (index) {
+        return DataRow(
+          cells: <DataCell>[
+            DataCell(Text(data[index].rCNTNAME!)),
+            DataCell(Text(data[index].rSTCNAME!)),
+            DataCell(Text(data[index].strRDate!)),
+          ],
+        );
+      },
+    );
+
+    Navigator.pop(context);
+    generateListingDialog(context, dialogImage, dialogTitle, columns, rows);
+  }
+
+  Future<void> getDocumentLinks(BuildContext context) async {
+    showLoaderDialog(context);
+    var result = await controller.getLinks(context);
+    Navigator.of(context).pop();
+    if (result == null) return;
+    var data = result.links!;
+    //var data = controller.getDocumentTransfersModel!.documentTransfers;
+    var dialogImage = Image.asset(
+      'assets/images/ending.png',
+      height: 20,
+      width: 20,
+    );
+    var dialogTitle = "Transfers";
+    List<DataColumn> columns = [
+      DataColumn(label: Text('ref')),
+      DataColumn(label: Text('date')),
+      DataColumn(label: Text('privacy')),
+      DataColumn(label: Text('user')),
+    ];
+    List<DataRow> rows = List<DataRow>.generate(
+      data.length,
+      (index) {
+        return DataRow(
+          cells: <DataCell>[
+            DataCell(Text(data[index].docReference!)),
+            DataCell(Text(data[index].docDate!)),
+            DataCell(Text(data[index].privacy!)),
+            DataCell(Text(data[index].linkedBy!)),
+          ],
+        );
+      },
+    );
+
+    Navigator.pop(context);
+    generateListingDialog(context, dialogImage, dialogTitle, columns, rows);
+  }
+
+  Future<void> clickOnSHowTransferData(BuildContext context) async {
+    showLoaderDialog(context);
+    var result = await controller.getTransfersData(context);
+    Navigator.of(context).pop();
+    if (result == null) return;
+    var data = result.documentTransfers!;
+    //var data = controller.getDocumentTransfersModel!.documentTransfers;
+    var dialogImage = Image.asset(
+      'assets/images/ending.png',
+      height: 20,
+      width: 20,
+    );
+    var dialogTitle = "Transfers";
+    List<DataColumn> columns = [
+      DataColumn(label: Text('to')),
+      DataColumn(label: Text('date')),
+      DataColumn(label: Text('purpose')),
+      DataColumn(label: Text('status')),
+      DataColumn(label: Text('action')),
+    ];
+    List<DataRow> rows = List<DataRow>.generate(
+      data!.length,
+      (index) {
+        return DataRow(
+          cells: <DataCell>[
+            DataCell(
+              Text(data[index].transferReceivedByStructure!.fullNameAr! +
+                  " | " +
+                  data[index].transferReceivedByUser!.fullNameAr!),
+            ),
+            DataCell(Text(data[index].strTransferDate!)),
+            DataCell(Text(data[index].purpose!.textAr!)),
+            DataCell(Text(data[index].transferStatusId!.toString())),
+            DataCell(Text("")),
+          ],
+        );
+      },
+    );
+
+    Navigator.pop(context);
+    generateListingDialog(context, dialogImage, dialogTitle, columns, rows);
+  }
+
+  Future<void> clickOnSHowAuditLog(BuildContext context) async {
+    showLoaderDialog(context);
+
+    var result = await controller.getAuditLog(context);
+    Navigator.of(context).pop();
+    if (result == null) return;
+    var data = result.documentLogs!;
+    var dialogImage = Image.asset(
+      'assets/images/ending.png',
+      height: 20,
+      width: 20,
+    );
+    var dialogTitle = "Audit";
+    List<DataColumn> columns = [
+      DataColumn(label: Text('Type')),
+      DataColumn(label: Text('Date')),
+      DataColumn(label: Text('By')),
+      DataColumn(label: Text('Details')),
+    ];
+    List<DataRow> rows = List<DataRow>.generate(
+      data!.length,
+      (index) {
+        return DataRow(
+          cells: <DataCell>[
+            DataCell(Text(data[index].dLACTIONNAME!)),
+            DataCell(Text(data[index].actionDate!)),
+            DataCell(Text(data[index].actionUser!)),
+            DataCell(Text(data[index].dLDETAILS!)),
+          ],
+        );
+      },
+    );
+
+    Navigator.pop(context);
+    generateListingDialog(context, dialogImage, dialogTitle, columns, rows);
+  }
+
+  void generateListingDialog(BuildContext context, Image dialogImage,
+      String dialogTitle, List<DataColumn> columns, List<DataRow> rows) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Row(children: [
+          dialogImage,
+          const SizedBox(
+            width: 8,
+          ),
+          Text(
+            dialogTitle,
+            style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                color: Colors.black.withOpacity(.5),
+                fontSize: 18,
+                fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+          ),
+          const Spacer(),
+          InkWell(
+            onTap: () {
+              controller.filterWord = "";
+              Navigator.pop(context);
+            },
+            child: Image.asset(
+              'assets/images/close_button.png',
+              width: 30,
+              height: 30,
+            ),
+          ),
+        ]),
+        // title: Text(" "),
+        content: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: DataTable(
+            columns: columns,
+            rows: rows,
+          ),
         ),
       ),
     );

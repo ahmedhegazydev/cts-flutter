@@ -721,7 +721,7 @@ class InboxController extends GetxController {
 
         // Get.find<DocumentController>().gatAllDataAboutDOC(
         //     context: context,
-        //     docId: docId,
+        //     //  docId: docId,
         //     transferId: transferId,
         //     correspondenceId: correspondenceId);
 

@@ -365,16 +365,18 @@ class DocumentPage extends GetWidget<DocumentController> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CTSActionButton('assets/images/track.png', "Audit", () async {
+                CTSActionButton('assets/images/track.png', "audit".tr,
+                    () async {
                   await clickOnSHowAuditLog(context);
                 }),
-                CTSActionButton('assets/images/track.png', "TransferData", () {
+                CTSActionButton('assets/images/track.png', "transferData".tr,
+                    () {
                   clickOnSHowTransferData(context);
                 }),
-                CTSActionButton('assets/images/track.png', "Links", () {
+                CTSActionButton('assets/images/track.png', "links".tr, () {
                   getDocumentLinks(context);
                 }),
-                CTSActionButton('assets/images/track.png', "Recievers", () {
+                CTSActionButton('assets/images/track.png', "recievers".tr, () {
                   clickOnRecieversData(context);
                 }),
               ],
@@ -577,9 +579,9 @@ class DocumentPage extends GetWidget<DocumentController> {
     );
     var dialogTitle = "Transfers";
     List<DataColumn> columns = [
-      DataColumn(label: Text('name')),
-      DataColumn(label: Text('structure')),
-      DataColumn(label: Text('date')),
+      DataColumn(label: Text('name2'.tr)),
+      DataColumn(label: Text('structure'.tr)),
+      DataColumn(label: Text('date2'.tr)),
     ];
     List<DataRow> rows = List<DataRow>.generate(
       data.length,
@@ -612,10 +614,10 @@ class DocumentPage extends GetWidget<DocumentController> {
     );
     var dialogTitle = "Transfers";
     List<DataColumn> columns = [
-      DataColumn(label: Text('ref')),
-      DataColumn(label: Text('date')),
-      DataColumn(label: Text('privacy')),
-      DataColumn(label: Text('user')),
+      DataColumn(label: Text('ref'.tr)),
+      DataColumn(label: Text('bookDate'.tr)),
+      DataColumn(label: Text('privacy'.tr)),
+      DataColumn(label: Text('user'.tr)),
     ];
     List<DataRow> rows = List<DataRow>.generate(
       data.length,
@@ -649,11 +651,11 @@ class DocumentPage extends GetWidget<DocumentController> {
     );
     var dialogTitle = "Transfers";
     List<DataColumn> columns = [
-      DataColumn(label: Text('to')),
-      DataColumn(label: Text('date')),
-      DataColumn(label: Text('purpose')),
-      DataColumn(label: Text('status')),
-      DataColumn(label: Text('action')),
+      DataColumn(label: Text('transferTo'.tr)),
+      DataColumn(label: Text('transferDate'.tr)),
+      DataColumn(label: Text('purpose'.tr)),
+      DataColumn(label: Text('status'.tr)),
+      DataColumn(label: Text('action'.tr)),
     ];
     List<DataRow> rows = List<DataRow>.generate(
       data!.length,
@@ -690,12 +692,12 @@ class DocumentPage extends GetWidget<DocumentController> {
       height: 20,
       width: 20,
     );
-    var dialogTitle = "Audit";
+    var dialogTitle = "audit".tr;
     List<DataColumn> columns = [
-      DataColumn(label: Text('Type')),
-      DataColumn(label: Text('Date')),
-      DataColumn(label: Text('By')),
-      DataColumn(label: Text('Details')),
+      DataColumn(label: Text('type'.tr)),
+      DataColumn(label: Text('date'.tr)),
+      DataColumn(label: Text('by'.tr)),
+      DataColumn(label: Text('details'.tr)),
     ];
     List<DataRow> rows = List<DataRow>.generate(
       data!.length,

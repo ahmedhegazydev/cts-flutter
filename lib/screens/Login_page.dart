@@ -3,7 +3,6 @@ import 'package:cts/utility/Extenstions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
-
 import '../controllers/login_controller.dart';
 import '../controllers/main_controller.dart';
 import '../db/cts_database.dart';
@@ -397,6 +396,7 @@ class LoginPage extends GetWidget<LoginController> {
                     child: Align(
                       alignment: Alignment.bottomLeft,
                       child: FloatingActionButton(
+                        heroTag: "btn1",
                         onPressed: () {
                           showDialog(
                               context: context,

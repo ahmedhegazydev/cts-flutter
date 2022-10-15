@@ -4,6 +4,7 @@ import 'package:encrypt/encrypt.dart' as enc;
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../services/apis/log_api.dart';
 import '../services/json_model/login_model.dart';
@@ -25,6 +26,27 @@ class LoginController extends GetxController {
   final loginFormKey = GlobalKey<FormState>();
   bool islogin = false;
   SecureStorage secureStorage = SecureStorage();
+  DateTime time = DateTime.now();
+
+  checkTokenTimeStamp() {
+    SecureStorage secureStorage = SecureStorage();
+    DateTime time = DateTime.now();
+    List? resList =
+        secureStorage.getTokenWithTimeStamp("userToken", "createdTime");
+    DateTime parseDate =
+        new DateFormat("yyyy-MM-dd hh:mm:ss").parse(resList![1]);
+    if ((time.hour - parseDate.hour) < 1) {
+      secureStorage.writeSecureData(AllStringConst.Token, resList[0]);
+      Get.put(LandingPageController());
+      Get.offNamed("/Landing");
+    } else {}
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    checkTokenTimeStamp();
+  }
 
   clear() {
     baseUrl.clear();
@@ -84,6 +106,8 @@ class LoginController extends GetxController {
           //    print("signature  ${loginModel}");
           print(
               "loginModel.tokenloginModel.tokenloginModel.token      ${loginModel.token}");
+          secureStorage.saveTokenWithTimeStamp(
+              "userToken", loginModel.token!, "createdTime", time.toString());
           secureStorage.writeSecureData(
               AllStringConst.Token, loginModel.token!);
           secureStorage.writeSecureData(

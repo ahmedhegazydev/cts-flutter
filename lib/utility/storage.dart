@@ -6,7 +6,6 @@ class SecureStorage {
   //String  user_id = 'user_id';
   final box = GetStorage();
 
-
   /**
    * read
    */
@@ -74,5 +73,20 @@ class SecureStorage {
     return readData;
   }
 
+  Future saveTokenWithTimeStamp(
+      String key1, String value1, String key2, String value2) async {
+    print("i save the $value1");
+    print("i save the $key1");
+    print("i save the $value2");
+    print("i save the $key2");
+    var token = await box.write(key1, value1);
+    var time = await box.write(key2, value2);
+    return [token, time];
+  }
 
+  List? getTokenWithTimeStamp(String key1, String key2) {
+    var token = box.read(key1);
+    var time = box.read(key2);
+    return [token, time];
+  }
 }

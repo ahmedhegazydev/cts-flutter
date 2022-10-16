@@ -3,14 +3,23 @@ import 'package:flutter/material.dart';
 
 extension ColorExtension on String {
   toColor() {
-    var hexColor = this.replaceAll("#", "");
-    if (hexColor.length == 6) {
-      hexColor = "FF" + hexColor;
+    RegExp hex = RegExp(
+        r'^#([\da-f]{3}){1,2}$|^#([\da-f]{4}){1,2}$|(rgb|hsl)a?\((\s*-?\d+%?\s*,){2}(\s*-?\d+%?\s*,?\s*\)?)(,\s*(0?\.\d+)?|1)?\)');
+
+    String c = this.replaceAll(" ", "");
+
+    if (hex.hasMatch(c)) {
+      var hexColor = this.replaceAll("#", "");
+      print(hexColor);
+      if (hexColor.length == 6) {
+        hexColor = "FF" + hexColor;
+      }
+      if (hexColor.length == 8) {
+        return Color(int.parse("0x$hexColor"));
+        // return Colors.red;
+      }
     }
-    if (hexColor.length == 8) {
-      return Color(int.parse("0x$hexColor"));
-      // return Colors.red;
-    }
+    return Colors.grey;
   }
 }
 

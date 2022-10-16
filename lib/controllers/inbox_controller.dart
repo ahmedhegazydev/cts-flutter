@@ -519,6 +519,66 @@ class InboxController extends GetxController {
     update();
   }
 
+  Future<List<Correspondences>> getCorrespondencesDataAsync(
+      {context,
+      required int inboxId,
+      int pageSize = 20,
+      bool showThumbnails = false}) async {
+    final GetCorrespondencesApi _correspondencesApi =
+        GetCorrespondencesApi(context);
+    getData = true;
+    haveMoreData = true;
+    this.inboxId = inboxId;
+    _correspondencesApi.data =
+        "Token=${secureStorage.token()}&inboxId=$inboxId&nodeId=$nodeId&index=$index&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&showThumbnails=$showThumbnails";
+    var value = await _correspondencesApi.getData(); //.then((value) {
+    correspondencesModel = value as CorrespondencesModel;
+    listPriorities = correspondencesModel!.priorities!;
+    listPriorities.forEach((element) {
+      mapOfPriorities[element.Value!] = element;
+    });
+    correspondencesModel?.inbox?.correspondences?.forEach((element) {
+      UserFilter user = UserFilter(
+          userId: element.fromUserId!,
+          name: element.fromUser!,
+          isStructure: false);
+      UserFilter structure = UserFilter(
+          userId: element.fromUserId!,
+          name: element.fromStructure!,
+          isStructure: true);
+      if (!userFilter.contains(user)) {
+        userFilter.add(user);
+      }
+      if (!userFilter.contains(structure)) {
+        userFilter.add(structure);
+      }
+    });
+    if (addToList) {
+      allCorrespondences
+          .addAll(correspondencesModel?.inbox?.correspondences ?? []);
+    } else {
+      allCorrespondences = correspondencesModel?.inbox?.correspondences ?? [];
+    }
+    //For filter by urgent check box
+    filteredUrgentCorrespondencesTemp = allCorrespondences;
+    //For filter by form user id check box
+    filteredFormUserIdCorrespondencesTemp = allCorrespondences;
+    //For filter by unRead check box
+    allCorrespondencesTempFilterUnread = allCorrespondences;
+    if (unread == true) {
+      var filtered =
+          allCorrespondences.where((content) => content.isNew == true).toList();
+      allCorrespondences = filtered;
+    }
+    int listLength = correspondencesModel?.inbox?.correspondences?.length ?? 0;
+    if (listLength < pageSize) {
+      haveMoreData = false;
+    }
+    getData = false;
+    update();
+    return allCorrespondences;
+  }
+
   void getCorrespondencesData(
       {context,
       required int inboxId,

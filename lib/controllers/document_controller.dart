@@ -282,7 +282,7 @@ class DocumentController extends GetxController {
     print(
         "CanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModel");
     print("canOpenDocumentModel.toJson()  =>${canOpenDocumentModel!.toJson()}");
-
+    log("${canOpenDocumentModel!.toJson()}");
     canOpenDocumentModel = data;
     canOpenDocumentModel?.attachments?.attachments?.forEach((element) {
       if (element.isOriginalMail!) {
@@ -566,7 +566,6 @@ class DocumentController extends GetxController {
     _findRecipient.getData().then((value) {
       findRecipientModel = value as FindRecipientModel;
 
-      Get.find<InboxController>().context = context;
       Get.find<InboxController>().setFindRecipientData(findRecipientModel!);
       // listOfUser(0);
       print(
@@ -975,20 +974,27 @@ class DocumentController extends GetxController {
       {required context,
       required correspondenceId,
       required transferId,
-      required exportAction}) {
+      required exportAction}) async {
+    showLoaderDialog(context);
     AutoSendToRecepientsAndCCAPI _autoSendToRecepientsAndCCAPI =
         AutoSendToRecepientsAndCCAPI(context);
     _autoSendToRecepientsAndCCAPI.data =
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
-    _autoSendToRecepientsAndCCAPI.getData().then((value) {
-      autoSendToRecepientsAndCCModel = value as AutoSendToRecepientsAndCCModel;
+    var value = await _autoSendToRecepientsAndCCAPI.getData(); //.then((value) {
+    autoSendToRecepientsAndCCModel = value as AutoSendToRecepientsAndCCModel;
 
-      if (autoSendToRecepientsAndCCModel?.isConfirm ?? false) {
-        Get.snackbar("", autoSendToRecepientsAndCCModel!.message!);
-      }
-      print(
-          "_alreadyExportedAsPaperworkAPI =>  ${autoSendToRecepientsAndCCModel!.toJson()}");
-    });
+    if (autoSendToRecepientsAndCCModel?.isConfirm ?? false) {
+      Get.snackbar("", autoSendToRecepientsAndCCModel!.message!);
+    }
+    Get.find<LandingPageController>().getDashboardStats(context: context);
+    await Get.find<InboxController>().getCorrespondencesDataAsync(
+        context: context,
+        inboxId: Get.find<InboxController>().inboxId,
+        pageSize: 20,
+        showThumbnails: false);
+    Navigator.pop(context);
+
+    Get.offAllNamed("/InboxPage");
   }
 
   checkForEmptyStructureRecipients(
@@ -1007,6 +1013,29 @@ class DocumentController extends GetxController {
       if (checkForEmptyStructureRecipientsModel?.isConfirm ?? false) {
         Get.snackbar("", checkForEmptyStructureRecipientsModel!.message!);
       }
+
+      showDilog(
+          context: context,
+          massge: checkForEmptyStructureRecipientsModel!.message!,
+          no: () {
+            Navigator.of(context).pop();
+          },
+          yes: () {
+            var methodName = "";
+            if (checkForEmptyStructureRecipientsModel?.yesMethod != null)
+              methodName = checkForEmptyStructureRecipientsModel!.yesMethod!;
+            else if (checkForEmptyStructureRecipientsModel?.yesMethod2 != null)
+              methodName = checkForEmptyStructureRecipientsModel!.yesMethod2!;
+            getSwitchMethod(
+              exportAction: exportAction,
+              transferId: transferId,
+              correspondenceId: correspondenceId,
+              context: context,
+              name: methodName,
+            );
+            //   Get.back();
+            // Navigator.of(context).pop();
+          });
       print(
           "_alreadyExportedAsPaperworkAPI =>  ${checkForEmptyStructureRecipientsModel!.toJson()}");
     });
@@ -1316,6 +1345,7 @@ class DocumentController extends GetxController {
       case "ConfirmAgain":
         // do something else
         break;
+
       case "AutoSendToRecepientsAndCC":
         autoSendToRecepientsAndCC(
             context: context,

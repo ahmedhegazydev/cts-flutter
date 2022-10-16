@@ -1,18 +1,9 @@
-import 'dart:convert';
-
-import 'package:cts/controllers/search_controller.dart';
-import 'package:cts/utility/Extenstions.dart';
 import 'package:cts/utility/utilitie.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/safe_area_values.dart';
-import 'package:top_snackbar_flutter/tap_bounce_container.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
-import '../main.dart';
 import '../services/apis/basket/add_edit_basket_result _api.dart';
 import '../services/apis/basket/getFetchBasketList_api.dart';
 import '../services/apis/basket/get_gasket_inbox_api.dart';
@@ -23,9 +14,7 @@ import '../services/apis/favorites/AddFavoriteRecipients_api.dart';
 import '../services/apis/favorites/ListFavoriteRecipients_api.dart';
 import '../services/apis/favorites/RemoveFavoriteRecipients_api.dart';
 import '../services/apis/find_recipient_api.dart';
-import '../services/apis/get_correspondences_api.dart';
 import '../services/apis/get_my_routing_settings_api.dart';
-import '../services/apis/remove_my_routing_settings_api.dart';
 import '../services/apis/remove_my_routing_settings_api.dart';
 import '../services/apis/save_my_routing_settings_api.dart';
 import '../services/json_model/basket/add_edit_basket_flag_model.dart';
@@ -35,20 +24,16 @@ import '../services/json_model/basket/remove_basket_request_model.dart';
 import '../services/json_model/basket/reorder_baskets_request_model.dart';
 import '../services/json_model/dashboard_stats_result_model.dart';
 import '../services/json_model/favorites/add/AddFavoriteRecipients_request.dart';
-import '../services/json_model/favorites/list_all/ListFavoriteRecipients_request.dart';
 import '../services/json_model/favorites/list_all/ListFavoriteRecipients_response.dart';
 import '../services/json_model/favorites/remove/RemoveFavoriteRecipients_request.dart';
 import '../services/json_model/find_recipient_model.dart';
-import '../services/json_model/get_correspondences_model.dart';
 
-import '../services/json_model/get_my_routing_settings_model.dart';
 import '../services/json_model/login_model.dart';
 import '../services/json_model/my_transfer_routing_dto_model.dart';
 import '../services/json_model/my_transfer_routing_dto_result.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
 import 'document_controller.dart';
-import 'package:flutter/services.dart' as rootBundel;
 
 class LandingPageController extends GetxController {
   bool isSavingOrder = false;

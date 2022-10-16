@@ -8,61 +8,34 @@ import '../services/json_model/login_model.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
 
-class SearchPageResultController extends GetxController{
+class SearchPageResultController extends GetxController {
   ScrollController scrollController = ScrollController();
   final SecureStorage _secureStorage = SecureStorage();
-  Map <String,dynamic>?logindata;
+  Map<String, dynamic>? logindata;
   List<Correspondences> correspondences = [];
-  List<CustomActions>? customActions=[];
+  List<CustomActions>? customActions = [];
 
+  onDismissed(DismissDirection direction) {}
 
+  Future<void> onRefresh() async {}
 
-
-  onDismissed(DismissDirection direction ) {
-
-
-
-
-  }
-
-
-
-  Future<void> onRefresh() async {
-
-  }
-
-
-
-
-
-
-  canOpenDoc({
-    context,
-    required correspondenceId, required transferId}) {
+  canOpenDoc({context, required correspondenceId, required transferId}) {
     CanOpenDocumentApi canOpenDocumentApi = CanOpenDocumentApi(context);
     canOpenDocumentApi.data =
-    "Token=${_secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+        "Token=${_secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     canOpenDocumentApi.getData().then((value) {
-
-
-
       FindRecipientModel findRecipientModel = value as FindRecipientModel;
-
     });
   }
+
   @override
   void onReady() {
     super.onReady();
 
-
-
-
-    logindata=_secureStorage.readSecureJsonData(AllStringConst.LogInData) ;
-    if(logindata!=null){
-      LoginModel data=LoginModel.fromJson(logindata!);
-      customActions=data.customActions;
+    logindata = _secureStorage.readSecureJsonData(AllStringConst.LogInData);
+    if (logindata != null) {
+      LoginModel data = LoginModel.fromJson(logindata!);
+      customActions = data.customActions;
     }
-
-
   }
 }

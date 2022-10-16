@@ -33,8 +33,10 @@ class LoginController extends GetxController {
     DateTime time = DateTime.now();
     List? resList =
         secureStorage.getTokenWithTimeStamp("userToken", "createdTime");
+
+    if (resList == null || resList[1] == null || resList[0] == null) return;
     DateTime parseDate =
-        new DateFormat("yyyy-MM-dd hh:mm:ss").parse(resList![1]);
+        new DateFormat("yyyy-MM-dd hh:mm:ss").parse(resList[1]);
     if ((time.hour - parseDate.hour) < 1) {
       secureStorage.writeSecureData(AllStringConst.Token, resList[0]);
       Get.put(LandingPageController());

@@ -160,12 +160,12 @@ class InboxController extends GetxController {
     AddEDocumentsToBasketApi addEDocumentsToBasketApi =
         AddEDocumentsToBasketApi(context);
 
-    Map<String, dynamic> a = {
-      "token": secureStorage.token(),
-      "basketId": basketId,
-      "language": "ar",
-      "documentIds": listSelectCorrespondences
-    };
+    // Map<String, dynamic> a = {
+    //   "token": secureStorage.token(),
+    //   "basketId": basketId,
+    //   "language": "ar",
+    //   "documentIds": listSelectCorrespondences
+    // };
 
     await addEDocumentsToBasketApi
         .post(addDocumentsToBasketRequest.toMap())
@@ -1162,8 +1162,8 @@ class InboxController extends GetxController {
     transfarForMany.clear();
     usersWillSendTo.clear();
     _multipleTransfersAPI.post(multipleTransfers.toMap()).then((value) {
-      DefaultOnSuccessResult defaultOnSuccessResult =
-          value as DefaultOnSuccessResult;
+      // DefaultOnSuccessResult defaultOnSuccessResult =
+      //     value as DefaultOnSuccessResult;
 
       Get.snackbar("", "تم التنفيذ بنجاح");
     });

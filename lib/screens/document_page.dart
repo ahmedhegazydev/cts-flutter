@@ -1,5 +1,3 @@
-//import 'dart:js';
-import 'dart:io';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:cts/screens/search_page.dart';
@@ -497,9 +495,9 @@ class DocumentPage extends GetWidget<DocumentController> {
             SizedBox(
               height: 8,
             ),
-            ...List.generate(controller.correspondences!.metadata!.length,
+            ...List.generate(controller.correspondences.metadata!.length,
                 (index) {
-              var item = controller.correspondences!.metadata![index];
+              var item = controller.correspondences.metadata![index];
               return _itemSideMenu(
                 context: context,
                 title: item.label!,
@@ -658,7 +656,7 @@ class DocumentPage extends GetWidget<DocumentController> {
       DataColumn(label: Text('action'.tr)),
     ];
     List<DataRow> rows = List<DataRow>.generate(
-      data!.length,
+      data.length,
       (index) {
         return DataRow(
           cells: <DataCell>[
@@ -700,7 +698,7 @@ class DocumentPage extends GetWidget<DocumentController> {
       DataColumn(label: Text('details'.tr)),
     ];
     List<DataRow> rows = List<DataRow>.generate(
-      data!.length,
+      data.length,
       (index) {
         return DataRow(
           cells: <DataCell>[

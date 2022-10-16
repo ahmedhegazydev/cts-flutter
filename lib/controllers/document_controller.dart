@@ -60,7 +60,6 @@ import '../services/json_model/inopendocModel/getatt_achments_model.dart'
 import '../services/json_model/inopendocModel/getatt_achments_model.dart';
 import '../services/json_model/inopendocModel/is_already_exported_as_paperwork_model.dart';
 import '../services/json_model/inopendocModel/is_already_exported_as_transfer_model.dart';
-import '../services/json_model/inopendocModel/save_document_annotation_model.dart';
 import '../services/json_model/login_model.dart';
 import '../services/json_model/save_document_annotation_model.dart';
 import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
@@ -170,7 +169,7 @@ class DocumentController extends GetxController {
       print("key====>$key");
       print("key====>${value}");
 
-      int countOfNodes = recordingMap.length;
+      //  int countOfNodes = recordingMap.length;
       for (var entry in recordingMap.entries) {
         var key = entry.key;
         var value = entry.value;
@@ -657,7 +656,7 @@ class DocumentController extends GetxController {
 
   CustomActions? getactions(id) {
     return transfarForManyCustomActions[id];
-    update();
+    // update();
   }
 
   setactions(id, CustomActions customActions) {

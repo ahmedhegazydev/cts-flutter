@@ -235,6 +235,7 @@ class DocumentController extends GetxController {
     required String isOriginalMail,
     required String documentAnnotationsString,
     required String delegateGctId,
+    required String docURL,
   }) async {
     final SaveDocumentAnnotationsAPI _saveDocumentAnnotationsApi =
         SaveDocumentAnnotationsAPI(context);
@@ -248,18 +249,18 @@ class DocumentController extends GetxController {
       UserId: userId,
       TransferId: transferId,
       DocumentPagesString: '',
-      DocumentUrl: '',
+      DocumentUrl: docURL,
       Language: 'en',
       UnSign: 'false',
     );
 
     log(jsonEncode(postSaveDocumentAnnotationsModel?.toMap()));
-    await _saveDocumentAnnotationsApi
-        .post(postSaveDocumentAnnotationsModel?.toMap())
-        .then((value) {
-      log("saveannotations res");
-      log(jsonEncode(value));
-    });
+    var value = await _saveDocumentAnnotationsApi
+        .post(postSaveDocumentAnnotationsModel?.toMap());
+
+    log("saveannotations res");
+    log(jsonEncode(value));
+    //});
   }
 
   backTooragnalFileDocpdf() {

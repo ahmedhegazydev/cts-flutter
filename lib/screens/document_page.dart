@@ -363,11 +363,11 @@ class DocumentPage extends GetWidget<DocumentController> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CTSActionButton('assets/images/track.png', "audit".tr,
+                CTSActionButton('assets/images/track.png', 'processes'.tr,
                     () async {
                   await clickOnSHowAuditLog(context);
                 }),
-                CTSActionButton('assets/images/track.png', "transferData".tr,
+                CTSActionButton('assets/images/track.png', "transferDetails".tr,
                     () {
                   clickOnSHowTransferData(context);
                 }),
@@ -575,7 +575,7 @@ class DocumentPage extends GetWidget<DocumentController> {
       height: 20,
       width: 20,
     );
-    var dialogTitle = "Transfers";
+    var dialogTitle = "recievers".tr;
     List<DataColumn> columns = [
       DataColumn(label: Text('name2'.tr)),
       DataColumn(label: Text('structure'.tr)),
@@ -610,7 +610,7 @@ class DocumentPage extends GetWidget<DocumentController> {
       height: 20,
       width: 20,
     );
-    var dialogTitle = "Transfers";
+    var dialogTitle = "links".tr;
     List<DataColumn> columns = [
       DataColumn(label: Text('ref'.tr)),
       DataColumn(label: Text('bookDate'.tr)),
@@ -647,7 +647,7 @@ class DocumentPage extends GetWidget<DocumentController> {
       height: 20,
       width: 20,
     );
-    var dialogTitle = "Transfers";
+    var dialogTitle = "transferDetails".tr;
     List<DataColumn> columns = [
       DataColumn(label: Text('transferTo'.tr)),
       DataColumn(label: Text('transferDate'.tr)),
@@ -690,7 +690,7 @@ class DocumentPage extends GetWidget<DocumentController> {
       height: 20,
       width: 20,
     );
-    var dialogTitle = "audit".tr;
+    var dialogTitle = 'processes'.tr;
     List<DataColumn> columns = [
       DataColumn(label: Text('type'.tr)),
       DataColumn(label: Text('date'.tr)),

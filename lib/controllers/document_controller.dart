@@ -1503,6 +1503,10 @@ class DocumentController extends GetxController {
     update(["record"]);
   }
 
+  String completeNote = "";
+  String replyNote = "";
+  bool isPrivate = true;
+
   Future playMathod({required id}) async {
     audioPlayer = FlutterSoundPlayer();
     audioPlayer!.openPlayer();

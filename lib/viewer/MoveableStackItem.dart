@@ -402,7 +402,7 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
 
             s.viewerIsEditable.value ? dragButtonCR() : Text(""),
             s.viewerIsEditable.value ? dragButtonCL() : Text(""),
-            s.viewerIsEditable.value ? deleteButton() : Text(""),
+            // s.viewerIsEditable.value ? deleteButton() : Text(""),
             // isEditing ? dragButton() : Text("ss"),
             // CloseButton(),
           ]),

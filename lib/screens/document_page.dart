@@ -11,11 +11,15 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../controllers/document_controller.dart';
 import '../controllers/inbox_controller.dart';
+import '../controllers/landing_page_controller.dart';
 import '../controllers/main_controller.dart';
 import '../controllers/web_view_controller.dart';
+import '../services/apis/reply_with_voice_note_api.dart';
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/inopendocModel/g2g/g2g_Info_for_export_model.dart';
 import '../services/json_model/login_model.dart';
+import '../services/json_model/reply_with_voicenote_model.dart';
+import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
 import '../utility/all_const.dart';
 import '../utility/all_string_const.dart';
 import '../utility/utilitie.dart';
@@ -105,7 +109,6 @@ class DocumentPage extends GetWidget<DocumentController> {
       children: [
         ActionButton(
           onPressed: () async {
-
             showLoaderDialog(context);
             var all = ViewerController.to.allAnnotations.toList();
             //       var sall = ViewerController.to.movableItems.toJson();
@@ -119,7 +122,7 @@ class DocumentPage extends GetWidget<DocumentController> {
             //log(jsonEncode(updated));
             log(stringData);
             //  var stringAnnotations = stringData.replaceAll('"', '"\\');
-            
+
             await controller.SaveDocAnnotationsData(
                 context: context,
                 attachmentId: controller
@@ -139,7 +142,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                     .toString(),
                 docURL: controller.pdfAndSingData.first);
 
-                   Navigator.of(context).pop();
+            Navigator.of(context).pop();
 
             // log(updated);
           },
@@ -353,6 +356,10 @@ class DocumentPage extends GetWidget<DocumentController> {
                 CTSActionButton('assets/images/track.png', "tracking".tr, () {
                   _openVisualTracking();
                 }),
+                CTSActionButton('assets/images/track.png', "Reply".tr, () {
+                  replyClick(context);
+                }),
+
                 if (controller.notoragnalFileDoc)
                   CTSActionButton('assets/images/track.png', "tracking".tr, () {
                     controller.backTooragnalFileDocpdf();
@@ -2256,6 +2263,248 @@ class DocumentPage extends GetWidget<DocumentController> {
             ],
           );
         });
+  }
+
+  void replyClick(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Row(
+          children: [
+            Image.asset(
+              'assets/images/refer.png'
+              //
+              ,
+              height: 20,
+              width: 20,
+            ),
+            SizedBox(
+              width: 16,
+            ),
+            Text("Reply".tr,
+                style: TextStyle(
+                    fontSize: 30,
+                    color: Theme.of(context).colorScheme.primary)),
+            Spacer(),
+            InkWell(
+                onTap: () {
+                  Navigator.of(ctx).pop();
+                },
+                child: Image.asset(
+                  "assets/images/close_button.png",
+                  height: 24,
+                  width: 24,
+                ))
+          ],
+        ),
+        content: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            width: MediaQuery.of(context).size.width * .5,
+            color: Colors.grey[200],
+            child: SingleChildScrollView(
+              child: Column(children: [
+                Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                  Text(
+                    "name".tr,
+                    style: Theme.of(context).textTheme.headline3!.copyWith(
+                          color: createMaterialColor(
+                            const Color.fromRGBO(77, 77, 77, 1),
+                          ),
+                          fontSize: 15,
+                        ),
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(controller
+                            .canOpenDocumentModel!.correspondence!.fromUser ??
+                        ""),
+                  ),
+                  Spacer(),
+                  CircleAvatar(
+                    backgroundImage: AssetImage("assets/images/pr.jpg"),
+                    backgroundColor: Colors.cyan,
+                    maxRadius: 30,
+                    minRadius: 30,
+                  ),
+                  SizedBox(
+                    width: 8,
+                  )
+                ]),
+                SizedBox(
+                  height: 4,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text("audioNotes".tr),
+                    ),
+                    Spacer(),
+                    Text("private".tr),
+                    GetBuilder<InboxController>(
+                      id: "pr",
+                      assignId: true,
+                      autoRemove: false,
+                      builder: (logic) {
+                        return Checkbox(
+                          value: logic.isPrivate,
+                          onChanged: logic.updateISPrivate,
+                        );
+                      },
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                          height: 40,
+                          color: Colors.grey[300],
+                          child: Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () async {
+                                  controller.record.isRecording
+                                      ? controller.stopMathod()
+                                      : controller.recordMathod(
+                                          id: controller.canOpenDocumentModel!
+                                              .correspondence!.fromUserId!,
+                                        );
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: GetBuilder<DocumentController>(
+                                      id: "id",
+                                      builder: (logic) {
+                                        return Icon(
+                                            Get.find<DocumentController>()
+                                                    .recording
+                                                ? Icons.stop
+                                                : Icons.mic);
+                                      }),
+                                ),
+                              ),
+                              Expanded(
+                                  child: Container(
+                                color: Theme.of(context).colorScheme.primary,
+                                height: 1,
+                              )),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: InkWell(
+                                  onTap: () {
+                                    controller.playMathod(
+                                        id: controller.canOpenDocumentModel!
+                                            .correspondence!.fromUserId!);
+                                  },
+                                  child: Icon(Icons.play_arrow,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary),
+                                ),
+                              )
+                            ],
+                          )),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                Container(
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                        hintText: " ادخل الرد",
+                        contentPadding: EdgeInsets.all(16)),
+                    onChanged: (v) {
+                      controller.replyNote = v;
+                    },
+                    maxLines: 4,
+                  ),
+                  color: Colors.grey[300],
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+              ]),
+            ),
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () async {
+              ReplyWithVoiceNoteRequestModel v;
+              String? audioFileBes64 =
+                  await audiobase64String(file: controller.recordFile);
+
+              ReplyWithVoiceNoteApi replayAPI = ReplyWithVoiceNoteApi(context);
+              if (controller.recordFile != null) {
+                v = ReplyWithVoiceNoteRequestModel(
+                    userId: controller
+                        .canOpenDocumentModel!.correspondence!.fromUserId
+                        .toString(),
+                    transferId: controller
+                        .canOpenDocumentModel!.correspondence!.transferId,
+                    token: Get.find<InboxController>().secureStorage.token(),
+                    correspondencesId: controller
+                        .canOpenDocumentModel!.correspondence!.correspondenceId,
+                    language: Get.locale?.languageCode == "en" ? "en" : "ar",
+                    voiceNote: audioFileBes64,
+                    notes: controller.replyNote,
+                    voiceNoteExt: "m4a",
+                    voiceNotePrivate: Get.find<InboxController>().isPrivate);
+              } else {
+                v = ReplyWithVoiceNoteRequestModel(
+                    userId: controller
+                        .canOpenDocumentModel!.correspondence!.fromUserId
+                        .toString(),
+                    transferId: controller
+                        .canOpenDocumentModel!.correspondence!.transferId,
+                    token: Get.find<InboxController>().secureStorage.token(),
+                    correspondencesId: controller
+                        .canOpenDocumentModel!.correspondence!.correspondenceId,
+                    language: Get.locale?.languageCode == "en" ? "en" : "ar",
+                    voiceNote: null,
+                    notes: controller.replyNote,
+                    voiceNoteExt: null,
+                    voiceNotePrivate: false);
+              }
+
+              print(v.toMap());
+              showLoaderDialog(context);
+              await replayAPI.post(v.toMap()).then((value) {
+                Navigator.pop(context);
+                ReplyWithVoiceNoteModel v = value as ReplyWithVoiceNoteModel;
+                if (v.status == 1) {
+                  Get.snackbar("", "تمت العمليه بنجاح");
+                }
+                // Get.       getDashboardStats()
+                Get.find<LandingPageController>()
+                    .getDashboardStats(context: context);
+                Get.find<InboxController>().getCorrespondencesData(
+                    context: context,
+                    inboxId: Get.find<InboxController>().inboxId,
+                    pageSize: 20,
+                    showThumbnails: false);
+              });
+
+              /// ToDo send Replay
+              Get.find<InboxController>().recordFile = null;
+              Get.find<InboxController>().replyNote = "";
+              // Navigator.of(ctx).pop();
+              Get.offAllNamed("/InboxPage");
+            },
+            child: Text("send".tr,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          ),
+        ],
+      ),
+    );
   }
 }
 

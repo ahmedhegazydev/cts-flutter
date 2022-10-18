@@ -126,15 +126,18 @@ class LandingPageController extends GetxController {
     DashboardStatsResultApi dashboardStatsResultApi = DashboardStatsResultApi();
     dashboardStatsResultApi.data =
         "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
-    print(dashboardStatsResultApi.apiUrl());
-    print(dashboardStatsResultApi.apiUrl() +
-        "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}");
-
     dashboardStatsResultApi.getData().then((value) {
       dashboardStatsResultModel = value as DashboardStatsResultModel;
-
       update();
     });
+  }
+
+  Future<DashboardStatsResultModel> getDashboardStatsAsync({context}) async {
+    DashboardStatsResultApi dashboardStatsResultApi = DashboardStatsResultApi();
+    dashboardStatsResultApi.data =
+        "Token=${secureStorage.token()}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+    var value = await dashboardStatsResultApi.getData();
+    return value as DashboardStatsResultModel;
   }
 
   @override
@@ -145,26 +148,15 @@ class LandingPageController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    // if(context == null){
-    //   context = NavigationService.navigatorKey.currentContext;
-    // }
     getDashboardStats();
-
     _logindata = secureStorage.readSecureJsonData(AllStringConst.LogInData);
     if (_logindata != null) {
       data = LoginModel.fromJson(_logindata!);
     }
-
-    //Get.find<SearchController>().getAllData();
-    // getFindRecipientData();
-
-    //context: null && not required ->  for not showing progress dialog
     getFindRecipientData(context: null);
     listFavoriteRecipients(context: null);
     Get.put<DocumentController>(DocumentController())
         .getFindRecipientData(context: null);
-
-    // getDashboardStatsLocalJson();
   }
 
   String userName() {
@@ -317,16 +309,6 @@ class LandingPageController extends GetxController {
           getMyRoutingSettingsModel?.routing?.name ?? "";
       textEditingControllerToroutingReson.text =
           getMyRoutingSettingsModel?.routing?.crtComments ?? "";
-      print(
-          "getMyRoutingSettingsModel?.routing?.name=> ${getMyRoutingSettingsModel?.routing?.name}");
-      print(
-          "getMyRoutingSettingsModel?.routing?.crtToDate=> ${getMyRoutingSettingsModel?.routing?.crtToDate}");
-      print(
-          "getMyRoutingSettingsModel?.routing?.crtFromDate=> ${getMyRoutingSettingsModel?.routing?.crtFromDate}");
-      print(
-          "getMyRoutingSettingsModel?.routing?.crtComments?.name=> ${getMyRoutingSettingsModel?.routing?.crtComments}");
-
-      //  update();
     });
   }
 

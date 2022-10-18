@@ -1,6 +1,6 @@
 import 'package:cts/services/abstract_json_resource.dart';
 
-class CheckForEmptyStructureRecipientsModel extends AbstractJsonResource{
+class CheckForEmptyStructureRecipientsModel extends AbstractJsonResource {
   String? errorMessage;
   int? status;
   List<String>? cceds;
@@ -21,34 +21,36 @@ class CheckForEmptyStructureRecipientsModel extends AbstractJsonResource{
 
   CheckForEmptyStructureRecipientsModel(
       {this.errorMessage,
-        this.status,
-        this.cceds,
-        this.ccedsTitle,
-        this.confirmMessage2,
-        this.isConfirm,
-        this.message,
-        this.noMethod,
-        this.noMethod2,
-        this.recipients,
-        this.recipientsTitle,
-        this.request,
-        this.structures,
-        this.structuresTitle,
-        this.transferTo,
-        this.yesMethod,
-        this.yesMethod2});
+      this.status,
+      this.cceds,
+      this.ccedsTitle,
+      this.confirmMessage2,
+      this.isConfirm,
+      this.message,
+      this.noMethod,
+      this.noMethod2,
+      this.recipients,
+      this.recipientsTitle,
+      this.request,
+      this.structures,
+      this.structuresTitle,
+      this.transferTo,
+      this.yesMethod,
+      this.yesMethod2});
 
   CheckForEmptyStructureRecipientsModel.fromJson(Map<String, dynamic> json) {
     errorMessage = json['ErrorMessage'];
     status = json['Status'];
-    cceds = json['cceds'].cast<String>();
+    var tempCCd = json['cceds'];
+    if (tempCCd != null) cceds = json['cceds'].cast<String>();
     ccedsTitle = json['ccedsTitle'];
     confirmMessage2 = json['confirmMessage2'];
     isConfirm = json['isConfirm'];
     message = json['message'];
     noMethod = json['noMethod'];
     noMethod2 = json['noMethod2'];
-    recipients = json['recipients'].cast<String>();
+    var tempRec = json['recipients'];
+    if (tempRec != null) recipients = json['recipients'].cast<String>();
     recipientsTitle = json['recipientsTitle'];
     request = json['request'];
     structures = json['structures'];

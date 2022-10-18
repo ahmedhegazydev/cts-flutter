@@ -105,6 +105,8 @@ class DocumentPage extends GetWidget<DocumentController> {
       children: [
         ActionButton(
           onPressed: () async {
+
+            showLoaderDialog(context);
             var all = ViewerController.to.allAnnotations.toList();
             //       var sall = ViewerController.to.movableItems.toJson();
             List<Map> data = [];
@@ -117,7 +119,7 @@ class DocumentPage extends GetWidget<DocumentController> {
             //log(jsonEncode(updated));
             log(stringData);
             //  var stringAnnotations = stringData.replaceAll('"', '"\\');
-
+            
             await controller.SaveDocAnnotationsData(
                 context: context,
                 attachmentId: controller
@@ -134,7 +136,10 @@ class DocumentPage extends GetWidget<DocumentController> {
                     .canOpenDocumentModel!.correspondence!.transferId!,
                 userId: controller.secureStorage
                     .readIntSecureData(AllStringConst.UserId)
-                    .toString());
+                    .toString(),
+                docURL: controller.pdfAndSingData.first);
+
+                   Navigator.of(context).pop();
 
             // log(updated);
           },
@@ -1124,9 +1129,7 @@ class DocumentPage extends GetWidget<DocumentController> {
             title: Row(//mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
               Image.asset(
-                'assets/images/refer.png'
-                //
-                ,
+                'assets/images/refer.png',
                 height: 20,
                 width: 20,
               ),

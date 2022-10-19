@@ -298,11 +298,6 @@ class InboxPage extends GetWidget<InboxController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: [
-        // Container(
-        //   width: 10,
-        //   height: double.infinity,
-        //   color: Colors.grey.shade400,
-        // ),
         Expanded(
           child: Column(
             children: [
@@ -373,7 +368,11 @@ class InboxPage extends GetWidget<InboxController> {
                               ? FractionalOffset.centerRight
                               : FractionalOffset.centerLeft,
                           child: Text(
-                            "sharedServicesAdministration".tr,
+                            Get.find<LandingPageController>()
+                                    .data
+                                    ?.departmentName ??
+                                "",
+                            //  "sharedServicesAdministration".tr,
                             style:
                                 Theme.of(context).textTheme.headline2!.copyWith(
                                       color: createMaterialColor(

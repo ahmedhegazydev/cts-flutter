@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:cts/services/api_manager.dart';
 import 'package:cts/services/apis/inside_doc/g2g/eport_using_g2g_api.dart';
 import 'package:cts/services/apis/request_edit_in_office_api.dart';
 import 'package:cts/services/apis/request_refresh_edit_in_office_api.dart';
@@ -49,6 +50,7 @@ import '../services/json_model/inopendocModel/attachment_Info_model.dart';
 import '../services/json_model/inopendocModel/auto_send_to_recepients_and_cc_model.dart';
 import '../services/json_model/inopendocModel/can_export_as_paperwork_model.dart';
 import '../services/json_model/inopendocModel/check_for_empty_structure_recipients_model.dart';
+import '../services/json_model/inopendocModel/export_response_model.dart';
 import '../services/json_model/inopendocModel/g2g/export_usign_g2g_model.dart';
 import '../services/json_model/inopendocModel/g2g/g2g_Info_for_export_model.dart';
 import '../services/json_model/inopendocModel/g2g/g2g_export_dto.dart';
@@ -75,6 +77,384 @@ import 'package:flutter/services.dart' as rootBundel;
 import 'landing_page_controller.dart';
 
 class DocumentController extends GetxController {
+  ////
+  ///
+  ///EXPORT AND SHIT !!!!!
+  ///
+
+  StartExportAsPaperowrk(
+      {required correspondenceId,
+      required transferId,
+      required exportAction,
+      required context}) {
+    executeExportMethod(
+        method: "IsAlreadyExportedAsPaperwork",
+        correspondenceId: correspondenceId,
+        transferId: transferId,
+        exportAction: exportAction,
+        context: context);
+  }
+
+  StartExportAsTransfer(
+      {required context,
+      required correspondenceId,
+      required transferId,
+      required exportAction}) {
+    executeExportMethod(
+        method: "IsAlreadyExportedAsTransfer",
+        correspondenceId: correspondenceId,
+        transferId: transferId,
+        exportAction: exportAction,
+        context: context);
+  }
+
+  Future executeExportMethod(
+      {required String method,
+      required correspondenceId,
+      required transferId,
+      required String exportAction,
+      required context,
+      previousResponse = null,
+      withContinue = false}) async {
+    var api;
+    switch (method) {
+      case "IsAlreadyExportedAsTransfer":
+        api = IsAlreadyExportedAsTransferAPI(context);
+        break;
+      case "IsAlreadyExportedAsPaperwork":
+        api = IsAlreadyExportedAsPaperworkAPI(context);
+        break;
+
+      case "CanExportAsPaperwork":
+        api = CanExportAsPaperworkAPI(context);
+        break;
+      case "CheckForEmptyStructureRecipients":
+        api = CheckForEmptyStructureRecipientsAPI(context);
+        break;
+      case "AutoSendToRecepientsAndCC":
+        if (!withContinue)
+          showDilog(
+              context: context,
+              massge: previousResponse.message!,
+              subTitle: previousResponse.recipientsTitle +
+                  " ' " +
+                  previousResponse.recipients.join(', ') +
+                  " ' " +
+                  previousResponse.ccedsTitle +
+                  " ' " +
+                  previousResponse.cceds.join(', ') +
+                  " '",
+              no: () {
+                Navigator.of(context).pop();
+                return;
+              },
+              yes: () {
+                executeExportMethod(
+                    method: "AutoSendToRecepientsAndCC",
+                    correspondenceId: correspondenceId,
+                    transferId: transferId,
+                    exportAction: exportAction,
+                    context: context,
+                    previousResponse: exportResponse,
+                    withContinue: true);
+                Navigator.of(context).pop();
+              });
+
+        api = AutoSendToRecepientsAndCCAPI(context);
+        break;
+
+      case "ConfirmAgain":
+        // do something else
+        recursivelyExportFuntcion(
+            context: context,
+            correspondenceId: correspondenceId,
+            transferId: transferId,
+            exportResponse: previousResponse,
+            exportAction: exportAction,
+            isAgain: true);
+        return;
+        break;
+      case "OpenTransferWindow":
+        print("OpenTransferWindow");
+        _popUpMenu(context);
+        return;
+      case "NOTHING":
+        Get.find<LandingPageController>().getDashboardStats(context: context);
+        Get.find<InboxController>().getCorrespondencesDataAsync(
+            context: context,
+            inboxId: Get.find<InboxController>().inboxId,
+            pageSize: 20,
+            showThumbnails: false);
+        Get.offAllNamed("/InboxPage");
+        return;
+    }
+
+    api.data =
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
+
+    showLoaderDialog(context);
+    var resp = await api.getData() as ExportResponse;
+    Navigator.of(context).pop();
+    recursivelyExportFuntcion(
+        context: context,
+        correspondenceId: correspondenceId,
+        transferId: transferId,
+        exportResponse: resp,
+        exportAction: exportAction);
+  }
+
+  recursivelyExportFuntcion(
+      { //required String name,
+      required correspondenceId,
+      required exportAction,
+      required transferId,
+      required context,
+      required ExportResponse exportResponse,
+      isAgain = false}) async {
+    if (exportResponse.transferTo != null) {
+      userWillAddToOpenTransferWindow = Destination(
+          value: exportResponse.transferTo!.structureName,
+          id: exportResponse.transferTo!.id);
+      usersWillSendTo.clear();
+      addTousersWillSendTo(user: userWillAddToOpenTransferWindow!);
+    }
+    if (exportResponse.isConfirm) {
+      showDilog(
+          context: context,
+          massge: exportResponse.message!,
+          no: () {
+            executeExportMethod(
+              method: !isAgain
+                  ? exportResponse.noMethod!
+                  : exportResponse.noMethod2!,
+              correspondenceId: correspondenceId,
+              transferId: transferId,
+              exportAction: exportAction,
+              context: context,
+            );
+            Navigator.of(context).pop();
+          },
+          yes: () {
+            executeExportMethod(
+                method: !isAgain
+                    ? exportResponse.yesMethod!
+                    : exportResponse.yesMethod2!,
+                correspondenceId: correspondenceId,
+                transferId: transferId,
+                exportAction: exportAction,
+                context: context,
+                previousResponse: exportResponse);
+            Navigator.of(context).pop();
+          });
+    } else {
+      executeExportMethod(
+        method: exportResponse.request!,
+        correspondenceId: correspondenceId,
+        transferId: transferId,
+        exportAction: exportAction,
+        context: context,
+      );
+    }
+  }
+
+  getIsAlreadyExportedAsPaperwork(
+      {required correspondenceId,
+      required transferId,
+      required exportAction,
+      required context}) async {
+    IsAlreadyExportedAsPaperworkAPI _alreadyExportedAsPaperworkAPI =
+        IsAlreadyExportedAsPaperworkAPI(null);
+
+    _alreadyExportedAsPaperworkAPI.data =
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
+    isAlreadyExportedAsPaperworkModel = await _alreadyExportedAsPaperworkAPI
+        .getData() as IsAlreadyExportedAsPaperworkModel;
+    if (isAlreadyExportedAsPaperworkModel?.transferTo != null) {
+      userWillAddToOpenTransferWindow = Destination(
+          value: isAlreadyExportedAsPaperworkModel?.transferTo!.structureName,
+          id: isAlreadyExportedAsPaperworkModel?.transferTo!.id);
+      usersWillSendTo.clear();
+      addTousersWillSendTo(user: userWillAddToOpenTransferWindow!);
+    }
+    if (isAlreadyExportedAsPaperworkModel?.isConfirm ?? false) {
+      showDilog(
+          context: context,
+          massge: isAlreadyExportedAsPaperworkModel!.message!,
+          no: () {
+            getSwitchMethod(
+                exportAction: exportAction,
+                transferId: transferId,
+                correspondenceId: correspondenceId,
+                context: context,
+                name: isAlreadyExportedAsPaperworkModel?.noMethod ??
+                    isAlreadyExportedAsPaperworkModel!.noMethod2!);
+          },
+          yes: () {
+            getSwitchMethod(
+                exportAction: exportAction,
+                transferId: transferId,
+                correspondenceId: correspondenceId,
+                context: context,
+                name: isAlreadyExportedAsPaperworkModel?.yesMethod ??
+                    isAlreadyExportedAsPaperworkModel!.yesMethod2!);
+          });
+    } else if (isAlreadyExportedAsPaperworkModel?.request != null) {
+      getSwitchMethod(
+          exportAction: exportAction,
+          transferId: transferId,
+          correspondenceId: correspondenceId,
+          context: context,
+          name: isAlreadyExportedAsPaperworkModel!.request!);
+    } else {
+      Get.snackbar("", isAlreadyExportedAsPaperworkModel!.message!);
+    }
+  }
+
+  // ExportResponse? exportResponse;
+
+  getSwitchMethod(
+      {required String name,
+      required correspondenceId,
+      required exportAction,
+      required transferId,
+      required context}) async {
+    switch (name) {
+      case "CanExportAsPaperwork":
+        // do something
+
+        // _alreadyExportedAsPaperworkAPI.getData() as  IsAlreadyExportedAsPaperworkModel;
+        await canExportAsPPWorkkCase(
+            exportAction, transferId, correspondenceId, context);
+        break;
+      case "OpenTransferWindow":
+        print("OpenTransferWindow");
+
+        userWillAddToOpenTransferWindow = Destination(
+            value: canExportAsPaperworkModel?.transferTo!.structureName,
+            id: canExportAsPaperworkModel?.transferTo!.id);
+        usersWillSendTo.clear();
+        addTousersWillSendTo(user: userWillAddToOpenTransferWindow!);
+        _popUpMenu(context);
+        break;
+      case "IsAlreadyExportedAsTransfer":
+        isAlreadyExportedAsTransfer(
+            context: context,
+            correspondenceId: correspondenceId,
+            transferId: transferId,
+            exportAction: exportAction);
+        // do something else
+        break;
+      case "CheckForEmptyStructureRecipients":
+        // do something else
+        checkForEmptyStructureRecipients(
+            context: context,
+            exportAction: exportAction,
+            transferId: transferId,
+            correspondenceId: correspondenceId);
+        break;
+      case "ConfirmAgain":
+        // do something else
+        break;
+
+      case "AutoSendToRecepientsAndCC":
+        autoSendToRecepientsAndCC(
+            context: context,
+            correspondenceId: correspondenceId,
+            exportAction: exportAction,
+            transferId: transferId);
+        break;
+      case "IsAlreadyExportedAsPaperwork":
+        isAlreadyExportedAsTransfer(
+            context: context,
+            exportAction: exportAction,
+            transferId: transferId,
+            correspondenceId: correspondenceId);
+        // do something else
+        break;
+      case "NOTHING":
+        Get.find<LandingPageController>().getDashboardStats(context: context);
+        await Get.find<InboxController>().getCorrespondencesDataAsync(
+            context: context,
+            inboxId: Get.find<InboxController>().inboxId,
+            pageSize: 20,
+            showThumbnails: false);
+        Get.offAllNamed("/InboxPage");
+        // do something else
+        break;
+    }
+  }
+
+  Future<void> canExportAsPPWorkkCase(
+      exportAction, transferId, correspondenceId, context) async {
+    // _alreadyExportedAsPaperworkAPI.getData() as  IsAlreadyExportedAsPaperworkModel;
+    isAlreadyExportedAsPaperworkModel = await getCanExportAsPaperwork(
+        exportAction: exportAction,
+        transferId: transferId,
+        correspondenceId: correspondenceId,
+        context: context);
+
+    if (isAlreadyExportedAsPaperworkModel?.isConfirm ?? false) {
+      showDilog(
+          context: context,
+          massge: isAlreadyExportedAsPaperworkModel!.message!,
+          no: () {
+            //  Navigator.of(context).pop();
+            getSwitchMethod(
+                exportAction: exportAction,
+                transferId: transferId,
+                correspondenceId: correspondenceId,
+                context: context,
+                name: isAlreadyExportedAsPaperworkModel?.noMethod ??
+                    isAlreadyExportedAsPaperworkModel!.noMethod2!);
+          },
+          yes: () {
+            // getCanExportAsPaperwork(
+            //     exportAction: exportAction,
+            //     transferId: transferId,
+            //     correspondenceId: correspondenceId,
+            //     context: context);
+
+            getSwitchMethod(
+                exportAction: exportAction,
+                transferId: transferId,
+                correspondenceId: correspondenceId,
+                context: context,
+                name: isAlreadyExportedAsPaperworkModel?.yesMethod ??
+                    isAlreadyExportedAsPaperworkModel!.yesMethod2!);
+            //   Get.back();
+            // Navigator.of(context).pop();
+          });
+    } else if (isAlreadyExportedAsPaperworkModel?.request != null) {
+      getSwitchMethod(
+          exportAction: exportAction,
+          transferId: transferId,
+          correspondenceId: correspondenceId,
+          context: context,
+          name: isAlreadyExportedAsPaperworkModel!.request!);
+
+      print(isAlreadyExportedAsPaperworkModel?.request);
+      //  Get.back();
+
+    } else {
+      // Get.snackbar("", isAlreadyExportedAsPaperworkModel?.message ?? "");
+
+      // getSwitchMethod(
+      //     exportAction: exportAction,
+      //     transferId: transferId,
+      //     correspondenceId: correspondenceId,
+      //     context: context,
+      //     name: isAlreadyExportedAsPaperworkModel!.request!);
+      // Get.back();
+      //
+
+      //  Navigator.of(context).pop();
+    }
+  }
+
+  ///
+  ///EXPORT AND SHIT !!!!!
+  ///
+
   Destination? userWillAddToOpenTransferWindow;
   RxBool isPlayingAudio = false.obs;
   RxInt documentEditedInOfficeId = 0.obs;
@@ -208,7 +588,7 @@ class DocumentController extends GetxController {
           showThumbnails: false);
       Get.back();
 
-      Navigator.pop(context);
+      // Navigator.pop(context);
       //Get.back(closeOverlays: true);
       //  Get.back();
       Get.offAllNamed("/InboxPage");
@@ -346,6 +726,7 @@ class DocumentController extends GetxController {
     update();
   }
 
+  ExportResponse? exportResponse;
   IsAlreadyExportedAsPaperworkModel? isAlreadyExportedAsPaperworkModel;
 
   CanExportAsPaperworkModel? canExportAsPaperworkModel;
@@ -744,83 +1125,6 @@ class DocumentController extends GetxController {
     } else {}
   }
 
-  getIsAlreadyExportedAsPaperwork(
-      {required correspondenceId,
-      required transferId,
-      required exportAction,
-      required context}) async {
-    IsAlreadyExportedAsPaperworkAPI _alreadyExportedAsPaperworkAPI =
-        IsAlreadyExportedAsPaperworkAPI(null);
-
-    _alreadyExportedAsPaperworkAPI.data =
-        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&exportAction=$exportAction";
-    isAlreadyExportedAsPaperworkModel = await _alreadyExportedAsPaperworkAPI
-        .getData() as IsAlreadyExportedAsPaperworkModel;
-    if (isAlreadyExportedAsPaperworkModel?.transferTo != null) {
-      userWillAddToOpenTransferWindow = Destination(
-          value: isAlreadyExportedAsPaperworkModel?.transferTo!.structureName,
-          id: isAlreadyExportedAsPaperworkModel?.transferTo!.id);
-      usersWillSendTo.clear();
-      addTousersWillSendTo(user: userWillAddToOpenTransferWindow!);
-    }
-    if (isAlreadyExportedAsPaperworkModel?.isConfirm ?? false) {
-      showDilog(
-          context: context,
-          massge: isAlreadyExportedAsPaperworkModel!.message!,
-          no: () {
-            //  Navigator.of(context).pop();
-            getSwitchMethod(
-                exportAction: exportAction,
-                transferId: transferId,
-                correspondenceId: correspondenceId,
-                context: context,
-                name: isAlreadyExportedAsPaperworkModel?.noMethod ??
-                    isAlreadyExportedAsPaperworkModel!.noMethod2!);
-          },
-          yes: () {
-            // getCanExportAsPaperwork(
-            //     exportAction: exportAction,
-            //     transferId: transferId,
-            //     correspondenceId: correspondenceId,
-            //     context: context);
-
-            getSwitchMethod(
-                exportAction: exportAction,
-                transferId: transferId,
-                correspondenceId: correspondenceId,
-                context: context,
-                name: isAlreadyExportedAsPaperworkModel?.yesMethod ??
-                    isAlreadyExportedAsPaperworkModel!.yesMethod2!);
-            //   Get.back();
-            // Navigator.of(context).pop();
-          });
-    } else if (isAlreadyExportedAsPaperworkModel?.request != null) {
-      getSwitchMethod(
-          exportAction: exportAction,
-          transferId: transferId,
-          correspondenceId: correspondenceId,
-          context: context,
-          name: isAlreadyExportedAsPaperworkModel!.request!);
-
-      print(isAlreadyExportedAsPaperworkModel?.request);
-      //  Get.back();
-
-    } else {
-      Get.snackbar("", isAlreadyExportedAsPaperworkModel!.message!);
-
-      // getSwitchMethod(
-      //     exportAction: exportAction,
-      //     transferId: transferId,
-      //     correspondenceId: correspondenceId,
-      //     context: context,
-      //     name: isAlreadyExportedAsPaperworkModel!.request!);
-      // Get.back();
-      //
-
-      //  Navigator.of(context).pop();
-    }
-  }
-
   Future getCanExportAsPaperwork(
       {required correspondenceId,
       required transferId,
@@ -987,15 +1291,24 @@ class DocumentController extends GetxController {
     if (autoSendToRecepientsAndCCModel?.isConfirm ?? false) {
       Get.snackbar("", autoSendToRecepientsAndCCModel!.message!);
     }
-    Get.find<LandingPageController>().getDashboardStats(context: context);
-    await Get.find<InboxController>().getCorrespondencesDataAsync(
-        context: context,
-        inboxId: Get.find<InboxController>().inboxId,
-        pageSize: 20,
-        showThumbnails: false);
-    Navigator.pop(context);
 
-    Get.offAllNamed("/InboxPage");
+    Navigator.pop(context);
+    var methodName = "";
+
+    if (autoSendToRecepientsAndCCModel?.yesMethod != null)
+      methodName = autoSendToRecepientsAndCCModel!.yesMethod!;
+    else if (autoSendToRecepientsAndCCModel?.yesMethod2 != null)
+      methodName = autoSendToRecepientsAndCCModel!.yesMethod2!;
+    if (autoSendToRecepientsAndCCModel!.request == "NOTHING")
+      methodName = "NOTHING";
+    //  _popUpMenu(context);
+    getSwitchMethod(
+      exportAction: exportAction,
+      transferId: transferId,
+      correspondenceId: correspondenceId,
+      context: context,
+      name: methodName,
+    );
   }
 
   checkForEmptyStructureRecipients(
@@ -1011,9 +1324,9 @@ class DocumentController extends GetxController {
       checkForEmptyStructureRecipientsModel =
           value as CheckForEmptyStructureRecipientsModel;
 
-      if (checkForEmptyStructureRecipientsModel?.isConfirm ?? false) {
-        Get.snackbar("", checkForEmptyStructureRecipientsModel!.message!);
-      }
+      // if (checkForEmptyStructureRecipientsModel?.isConfirm ?? false) {
+      //   Get.snackbar("", checkForEmptyStructureRecipientsModel!.message!);
+      // }
 
       showDilog(
           context: context,
@@ -1027,6 +1340,7 @@ class DocumentController extends GetxController {
               methodName = checkForEmptyStructureRecipientsModel!.yesMethod!;
             else if (checkForEmptyStructureRecipientsModel?.yesMethod2 != null)
               methodName = checkForEmptyStructureRecipientsModel!.yesMethod2!;
+            Navigator.of(context).pop();
             getSwitchMethod(
               exportAction: exportAction,
               transferId: transferId,
@@ -1097,8 +1411,8 @@ class DocumentController extends GetxController {
         print(isAlreadyExportedAsTransferModel?.request);
         Get.back();
       } else {
-        Get.snackbar("isAlreadyExportedAsTransferModel",
-            isAlreadyExportedAsTransferModel!.message!);
+        // Get.snackbar("isAlreadyExportedAsTransferModel",
+        //     isAlreadyExportedAsTransferModel!.message!);
         // getSwitchMethod(
         //     exportAction: exportAction,
         //     transferId: transferId,
@@ -1111,7 +1425,7 @@ class DocumentController extends GetxController {
       }
 
       if (isAlreadyExportedAsTransferModel?.isConfirm ?? false) {
-        Get.snackbar("", isAlreadyExportedAsTransferModel!.message!);
+        //   Get.snackbar("", isAlreadyExportedAsTransferModel!.message!);
       }
       print(
           "_alreadyExportedAsPaperworkAPI =>  ${isAlreadyExportedAsTransferModel!.toJson()}");
@@ -1247,125 +1561,6 @@ class DocumentController extends GetxController {
     _receiveDocumentUsingG2GApi
         .post(g2gReceiveOrRejectDto.toMap())
         .then((value) {});
-  }
-
-  getSwitchMethod(
-      {required String name,
-      required correspondenceId,
-      required exportAction,
-      required transferId,
-      required context}) async {
-    switch (name) {
-      case "CanExportAsPaperwork":
-        // do something
-
-        // _alreadyExportedAsPaperworkAPI.getData() as  IsAlreadyExportedAsPaperworkModel;
-        isAlreadyExportedAsPaperworkModel = await getCanExportAsPaperwork(
-            exportAction: exportAction,
-            transferId: transferId,
-            correspondenceId: correspondenceId,
-            context: context);
-
-        if (isAlreadyExportedAsPaperworkModel?.isConfirm ?? false) {
-          showDilog(
-              context: context,
-              massge: isAlreadyExportedAsPaperworkModel!.message!,
-              no: () {
-                //  Navigator.of(context).pop();
-                getSwitchMethod(
-                    exportAction: exportAction,
-                    transferId: transferId,
-                    correspondenceId: correspondenceId,
-                    context: context,
-                    name: isAlreadyExportedAsPaperworkModel?.noMethod ??
-                        isAlreadyExportedAsPaperworkModel!.noMethod2!);
-              },
-              yes: () {
-                // getCanExportAsPaperwork(
-                //     exportAction: exportAction,
-                //     transferId: transferId,
-                //     correspondenceId: correspondenceId,
-                //     context: context);
-
-                getSwitchMethod(
-                    exportAction: exportAction,
-                    transferId: transferId,
-                    correspondenceId: correspondenceId,
-                    context: context,
-                    name: isAlreadyExportedAsPaperworkModel?.yesMethod ??
-                        isAlreadyExportedAsPaperworkModel!.yesMethod2!);
-                //   Get.back();
-                // Navigator.of(context).pop();
-              });
-        } else if (isAlreadyExportedAsPaperworkModel?.request != null) {
-          getSwitchMethod(
-              exportAction: exportAction,
-              transferId: transferId,
-              correspondenceId: correspondenceId,
-              context: context,
-              name: isAlreadyExportedAsPaperworkModel!.request!);
-
-          print(isAlreadyExportedAsPaperworkModel?.request);
-          //  Get.back();
-
-        } else {
-          Get.snackbar("", isAlreadyExportedAsPaperworkModel?.message ?? "");
-
-          // getSwitchMethod(
-          //     exportAction: exportAction,
-          //     transferId: transferId,
-          //     correspondenceId: correspondenceId,
-          //     context: context,
-          //     name: isAlreadyExportedAsPaperworkModel!.request!);
-          // Get.back();
-          //
-
-          //  Navigator.of(context).pop();
-        }
-        break;
-      case "OpenTransferWindow":
-        print("OpenTransferWindow");
-        _popUpMenu(context);
-        break;
-      case "IsAlreadyExportedAsTransfer":
-        isAlreadyExportedAsTransfer(
-            context: context,
-            correspondenceId: correspondenceId,
-            transferId: transferId,
-            exportAction: exportAction);
-        // do something else
-        break;
-      case "CheckForEmptyStructureRecipients":
-        // do something else
-        checkForEmptyStructureRecipients(
-            context: context,
-            exportAction: exportAction,
-            transferId: transferId,
-            correspondenceId: correspondenceId);
-        break;
-      case "ConfirmAgain":
-        // do something else
-        break;
-
-      case "AutoSendToRecepientsAndCC":
-        autoSendToRecepientsAndCC(
-            context: context,
-            correspondenceId: correspondenceId,
-            exportAction: exportAction,
-            transferId: transferId);
-        break;
-      case "IsAlreadyExportedAsPaperwork":
-        isAlreadyExportedAsTransfer(
-            context: context,
-            exportAction: exportAction,
-            transferId: transferId,
-            correspondenceId: correspondenceId);
-        // do something else
-        break;
-      case "NOTHING":
-        // do something else
-        break;
-    }
   }
 
   //الجديد في الارسال الي الكل
@@ -1952,7 +2147,9 @@ class DocumentController extends GetxController {
                   );
                   Navigator.pop(context);
                 },
-                child: Text("Ok"),
+                child: Text(
+                  "refer".tr,
+                ),
               ),
             ],
           );
@@ -2177,7 +2374,8 @@ showDilog(
     {required context,
     required String massge,
     required VoidCallback yes,
-    required VoidCallback no}) {
+    required VoidCallback no,
+    subTitle = ""}) {
   return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -2201,6 +2399,7 @@ showDilog(
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(massge),
+              subTitle != "" ? Text(subTitle) : Container(),
             ]),
           ),
           actions: <Widget>[

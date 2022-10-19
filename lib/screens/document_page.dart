@@ -65,7 +65,7 @@ class DocumentPage extends GetWidget<DocumentController> {
             leading: Icon(Icons.receipt),
             title: Text("paperExport".tr),
             onTap: () {
-              controller.getIsAlreadyExportedAsPaperwork(
+              controller.StartExportAsPaperowrk(
                   context: context,
                   correspondenceId:
                       controller.correspondences.correspondenceId!,
@@ -77,7 +77,7 @@ class DocumentPage extends GetWidget<DocumentController> {
             leading: Icon(Icons.attachment),
             title: Text("electronicExport".tr),
             onTap: () {
-              controller.isAlreadyExportedAsTransfer(
+              controller.StartExportAsTransfer(
                   context: context,
                   correspondenceId:
                       controller.correspondences.correspondenceId!,
@@ -89,7 +89,7 @@ class DocumentPage extends GetWidget<DocumentController> {
             leading: Icon(Icons.print),
             title: Text("paperAndElectronicExport".tr),
             onTap: () {
-              controller.isAlreadyExportedAsTransfer(
+              controller.StartExportAsTransfer(
                   context: context,
                   correspondenceId:
                       controller.correspondences.correspondenceId!,
@@ -306,6 +306,7 @@ class DocumentPage extends GetWidget<DocumentController> {
     var privacy =
         cm?.privacies?.where((element) => element.Value == privacyID).first;
 
+    // var r = controller.canOpenDocumentModel!.correspondence!.controlList;
     return Padding(
       padding: const EdgeInsets.all(28.0),
       child: SingleChildScrollView(
@@ -337,6 +338,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                   showLoaderDialog(context);
                   _popUpMenuTransfer(context);
                 }),
+
                 CTSActionButton('assets/images/up_arrow.png', "export".tr, () {
                   showExportDialog(context);
                 }),
@@ -359,7 +361,6 @@ class DocumentPage extends GetWidget<DocumentController> {
                 CTSActionButton('assets/images/track.png', "Reply".tr, () {
                   replyClick(context);
                 }),
-
                 if (controller.notoragnalFileDoc)
                   CTSActionButton('assets/images/track.png', "tracking".tr, () {
                     controller.backTooragnalFileDocpdf();

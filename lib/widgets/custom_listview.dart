@@ -55,6 +55,7 @@ class CustomListView extends GetView<InboxController> {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(DocumentController());
     var r = Get.find<InboxController>().correspondencesModel;
     // return Container(color: Colors.pink);
     return Expanded(
@@ -492,12 +493,12 @@ class CustomListView extends GetView<InboxController> {
                                                                             children: [
                                                                               GestureDetector(
                                                                                 onTap: () async {
-                                                                                  if (Get.find<InboxController>().record.isRecording) {
+                                                                                  if (Get.find<DocumentController>().record.isRecording) {
                                                                                     print(" ايقاف التشغيل");
-                                                                                    Get.find<InboxController>().stopMathod();
+                                                                                    Get.find<DocumentController>().stopMathod();
                                                                                   } else {
                                                                                     print(" بداء  التشغيل");
-                                                                                    Get.find<InboxController>().recordMathod();
+                                                                                    Get.find<DocumentController>().recordMathod(id: 222);
                                                                                   }
                                                                                   //دي القديم الي كنت بستخدمه في الرد
                                                                                   // Get
@@ -522,10 +523,10 @@ class CustomListView extends GetView<InboxController> {
                                                                                 },
                                                                                 child: Padding(
                                                                                   padding: const EdgeInsets.all(8.0),
-                                                                                  child: GetBuilder<InboxController>(
+                                                                                  child: GetBuilder<DocumentController>(
                                                                                       id: "id",
                                                                                       builder: (logic) {
-                                                                                        return Icon(Get.find<InboxController>().recording ? Icons.stop : Icons.mic);
+                                                                                        return Icon(Get.find<DocumentController>().recording ? Icons.stop : Icons.mic);
                                                                                       }),
                                                                                 ),
                                                                               ),
@@ -538,9 +539,14 @@ class CustomListView extends GetView<InboxController> {
                                                                                 padding: const EdgeInsets.all(8.0),
                                                                                 child: InkWell(
                                                                                   onTap: () {
-                                                                                    Get.find<InboxController>().playMathod();
+                                                                                    if (!Get.find<DocumentController>().isPlayingAudio.value)
+                                                                                      Get.find<DocumentController>().playMathod(id: 222);
+                                                                                    else {
+                                                                                      Get.find<DocumentController>().isPlayingAudio.value = false;
+                                                                                      Get.find<DocumentController>().audioPlayer!.stopPlayer();
+                                                                                    }
                                                                                   },
-                                                                                  child: Icon(Icons.play_arrow, color: Theme.of(context).colorScheme.primary),
+                                                                                  child: Icon(Get.find<DocumentController>().isPlayingAudio.value ? Icons.stop : Icons.play_arrow),
                                                                                 ),
                                                                               )
                                                                             ],
@@ -587,7 +593,7 @@ class CustomListView extends GetView<InboxController> {
                                                               audioFileBes64 =
                                                               await audiobase64String(
                                                                   file: Get.find<
-                                                                          InboxController>()
+                                                                          DocumentController>()
                                                                       .recordFile);
 
                                                           ReplyWithVoiceNoteApi

@@ -3199,8 +3199,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                           ),
                         ),
                         Text(
-                          controller.data?.departmentName ??
-                              "sharedServicesAdministration".tr,
+                          controller.data?.departmentName ?? "",
                           // "sharedServicesAdministration".tr,
                           style: Theme.of(context)
                               .textTheme

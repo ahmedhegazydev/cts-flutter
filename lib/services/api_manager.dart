@@ -115,6 +115,8 @@ abstract class ApiManager {
         // Navigator.pop(context!);
       } // Get.back();
       if (value.data["Status"] == 0) {
+        print(value);
+        log("${value.data["ErrorMessage"]}");
         a.Get.snackbar("Error".tr, "${value.data["ErrorMessage"]}");
         // a.Get.snackbar("Error".tr, "tryAgain".tr);
       } else {

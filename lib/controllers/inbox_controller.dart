@@ -284,16 +284,16 @@ class InboxController extends GetxController {
   }
 
   // List<Correspondences> correspondences = [];
-  List<Correspondences> allCorrespondences = [];
+  List<Correspondence> allCorrespondences = [];
 
-  List<Correspondences> allCorrespondencesTempFilterUnread = [];
-  List<Correspondences> filteredAllCorrespondencesByUnread = [];
+  List<Correspondence> allCorrespondencesTempFilterUnread = [];
+  List<Correspondence> filteredAllCorrespondencesByUnread = [];
 
-  List<Correspondences> filteredUrgentCorrespondencesTemp = [];
-  List<Correspondences> filteredUrgentCorrespondences = [];
+  List<Correspondence> filteredUrgentCorrespondencesTemp = [];
+  List<Correspondence> filteredUrgentCorrespondences = [];
 
-  List<Correspondences> filteredFormUserIdCorrespondencesTemp = [];
-  List<Correspondences> filteredFormUserIdCorrespondences = [];
+  List<Correspondence> filteredFormUserIdCorrespondencesTemp = [];
+  List<Correspondence> filteredFormUserIdCorrespondences = [];
 
   final SecureStorage secureStorage = SecureStorage();
 
@@ -519,7 +519,7 @@ class InboxController extends GetxController {
     update();
   }
 
-  Future<List<Correspondences>> getCorrespondencesDataAsync(
+  Future<List<Correspondence>> getCorrespondencesDataAsync(
       {context,
       required int inboxId,
       int pageSize = 20,
@@ -553,6 +553,12 @@ class InboxController extends GetxController {
         userFilter.add(structure);
       }
     });
+    userFilter.sort(((a, b) {
+      if (b.isStructure) {
+        return 1;
+      }
+      return -1;
+    }));
     if (addToList) {
       allCorrespondences
           .addAll(correspondencesModel?.inbox?.correspondences ?? []);
@@ -623,7 +629,12 @@ class InboxController extends GetxController {
           userFilter.add(structure);
         }
       });
-
+      userFilter.sort(((a, b) {
+        if (b.isStructure) {
+          return 1;
+        }
+        return -1;
+      }));
       if (addToList) {
         allCorrespondences
             .addAll(correspondencesModel?.inbox?.correspondences ?? []);
@@ -705,7 +716,12 @@ class InboxController extends GetxController {
           userFilter.add(structure);
         }
       });
-
+      userFilter.sort(((a, b) {
+        if (b.isStructure) {
+          return 1;
+        }
+        return -1;
+      }));
       if (addToList) {
         allCorrespondences
             .addAll(correspondencesModel?.inbox?.correspondences ?? []);
@@ -730,79 +746,48 @@ class InboxController extends GetxController {
   }
 
   //
-  //  openfilee({required docId,required correspondenceId, required transferId})async{
-  //    print("openfilee87y7878");
-  //    canOpenDocumentApi.data =
-  //    "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
-  //
-  // final  jsondata=await rootBundel.rootBundle.loadString("assets/json/canopendocument.json");
-  //    canOpenDocumentModel=   CanOpenDocumentModel.fromJson(json.decode(jsondata));
-  //
-  //    // canOpenDocumentApi.getData().then((value) {
-  //    //
-  //    //   canOpenDocumentModel=value as CanOpenDocumentModel;
-  //    //   print("i get dayta");
-  //    // });
-  //    print(canOpenDocumentModel?.toJson());
-  //    if(canOpenDocumentModel!.allow!){
-  //      Get.find<DocumentController>().updatecanOpenDocumentModel(canOpenDocumentModel!);
-  //      Get.toNamed("/DocumentPage");
-  //    }
-  //   //
-  //  }
 
   Future canOpenDoc(
       {required context,
       // required docId,
       required correspondenceId,
-      required transferId}) async {
+      required transferId,
+      Correspondence = null}) async {
     Get.put(DocumentController());
-    CanOpenDocumentApi canOpenDocumentApi = CanOpenDocumentApi(context);
+    Get.find<DocumentController>().pdfAndSing.clear();
+    Get.find<DocumentController>().pdfAndSingData.clear();
+    Get.find<DocumentController>().documentEditedInOfficeId.value = 0;
 
-    print("canOpenDoc canOpenDoc canOpenDoc canOpenDoc");
+    CanOpenDocumentApi canOpenDocumentApi = CanOpenDocumentApi(context);
     canOpenDocumentApi.data =
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
 
-    print(canOpenDocumentApi.data);
-    print("canOpenDocumentApi.data");
-    //DocumentController
-    Get.find<DocumentController>().pdfAndSing.clear();
-    Get.find<DocumentController>().pdfAndSingData.clear();
-    canOpenDocumentApi.getData().then((value) {
-      canOpenDocumentModel = value as CanOpenDocumentModel;
+    var value = await canOpenDocumentApi.getData(); //.then((value) {
+    canOpenDocumentModel = value as CanOpenDocumentModel;
+    Get.find<DocumentController>().canOpenDocumentModel = value;
 
-      print(
-          "the valll ogfffcanOpenDocumentModel!.allow!cumentModel!.allow! =>${canOpenDocumentModel?.toJson()}");
-      Get.find<DocumentController>().canOpenDocumentModel = value;
-      Get.find<DocumentController>().updatecanOpenDocumentModel(value);
-      //   FindRecipientModel findRecipientModel = value as FindRecipientModel;
+    Get.find<DocumentController>().updatecanOpenDocumentModel(value);
+
+    if (Correspondence != null) {
+      Get.find<DocumentController>().canOpenDocumentModel!.correspondence =
+          Correspondence;
+
+      // Get.find<DocumentController>().updatecanOpenDocumentModel(
+      //     Get.find<DocumentController>().canOpenDocumentModel!);
+      Navigator.of(context).pop();
+      Get.toNamed("/DocumentPage");
+    } else {
       if (canOpenDocumentModel!.allow!) {
-        //   Get.put(DocumentController(),permanent: true);
-
-        // Get.find<DocumentController>().gatAllDataAboutDOC(
-        //     context: context,
-        //     //  docId: docId,
-        //     transferId: transferId,
-        //     correspondenceId: correspondenceId);
-
-        //  ViewerController.to.allAnnotations.clear();
-        Get.find<DocumentController>().documentEditedInOfficeId.value = 0;
         Get.toNamed("/DocumentPage");
       } else {
         Get.snackbar("", "canotopen".tr);
       }
-    }).catchError((e) {
-      print("eeeeeeeeeeeeeeee=>  $e");
-    });
+    }
+    // }).catchError((e) {
+    //   print("eeeeeeeeeeeeeeee=>  $e");
+    // });
 
-    // // عشان ندخل الملف وبعدين هنشوف مشكله الجسون
-    //
-    //    Get.find<DocumentController>().gatAllDataAboutDOC(docId:  docId, transferId: transferId, correspondenceId: correspondenceId);
-    //   Get.find<DocumentController>().loadPdf();
-
-    // ViewerController.to.allAnnotations.clear();
-    Get.find<DocumentController>().documentEditedInOfficeId.value = 0;
-    Get.toNamed("/DocumentPage");
+    // Get.toNamed("/DocumentPage");
   }
 
   int userId = 0;

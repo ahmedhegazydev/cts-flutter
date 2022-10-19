@@ -1,9 +1,8 @@
-
-
 import '../../models/CorrespondencesModel.dart';
 import '../abstract_json_resource.dart';
+import 'can_open_document_model.dart';
 
-class GetCorrespondencesModel extends AbstractJsonResource{
+class GetCorrespondencesModel extends AbstractJsonResource {
   String? errorMessage;
   int? status;
   Inbox? inbox;
@@ -28,7 +27,7 @@ class GetCorrespondencesModel extends AbstractJsonResource{
 }
 
 class Inbox {
- late List<Correspondences> correspondences;
+  late List<Correspondence> correspondences;
   String? id;
   int? total;
 
@@ -36,9 +35,9 @@ class Inbox {
 
   Inbox.fromJson(Map<String, dynamic> json) {
     if (json['Correspondences'] != null) {
-      correspondences = <Correspondences>[];
+      correspondences = <Correspondence>[];
       json['Correspondences'].forEach((v) {
-        correspondences.add(new Correspondences.fromJson(v));
+        correspondences.add(new Correspondence.fromJson(v));
       });
     }
     id = json['Id'];

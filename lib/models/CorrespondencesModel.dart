@@ -1,6 +1,7 @@
 import '../services/abstract_json_resource.dart';
+import '../services/json_model/can_open_document_model.dart';
 
-class CorrespondencesModel extends AbstractJsonResource{
+class CorrespondencesModel extends AbstractJsonResource {
   CorrespondencesModel({
     this.errorMessage,
     this.status,
@@ -46,16 +47,13 @@ class CorrespondencesModel extends AbstractJsonResource{
     _data['Status'] = status;
     _data['Inbox'] = inbox?.toJson();
     if (this.priorities != null) {
-      _data['priorities'] =
-          this.priorities!.map((v) => v.toJson()).toList();
+      _data['priorities'] = this.priorities!.map((v) => v.toJson()).toList();
     }
     if (this.privacies != null) {
-      _data['privacies'] =
-          this.privacies!.map((v) => v.toJson()).toList();
+      _data['privacies'] = this.privacies!.map((v) => v.toJson()).toList();
     }
     if (this.purposes != null) {
-      _data['purposes'] =
-          this.purposes!.map((v) => v.toJson()).toList();
+      _data['purposes'] = this.purposes!.map((v) => v.toJson()).toList();
     }
     return _data;
   }
@@ -67,13 +65,13 @@ class Inbox {
     this.id,
     this.total,
   });
-  late final List<Correspondences>? correspondences;
+  late final List<Correspondence>? correspondences;
   late final String? id;
   late final int? total;
 
   Inbox.fromJson(Map<String, dynamic> json) {
     correspondences = List.from(json['Correspondences'])
-        .map((e) => Correspondences.fromJson(e))
+        .map((e) => Correspondence.fromJson(e))
         .toList();
     id = json['Id'];
     total = json['Total'];
@@ -88,9 +86,8 @@ class Inbox {
   }
 }
 
-class Correspondences {
-
-      bool isSelect=false;
+class Correspondence {
+  bool isSelect = false;
   late final bool? canRequestDueDate;
   late final String? categoryId;
   late final bool? clickableLock;
@@ -124,8 +121,8 @@ class Correspondences {
   late final String? type;
   late final String? visualTrackingUrl;
   late final bool? isTransferedToContact;
-  Correspondences({
-    this.isSelect=false,
+  Correspondence({
+    this.isSelect = false,
     this.canRequestDueDate,
     this.categoryId,
     this.clickableLock,
@@ -161,8 +158,8 @@ class Correspondences {
     this.isTransferedToContact,
   });
 
-  Correspondences.fromJson(Map<String, dynamic> json) {
-    isSelect=false;
+  Correspondence.fromJson(Map<String, dynamic> json) {
+    isSelect = false;
     canRequestDueDate = json['CanRequestDueDate'];
     categoryId = json['CategoryId'];
     clickableLock = json['ClickableLock'];
@@ -360,7 +357,6 @@ class Metadata {
     return _data;
   }
 }
-
 
 class Priorities {
   String? Text;

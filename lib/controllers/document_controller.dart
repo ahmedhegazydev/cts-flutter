@@ -632,14 +632,15 @@ class DocumentController extends GetxController {
       DocumentUrl: docURL,
       Language: 'en',
       UnSign: 'false',
+      PagesOrderString: "[]",
     );
 
-    log(jsonEncode(postSaveDocumentAnnotationsModel?.toMap()));
+    //log(jsonEncode(postSaveDocumentAnnotationsModel?.toMap()));
     var value = await _saveDocumentAnnotationsApi
         .post(postSaveDocumentAnnotationsModel?.toMap());
 
     log("saveannotations res");
-    log(jsonEncode(value));
+    // log(jsonEncode(value));
     //});
   }
 
@@ -660,10 +661,7 @@ class DocumentController extends GetxController {
   updatecanOpenDocumentModel(CanOpenDocumentModel data) {
     pdfAndSing.clear();
     pdfAndSingData.clear();
-    print(
-        "CanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModelCanOpenDocumentModel");
-    print("canOpenDocumentModel.toJson()  =>${canOpenDocumentModel!.toJson()}");
-    log("${canOpenDocumentModel!.toJson()}");
+
     canOpenDocumentModel = data;
     canOpenDocumentModel?.attachments?.attachments?.forEach((element) {
       if (element.isOriginalMail!) {
@@ -956,7 +954,7 @@ class DocumentController extends GetxController {
   }
 
   List<CustomActions>? customActions = [];
-  late Correspondences correspondences;
+  late Correspondence correspondences;
 
   //PDFDocument? doc;
 

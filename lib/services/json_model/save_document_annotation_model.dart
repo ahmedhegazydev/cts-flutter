@@ -15,7 +15,7 @@ class SaveDocumentAnnotationModel extends AbstractJsonResource {
 
   String DocumentPagesString;
   String DocumentUrl;
-  List PagesOrderString = [];
+  String PagesOrderString;
   String UnSign;
 
   SaveDocumentAnnotationModel(
@@ -30,7 +30,8 @@ class SaveDocumentAnnotationModel extends AbstractJsonResource {
       required this.DocumentPagesString,
       required this.DocumentUrl,
       required this.Language,
-      required this.UnSign});
+      required this.UnSign,
+      required this.PagesOrderString});
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> data = {};

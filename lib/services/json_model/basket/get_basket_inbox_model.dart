@@ -1,11 +1,12 @@
 import 'package:cts/services/abstract_json_resource.dart';
 
 import '../../../models/CorrespondencesModel.dart';
+import '../can_open_document_model.dart';
 
-class GetBasketInboxModel extends AbstractJsonResource{
+class GetBasketInboxModel extends AbstractJsonResource {
   String? errorMessage;
   int? status;
-  List<Correspondences>? correspondences;
+  List<Correspondence>? correspondences;
 
   GetBasketInboxModel({this.errorMessage, this.status, this.correspondences});
 
@@ -13,9 +14,9 @@ class GetBasketInboxModel extends AbstractJsonResource{
     errorMessage = json['ErrorMessage'];
     status = json['Status'];
     if (json['Correspondences'] != null) {
-      correspondences = <Correspondences>[];
+      correspondences = <Correspondence>[];
       json['Correspondences'].forEach((v) {
-        correspondences!.add(new Correspondences.fromJson(v));
+        correspondences!.add(new Correspondence.fromJson(v));
       });
     }
   }

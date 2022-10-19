@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import '../services/json_model/can_open_document_model.dart';
 import '../utility/utilitie.dart' as u;
 import '../controllers/document_controller.dart';
 import '../controllers/inbox_controller.dart';
@@ -48,7 +49,7 @@ class CustomListView extends GetView<InboxController> {
   Future<void> function;
 
   VoidCallback onClickItem;
-  List<Correspondences> correspondences;
+  List<Correspondence> correspondences;
   //List<Correspondences> allCorrespondences;
   ScrollController scrollController;
   bool haveMoreData = true;
@@ -76,13 +77,16 @@ class CustomListView extends GetView<InboxController> {
                             // correspondences[pos].isNew??false?
 
                             InkWell(
-                          onTap: () {
+                          onTap: () async {
+                            showLoaderDialog(context);
                             Get.find<InboxController>().canOpenDoc(
-                                context: context,
-                                // docId: correspondences[pos].purposeId,
-                                correspondenceId:
-                                    correspondences[pos].correspondenceId,
-                                transferId: correspondences[pos].transferId);
+                              context: context,
+                              // docId: correspondences[pos].purposeId,
+                              correspondenceId:
+                                  correspondences[pos].correspondenceId,
+                              transferId: correspondences[pos].transferId,
+                              Correspondence: correspondences[pos],
+                            );
 
                             Get.find<DocumentController>().correspondences =
                                 correspondences[pos];

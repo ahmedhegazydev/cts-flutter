@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../models/CorrespondencesModel.dart';
 import '../services/apis/can_open_document.dart';
+import '../services/json_model/can_open_document_model.dart';
 import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/login_model.dart';
 import '../utility/all_string_const.dart';
@@ -12,7 +13,7 @@ class SearchPageResultController extends GetxController {
   ScrollController scrollController = ScrollController();
   final SecureStorage _secureStorage = SecureStorage();
   Map<String, dynamic>? logindata;
-  List<Correspondences> correspondences = [];
+  List<Correspondence> correspondences = [];
   List<CustomActions>? customActions = [];
 
   onDismissed(DismissDirection direction) {}

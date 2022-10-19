@@ -95,172 +95,172 @@ class CanOpenDocumentModel extends AbstractJsonResource {
 //   }
 // }
 
-class Correspondence {
-  bool? canRequestDueDate;
-  String? categoryId;
-  bool? clickableLock;
-  String? comments;
-  ControlList? controlList;
-  String? correspondenceId;
-  String? docDueDate;
-  int? docDueDays;
-  String? fromStructure;
-  String? fromUser;
-  int? fromUserId;
-  List<GridInfo>? gridInfo;
-  bool? hasAttachments;
-  bool? hasAttachmentsToBeDelivered;
-  bool? hasSummaries;
-  String? inboxId;
-  bool? isCC;
-  bool? isForGuideline;
-  bool? isHighPriority;
-  bool? isLocked;
-  bool? isNew;
-  bool? isShareable;
-  List<Metadata>? metadata;
-  String? priorityId;
-  String? privacyId;
-  String? purposeId;
-  bool? showLock;
-  int? status;
-  String? thumbnailUrl;
-  String? transferId;
-  String? tsfDueDate;
-  String? type;
-  String? visualTrackingUrl;
-  bool? isTransferedToContact;
+// class Correspondence {
+//   bool? canRequestDueDate;
+//   String? categoryId;
+//   bool? clickableLock;
+//   String? comments;
+//   ControlList? controlList;
+//   String? correspondenceId;
+//   String? docDueDate;
+//   int? docDueDays;
+//   String? fromStructure;
+//   String? fromUser;
+//   int? fromUserId;
+//   List<GridInfo>? gridInfo;
+//   bool? hasAttachments;
+//   bool? hasAttachmentsToBeDelivered;
+//   bool? hasSummaries;
+//   String? inboxId;
+//   bool? isCC;
+//   bool? isForGuideline;
+//   bool? isHighPriority;
+//   bool? isLocked;
+//   bool? isNew;
+//   bool? isShareable;
+//   List<Metadata>? metadata;
+//   String? priorityId;
+//   String? privacyId;
+//   String? purposeId;
+//   bool? showLock;
+//   int? status;
+//   String? thumbnailUrl;
+//   String? transferId;
+//   String? tsfDueDate;
+//   String? type;
+//   String? visualTrackingUrl;
+//   bool? isTransferedToContact;
 
-  Correspondence(
-      {this.canRequestDueDate,
-      this.categoryId,
-      this.clickableLock,
-      this.comments,
-      this.controlList,
-      this.correspondenceId,
-      this.docDueDate,
-      this.docDueDays,
-      this.fromStructure,
-      this.fromUser,
-      this.fromUserId,
-      this.gridInfo,
-      this.hasAttachments,
-      this.hasAttachmentsToBeDelivered,
-      this.hasSummaries,
-      this.inboxId,
-      this.isCC,
-      this.isForGuideline,
-      this.isHighPriority,
-      this.isLocked,
-      this.isNew,
-      this.isShareable,
-      this.metadata,
-      this.priorityId,
-      this.privacyId,
-      this.purposeId,
-      this.showLock,
-      this.status,
-      this.thumbnailUrl,
-      this.transferId,
-      this.tsfDueDate,
-      this.type,
-      this.visualTrackingUrl,
-      this.isTransferedToContact});
+//   Correspondence(
+//       {this.canRequestDueDate,
+//       this.categoryId,
+//       this.clickableLock,
+//       this.comments,
+//       this.controlList,
+//       this.correspondenceId,
+//       this.docDueDate,
+//       this.docDueDays,
+//       this.fromStructure,
+//       this.fromUser,
+//       this.fromUserId,
+//       this.gridInfo,
+//       this.hasAttachments,
+//       this.hasAttachmentsToBeDelivered,
+//       this.hasSummaries,
+//       this.inboxId,
+//       this.isCC,
+//       this.isForGuideline,
+//       this.isHighPriority,
+//       this.isLocked,
+//       this.isNew,
+//       this.isShareable,
+//       this.metadata,
+//       this.priorityId,
+//       this.privacyId,
+//       this.purposeId,
+//       this.showLock,
+//       this.status,
+//       this.thumbnailUrl,
+//       this.transferId,
+//       this.tsfDueDate,
+//       this.type,
+//       this.visualTrackingUrl,
+//       this.isTransferedToContact});
 
-  Correspondence.fromJson(Map<String, dynamic> json) {
-    canRequestDueDate = json['CanRequestDueDate'];
-    categoryId = json['CategoryId'];
-    clickableLock = json['ClickableLock'];
-    comments = json['Comments'];
-    controlList = json['ControlList'] != null
-        ? new ControlList.fromJson(json['ControlList'])
-        : null;
-    correspondenceId = json['CorrespondenceId'];
-    docDueDate = json['DocDueDate'];
-    docDueDays = json['DocDueDays'];
-    fromStructure = json['FromStructure'];
-    fromUser = json['FromUser'];
-    fromUserId = json['FromUserId'];
-    if (json['GridInfo'] != null) {
-      gridInfo = <GridInfo>[];
-      json['GridInfo'].forEach((v) {
-        gridInfo!.add(new GridInfo.fromJson(v));
-      });
-    }
-    hasAttachments = json['HasAttachments'];
-    hasAttachmentsToBeDelivered = json['HasAttachmentsToBeDelivered'];
-    hasSummaries = json['HasSummaries'];
-    inboxId = json['InboxId'];
-    isCC = json['IsCC'];
-    isForGuideline = json['IsForGuideline'];
-    isHighPriority = json['IsHighPriority'];
-    isLocked = json['IsLocked'];
-    isNew = json['IsNew'];
-    isShareable = json['IsShareable'];
-    if (json['Metadata'] != null) {
-      metadata = <Metadata>[];
-      json['Metadata'].forEach((v) {
-        metadata!.add(new Metadata.fromJson(v));
-      });
-    }
-    priorityId = json['PriorityId'];
-    privacyId = json['PrivacyId'];
-    purposeId = json['PurposeId'];
-    showLock = json['ShowLock'];
-    status = json['Status'];
-    thumbnailUrl = json['ThumbnailUrl'];
-    transferId = json['TransferId'];
-    tsfDueDate = json['TsfDueDate'];
-    type = json['Type'];
-    visualTrackingUrl = json['VisualTrackingUrl'];
-    isTransferedToContact = json['isTransferedToContact'];
-  }
+//   Correspondence.fromJson(Map<String, dynamic> json) {
+//     canRequestDueDate = json['CanRequestDueDate'];
+//     categoryId = json['CategoryId'];
+//     clickableLock = json['ClickableLock'];
+//     comments = json['Comments'];
+//     controlList = json['ControlList'] != null
+//         ? new ControlList.fromJson(json['ControlList'])
+//         : null;
+//     correspondenceId = json['CorrespondenceId'];
+//     docDueDate = json['DocDueDate'];
+//     docDueDays = json['DocDueDays'];
+//     fromStructure = json['FromStructure'];
+//     fromUser = json['FromUser'];
+//     fromUserId = json['FromUserId'];
+//     if (json['GridInfo'] != null) {
+//       gridInfo = <GridInfo>[];
+//       json['GridInfo'].forEach((v) {
+//         gridInfo!.add(new GridInfo.fromJson(v));
+//       });
+//     }
+//     hasAttachments = json['HasAttachments'];
+//     hasAttachmentsToBeDelivered = json['HasAttachmentsToBeDelivered'];
+//     hasSummaries = json['HasSummaries'];
+//     inboxId = json['InboxId'];
+//     isCC = json['IsCC'];
+//     isForGuideline = json['IsForGuideline'];
+//     isHighPriority = json['IsHighPriority'];
+//     isLocked = json['IsLocked'];
+//     isNew = json['IsNew'];
+//     isShareable = json['IsShareable'];
+//     if (json['Metadata'] != null) {
+//       metadata = <Metadata>[];
+//       json['Metadata'].forEach((v) {
+//         metadata!.add(new Metadata.fromJson(v));
+//       });
+//     }
+//     priorityId = json['PriorityId'];
+//     privacyId = json['PrivacyId'];
+//     purposeId = json['PurposeId'];
+//     showLock = json['ShowLock'];
+//     status = json['Status'];
+//     thumbnailUrl = json['ThumbnailUrl'];
+//     transferId = json['TransferId'];
+//     tsfDueDate = json['TsfDueDate'];
+//     type = json['Type'];
+//     visualTrackingUrl = json['VisualTrackingUrl'];
+//     isTransferedToContact = json['isTransferedToContact'];
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['CanRequestDueDate'] = this.canRequestDueDate;
-    data['CategoryId'] = this.categoryId;
-    data['ClickableLock'] = this.clickableLock;
-    data['Comments'] = this.comments;
-    if (this.controlList != null) {
-      data['ControlList'] = this.controlList!.toJson();
-    }
-    data['CorrespondenceId'] = this.correspondenceId;
-    data['DocDueDate'] = this.docDueDate;
-    data['DocDueDays'] = this.docDueDays;
-    data['FromStructure'] = this.fromStructure;
-    data['FromUser'] = this.fromUser;
-    data['FromUserId'] = this.fromUserId;
-    if (this.gridInfo != null) {
-      data['GridInfo'] = this.gridInfo!.map((v) => v.toJson()).toList();
-    }
-    data['HasAttachments'] = this.hasAttachments;
-    data['HasAttachmentsToBeDelivered'] = this.hasAttachmentsToBeDelivered;
-    data['HasSummaries'] = this.hasSummaries;
-    data['InboxId'] = this.inboxId;
-    data['IsCC'] = this.isCC;
-    data['IsForGuideline'] = this.isForGuideline;
-    data['IsHighPriority'] = this.isHighPriority;
-    data['IsLocked'] = this.isLocked;
-    data['IsNew'] = this.isNew;
-    data['IsShareable'] = this.isShareable;
-    if (this.metadata != null) {
-      data['Metadata'] = this.metadata!.map((v) => v.toJson()).toList();
-    }
-    data['PriorityId'] = this.priorityId;
-    data['PrivacyId'] = this.privacyId;
-    data['PurposeId'] = this.purposeId;
-    data['ShowLock'] = this.showLock;
-    data['Status'] = this.status;
-    data['ThumbnailUrl'] = this.thumbnailUrl;
-    data['TransferId'] = this.transferId;
-    data['TsfDueDate'] = this.tsfDueDate;
-    data['Type'] = this.type;
-    data['VisualTrackingUrl'] = this.visualTrackingUrl;
-    data['isTransferedToContact'] = this.isTransferedToContact;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     data['CanRequestDueDate'] = this.canRequestDueDate;
+//     data['CategoryId'] = this.categoryId;
+//     data['ClickableLock'] = this.clickableLock;
+//     data['Comments'] = this.comments;
+//     if (this.controlList != null) {
+//       data['ControlList'] = this.controlList!.toJson();
+//     }
+//     data['CorrespondenceId'] = this.correspondenceId;
+//     data['DocDueDate'] = this.docDueDate;
+//     data['DocDueDays'] = this.docDueDays;
+//     data['FromStructure'] = this.fromStructure;
+//     data['FromUser'] = this.fromUser;
+//     data['FromUserId'] = this.fromUserId;
+//     if (this.gridInfo != null) {
+//       data['GridInfo'] = this.gridInfo!.map((v) => v.toJson()).toList();
+//     }
+//     data['HasAttachments'] = this.hasAttachments;
+//     data['HasAttachmentsToBeDelivered'] = this.hasAttachmentsToBeDelivered;
+//     data['HasSummaries'] = this.hasSummaries;
+//     data['InboxId'] = this.inboxId;
+//     data['IsCC'] = this.isCC;
+//     data['IsForGuideline'] = this.isForGuideline;
+//     data['IsHighPriority'] = this.isHighPriority;
+//     data['IsLocked'] = this.isLocked;
+//     data['IsNew'] = this.isNew;
+//     data['IsShareable'] = this.isShareable;
+//     if (this.metadata != null) {
+//       data['Metadata'] = this.metadata!.map((v) => v.toJson()).toList();
+//     }
+//     data['PriorityId'] = this.priorityId;
+//     data['PrivacyId'] = this.privacyId;
+//     data['PurposeId'] = this.purposeId;
+//     data['ShowLock'] = this.showLock;
+//     data['Status'] = this.status;
+//     data['ThumbnailUrl'] = this.thumbnailUrl;
+//     data['TransferId'] = this.transferId;
+//     data['TsfDueDate'] = this.tsfDueDate;
+//     data['Type'] = this.type;
+//     data['VisualTrackingUrl'] = this.visualTrackingUrl;
+//     data['isTransferedToContact'] = this.isTransferedToContact;
+//     return data;
+//   }
+// }
 
 class ControlList {
   Null? customToolbarItems;
@@ -288,39 +288,39 @@ class ControlList {
   }
 }
 
-class ToolbarItems {
-  ControlList? children;
-  bool? display;
-  String? label;
-  String? name;
-  bool? quickAction;
+// class ToolbarItems {
+//   ControlList? children;
+//   bool? display;
+//   String? label;
+//   String? name;
+//   bool? quickAction;
 
-  ToolbarItems(
-      {this.children, this.display, this.label, this.name, this.quickAction});
+//   ToolbarItems(
+//       {this.children, this.display, this.label, this.name, this.quickAction});
 
-  ToolbarItems.fromJson(Map<String, dynamic> json) {
-    children = json['Children'] != null
-        ? new ControlList.fromJson(json['Children'])
-        : null;
-    display = json['Display'];
-    label = json['Label'];
-    name = json['Name'];
-    quickAction = json['QuickAction'];
-  }
+//   ToolbarItems.fromJson(Map<String, dynamic> json) {
+//     children = json['Children'] != null
+//         ? new ControlList.fromJson(json['Children'])
+//         : null;
+//     display = json['Display'];
+//     label = json['Label'];
+//     name = json['Name'];
+//     quickAction = json['QuickAction'];
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.children != null) {
-      data['Children'] = this.children!.toJson();
-    }
-    data['Display'] = this.display;
-    data['Label'] = this.label;
-    data['Name'] = this.name;
-    data['QuickAction'] = this.quickAction;
-    return data;
-  }
-}
-//
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     if (this.children != null) {
+//       data['Children'] = this.children!.toJson();
+//     }
+//     data['Display'] = this.display;
+//     data['Label'] = this.label;
+//     data['Name'] = this.name;
+//     data['QuickAction'] = this.quickAction;
+//     return data;
+//   }
+// }
+// //
 // class ToolbarItems {
 //   Null? children;
 //   bool? display;

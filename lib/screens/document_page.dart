@@ -116,7 +116,6 @@ class DocumentPage extends GetWidget<DocumentController> {
             all.forEach((element) {
               data.add(element.toMap());
             });
-            print(data);
             Map<String, List<Map>> updated = {"1": data};
             var stringData = jsonEncode(updated);
             //log(jsonEncode(updated));
@@ -141,7 +140,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                     .readIntSecureData(AllStringConst.UserId)
                     .toString(),
                 docURL: controller.pdfAndSingData.first);
-
+            ViewerController.to.allAnnotations.clear();
             Navigator.of(context).pop();
 
             // log(updated);
@@ -297,6 +296,25 @@ class DocumentPage extends GetWidget<DocumentController> {
     );
   }
 
+  bool inCludedInChildren(String name) {
+    var r = controller.canOpenDocumentModel?.correspondence?.controlList;
+    if (r == null) return false;
+    for (var element in r.toolbarItems!) {
+      if (element!.name!.toLowerCase() == name) {
+        return true;
+      }
+
+      if (element.children != null) {
+        if (element.children!.toolbarItems != null) {
+          for (var element2 in element.children!.toolbarItems!) {
+            if (element2.name!.toLowerCase() == name) return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
   _MetadataSideMenu(BuildContext context) {
     var cm = Get.find<InboxController>().correspondencesModel;
     int priorityID = int.parse(controller.correspondences.priorityId!);
@@ -306,7 +324,7 @@ class DocumentPage extends GetWidget<DocumentController> {
     var privacy =
         cm?.privacies?.where((element) => element.Value == privacyID).first;
 
-    // var r = controller.canOpenDocumentModel!.correspondence!.controlList;
+    //  var r = controller.canOpenDocumentModel?.correspondence?.controlList;
     return Padding(
       padding: const EdgeInsets.all(28.0),
       child: SingleChildScrollView(
@@ -338,10 +356,11 @@ class DocumentPage extends GetWidget<DocumentController> {
                   showLoaderDialog(context);
                   _popUpMenuTransfer(context);
                 }),
-
-                CTSActionButton('assets/images/up_arrow.png', "export".tr, () {
-                  showExportDialog(context);
-                }),
+                if (inCludedInChildren("export"))
+                  CTSActionButton('assets/images/up_arrow.png', "export".tr,
+                      () {
+                    showExportDialog(context);
+                  }),
                 CTSActionButton('assets/images/ending.png', "ending".tr, () {
                   // loader
                   showLoaderDialog(context);

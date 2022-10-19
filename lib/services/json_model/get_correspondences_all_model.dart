@@ -1,7 +1,8 @@
 import '../../models/CorrespondencesModel.dart';
 import '../abstract_json_resource.dart';
+import 'can_open_document_model.dart';
 
-class GetCorrespondencesAllModel extends AbstractJsonResource{
+class GetCorrespondencesAllModel extends AbstractJsonResource {
   String? errorMessage;
   int? status;
   Inbox? inbox;
@@ -9,7 +10,10 @@ class GetCorrespondencesAllModel extends AbstractJsonResource{
   // List<Privacies>? privacies;
   // List<Purposes>? purposes;
   //
-  GetCorrespondencesAllModel({this.errorMessage, this.status, this.inbox,
+  GetCorrespondencesAllModel({
+    this.errorMessage,
+    this.status,
+    this.inbox,
     // this.priorities,
     // this.privacies,
     // this.purposes,
@@ -63,7 +67,7 @@ class GetCorrespondencesAllModel extends AbstractJsonResource{
 }
 
 class Inbox {
-  List<Correspondences>? correspondences;
+  List<Correspondence>? correspondences;
   String? id;
   int? total;
 
@@ -71,9 +75,9 @@ class Inbox {
 
   Inbox.fromJson(Map<String, dynamic> json) {
     if (json['Correspondences'] != null) {
-      correspondences = <Correspondences>[];
+      correspondences = <Correspondence>[];
       json['Correspondences'].forEach((v) {
-        correspondences!.add(Correspondences.fromJson(v));
+        correspondences!.add(Correspondence.fromJson(v));
       });
     }
     id = json['Id'];

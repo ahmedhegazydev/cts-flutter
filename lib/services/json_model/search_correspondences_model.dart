@@ -1,14 +1,11 @@
-
-
-
 import '../../models/CorrespondencesModel.dart';
 import '../abstract_json_resource.dart';
+import 'can_open_document_model.dart';
 
-
-class SearchCorrespondencesModel extends AbstractJsonResource{
+class SearchCorrespondencesModel extends AbstractJsonResource {
   String? errorMessage;
   int? status;
-  List<Correspondences>? correspondences;
+  List<Correspondence>? correspondences;
   int? total;
 
   SearchCorrespondencesModel(
@@ -18,9 +15,9 @@ class SearchCorrespondencesModel extends AbstractJsonResource{
     errorMessage = json['ErrorMessage'];
     status = json['Status'];
     if (json['Correspondences'] != null) {
-      correspondences = <Correspondences>[];
+      correspondences = <Correspondence>[];
       json['Correspondences'].forEach((v) {
-        correspondences!.add(new Correspondences.fromJson(v));
+        correspondences!.add(new Correspondence.fromJson(v));
       });
     }
     total = json['Total'];

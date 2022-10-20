@@ -13,11 +13,8 @@ import '../../services/json_model/send_json_model/reply_with_voice_note_request.
 import '../../utility/all_const.dart';
 import '../../utility/storage.dart';
 import '../../utility/utilitie.dart';
-import '../../viewer/controllers/viewerController.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_button_with_icon.dart';
-import 'AllAvailablePockets.dart';
-import 'MyFavListView.dart';
 
 class MyPocketsScreen extends GetWidget<InboxController> {
   SecureStorage secureStorage = SecureStorage();
@@ -45,26 +42,14 @@ class MyPocketsScreen extends GetWidget<InboxController> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.max,
         children: [
-          //side bar
-          // orientation == Orientation.landscape
-          //     ? Container(
-          //         width: 260,
-          //         height: size.height,
-          //         color: Colors.grey.shade300,
-          //         child: _buildSideMenu(context),
-          //       )
-          //     : Container(),
           Expanded(
             child: Container(
-              // width: size.infinity,
-              // height: double.infinity,
               color: Colors.white,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  //top bar
                   Container(
                     width: double.infinity,
                     height: 110,
@@ -73,60 +58,10 @@ class MyPocketsScreen extends GetWidget<InboxController> {
                     ),
                     child: _buildTopBar(context),
                   ),
-
-                  //inbox menu (filters with inbox type or with purpose -- depends on the configuration)
-                  //and correspondences table view container
-                  // Container(
-                  //   width: double.infinity,
-                  //   height: 10,
-                  //   color: Colors.transparent,
-                  // ),
                   Expanded(
                     child: Column(
                       children: [
                         Expanded(child: ListView1()),
-
-                        // Visibility(
-                        //   visible: !controller.showHideFilterScreen &&
-                        //       !controller.showHideMyFavListScreen &&
-                        //       !controller.showHideCreateNewBasketScreen,
-                        //   child: Expanded(
-                        //     child: _buildTopInboxMenu(context),
-                        //   ),
-                        // ),
-
-                        // Visibility(
-                        //   visible: controller.showHideMyFavListScreen,
-                        //   child: Expanded(
-                        //     child: MyFavListViewWidget(),
-                        //   ),
-                        // ),
-
-                        // Expanded(
-                        //   // child: _buildTopInboxMenu(context),
-                        //   // child: Text("data"),
-                        //   child: Visibility(
-                        //     visible: controller.showHideFilterScreen
-                        //         && !controller.showHideMyFavListScreen
-                        //         // && !controller.showHideCreateNewBasketScreen
-                        //     ,
-                        //     child: FilterSlidePage(),
-                        //   ),
-                        // ),
-
-                        // Expanded(
-                        //   // child: _buildTopInboxMenu(context),
-                        //   // child: Text("data"),
-                        //   child: Visibility(
-                        //     visible: controller.showHideCreateNewBasketScreen
-                        //         && !controller.showHideMyFavListScreen
-                        //         // && !controller.showHideFilterScreen
-                        //     ,
-                        //     child: CreateNewBasket(),
-                        //   ),
-                        // ),
-
-                        //line separator
                         Container(
                           decoration: BoxDecoration(
                             color: Colors.grey.shade300,
@@ -139,7 +74,6 @@ class MyPocketsScreen extends GetWidget<InboxController> {
                       ],
                     ),
                   ),
-
                   orientation == Orientation.portrait
                       ? _buildBotomMenuInboxes(context)
                       : SizedBox()
@@ -340,13 +274,7 @@ class MyPocketsScreen extends GetWidget<InboxController> {
     return ColorPicker(
       pickerColor: Get.find<CreateBasketController>().pickerColor,
       onColorChanged: (Color color) {
-        // Get.find<MController>().setAppColor(color);
-        // print(color);
-        // controller.setPickerColor(color);
         Get.find<CreateBasketController>().setPickerColor(color);
-        // setState(() {
-        //   controller.setPickerColor(color);
-        // });
       },
     );
   }
@@ -412,9 +340,6 @@ class MyPocketsScreen extends GetWidget<InboxController> {
                 Container(
                   decoration: BoxDecoration(
                       color: AppColor, borderRadius: BorderRadius.circular(8)),
-                  // margin: EdgeInsets.only(right: 8, left: 8),
-                  //   height: size.height * .03,
-                  ////width: 1,
                   child: Row(
                     children: [
                       Icon(
@@ -1408,15 +1333,6 @@ class _ListView1State extends State<ListView1> {
     controller.context = context;
 
     return GetBuilder<BasketController>(builder: (logic) {
-      // return logic.getBasketInboxModel == null
-      //     ? Center(
-      //         child: CircularProgressIndicator(),
-      //       )
-      //     :
-      // Text(logic
-      //             .getBasketInboxModel?.correspondences?.length
-      //             .toString() ??
-      //         "");
       return logic.getBasketInboxModel == null
           ? Center(
               child: CircularProgressIndicator(),
@@ -1425,40 +1341,20 @@ class _ListView1State extends State<ListView1> {
               controller: controller.scrollController,
               itemBuilder: (context, pos) {
                 if (pos < logic.getBasketInboxModel!.correspondences!.length) {
-// print("correspondences[pos].privacyId    ${correspondences[pos].privacyId}");
-                  return
-// correspondences[pos].isNew??false?
-
-                      InkWell(
+                  return InkWell(
                     onTap: () {
-                      /// TO Do
-                      // Get.find<InboxController>().canOpenDoc(docId:   logic.  getBasketInboxModel!.correspondences?[pos].purposeId ,
-                      //     correspondenceId:
-                      //   logic.  getBasketInboxModel!.correspondences?[pos].correspondenceId,
-                      //     transferId:
-                      // logic.  getBasketInboxModel!.  correspondences?[pos].transferId);
-
-                      Get.find<DocumentController>().correspondences =
-                          logic.getBasketInboxModel!.correspondences![pos];
-
-                      // Get.find<DocumentController>().gatAllDataAboutDOC(
-                      //     context: context,
-                      //     docId: logic.getBasketInboxModel!
-                      //         .correspondences![pos].purposeId!,
-                      //     correspondenceId: logic.getBasketInboxModel!
-                      //         .correspondences![pos].correspondenceId!,
-                      //     transferId: logic.getBasketInboxModel!
-                      //         .correspondences![pos].transferId!);
-//  Get.find<DocumentController>().loadPdf();
-
-                      //ViewerController.to.allAnnotations.clear();
-                      Get.find<DocumentController>()
-                          .documentEditedInOfficeId
-                          .value = 0;
-                      Get.toNamed("/DocumentPage");
+                      Get.find<InboxController>().openDocument(
+                          context: context,
+                          correspondence:
+                              logic.getBasketInboxModel!.correspondences![pos]);
+                      // Get.find<DocumentController>().correspondences =
+                      //     logic.getBasketInboxModel!.correspondences![pos];
+                      // Get.find<DocumentController>()
+                      //     .documentEditedInOfficeId
+                      //     .value = 0;
+                      // Get.toNamed("/DocumentPage");
                     },
                     child: SizedBox(
-//height: MediaQuery.of(context).size.height*.3,
                       child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
@@ -1506,11 +1402,6 @@ class _ListView1State extends State<ListView1> {
                                                 ),
                                                 Expanded(
                                                   child: Container(
-// width: MediaQuery.of(
-//     context)
-//     .size
-//     .width *
-//     .3,
                                                     child: Text(
                                                       logic
                                                               .getBasketInboxModel!
@@ -1648,7 +1539,6 @@ class _ListView1State extends State<ListView1> {
                                               ),
                                               value: 2,
                                               onTap: () {},
-                                              // logic.  functionTrunsfer,
                                             ),
                                             PopupMenuItem(
                                               child: Row(
@@ -1662,7 +1552,6 @@ class _ListView1State extends State<ListView1> {
                                                 ],
                                               ),
                                               onTap: () {},
-                                              //  logic.  functionComplet,
                                               value: 3,
                                             ),
                                             if (logic
@@ -1683,23 +1572,11 @@ class _ListView1State extends State<ListView1> {
                                                   ],
                                                 ),
                                                 onTap: () {},
-                                                //logic.  functionSummary,
                                                 value: 4,
                                               ),
                                           ],
                                       enableFeedback: true,
                                       onSelected: (v) async {
-// print("*" * 50);
-// print(correspondences[pos]
-//     .hasSummaries);
-// print(correspondences[pos]
-//     .correspondenceId);
-//
-// print(correspondences[pos]
-//     .transferId);
-//
-// print("*" * 50);
-
                                         if (v == 1) {
                                           showDialog(
                                             context: context,
@@ -1807,7 +1684,6 @@ class _ListView1State extends State<ListView1> {
                                                                                 "id",
                                                                             builder:
                                                                                 (logic) {
-                                                                              print("5555");
                                                                               return Icon(Get.find<InboxController>().recording ? Icons.stop : Icons.mic);
                                                                             }),
                                                                       ),
@@ -1819,10 +1695,7 @@ class _ListView1State extends State<ListView1> {
                                                                       child:
                                                                           InkWell(
                                                                         onTap:
-                                                                            () {
-// controller
-//     .playRec();
-                                                                        },
+                                                                            () {},
                                                                         child: Icon(
                                                                             Icons.play_arrow),
                                                                       ),
@@ -1914,8 +1787,6 @@ class _ListView1State extends State<ListView1> {
                                                       print("1" * 50);
                                                     });
 
-                                                    /// ToDo send Replay
-
                                                     Navigator.of(ctx).pop();
                                                   },
                                                   child: Text("Ok"),
@@ -1928,59 +1799,52 @@ class _ListView1State extends State<ListView1> {
                                               context: context,
                                               builder: (BuildContext context) {
                                                 return AlertDialog(
-                                                  title: Row(
-//mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        Image.asset(
-                                                          'assets/images/refer.png'
-//
-                                                          ,
-                                                          height: 20,
-                                                          width: 20,
-                                                        ),
-                                                        const SizedBox(
-                                                          width: 8,
-                                                        ),
-                                                        Text(
-                                                          "refer".tr,
-                                                          style:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .headline3!
-                                                                  .copyWith(
-                                                                    color:
-                                                                        createMaterialColor(
-                                                                      const Color
-                                                                              .fromRGBO(
-                                                                          77,
-                                                                          77,
-                                                                          77,
-                                                                          1),
-                                                                    ),
-                                                                    fontSize:
-                                                                        15,
-                                                                  ),
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                        ),
-                                                        const Spacer(),
-                                                        InkWell(
-                                                          onTap: () {
-                                                            Get.find<
-                                                                    InboxController>()
-                                                                .filterWord = "";
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          child: Image.asset(
-                                                            'assets/images/close_button.png',
-                                                            width: 20,
-                                                            height: 20,
+                                                  title: Row(children: [
+                                                    Image.asset(
+                                                      'assets/images/refer.png',
+                                                      height: 20,
+                                                      width: 20,
+                                                    ),
+                                                    const SizedBox(
+                                                      width: 8,
+                                                    ),
+                                                    Text(
+                                                      "refer".tr,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headline3!
+                                                          .copyWith(
+                                                            color:
+                                                                createMaterialColor(
+                                                              const Color
+                                                                      .fromRGBO(
+                                                                  77,
+                                                                  77,
+                                                                  77,
+                                                                  1),
+                                                            ),
+                                                            fontSize: 15,
                                                           ),
-                                                        ),
-                                                      ]),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
+                                                    const Spacer(),
+                                                    InkWell(
+                                                      onTap: () {
+                                                        Get.find<
+                                                                InboxController>()
+                                                            .filterWord = "";
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Image.asset(
+                                                        'assets/images/close_button.png',
+                                                        width: 20,
+                                                        height: 20,
+                                                      ),
+                                                    ),
+                                                  ]),
                                                   content:
                                                       SingleChildScrollView(
                                                     child: Column(
@@ -2063,7 +1927,6 @@ class _ListView1State extends State<ListView1> {
                                                                           InboxController>(
                                                                     assignId:
                                                                         true,
-//tag: "alluser",
                                                                     builder:
                                                                         (logic) {
                                                                       return ListView.builder(
@@ -2076,8 +1939,6 @@ class _ListView1State extends State<ListView1> {
                                                                             List<String>?
                                                                                 a =
                                                                                 logic.users[pos].value?.split(" ");
-
-// bool a=logic.user?[pos].value?.contains(logic.filterWord)??false;
                                                                             if (logic.users[pos].value?.contains(logic.filterWord) ??
                                                                                 false) {
                                                                               return Padding(
@@ -2104,22 +1965,13 @@ class _ListView1State extends State<ListView1> {
                                                                                           child: Center(child: FittedBox(child: Text("${a?[0][0]} ${a?[0][0] ?? ""}"))),
                                                                                         ),
                                                                                         Padding(
-                                                                                            padding: const EdgeInsets.only(top: 2.0, bottom: 2, right: 8, left: 8),
-                                                                                            child: Text(
-                                                                                              logic.users[pos].value ?? "",
-                                                                                              maxLines: 3,
-                                                                                              softWrap: true,
-                                                                                            )
-
-//
-// Container(
-//   height: 50,
-//   width: 50,
-//   decoration: const BoxDecoration(
-//       shape: BoxShape.circle,
-//       color: Colors.green),
-// ),
-                                                                                            ),
+                                                                                          padding: const EdgeInsets.only(top: 2.0, bottom: 2, right: 8, left: 8),
+                                                                                          child: Text(
+                                                                                            logic.users[pos].value ?? "",
+                                                                                            maxLines: 3,
+                                                                                            softWrap: true,
+                                                                                          ),
+                                                                                        ),
                                                                                       ],
                                                                                     ),
                                                                                   ),
@@ -2143,18 +1995,19 @@ class _ListView1State extends State<ListView1> {
                                                                       .width *
                                                                   .8,
                                                               height: 300,
-// MediaQuery.of(context).size.height * .5,
                                                               child: GetBuilder<
                                                                   InboxController>(
-//   assignId: true,//tag: "user",
                                                                 builder:
                                                                     (logic) {
-                                                                  return //Text(logic.filterWord);
-
-                                                                      ListView.builder(
-                                                                          scrollDirection: Axis.vertical,
-                                                                          itemCount: Get.find<InboxController>().usersWillSendTo.length,
-                                                                          itemBuilder: (context, pos) {
+                                                                  return ListView
+                                                                      .builder(
+                                                                          scrollDirection: Axis
+                                                                              .vertical,
+                                                                          itemCount: Get.find<InboxController>()
+                                                                              .usersWillSendTo
+                                                                              .length,
+                                                                          itemBuilder:
+                                                                              (context, pos) {
                                                                             return //Text(controller.filterWord);
 
                                                                                 Padding(
@@ -2303,9 +2156,6 @@ class _ListView1State extends State<ListView1> {
                                                   actions: <Widget>[
                                                     TextButton(
                                                       onPressed: () {
-                                                        print("i click ok");
-                                                        print(
-                                                            "Get.find<InboxController>().   =>   ${Get.find<InboxController>().transfarForMany.length}");
                                                         Get.find<
                                                                 InboxController>()
                                                             .transfarForMany
@@ -2314,7 +2164,6 @@ class _ListView1State extends State<ListView1> {
                                                           print(
                                                               "$key      ${value.toMap()}");
                                                         });
-//Navigator.of(context).pop();
                                                       },
                                                       child: Text("Ok"),
                                                     ),
@@ -2405,8 +2254,6 @@ class _ListView1State extends State<ListView1> {
                           )),
                     ),
                   );
-
-                  ///:SizedBox();
                 } else {
                   return logic.haveMoreData
                       ? const SizedBox(
@@ -2438,5 +2285,3 @@ class _SystemPadding extends StatelessWidget {
         child: child);
   }
 }
-
-//ناصر

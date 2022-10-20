@@ -749,53 +749,51 @@ class InboxController extends GetxController {
 
   //
 
-  Future<GetAttachmentsModel?> getDocumentAttachments(
+  Future<Attachments?> getDocumentAttachments(
       {required context, required String docId}) async {
     final GetDocumentAttachmentsAPI api = GetDocumentAttachmentsAPI(context);
     api.data =
         "Token=${secureStorage.token()}&docId=$docId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
     var value = await api.getData();
-    return value as GetAttachmentsModel;
+    return value as Attachments;
   }
 
-  Future PrepareDocumentBaseObject({
-    required context,
-    required correspondenceId,
-    required transferId,
-    required Correspondence correspondence,
-  }) async {
-    var attachments =
-        await getDocumentAttachments(context: context, docId: correspondenceId);
-
-    DocumentModel baseModel =
-        DocumentModel(allow: true, correspondence: correspondence);
-
-    //baseModel.correspondence
-
-    Get.put(DocumentController());
+  clearDocumentControllerTempVars() {
     Get.find<DocumentController>().pdfAndSing.clear();
     Get.find<DocumentController>().pdfAndSingData.clear();
     Get.find<DocumentController>().documentEditedInOfficeId.value = 0;
+  }
 
-    CanOpenDocumentApi canOpenDocumentApi = CanOpenDocumentApi(context);
-    canOpenDocumentApi.data =
-        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
-    var value = await canOpenDocumentApi.getData(); //.then((value) {
-    canOpenDocumentModel = value as DocumentModel;
-    Get.find<DocumentController>().documentBaseModel = value;
-    Get.find<DocumentController>().updatecanOpenDocumentModel(value);
-    if (Correspondence != null) {
-      Get.find<DocumentController>().documentBaseModel!.correspondence =
-          Correspondence;
-      Navigator.of(context).pop();
+  Future openDocument({
+    required context,
+    required Correspondence correspondence,
+  }) async {
+    showLoaderDialog(context);
+    var document = await PrepareDocumentBaseObject(
+        context: context, correspondence: correspondence);
+    Get.find<DocumentController>().documentBaseModel = document;
+    Navigator.pop(context);
+    if (canOpenDocumentModel!.allow!) {
       Get.toNamed("/DocumentPage");
     } else {
-      if (canOpenDocumentModel!.allow!) {
-        Get.toNamed("/DocumentPage");
-      } else {
-        Get.snackbar("", "canotopen".tr);
-      }
+      Get.snackbar("", "canotopen".tr);
     }
+  }
+
+  Future<DocumentModel?> PrepareDocumentBaseObject({
+    required context,
+    required Correspondence correspondence,
+  }) async {
+    Attachments? attachments = await getDocumentAttachments(
+        context: context, docId: correspondence.correspondenceId!);
+    if (attachments == null) {
+      return null;
+    }
+    DocumentModel baseModel =
+        DocumentModel(allow: true, correspondence: correspondence);
+    baseModel.attachments = attachments;
+
+    return baseModel;
   }
 
   Future canOpenDoc(

@@ -71,30 +71,13 @@ class CustomListView extends GetView<InboxController> {
                     controller: scrollController,
                     itemBuilder: (context, pos) {
                       if (pos < correspondences.length) {
-                        // print("correspondences[pos].privacyId    ${correspondences[pos].privacyId}");
-
-                        return
-                            // correspondences[pos].isNew??false?
-
-                            InkWell(
+                        return InkWell(
                           onTap: () async {
-                            showLoaderDialog(context);
-                            Get.find<InboxController>().canOpenDoc(
+                            var correspondence = correspondences[pos];
+                            controller.openDocument(
                               context: context,
-                              // docId: correspondences[pos].purposeId,
-                              correspondenceId:
-                                  correspondences[pos].correspondenceId,
-                              transferId: correspondences[pos].transferId,
-                              Correspondence: correspondences[pos],
+                              correspondence: correspondence,
                             );
-
-                            Get.find<DocumentController>().correspondences =
-                                correspondences[pos];
-
-                            //  Get.find<DocumentController>().loadPdf();
-
-                            //  Get.find<DocumentController>().loadPdf();
-                            //Get.toNamed("/DocumentPage");
                           },
                           child: SizedBox(
                             //height: MediaQuery.of(context).size.height*.3,

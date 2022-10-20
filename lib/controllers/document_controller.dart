@@ -528,8 +528,8 @@ class DocumentController extends GetxController {
   GetAttAchmentItem? getAttAchmentItem;
 
   //دي الرد بتاع السيف للاتاتشمنت
-  getatt_achments_model.Attachments? saveAttAchmentItemAnnotationsresalt;
-  GetAttachmentsModel? saveAttAchmentItemAnnotationsData;
+  // getatt_achments_model.Attachments? saveAttAchmentItemAnnotationsresalt;
+  Attachments? saveAttAchmentItemAnnotationsData;
 
   getAttachmentItem({context, documentId, transferId, attachmentId}) {
     GetAttachmentItemAPI getAttachmentItemAPI = GetAttachmentItemAPI(context);
@@ -948,7 +948,7 @@ class DocumentController extends GetxController {
   }
 
   List<CustomActions>? customActions = [];
-  late Correspondence correspondences;
+  // late Correspondence correspondences;
 
   //PDFDocument? doc;
 
@@ -1507,7 +1507,8 @@ class DocumentController extends GetxController {
         token: secureStorage.token()!,
         notes: notes,
         attachments: attachmentsIds,
-        documentId: int.parse(correspondences.correspondenceId ?? "2020"),
+        documentId: int.parse(
+            documentBaseModel!.correspondence!.correspondenceId ?? "2020"),
         recipients: [g2gRecipient]);
 
     var allRecipients = <G2GRecipient>[];
@@ -2271,10 +2272,13 @@ class DocumentController extends GetxController {
                                                     user: logic.users[pos]);
                                                 SetMultipleReplyWithVoiceNoteRequestModel(
                                                     correspondencesId:
-                                                        correspondences
+                                                        documentBaseModel!
+                                                            .correspondence!
                                                             .correspondenceId!,
-                                                    transferId: correspondences
-                                                        .transferId!,
+                                                    transferId:
+                                                        documentBaseModel!
+                                                            .correspondence!
+                                                            .transferId!,
                                                     id: logic.users[pos].id!);
                                               }
                                             },

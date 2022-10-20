@@ -67,9 +67,10 @@ class DocumentPage extends GetWidget<DocumentController> {
             onTap: () {
               controller.StartExportAsPaperowrk(
                   context: context,
-                  correspondenceId:
-                      controller.correspondences.correspondenceId!,
-                  transferId: controller.correspondences.transferId!,
+                  correspondenceId: controller
+                      .documentBaseModel!.correspondence!.correspondenceId!,
+                  transferId:
+                      controller.documentBaseModel!.correspondence!.transferId!,
                   exportAction: "paper");
             },
           ),
@@ -79,9 +80,10 @@ class DocumentPage extends GetWidget<DocumentController> {
             onTap: () {
               controller.StartExportAsTransfer(
                   context: context,
-                  correspondenceId:
-                      controller.correspondences.correspondenceId!,
-                  transferId: controller.correspondences.transferId!,
+                  correspondenceId: controller
+                      .documentBaseModel!.correspondence!.correspondenceId!,
+                  transferId:
+                      controller.documentBaseModel!.correspondence!.transferId!,
                   exportAction: "electronic");
             },
           ),
@@ -91,9 +93,10 @@ class DocumentPage extends GetWidget<DocumentController> {
             onTap: () {
               controller.StartExportAsTransfer(
                   context: context,
-                  correspondenceId:
-                      controller.correspondences.correspondenceId!,
-                  transferId: controller.correspondences.transferId!,
+                  correspondenceId: controller
+                      .documentBaseModel!.correspondence!.correspondenceId!,
+                  transferId:
+                      controller.documentBaseModel!.correspondence!.transferId!,
                   exportAction: "paperAndelectronic");
               print("paperAndElectronicExport");
             },
@@ -177,7 +180,7 @@ class DocumentPage extends GetWidget<DocumentController> {
 
   AppBar _buildAppBar(BuildContext context) {
     var title = "appTitle".tr;
-    var ref = controller.correspondences.gridInfo![2].value;
+    var ref = controller.documentBaseModel!.correspondence!.gridInfo![2].value;
     if (ref != null && ref != "") {
       title = ref;
     }
@@ -281,8 +284,7 @@ class DocumentPage extends GetWidget<DocumentController> {
 
   void _openVisualTracking() {
     Get.find<WebViewPageController>().isPdf = false;
-    print(controller.correspondences.gridInfo![2].value);
-    var ref = controller.correspondences.gridInfo![2].value;
+    var ref = controller.documentBaseModel?.correspondence!.gridInfo![2].value;
     var url = controller.documentBaseModel?.correspondence!.visualTrackingUrl!;
 
     if (ref != null && ref != "")
@@ -316,14 +318,14 @@ class DocumentPage extends GetWidget<DocumentController> {
 
   _MetadataSideMenu(BuildContext context) {
     var cm = Get.find<InboxController>().correspondencesModel;
-    int priorityID = int.parse(controller.correspondences.priorityId!);
+    var correspondence = controller.documentBaseModel!.correspondence!;
+    int priorityID = int.parse(correspondence.priorityId!);
     var priority =
         cm?.priorities?.where((element) => element.Value == priorityID).first;
-    int privacyID = int.parse(controller.correspondences.privacyId!);
+    int privacyID = int.parse(correspondence.privacyId!);
     var privacy =
         cm?.privacies?.where((element) => element.Value == privacyID).first;
 
-    //  var r = controller.canOpenDocumentModel?.correspondence?.controlList;
     return Padding(
       padding: const EdgeInsets.all(28.0),
       child: SingleChildScrollView(
@@ -440,10 +442,9 @@ class DocumentPage extends GetWidget<DocumentController> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(Icons.priority_high,
-                                color:
-                                    controller.correspondences.priorityId == "3"
-                                        ? AppColor
-                                        : RedColor),
+                                color: correspondence.priorityId == "3"
+                                    ? AppColor
+                                    : RedColor),
                             SizedBox(
                               width: 8,
                             ),
@@ -481,7 +482,6 @@ class DocumentPage extends GetWidget<DocumentController> {
                               Get.locale?.languageCode == "en"
                                   ? privacy!.Text!
                                   : privacy!.TextAr!,
-                              //     "veryimportant".tr,
                               style: TextStyle(color: AppColor),
                             ),
                           ]),
@@ -504,19 +504,20 @@ class DocumentPage extends GetWidget<DocumentController> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
-                                controller.correspondences.isLocked!
+                                correspondence.isLocked!
                                     ? Icons.lock
                                     : Icons.lock_open,
                                 color: Theme.of(context).colorScheme.primary),
                             SizedBox(
                               width: 4,
                             ),
-                            if (controller.correspondences.isLocked ?? false)
-                              Text("closed".tr,
-                                  style: TextStyle(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primary)),
+                            if (correspondence.isLocked ?? false)
+                              Text(
+                                "closed".tr,
+                                style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.primary),
+                              ),
                           ]),
                     ),
                   ),
@@ -526,9 +527,8 @@ class DocumentPage extends GetWidget<DocumentController> {
             SizedBox(
               height: 8,
             ),
-            ...List.generate(controller.correspondences.metadata!.length,
-                (index) {
-              var item = controller.correspondences.metadata![index];
+            ...List.generate(correspondence.metadata!.length, (index) {
+              var item = correspondence.metadata![index];
               return _itemSideMenu(
                 context: context,
                 title: item.label!,
@@ -1748,12 +1748,13 @@ class DocumentPage extends GetWidget<DocumentController> {
                                                     user: logic.users[pos]);
                                                 controller
                                                     .SetMultipleReplyWithVoiceNoteRequestModel(
-                                                        correspondencesId:
-                                                            controller
-                                                                .correspondences
-                                                                .correspondenceId!,
+                                                        correspondencesId: controller
+                                                            .documentBaseModel!
+                                                            .correspondence!
+                                                            .correspondenceId!,
                                                         transferId: controller
-                                                            .correspondences
+                                                            .documentBaseModel!
+                                                            .correspondence!
                                                             .transferId!,
                                                         id: logic
                                                             .users[pos].id!);

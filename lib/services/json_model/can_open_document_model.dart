@@ -88,7 +88,7 @@ class GridInfo {
   }
 }
 
-class Attachments {
+class Attachments extends AbstractJsonResource {
   Attachments({
     this.errorMessage,
     this.status,

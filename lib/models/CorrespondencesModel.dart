@@ -1,5 +1,4 @@
 import '../services/abstract_json_resource.dart';
-import '../services/json_model/can_open_document_model.dart';
 
 class CorrespondencesModel extends AbstractJsonResource {
   CorrespondencesModel({
@@ -238,14 +237,11 @@ class Correspondence {
 
 class ControlList {
   ControlList(
-    this.customToolbarItems,
     this.toolbarItems,
   );
-  late final Null customToolbarItems;
   late final List<ToolbarItems?> toolbarItems;
 
   ControlList.fromJson(Map<String, dynamic> json) {
-    customToolbarItems = null;
     // List.castFrom<dynamic, dynamic>(json['CustomToolbarItems']);
     toolbarItems = List.from(json['ToolbarItems'])
         .map((e) => ToolbarItems.fromJson(e))
@@ -254,7 +250,6 @@ class ControlList {
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['CustomToolbarItems'] = customToolbarItems;
     _data['ToolbarItems'] = toolbarItems.map((e) => e?.toJson()).toList();
     return _data;
   }

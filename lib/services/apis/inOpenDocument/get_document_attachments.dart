@@ -1,10 +1,8 @@
-import 'package:cts/services/abstract_json_resource.dart';
 import 'package:cts/services/api_manager.dart';
+import 'package:cts/services/json_model/can_open_document_model.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 import '../../../utility/settings_app.dart';
-import '../../json_model/inopendocModel/get_attachment_item_model.dart';
-import '../../json_model/inopendocModel/getatt_achments_model.dart';
 
 class GetDocumentAttachmentsAPI extends ApiManager {
   String data = "";
@@ -16,7 +14,7 @@ class GetDocumentAttachmentsAPI extends ApiManager {
   }
 
   @override
-  GetAttachmentsModel fromJson(data) {
-    return GetAttachmentsModel.fromJson(data);
+  Attachments fromJson(data) {
+    return Attachments.fromJson(data);
   }
 }

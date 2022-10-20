@@ -167,7 +167,7 @@ class DocumentController extends GetxController {
 
       case "OpenTransferWindow":
         print("OpenTransferWindow");
-        transferPopup(context);
+        transferPopup(context, transferId, correspondenceId);
         return;
       case "NOTHING":
         Get.find<LandingPageController>().getDashboardStats(context: context);
@@ -325,7 +325,8 @@ class DocumentController extends GetxController {
             id: canExportAsPaperworkModel?.transferTo!.id);
         usersWillSendTo.clear();
         addTousersWillSendTo(user: userWillAddToOpenTransferWindow!);
-        transferPopup(context);
+        transferPopup(context, transferId, correspondenceId);
+
         break;
       case "IsAlreadyExportedAsTransfer":
         isAlreadyExportedAsTransfer(
@@ -893,9 +894,16 @@ class DocumentController extends GetxController {
 
   addTousersWillSendTo({required Destination user}) {
     usersWillSendTo.add(user);
+
+    var purp = "15";
+    if (documentBaseModel != null &&
+        documentBaseModel!.correspondence != null) {
+      purp = documentBaseModel!.correspondence!.purposeId!;
+    }
+
     multipletransfersSend.TransferNode transferNode =
         multipletransfersSend.TransferNode(
-            purposeId: documentBaseModel!.correspondence!.purposeId,
+            purposeId: purp,
             destinationId: user.id.toString(),
             voiceNotePrivate: false);
     multiTransferNode[user.id!] = transferNode;
@@ -921,7 +929,7 @@ class DocumentController extends GetxController {
       findRecipientModel = value as FindRecipientModel;
 
       Get.find<InboxController>().setFindRecipientData(findRecipientModel!);
-      // listOfUser(0);
+      listOfUser(0);
       print(
           "tis is  findRecipientModel?.toJson()              =>  ${findRecipientModel?.toJson()}");
     });
@@ -1653,8 +1661,9 @@ class DocumentController extends GetxController {
 
   Recipients? selectlistfavoriteUser;
 
-  transferPopup(context) async {
+  transferPopup(context, String transferID, String correspondenceID) async {
     showLoaderDialog(context);
+    getFindRecipientData(context: context);
     await listFavoriteRecipients(context: context);
     Navigator.pop(context);
     showDialog(
@@ -1675,7 +1684,7 @@ class DocumentController extends GetxController {
                             color: Colors.black.withOpacity(.5),
                             fontSize: 18,
                             fontWeight: FontWeight.bold)),
-                    buildFavoitesBar(context),
+                    buildFavoitesBar(context, transferID, correspondenceID),
                     const Divider(
                       color: Colors.grey,
                     ),
@@ -1911,12 +1920,14 @@ class DocumentController extends GetxController {
                         ))
                   ]),
             ),
-            actions: transferPopupActions(context),
+            actions:
+                transferPopupActions(context, transferID, correspondenceID),
           );
         });
   }
 
-  Row buildFavoitesBar(BuildContext context) {
+  Row buildFavoitesBar(
+      BuildContext context, String transferID, String correspondenceID) {
     return Row(
       children: [
         GetBuilder<DocumentController>(
@@ -1985,7 +1996,8 @@ class DocumentController extends GetxController {
         ),
         InkWell(
           onTap: () {
-            chooseFromUsersAndStructuresPopup(context);
+            chooseFromUsersAndStructuresPopup(
+                context, transferID, correspondenceID);
           },
           child: Container(
             padding: EdgeInsets.all(8),
@@ -2002,17 +2014,23 @@ class DocumentController extends GetxController {
     );
   }
 
-  List<Widget> transferPopupActions(BuildContext context) {
+  List<Widget> transferPopupActions(
+      BuildContext context, String transferID, String correspondenceID) {
     return <Widget>[
       TextButton(
         onPressed: () async {
           showLoaderDialog(context);
           await multipleTransferspost(
             context: context,
-            transferId: documentBaseModel!.correspondence!.transferId!,
-            correspondenceId:
-                documentBaseModel!.correspondence!.correspondenceId,
+            transferId: transferID,
+            correspondenceId: correspondenceID,
           );
+          // await multipleTransferspost(
+          //   context: context,
+          //   transferId: documentBaseModel!.correspondence!.transferId!,
+          //   correspondenceId:
+          //       documentBaseModel!.correspondence!.correspondenceId,
+          // );
           Navigator.pop(context);
           Get.offAllNamed("/InboxPage");
         },
@@ -2057,7 +2075,8 @@ class DocumentController extends GetxController {
     ]);
   }
 
-  chooseFromUsersAndStructuresPopup(context) {
+  chooseFromUsersAndStructuresPopup(
+      context, String transferID, String correspondenceID) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -2150,13 +2169,8 @@ class DocumentController extends GetxController {
                                                     user: logic.users[pos]);
                                                 SetMultipleReplyWithVoiceNoteRequestModel(
                                                     correspondencesId:
-                                                        documentBaseModel!
-                                                            .correspondence!
-                                                            .correspondenceId!,
-                                                    transferId:
-                                                        documentBaseModel!
-                                                            .correspondence!
-                                                            .transferId!,
+                                                        correspondenceID,
+                                                    transferId: transferID,
                                                     id: logic.users[pos].id!);
                                                 Navigator.of(context).pop();
                                               }

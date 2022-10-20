@@ -135,8 +135,9 @@ class DocumentPage extends GetWidget<DocumentController> {
         ),
         ActionButton(
           onPressed: () {
-            // showLoaderDialog(context);
-            controller.transferPopup(context);
+            var corresp = controller.documentBaseModel!.correspondence!;
+            controller.transferPopup(
+                context, corresp.transferId!, corresp.correspondenceId!);
           },
           icon: const Icon(Icons.send),
         ),
@@ -332,7 +333,9 @@ class DocumentPage extends GetWidget<DocumentController> {
                 CTSActionButton('assets/images/refer.png', "refer".tr, () {
                   // loader
                   // showLoaderDialog(context);
-                  controller.transferPopup(context);
+                  var corresp = controller.documentBaseModel!.correspondence!;
+                  controller.transferPopup(
+                      context, corresp.transferId!, corresp.correspondenceId!);
                 }),
                 if (correspondanceHasAction("export"))
                   CTSActionButton('assets/images/up_arrow.png', "export".tr,

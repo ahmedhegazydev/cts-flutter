@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
-import '../services/json_model/can_open_document_model.dart';
 import '../utility/utilitie.dart' as u;
 import '../controllers/document_controller.dart';
 import '../controllers/inbox_controller.dart';
-
 import '../controllers/landing_page_controller.dart';
 import '../controllers/my_cart/create_basket_controller.dart';
 import '../models/CorrespondencesModel.dart';
@@ -1850,8 +1848,6 @@ class CustomListView extends GetView<InboxController> {
                             autoRemove: false,
                             builder: (logic) {
                               return Container(
-                                // height: 50,
-                                // width: 50,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     border: Border.all(
@@ -1883,7 +1879,9 @@ class CustomListView extends GetView<InboxController> {
                                         value: v!.targetName,
                                         id: v.targetGctid);
                                     controller.addTousersWillSendTo(
-                                        user: user, thepos: thepos);
+                                      user: user,
+                                      thepos: thepos,
+                                    );
                                   },
                                   items: controller.listfavoriteUser
                                       .map<DropdownMenuItem<Recipients>>(

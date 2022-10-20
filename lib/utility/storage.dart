@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:get_storage/get_storage.dart';
 
 import 'all_string_const.dart';
@@ -16,7 +18,8 @@ class SecureStorage {
   bool readBoolData(String key) {
     var readData = box.read(key);
     if (readData == null) return false;
-    return readData;
+    if (readData is bool) return readData as bool;
+    return false;
   }
 
   String? readSecureData(String key) {

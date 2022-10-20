@@ -62,42 +62,11 @@ class CtsSettingsDatabase {
   }
 
   Future<SettingItem> readNote(int id) async {
-    final SharedPreferences prefs = await _prefs;
-
-    // prefs.setString("note.baseUrl", setting.baseUrl);
-    // prefs.setString("note.color", setting.color);
-    // prefs.setString("note.language", setting.language);
-
-    final String? baseUrl = prefs.getString("note.baseUrl");
-    final String? color = prefs.getString("note.color");
-    final String? language = prefs.getString("note.language");
-
-    // final db = await instance.database;
-
-    // final maps = await db.query(
-    //   tableNotes,
-    //   columns: SettingsFields.values,
-    //   where: '${SettingsFields.id} = ?',
-    //   whereArgs: [id],
-    // );
-
-    // if (maps.isNotEmpty) {
-    //   return SettingItem.fromJson(maps.first);
-    // } else {
-    //   throw Exception('ID $id not found');
-    // }
-
     SettingItem m = SettingItem(baseUrl: "", language: "", color: "");
     return m;
   }
 
   Future<List<SettingItem>> readAllNotes() async {
-    // final db = await instance.database;
-
-    // final result = await db.query(tableNotes);
-
-    // return result.map((json) => SettingItem.fromJson(json)).toList();
-
     final SharedPreferences prefs = await _prefs;
 
     final String? baseUrl = prefs.getString("note.baseUrl");

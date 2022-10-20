@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-import 'Translation/Trans.dart';
+import 'translation/trans.dart';
 import 'bindings/busket_bindings.dart';
 import 'bindings/inbox_bindings.dart';
 import 'bindings/landing_page_bindings.dart';
@@ -35,10 +35,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await GetStorage.init();
-  SecureStorage secureStorage = SecureStorage();
-
-  print(
-      "secureStorage.deleteSecureData(AllStringConst.Token)   =>     ${secureStorage.deleteSecureData(AllStringConst.Token)}");
+  // SecureStorage secureStorage = SecureStorage();
 
   Get.put(MController());
   if (isPhone()) {
@@ -52,41 +49,6 @@ void main() async {
 bool isPhone() {
   final data = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
   return data.size.shortestSide < 600;
-}
-
-class RestartWidget extends StatefulWidget {
-  RestartWidget({required this.child});
-
-  final Widget child;
-
-  static void restartApp(BuildContext context) {
-    context.findAncestorStateOfType<_RestartWidgetState>()?.restartApp();
-  }
-
-  @override
-  _RestartWidgetState createState() => _RestartWidgetState();
-}
-
-class _RestartWidgetState extends State<RestartWidget> {
-  Key key = UniqueKey();
-
-  void restartApp() {
-    setState(() {
-      key = UniqueKey();
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return KeyedSubtree(
-      key: key,
-      child: widget.child,
-    );
-  }
-}
-
-class NavigationService {
-  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 }
 
 class MyApp extends StatelessWidget {

@@ -7,7 +7,7 @@ class SettingsApp {
   static const String baseUrl =
       'http://192.168.20.237:89/Eversuite.CTS.Mobile/CMS.svc';
 
-  SettingsApp() {}
+  // SettingsApp() {}
 
   static const String loginUrl = baseUrl + "/Login?";
   static const String FindRecipientUrl = baseUrl + "/FindRecipient?";

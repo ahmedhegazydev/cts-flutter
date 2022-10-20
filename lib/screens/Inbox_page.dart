@@ -7,6 +7,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../controllers/inbox_controller.dart';
 import '../controllers/landing_page_controller.dart';
 import '../controllers/my_cart/create_basket_controller.dart';
+import '../models/user_filter.dart';
 import '../services/json_model/basket/fetch_basket_list_model.dart';
 import '../utility/all_const.dart';
 import '../utility/storage.dart';

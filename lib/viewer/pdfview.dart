@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:internet_file/internet_file.dart';
@@ -8,7 +6,6 @@ import '../controllers/document_controller.dart';
 import '../utility/utilitie.dart';
 import './controllers/viewerController.dart';
 import './pageContainer.dart';
-import './static/AnnotationTypes.dart';
 
 class PDFView extends StatefulWidget {
   PDFView({
@@ -198,57 +195,6 @@ class PDFColumn extends StatelessWidget {
       ),
     );
   }
-}
-
-// class PDFColumn extends StatelessWidget {
-//   const PDFColumn({
-//     Key? key,
-//     required this.pages,
-//   }) : super(key: key);
-//   final List<PdfPageImage> pages;
-//   @override
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       children: List.generate(
-//         pages.length,
-//         (index) {
-//           return GestureDetector(
-//             onPanStart: ((details) => print(details)),
-//             onTap: () {
-//               print('On Tap ');
-//             },
-//             onDoubleTap: () {
-//               ViewerController.to.selectedActionIndex.value = 0;
-
-//               ViewerController.to.setEditable(false);
-//             },
-//             onTapUp: (details) {
-//               print('On Tap Up');
-//               print(details);
-//             },
-//             onTapCancel: () => print('On Tap Cancel'),
-//             onTapDown: (details) {
-//               print(details);
-//             },
-//             child: PageContainer(
-//               image: Image.memory(pages[index].bytes),
-//               // Image.asset(
-//               //     fit: BoxFit.cover,
-//               //     "assets/images/background_R.png"), // MemoryImage(pages[index].bytes),
-//               pageNumber: index,
-//             ),
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
-
-String uint8ListTob64(Uint8List uint8list) {
-  String base64String = base64Encode(uint8list);
-  String header = "data:image/png;base64,";
-  return header + base64String;
 }
 
 @immutable
@@ -457,28 +403,6 @@ class ActionButton extends StatelessWidget {
         onPressed: onPressed,
         icon: icon,
         // color: Colors.white,
-      ),
-    );
-  }
-}
-
-@immutable
-class FakeItem extends StatelessWidget {
-  const FakeItem({
-    //  super.key,
-    required this.isBig,
-  });
-
-  final bool isBig;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
-      height: isBig ? 128.0 : 36.0,
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-        color: Colors.grey.shade300,
       ),
     );
   }

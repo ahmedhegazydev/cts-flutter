@@ -1,4 +1,3 @@
-import 'package:cts/screens/Inbox_page.dart';
 import 'package:cts/screens/search_page.dart';
 import 'package:cts/utility/Extenstions.dart';
 import 'package:flutter/material.dart';
@@ -23,22 +22,6 @@ import '../utility/storage.dart';
 import '../utility/utilitie.dart' as u;
 import '../widgets/custom_button.dart';
 import 'Login_page.dart';
-
-class BasketListTile extends StatefulWidget {
-  const BasketListTile({Key? key}) : super(key: key);
-
-  @override
-  State<BasketListTile> createState() => _BasketListTileState();
-}
-
-class _BasketListTileState extends State<BasketListTile> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: LandingPage(),
-    );
-  }
-}
 
 class LandingPage extends GetWidget<LandingPageController> {
   SecureStorage secureStorage = SecureStorage();
@@ -476,59 +459,20 @@ class LandingPage extends GetWidget<LandingPageController> {
                     // inboxController.applyFilter();
                     // Navigator.pop(context);
                     showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                              title: Text(
-                                "pick your Color".tr,
-                              ),
-                              content: Container(
-                                width: MediaQuery.of(context).size.width * .3,
-                                height: MediaQuery.of(context).size.height * .5,
-                                child: Column(children: [
-                                  buildHorizontalListViewCircleColors(context),
-
-                                  // ColorPicker(
-                                  //   pickerColor:
-                                  //       Get.find<CreateBasketController>()
-                                  //           .pickerColor,
-                                  //   onColorChanged: (Color color) {
-                                  //     Get.find<CreateBasketController>()
-                                  //         .setPickerColor(color);
-                                  //   },
-                                  // ),
-                                  // Padding(
-                                  //   padding: const EdgeInsets.only(
-                                  //       top: 8.0, bottom: 8, right: 20, left: 20),
-                                  //   child: Row(children: []),
-                                  // ),
-                                  // Container(
-                                  //   width: MediaQuery.of(context).size.width * .7,
-                                  //   padding: const EdgeInsets.only(
-                                  //       left: 0, right: 0, top: 0, bottom: 0),
-                                  //   height: 60,
-                                  //   decoration: BoxDecoration(
-                                  //       color:
-                                  //       Theme.of(context).colorScheme.primary,
-                                  //       borderRadius: const BorderRadius.all(
-                                  //           Radius.circular(6))),
-                                  //   child: ElevatedButton(
-                                  //       onPressed: () {
-                                  //         // Get.find<SecureStorage>().writeSecureData(
-                                  //         //     AllStringConst.AppColor,
-                                  //         //     Get.find<MController>().appcolor.value);
-                                  //         Navigator.of(context).pop();
-                                  //       },
-                                  //       child: GestureDetector(
-                                  //         onTap: () {},
-                                  //         child: Text(
-                                  //           "save".tr,
-                                  //           textAlign: TextAlign.center,
-                                  //         ),
-                                  //       )),
-                                  // )
-                                ]),
-                              ),
-                            ));
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text(
+                          "pick your Color".tr,
+                        ),
+                        content: Container(
+                          width: MediaQuery.of(context).size.width * .3,
+                          height: MediaQuery.of(context).size.height * .5,
+                          child: Column(children: [
+                            buildHorizontalListViewCircleColors(context),
+                          ]),
+                        ),
+                      ),
+                    );
                   },
                   child: GetBuilder<CreateBasketController>(
                     init: CreateBasketController(),

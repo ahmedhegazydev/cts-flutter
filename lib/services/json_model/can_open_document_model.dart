@@ -43,51 +43,6 @@ class DocumentModel extends AbstractJsonResource {
   }
 }
 
-class ControlList {
-  Null? customToolbarItems;
-  List<ToolbarItems>? toolbarItems;
-
-  ControlList({this.customToolbarItems, this.toolbarItems});
-
-  ControlList.fromJson(Map<String, dynamic> json) {
-    customToolbarItems = json['CustomToolbarItems'];
-    if (json['ToolbarItems'] != null) {
-      toolbarItems = <ToolbarItems>[];
-      json['ToolbarItems'].forEach((v) {
-        toolbarItems!.add(new ToolbarItems.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['CustomToolbarItems'] = this.customToolbarItems;
-    if (this.toolbarItems != null) {
-      data['ToolbarItems'] = this.toolbarItems!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class GridInfo {
-  String? label;
-  String? value;
-
-  GridInfo({this.label, this.value});
-
-  GridInfo.fromJson(Map<String, dynamic> json) {
-    label = json['Label'];
-    value = json['Value'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Label'] = this.label;
-    data['Value'] = this.value;
-    return data;
-  }
-}
-
 class Attachments extends AbstractJsonResource {
   Attachments({
     this.errorMessage,

@@ -10,14 +10,13 @@ class CustomInputTextFiled extends StatelessWidget {
 
   CustomInputTextFiled(
       {required this.textEditingController,
-      required this.validator,
-        this.obscureText=false,
-        required this.label});
+      this.validator,
+      this.obscureText = false,
+      required this.label});
 
   @override
   Widget build(BuildContext context) {
-
-     print("Get.deviceLocale==>   ${Get.deviceLocale?.languageCode=="en"}");
+    print("Get.deviceLocale==>   ${Get.deviceLocale?.languageCode == "en"}");
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -30,13 +29,17 @@ class CustomInputTextFiled extends StatelessWidget {
               right: 20,
               left: 20,
             ),
-            child: Text(  label,style: TextStyle(fontSize: 14),
-
-              textDirection: Get.locale?.languageCode=="en"?
-              TextDirection.ltr: TextDirection.rtl ,
+            child: Text(
+              label,
+              style: TextStyle(fontSize: 14),
+              textDirection: Get.locale?.languageCode == "en"
+                  ? TextDirection.ltr
+                  : TextDirection.rtl,
             ),
           ),
-          SizedBox(height: 5,),
+          SizedBox(
+            height: 5,
+          ),
           Container(
             decoration: BoxDecoration(
               color: Colors.grey.shade300,

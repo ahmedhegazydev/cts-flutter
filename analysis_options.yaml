@@ -3,10 +3,10 @@ dart_code_metrics:
     - long-method
     - long-parameter-list
   metrics:
-    cyclomatic-complexity: 20
-    maximum-nesting-level: 5
-    number-of-parameters: 4
-    source-lines-of-code: 50
+    cyclomatic-complexity: 200
+    maximum-nesting-level: 50
+    number-of-parameters: 40
+    source-lines-of-code: 5000
     
   metrics-exclude:
     - test/**
@@ -17,3 +17,4 @@ dart_code_metrics:
     - prefer-trailing-comma
     - prefer-conditional-expressions
     - no-equal-then-else
+    

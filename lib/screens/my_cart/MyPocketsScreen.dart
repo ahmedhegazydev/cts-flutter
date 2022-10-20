@@ -1300,13 +1300,6 @@ class MyPocketsScreen extends GetWidget<InboxController> {
   }
 }
 
-const List<String> texts1 = [
-  "للعلم والاطلاع",
-  "لاجراء اللازم",
-  "للافاده",
-  "للتوجيه",
-];
-
 class ListView1 extends StatefulWidget {
   const ListView1({Key? key}) : super(key: key);
 
@@ -2268,20 +2261,5 @@ class _ListView1State extends State<ListView1> {
               itemCount:
                   logic.getBasketInboxModel!.correspondences!.length + 1);
     });
-  }
-}
-
-class _SystemPadding extends StatelessWidget {
-  final Widget child;
-
-  _SystemPadding({required Key key, required this.child}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    var mediaQuery = MediaQuery.of(context);
-    return new AnimatedContainer(
-        padding: mediaQuery.viewInsets,
-        duration: const Duration(milliseconds: 300),
-        child: child);
   }
 }

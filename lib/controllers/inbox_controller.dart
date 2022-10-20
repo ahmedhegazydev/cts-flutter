@@ -1,7 +1,5 @@
-import 'dart:convert';
 import 'dart:io';
 
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
@@ -12,6 +10,7 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../models/CorrespondencesModel.dart' as tt;
 import '../models/CorrespondencesModel.dart';
+import '../models/user_filter.dart';
 import '../services/apis/basket/add_documents_to_basket_api.dart';
 import '../services/apis/basket/add_edit_basket_result _api.dart';
 import '../services/apis/basket/getFetchBasketList_api.dart';
@@ -34,10 +33,8 @@ import '../services/json_model/basket/get_basket_inbox_model.dart';
 import '../services/json_model/basket/remove_basket_request_model.dart';
 import '../services/json_model/basket/reorder_baskets_request_model.dart';
 import '../services/json_model/can_open_document_model.dart';
-import '../services/json_model/default_on_success_result.dart';
 import '../services/json_model/favorites/list_all/ListFavoriteRecipients_response.dart';
 import '../services/json_model/find_recipient_model.dart';
-import '../services/json_model/inopendocModel/getatt_achments_model.dart';
 import '../services/json_model/login_model.dart';
 import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
 import '../utility/all_string_const.dart';
@@ -468,11 +465,9 @@ class InboxController extends GetxController {
 
     if (statusmicrophone != PermissionStatus.granted) {
       return;
-      throw "Microphone permission not granted";
     }
     if (statusstorage != PermissionStatus.granted) {
       return;
-      throw "storage permission not granted";
     }
     if (statusmanageExternalStorage != PermissionStatus.granted) {
       Permission.manageExternalStorage.request();
@@ -692,13 +687,8 @@ class InboxController extends GetxController {
     _getCorrespondencesAllAPI.data =
         "Token=${secureStorage.token()}&inboxId=$inboxId&index=$index&pageSize=$pageSize&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}&showThumbnails=$showThumbnails";
     _getCorrespondencesAllAPI.getData().then((value) {
-      // Navigator.pop(context);
-      print("i get alll _getCorrespondencesAllAPI");
-      //getCorrespondencesAllModel = value as GetCorrespondencesAllModel;
-      correspondencesModel = value as CorrespondencesModel;
       correspondencesModel = value as CorrespondencesModel;
       listPriorities = correspondencesModel!.priorities!;
-      print("correspondencesModel =>   ${listPriorities.length}");
       correspondencesModel?.inbox?.correspondences?.forEach((element) {
         UserFilter user = UserFilter(
             userId: element.fromUserId!,
@@ -733,13 +723,11 @@ class InboxController extends GetxController {
 
       int listLength =
           correspondencesModel?.inbox?.correspondences?.length ?? 0;
-      var v = correspondencesModel?.toJson();
+
       if (listLength < pageSize - 1) {
         haveMoreData = false;
       }
       update();
-      // log(v.length);
-      print(correspondencesModel?.inbox?.correspondences?.length);
       getData = false;
       update();
     }).onError((error, stackTrace) {
@@ -750,12 +738,17 @@ class InboxController extends GetxController {
   //
 
   Future<Attachments?> getDocumentAttachments(
-      {required context, required String docId}) async {
+      {required context,
+      required String docId,
+      required String transferId}) async {
     final GetDocumentAttachmentsAPI api = GetDocumentAttachmentsAPI(context);
+
+    //  Token={Token}&userId={userId}&docId={docId}&transferId={transferId}&language={language}
     api.data =
-        "Token=${secureStorage.token()}&docId=$docId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
-    var value = await api.getData();
-    return value as Attachments;
+        "Token=${secureStorage.token()}&docId=$docId&userId=$userId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+    var value = await api.getData() as Attachments?;
+
+    return value;
   }
 
   clearDocumentControllerTempVars() {
@@ -771,9 +764,11 @@ class InboxController extends GetxController {
     showLoaderDialog(context);
     var document = await PrepareDocumentBaseObject(
         context: context, correspondence: correspondence);
-    Get.find<DocumentController>().documentBaseModel = document;
+
     Navigator.pop(context);
-    if (canOpenDocumentModel!.allow!) {
+    if (document != null) {
+      Get.find<DocumentController>().documentBaseModel = document;
+      Get.find<DocumentController>().updatecanOpenDocumentModel(document);
       Get.toNamed("/DocumentPage");
     } else {
       Get.snackbar("", "canotopen".tr);
@@ -785,7 +780,9 @@ class InboxController extends GetxController {
     required Correspondence correspondence,
   }) async {
     Attachments? attachments = await getDocumentAttachments(
-        context: context, docId: correspondence.correspondenceId!);
+        context: context,
+        docId: correspondence.correspondenceId!,
+        transferId: correspondence.transferId!);
     if (attachments == null) {
       return null;
     }
@@ -834,7 +831,6 @@ class InboxController extends GetxController {
 
   CustomActions? getactions(id) {
     return transfarForManyCustomActions[id];
-    update();
   }
 
   setactions(id, CustomActions customActions) {
@@ -932,57 +928,9 @@ class InboxController extends GetxController {
           inboxId: Get.find<InboxController>().inboxId,
           pageSize: 20,
           showThumbnails: false);
-
-      // Navigator.pop(context);
-      // Get.back();
-
-      // showTopSnackBar(
-      //   context,
-      //   CustomSnackBar.success(
-      //     icon: Container(),
-      //     backgroundColor: Colors.lightGreen,
-      //     message: "EndedSuccess".tr,
-      //   ),
-      // );
     });
   }
 
-  //================================================================================================
-  // Future recordForMany() async {
-  //   await Permission.storage.request();
-  //   await Permission.manageExternalStorage.request();
-  //   final stats = await Permission.microphone.request();
-  //
-  //   if (stats != PermissionStatus.granted) {
-  //     throw RecordingPermissionException("Microphone Permission");
-  //   }
-  //   audioRecorder = FlutterSoundRecorder();
-  //   audioPlayer = FlutterSoundPlayer();
-  //   // audioRecorder!.openAudioSession();
-  //   audioRecorder!.stopRecorder();
-  //   appDocDir = await getApplicationDocumentsDirectory();
-  //   _directoryPath = appDocDir!.path +
-  //       '/' +
-  //       DateTime.now().millisecondsSinceEpoch.toString() +
-  //       '.mp4';
-  //   recording = true;
-  //   update();
-  //
-  //   await audioRecorder?.startRecorder(codec: _codec, toFile: _directoryPath);
-  // }
-  //
-  // Future stopForMany({required int id}) async {
-  //   await audioRecorder?.stopRecorder();
-  //   recordFile = File(_directoryPath);
-  //   recording = false;
-  //   String? audioFileBes64 = await audiobase64String(file: recordFile);
-  //   update();
-  //   transfarForMany[id]?.voiceNote = audioFileBes64;
-  // }
-  //
-  //
-
-  /////=============================
   Future<void> selectFromDocDate({required BuildContext context}) async {
     final DateTime? pickedDate = await showDatePicker(
         context: context,
@@ -995,7 +943,6 @@ class InboxController extends GetxController {
 
       var outputFormat = DateFormat('dd/MM/yyyy');
       var outputDate = outputFormat.format(pickedDate);
-      //fromDocDate.toString();
       update();
     }
   }
@@ -1309,17 +1256,4 @@ class InboxController extends GetxController {
     this.isSavingOrder = saving;
     update();
   }
-}
-
-class UserFilter extends Equatable {
-  int userId;
-  String name;
-  bool isStructure;
-
-  UserFilter(
-      {required this.userId, required this.name, required this.isStructure});
-
-  @override
-  // TODO: implement props
-  List<Object?> get props => [userId, name, isStructure];
 }

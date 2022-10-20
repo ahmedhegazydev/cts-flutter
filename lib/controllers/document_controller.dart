@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:cts/services/apis/inside_doc/g2g/eport_using_g2g_api.dart';
@@ -9,18 +8,14 @@ import 'package:cts/services/json_model/request_edit_in_office_model.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
-
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:signature/signature.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-
-import '../models/CorrespondencesModel.dart';
 import '../services/apis/favorites/ListFavoriteRecipients_api.dart';
 import '../services/apis/find_recipient_api.dart';
 import '../services/apis/inOpenDocument/GetAttachmentItem_api.dart';
-import '../services/apis/inOpenDocument/get_document_attachments.dart';
 import '../services/apis/inOpenDocument/get_document_audit_logs_api.dart';
 import '../services/apis/inOpenDocument/get_document_links_api.dart';
 import '../services/apis/inOpenDocument/get_document_receivers_api.dart';
@@ -56,9 +51,6 @@ import '../services/json_model/inopendocModel/g2g/g2g_export_dto.dart';
 import '../services/json_model/inopendocModel/g2g/g2g_receive_or_reject_dto.dart';
 import '../services/json_model/inopendocModel/get_attachment_item_model.dart';
 import '../services/json_model/inopendocModel/get_user_routing_model.dart';
-import '../services/json_model/inopendocModel/getatt_achments_model.dart'
-    as getatt_achments_model;
-import '../services/json_model/inopendocModel/getatt_achments_model.dart';
 import '../services/json_model/inopendocModel/is_already_exported_as_paperwork_model.dart';
 import '../services/json_model/inopendocModel/is_already_exported_as_transfer_model.dart';
 import '../services/json_model/login_model.dart';
@@ -172,10 +164,10 @@ class DocumentController extends GetxController {
             exportAction: exportAction,
             isAgain: true);
         return;
-        break;
+
       case "OpenTransferWindow":
         print("OpenTransferWindow");
-        _popUpMenu(context);
+        transferPopup(context);
         return;
       case "NOTHING":
         Get.find<LandingPageController>().getDashboardStats(context: context);
@@ -333,7 +325,7 @@ class DocumentController extends GetxController {
             id: canExportAsPaperworkModel?.transferTo!.id);
         usersWillSendTo.clear();
         addTousersWillSendTo(user: userWillAddToOpenTransferWindow!);
-        _popUpMenu(context);
+        transferPopup(context);
         break;
       case "IsAlreadyExportedAsTransfer":
         isAlreadyExportedAsTransfer(
@@ -545,9 +537,6 @@ class DocumentController extends GetxController {
     MultipleTransfersAPI _multipleTransfersAPI = MultipleTransfersAPI(context);
     // check
     recordingMap.forEach((key, value) async {
-      print("key====>$key");
-      print("key====>${value}");
-
       //  int countOfNodes = recordingMap.length;
       for (var entry in recordingMap.entries) {
         var key = entry.key;
@@ -578,27 +567,24 @@ class DocumentController extends GetxController {
 
     transfarForMany.clear();
     usersWillSendTo.clear();
-    _multipleTransfersAPI.post(multipleTransfers.toMap()).then((value) {
-      Get.find<LandingPageController>().getDashboardStats(context: context);
-      Get.find<InboxController>().getCorrespondencesData(
-          context: context,
-          inboxId: Get.find<InboxController>().inboxId,
-          pageSize: 20,
-          showThumbnails: false);
-      Get.back();
+    await _multipleTransfersAPI
+        .post(multipleTransfers.toMap()); //.then((value) {
+    Get.find<LandingPageController>().getDashboardStats(context: context);
+    Get.find<InboxController>().getCorrespondencesData(
+        context: context,
+        inboxId: Get.find<InboxController>().inboxId,
+        pageSize: 20,
+        showThumbnails: false);
+    Get.back();
 
-      // Navigator.pop(context);
-      //Get.back(closeOverlays: true);
-      //  Get.back();
-      Get.offAllNamed("/InboxPage");
+    Get.offAllNamed("/InboxPage");
 
-      CustomSnackBar.success(
-        icon: Container(),
-        backgroundColor: Colors.lightGreen,
-        message: "EndedSuccess".tr,
-      );
-      //   Get.snackbar("", "تم التنفيذ بنجاح");
-    });
+    CustomSnackBar.success(
+      icon: Container(),
+      backgroundColor: Colors.lightGreen,
+      message: "EndedSuccess".tr,
+    );
+    //});
   }
 
 //=====================================================================================
@@ -633,14 +619,8 @@ class DocumentController extends GetxController {
       UnSign: 'false',
       PagesOrderString: "[]",
     );
-
-    //log(jsonEncode(postSaveDocumentAnnotationsModel?.toMap()));
-    var value = await _saveDocumentAnnotationsApi
+    await _saveDocumentAnnotationsApi
         .post(postSaveDocumentAnnotationsModel?.toMap());
-
-    log("saveannotations res");
-    // log(jsonEncode(value));
-    //});
   }
 
   backTooragnalFileDocpdf() {
@@ -972,7 +952,7 @@ class DocumentController extends GetxController {
     super.onInit();
     //  initRecorder();
 
-    genratG2GExportDto();
+    // /  genratG2GExportDto();
     g2GInfoForExport();
   }
 
@@ -1460,40 +1440,6 @@ class DocumentController extends GetxController {
         "g2gInfoForExportModel?.toJson()=>  ${g2gInfoForExportModel?.toJson()}");
   }
 
-//-----------------------------------------------------------------------------
-
-//الي جم من الانبوكس عشان يتنادو لما ندخل الفيل
-//   Get.find<DocumentController>()
-//       .gatAllDataAboutDOC(
-//   context: context,
-//   docId:
-//   correspondences[pos].purposeId!,
-//   correspondenceId: correspondences[pos]
-//       .correspondenceId!,
-//   transferId:
-//   correspondences[pos].transferId!);
-//   Get.find<DocumentController>()
-//       .g2gInfoForExport(
-//   context: context,
-//   documentId: correspondences[pos]
-//       .correspondenceId!);
-
-  //-----------------------------------------------------------------------
-  genratG2GExportDto() {
-    // g2gRecipient =
-    // G2GRecipient(childId: 5, isCC: false, parentId: 10);
-    // g2gExportDto = G2GExportDto(
-    //     token: secureStorage.token(),
-    //     language: Get.locale?.languageCode == "en" ? "en" : "ar",
-    //     notes: " ",
-    //     attachments: [],
-    //     documentId: 2020,
-    //     recipients: [g2gRecipient!]);
-    //
-    // print("this the map=> ${jsonEncode(g2gRecipient?.toMap())}");
-    // print("this the map=> ${jsonEncode(g2gExportDto?.toMap())}");
-  }
-
   exportUsingG2g({required context, notes}) {
     G2GExportDto? g2gExportDto;
     G2GRecipient? g2gRecipient;
@@ -1566,15 +1512,13 @@ class DocumentController extends GetxController {
         ListFavoriteRecipientsApi(context);
     listFavoriteRecipientsApi.data =
         "Token=${secureStorage.token()}&Language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
-    await listFavoriteRecipientsApi.getData().then((value) {
-      if (value != null) {
-        favoriteRecipientsResponse = value as ListFavoriteRecipientsResponse;
-      } else {
-        Get.snackbar("", "err".tr);
-      }
-
-      // print("listFavoriteRecipientsApi  =>${favoriteRecipientsResponse?.recipients[0].targetPhotoBs64.isEmpty}");
-    });
+    var value = await listFavoriteRecipientsApi.getData(); //.then((value) {
+    if (value != null) {
+      favoriteRecipientsResponse = value as ListFavoriteRecipientsResponse;
+    } else {
+      Get.snackbar("", "err".tr);
+    }
+    // });
     update();
   }
 
@@ -1608,8 +1552,7 @@ class DocumentController extends GetxController {
         webId: editOfficeDetails.webId,
         fileId: editOfficeDetails.fileId);
     RequestRefreshEditInOfficeAPI api = RequestRefreshEditInOfficeAPI(context);
-    var value = await api.post(model.toMap()); //.then((value) {
-    //  DefaultOnSuccessResult res = value as DefaultOnSuccessResult;
+    await api.post(model.toMap());
     documentEditedInOfficeId.value = 0;
     return editOfficeDetails.spUrl!;
   }
@@ -1634,8 +1577,7 @@ class DocumentController extends GetxController {
         fileId: editOfficeDetails.fileId);
     RequestEditInOfficeAPI api = RequestEditInOfficeAPI(context);
 
-    var value = await api.post(model.toMap()); //.then((value) {
-    //  DefaultOnSuccessResult res = value as DefaultOnSuccessResult;
+    await api.post(model.toMap());
     return editOfficeDetails.spUrl!;
   }
 
@@ -1709,46 +1651,21 @@ class DocumentController extends GetxController {
     }
   }
 
-  _popUpMenu(context) async {
+  Recipients? selectlistfavoriteUser;
+
+  transferPopup(context) async {
+    showLoaderDialog(context);
     await listFavoriteRecipients(context: context);
+    Navigator.pop(context);
     showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Row(//mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-              Image.asset(
-                'assets/images/refer.png'
-                //
-                ,
-                height: 20,
-                width: 20,
-              ),
-              const SizedBox(
-                width: 8,
-              ),
-              Text(
-                "refer".tr,
-                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                    color: Colors.black.withOpacity(.5),
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-              ),
-              const Spacer(),
-              InkWell(
-                onTap: () {
-                  filterWord = "";
-                  Navigator.pop(context);
-                },
-                child: Image.asset(
-                  'assets/images/close_button.png',
-                  width: 30,
-                  height: 30,
-                ),
-              ),
-            ]),
+            title: buildPopupHeader(
+              context,
+              'assets/images/refer.png',
+              "refer".tr,
+            ),
             content: SingleChildScrollView(
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -1758,107 +1675,7 @@ class DocumentController extends GetxController {
                             color: Colors.black.withOpacity(.5),
                             fontSize: 18,
                             fontWeight: FontWeight.bold)),
-                    Container(
-                      height: 100,
-                      width: MediaQuery.of(context).size.width * .8,
-                      child: GetBuilder<DocumentController>(//autoRemove: false,
-
-                          builder: (logic) {
-                        return ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: (favoriteRecipientsResponse
-                                        ?.recipients?.length ??
-                                    0) +
-                                1,
-                            itemBuilder: (context, pos) {
-                              if (pos ==
-                                  (favoriteRecipientsResponse
-                                          ?.recipients?.length ??
-                                      0)) {
-                                return InkWell(
-                                  onTap: () {
-                                    _popUpMenuMore(context);
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.all(8),
-                                    child: Icon(Icons.add,
-                                        size: 30, color: Colors.white),
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                    ),
-                                    height: 75,
-                                    width: 75,
-                                  ),
-                                );
-                              } else {
-                                return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: InkWell(
-                                    onTap: () {
-                                      Destination user = Destination(
-                                          value: favoriteRecipientsResponse!
-                                              .recipients![pos].targetName,
-                                          id: favoriteRecipientsResponse!
-                                              .recipients![pos].targetGctid);
-                                      addTousersWillSendTo(user: user);
-                                    },
-                                    child: Card(
-                                      elevation: 8,
-                                      child: Row(
-                                        children: [
-                                          favoriteRecipientsResponse!
-                                                  .recipients![pos]
-                                                  .targetPhotoBs64!
-                                                  .trim()
-                                                  .isEmpty
-                                              ? Container(
-                                                  padding: EdgeInsets.all(8),
-                                                  decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .primary,
-                                                      image: DecorationImage(
-                                                          image: AssetImage(
-                                                            "assets/images/pr.jpg",
-                                                          ),
-                                                          fit: BoxFit.cover)),
-                                                  height: 75,
-                                                  width: 75,
-                                                )
-                                              : Container(
-                                                  padding: EdgeInsets.all(8),
-                                                  decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .primary,
-                                                      image: DecorationImage(
-                                                          image: MemoryImage(
-                                                              dataFromBase64String(
-                                                                  favoriteRecipientsResponse!
-                                                                      .recipients![
-                                                                          pos]
-                                                                      .targetPhotoBs64!)),
-                                                          fit: BoxFit.cover)),
-                                                  height: 75,
-                                                  width: 75,
-                                                ),
-                                          Text(favoriteRecipientsResponse!
-                                              .recipients![pos].targetName!)
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }
-
-                              //  CircleAvatar(backgroundColor: Colors.red,backgroundImage: AssetImage("assets/images/pr.jpg",),,radius: 30,);
-                            });
-                      }),
-                    ),
+                    buildFavoitesBar(context),
                     const Divider(
                       color: Colors.grey,
                     ),
@@ -1866,326 +1683,387 @@ class DocumentController extends GetxController {
                         width: MediaQuery.of(context).size.width * .8,
                         height: 300, // MediaQuery.of(context).size.height * .5,
                         child: GetBuilder<DocumentController>(
-                          //autoRemove: false,
-                          //   assignId: true,//tag: "user",
                           builder: (logic) {
-                            return //Text(logic.filterWord);
-
-                                ListView.builder(
-                                    scrollDirection: Axis.vertical,
-                                    itemCount: usersWillSendTo.length,
-                                    itemBuilder: (context, pos) {
-                                      return //Text(controller.filterWord);
-
-                                          Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                          color: Colors.grey[200],
-                                          child: Column(children: [
-                                            Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    "name".tr,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline3!
-                                                        .copyWith(
-                                                          color:
-                                                              createMaterialColor(
-                                                            const Color
-                                                                    .fromRGBO(
-                                                                77, 77, 77, 1),
-                                                          ),
-                                                          fontSize: 15,
+                            return ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                itemCount: usersWillSendTo.length,
+                                itemBuilder: (context, pos) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      color: Colors.grey[200],
+                                      child: Column(children: [
+                                        Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "name".tr,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline3!
+                                                    .copyWith(
+                                                      color:
+                                                          createMaterialColor(
+                                                        const Color.fromRGBO(
+                                                          77,
+                                                          77,
+                                                          77,
+                                                          1,
                                                         ),
-                                                    textAlign: TextAlign.center,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Text(logic
+                                                      ),
+                                                      fontSize: 15,
+                                                    ),
+                                                textAlign: TextAlign.center,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(logic
+                                                        .usersWillSendTo[pos]
+                                                        .value ??
+                                                    ""),
+                                              ),
+                                              SizedBox(
+                                                width: 8,
+                                              ),
+                                              Spacer(),
+                                              GestureDetector(
+                                                onTap: () {
+                                                  transfarForMany.remove(logic
+                                                      .usersWillSendTo[pos].id);
+                                                  logic.delTousersWillSendTo(
+                                                      user:
+                                                          logic.usersWillSendTo[
+                                                              pos]);
+                                                },
+                                                child: Image.asset(
+                                                  'assets/images/close_button.png',
+                                                  width: 20,
+                                                  height: 20,
+                                                ),
+                                              ),
+                                            ]),
+                                        SizedBox(
+                                          height: 4,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: Text("action".tr),
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Expanded(
+                                              child: Text("audioNotes".tr),
+                                            )
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: Container(
+                                                height: 40,
+                                                color: Colors.grey[300],
+                                                child: DropdownButton<
+                                                    CustomActions>(
+                                                  alignment: Alignment.topRight,
+                                                  value: logic.getactions(logic
+                                                      .usersWillSendTo[pos].id),
+                                                  // icon: const Icon(
+                                                  //     Icons.arrow_downward),
+                                                  elevation: 16,
+
+                                                  underline: SizedBox(),
+                                                  hint: Text("اختار"),
+                                                  onChanged: (CustomActions?
+                                                      newValue) {
+                                                    setactions(
+                                                        logic
                                                             .usersWillSendTo[
                                                                 pos]
-                                                            .value ??
-                                                        ""),
-                                                    // child: Container(
-                                                    //   height: 50,
-                                                    //   width: 50,
-                                                    //   // decoration: const BoxDecoration(
-                                                    //   //   shape: BoxShape.circle,
-                                                    //   //   color: Colors.grey,
-                                                    //   // ),
-                                                    // ),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 8,
-                                                  ),
-                                                  Spacer(),
-                                                  GestureDetector(
-                                                    onTap: () {
-                                                      print(
-                                                          "i deeeeeeeeeeeeeeeeeeeeeeee");
-                                                      transfarForMany.remove(
-                                                          logic
-                                                              .usersWillSendTo[
-                                                                  pos]
-                                                              .id);
-                                                      logic.delTousersWillSendTo(
-                                                          user: logic
-                                                                  .usersWillSendTo[
-                                                              pos]);
-                                                    },
-                                                    child: Image.asset(
-                                                      'assets/images/close_button.png',
-                                                      width: 20,
-                                                      height: 20,
-                                                    ),
-                                                  ),
-                                                ]),
-                                            SizedBox(
-                                              height: 4,
-                                            ),
-                                            Row(
-                                              children: [
-                                                Expanded(
-                                                  child: Text("action".tr),
-                                                ),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Expanded(
-                                                  child: Text("audioNotes".tr),
-                                                )
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Expanded(
-                                                  child: Container(
-                                                    height: 40,
-                                                    color: Colors.grey[300],
-                                                    child: DropdownButton<
+                                                            .id,
+                                                        newValue!);
+                                                    //  dropdownValue = newValue!;
+                                                  },
+                                                  items: customActions?.map<
+                                                          DropdownMenuItem<
+                                                              CustomActions>>(
+                                                      (CustomActions value) {
+                                                    return DropdownMenuItem<
                                                         CustomActions>(
-                                                      alignment:
-                                                          Alignment.topRight,
-                                                      value: logic.getactions(
-                                                          logic
-                                                              .usersWillSendTo[
-                                                                  pos]
-                                                              .id),
-                                                      // icon: const Icon(
-                                                      //     Icons.arrow_downward),
-                                                      elevation: 16,
-
-                                                      underline: SizedBox(),
-                                                      hint: Text("اختار"),
-                                                      onChanged: (CustomActions?
-                                                          newValue) {
-                                                        setactions(
-                                                            logic
-                                                                .usersWillSendTo[
-                                                                    pos]
-                                                                .id,
-                                                            newValue!);
-                                                        //  dropdownValue = newValue!;
-                                                      },
-                                                      items: customActions?.map<
-                                                              DropdownMenuItem<
-                                                                  CustomActions>>(
-                                                          (CustomActions
-                                                              value) {
-                                                        return DropdownMenuItem<
-                                                            CustomActions>(
-                                                          value: value,
-                                                          child:
-                                                              Text(value.name!),
-                                                        );
-                                                      }).toList(),
-                                                    ),
-                                                  ),
+                                                      value: value,
+                                                      child: Text(value.name!),
+                                                    );
+                                                  }).toList(),
                                                 ),
-                                                const SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Expanded(
-                                                  child: Container(
-                                                      height: 40,
-                                                      color: Colors.grey[300],
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          GestureDetector(
-                                                            onTap: () async {
-                                                              ///To Do Start and stop rec
-                                                              ///
-                                                              ///
-                                                              ///
-                                                              // controller.canOpenDocumentModel.correspondence.docDueDate
-                                                              record.isRecording
-                                                                  ? stopMathod()
-                                                                  : recordMathod(
-                                                                      id: logic
-                                                                          .usersWillSendTo[
-                                                                              pos]
-                                                                          .id,
-                                                                    );
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Expanded(
+                                              child: Container(
+                                                  height: 40,
+                                                  color: Colors.grey[300],
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      GestureDetector(
+                                                        onTap: () async {
+                                                          ///To Do Start and stop rec
+                                                          ///
+                                                          ///
+                                                          ///
+                                                          // controller.canOpenDocumentModel.correspondence.docDueDate
+                                                          record.isRecording
+                                                              ? stopMathod()
+                                                              : recordMathod(
+                                                                  id: logic
+                                                                      .usersWillSendTo[
+                                                                          pos]
+                                                                      .id,
+                                                                );
+                                                        },
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8.0),
+                                                          child: GetBuilder<
+                                                                  DocumentController>(
+                                                              id: "record", //autoRemove: false,
+                                                              builder: (logic) {
+                                                                return Icon(record
+                                                                        .isRecording
+                                                                    ? Icons.stop
+                                                                    : Icons
+                                                                        .mic);
+                                                              }),
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Obx(
+                                                          () => InkWell(
+                                                            onTap: () {
+                                                              if (!isPlayingAudio
+                                                                  .value) {
+                                                                playMathod(
+                                                                    id: logic
+                                                                        .usersWillSendTo[
+                                                                            pos]
+                                                                        .id);
+                                                              } else {
+                                                                isPlayingAudio
+                                                                        .value =
+                                                                    false;
+                                                                audioPlayer!
+                                                                    .stopPlayer();
+                                                              }
                                                             },
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(8.0),
-                                                              child: GetBuilder<
-                                                                      DocumentController>(
-                                                                  id:
-                                                                      "record", //autoRemove: false,
-                                                                  builder:
-                                                                      (logic) {
-                                                                    return Icon(record
-                                                                            .isRecording
-                                                                        ? Icons
-                                                                            .stop
-                                                                        : Icons
-                                                                            .mic);
-                                                                  }),
+                                                            child: Icon(
+                                                              isPlayingAudio
+                                                                      .value
+                                                                  ? Icons.stop
+                                                                  : Icons
+                                                                      .play_arrow,
                                                             ),
                                                           ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(8.0),
-                                                            child: Obx(
-                                                              () => InkWell(
-                                                                onTap: () {
-                                                                  if (!isPlayingAudio
-                                                                      .value) {
-                                                                    playMathod(
-                                                                        id: logic
-                                                                            .usersWillSendTo[pos]
-                                                                            .id);
-                                                                  } else {
-                                                                    isPlayingAudio
-                                                                            .value =
-                                                                        false;
-                                                                    audioPlayer!
-                                                                        .stopPlayer();
-                                                                  }
-                                                                },
-                                                                child: Icon(
-                                                                  isPlayingAudio
-                                                                          .value
-                                                                      ? Icons
-                                                                          .stop
-                                                                      : Icons
-                                                                          .play_arrow,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          )
-                                                        ],
-                                                      )),
-                                                )
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 8,
-                                            ),
-                                            Container(
-                                              child: TextFormField(
-                                                onChanged: (v) {
-                                                  multiTransferNode[logic
-                                                          .usersWillSendTo[pos]
-                                                          .id]
-                                                      ?.note = v;
-                                                  setNots(
-                                                      id: logic
-                                                          .usersWillSendTo[pos]
-                                                          .id!,
-                                                      not: v);
-                                                },
-                                                maxLines: 4,
-                                              ),
-                                              color: Colors.grey[300],
-                                            ),
-                                            SizedBox(
-                                              height: 8,
-                                            ),
-                                          ]),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  )),
+                                            )
+                                          ],
                                         ),
-                                      );
-                                    });
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Container(
+                                          child: TextFormField(
+                                            onChanged: (v) {
+                                              multiTransferNode[logic
+                                                      .usersWillSendTo[pos].id]
+                                                  ?.note = v;
+                                              setNots(
+                                                  id: logic
+                                                      .usersWillSendTo[pos].id!,
+                                                  not: v);
+                                            },
+                                            maxLines: 4,
+                                          ),
+                                          color: Colors.grey[300],
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                      ]),
+                                    ),
+                                  );
+                                });
                           },
                         ))
                   ]),
             ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  ///ToDo
-                  ///send to many
-
-                  multipleTransferspost(
-                    context: context,
-                    transferId: documentBaseModel!.correspondence!.transferId!,
-                    correspondenceId:
-                        documentBaseModel!.correspondence!.correspondenceId,
-                  );
-                  Navigator.pop(context);
-                },
-                child: Text(
-                  "refer".tr,
-                ),
-              ),
-            ],
+            actions: transferPopupActions(context),
           );
         });
   }
 
-  _popUpMenuMore(context) {
+  Row buildFavoitesBar(BuildContext context) {
+    return Row(
+      children: [
+        GetBuilder<DocumentController>(
+            autoRemove: false,
+            builder: (logic) {
+              return Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                        width: 1,
+                        color: Theme.of(context).colorScheme.primary)),
+                child: DropdownButton<Recipients>(
+                  value: selectlistfavoriteUser,
+                  icon: const Icon(Icons.arrow_downward),
+                  hint: Row(
+                    children: [
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: AssetImage("assets/images/pr.jpg"),
+                          ),
+                        ),
+                      ),
+                      Text("chooseaperson".tr),
+                    ],
+                  ),
+                  iconSize: 24,
+                  elevation: 16,
+                  underline: SizedBox(),
+                  onChanged: (v) {
+                    Destination user =
+                        Destination(value: v!.targetName, id: v.targetGctid);
+                    addTousersWillSendTo(
+                      user: user,
+                    );
+                  },
+                  items: favoriteRecipientsResponse!.recipients!
+                      .map<DropdownMenuItem<Recipients>>((Recipients value) {
+                    return DropdownMenuItem<Recipients>(
+                      value: value,
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: AssetImage("assets/images/pr.jpg"),
+                              ),
+                            ),
+                          ),
+                          Text(value.targetName ?? ""),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                ),
+              );
+            }),
+        SizedBox(
+          width: 20,
+        ),
+        InkWell(
+          onTap: () {
+            chooseFromUsersAndStructuresPopup(context);
+          },
+          child: Container(
+            padding: EdgeInsets.all(8),
+            child: Icon(Icons.add, size: 30, color: Colors.white),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            height: 75,
+            width: 75,
+          ),
+        ),
+      ],
+    );
+  }
+
+  List<Widget> transferPopupActions(BuildContext context) {
+    return <Widget>[
+      TextButton(
+        onPressed: () async {
+          showLoaderDialog(context);
+          await multipleTransferspost(
+            context: context,
+            transferId: documentBaseModel!.correspondence!.transferId!,
+            correspondenceId:
+                documentBaseModel!.correspondence!.correspondenceId,
+          );
+          Navigator.pop(context);
+          Get.offAllNamed("/InboxPage");
+        },
+        child: Text(
+          "refer".tr,
+        ),
+      ),
+    ];
+  }
+
+  Row buildPopupHeader(BuildContext context, String image, String text) {
+    return Row(children: [
+      Image.asset(
+        image,
+        height: 20,
+        width: 20,
+      ),
+      const SizedBox(
+        width: 8,
+      ),
+      Text(
+        text,
+        style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+            color: Colors.black.withOpacity(.5),
+            fontSize: 18,
+            fontWeight: FontWeight.bold),
+        textAlign: TextAlign.center,
+        overflow: TextOverflow.ellipsis,
+      ),
+      const Spacer(),
+      InkWell(
+        onTap: () {
+          filterWord = "";
+          Navigator.pop(context);
+        },
+        child: Image.asset(
+          'assets/images/close_button.png',
+          width: 30,
+          height: 30,
+        ),
+      ),
+    ]);
+  }
+
+  chooseFromUsersAndStructuresPopup(context) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Row(//mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-              Image.asset(
-                'assets/images/refer.png'
-                //
-                ,
-                height: 20,
-                width: 20,
-              ),
-              const SizedBox(
-                width: 8,
-              ),
-              Text(
-                "refer".tr,
-                style: Theme.of(context).textTheme.headline3!.copyWith(
-                    color: Colors.black.withOpacity(.5),
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-              ),
-              const Spacer(),
-              InkWell(
-                onTap: () {
-                  filterWord = "";
-                  Navigator.pop(context);
-                },
-                child: Image.asset(
-                  'assets/images/close_button.png',
-                  width: 30,
-                  height: 30,
-                ),
-              ),
-            ]),
+            title: buildPopupHeader(
+                context, 'assets/images/refer.png', "refer".tr),
             content: SingleChildScrollView(
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -2243,7 +2121,7 @@ class DocumentController extends GetxController {
                     Text("referTo".tr),
                     SizedBox(
                         width: MediaQuery.of(context).size.width * .8,
-                        height: 100,
+                        height: 300,
                         child: Row(
                           children: [
                             Expanded(
@@ -2252,7 +2130,7 @@ class DocumentController extends GetxController {
                               assignId: true, //tag: "alluser",
                               builder: (logic) {
                                 return ListView.builder(
-                                    scrollDirection: Axis.horizontal,
+                                    scrollDirection: Axis.vertical,
                                     itemCount: users.length,
                                     itemBuilder: (context, pos) {
                                       List<String>? a =
@@ -2280,6 +2158,7 @@ class DocumentController extends GetxController {
                                                             .correspondence!
                                                             .transferId!,
                                                     id: logic.users[pos].id!);
+                                                Navigator.of(context).pop();
                                               }
                                             },
                                             child: Container(
@@ -2303,9 +2182,11 @@ class DocumentController extends GetxController {
                                                           .primary,
                                                     ),
                                                     child: Center(
-                                                        child: FittedBox(
-                                                            child: Text(
-                                                                "${a?[0][0]} ${a?[0][0] ?? ""}"))),
+                                                      child: FittedBox(
+                                                        child: Text(
+                                                            "${a?[0][0]} ${a?[0][0] ?? ""}"),
+                                                      ),
+                                                    ),
                                                   ),
                                                   Padding(
                                                     padding:
@@ -2332,18 +2213,18 @@ class DocumentController extends GetxController {
                                     });
                               },
                             )),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                child: const Icon(Icons.clear),
-                                height: 50,
-                                width: 50,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.all(8.0),
+                            //   child: Container(
+                            //     child: const Icon(Icons.clear),
+                            //     height: 50,
+                            //     width: 50,
+                            //     decoration: const BoxDecoration(
+                            //       shape: BoxShape.circle,
+                            //       color: Colors.grey,
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         )),
                     const Divider(
@@ -2351,14 +2232,14 @@ class DocumentController extends GetxController {
                     ),
                   ]),
             ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text("Ok"),
-              ),
-            ],
+            // actions: <Widget>[
+            //   TextButton(
+            //     onPressed: () {
+            //       Navigator.of(context).pop();
+            //     },
+            //     child: Text("Ok"),
+            //   ),
+            // ],
           );
         });
   }
@@ -2408,26 +2289,6 @@ showDilog(
           ],
         );
       });
-}
-
-extension UtilListExtension on List {
-  groupBy(String key) {
-    try {
-      List<Map<String, dynamic>> result = [];
-      List<String> keys = [];
-
-      this.forEach((f) => keys.add(f[key]));
-
-      [...keys.toSet()].forEach((k) {
-        List data = [...this.where((e) => e[key] == k)];
-        result.add({k: data});
-      });
-
-      return result;
-    } catch (e, s) {
-      return this;
-    }
-  }
 }
 
 class ViewerAnnotation {

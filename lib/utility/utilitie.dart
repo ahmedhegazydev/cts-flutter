@@ -91,12 +91,6 @@ double calculateHeight(double nb, BuildContext context) {
   return (height * nb) / 1024;
 }
 
-double calculateWidth(double nb, BuildContext context) {
-  //the development was done on ipad 12 pro, the width in landscape is 1366
-  double width = MediaQuery.of(context).size.width;
-  return (width * nb) / 1366;
-}
-
 double calculateFontSize(double nb, BuildContext context) {
   //the development was done on ipad 12 pro, the width in landscape is 1366
   double width = MediaQuery.of(context).size.width;
@@ -112,28 +106,8 @@ String calculateDate(String dateFormat, String locale) {
   return date;
 }
 
-class HexColor extends Color {
-  static int _getColorFromHex(String hexColor) {
-    hexColor = hexColor.toUpperCase().replaceAll("#", "");
-    if (hexColor.length == 6) {
-      hexColor = "FF" + hexColor;
-    }
-    return int.parse(hexColor, radix: 16);
-  }
-
-  HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
-}
-
-Image imageFromBase64String(String base64String) {
-  return Image.memory(base64Decode(base64String));
-}
-
 Uint8List dataFromBase64String(String? base64String) {
   return base64Decode(base64String!);
-}
-
-String base64String(Uint8List data) {
-  return base64Encode(data);
 }
 
 Future<String?> audiobase64String({File? file}) async {
@@ -147,31 +121,6 @@ Future<String?> audiobase64String({File? file}) async {
   }
 
   return fileString;
-}
-
-Future<String> createFileFromString(data) async {
-  final encodedStr = data;
-  Uint8List bytes = base64.decode(encodedStr);
-  String dir = (await getApplicationDocumentsDirectory()).path;
-  File file = File("$dir/" + "voice" + ".aac");
-  await file.writeAsBytes(bytes);
-  return file.path;
-}
-
-//
-// Future<String?>  audiobase64String({  File? file})async{
-//   String? fileString;
-// Uint8List audio=await file!.readAsBytes();
-// String b64=base64.encode(audio);
-// fileString=b64;
-//
-//
-//   return fileString;
-// }
-
-void printWrapped(String text) {
-  final pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
-  pattern.allMatches(text).forEach((match) => print(match.group(0)));
 }
 
 showLoaderDialog(BuildContext context) {

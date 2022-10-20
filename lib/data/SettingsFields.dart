@@ -1,5 +1,3 @@
-final String tableNotes = 'cts_settings';
-
 class SettingsFields {
   static final List<String> values = [
     /// Add all fields

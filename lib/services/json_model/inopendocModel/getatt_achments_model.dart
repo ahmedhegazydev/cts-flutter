@@ -1,6 +1,6 @@
 import '../../abstract_json_resource.dart';
 
-class GetattAchmentsModel extends AbstractJsonResource{
+class GetAttachmentsModel extends AbstractJsonResource {
   String? errorMessage;
   int? status;
   List<Attachments>? attachments;
@@ -10,17 +10,17 @@ class GetattAchmentsModel extends AbstractJsonResource{
   bool? isDocSigned;
   String? voiceNote;
 
-  GetattAchmentsModel(
+  GetAttachmentsModel(
       {this.errorMessage,
-        this.status,
-        this.attachments,
-        this.isLocked,
-        this.lockedBy,
-        this.hasVoice,
-        this.isDocSigned,
-        this.voiceNote});
+      this.status,
+      this.attachments,
+      this.isLocked,
+      this.lockedBy,
+      this.hasVoice,
+      this.isDocSigned,
+      this.voiceNote});
 
-  GetattAchmentsModel. fromJson(Map<String, dynamic> json) {
+  GetAttachmentsModel.fromJson(Map<String, dynamic> json) {
     errorMessage = json['ErrorMessage'];
     status = json['Status'];
     if (json['Attachments'] != null) {
@@ -70,19 +70,19 @@ class Attachments {
 
   Attachments(
       {this.annotations,
-        this.attachmentId,
-        this.canEditPDF,
-        this.docId,
-        this.fileName,
-        this.folderId,
-        this.folderName,
-        this.isOriginalMail,
-        this.isPrivate,
-        this.serverFileInfo,
-        this.status,
-        this.transferId,
-        this.uRL,
-        this.editOfficeDetails});
+      this.attachmentId,
+      this.canEditPDF,
+      this.docId,
+      this.fileName,
+      this.folderId,
+      this.folderName,
+      this.isOriginalMail,
+      this.isPrivate,
+      this.serverFileInfo,
+      this.status,
+      this.transferId,
+      this.uRL,
+      this.editOfficeDetails});
 
   Attachments.fromJson(Map<String, dynamic> json) {
     annotations = json['Annotations'];
@@ -138,14 +138,14 @@ class EditOfficeDetails {
 
   EditOfficeDetails(
       {this.fileId,
-        this.isEditable,
-        this.localUrl,
-        this.name,
-        this.siteId,
-        this.spFrameUrl,
-        this.spLocation,
-        this.spUrl,
-        this.webId});
+      this.isEditable,
+      this.localUrl,
+      this.name,
+      this.siteId,
+      this.spFrameUrl,
+      this.spLocation,
+      this.spUrl,
+      this.webId});
 
   EditOfficeDetails.fromJson(Map<String, dynamic> json) {
     fileId = json['fileId'];

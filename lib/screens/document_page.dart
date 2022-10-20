@@ -40,7 +40,7 @@ class DocumentPage extends GetWidget<DocumentController> {
             builder: (logic) {
               return Scaffold(
                 appBar: _buildAppBar(context),
-                body: controller.canOpenDocumentModel == null
+                body: controller.documentBaseModel == null
                     ? Center(
                         child: CircularProgressIndicator(),
                       )
@@ -128,14 +128,14 @@ class DocumentPage extends GetWidget<DocumentController> {
                     .isOriginalMailAttachmentsList!.attachmentId
                     .toString(),
                 correspondenceId: controller
-                    .canOpenDocumentModel!.correspondence!.correspondenceId!,
+                    .documentBaseModel!.correspondence!.correspondenceId!,
                 delegateGctId: "0",
                 documentAnnotationsString: stringData,
                 isOriginalMail: controller
                     .isOriginalMailAttachmentsList!.isOriginalMail!
                     .toString(),
-                transferId: controller
-                    .canOpenDocumentModel!.correspondence!.transferId!,
+                transferId:
+                    controller.documentBaseModel!.correspondence!.transferId!,
                 userId: controller.secureStorage
                     .readIntSecureData(AllStringConst.UserId)
                     .toString(),
@@ -238,9 +238,9 @@ class DocumentPage extends GetWidget<DocumentController> {
             await Get.find<InboxController>().canOpenDoc(
                 context: context,
                 correspondenceId: controller
-                    .canOpenDocumentModel!.correspondence!.correspondenceId,
-                transferId: controller
-                    .canOpenDocumentModel!.correspondence!.transferId);
+                    .documentBaseModel!.correspondence!.correspondenceId,
+                transferId:
+                    controller.documentBaseModel!.correspondence!.transferId);
             await Future.delayed(Duration(seconds: 1));
             Navigator.of(context).pop();
           },
@@ -283,8 +283,7 @@ class DocumentPage extends GetWidget<DocumentController> {
     Get.find<WebViewPageController>().isPdf = false;
     print(controller.correspondences.gridInfo![2].value);
     var ref = controller.correspondences.gridInfo![2].value;
-    var url =
-        controller.canOpenDocumentModel?.correspondence!.visualTrackingUrl!;
+    var url = controller.documentBaseModel?.correspondence!.visualTrackingUrl!;
 
     if (ref != null && ref != "")
       Get.find<WebViewPageController>().title = ref;
@@ -297,7 +296,7 @@ class DocumentPage extends GetWidget<DocumentController> {
   }
 
   bool inCludedInChildren(String name) {
-    var r = controller.canOpenDocumentModel?.correspondence?.controlList;
+    var r = controller.documentBaseModel?.correspondence?.controlList;
     if (r == null) return false;
     for (var element in r.toolbarItems!) {
       if (element!.name!.toLowerCase() == name) {
@@ -536,7 +535,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                 data: item.value ?? "",
               );
             }),
-            if (controller.canOpenDocumentModel?.attachments?.hasVoice ?? false)
+            if (controller.documentBaseModel?.attachments?.hasVoice ?? false)
               Container(
                 height: 40,
                 color: Colors.grey[300],
@@ -563,8 +562,8 @@ class DocumentPage extends GetWidget<DocumentController> {
                                   FlutterSoundPlayer();
 
                               audioPlayer.openPlayer();
-                              var base64 = controller.canOpenDocumentModel
-                                  ?.attachments?.voiceNote!;
+                              var base64 = controller
+                                  .documentBaseModel?.attachments?.voiceNote!;
 
                               await audioPlayer.startPlayer(
                                 fromDataBuffer: base64Decode(base64!),
@@ -908,19 +907,14 @@ class DocumentPage extends GetWidget<DocumentController> {
               print(Get.find<InboxController>().completeCustomActions?.icon);
 
               String data =
-                  'Token=${Get.find<InboxController>().secureStorage.token()}&correspondenceId=${controller.canOpenDocumentModel!.correspondence!.correspondenceId}&transferId=${controller.canOpenDocumentModel!.correspondence!.transferId}&actionType=Complete&note=${Get.find<InboxController>().completeNote}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}';
+                  'Token=${Get.find<InboxController>().secureStorage.token()}&correspondenceId=${controller.documentBaseModel!.correspondence!.correspondenceId}&transferId=${controller.documentBaseModel!.correspondence!.transferId}&actionType=Complete&note=${Get.find<InboxController>().completeNote}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}';
 
-              // Navigator.of(ctx).pop();
               showLoaderDialog(context);
               await Get.find<InboxController>()
                   .completeInCorrespondence(context: context, data: data);
               Navigator.pop(context);
-              //Get.back(closeOverlays: true);
-              //  Get.back();
               Get.offAllNamed("/InboxPage");
 
-              // Get.offNamed("InboxPage"); //.  Get.toNamed("/InboxPage");
-              // Ge
               showTopSnackBar(
                 context,
                 CustomSnackBar.success(
@@ -1598,9 +1592,9 @@ class DocumentPage extends GetWidget<DocumentController> {
                   controller.multipleTransferspost(
                       context: context,
                       transferId: controller
-                          .canOpenDocumentModel!.correspondence!.transferId!,
-                      correspondenceId: controller.canOpenDocumentModel!
-                          .correspondence!.correspondenceId);
+                          .documentBaseModel!.correspondence!.transferId!,
+                      correspondenceId: controller
+                          .documentBaseModel!.correspondence!.correspondenceId);
                   Navigator.pop(context);
 
                   Navigator.pop(context);
@@ -2342,7 +2336,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(controller
-                            .canOpenDocumentModel!.correspondence!.fromUser ??
+                            .documentBaseModel!.correspondence!.fromUser ??
                         ""),
                   ),
                   Spacer(),
@@ -2392,7 +2386,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                   controller.record.isRecording
                                       ? controller.stopMathod()
                                       : controller.recordMathod(
-                                          id: controller.canOpenDocumentModel!
+                                          id: controller.documentBaseModel!
                                               .correspondence!.fromUserId!,
                                         );
                                 },
@@ -2419,7 +2413,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                 child: InkWell(
                                   onTap: () {
                                     controller.playMathod(
-                                        id: controller.canOpenDocumentModel!
+                                        id: controller.documentBaseModel!
                                             .correspondence!.fromUserId!);
                                   },
                                   child: Icon(Icons.play_arrow,
@@ -2466,13 +2460,13 @@ class DocumentPage extends GetWidget<DocumentController> {
               if (controller.recordFile != null) {
                 v = ReplyWithVoiceNoteRequestModel(
                     userId: controller
-                        .canOpenDocumentModel!.correspondence!.fromUserId
+                        .documentBaseModel!.correspondence!.fromUserId
                         .toString(),
                     transferId: controller
-                        .canOpenDocumentModel!.correspondence!.transferId,
+                        .documentBaseModel!.correspondence!.transferId,
                     token: Get.find<InboxController>().secureStorage.token(),
                     correspondencesId: controller
-                        .canOpenDocumentModel!.correspondence!.correspondenceId,
+                        .documentBaseModel!.correspondence!.correspondenceId,
                     language: Get.locale?.languageCode == "en" ? "en" : "ar",
                     voiceNote: audioFileBes64,
                     notes: controller.replyNote,
@@ -2481,13 +2475,13 @@ class DocumentPage extends GetWidget<DocumentController> {
               } else {
                 v = ReplyWithVoiceNoteRequestModel(
                     userId: controller
-                        .canOpenDocumentModel!.correspondence!.fromUserId
+                        .documentBaseModel!.correspondence!.fromUserId
                         .toString(),
                     transferId: controller
-                        .canOpenDocumentModel!.correspondence!.transferId,
+                        .documentBaseModel!.correspondence!.transferId,
                     token: Get.find<InboxController>().secureStorage.token(),
                     correspondencesId: controller
-                        .canOpenDocumentModel!.correspondence!.correspondenceId,
+                        .documentBaseModel!.correspondence!.correspondenceId,
                     language: Get.locale?.languageCode == "en" ? "en" : "ar",
                     voiceNote: null,
                     notes: controller.replyNote,

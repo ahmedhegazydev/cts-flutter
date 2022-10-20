@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
-
-import 'package:cts/services/api_manager.dart';
 import 'package:cts/services/apis/inside_doc/g2g/eport_using_g2g_api.dart';
 import 'package:cts/services/apis/request_edit_in_office_api.dart';
 import 'package:cts/services/apis/request_refresh_edit_in_office_api.dart';
@@ -22,6 +20,7 @@ import '../models/CorrespondencesModel.dart';
 import '../services/apis/favorites/ListFavoriteRecipients_api.dart';
 import '../services/apis/find_recipient_api.dart';
 import '../services/apis/inOpenDocument/GetAttachmentItem_api.dart';
+import '../services/apis/inOpenDocument/get_document_attachments.dart';
 import '../services/apis/inOpenDocument/get_document_audit_logs_api.dart';
 import '../services/apis/inOpenDocument/get_document_links_api.dart';
 import '../services/apis/inOpenDocument/get_document_receivers_api.dart';
@@ -460,7 +459,7 @@ class DocumentController extends GetxController {
   RxInt documentEditedInOfficeId = 0.obs;
 
   SecureStorage secureStorage = SecureStorage();
-  CanOpenDocumentModel? canOpenDocumentModel;
+  DocumentModel? documentBaseModel;
   final record = FlutterSoundRecorder();
 
   bool notoragnalFileDoc = false;
@@ -530,7 +529,7 @@ class DocumentController extends GetxController {
 
   //دي الرد بتاع السيف للاتاتشمنت
   getatt_achments_model.Attachments? saveAttAchmentItemAnnotationsresalt;
-  GetattAchmentsModel? saveAttAchmentItemAnnotationsData;
+  GetAttachmentsModel? saveAttAchmentItemAnnotationsData;
 
   getAttachmentItem({context, documentId, transferId, attachmentId}) {
     GetAttachmentItemAPI getAttachmentItemAPI = GetAttachmentItemAPI(context);
@@ -560,7 +559,7 @@ class DocumentController extends GetxController {
         multiTransferNode[key]?.voiceNotePrivate = false;
         multiTransferNode[key]?.destinationId = key.toString();
         multiTransferNode[key]?.purposeId =
-            canOpenDocumentModel!.correspondence!.purposeId;
+            documentBaseModel!.correspondence!.purposeId;
         multiTransferNode[key]?.voiceNotePrivate = false;
       }
     });
@@ -658,12 +657,12 @@ class DocumentController extends GetxController {
   }
 
   //تحديث كان ابن فيل وجلب جميع البيانات الخاصه بلملف
-  updatecanOpenDocumentModel(CanOpenDocumentModel data) {
+  updatecanOpenDocumentModel(DocumentModel data) {
     pdfAndSing.clear();
     pdfAndSingData.clear();
 
-    canOpenDocumentModel = data;
-    canOpenDocumentModel?.attachments?.attachments?.forEach((element) {
+    documentBaseModel = data;
+    documentBaseModel?.attachments?.attachments?.forEach((element) {
       if (element.isOriginalMail!) {
         print("element.uRL=>      ${element.uRL}");
         oragnalFileDocpdfUrlFile = element.uRL!;
@@ -720,7 +719,6 @@ class DocumentController extends GetxController {
       );
     }
 
-    print("update canOpenDocumentModel");
     update();
   }
 
@@ -844,9 +842,8 @@ class DocumentController extends GetxController {
   }
 
   Future<GetDocumentReceiversModel?> getRecieversData(context) async {
-    var transferId = canOpenDocumentModel!.correspondence!.transferId!;
-    var correspondenceId =
-        canOpenDocumentModel!.correspondence!.correspondenceId;
+    var transferId = documentBaseModel!.correspondence!.transferId!;
+    var correspondenceId = documentBaseModel!.correspondence!.correspondenceId;
     return await getDocumentReceiversdata(
         context: context,
         correspondenceId: correspondenceId,
@@ -854,9 +851,8 @@ class DocumentController extends GetxController {
   }
 
   Future<GetDocumentLinksModel?> getLinks(context) async {
-    var transferId = canOpenDocumentModel!.correspondence!.transferId!;
-    var correspondenceId =
-        canOpenDocumentModel!.correspondence!.correspondenceId;
+    var transferId = documentBaseModel!.correspondence!.transferId!;
+    var correspondenceId = documentBaseModel!.correspondence!.correspondenceId;
     return await getDocumentLinksdata(
         context: context,
         correspondenceId: correspondenceId,
@@ -864,8 +860,7 @@ class DocumentController extends GetxController {
   }
 
   Future<GetDocumentLogsModel?> getAuditLog(context) async {
-    var correspondenceId =
-        canOpenDocumentModel!.correspondence!.correspondenceId;
+    var correspondenceId = documentBaseModel!.correspondence!.correspondenceId;
     return await getDocumentAuditLogsdata(
       context: context,
       docId: correspondenceId!,
@@ -873,9 +868,8 @@ class DocumentController extends GetxController {
   }
 
   Future<GetDocumentTransfersModel?> getTransfersData(context) async {
-    var transferId = canOpenDocumentModel!.correspondence!.transferId!;
-    var correspondenceId =
-        canOpenDocumentModel!.correspondence!.correspondenceId!;
+    var transferId = documentBaseModel!.correspondence!.transferId!;
+    var correspondenceId = documentBaseModel!.correspondence!.correspondenceId!;
     return await getDocumentTransfersdata(
       context: context,
       correspondenceId: correspondenceId,
@@ -921,7 +915,7 @@ class DocumentController extends GetxController {
     usersWillSendTo.add(user);
     multipletransfersSend.TransferNode transferNode =
         multipletransfersSend.TransferNode(
-            purposeId: canOpenDocumentModel!.correspondence!.purposeId,
+            purposeId: documentBaseModel!.correspondence!.purposeId,
             destinationId: user.id.toString(),
             voiceNotePrivate: false);
     multiTransferNode[user.id!] = transferNode;
@@ -1114,7 +1108,7 @@ class DocumentController extends GetxController {
       attachmentInfoModel = AttachmentInfoModel(
           token: secureStorage.token()!,
           correspondenceId:
-              canOpenDocumentModel!.correspondence!.correspondenceId!,
+              documentBaseModel!.correspondence!.correspondenceId!,
           fileName: name,
           fileContent: img64,
           language: Get.locale?.languageCode == "en" ? "en" : "ar");
@@ -1584,10 +1578,9 @@ class DocumentController extends GetxController {
   }
 
   bool canOpenInOffice() {
-    if (canOpenDocumentModel == null) return false;
-    if (canOpenDocumentModel!.attachments!.attachments!.length == 0)
-      return false;
-    var attachment = canOpenDocumentModel!.attachments!.attachments![0];
+    if (documentBaseModel == null) return false;
+    if (documentBaseModel!.attachments!.attachments!.length == 0) return false;
+    var attachment = documentBaseModel!.attachments!.attachments![0];
     var editOfficeDetails = attachment.editOfficeDetails!;
     if (editOfficeDetails.spUrl == null ||
         editOfficeDetails.spUrl!.isEmpty ||
@@ -1598,7 +1591,7 @@ class DocumentController extends GetxController {
   }
 
   Future<String> refreshOffice({context}) async {
-    var attachment = canOpenDocumentModel!.attachments!.attachments![0];
+    var attachment = documentBaseModel!.attachments!.attachments![0];
     var editOfficeDetails = attachment.editOfficeDetails!;
 
     if (editOfficeDetails.spUrl == null ||
@@ -1621,7 +1614,7 @@ class DocumentController extends GetxController {
   }
 
   Future<String> prepareOpenDocumentInOffice({context}) async {
-    var attachment = canOpenDocumentModel!.attachments!.attachments![0];
+    var attachment = documentBaseModel!.attachments!.attachments![0];
     var editOfficeDetails = attachment.editOfficeDetails!;
 
     if (editOfficeDetails.spUrl == null ||
@@ -2138,10 +2131,9 @@ class DocumentController extends GetxController {
 
                   multipleTransferspost(
                     context: context,
-                    transferId:
-                        canOpenDocumentModel!.correspondence!.transferId!,
+                    transferId: documentBaseModel!.correspondence!.transferId!,
                     correspondenceId:
-                        canOpenDocumentModel!.correspondence!.correspondenceId,
+                        documentBaseModel!.correspondence!.correspondenceId,
                   );
                   Navigator.pop(context);
                 },

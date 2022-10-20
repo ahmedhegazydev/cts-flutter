@@ -67,6 +67,8 @@ class SettingsApp {
   static const String GetAttachmentItemUrl =
       baseUrl + "/GetAttachmentItem?"; //Token={Token}&GctId={GctId}")
 
+  static const String GetAttachmentsUrl = baseUrl + "/GetAttachments?";
+
   //////// #region G2G
 
   static const String GetG2GInfoForExportUrl = baseUrl +

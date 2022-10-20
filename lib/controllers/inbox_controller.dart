@@ -25,6 +25,7 @@ import '../services/apis/get_correspondences_all_api.dart';
 import '../services/apis/get_correspondences_api.dart';
 
 //import '../services/json_model/get_correspondences_model.dart';
+import '../services/apis/inOpenDocument/get_document_attachments.dart';
 import '../services/apis/multiple_transfers_api.dart';
 import '../services/json_model/basket/add_documents_to_basket_request.dart';
 import '../services/json_model/basket/add_edit_basket_flag_model.dart';
@@ -36,6 +37,7 @@ import '../services/json_model/can_open_document_model.dart';
 import '../services/json_model/default_on_success_result.dart';
 import '../services/json_model/favorites/list_all/ListFavoriteRecipients_response.dart';
 import '../services/json_model/find_recipient_model.dart';
+import '../services/json_model/inopendocModel/getatt_achments_model.dart';
 import '../services/json_model/login_model.dart';
 import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
 import '../utility/all_string_const.dart';
@@ -297,7 +299,7 @@ class InboxController extends GetxController {
 
   final SecureStorage secureStorage = SecureStorage();
 
-  CanOpenDocumentModel? canOpenDocumentModel;
+  DocumentModel? canOpenDocumentModel;
 
   bool getData = false;
 
@@ -747,6 +749,55 @@ class InboxController extends GetxController {
 
   //
 
+  Future<GetAttachmentsModel?> getDocumentAttachments(
+      {required context, required String docId}) async {
+    final GetDocumentAttachmentsAPI api = GetDocumentAttachmentsAPI(context);
+    api.data =
+        "Token=${secureStorage.token()}&docId=$docId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+    var value = await api.getData();
+    return value as GetAttachmentsModel;
+  }
+
+  Future PrepareDocumentBaseObject({
+    required context,
+    required correspondenceId,
+    required transferId,
+    required Correspondence correspondence,
+  }) async {
+    var attachments =
+        await getDocumentAttachments(context: context, docId: correspondenceId);
+
+    DocumentModel baseModel =
+        DocumentModel(allow: true, correspondence: correspondence);
+
+    //baseModel.correspondence
+
+    Get.put(DocumentController());
+    Get.find<DocumentController>().pdfAndSing.clear();
+    Get.find<DocumentController>().pdfAndSingData.clear();
+    Get.find<DocumentController>().documentEditedInOfficeId.value = 0;
+
+    CanOpenDocumentApi canOpenDocumentApi = CanOpenDocumentApi(context);
+    canOpenDocumentApi.data =
+        "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
+    var value = await canOpenDocumentApi.getData(); //.then((value) {
+    canOpenDocumentModel = value as DocumentModel;
+    Get.find<DocumentController>().documentBaseModel = value;
+    Get.find<DocumentController>().updatecanOpenDocumentModel(value);
+    if (Correspondence != null) {
+      Get.find<DocumentController>().documentBaseModel!.correspondence =
+          Correspondence;
+      Navigator.of(context).pop();
+      Get.toNamed("/DocumentPage");
+    } else {
+      if (canOpenDocumentModel!.allow!) {
+        Get.toNamed("/DocumentPage");
+      } else {
+        Get.snackbar("", "canotopen".tr);
+      }
+    }
+  }
+
   Future canOpenDoc(
       {required context,
       // required docId,
@@ -761,19 +812,13 @@ class InboxController extends GetxController {
     CanOpenDocumentApi canOpenDocumentApi = CanOpenDocumentApi(context);
     canOpenDocumentApi.data =
         "Token=${secureStorage.token()}&correspondenceId=$correspondenceId&transferId=$transferId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
-
     var value = await canOpenDocumentApi.getData(); //.then((value) {
-    canOpenDocumentModel = value as CanOpenDocumentModel;
-    Get.find<DocumentController>().canOpenDocumentModel = value;
-
+    canOpenDocumentModel = value as DocumentModel;
+    Get.find<DocumentController>().documentBaseModel = value;
     Get.find<DocumentController>().updatecanOpenDocumentModel(value);
-
     if (Correspondence != null) {
-      Get.find<DocumentController>().canOpenDocumentModel!.correspondence =
+      Get.find<DocumentController>().documentBaseModel!.correspondence =
           Correspondence;
-
-      // Get.find<DocumentController>().updatecanOpenDocumentModel(
-      //     Get.find<DocumentController>().canOpenDocumentModel!);
       Navigator.of(context).pop();
       Get.toNamed("/DocumentPage");
     } else {
@@ -783,138 +828,12 @@ class InboxController extends GetxController {
         Get.snackbar("", "canotopen".tr);
       }
     }
-    // }).catchError((e) {
-    //   print("eeeeeeeeeeeeeeee=>  $e");
-    // });
-
-    // Get.toNamed("/DocumentPage");
   }
 
   int userId = 0;
-
   Map<int, ReplyWithVoiceNoteRequestModel> transfarForMany = {};
   Map<int, CustomActions> transfarForManyCustomActions = {};
 
-// //open the AttachmentItem
-// //   getAttachmentItemlocal(
-// //       {documentId, transferId, attachmentId, required BuildContext context}) async {
-// //
-// //     notoragnalFileDoc=true;
-// //
-// //     final jsondata = await rootBundel.rootBundle.loadString(
-// //         "assets/json/getattachmentitem.json");
-// //
-// //     getAttAchmentItem = GetAttAchmentItem.fromJson(json.decode(jsondata));
-// //     print("g2gInfoForExportModel?.toJson()=>  ${g2gInfoForExportModel
-// //         ?.toJson()}");
-// //
-// //     pdfUrlFile=   getAttAchmentItem!.attachment!.uRL!;
-// //
-// // update();
-// //
-// //
-// //     // showDialog(
-// //     //     context: context,
-// //     //     builder: (BuildContext context) {
-// //     //       return AlertDialog(
-// //     //         title: Text(getAttAchmentItem!.attachment!.fileName!),
-// //     //         content: SizedBox(
-// //     //             height: MediaQuery
-// //     //                 .of(context)
-// //     //                 .size
-// //     //                 .height * .7,
-// //     //             width: MediaQuery
-// //     //                 .of(context)
-// //     //                 .size
-// //     //                 .width * .7,
-// //     //             child: SfPdfViewer.network(
-// //     //               //'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf'
-// //     //                 getAttAchmentItem!.attachment!.uRL!
-// //     //
-// //     //             )),
-// //     //         actions: <Widget>[
-// //     //           TextButton(
-// //     //             onPressed: () {
-// //     //               Navigator.of(context).pop();
-// //     //             },
-// //     //             child: Text("Ok"),
-// //     //           ),
-// //     //         ],
-// //     //       );
-// //     //     });
-// //   }
-//
-//   // [OperationContract]
-//   // [WebGet(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
-//   // UriTemplate = "GetAttachmentItem?)]
-//   // GetAttachmentItemResult GetAttachmentItem(string Token, string documentId, string transferId, string attachmentId, string language);
-//   //
-//
-// //=============================================================================================
-//
-//   multipleTransferspost({context, correspondenceId, transferId}) {
-//     //
-//     MultipleTransfersAPI _multipleTransfersAPI = MultipleTransfersAPI(context);
-//     recordingMap.forEach((key, value) async {
-//       print("key====>$key");
-//       print("key====>${value}");
-//
-//       String? audioFileBes64 = await audiobase64String(file: File(value));
-//
-//       multiTransferNode[key]?.voiceNote = audioFileBes64;
-//       multiTransferNode[key]?.voiceNoteExt = "m4a";
-//       multiTransferNode[key]?.voiceNotePrivate = false;
-//       multiTransferNode[key]?.destinationId = key.toString();
-//       multiTransferNode[key]?.purposeId =
-//           canOpenDocumentModel!.correspondence!.purposeId;
-//       multiTransferNode[key]?.voiceNotePrivate = false;
-//
-//       // multipletransfersSend.TransferNode transferNode =
-//       // multipletransfersSend.TransferNode(
-//       //     destinationId: key.toString(),note: ,voiceNotePrivate: ,
-//       //     purposeId:
-//       //         canOpenDocumentModel!.correspondence!.correspondenceId!,
-//       //     //value.correspondencesId!,
-//       //     dueDate: canOpenDocumentModel!.correspondence!.docDueDate!,
-//       //     //canOpenDocumentModel!.correspondence!.docDueDate!,
-//       //     voiceNote: audioFileBes64!,
-//       //     voiceNoteExt: "m4a");
-//       print(
-//           "multiTransferNode[key]=>    ${jsonEncode(multiTransferNode[key]?.toMap())}");
-//       print("key====>${jsonEncode(value)}");
-//     });
-//
-//     List<multipletransfersSend.TransferNode> transfers = [];
-//     multiTransferNode.forEach((key, value) {
-//       transfers.add(value);
-//     });
-//
-//     multipletransfersSend.MultipleTransfers multipleTransfers =
-//     multipletransfersSend.MultipleTransfers(
-//         transfers: transfers,
-//         correspondenceId: correspondenceId,
-//         token: secureStorage.token()!,
-//         transferId: transferId);
-//
-//     // MultipleTransfersModel multipleTransfersModel = MultipleTransfersModel(
-//     //     token: secureStorage.token()!,
-//     //     correspondenceId: correspondenceId,
-//     //     transferId: transferId,
-//     //     transfers: transfers);
-//
-//     print(
-//         "multipleTransfersModel.toMap()   =>${jsonEncode(multipleTransfers.toMap())}");
-//     transfarForMany.clear();
-//     usersWillSendTo.clear();
-//     _multipleTransfersAPI.post(multipleTransfers.toMap()).then((value) {
-//       DefaultOnSuccessResult defaultOnSuccessResult=value as DefaultOnSuccessResult;
-//
-//       Get.snackbar("", "تم التنفيذ بنجاح");
-//
-//     });
-//   }
-
-//============================================================================
   CustomActions? getactions(id) {
     return transfarForManyCustomActions[id];
     update();
@@ -998,7 +917,6 @@ class InboxController extends GetxController {
   }
 
   playRec() async {
-    // await audioPlayer!.openAudioSession();
     await audioPlayer!.stopPlayer();
     await audioPlayer!.startPlayer(fromURI: _directoryPath);
   }
@@ -1166,22 +1084,7 @@ class InboxController extends GetxController {
       multiTransferNode[key]?.voiceNotePrivate = false;
       multiTransferNode[key]?.destinationId = key.toString();
       multiTransferNode[key]?.purposeId = purposeId;
-      // canOpenDocumentModel!.correspondence!.purposeId;
       multiTransferNode[key]?.voiceNotePrivate = false;
-
-      // multipletransfersSend.TransferNode transferNode =
-      // multipletransfersSend.TransferNode(
-      //     destinationId: key.toString(),note: ,voiceNotePrivate: ,
-      //     purposeId:
-      //         canOpenDocumentModel!.correspondence!.correspondenceId!,
-      //     //value.correspondencesId!,
-      //     dueDate: canOpenDocumentModel!.correspondence!.docDueDate!,
-      //     //canOpenDocumentModel!.correspondence!.docDueDate!,
-      //     voiceNote: audioFileBes64!,
-      //     voiceNoteExt: "m4a");
-      print(
-          "multiTransferNode[key]=>    ${jsonEncode(multiTransferNode[key]?.toMap())}");
-      print("key====>${jsonEncode(value)}");
     });
 
     List<multipletransfersSend.TransferNode> transfers = [];
@@ -1195,21 +1098,9 @@ class InboxController extends GetxController {
             correspondenceId: correspondenceId,
             token: secureStorage.token()!,
             transferId: transferId);
-
-    // MultipleTransfersModel multipleTransfersModel = MultipleTransfersModel(
-    //     token: secureStorage.token()!,
-    //     correspondenceId: correspondenceId,
-    //     transferId: transferId,
-    //     transfers: transfers);
-
-    print(
-        "multipleTransfersModel.toMap()   =>${jsonEncode(multipleTransfers.toMap())}");
     transfarForMany.clear();
     usersWillSendTo.clear();
     _multipleTransfersAPI.post(multipleTransfers.toMap()).then((value) {
-      // DefaultOnSuccessResult defaultOnSuccessResult =
-      //     value as DefaultOnSuccessResult;
-
       Get.snackbar("", "تم التنفيذ بنجاح");
     });
   }

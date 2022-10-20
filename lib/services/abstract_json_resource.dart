@@ -1,2 +1,1 @@
-abstract class AbstractJsonResource{
-}
+abstract class AbstractJsonResource {}

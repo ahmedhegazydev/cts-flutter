@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:signature/signature.dart';
 
+import '../db/cts_database.dart';
 import '../services/apis/update_signature_api.dart';
 import '../services/json_model/login_model.dart';
 import '../services/json_model/signature_Info_model.dart';
@@ -53,7 +54,6 @@ class SignaturePageController extends GetxController {
       LoginModel data = LoginModel.fromJson(logindata!);
       multiSignatures = data.multiSignatures ?? [];
       update();
-      //multiSignatures.add(SecureStorage.to.readSecureData(AllStringConst.Signature))
     }
   }
 
@@ -73,11 +73,13 @@ class SignaturePageController extends GetxController {
 
     await updateSignature(
         context: context, signatureInfoModel: _signatureInfoModel);
+    await CtsSettingsDatabase.instance
+        .saveString(AllStringConst.Signature, base64.encode(data));
 
-    await SecureStorage.to.deleteSecureData(AllStringConst.Signature);
+    // await SecureStorage.to.deleteSecureData(AllStringConst.Signature);
 
-    SecureStorage.to
-        .writeSecureData(AllStringConst.Signature, base64.encode(data));
+    // SecureStorage.to
+    //     .writeSecureData(AllStringConst.Signature, base64.encode(data));
 
     saveSing = false;
     update();

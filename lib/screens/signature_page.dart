@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:signature/signature.dart';
 
 import '../controllers/signature_Controller.dart';
+import '../db/cts_database.dart';
 import '../utility/all_const.dart';
 import '../utility/all_string_const.dart';
 import '../utility/storage.dart';
@@ -46,7 +47,7 @@ class SignaturePage extends GetView<SignaturePageController> {
         ], leading: SizedBox(), centerTitle: true),
         body: Row(
           children: [
-            Expanded(flex: 1, child: buildSavedSignaturesBar()),
+            Expanded(flex: 1, child: buildSavedSignaturesBar(context)),
             SizedBox(
               width: size.width * .05,
             ),
@@ -70,9 +71,10 @@ class SignaturePage extends GetView<SignaturePageController> {
                   Container(
                       width: double.infinity,
                       height: size.height * .4,
+                      color: Colors.grey.withOpacity(.5),
                       child: Signature(
                         //dynamicPressureSupported: true,
-                        backgroundColor: Colors.grey.withOpacity(.5),
+                        backgroundColor: Colors.transparent,
                         controller: controller.controller,
                         width: size.width * 0.7,
                         height: size.height * .4,
@@ -138,7 +140,7 @@ class SignaturePage extends GetView<SignaturePageController> {
         ));
   }
 
-  Container buildSavedSignaturesBar() {
+  Container buildSavedSignaturesBar(context) {
     return Container(
       child: Padding(
         padding: const EdgeInsets.only(top: 20.0, right: 10, left: 10),
@@ -154,7 +156,7 @@ class SignaturePage extends GetView<SignaturePageController> {
           SizedBox(
             height: 20,
           ),
-          buildDefaultSignature(),
+          DefaultSignature(context),
           SizedBox(
             height: 20,
           ),
@@ -175,27 +177,58 @@ class SignaturePage extends GetView<SignaturePageController> {
     );
   }
 
-  buildDefaultSignature() {
-    var signature = SecureStorage.to.readSecureData(AllStringConst.Signature);
-    if (signature != null && signature.isNotEmpty)
-      return GetBuilder<SignaturePageController>(builder: (logic) {
-        return Container(
-          height: 100,
-          padding: EdgeInsets.all(8),
-          color: Colors.grey.withOpacity(.5),
-          child: CachedMemoryImage(
-            uniqueKey: "defaultsignature",
-            errorWidget: const Text('Error'),
-            bytes: dataFromBase64String(signature),
-            placeholder: const CircularProgressIndicator(),
-          ),
-        );
-      });
-
-    return Container(
-      height: 100,
-    );
+  Widget DefaultSignature(context) {
+    return FutureBuilder<String?>(
+        future:
+            CtsSettingsDatabase.instance.getString(AllStringConst.Signature),
+        builder: (context, AsyncSnapshot<String?> snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data != null && snapshot.data!.isNotEmpty) {
+              return Container(
+                height: 100,
+                padding: EdgeInsets.all(8),
+                color: Colors.grey.withOpacity(.5),
+                child: Image(
+                  fit: BoxFit.fill,
+                  image: MemoryImage(
+                    dataFromBase64String(snapshot.data!),
+                  ),
+                ),
+              );
+            } else {
+              return Container(
+                height: 100,
+              );
+            }
+          } else {
+            return CircularProgressIndicator();
+          }
+        });
   }
+
+  // buildDefaultSignature() async {
+  //   var signature =
+  //       await CtsSettingsDatabase.instance.getString(AllStringConst.Signature);
+  //   // var signature = SecureStorage.to.readSecureData(AllStringConst.Signature);
+  //   if (signature != null && signature.isNotEmpty)
+  //     return GetBuilder<SignaturePageController>(builder: (logic) {
+  //       return Container(
+  //         height: 100,
+  //         padding: EdgeInsets.all(8),
+  //         color: Colors.grey.withOpacity(.5),
+  //         child: CachedMemoryImage(
+  //           uniqueKey: "defaultsignature",
+  //           errorWidget: const Text('Error'),
+  //           bytes: dataFromBase64String(signature),
+  //           placeholder: const CircularProgressIndicator(),
+  //         ),
+  //       );
+  //     });
+
+  //   return Container(
+  //     height: 100,
+  //   );
+  // }
 
   GetBuilder<SignaturePageController> buildList() {
     return GetBuilder<SignaturePageController>(builder: (logic) {
@@ -214,12 +247,11 @@ class SignaturePage extends GetView<SignaturePageController> {
                         height: 100,
                         padding: EdgeInsets.all(8),
                         color: Colors.grey.withOpacity(.5),
-                        child: CachedMemoryImage(
+                        child: Image(
                           fit: BoxFit.fill,
-                          uniqueKey: index.toString(),
-                          errorWidget: const Text('Error'),
-                          bytes: dataFromBase64String(signature2),
-                          placeholder: const CircularProgressIndicator(),
+                          image: MemoryImage(
+                            dataFromBase64String(signature2),
+                          ),
                         ),
                       ),
                     );

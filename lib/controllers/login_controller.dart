@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cts/db/cts_database.dart';
 import 'package:encrypt/encrypt.dart' as enc;
 import 'package:flutter/material.dart';
 
@@ -120,9 +121,10 @@ class LoginController extends GetxController {
               AllStringConst.DepartmentName, loginModel.departmentName);
           await SecureStorage.to
               .writeSecureData(AllStringConst.Pincode, loginModel.pincode);
-          await SecureStorage.to.deleteSecureData(AllStringConst.Signature);
-          await SecureStorage.to
-              .writeSecureData(AllStringConst.Signature, loginModel.signature);
+          //  await SecureStorage.to.deleteSecureData(AllStringConst.Signature);
+          await CtsSettingsDatabase.instance
+              .saveString(AllStringConst.Signature, loginModel.signature ?? "");
+
           await SecureStorage.to.writeSecureData(
               AllStringConst.SignatureId, loginModel.signatureId);
           await SecureStorage.to.writeSecureData(

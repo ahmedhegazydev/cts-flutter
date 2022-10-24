@@ -9,55 +9,23 @@ class CtsSettingsDatabase {
   CtsSettingsDatabase._init();
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
-  // Future<Database> get database async {
-  //   if (_database != null) return _database!;
+  Future<String> saveString(String key, String value) async {
+    final SharedPreferences prefs = await _prefs;
+    prefs.setString(key, value);
+    return value;
+  }
 
-  //   _database = await _initDB('notes.db');
-  //   return _database!;
-  // }
-
-  // Future<Database> _initDB(String filePath) async {
-  //   final dbPath = await getDatabasesPath();
-  //   final path = join(dbPath, filePath);
-
-  //   return await openDatabase(path, version: 1, onCreate: _createDB);
-  // }
-
-//   Future _createDB(Database db, int version) async {
-//     final idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
-//     final textType = 'TEXT NOT NULL';
-//     final boolType = 'BOOLEAN NOT NULL';
-//     final integerType = 'INTEGER NOT NULL';
-
-//     await db.execute('''
-// CREATE TABLE $tableNotes (
-//   ${SettingsFields.id} $idType,
-//   ${SettingsFields.baseUrl} $textType,
-//   ${SettingsFields.language} $textType,
-//   ${SettingsFields.color} $textType
-//   )
-// ''');
-//   }
+  Future<String?> getString(String key) async {
+    final SharedPreferences prefs = await _prefs;
+    return await prefs.getString(key);
+  }
 
   Future<SettingItem> create(SettingItem setting) async {
     final SharedPreferences prefs = await _prefs;
 
-    // final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-
-    // final db = await instance.database;
-
-    // final json = note.toJson();
-    // final columns =
-    //     '${NoteFields.title}, ${NoteFields.description}, ${NoteFields.time}';
-    // final values =
-    //     '${json[NoteFields.title]}, ${json[NoteFields.description]}, ${json[NoteFields.time]}';
-    // final id = await db
-    //     .rawInsert('INSERT INTO table_name ($columns) VALUES ($values)');
-
     prefs.setString("note.baseUrl", setting.baseUrl);
     prefs.setString("note.color", setting.color);
     prefs.setString("note.language", setting.language);
-    //final id = await db.insert(tableNotes, note.toJson());
     return setting; //.copy(id: id);
   }
 
@@ -91,8 +59,5 @@ class CtsSettingsDatabase {
     return 1;
   }
 
-  Future close() async {
-    // final db = await instance.database;
-    // db.close();
-  }
+  Future close() async {}
 }

@@ -31,7 +31,7 @@ class SearchPageResultController extends GetxController {
   void onReady() {
     super.onReady();
 
-    logindata = _secureStorage.readSecureJsonData(AllStringConst.LogInData);
+    logindata = SecureStorage.to.readSecureJsonData(AllStringConst.LogInData);
     if (logindata != null) {
       LoginModel data = LoginModel.fromJson(logindata!);
       customActions = data.customActions;

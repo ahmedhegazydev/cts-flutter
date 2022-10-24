@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:cts/screens/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/public/flutter_sound_player.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
 import 'package:signature/signature.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -15,9 +13,6 @@ import '../controllers/landing_page_controller.dart';
 import '../controllers/main_controller.dart';
 import '../controllers/web_view_controller.dart';
 import '../services/apis/reply_with_voice_note_api.dart';
-import '../services/json_model/find_recipient_model.dart';
-import '../services/json_model/inopendocModel/g2g/g2g_Info_for_export_model.dart';
-import '../services/json_model/login_model.dart';
 import '../services/json_model/reply_with_voicenote_model.dart';
 import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
 import '../utility/all_const.dart';
@@ -150,6 +145,8 @@ class DocumentPage extends GetWidget<DocumentController> {
     var all = ViewerController.to.allAnnotations.toList();
     List<Map> data = [];
     all.forEach((element) {
+      element.height = element.height * 2;
+      element.width = element.width * 2;
       data.add(element.toMap());
     });
     Map<String, List<Map>> updated = {"1": data};
@@ -212,10 +209,7 @@ class DocumentPage extends GetWidget<DocumentController> {
 
   /// ToDo get the print
   Widget _buildBody(BuildContext context) {
-    Orientation orientation = MediaQuery.of(context).orientation;
-
     Size size = MediaQuery.of(context).size;
-
     Size s = Size(size.width, size.height);
     if (controller.documentEditedInOfficeId.value != 0) {
       return Center(
@@ -224,14 +218,17 @@ class DocumentPage extends GetWidget<DocumentController> {
             showLoaderDialog(context);
             await controller.refreshOffice(context: context);
 
-            await Get.find<InboxController>().canOpenDoc(
+            // await getDocumentAttachments(
+            //     context: context,
+            //     docId: correspondence.correspondenceId!,
+            //     transferId: correspondence.transferId!);
+            Navigator.pop(context);
+            await Get.find<InboxController>().openDocument(
                 context: context,
-                correspondenceId: controller
-                    .documentBaseModel!.correspondence!.correspondenceId,
-                transferId:
-                    controller.documentBaseModel!.correspondence!.transferId);
-            await Future.delayed(Duration(seconds: 1));
-            Navigator.of(context).pop();
+                correspondence: controller.documentBaseModel!.correspondence!);
+
+            // await Future.delayed(Duration(seconds: 1));
+            // Navigator.of(context).pop();
           },
           icon: Icon(
             Icons.refresh,
@@ -300,7 +297,7 @@ class DocumentPage extends GetWidget<DocumentController> {
     int priorityID = int.parse(correspondence.priorityId!);
     var priority =
         cm?.priorities?.where((element) => element.Value == priorityID).first;
-    int privacyID = int.parse(correspondence.privacyId!);
+    int privacyID = int.parse(correspondence.privacyId ?? "0");
     var privacy =
         cm?.privacies?.where((element) => element.Value == privacyID).first;
 
@@ -713,14 +710,16 @@ class DocumentPage extends GetWidget<DocumentController> {
       (index) {
         return DataRow(
           cells: <DataCell>[
-            DataCell(Text(data[index].dLACTIONNAME!)),
-            DataCell(Text(data[index].actionDate!)),
-            DataCell(Text(data[index].actionUser!)),
-            DataCell(Text(data[index].dLDETAILS!)),
+            DataCell(Text(data[index].dLACTIONNAME ?? "")),
+            DataCell(Text(data[index].actionDate ?? "")),
+            DataCell(Text(data[index].actionUser ?? "")),
+            DataCell(Text(data[index].dLDETAILS ?? "")),
           ],
         );
       },
     );
+
+    //rows.add(rows[0]);
 
     Navigator.pop(context);
     generateListingDialog(context, dialogImage, dialogTitle, columns, rows);
@@ -761,9 +760,11 @@ class DocumentPage extends GetWidget<DocumentController> {
         // title: Text(" "),
         content: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: DataTable(
-            columns: columns,
-            rows: rows,
+          child: SingleChildScrollView(
+            child: DataTable(
+              columns: columns,
+              rows: rows,
+            ),
           ),
         ),
       ),
@@ -778,8 +779,6 @@ class DocumentPage extends GetWidget<DocumentController> {
     if (fileURL.isNotEmpty) {
       final Uri toLaunch = Uri.parse("ms-word:ofv|u|$fileURL|a|App");
       Navigator.pop(context);
-      final box = context.findRenderObject() as RenderBox?;
-      final Size size = MediaQuery.of(context).size;
 
       final bool nativeAppLaunchSucceeded = await launchUrl(
         toLaunch,
@@ -801,6 +800,10 @@ class DocumentPage extends GetWidget<DocumentController> {
           );
         }
       }
+    } else {
+      CustomSnackBar.error(
+        message: "tryAgainLater".tr,
+      );
     }
   }
 
@@ -1108,707 +1111,6 @@ class DocumentPage extends GetWidget<DocumentController> {
     );
   }
 
-  // _popUpMenuTransfer(context) async {
-  //   await controller.listFavoriteRecipients(context: context);
-  //   Navigator.of(context).pop();
-  //   showDialog(
-  //       context: context,
-  //       builder: (BuildContext context) {
-  //         return AlertDialog(
-  //           title: Row(//mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //               children: [
-  //             Image.asset(
-  //               'assets/images/refer.png',
-  //               height: 20,
-  //               width: 20,
-  //             ),
-  //             const SizedBox(
-  //               width: 8,
-  //             ),
-  //             Text(
-  //               "refer".tr,
-  //               style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-  //                   color: Colors.black.withOpacity(.5),
-  //                   fontSize: 18,
-  //                   fontWeight: FontWeight.bold),
-  //               textAlign: TextAlign.center,
-  //               overflow: TextOverflow.ellipsis,
-  //             ),
-  //             const Spacer(),
-  //             InkWell(
-  //               onTap: () {
-  //                 controller.filterWord = "";
-  //                 Navigator.pop(context);
-  //               },
-  //               child: Image.asset(
-  //                 'assets/images/close_button.png',
-  //                 width: 30,
-  //                 height: 30,
-  //               ),
-  //             ),
-  //           ]),
-  //           content: SingleChildScrollView(
-  //             child: Column(
-  //                 crossAxisAlignment: CrossAxisAlignment.start,
-  //                 children: [
-  //                   Text("referTo".tr,
-  //                       style: Theme.of(context).textTheme.headline3!.copyWith(
-  //                           color: Colors.black.withOpacity(.5),
-  //                           fontSize: 18,
-  //                           fontWeight: FontWeight.bold)),
-  //                   Container(
-  //                     height: 100,
-  //                     width: MediaQuery.of(context).size.width * .8,
-  //                     child: GetBuilder<DocumentController>(
-  //                         autoRemove: false,
-  //                         builder: (logic) {
-  //                           return ListView.builder(
-  //                               scrollDirection: Axis.horizontal,
-  //                               itemCount: (controller
-  //                                           .favoriteRecipientsResponse
-  //                                           ?.recipients
-  //                                           ?.length ??
-  //                                       0) +
-  //                                   1,
-  //                               itemBuilder: (context, pos) {
-  //                                 if (pos ==
-  //                                     (controller.favoriteRecipientsResponse
-  //                                             ?.recipients?.length ??
-  //                                         0)) {
-  //                                   return InkWell(
-  //                                     onTap: () {
-  //                                       _popUpMenuMore(context);
-  //                                     },
-  //                                     child: Container(
-  //                                       padding: EdgeInsets.all(8),
-  //                                       child: Icon(Icons.add,
-  //                                           size: 30, color: Colors.white),
-  //                                       decoration: BoxDecoration(
-  //                                         shape: BoxShape.circle,
-  //                                         color: Theme.of(context)
-  //                                             .colorScheme
-  //                                             .primary,
-  //                                       ),
-  //                                       height: 75,
-  //                                       width: 75,
-  //                                     ),
-  //                                   );
-  //                                 } else {
-  //                                   return Padding(
-  //                                     padding: const EdgeInsets.all(8.0),
-  //                                     child: InkWell(
-  //                                       onTap: () {
-  //                                         Destination user = Destination(
-  //                                             value: controller
-  //                                                 .favoriteRecipientsResponse!
-  //                                                 .recipients![pos]
-  //                                                 .targetName,
-  //                                             id: controller
-  //                                                 .favoriteRecipientsResponse!
-  //                                                 .recipients![pos]
-  //                                                 .targetGctid);
-  //                                         controller.addTousersWillSendTo(
-  //                                             user: user);
-  //                                       },
-  //                                       child: Card(
-  //                                         elevation: 8,
-  //                                         child: Row(
-  //                                           children: [
-  //                                             controller
-  //                                                     .favoriteRecipientsResponse!
-  //                                                     .recipients![pos]
-  //                                                     .targetPhotoBs64!
-  //                                                     .trim()
-  //                                                     .isEmpty
-  //                                                 ? Container(
-  //                                                     padding:
-  //                                                         EdgeInsets.all(8),
-  //                                                     decoration: BoxDecoration(
-  //                                                         shape:
-  //                                                             BoxShape.circle,
-  //                                                         color:
-  //                                                             Theme.of(context)
-  //                                                                 .colorScheme
-  //                                                                 .primary,
-  //                                                         image:
-  //                                                             DecorationImage(
-  //                                                                 image:
-  //                                                                     AssetImage(
-  //                                                                   "assets/images/pr.jpg",
-  //                                                                 ),
-  //                                                                 fit: BoxFit
-  //                                                                     .cover)),
-  //                                                     height: 75,
-  //                                                     width: 75,
-  //                                                   )
-  //                                                 : Container(
-  //                                                     padding:
-  //                                                         EdgeInsets.all(8),
-  //                                                     decoration: BoxDecoration(
-  //                                                         shape:
-  //                                                             BoxShape.circle,
-  //                                                         color:
-  //                                                             Theme.of(context)
-  //                                                                 .colorScheme
-  //                                                                 .primary,
-  //                                                         image: DecorationImage(
-  //                                                             image: MemoryImage(
-  //                                                                 dataFromBase64String(controller
-  //                                                                     .favoriteRecipientsResponse!
-  //                                                                     .recipients![
-  //                                                                         pos]
-  //                                                                     .targetPhotoBs64!)),
-  //                                                             fit: BoxFit
-  //                                                                 .cover)),
-  //                                                     height: 75,
-  //                                                     width: 75,
-  //                                                   ),
-  //                                             Text(controller
-  //                                                 .favoriteRecipientsResponse!
-  //                                                 .recipients![pos]
-  //                                                 .targetName!)
-  //                                           ],
-  //                                         ),
-  //                                       ),
-  //                                     ),
-  //                                   );
-  //                                 }
-
-  //                                 //  CircleAvatar(backgroundColor: Colors.red,backgroundImage: AssetImage("assets/images/pr.jpg",),,radius: 30,);
-  //                               });
-  //                         }),
-  //                   ),
-  //                   const Divider(
-  //                     color: Colors.grey,
-  //                   ),
-  //                   SizedBox(
-  //                       width: MediaQuery.of(context).size.width * .8,
-  //                       height: 300, // MediaQuery.of(context).size.height * .5,
-  //                       child: GetBuilder<DocumentController>(
-  //                         autoRemove: false,
-  //                         //   assignId: true,//tag: "user",
-  //                         builder: (logic) {
-  //                           return //Text(logic.filterWord);
-
-  //                               ListView.builder(
-  //                                   scrollDirection: Axis.vertical,
-  //                                   itemCount:
-  //                                       controller.usersWillSendTo.length,
-  //                                   itemBuilder: (context, pos) {
-  //                                     return //Text(controller.filterWord);
-
-  //                                         Padding(
-  //                                       padding: const EdgeInsets.all(8.0),
-  //                                       child: Container(
-  //                                         color: Colors.grey[200],
-  //                                         child: Column(children: [
-  //                                           Row(
-  //                                               crossAxisAlignment:
-  //                                                   CrossAxisAlignment.center,
-  //                                               children: [
-  //                                                 Text(
-  //                                                   "name".tr,
-  //                                                   style: Theme.of(context)
-  //                                                       .textTheme
-  //                                                       .headline3!
-  //                                                       .copyWith(
-  //                                                         color:
-  //                                                             createMaterialColor(
-  //                                                           const Color
-  //                                                                   .fromRGBO(
-  //                                                               77, 77, 77, 1),
-  //                                                         ),
-  //                                                         fontSize: 15,
-  //                                                       ),
-  //                                                   textAlign: TextAlign.center,
-  //                                                   overflow:
-  //                                                       TextOverflow.ellipsis,
-  //                                                 ),
-  //                                                 Padding(
-  //                                                   padding:
-  //                                                       const EdgeInsets.all(
-  //                                                           8.0),
-  //                                                   child: Text(logic
-  //                                                           .usersWillSendTo[
-  //                                                               pos]
-  //                                                           .value ??
-  //                                                       ""),
-  //                                                   // child: Container(
-  //                                                   //   height: 50,
-  //                                                   //   width: 50,
-  //                                                   //   // decoration: const BoxDecoration(
-  //                                                   //   //   shape: BoxShape.circle,
-  //                                                   //   //   color: Colors.grey,
-  //                                                   //   // ),
-  //                                                   // ),
-  //                                                 ),
-  //                                                 SizedBox(
-  //                                                   width: 8,
-  //                                                 ),
-  //                                                 Spacer(),
-  //                                                 GestureDetector(
-  //                                                   onTap: () {
-  //                                                     print(
-  //                                                         "i deeeeeeeeeeeeeeeeeeeeeeee");
-  //                                                     controller.transfarForMany
-  //                                                         .remove(logic
-  //                                                             .usersWillSendTo[
-  //                                                                 pos]
-  //                                                             .id);
-  //                                                     logic.delTousersWillSendTo(
-  //                                                         user: logic
-  //                                                                 .usersWillSendTo[
-  //                                                             pos]);
-  //                                                   },
-  //                                                   child: Image.asset(
-  //                                                     'assets/images/close_button.png',
-  //                                                     width: 20,
-  //                                                     height: 20,
-  //                                                   ),
-  //                                                 ),
-  //                                               ]),
-  //                                           SizedBox(
-  //                                             height: 4,
-  //                                           ),
-  //                                           Row(
-  //                                             children: [
-  //                                               Expanded(
-  //                                                 child: Text("action".tr),
-  //                                               ),
-  //                                               SizedBox(
-  //                                                 width: 10,
-  //                                               ),
-  //                                               Expanded(
-  //                                                 child: Text("audioNotes".tr),
-  //                                               )
-  //                                             ],
-  //                                           ),
-  //                                           Row(
-  //                                             children: [
-  //                                               Expanded(
-  //                                                 child: Container(
-  //                                                   height: 40,
-  //                                                   color: Colors.grey[300],
-  //                                                   child: DropdownButton<
-  //                                                       CustomActions>(
-  //                                                     alignment:
-  //                                                         Alignment.topRight,
-  //                                                     value: logic.getactions(
-  //                                                         logic
-  //                                                             .usersWillSendTo[
-  //                                                                 pos]
-  //                                                             .id),
-  //                                                     // icon: const Icon(
-  //                                                     //     Icons.arrow_downward),
-  //                                                     elevation: 16,
-
-  //                                                     underline: SizedBox(),
-  //                                                     hint: Text("اختار"),
-  //                                                     onChanged: (CustomActions?
-  //                                                         newValue) {
-  //                                                       controller.setactions(
-  //                                                           logic
-  //                                                               .usersWillSendTo[
-  //                                                                   pos]
-  //                                                               .id,
-  //                                                           newValue!);
-  //                                                       //  dropdownValue = newValue!;
-  //                                                     },
-  //                                                     items: controller
-  //                                                         .customActions
-  //                                                         ?.map<
-  //                                                                 DropdownMenuItem<
-  //                                                                     CustomActions>>(
-  //                                                             (CustomActions
-  //                                                                 value) {
-  //                                                       return DropdownMenuItem<
-  //                                                           CustomActions>(
-  //                                                         value: value,
-  //                                                         child:
-  //                                                             Text(value.name!),
-  //                                                       );
-  //                                                     }).toList(),
-  //                                                   ),
-  //                                                 ),
-  //                                               ),
-  //                                               const SizedBox(
-  //                                                 width: 10,
-  //                                               ),
-  //                                               Expanded(
-  //                                                 child: Container(
-  //                                                     height: 40,
-  //                                                     color: Colors.grey[300],
-  //                                                     child: Row(
-  //                                                       mainAxisAlignment:
-  //                                                           MainAxisAlignment
-  //                                                               .spaceBetween,
-  //                                                       children: [
-  //                                                         GestureDetector(
-  //                                                           onTap: () async {
-  //                                                             ///To Do Start and stop rec
-  //                                                             controller.record
-  //                                                                     .isRecording
-  //                                                                 ? controller
-  //                                                                     .stopMathod()
-  //                                                                 : controller
-  //                                                                     .recordMathod(
-  //                                                                     id: logic
-  //                                                                         .usersWillSendTo[
-  //                                                                             pos]
-  //                                                                         .id,
-  //                                                                   );
-  //                                                           },
-  //                                                           child: Padding(
-  //                                                             padding:
-  //                                                                 const EdgeInsets
-  //                                                                     .all(8.0),
-  //                                                             child: GetBuilder<
-  //                                                                     DocumentController>(
-  //                                                                 id: "record",
-  //                                                                 autoRemove:
-  //                                                                     false,
-  //                                                                 builder:
-  //                                                                     (logic) {
-  //                                                                   return Icon(controller
-  //                                                                           .record
-  //                                                                           .isRecording
-  //                                                                       ? Icons
-  //                                                                           .stop
-  //                                                                       : Icons
-  //                                                                           .mic);
-  //                                                                 }),
-  //                                                           ),
-  //                                                         ),
-  //                                                         Padding(
-  //                                                           padding:
-  //                                                               const EdgeInsets
-  //                                                                   .all(8.0),
-  //                                                           child: Obx(
-  //                                                             () => InkWell(
-  //                                                               onTap: () {
-  //                                                                 if (!controller
-  //                                                                     .isPlayingAudio
-  //                                                                     .value)
-  //                                                                   controller.playMathod(
-  //                                                                       id: logic
-  //                                                                           .usersWillSendTo[pos]
-  //                                                                           .id);
-  //                                                                 else {
-  //                                                                   controller
-  //                                                                       .isPlayingAudio
-  //                                                                       .value = false;
-  //                                                                   controller
-  //                                                                       .audioPlayer!
-  //                                                                       .stopPlayer();
-  //                                                                 }
-  //                                                               },
-  //                                                               child: Icon(
-  //                                                                 controller
-  //                                                                         .isPlayingAudio
-  //                                                                         .value
-  //                                                                     ? Icons
-  //                                                                         .stop
-  //                                                                     : Icons
-  //                                                                         .play_arrow,
-  //                                                               ),
-  //                                                             ),
-  //                                                           ),
-  //                                                         )
-  //                                                       ],
-  //                                                     )),
-  //                                               )
-  //                                             ],
-  //                                           ),
-  //                                           SizedBox(
-  //                                             height: 8,
-  //                                           ),
-  //                                           Container(
-  //                                             child: TextFormField(
-  //                                               onChanged: (v) {
-  //                                                 controller
-  //                                                     .multiTransferNode[logic
-  //                                                         .usersWillSendTo[pos]
-  //                                                         .id]
-  //                                                     ?.note = v;
-  //                                                 controller.setNots(
-  //                                                     id: logic
-  //                                                         .usersWillSendTo[pos]
-  //                                                         .id!,
-  //                                                     not: v);
-  //                                               },
-  //                                               maxLines: 4,
-  //                                             ),
-  //                                             color: Colors.grey[300],
-  //                                           ),
-  //                                           SizedBox(
-  //                                             height: 8,
-  //                                           ),
-  //                                         ]),
-  //                                       ),
-  //                                     );
-  //                                   });
-  //                         },
-  //                       ))
-  //                 ]),
-  //           ),
-  //           actions: <Widget>[
-  //             TextButton(
-  //               onPressed: () {
-  //                 ///ToDo
-  //                 ///send to many
-
-  //                 controller.multipleTransferspost(
-  //                     context: context,
-  //                     transferId: controller
-  //                         .documentBaseModel!.correspondence!.transferId!,
-  //                     correspondenceId: controller
-  //                         .documentBaseModel!.correspondence!.correspondenceId);
-  //                 Navigator.pop(context);
-
-  //                 Navigator.pop(context);
-  //                 //Get.back(closeOverlays: true);
-  //                 //  Get.back();
-  //                 Get.offAllNamed("/InboxPage");
-
-  //                 // Get.offNamed("InboxPage"); //.  Get.toNamed("/InboxPage");
-  //                 // Ge
-  //                 showTopSnackBar(
-  //                   context,
-  //                   CustomSnackBar.success(
-  //                     icon: Container(),
-  //                     backgroundColor: Colors.lightGreen,
-  //                     message: "EndedSuccess".tr,
-  //                   ),
-  //                 );
-  //               },
-  //               child: Text(
-  //                 "refer".tr,
-  //               ),
-  //             ),
-  //           ],
-  //         );
-  //       });
-  // }
-
-// الاحاله القديمة//
-  _popUpMenuMore(context) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Row(//mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-              Image.asset(
-                'assets/images/refer.png'
-                //
-                ,
-                height: 20,
-                width: 20,
-              ),
-              const SizedBox(
-                width: 8,
-              ),
-              Text(
-                "refer".tr,
-                style: Theme.of(context).textTheme.headline3!.copyWith(
-                    color: Colors.black.withOpacity(.5),
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-              ),
-              const Spacer(),
-              InkWell(
-                onTap: () {
-                  controller.filterWord = "";
-                  Navigator.pop(context);
-                },
-                child: Image.asset(
-                  'assets/images/close_button.png',
-                  width: 30,
-                  height: 30,
-                ),
-              ),
-            ]),
-            content: SingleChildScrollView(
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                            child: Container(
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(6))),
-                                child: TextField(
-                                  decoration: const InputDecoration(
-                                    border: UnderlineInputBorder(),
-                                    labelText: 'To',
-                                  ),
-                                  onChanged: controller.filterUser,
-                                ))),
-                        const SizedBox(
-                          width: 2,
-                        ),
-                        CustomButtonWithIcon(
-                            icon: Icons.person,
-                            onClick: () {
-                              controller.listOfUser(0);
-                            }),
-                        const SizedBox(
-                          width: 2,
-                        ),
-                        CustomButtonWithIcon(
-                            icon: Icons.account_balance,
-                            onClick: () {
-                              controller.listOfUser(1);
-                            }),
-                        const SizedBox(
-                          width: 2,
-                        ),
-                        CustomButtonWithIcon(
-                            icon: Icons.person,
-                            onClick: () {
-                              controller.listOfUser(2);
-                            }),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text("referTo".tr),
-                    SizedBox(
-                        width: MediaQuery.of(context).size.width * .8,
-                        height: 100,
-                        child: Row(
-                          children: [
-                            Expanded(
-                                child: GetBuilder<DocumentController>(
-                              autoRemove: false,
-                              assignId: true, //tag: "alluser",
-                              builder: (logic) {
-                                return ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: controller.users.length,
-                                    itemBuilder: (context, pos) {
-                                      List<String>? a =
-                                          logic.users[pos].value?.split(" ");
-
-                                      // bool a=logic.user?[pos].value?.contains(logic.filterWord)??false;
-                                      if (logic.users[pos].value
-                                              ?.contains(logic.filterWord) ??
-                                          false) {
-                                        return Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: InkWell(
-                                            onTap: () {
-                                              if (!controller.usersWillSendTo
-                                                  .contains(logic.users[pos])) {
-                                                controller.addTousersWillSendTo(
-                                                    user: logic.users[pos]);
-                                                controller
-                                                    .SetMultipleReplyWithVoiceNoteRequestModel(
-                                                        correspondencesId: controller
-                                                            .documentBaseModel!
-                                                            .correspondence!
-                                                            .correspondenceId!,
-                                                        transferId: controller
-                                                            .documentBaseModel!
-                                                            .correspondence!
-                                                            .transferId!,
-                                                        id: logic
-                                                            .users[pos].id!);
-                                              }
-                                            },
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .primary,
-                                                    width: 1),
-                                              ),
-                                              padding: EdgeInsets.all(2.0),
-                                              child: Row(
-                                                children: [
-                                                  Container(
-                                                    height: 50,
-                                                    width: 50,
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .primary,
-                                                    ),
-                                                    child: Center(
-                                                        child: FittedBox(
-                                                            child: Text(
-                                                                "${a?[0][0]} ${a?[0][0] ?? ""}"))),
-                                                  ),
-                                                  Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 2.0,
-                                                              bottom: 2,
-                                                              right: 8,
-                                                              left: 8),
-                                                      child: Text(
-                                                        logic.users[pos]
-                                                                .value ??
-                                                            "",
-                                                        maxLines: 3,
-                                                        softWrap: true,
-                                                      )),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      } else {
-                                        return SizedBox();
-                                      }
-                                    });
-                              },
-                            )),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                child: const Icon(Icons.clear),
-                                height: 50,
-                                width: 50,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ),
-                          ],
-                        )),
-                    const Divider(
-                      color: Colors.grey,
-                    ),
-                  ]),
-            ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text("Ok"),
-              ),
-            ],
-          );
-        });
-  }
-
   final List<_HomeItem> items = List.generate(
     5,
     (i) => _HomeItem(
@@ -2102,37 +1404,6 @@ class CTSActionButton extends StatelessWidget {
     );
   }
 }
-
-// class _TileState extends State<Tile> {
-//   // final DocModel.AttachmentsList item;
-//   final AttachmentsG2gInfoExport item;
-//   final Function delete;
-
-//   _TileState(this.item, this.delete);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       children: <Widget>[
-//         ListTile(
-//           leading: new IconButton(
-//               icon: new Icon(Icons.close),
-//               onPressed: () {
-//                 // Navigator.pop(context,true);
-//                 print("leading");
-//                 delete(item);
-//               }), // for Right
-//           // trailing: Icon(Icons.close),  // for Left
-//           key: ValueKey(item.FileKey),
-//           title: Text("${item.FileName}"),
-//           // subtitle: Text("${item.fonam}"),
-//           // onTap: () => delete(item),
-//         ),
-//         Divider(), //                           <-- Divider
-//       ],
-//     );
-//   }
-// }
 
 class _HomeItem {
   const _HomeItem(

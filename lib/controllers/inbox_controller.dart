@@ -385,7 +385,7 @@ class InboxController extends GetxController {
   void onReady() {
     super.onReady();
 
-    logindata = secureStorage.readSecureJsonData(AllStringConst.LogInData);
+    logindata = SecureStorage.to.readSecureJsonData(AllStringConst.LogInData);
     if (logindata != null) {
       LoginModel data = LoginModel.fromJson(logindata!);
       customActions = data.customActions;
@@ -764,7 +764,7 @@ class InboxController extends GetxController {
     showLoaderDialog(context);
     var document = await PrepareDocumentBaseObject(
         context: context, correspondence: correspondence);
-
+    Navigator.pop(context);
     Navigator.pop(context);
     if (document != null) {
       Get.find<DocumentController>().documentBaseModel = document;
@@ -1168,6 +1168,7 @@ class InboxController extends GetxController {
     unread = false;
     isUrgentClicked = false;
     allCorrespondences = filteredUrgentCorrespondencesTemp;
+    selectUserFilter = null;
     //or
     // allCorrespondences = filteredFormUserIdCorrespondencesTemp;
     update();

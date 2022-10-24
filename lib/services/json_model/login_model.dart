@@ -1,9 +1,7 @@
-
-
 import '../abstract_json_resource.dart';
 import '../models/LoginModel.dart';
 
-class LoginModel extends AbstractJsonResource{
+class LoginModel extends AbstractJsonResource {
   String? errorMessage;
   int? status;
   List<CustomActions>? customActions;
@@ -33,31 +31,31 @@ class LoginModel extends AbstractJsonResource{
 
   LoginModel(
       {this.errorMessage,
-        this.status,
-        this.customActions,
-        this.departmentName,
-        this.firstName,
-        this.inbox,
-        this.lastName,
-        this.logoOffline,
-        this.logoOnline,
-        this.multiSignatures,
-        this.pincode,
-        this.reportUrl,
-        this.serviceType,
-        this.signature,
-        this.signatureId,
-        this.token,
-        this.transferData,
-        this.userDetails,
-        this.userGuideUrl,
-        this.userId,
-        this.viewerURL,
-        this.visualTrackingUrl,
-        this.watermark,
-        this.feedbackText,
-        this.termsAndConditions,
-        this.usePinCode});
+      this.status,
+      this.customActions,
+      this.departmentName,
+      this.firstName,
+      this.inbox,
+      this.lastName,
+      this.logoOffline,
+      this.logoOnline,
+      this.multiSignatures,
+      this.pincode,
+      this.reportUrl,
+      this.serviceType,
+      this.signature,
+      this.signatureId,
+      this.token,
+      this.transferData,
+      this.userDetails,
+      this.userGuideUrl,
+      this.userId,
+      this.viewerURL,
+      this.visualTrackingUrl,
+      this.watermark,
+      this.feedbackText,
+      this.termsAndConditions,
+      this.usePinCode});
 
   LoginModel.fromJson(Map<String, dynamic> json) {
     errorMessage = json['ErrorMessage'];
@@ -146,24 +144,24 @@ class LoginModel extends AbstractJsonResource{
   }
 }
 
-class CustomActions {
-  String? icon;
-  String? name;
+// class CustomActions {
+//   String? icon;
+//   String? name;
 
-  CustomActions({this.icon, this.name});
+//   CustomActions({this.icon, this.name});
 
-  CustomActions.fromJson(Map<String, dynamic> json) {
-    icon = json['Icon'];
-    name = json['Name'];
-  }
+//   CustomActions.fromJson(Map<String, dynamic> json) {
+//     icon = json['Icon'];
+//     name = json['Name'];
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Icon'] = this.icon;
-    data['Name'] = this.name;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     data['Icon'] = this.icon;
+//     data['Name'] = this.name;
+//     return data;
+//   }
+// }
 
 class Inbox {
   List<InboxItems>? inboxItems;
@@ -227,11 +225,11 @@ class MultiSignatures {
 
   MultiSignatures(
       {this.cNTGctId,
-        this.cONTENTTYPE,
-        this.eSCOUNT,
-        this.nAME,
-        this.signature,
-        this.tag});
+      this.cONTENTTYPE,
+      this.eSCOUNT,
+      this.nAME,
+      this.signature,
+      this.tag});
 
   MultiSignatures.fromJson(Map<String, dynamic> json) {
     cNTGctId = json['CNTGctId'];
@@ -263,10 +261,10 @@ class TransferData {
 
   TransferData(
       {this.priorities,
-        this.privacies,
-        this.purposes,
-        this.sections,
-        this.statuses});
+      this.privacies,
+      this.purposes,
+      this.sections,
+      this.statuses});
 
   TransferData.fromJson(Map<String, dynamic> json) {
     if (json['Priorities'] != null) {
@@ -399,5 +397,47 @@ class FeedbackText {
     data['notes'] = this.notes;
     data['title'] = this.title;
     return data;
+  }
+}
+
+class CustomActions {
+  late final String? icon;
+  late final String? name;
+  CustomActions(
+    this.icon,
+    this.name,
+  );
+
+  CustomActions.fromJson(Map<dynamic, dynamic> json) {
+    icon = json['Icon'];
+    name = json['Name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['Icon'] = icon;
+    _data['Name'] = name;
+    return _data;
+  }
+}
+
+class Purposes {
+  late final String? id;
+  late final String? value;
+  Purposes(
+    this.id,
+    this.value,
+  );
+
+  Purposes.fromJson(Map<dynamic, dynamic> json) {
+    id = json['Id'];
+    value = json['Value'];
+  }
+
+  Map<dynamic, dynamic> toJson() {
+    final _data = <dynamic, dynamic>{};
+    _data['Id'] = id;
+    _data['Value'] = value;
+    return _data;
   }
 }

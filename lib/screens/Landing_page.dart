@@ -41,7 +41,7 @@ class LandingPage extends GetWidget<LandingPageController> {
     Orientation orientation = MediaQuery.of(context).orientation;
 
     print(
-        "the Token Is => ${secureStorage.readSecureData(AllStringConst.Token)}");
+        "the Token Is => ${SecureStorage.to.readSecureData(AllStringConst.Token)}");
     return SafeArea(
       child: GetBuilder<LandingPageController>(builder: (logic) {
         return Scaffold(
@@ -601,7 +601,7 @@ class LandingPage extends GetWidget<LandingPageController> {
             // height: 50,
             child: Text(
               "hello".tr +
-                  "  ${secureStorage.readSecureData(AllStringConst.FirstName)} ${secureStorage.readSecureData(AllStringConst.LastName)}",
+                  "  ${SecureStorage.to.readSecureData(AllStringConst.FirstName)} ${SecureStorage.to.readSecureData(AllStringConst.LastName)}",
               style: Theme.of(contex).textTheme.headline2!.copyWith(
                     color: Colors.grey,
                     fontSize: u.calculateFontSize(28, contex),
@@ -2648,7 +2648,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                                                 child: Text(
                                                   Get.find<LandingPageController>()
                                                           .dashboardStatsResultModel
-                                                          ?.forActionNode
+                                                          ?.unreadNode
                                                           ?.titleAr
                                                           ?.toString() ??
                                                       "",
@@ -3010,7 +3010,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                           },
                           child: _buildInboxesRow(
                             context,
-                            e.key!,
+                            e.value!.name!,
                             e.value!.count!,
                           ),
                         ),
@@ -3226,7 +3226,7 @@ class LandingPage extends GetWidget<LandingPageController> {
                           },
                           child: _buildInboxesRow(
                             context,
-                            e.key!,
+                            e.value!.name!,
                             e.value!.count!,
                           ),
                         ),

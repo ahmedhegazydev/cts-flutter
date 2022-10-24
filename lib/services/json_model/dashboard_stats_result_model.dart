@@ -88,7 +88,7 @@ class Value {
 
   Value.fromJson(Map<String, dynamic> json) {
     count = json['Count'];
-    name = json['Name'];
+    name = json['TitleAr'];
     nodeId = json['NodeId'];
   }
 

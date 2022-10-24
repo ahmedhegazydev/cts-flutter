@@ -224,7 +224,7 @@ class SearchController extends GetxController {
         DateTime.now().toString().substring(0, 4);
 
     Map<String, dynamic>? logindata =
-        _secureStorage.readSecureJsonData(AllStringConst.LogInData);
+        SecureStorage.to.readSecureJsonData(AllStringConst.LogInData);
     LoginModel data = LoginModel.fromJson(logindata!);
     statuses = data.transferData?.statuses;
     privacies = data.transferData?.privacies;

@@ -1,10 +1,13 @@
 import 'dart:ffi';
 
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 import 'all_string_const.dart';
 
-class SecureStorage {
+class SecureStorage extends GetxController {
+  static SecureStorage get to => Get.find<SecureStorage>();
+
   //String  user_id = 'user_id';
   final box = GetStorage();
 

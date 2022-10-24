@@ -50,12 +50,12 @@ class SignaturePageController extends GetxController {
   void onReady() {
     super.onReady();
 
-    logindata = secureStorage.readSecureJsonData(AllStringConst.LogInData);
+    logindata = SecureStorage.to.readSecureJsonData(AllStringConst.LogInData);
     if (logindata != null) {
       LoginModel data = LoginModel.fromJson(logindata!);
       multiSignatures = data.multiSignatures ?? [];
       update();
-      //multiSignatures.add(secureStorage.readSecureData(AllStringConst.Signature))
+      //multiSignatures.add(SecureStorage.to.readSecureData(AllStringConst.Signature))
     }
   }
 

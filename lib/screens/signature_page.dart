@@ -6,6 +6,7 @@ import 'package:signature/signature.dart';
 import '../controllers/signature_Controller.dart';
 import '../utility/all_const.dart';
 import '../utility/all_string_const.dart';
+import '../utility/storage.dart';
 import '../utility/utilitie.dart';
 
 class SignaturePage extends GetView<SignaturePageController> {
@@ -175,8 +176,7 @@ class SignaturePage extends GetView<SignaturePageController> {
   }
 
   buildDefaultSignature() {
-    var signature =
-        controller.secureStorage.readSecureData(AllStringConst.Signature);
+    var signature = SecureStorage.to.readSecureData(AllStringConst.Signature);
     if (signature != null && signature.isNotEmpty)
       return GetBuilder<SignaturePageController>(builder: (logic) {
         return Container(

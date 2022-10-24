@@ -9,7 +9,7 @@ class AuthMiddleWare extends GetMiddleware {
 
   @override
   RouteSettings? redirect(String? route) {
-    bool log = _secureStorage.readBoolData(AllStringConst.Token);
+    bool log = SecureStorage.to.readBoolData(AllStringConst.Token);
     print(log);
     if (log)
       return RouteSettings(name: "/Landing");

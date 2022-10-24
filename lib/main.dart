@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+import 'controllers/document_controller.dart';
 import 'translation/trans.dart';
 import 'bindings/busket_bindings.dart';
 import 'bindings/inbox_bindings.dart';
@@ -58,6 +59,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put<ViewerController>(ViewerController());
+    Get.put<SecureStorage>(SecureStorage());
+    Get.put<DocumentController>(DocumentController());
 
     Color savedColor_ = Get.find<MController>().appcolor;
     getSavedColorFromDatabase()
@@ -163,7 +166,7 @@ class MyApp extends StatelessWidget {
 
   getSavedLocale() {
     SecureStorage secureStorage = SecureStorage();
-    String? appLan = secureStorage.readSecureData(AllStringConst.AppLan);
+    String? appLan = SecureStorage.to.readSecureData(AllStringConst.AppLan);
     if (appLan == null) {
       return LocalizationService.locale;
     } else {

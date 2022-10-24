@@ -123,33 +123,33 @@ class DocumentController extends GetxController {
         api = CheckForEmptyStructureRecipientsAPI(context);
         break;
       case "AutoSendToRecepientsAndCC":
-        if (!withContinue)
-          showDilog(
-              context: context,
-              massge: previousResponse.message!,
-              subTitle: previousResponse.recipientsTitle +
-                  " ' " +
-                  previousResponse.recipients.join(', ') +
-                  " ' " +
-                  previousResponse.ccedsTitle +
-                  " ' " +
-                  previousResponse.cceds.join(', ') +
-                  " '",
-              no: () {
-                Navigator.of(context).pop();
-                return;
-              },
-              yes: () {
-                executeExportMethod(
-                    method: "AutoSendToRecepientsAndCC",
-                    correspondenceId: correspondenceId,
-                    transferId: transferId,
-                    exportAction: exportAction,
-                    context: context,
-                    previousResponse: exportResponse,
-                    withContinue: true);
-                Navigator.of(context).pop();
-              });
+        // if (!withContinue)
+        //   showDilog(
+        //       context: context,
+        //       massge: previousResponse.message!,
+        //       subTitle: previousResponse.recipientsTitle +
+        //           " ' " +
+        //           previousResponse.recipients.join(', ') +
+        //           " ' " +
+        //           previousResponse.ccedsTitle +
+        //           " ' " +
+        //           previousResponse.cceds.join(', ') +
+        //           " '",
+        //       no: () {
+        //         Navigator.of(context).pop();
+        //         return;
+        //       },
+        //       yes: () {
+        //         executeExportMethod(
+        //             method: "AutoSendToRecepientsAndCC",
+        //             correspondenceId: correspondenceId,
+        //             transferId: transferId,
+        //             exportAction: exportAction,
+        //             context: context,
+        //             previousResponse: exportResponse,
+        //             withContinue: true);
+        //         Navigator.of(context).pop();
+        //       });
 
         api = AutoSendToRecepientsAndCCAPI(context);
         break;
@@ -167,9 +167,12 @@ class DocumentController extends GetxController {
 
       case "OpenTransferWindow":
         print("OpenTransferWindow");
-        transferPopup(context, transferId, correspondenceId);
+        transferPopup(context, transferId, correspondenceId,
+            defaultPurpose: 23);
         return;
       case "NOTHING":
+        return;
+      case "ExportDone":
         Get.find<LandingPageController>().getDashboardStats(context: context);
         Get.find<InboxController>().getCorrespondencesDataAsync(
             context: context,
@@ -209,10 +212,28 @@ class DocumentController extends GetxController {
       usersWillSendTo.clear();
       addTousersWillSendTo(user: userWillAddToOpenTransferWindow!);
     }
+
     if (exportResponse.isConfirm) {
+      var additional = "\n";
+      if (exportResponse.recipients != null &&
+          exportResponse.recipients!.length > 0) {
+        additional += exportResponse.recipientsTitle! +
+            "\n" +
+            exportResponse.recipients!.join('\n') +
+            "\n \n";
+      }
+
+      if (exportResponse.cceds != null && exportResponse.cceds!.length > 0) {
+        additional += exportResponse.ccedsTitle! +
+            "\n" +
+            exportResponse.cceds!.join('\n') +
+            "\n \n";
+      }
+
       showDilog(
           context: context,
           massge: exportResponse.message!,
+          subTitle: additional,
           no: () {
             executeExportMethod(
               method: !isAgain
@@ -556,6 +577,9 @@ class DocumentController extends GetxController {
 
     List<multipletransfersSend.TransferNode> transfers = [];
     multiTransferNode.forEach((key, value) {
+      var pid = getPurposes(value.destinationId);
+      value.purposeId = pid?.id;
+
       transfers.add(value);
     });
 
@@ -641,7 +665,7 @@ class DocumentController extends GetxController {
   updatecanOpenDocumentModel(DocumentModel data) {
     pdfAndSing.clear();
     pdfAndSingData.clear();
-
+    documentEditedInOfficeId.value = 0;
     documentBaseModel = data;
     documentBaseModel?.attachments?.attachments?.forEach((element) {
       if (element.isOriginalMail!) {
@@ -936,9 +960,7 @@ class DocumentController extends GetxController {
   }
 
   List<CustomActions>? customActions = [];
-  // late Correspondence correspondences;
-
-  //PDFDocument? doc;
+  List<Purposes>? purposes = [];
 
   Map<String, String> actions = {};
 
@@ -946,11 +968,11 @@ class DocumentController extends GetxController {
   void onReady() {
     super.onReady();
     // getAttachmentItemlocal( );
-    logindata = secureStorage.readSecureJsonData(AllStringConst.LogInData);
+    logindata = SecureStorage.to.readSecureJsonData(AllStringConst.LogInData);
     if (logindata != null) {
       LoginModel data = LoginModel.fromJson(logindata!);
       customActions = data.customActions;
-
+      purposes = data.transferData!.purposes!;
       multiSignatures = data.multiSignatures ?? [];
     }
   }
@@ -1013,6 +1035,8 @@ class DocumentController extends GetxController {
   Map<int, ReplyWithVoiceNoteRequestModel> transfarForMany = {};
   Map<int, CustomActions> transfarForManyCustomActions = {};
 
+  Map<String, Purposes> transfarForManyPurposes = {};
+
   // Map<int, String> transfarForManyNots = {};
 
   CustomActions? getactions(id) {
@@ -1020,9 +1044,20 @@ class DocumentController extends GetxController {
     // update();
   }
 
+  Purposes? getPurposes(id) {
+    return transfarForManyPurposes[id];
+    // update();
+  }
+
   setactions(id, CustomActions customActions) {
     transfarForManyCustomActions[id] = customActions;
     transfarForMany[id]?.actionType = customActions.name;
+    update();
+  }
+
+  setPurposes(id, Purposes customActions) {
+    transfarForManyPurposes[id] = customActions;
+    transfarForMany[id]?.actionType = customActions.id;
     update();
   }
 
@@ -1585,7 +1620,11 @@ class DocumentController extends GetxController {
         fileId: editOfficeDetails.fileId);
     RequestEditInOfficeAPI api = RequestEditInOfficeAPI(context);
 
-    await api.post(model.toMap());
+    var res = await api.post(model.toMap());
+    if (res == null) {
+      return "";
+    }
+
     return editOfficeDetails.spUrl!;
   }
 
@@ -1661,11 +1700,13 @@ class DocumentController extends GetxController {
 
   Recipients? selectlistfavoriteUser;
 
-  transferPopup(context, String transferID, String correspondenceID) async {
+  transferPopup(context, String transferID, String correspondenceID,
+      {int? defaultPurpose}) async {
     showLoaderDialog(context);
     getFindRecipientData(context: context);
     await listFavoriteRecipients(context: context);
     Navigator.pop(context);
+
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -1689,235 +1730,226 @@ class DocumentController extends GetxController {
                       color: Colors.grey,
                     ),
                     SizedBox(
-                        width: MediaQuery.of(context).size.width * .8,
-                        height: 300, // MediaQuery.of(context).size.height * .5,
-                        child: GetBuilder<DocumentController>(
-                          builder: (logic) {
-                            return ListView.builder(
-                                scrollDirection: Axis.vertical,
-                                itemCount: usersWillSendTo.length,
-                                itemBuilder: (context, pos) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      color: Colors.grey[200],
-                                      child: Column(children: [
-                                        Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                "name".tr,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline3!
-                                                    .copyWith(
-                                                      color:
-                                                          createMaterialColor(
-                                                        const Color.fromRGBO(
-                                                          77,
-                                                          77,
-                                                          77,
-                                                          1,
-                                                        ),
-                                                      ),
-                                                      fontSize: 15,
-                                                    ),
-                                                textAlign: TextAlign.center,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Text(logic
-                                                        .usersWillSendTo[pos]
-                                                        .value ??
-                                                    ""),
-                                              ),
-                                              SizedBox(
-                                                width: 8,
-                                              ),
-                                              Spacer(),
-                                              GestureDetector(
-                                                onTap: () {
-                                                  transfarForMany.remove(logic
-                                                      .usersWillSendTo[pos].id);
-                                                  logic.delTousersWillSendTo(
-                                                      user:
-                                                          logic.usersWillSendTo[
-                                                              pos]);
-                                                },
-                                                child: Image.asset(
-                                                  'assets/images/close_button.png',
-                                                  width: 20,
-                                                  height: 20,
-                                                ),
-                                              ),
-                                            ]),
-                                        SizedBox(
-                                          height: 4,
-                                        ),
-                                        Row(
+                      width: MediaQuery.of(context).size.width * .8,
+                      height: 300, // MediaQuery.of(context).size.height * .5,
+                      child: GetBuilder<DocumentController>(
+                        builder: (logic) {
+                          return ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              itemCount: usersWillSendTo.length,
+                              itemBuilder: (context, pos) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    color: Colors.grey[200],
+                                    child: Column(children: [
+                                      Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
                                           children: [
-                                            Expanded(
-                                              child: Text("action".tr),
+                                            Text(
+                                              "name".tr,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline3!
+                                                  .copyWith(
+                                                    color: createMaterialColor(
+                                                      const Color.fromRGBO(
+                                                        77,
+                                                        77,
+                                                        77,
+                                                        1,
+                                                      ),
+                                                    ),
+                                                    fontSize: 15,
+                                                  ),
+                                              textAlign: TextAlign.center,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Text(logic
+                                                      .usersWillSendTo[pos]
+                                                      .value ??
+                                                  ""),
                                             ),
                                             SizedBox(
-                                              width: 10,
+                                              width: 8,
                                             ),
-                                            Expanded(
-                                              child: Text("audioNotes".tr),
-                                            )
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              child: Container(
-                                                height: 40,
-                                                color: Colors.grey[300],
-                                                child: DropdownButton<
-                                                    CustomActions>(
-                                                  alignment: Alignment.topRight,
-                                                  value: logic.getactions(logic
-                                                      .usersWillSendTo[pos].id),
-                                                  // icon: const Icon(
-                                                  //     Icons.arrow_downward),
-                                                  elevation: 16,
-
-                                                  underline: SizedBox(),
-                                                  hint: Text("اختار"),
-                                                  onChanged: (CustomActions?
-                                                      newValue) {
-                                                    setactions(
-                                                        logic
-                                                            .usersWillSendTo[
-                                                                pos]
-                                                            .id,
-                                                        newValue!);
-                                                    //  dropdownValue = newValue!;
-                                                  },
-                                                  items: customActions?.map<
-                                                          DropdownMenuItem<
-                                                              CustomActions>>(
-                                                      (CustomActions value) {
-                                                    return DropdownMenuItem<
-                                                        CustomActions>(
-                                                      value: value,
-                                                      child: Text(value.name!),
-                                                    );
-                                                  }).toList(),
-                                                ),
+                                            Spacer(),
+                                            GestureDetector(
+                                              onTap: () {
+                                                transfarForMany.remove(logic
+                                                    .usersWillSendTo[pos].id);
+                                                logic.delTousersWillSendTo(
+                                                    user: logic
+                                                        .usersWillSendTo[pos]);
+                                              },
+                                              child: Image.asset(
+                                                'assets/images/close_button.png',
+                                                width: 20,
+                                                height: 20,
                                               ),
                                             ),
-                                            const SizedBox(
-                                              width: 10,
+                                          ]),
+                                      SizedBox(
+                                        height: 4,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text("action".tr),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Text("audioNotes".tr),
+                                          )
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Container(
+                                              height: 40,
+                                              color: Colors.grey[300],
+                                              child: DropdownButton<Purposes>(
+                                                alignment: Alignment.topRight,
+                                                value: logic.getPurposes(logic
+                                                    .usersWillSendTo[pos].id),
+                                                // icon: const Icon(
+                                                //     Icons.arrow_downward),
+                                                elevation: 16,
+
+                                                underline: SizedBox(),
+                                                hint: Text("اختار"),
+                                                onChanged:
+                                                    (Purposes? newValue) {
+                                                  setPurposes(
+                                                    logic
+                                                        .usersWillSendTo[pos].id
+                                                        .toString(),
+                                                    newValue!,
+                                                  );
+                                                  //  dropdownValue = newValue!;
+                                                },
+                                                items: purposes?.map<
+                                                        DropdownMenuItem<
+                                                            Purposes>>(
+                                                    (Purposes value) {
+                                                  return DropdownMenuItem<
+                                                      Purposes>(
+                                                    value: value,
+                                                    child: Text(value.value!),
+                                                  );
+                                                }).toList(),
+                                              ),
                                             ),
-                                            Expanded(
-                                              child: Container(
-                                                  height: 40,
-                                                  color: Colors.grey[300],
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      GestureDetector(
-                                                        onTap: () async {
-                                                          ///To Do Start and stop rec
-                                                          ///
-                                                          ///
-                                                          ///
-                                                          // controller.canOpenDocumentModel.correspondence.docDueDate
-                                                          record.isRecording
-                                                              ? stopMathod()
-                                                              : recordMathod(
-                                                                  id: logic
-                                                                      .usersWillSendTo[
-                                                                          pos]
-                                                                      .id,
-                                                                );
-                                                        },
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: GetBuilder<
-                                                                  DocumentController>(
-                                                              id: "record", //autoRemove: false,
-                                                              builder: (logic) {
-                                                                return Icon(record
-                                                                        .isRecording
-                                                                    ? Icons.stop
-                                                                    : Icons
-                                                                        .mic);
-                                                              }),
-                                                        ),
-                                                      ),
-                                                      Padding(
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Container(
+                                                height: 40,
+                                                color: Colors.grey[300],
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    GestureDetector(
+                                                      onTap: () async {
+                                                        record.isRecording
+                                                            ? stopMathod()
+                                                            : recordMathod(
+                                                                id: logic
+                                                                    .usersWillSendTo[
+                                                                        pos]
+                                                                    .id,
+                                                              );
+                                                      },
+                                                      child: Padding(
                                                         padding:
                                                             const EdgeInsets
                                                                 .all(8.0),
-                                                        child: Obx(
-                                                          () => InkWell(
-                                                            onTap: () {
-                                                              if (!isPlayingAudio
-                                                                  .value) {
-                                                                playMathod(
-                                                                    id: logic
-                                                                        .usersWillSendTo[
-                                                                            pos]
-                                                                        .id);
-                                                              } else {
-                                                                isPlayingAudio
-                                                                        .value =
-                                                                    false;
-                                                                audioPlayer!
-                                                                    .stopPlayer();
-                                                              }
-                                                            },
-                                                            child: Icon(
-                                                              isPlayingAudio
-                                                                      .value
+                                                        child: GetBuilder<
+                                                                DocumentController>(
+                                                            id: "record", //autoRemove: false,
+                                                            builder: (logic) {
+                                                              return Icon(record
+                                                                      .isRecording
                                                                   ? Icons.stop
-                                                                  : Icons
-                                                                      .play_arrow,
-                                                            ),
+                                                                  : Icons.mic);
+                                                            }),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Obx(
+                                                        () => InkWell(
+                                                          onTap: () {
+                                                            if (!isPlayingAudio
+                                                                .value) {
+                                                              playMathod(
+                                                                  id: logic
+                                                                      .usersWillSendTo[
+                                                                          pos]
+                                                                      .id);
+                                                            } else {
+                                                              isPlayingAudio
+                                                                      .value =
+                                                                  false;
+                                                              audioPlayer!
+                                                                  .stopPlayer();
+                                                            }
+                                                          },
+                                                          child: Icon(
+                                                            isPlayingAudio.value
+                                                                ? Icons.stop
+                                                                : Icons
+                                                                    .play_arrow,
                                                           ),
                                                         ),
-                                                      )
-                                                    ],
-                                                  )),
-                                            )
-                                          ],
+                                                      ),
+                                                    )
+                                                  ],
+                                                )),
+                                          )
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Container(
+                                        child: TextFormField(
+                                          onChanged: (v) {
+                                            multiTransferNode[logic
+                                                    .usersWillSendTo[pos].id]
+                                                ?.note = v;
+                                            setNots(
+                                                id: logic
+                                                    .usersWillSendTo[pos].id!,
+                                                not: v);
+                                          },
+                                          maxLines: 4,
                                         ),
-                                        SizedBox(
-                                          height: 8,
-                                        ),
-                                        Container(
-                                          child: TextFormField(
-                                            onChanged: (v) {
-                                              multiTransferNode[logic
-                                                      .usersWillSendTo[pos].id]
-                                                  ?.note = v;
-                                              setNots(
-                                                  id: logic
-                                                      .usersWillSendTo[pos].id!,
-                                                  not: v);
-                                            },
-                                            maxLines: 4,
-                                          ),
-                                          color: Colors.grey[300],
-                                        ),
-                                        SizedBox(
-                                          height: 8,
-                                        ),
-                                      ]),
-                                    ),
-                                  );
-                                });
-                          },
-                        ))
+                                        color: Colors.grey[300],
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                    ]),
+                                  ),
+                                );
+                              });
+                        },
+                      ),
+                    )
                   ]),
             ),
             actions:
@@ -2294,11 +2326,11 @@ showDilog(
           actions: <Widget>[
             TextButton(
               onPressed: yes,
-              child: Text("Yes"),
+              child: Text("Ok".tr),
             ),
             TextButton(
               onPressed: no,
-              child: Text("No"),
+              child: Text("Cancel".tr),
             ),
           ],
         );

@@ -695,6 +695,7 @@ class InboxPage extends GetWidget<InboxController> {
                       controller.getCorrespondencesData(
                           context: context, inboxId: controller.inboxId);
                       controller.update();
+                      Navigator.of(context).pop();
                     },
                     // onTap:,
                     child: SizedBox(

@@ -438,7 +438,7 @@ class MyPocketsScreen extends GetWidget<InboxController> {
   //                   FittedBox(
   //                     child: Text(
   //                       //  "hello".tr +
-  //                       "${secureStorage.readSecureData(
+  //                       "${SecureStorage.to.readSecureData(
   //                           AllStringConst.FirstName)} ${secureStorage
   //                           .readSecureData(AllStringConst.LastName)}",
   //                       style: Theme

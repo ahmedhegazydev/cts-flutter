@@ -956,9 +956,9 @@ class CustomListView extends GetView<InboxController> {
           SizedBox(
             width: 50,
           ),
-          if (correspondences[pos].showLock!)
-            Icon(correspondences[pos].isLocked! ? Icons.lock : Icons.lock_open,
-                color: Theme.of(context).colorScheme.primary),
+          // if (correspondences[pos].showLock!)
+          //   Icon(correspondences[pos].isLocked! ? Icons.lock : Icons.lock_open,
+          //       color: Theme.of(context).colorScheme.primary),
 
           SizedBox(
             width: 50,

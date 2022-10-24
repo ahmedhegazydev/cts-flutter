@@ -149,7 +149,7 @@ class LandingPageController extends GetxController {
   void onReady() {
     super.onReady();
     getDashboardStats();
-    _logindata = secureStorage.readSecureJsonData(AllStringConst.LogInData);
+    _logindata = SecureStorage.to.readSecureJsonData(AllStringConst.LogInData);
     if (_logindata != null) {
       data = LoginModel.fromJson(_logindata!);
     }
@@ -160,7 +160,7 @@ class LandingPageController extends GetxController {
   }
 
   String userName() {
-    String? name = secureStorage.readSecureData(AllStringConst.FirstName);
+    String? name = SecureStorage.to.readSecureData(AllStringConst.FirstName);
     return name ?? "";
   }
 

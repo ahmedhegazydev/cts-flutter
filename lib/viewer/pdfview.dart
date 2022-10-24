@@ -29,7 +29,6 @@ class PDFView extends StatefulWidget {
 class _PDFViewState extends State<PDFView> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     ViewerController.to.themeColor = widget.color;
     Future.delayed(const Duration(milliseconds: 200), () {

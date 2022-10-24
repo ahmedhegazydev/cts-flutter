@@ -9,7 +9,7 @@ class SecureStorage extends GetxController {
   static SecureStorage get to => Get.find<SecureStorage>();
 
   //String  user_id = 'user_id';
-  final box = GetStorage();
+  var box = GetStorage("new");
 
   /**
    * read

@@ -320,10 +320,9 @@ class LoginPage extends GetWidget<LoginController> {
                                         actions: <Widget>[
                                           TextButton(
                                             onPressed: () async {
-                                              controller.secureStorage
-                                                  .writeSecureData(
-                                                      AllStringConst.BaseUrl,
-                                                      controller.baseUrl.text);
+                                              SecureStorage.to.writeSecureData(
+                                                  AllStringConst.BaseUrl,
+                                                  controller.baseUrl.text);
 
                                               // final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
                                               // final SharedPreferences prefs = await _prefs;
@@ -422,7 +421,7 @@ class LoginPage extends GetWidget<LoginController> {
         actions: <Widget>[
           TextButton(
             onPressed: () async {
-              controller.secureStorage.writeSecureData(AllStringConst.AppColor,
+              SecureStorage.to.writeSecureData(AllStringConst.AppColor,
                   Get.find<MController>().appcolor.value);
               final settingObj = SettingItem(
                   baseUrl: controller.baseUrl.text,

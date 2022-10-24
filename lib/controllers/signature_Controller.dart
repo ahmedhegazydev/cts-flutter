@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class SignaturePageController extends GetxController {
   bool saveSing = false;
   Map<String, dynamic>? logindata;
   List<MultiSignatures> multiSignatures = [];
-  final SecureStorage secureStorage = SecureStorage();
+  // final SecureStorage secureStorage = SecureStorage();
 
   List newSing = [];
   final SignatureController controller = SignatureController(
@@ -36,14 +37,11 @@ class SignaturePageController extends GetxController {
     saveSing = true;
     update();
     UpdateSignatureApi _updateSignatureApi = UpdateSignatureApi(context);
-    await _updateSignatureApi.post(signatureInfoModel.toMap()).then((value) {
-      saveSing = false;
-      update();
-      print(value);
-    });
-
-    saveSing = false;
-    update();
+    var value = await _updateSignatureApi
+        .post(signatureInfoModel.toMap()); //.then((value) {
+    // saveSing = false;
+    print(value);
+    // });
   }
 
   @override
@@ -59,7 +57,8 @@ class SignaturePageController extends GetxController {
     }
   }
 
-  saveSign(context) async {
+  Future saveSign(context) async {
+    saveSing = true;
     print("9999999999999999999999999999999");
     if (controller.points.isEmpty) {
       controller.clear();
@@ -69,14 +68,19 @@ class SignaturePageController extends GetxController {
 
     SignatureInfoModel _signatureInfoModel = SignatureInfoModel(
         signature: base64.encode(data!),
-        Token: secureStorage.token()!,
+        Token: SecureStorage.to.token()!,
         SignatureId: "");
 
-    updateSignature(context: context, signatureInfoModel: _signatureInfoModel);
+    await updateSignature(
+        context: context, signatureInfoModel: _signatureInfoModel);
 
-    secureStorage.writeSecureData(
-        AllStringConst.Signature, base64.encode(data));
+    await SecureStorage.to.deleteSecureData(AllStringConst.Signature);
 
-    replaceSing(base64.encode(data));
+    SecureStorage.to
+        .writeSecureData(AllStringConst.Signature, base64.encode(data));
+
+    saveSing = false;
+    update();
+    return;
   }
 }

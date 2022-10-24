@@ -196,6 +196,7 @@ class DocumentPage extends GetWidget<DocumentController> {
           icon: const Icon(Icons.navigate_next),
           tooltip: 'back',
           onPressed: () {
+            Get.offAllNamed("/InboxPage");
             Get.back();
           },
         ),
@@ -346,18 +347,10 @@ class DocumentPage extends GetWidget<DocumentController> {
                 }),
                 // edit
 
-                // if (controller
-                //         .documentBaseModel?.correspondence?.hasAttachments ??
-                //     true)
-                //   CTSActionButton('assets/images/refer.png', "Attachments".tr,
-                //       () async {
-                //     _popUpMenuhasAttachments(context);
-                //   }),
-
                 CTSActionButton('assets/images/track.png', "tracking".tr, () {
                   _openVisualTracking();
                 }),
-                CTSActionButton('assets/images/track.png', "Reply".tr, () {
+                CTSActionButton('assets/images/referrals.png', "Reply".tr, () {
                   replyClick(context);
                 }),
               ],
@@ -371,18 +364,19 @@ class DocumentPage extends GetWidget<DocumentController> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                CTSActionButton('assets/images/track.png', 'processes'.tr,
+                CTSActionButton('assets/images/metadata.png', 'processes'.tr,
                     () async {
                   await clickOnSHowAuditLog(context);
                 }),
-                CTSActionButton('assets/images/track.png', "transferDetails".tr,
-                    () {
+                CTSActionButton(
+                    'assets/images/metadata.png', "transferDetails".tr, () {
                   clickOnSHowTransferData(context);
                 }),
-                CTSActionButton('assets/images/track.png', "links".tr, () {
+                CTSActionButton('assets/images/metadata.png', "links".tr, () {
                   getDocumentLinks(context);
                 }),
-                CTSActionButton('assets/images/track.png', "recievers".tr, () {
+                CTSActionButton('assets/images/metadata.png', "recievers".tr,
+                    () {
                   clickOnRecieversData(context);
                 }),
               ],
@@ -400,7 +394,8 @@ class DocumentPage extends GetWidget<DocumentController> {
                   if (controller
                           .documentBaseModel!.attachments!.attachments!.length >
                       0)
-                    CTSActionButton('assets/images/refer.png', "Attachments".tr,
+                    CTSActionButton(
+                        'assets/images/attachment.png', "Attachments".tr,
                         () async {
                       Navigator.of(context).pop();
                       _popUpMenuhasAttachments(context);
@@ -413,7 +408,8 @@ class DocumentPage extends GetWidget<DocumentController> {
                     await openInOffice(context);
                   }),
                 if (controller.notoragnalFileDoc)
-                  CTSActionButton('assets/images/track.png', "original", () {
+                  CTSActionButton(
+                      'assets/images/attachment.png', "backtooriginalfile", () {
                     Navigator.of(context).pop();
                     controller.backTooragnalFileDocpdf();
                   }),
@@ -1481,85 +1477,8 @@ class DocumentPage extends GetWidget<DocumentController> {
             ],
           );
         });
-
-    // showCupertinoDialog(
-    //     context: context,
-    //     builder: (context) => CupertinoAlertDialog(
-    //           title: Row(//mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //               children: [
-    //             Image.asset(
-    //               'assets/images/refer.png'
-    //               //
-    //               ,
-    //               height: 20,
-    //               width: 20,
-    //             ),
-    //             const SizedBox(
-    //               width: 8,
-    //             ),
-    //             Text(
-    //               "refer".tr,
-    //               style: Theme.of(context).textTheme.headline3!.copyWith(
-    //                     color: createMaterialColor(
-    //                       const Color.fromRGBO(77, 77, 77, 1),
-    //                     ),
-    //                     fontSize: 15,
-    //                   ),
-    //               textAlign: TextAlign.center,
-    //               overflow: TextOverflow.ellipsis,
-    //             ),
-    //             const Spacer(),
-    //             Image.asset(
-    //               'assets/images/close_button.png',
-    //               width: 20,
-    //               height: 20,
-    //             ),
-    //           ]),
-    //           content: Container(width: MediaQuery.of(context).size.width*.8,
-    //             child: Column(
-    //                 crossAxisAlignment: CrossAxisAlignment.start,
-    //                 children: [
-    //                   const SizedBox(
-    //                     height: 20,
-    //                   ),
-    //                   Text("referTo".tr),
-    //                   Container(
-    //                       height: 100,
-    //                       child: Row(
-    //                         children: [
-    //
-    //                      Expanded(child: ListView.builder(scrollDirection: Axis.horizontal,itemCount: 10,itemBuilder: (context,pos){
-    //                        return Container(
-    //                          height: 30,
-    //                          width: 30,
-    //                          decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.green),
-    //                        );
-    //                      }))  , Padding(
-    //                             padding: const EdgeInsets.all(8.0),
-    //                             child: Container(
-    //                               height: 30,
-    //                               width: 30,
-    //                               decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.red),
-    //                             ),
-    //                           ), ],
-    //                       ))
-    //                 ]),
-    //           ),
-    //           actions: [],
-    //         ));
   }
 }
-
-// class Tile extends StatefulWidget {
-//   // final DocModel.AttachmentsList item;
-//   final AttachmentsG2gInfoExport item;
-//   final Function delete;
-
-//   Tile(this.item, this.delete);
-
-//   @override
-//   State<StatefulWidget> createState() => _TileState(item, delete);
-// }
 
 class CTSActionButton extends StatelessWidget {
   final String image;

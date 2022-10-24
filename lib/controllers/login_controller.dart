@@ -25,20 +25,18 @@ class LoginController extends GetxController {
   Validators validators = Validators();
   final loginFormKey = GlobalKey<FormState>();
   bool islogin = false;
-  SecureStorage secureStorage = SecureStorage();
   DateTime time = DateTime.now();
 
   checkTokenTimeStamp() {
-    SecureStorage secureStorage = SecureStorage();
     DateTime time = DateTime.now();
     List? resList =
-        secureStorage.getTokenWithTimeStamp("userToken", "createdTime");
+        SecureStorage.to.getTokenWithTimeStamp("userToken", "createdTime");
 
     if (resList == null || resList[1] == null || resList[0] == null) return;
     DateTime parseDate =
         new DateFormat("yyyy-MM-dd hh:mm:ss").parse(resList[1]);
     if ((time.hour - parseDate.hour) < 1) {
-      secureStorage.writeSecureData(AllStringConst.Token, resList[0]);
+      SecureStorage.to.writeSecureData(AllStringConst.Token, resList[0]);
       Get.put(LandingPageController());
       Get.offNamed("/Landing");
     } else {}
@@ -100,35 +98,36 @@ class LoginController extends GetxController {
             print(element.inboxId);
             print("0000000000000000000000000000000000000000000000000000000");
           });
-          secureStorage.writeSecureData(
-              AllStringConst.Token, loginModel.token!);
-          await secureStorage.writeSecureJsonData(
+          SecureStorage.to
+              .writeSecureData(AllStringConst.Token, loginModel.token!);
+          await SecureStorage.to.writeSecureJsonData(
               AllStringConst.LogInData, loginModel.toJson());
           print("oooooooooooooooooo  ${loginModel.customActions?[0].name}");
           //    print("signature  ${loginModel}");
           print(
               "loginModel.tokenloginModel.tokenloginModel.token      ${loginModel.token}");
-          secureStorage.saveTokenWithTimeStamp(
+          await SecureStorage.to.saveTokenWithTimeStamp(
               "userToken", loginModel.token!, "createdTime", time.toString());
-          secureStorage.writeSecureData(
-              AllStringConst.Token, loginModel.token!);
-          secureStorage.writeSecureData(
-              AllStringConst.UserId, loginModel.userId);
-          secureStorage.writeSecureData(
-              AllStringConst.FirstName, loginModel.firstName);
-          secureStorage.writeSecureData(
-              AllStringConst.LastName, loginModel.lastName);
-          await secureStorage.writeSecureData(
+          await SecureStorage.to
+              .writeSecureData(AllStringConst.Token, loginModel.token!);
+          await SecureStorage.to
+              .writeSecureData(AllStringConst.UserId, loginModel.userId);
+          await SecureStorage.to
+              .writeSecureData(AllStringConst.FirstName, loginModel.firstName);
+          await SecureStorage.to
+              .writeSecureData(AllStringConst.LastName, loginModel.lastName);
+          await SecureStorage.to.writeSecureData(
               AllStringConst.DepartmentName, loginModel.departmentName);
-          await secureStorage.writeSecureData(
-              AllStringConst.Pincode, loginModel.pincode);
-          await secureStorage.writeSecureData(
-              AllStringConst.Signature, loginModel.signature);
-          await secureStorage.writeSecureData(
+          await SecureStorage.to
+              .writeSecureData(AllStringConst.Pincode, loginModel.pincode);
+          await SecureStorage.to.deleteSecureData(AllStringConst.Signature);
+          await SecureStorage.to
+              .writeSecureData(AllStringConst.Signature, loginModel.signature);
+          await SecureStorage.to.writeSecureData(
               AllStringConst.SignatureId, loginModel.signatureId);
-          await secureStorage.writeSecureData(
+          await SecureStorage.to.writeSecureData(
               AllStringConst.UserDetails, loginModel.userDetails);
-          await secureStorage.writeSecureData(
+          await SecureStorage.to.writeSecureData(
               AllStringConst.ServiceType, loginModel.serviceType);
 
           Get.put(LandingPageController());

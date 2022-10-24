@@ -545,13 +545,14 @@ class DocumentController extends GetxController {
   // getatt_achments_model.Attachments? saveAttAchmentItemAnnotationsresalt;
   Attachments? saveAttAchmentItemAnnotationsData;
 
-  getAttachmentItem({context, documentId, transferId, attachmentId}) {
+  Future<GetAttAchmentItem?> getAttachmentItemAsync(
+      {context, documentId, transferId, attachmentId}) async {
     GetAttachmentItemAPI getAttachmentItemAPI = GetAttachmentItemAPI(context);
     getAttachmentItemAPI.data =
         "Token=${secureStorage.token()}&documentId=$documentId&transferId=$transferId&attachmentId=$attachmentId&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}";
-    getAttachmentItemAPI.getData().then((value) {
-      getAttAchmentItem = value as GetAttAchmentItem;
-    });
+    var value = await getAttachmentItemAPI.getData();
+    if (value == null) return null;
+    return value as GetAttAchmentItem;
   }
 
   multipleTransferspost({context, correspondenceId, transferId}) async {
@@ -650,35 +651,61 @@ class DocumentController extends GetxController {
 
   backTooragnalFileDocpdf() {
     notoragnalFileDoc = false;
-
     pdfAndSing.clear();
     singpic.clear();
-
     pdfAndSing.clear();
-    pdfAndSingData.clear();
 
-    pdfAndSingData.add(oragnalFileDocpdfUrlFile);
+    pdfAndSingURL.value = oragnalFileDocpdfUrlFile;
+
+    Map<String, dynamic> dat =
+        jsonDecode(isOriginalMailAttachmentsList!.annotations!);
+
+    var loopableData = dat.values.toList();
+
+    loopableData.forEach((elementa) {
+      ViewerAnnotation daa = ViewerAnnotation.fromMap(elementa[0]);
+      annotations.add(daa);
+    });
+    update();
+  }
+
+  openNewAttachment(AttachmentsList attachment) {
+    notoragnalFileDoc = true;
+    pdfAndSing.clear();
+    singpic.clear();
+    pdfAndSing.clear();
+    // pdfAndSingData.clear();
+
+    // pdfAndSingData.add(attachment.uRL!);
+    pdfAndSingURL.value = attachment.uRL!;
+    Map<String, dynamic> dat = jsonDecode(attachment.annotations!);
+
+    var loopableData = dat.values.toList();
+
+    loopableData.forEach((elementa) {
+      ViewerAnnotation daa = ViewerAnnotation.fromMap(elementa[0]);
+      annotations.add(daa);
+    });
     update();
   }
 
   //تحديث كان ابن فيل وجلب جميع البيانات الخاصه بلملف
   updatecanOpenDocumentModel(DocumentModel data) {
     pdfAndSing.clear();
-    pdfAndSingData.clear();
     documentEditedInOfficeId.value = 0;
     documentBaseModel = data;
+    folder2.clear();
     documentBaseModel?.attachments?.attachments?.forEach((element) {
       if (element.isOriginalMail!) {
-        print("element.uRL=>      ${element.uRL}");
         oragnalFileDocpdfUrlFile = element.uRL!;
         isOriginalMailAttachmentsList = element;
 
         pdfAndSing.clear();
-        pdfAndSingData.clear();
+        // pdfAndSingData.clear();
 
         annotations.clear();
-
-        pdfAndSingData.add(oragnalFileDocpdfUrlFile);
+        pdfAndSingURL.value = oragnalFileDocpdfUrlFile;
+        // pdfAndSingData.add(oragnalFileDocpdfUrlFile);
 
         Map<String, dynamic> dat = jsonDecode(element.annotations!);
 
@@ -688,13 +715,8 @@ class DocumentController extends GetxController {
           ViewerAnnotation daa = ViewerAnnotation.fromMap(elementa[0]);
           annotations.add(daa);
         });
-
-        //var r = dat.values.toList().first[0];
-
-        update();
-      }
-
-      if (element.isOriginalMail == false) {
+        // update();
+      } else {
         if (folder2[element.folderName] != null) {
           folder2[element.folderName]?.add(element);
         } else {
@@ -704,27 +726,6 @@ class DocumentController extends GetxController {
         }
       }
     });
-    print("folder2=>${folder2.length}");
-    print("folder2=>${folder2}");
-
-    for (int i = 0; i < pdfAndSingannotation.length; i++) {
-      List<int> list = pdfAndSingannotation[i].imageByte!.codeUnits;
-      final Uint8List? data = Uint8List.fromList(list);
-      pdfAndSingannotationShowOrHide.add(
-        Positioned(
-          top: double.tryParse(pdfAndSingannotation[i].y!),
-          left: double.tryParse(pdfAndSingannotation[i].x!),
-          child: Image.memory(
-            data!,
-            fit: BoxFit.fill,
-            width: double.tryParse(pdfAndSingannotation[i].width!),
-            height: double.tryParse(pdfAndSingannotation[i].height!),
-          ),
-        ),
-      );
-    }
-
-    update();
   }
 
   ExportResponse? exportResponse;
@@ -752,7 +753,10 @@ class DocumentController extends GetxController {
   Map<GlobalKey, String> singpic = {};
 
   List<Widget> pdfAndSing = [];
-  List<String> pdfAndSingData = [];
+  // List<String> pdfAndSingData = [];
+
+  RxString pdfAndSingURL = "".obs;
+
   List<ViewerAnnotation> annotations = [];
   //لسته الامضاء القادمه مع الملف
   List<Annotation> pdfAndSingannotation = [];

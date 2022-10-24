@@ -17,7 +17,8 @@ import 'landing_page_controller.dart';
 class LoginController extends GetxController {
   TextEditingController userName = TextEditingController();
   TextEditingController baseUrl = TextEditingController(
-    text: 'http://192.168.20.237:89/Eversuite.CTS.Mobile/CMS.svc',
+    text:
+        'SecureStohttp://ecm-mob.mofa.gov.qa:9091/Eversuite.CTS.Mobile2/CMS.svcrage.to.',
     //text: 'http://139.99.149.12:9091/EverSuite.CTS.Mobile/CMS.svc'
   );
   BuildContext? context;

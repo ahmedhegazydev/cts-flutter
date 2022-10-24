@@ -167,7 +167,7 @@ class DocumentPage extends GetWidget<DocumentController> {
         userId: controller.secureStorage
             .readIntSecureData(AllStringConst.UserId)
             .toString(),
-        docURL: controller.pdfAndSingData.first);
+        docURL: controller.pdfAndSingURL.value);
     ViewerController.to.allAnnotations.clear();
     Navigator.of(context).pop();
   }
@@ -236,15 +236,26 @@ class DocumentPage extends GetWidget<DocumentController> {
         ),
       );
     }
-    if (controller.pdfAndSingData.length > 0) {
-      print("fi data ");
-      print(controller.pdfAndSingData.first);
+    if (controller.notoragnalFileDoc) {
+      print("open nonoreg " + controller.pdfAndSingURL.value);
       return SizedBox(
         width: size.width,
         height: size.height - 100,
-        child: PDFView(
+        child: new PDFView(
             originalAnnotations: controller.annotations,
-            url: controller.pdfAndSingData.first,
+            url: controller.pdfAndSingURL.value,
+            color: Get.find<MController>().appcolor,
+            size: s),
+      );
+    } else if (controller.pdfAndSingURL.isNotEmpty) {
+      print("fi mail ");
+      print(controller.pdfAndSingURL);
+      return SizedBox(
+        width: size.width,
+        height: size.height - 100,
+        child: new PDFView(
+            originalAnnotations: controller.annotations,
+            url: controller.pdfAndSingURL.value,
             color: Get.find<MController>().appcolor,
             size: s),
       );
@@ -254,15 +265,6 @@ class DocumentPage extends GetWidget<DocumentController> {
         backgroundColor: Colors.black,
       ),
     );
-    //  });
-
-    //  return documentViewer;
-    // Column(
-    //   mainAxisAlignment: MainAxisAlignment.start,
-    //   crossAxisAlignment: CrossAxisAlignment.stretch,
-    //   //  mainAxisSize: MainAxisSize.max,
-    //   children: [documentViewer],
-    // );
   }
 
   void _openVisualTracking() {
@@ -312,7 +314,7 @@ class DocumentPage extends GetWidget<DocumentController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
-                  height: 50,
+                  height: 10,
                 )
 
                 //action":
@@ -325,7 +327,7 @@ class DocumentPage extends GetWidget<DocumentController> {
               thickness: 1,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 CTSActionButton('assets/images/refer.png', "refer".tr, () {
                   // loader
@@ -346,33 +348,31 @@ class DocumentPage extends GetWidget<DocumentController> {
                   completeClick(context);
                 }),
                 // edit
-                if (controller.canOpenInOffice())
-                  CTSActionButton('assets/images/A.png', "marking".tr,
-                      () async {
-                    // loader
-                    showLoaderDialog(context);
-                    await openInOffice(context);
-                  }),
+
+                // if (controller
+                //         .documentBaseModel?.correspondence?.hasAttachments ??
+                //     true)
+                //   CTSActionButton('assets/images/refer.png', "Attachments".tr,
+                //       () async {
+                //     _popUpMenuhasAttachments(context);
+                //   }),
+
                 CTSActionButton('assets/images/track.png', "tracking".tr, () {
                   _openVisualTracking();
                 }),
                 CTSActionButton('assets/images/track.png', "Reply".tr, () {
                   replyClick(context);
                 }),
-                if (controller.notoragnalFileDoc)
-                  CTSActionButton('assets/images/track.png', "tracking".tr, () {
-                    controller.backTooragnalFileDocpdf();
-                  }),
               ],
             ),
             SizedBox(
-              height: 50,
+              height: 10,
             ),
             Text(
               "data".tr,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 CTSActionButton('assets/images/track.png', 'processes'.tr,
                     () async {
@@ -391,7 +391,34 @@ class DocumentPage extends GetWidget<DocumentController> {
               ],
             ),
             SizedBox(
-              height: 50,
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                if (controller
+                        .documentBaseModel?.correspondence?.hasAttachments ??
+                    true)
+                  // if (!controller.notoragnalFileDoc)
+                  //   CTSActionButton('assets/images/refer.png', "Attachments".tr,
+                  //       () async {
+                  //     _popUpMenuhasAttachments(context);
+                  //   }),
+                  if (controller.canOpenInOffice())
+                    CTSActionButton('assets/images/A.png', "marking".tr,
+                        () async {
+                      // loader
+                      showLoaderDialog(context);
+                      await openInOffice(context);
+                    }),
+                // if (controller.notoragnalFileDoc)
+                //   CTSActionButton('assets/images/track.png', "original", () {
+                //     controller.backTooragnalFileDocpdf();
+                //   }),
+              ],
+            ),
+            SizedBox(
+              height: 10,
             ),
             Text(
               "data".tr,
@@ -1360,6 +1387,164 @@ class DocumentPage extends GetWidget<DocumentController> {
       ),
     );
   }
+
+  _popUpMenuhasAttachments(context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          print(
+              " Get.find<DocumentController>() .canOpenDocumentModel?.attachments?.attachments?.length=>${Get.find<DocumentController>().documentBaseModel?.attachments?.attachments?.length}");
+          return AlertDialog(
+            title: Text("Attachments"),
+            content: SizedBox(
+              height: 150,
+              width: MediaQuery.of(context).size.width * .7,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: Get.find<DocumentController>().folder2.length,
+                  itemBuilder: (context, pos) {
+                    String key = Get.find<DocumentController>()
+                        .folder2
+                        .keys
+                        .elementAt(pos);
+
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * .3,
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                  width: double.infinity,
+                                  color: Theme.of(context).colorScheme.primary,
+                                  child: Text(key)),
+                            ),
+                            Expanded(
+                              child: ListView.builder(
+                                  itemCount: Get.find<DocumentController>()
+                                      .folder2[key]!
+                                      .length,
+                                  itemBuilder: (context, indx) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: GestureDetector(
+                                        onTap: () async {
+                                          //  Navigator.of(context).pop();
+                                          //Navigator.of(context).pop();
+                                          showLoaderDialog(context);
+                                          var folder =
+                                              Get.find<DocumentController>()
+                                                  .folder2[key];
+
+                                          var at =
+                                              Get.find<DocumentController>()
+                                                  .folder2[key]![indx];
+                                          var attachmentItem = await controller
+                                              .getAttachmentItemAsync(
+                                            context: context,
+                                            transferId: at.transferId,
+                                            attachmentId: at.attachmentId,
+                                            documentId: at.docId,
+                                          );
+                                          if (attachmentItem != null)
+                                            controller.openNewAttachment(
+                                                attachmentItem.attachment!);
+                                          Navigator.of(context).pop();
+                                          //  _popShowAttachments(context);
+                                        },
+                                        child: Text(
+                                            Get.find<DocumentController>()
+                                                .folder2[key]![indx]
+                                                .fileName!),
+                                      ),
+                                    );
+                                  }),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("Ok".tr),
+              ),
+            ],
+          );
+        });
+
+    // showCupertinoDialog(
+    //     context: context,
+    //     builder: (context) => CupertinoAlertDialog(
+    //           title: Row(//mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //               children: [
+    //             Image.asset(
+    //               'assets/images/refer.png'
+    //               //
+    //               ,
+    //               height: 20,
+    //               width: 20,
+    //             ),
+    //             const SizedBox(
+    //               width: 8,
+    //             ),
+    //             Text(
+    //               "refer".tr,
+    //               style: Theme.of(context).textTheme.headline3!.copyWith(
+    //                     color: createMaterialColor(
+    //                       const Color.fromRGBO(77, 77, 77, 1),
+    //                     ),
+    //                     fontSize: 15,
+    //                   ),
+    //               textAlign: TextAlign.center,
+    //               overflow: TextOverflow.ellipsis,
+    //             ),
+    //             const Spacer(),
+    //             Image.asset(
+    //               'assets/images/close_button.png',
+    //               width: 20,
+    //               height: 20,
+    //             ),
+    //           ]),
+    //           content: Container(width: MediaQuery.of(context).size.width*.8,
+    //             child: Column(
+    //                 crossAxisAlignment: CrossAxisAlignment.start,
+    //                 children: [
+    //                   const SizedBox(
+    //                     height: 20,
+    //                   ),
+    //                   Text("referTo".tr),
+    //                   Container(
+    //                       height: 100,
+    //                       child: Row(
+    //                         children: [
+    //
+    //                      Expanded(child: ListView.builder(scrollDirection: Axis.horizontal,itemCount: 10,itemBuilder: (context,pos){
+    //                        return Container(
+    //                          height: 30,
+    //                          width: 30,
+    //                          decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.green),
+    //                        );
+    //                      }))  , Padding(
+    //                             padding: const EdgeInsets.all(8.0),
+    //                             child: Container(
+    //                               height: 30,
+    //                               width: 30,
+    //                               decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.red),
+    //                             ),
+    //                           ), ],
+    //                       ))
+    //                 ]),
+    //           ),
+    //           actions: [],
+    //         ));
+  }
 }
 
 // class Tile extends StatefulWidget {
@@ -1382,24 +1567,34 @@ class CTSActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        action();
-      },
-      child: Column(
-        children: [
-          CircleAvatar(
-            child: Image.asset(
-              color: Colors.white,
-              image,
-              height: 20,
-              width: 20,
+    return SizedBox(
+      width: 45,
+      child: InkWell(
+        onTap: () {
+          action();
+        },
+        child: Column(
+          children: [
+            CircleAvatar(
+              child: Image.asset(
+                color: Colors.white,
+                image,
+                height: 20,
+                width: 20,
+              ),
             ),
-          ),
-          Text(
-            name,
-          )
-        ],
+            SizedBox(
+              width: 43,
+              height: 40,
+              child: Text(
+                name,
+                maxLines: 2,
+                textAlign: TextAlign.center,
+                textScaleFactor: 0.7,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -753,7 +753,7 @@ class InboxController extends GetxController {
 
   clearDocumentControllerTempVars() {
     Get.find<DocumentController>().pdfAndSing.clear();
-    Get.find<DocumentController>().pdfAndSingData.clear();
+    Get.find<DocumentController>().pdfAndSingURL.value = "";
     Get.find<DocumentController>().documentEditedInOfficeId.value = 0;
   }
 
@@ -773,6 +773,39 @@ class InboxController extends GetxController {
     } else {
       Get.snackbar("", "canotopen".tr);
     }
+  }
+
+  Future openDocumentChangedAttachment({
+    required context,
+    required Correspondence correspondence,
+    required Attachments attachments,
+  }) async {
+    showLoaderDialog(context);
+    var document = await PrepareDocumentBaseObjectWithAttachments(
+        context: context,
+        correspondence: correspondence,
+        attachments: attachments);
+    Navigator.pop(context);
+    Navigator.pop(context);
+    if (document != null) {
+      Get.find<DocumentController>().documentBaseModel = document;
+      Get.find<DocumentController>().updatecanOpenDocumentModel(document);
+      Get.toNamed("/DocumentPage");
+    } else {
+      Get.snackbar("", "canotopen".tr);
+    }
+  }
+
+  Future<DocumentModel?> PrepareDocumentBaseObjectWithAttachments({
+    required context,
+    required Correspondence correspondence,
+    required Attachments attachments,
+  }) async {
+    DocumentModel baseModel =
+        DocumentModel(allow: true, correspondence: correspondence);
+    baseModel.attachments = attachments;
+
+    return baseModel;
   }
 
   Future<DocumentModel?> PrepareDocumentBaseObject({
@@ -801,7 +834,7 @@ class InboxController extends GetxController {
       Correspondence = null}) async {
     Get.put(DocumentController());
     Get.find<DocumentController>().pdfAndSing.clear();
-    Get.find<DocumentController>().pdfAndSingData.clear();
+    Get.find<DocumentController>().pdfAndSingURL.value = "";
     Get.find<DocumentController>().documentEditedInOfficeId.value = 0;
 
     CanOpenDocumentApi canOpenDocumentApi = CanOpenDocumentApi(context);

@@ -19,7 +19,7 @@ abstract class ApiManager {
   late BuildContext? context;
 
   late String storageBaseUrl =
-      "http://192.168.20.237:89/Eversuite.CTS.Mobile/CMS.svc";
+      "SecureStohttp://ecm-mob.mofa.gov.qa:9091/Eversuite.CTS.Mobile2/CMS.svcrage.to.";
   late List<SettingItem> settingItems;
 
   ApiManager({BuildContext? context}) {

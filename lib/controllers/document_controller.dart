@@ -627,9 +627,13 @@ class DocumentController extends GetxController {
     required String documentAnnotationsString,
     required String delegateGctId,
     required String docURL,
+    bool? unSign,
   }) async {
     final SaveDocumentAnnotationsAPI _saveDocumentAnnotationsApi =
         SaveDocumentAnnotationsAPI(context);
+
+    var unsignValueToSend = 'false';
+    if (unSign != null && unSign == true) unsignValueToSend = 'true';
     postSaveDocumentAnnotationsModel = SaveDocumentAnnotationModel(
       AttachmentId: attachmentId.toString(),
       CorrespondenceId: correspondenceId,
@@ -642,7 +646,7 @@ class DocumentController extends GetxController {
       DocumentPagesString: '',
       DocumentUrl: docURL,
       Language: 'en',
-      UnSign: 'false',
+      UnSign: unsignValueToSend,
       PagesOrderString: "[]",
     );
     await _saveDocumentAnnotationsApi
@@ -696,13 +700,12 @@ class DocumentController extends GetxController {
     update();
   }
 
-  RxBool canSignThis = false.obs;
+  RxBool canSignThis = true.obs;
   bool canSignThisDocument() {
-    canSignThis.value = false;
-    if (selectedAttachent == null) return false;
+    canSignThis.value = true;
+    if (selectedAttachent == null) return true;
     if (selectedAttachent!.fileName!.contains('pdf')) {
       canSignThis.value = true;
-
       return true;
     }
     canSignThis.value = false;

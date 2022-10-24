@@ -143,6 +143,48 @@ class DocumentPage extends GetWidget<DocumentController> {
         ));
   }
 
+  Future<void> unsignDocument(BuildContext context) async {
+    showLoaderDialog(context);
+    var all = ViewerController.to.allAnnotations.toList();
+    List<Map> data = [];
+    all.forEach((element) {
+      element.height = element.height * 2;
+      element.width = element.width * 2;
+      data.add(element.toMap());
+    });
+    Map<String, List<Map>> updated = {"1": data};
+    var stringData = jsonEncode(updated);
+
+    var attachmentID =
+        controller.isOriginalMailAttachmentsList!.attachmentId.toString();
+    if (controller.selectedAttachent != null) {
+      attachmentID = controller.selectedAttachent!.attachmentId.toString();
+    }
+    var isOriginalMail = !controller.notoragnalFileDoc;
+    var isOriginalString = isOriginalMail.toString();
+    var url = controller.pdfAndSingURL.value;
+
+    print(attachmentID);
+    print(isOriginalMail);
+    print(url);
+    await controller.SaveDocAnnotationsData(
+        context: context,
+        attachmentId: attachmentID,
+        correspondenceId:
+            controller.documentBaseModel!.correspondence!.correspondenceId!,
+        delegateGctId: "0",
+        documentAnnotationsString: stringData,
+        isOriginalMail: isOriginalString,
+        transferId: controller.documentBaseModel!.correspondence!.transferId!,
+        userId: controller.secureStorage
+            .readIntSecureData(AllStringConst.UserId)
+            .toString(),
+        docURL: url,
+        unSign: true);
+    ViewerController.to.allAnnotations.clear();
+    Navigator.of(context).pop();
+  }
+
   Future<void> saveDocumentAnnotations(BuildContext context) async {
     showLoaderDialog(context);
     var all = ViewerController.to.allAnnotations.toList();
@@ -426,6 +468,11 @@ class DocumentPage extends GetWidget<DocumentController> {
                     Navigator.of(context).pop();
                     controller.backTooragnalFileDocpdf();
                   }),
+                CTSActionButton('assets/images/up_arrow.png', "unsign",
+                    () async {
+                  await unsignDocument(context);
+                  //showExportDialog(context);
+                }),
               ],
             ),
             SizedBox(

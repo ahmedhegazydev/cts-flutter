@@ -25,7 +25,7 @@ import 'hourizontal_list_view_colors.dart';
 
 class CustomListView extends GetView<InboxController> {
   CustomListView(
-      {required this.function,
+      {this.function,
       //  required this.allCorrespondences,
       required this.correspondences,
       required this.scrollController,
@@ -46,7 +46,7 @@ class CustomListView extends GetView<InboxController> {
 
   // VoidCallback openMenu;
 
-  Future<void> function;
+  Future<void>? function;
 
   VoidCallback onClickItem;
   List<Correspondence> correspondences;
@@ -56,12 +56,15 @@ class CustomListView extends GetView<InboxController> {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
+
     Get.put(DocumentController());
     var r = Get.find<InboxController>().correspondencesModel;
     // return Container(color: Colors.pink);
-    return Expanded(
+    return Container(
+      height: height - 100,
       child: RefreshIndicator(
-        onRefresh: () => function,
+        onRefresh: () => function!,
         child: DefaultTabController(
           length: 2,
           child: Column(
@@ -120,8 +123,8 @@ class CustomListView extends GetView<InboxController> {
                                                               .gridInfo?[0]
                                                               .value ??
                                                           "",
-                                                      softWrap: true,
-                                                      maxLines: 2,
+                                                      // softWrap: true,
+                                                      // maxLines: 2,
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                       style: TextStyle(
@@ -798,11 +801,15 @@ class CustomListView extends GetView<InboxController> {
                                                                 Container(
                                                                   child:
                                                                       TextFormField(
+                                                                    controller:
+                                                                        controller
+                                                                            .completeNote,
                                                                     onChanged:
                                                                         (v) {
                                                                       Get.find<
                                                                               InboxController>()
-                                                                          .completeNote = v;
+                                                                          .completeNote
+                                                                          .text = v;
                                                                     },
                                                                     maxLines: 4,
                                                                   ),
@@ -830,7 +837,7 @@ class CustomListView extends GetView<InboxController> {
                                                               ?.icon);
 
                                                           String data =
-                                                              'Token=${Get.find<InboxController>().secureStorage.token()}&correspondenceId=${correspondences[pos].correspondenceId}&transferId=${correspondences[pos].transferId}&actionType=Complete&note=${Get.find<InboxController>().completeNote}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}';
+                                                              'Token=${Get.find<InboxController>().secureStorage.token()}&correspondenceId=${correspondences[pos].correspondenceId}&transferId=${correspondences[pos].transferId}&actionType=Complete&note=${Get.find<InboxController>().completeNote.text}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}';
                                                           Navigator.of(ctx)
                                                               .pop();
                                                           showLoaderDialog(

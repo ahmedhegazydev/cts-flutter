@@ -12,7 +12,6 @@ import '../services/json_model/basket/fetch_basket_list_model.dart';
 import '../utility/all_const.dart';
 import '../utility/storage.dart';
 import '../utility/utilitie.dart';
-import '../viewer/controllers/viewerController.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_listview.dart';
 import '../utility/utilitie.dart' as u;
@@ -400,6 +399,15 @@ class InboxPage extends GetWidget<InboxController> {
     );
   }
 
+  Future<void> refreshInbox(BuildContext context, int inboxId) async {
+    controller.getCorrespondencesDataAsync(
+        inboxId: inboxId,
+        pageSize: 20,
+        showThumbnails: false,
+        context: context);
+    print('refreshing...');
+  }
+
   _buildTopInboxMenu(BuildContext context) {
     return Container(
       color: Colors.transparent,
@@ -444,110 +452,123 @@ class InboxPage extends GetWidget<InboxController> {
             Center(
                 child: controller.getData
                     ? const Center(child: CircularProgressIndicator())
-                    : Column(
-                        children: [
-                          Visibility(
-                              visible:
-                                  true, //controller.allCorrespondences.isNotEmpty,
-                              child: _filterMail(context)),
-                          controller.allCorrespondences.isNotEmpty
-                              ? CustomListView(
-                                  function: controller.onRefresh(),
-                                  correspondences:
-                                      controller.allCorrespondences,
-                                  scrollController: controller.scrollController,
-                                  haveMoreData: controller.haveMoreData,
-                                  onClickItem: () {
-                                    //     Get.toNamed("/DocumentPage");
-                                  },
-                                  functionSummary: () {},
-                                  //allCorrespondences: controller.allCorrespondences,
-                                  customActions: controller.customActions,
-                                  functionReply: () {},
-                                  functionTrunsfer: () {},
-                                  functionComplet: () {},
-                                )
-                              : Center(
-                                  child: Text('noData'.tr,
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.grey.shade500))),
-                        ],
+                    : RefreshIndicator(
+                        onRefresh: () => refreshInbox(context, 0),
+                        child: ListView(
+                          children: [
+                            Visibility(
+                                visible:
+                                    true, //controller.allCorrespondences.isNotEmpty,
+                                child: _filterMail(context)),
+                            controller.allCorrespondences.isNotEmpty
+                                ? CustomListView(
+                                    // function: controller.onRefresh(),
+                                    correspondences:
+                                        controller.allCorrespondences,
+                                    scrollController:
+                                        controller.scrollController,
+                                    haveMoreData: controller.haveMoreData,
+                                    onClickItem: () {
+                                      //     Get.toNamed("/DocumentPage");
+                                    },
+                                    functionSummary: () {},
+                                    //allCorrespondences: controller.allCorrespondences,
+                                    customActions: controller.customActions,
+                                    functionReply: () {},
+                                    functionTrunsfer: () {},
+                                    functionComplet: () {},
+                                  )
+                                : Center(
+                                    child: Text('noData'.tr,
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.grey.shade500))),
+                          ],
+                        ),
                       )),
             Center(
                 child: controller.getData
                     ? const Center(child: CircularProgressIndicator())
-                    : Column(
-                        children: [
-                          Visibility(
-                              visible:
-                                  true, // controller.allCorrespondences.isNotEmpty,
-                              child: _filterMail(context)),
-                          controller.allCorrespondences.isNotEmpty
-                              ? CustomListView(
-                                  function: controller.onRefresh(),
-                                  correspondences:
-                                      controller.allCorrespondences,
-                                  scrollController: controller.scrollController,
-                                  haveMoreData: controller.haveMoreData,
-                                  onClickItem: () {
-                                    Get.find<DocumentController>()
-                                        .documentEditedInOfficeId
-                                        .value = 0;
-                                    //   ViewerController.to.allAnnotations.clear();
-                                    Get.toNamed("/DocumentPage");
-                                  },
-                                  functionSummary: () {},
-                                  //allCorrespondences: controller.allCorrespondences,
-                                  customActions: controller.customActions,
-                                  functionReply: () {},
-                                  functionTrunsfer: () {},
-                                  functionComplet: () {},
-                                )
-                              : Center(
-                                  child: Text('noData'.tr,
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.grey.shade500))),
-                        ],
+                    : RefreshIndicator(
+                        onRefresh: () => refreshInbox(context, 1),
+                        child: ListView(
+                          children: [
+                            Visibility(
+                                visible:
+                                    true, // controller.allCorrespondences.isNotEmpty,
+                                child: _filterMail(context)),
+                            controller.allCorrespondences.isNotEmpty
+                                ? CustomListView(
+                                    // function: controller.onRefresh(),
+                                    correspondences:
+                                        controller.allCorrespondences,
+                                    scrollController:
+                                        controller.scrollController,
+                                    haveMoreData: controller.haveMoreData,
+                                    onClickItem: () {
+                                      Get.find<DocumentController>()
+                                          .documentEditedInOfficeId
+                                          .value = 0;
+                                      //   ViewerController.to.allAnnotations.clear();
+                                      Get.toNamed("/DocumentPage");
+                                    },
+                                    functionSummary: () {},
+                                    //allCorrespondences: controller.allCorrespondences,
+                                    customActions: controller.customActions,
+                                    functionReply: () {},
+                                    functionTrunsfer: () {},
+                                    functionComplet: () {},
+                                  )
+                                : Center(
+                                    child: Text('noData'.tr,
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.grey.shade500))),
+                          ],
+                        ),
                       )),
             Center(
                 child: controller.getData
                     ? const Center(child: CircularProgressIndicator())
-                    : Column(
-                        children: [
-                          Visibility(
-                              visible: controller.allCorrespondences.isNotEmpty,
-                              child: _filterMail(context)),
-                          controller.allCorrespondences.isNotEmpty
-                              ? CustomListView(
-                                  function: controller.onRefresh(),
-                                  correspondences:
-                                      controller.allCorrespondences,
-                                  scrollController: controller.scrollController,
-                                  haveMoreData: controller.haveMoreData,
-                                  onClickItem: () {
-                                    //        ViewerController.to.allAnnotations.clear();
-                                    Get.find<DocumentController>()
-                                        .documentEditedInOfficeId
-                                        .value = 0;
-                                    Get.toNamed("/DocumentPage");
-                                  },
-                                  functionSummary: () {},
-                                  //allCorrespondences: [],
-                                  customActions: [],
-                                  functionReply: () {},
-                                  functionTrunsfer: () {},
-                                  functionComplet: () {},
-                                )
-                              : Center(
-                                  child: Text(
-                                  'noData'.tr,
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.grey.shade500),
-                                )),
-                        ],
+                    : RefreshIndicator(
+                        onRefresh: () => refreshInbox(context, 5),
+                        child: ListView(
+                          children: [
+                            Visibility(
+                                visible:
+                                    controller.allCorrespondences.isNotEmpty,
+                                child: _filterMail(context)),
+                            controller.allCorrespondences.isNotEmpty
+                                ? CustomListView(
+                                    // function: controller.onRefresh(),
+                                    correspondences:
+                                        controller.allCorrespondences,
+                                    scrollController:
+                                        controller.scrollController,
+                                    haveMoreData: controller.haveMoreData,
+                                    onClickItem: () {
+                                      //        ViewerController.to.allAnnotations.clear();
+                                      Get.find<DocumentController>()
+                                          .documentEditedInOfficeId
+                                          .value = 0;
+                                      Get.toNamed("/DocumentPage");
+                                    },
+                                    functionSummary: () {},
+                                    //allCorrespondences: [],
+                                    customActions: [],
+                                    functionReply: () {},
+                                    functionTrunsfer: () {},
+                                    functionComplet: () {},
+                                  )
+                                : Center(
+                                    child: Text(
+                                    'noData'.tr,
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.grey.shade500),
+                                  )),
+                          ],
+                        ),
                       )),
           ],
           onChange: (value) {

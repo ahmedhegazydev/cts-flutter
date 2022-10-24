@@ -885,6 +885,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                     ),
                     Container(
                       child: TextFormField(
+                        controller: controller.completeNote,
                         maxLines: 4,
                       ),
                       color: Colors.grey[300],
@@ -903,7 +904,7 @@ class DocumentPage extends GetWidget<DocumentController> {
               print(Get.find<InboxController>().completeCustomActions?.icon);
 
               String data =
-                  'Token=${Get.find<InboxController>().secureStorage.token()}&correspondenceId=${controller.documentBaseModel!.correspondence!.correspondenceId}&transferId=${controller.documentBaseModel!.correspondence!.transferId}&actionType=Complete&note=${Get.find<InboxController>().completeNote}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}';
+                  'Token=${Get.find<InboxController>().secureStorage.token()}&correspondenceId=${controller.documentBaseModel!.correspondence!.correspondenceId}&transferId=${controller.documentBaseModel!.correspondence!.transferId}&actionType=Complete&note=${controller.completeNote.text}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}';
 
               showLoaderDialog(context);
               await Get.find<InboxController>()

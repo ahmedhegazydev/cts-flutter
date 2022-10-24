@@ -212,7 +212,7 @@ class InboxController extends GetxController {
 
   updateSelect(v) {}
 
-  String completeNote = "";
+  TextEditingController completeNote = new TextEditingController();
   String replyNote = "";
   bool isPrivate = true;
 
@@ -412,7 +412,11 @@ class InboxController extends GetxController {
   }
 
   Future<void> onRefresh() async {
-    //  getCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false,context: context );
+    // getCorrespondencesData(
+    //     inboxId: inboxId,
+    //     pageSize: 20,
+    //     showThumbnails: false,
+    //     context: context);
 
     // getAllCorrespondencesData(inboxId: inboxId, pageSize:20 ,showThumbnails:false, context: context );
     print("onRefresh");

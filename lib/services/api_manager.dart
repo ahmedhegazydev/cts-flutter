@@ -18,8 +18,10 @@ import 'dio_singleton.dart';
 abstract class ApiManager {
   late BuildContext? context;
 
+  // late String storageBaseUrl =
+  //     "http://ecm-mob.mofa.gov.qa:9091/Eversuite.CTS.Mobile2/CMS.svc";
   late String storageBaseUrl =
-      "http://ecm-mob.mofa.gov.qa:9091/Eversuite.CTS.Mobile2/CMS.svc";
+      "http://192.168.20.237:89/Eversuite.CTS.Mobile/CMS.svc";
   late List<SettingItem> settingItems;
 
   ApiManager({BuildContext? context}) {

@@ -2193,6 +2193,9 @@ class _ListView1State extends State<ListView1> {
                                                           Container(
                                                             child:
                                                                 TextFormField(
+                                                              controller: Get.find<
+                                                                      InboxController>()
+                                                                  .completeNote,
                                                               maxLines: 4,
                                                             ),
                                                             color: Colors
@@ -2218,7 +2221,7 @@ class _ListView1State extends State<ListView1> {
                                                         ?.icon);
 
                                                     String data =
-                                                        'Token=${Get.find<InboxController>().secureStorage.token()}&correspondenceId=${logic.getBasketInboxModel!.correspondences![pos].correspondenceId}&transferId=${logic.getBasketInboxModel!.correspondences![pos].transferId}&actionType=${Get.find<InboxController>().completeCustomActions?.name ?? ""}&note=${Get.find<InboxController>().completeNote}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}';
+                                                        'Token=${Get.find<InboxController>().secureStorage.token()}&correspondenceId=${logic.getBasketInboxModel!.correspondences![pos].correspondenceId}&transferId=${logic.getBasketInboxModel!.correspondences![pos].transferId}&actionType=${Get.find<InboxController>().completeCustomActions?.name ?? ""}&note=${Get.find<InboxController>().completeNote.text}&language=${Get.locale?.languageCode == "en" ? "en" : "ar"}';
 
                                                     Get.find<InboxController>()
                                                         .completeInCorrespondence(

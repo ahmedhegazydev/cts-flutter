@@ -1681,7 +1681,7 @@ class DocumentController extends GetxController {
     update(["record"]);
   }
 
-  String completeNote = "";
+  TextEditingController completeNote = new TextEditingController();
   String replyNote = "";
   bool isPrivate = true;
 

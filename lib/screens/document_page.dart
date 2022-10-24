@@ -100,44 +100,47 @@ class DocumentPage extends GetWidget<DocumentController> {
     );
   }
 
-  ExpandableFab _buildFAB(BuildContext context) {
-    return ExpandableFab(
-      distance: 122.0,
-      children: [
-        ActionButton(
-          onPressed: () async {
-            await saveDocumentAnnotations(context);
-          },
-          icon: const Icon(Icons.save),
-        ),
-        ActionButton(
-          onPressed: () async {
-            await saveDocumentAnnotations(context);
-            showExportDialog(context);
-          },
-          icon: const Icon(Icons.upload),
-        ),
-        ActionButton(
-          onPressed: () {
-            showLoaderDialog(context);
-            completeClick(context);
-          },
-          icon: const Icon(Icons.archive),
-        ),
-        ActionButton(
-          onPressed: () => clickOnSign(context),
-          icon: const Icon(Icons.edit),
-        ),
-        ActionButton(
-          onPressed: () {
-            var corresp = controller.documentBaseModel!.correspondence!;
-            controller.transferPopup(
-                context, corresp.transferId!, corresp.correspondenceId!);
-          },
-          icon: const Icon(Icons.send),
-        ),
-      ],
-    );
+  _buildFAB(BuildContext context) {
+    return Obx(() => ExpandableFab(
+          distance: 122.0,
+          children: [
+            if (controller.canSignThis.isTrue)
+              ActionButton(
+                onPressed: () async {
+                  await saveDocumentAnnotations(context);
+                },
+                icon: const Icon(Icons.save),
+              ),
+            if (correspondanceHasAction("export"))
+              ActionButton(
+                onPressed: () async {
+                  await saveDocumentAnnotations(context);
+                  showExportDialog(context);
+                },
+                icon: const Icon(Icons.upload),
+              ),
+            ActionButton(
+              onPressed: () {
+                showLoaderDialog(context);
+                completeClick(context);
+              },
+              icon: const Icon(Icons.archive),
+            ),
+            if (controller.canSignThis.isTrue)
+              ActionButton(
+                onPressed: () => clickOnSign(context),
+                icon: const Icon(Icons.edit),
+              ),
+            ActionButton(
+              onPressed: () {
+                var corresp = controller.documentBaseModel!.correspondence!;
+                controller.transferPopup(
+                    context, corresp.transferId!, corresp.correspondenceId!);
+              },
+              icon: const Icon(Icons.send),
+            ),
+          ],
+        ));
   }
 
   Future<void> saveDocumentAnnotations(BuildContext context) async {
@@ -152,22 +155,32 @@ class DocumentPage extends GetWidget<DocumentController> {
     Map<String, List<Map>> updated = {"1": data};
     var stringData = jsonEncode(updated);
 
+    var attachmentID =
+        controller.isOriginalMailAttachmentsList!.attachmentId.toString();
+    if (controller.selectedAttachent != null) {
+      attachmentID = controller.selectedAttachent!.attachmentId.toString();
+    }
+    var isOriginalMail = !controller.notoragnalFileDoc;
+    var isOriginalString = isOriginalMail.toString();
+    var url = controller.pdfAndSingURL.value;
+
+    print(attachmentID);
+    print(isOriginalMail);
+    print(url);
     await controller.SaveDocAnnotationsData(
-        context: context,
-        attachmentId:
-            controller.isOriginalMailAttachmentsList!.attachmentId.toString(),
-        correspondenceId:
-            controller.documentBaseModel!.correspondence!.correspondenceId!,
-        delegateGctId: "0",
-        documentAnnotationsString: stringData,
-        isOriginalMail: controller
-            .isOriginalMailAttachmentsList!.isOriginalMail!
-            .toString(),
-        transferId: controller.documentBaseModel!.correspondence!.transferId!,
-        userId: controller.secureStorage
-            .readIntSecureData(AllStringConst.UserId)
-            .toString(),
-        docURL: controller.pdfAndSingURL.value);
+      context: context,
+      attachmentId: attachmentID,
+      correspondenceId:
+          controller.documentBaseModel!.correspondence!.correspondenceId!,
+      delegateGctId: "0",
+      documentAnnotationsString: stringData,
+      isOriginalMail: isOriginalString,
+      transferId: controller.documentBaseModel!.correspondence!.transferId!,
+      userId: controller.secureStorage
+          .readIntSecureData(AllStringConst.UserId)
+          .toString(),
+      docURL: url,
+    );
     ViewerController.to.allAnnotations.clear();
     Navigator.of(context).pop();
   }
@@ -932,6 +945,9 @@ class DocumentPage extends GetWidget<DocumentController> {
 // signature design
   Future<void> clickOnSign(BuildContext context) async {
     print("object");
+    // controller.preparePageData();
+    print(controller.multiSignatures.length);
+
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(

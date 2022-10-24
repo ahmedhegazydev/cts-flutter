@@ -122,8 +122,8 @@ class LoginController extends GetxController {
           await SecureStorage.to
               .writeSecureData(AllStringConst.Pincode, loginModel.pincode);
           //  await SecureStorage.to.deleteSecureData(AllStringConst.Signature);
-          await CtsSettingsDatabase.instance
-              .saveString(AllStringConst.Signature, loginModel.signature ?? "");
+          await SecureStorage.to.writeSecureData(
+              AllStringConst.Signature, loginModel.signature ?? "");
 
           await SecureStorage.to.writeSecureData(
               AllStringConst.SignatureId, loginModel.signatureId);

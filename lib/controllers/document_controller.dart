@@ -654,7 +654,7 @@ class DocumentController extends GetxController {
     pdfAndSing.clear();
     singpic.clear();
     pdfAndSing.clear();
-
+    selectedAttachent = null;
     pdfAndSingURL.value = oragnalFileDocpdfUrlFile;
 
     Map<String, dynamic> dat =
@@ -666,29 +666,53 @@ class DocumentController extends GetxController {
       ViewerAnnotation daa = ViewerAnnotation.fromMap(elementa[0]);
       annotations.add(daa);
     });
+    canSignThisDocument();
     update();
   }
 
+  AttachmentsList? selectedAttachent;
   openNewAttachment(AttachmentsList attachment) {
+    selectedAttachent = attachment;
     notoragnalFileDoc = true;
     pdfAndSing.clear();
     singpic.clear();
     pdfAndSing.clear();
     pdfAndSingURL.value = attachment.uRL!;
     annotations.clear();
-    Map<String, dynamic> dat = jsonDecode(attachment.annotations!);
+    print(attachment.annotations!);
+    try {
+      Map<String, dynamic> dat = jsonDecode(attachment.annotations!);
 
-    var loopableData = dat.values.toList();
+      var loopableData = dat.values.toList();
 
-    loopableData.forEach((elementa) {
-      ViewerAnnotation daa = ViewerAnnotation.fromMap(elementa[0]);
-      annotations.add(daa);
-    });
+      loopableData.forEach((elementa) {
+        ViewerAnnotation daa = ViewerAnnotation.fromMap(elementa[0]);
+        annotations.add(daa);
+      });
+    } catch (ex) {
+      print(ex);
+    }
+    canSignThisDocument();
     update();
+  }
+
+  RxBool canSignThis = false.obs;
+  bool canSignThisDocument() {
+    canSignThis.value = false;
+    if (selectedAttachent == null) return false;
+    if (selectedAttachent!.fileName!.contains('pdf')) {
+      canSignThis.value = true;
+
+      return true;
+    }
+    canSignThis.value = false;
+    return false;
   }
 
   //تحديث كان ابن فيل وجلب جميع البيانات الخاصه بلملف
   updatecanOpenDocumentModel(DocumentModel data) {
+    logindata = SecureStorage.to.readSecureJsonData(AllStringConst.LogInData);
+    preparePageData();
     pdfAndSing.clear();
     documentEditedInOfficeId.value = 0;
     documentBaseModel = data;
@@ -702,6 +726,7 @@ class DocumentController extends GetxController {
         // pdfAndSingData.clear();
 
         annotations.clear();
+        selectedAttachent = null;
         pdfAndSingURL.value = oragnalFileDocpdfUrlFile;
         // pdfAndSingData.add(oragnalFileDocpdfUrlFile);
 
@@ -713,6 +738,8 @@ class DocumentController extends GetxController {
           ViewerAnnotation daa = ViewerAnnotation.fromMap(elementa[0]);
           annotations.add(daa);
         });
+        canSignThisDocument();
+
         // update();
       } else {
         if (folder2[element.folderName] != null) {
@@ -976,6 +1003,19 @@ class DocumentController extends GetxController {
       customActions = data.customActions;
       purposes = data.transferData!.purposes!;
       multiSignatures = data.multiSignatures ?? [];
+    }
+  }
+
+  preparePageData() async {
+    logindata = SecureStorage.to.readSecureJsonData(AllStringConst.LogInData);
+    if (logindata != null) {
+      LoginModel data = LoginModel.fromJson(logindata!);
+      customActions = data.customActions;
+      purposes = data.transferData!.purposes!;
+      multiSignatures = data.multiSignatures ?? [];
+      var signDef = SecureStorage.to.readSecureData(AllStringConst.Signature);
+      if (signDef != null && signDef.isNotEmpty)
+        multiSignatures.add(MultiSignatures(signature: signDef));
     }
   }
 

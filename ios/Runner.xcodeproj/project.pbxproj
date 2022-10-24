@@ -245,23 +245,6 @@
 			shellPath = /bin/sh;
 			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build\n";
 		};
-		A2B2B1CC8068DF29F734AFE8 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		B01FF5770447C5288FC3A074 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -434,7 +417,7 @@
 					"\"webview_flutter_wkwebview\"",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.intalio.newcmsdevtestsaj;
+				PRODUCT_BUNDLE_IDENTIFIER = com.intalioMOFA.newCTS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -616,7 +599,7 @@
 					"\"webview_flutter_wkwebview\"",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.intalio.newcmsdevtestsaj;
+				PRODUCT_BUNDLE_IDENTIFIER = com.intalioMOFA.newCTS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -690,7 +673,7 @@
 					"\"webview_flutter_wkwebview\"",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.intalio.newcmsdevtestsaj;
+				PRODUCT_BUNDLE_IDENTIFIER = com.intalioMOFA.newCTS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";

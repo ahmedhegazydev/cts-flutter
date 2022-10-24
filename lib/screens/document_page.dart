@@ -236,28 +236,13 @@ class DocumentPage extends GetWidget<DocumentController> {
         ),
       );
     }
-    if (controller.notoragnalFileDoc) {
-      print("open nonoreg " + controller.pdfAndSingURL.value);
-      return SizedBox(
-        width: size.width,
-        height: size.height - 100,
-        child: new PDFView(
-            originalAnnotations: controller.annotations,
-            url: controller.pdfAndSingURL.value,
-            color: Get.find<MController>().appcolor,
-            size: s),
-      );
-    } else if (controller.pdfAndSingURL.isNotEmpty) {
+    if (controller.pdfAndSingURL.isNotEmpty) {
       print("fi mail ");
       print(controller.pdfAndSingURL);
       return SizedBox(
         width: size.width,
         height: size.height - 100,
-        child: new PDFView(
-            originalAnnotations: controller.annotations,
-            url: controller.pdfAndSingURL.value,
-            color: Get.find<MController>().appcolor,
-            size: s),
+        child: _pdfView(s),
       );
     }
     return Center(
@@ -267,10 +252,22 @@ class DocumentPage extends GetWidget<DocumentController> {
     );
   }
 
+  PDFView _pdfView(Size s) {
+    return new PDFView(
+      originalAnnotations: controller.annotations,
+      url: controller.pdfAndSingURL.value,
+      color: Get.find<MController>().appcolor,
+      size: s,
+      key: UniqueKey(),
+    );
+  }
+
   void _openVisualTracking() {
     Get.find<WebViewPageController>().isPdf = false;
     var ref = controller.documentBaseModel?.correspondence!.gridInfo![2].value;
     var url = controller.documentBaseModel?.correspondence!.visualTrackingUrl!;
+
+    print(url);
 
     if (ref != null && ref != "")
       Get.find<WebViewPageController>().title = ref;
@@ -399,22 +396,27 @@ class DocumentPage extends GetWidget<DocumentController> {
                 if (controller
                         .documentBaseModel?.correspondence?.hasAttachments ??
                     true)
-                  // if (!controller.notoragnalFileDoc)
-                  //   CTSActionButton('assets/images/refer.png', "Attachments".tr,
-                  //       () async {
-                  //     _popUpMenuhasAttachments(context);
-                  //   }),
-                  if (controller.canOpenInOffice())
-                    CTSActionButton('assets/images/A.png', "marking".tr,
+                  //if (!controller.notoragnalFileDoc)
+                  if (controller
+                          .documentBaseModel!.attachments!.attachments!.length >
+                      0)
+                    CTSActionButton('assets/images/refer.png', "Attachments".tr,
                         () async {
-                      // loader
-                      showLoaderDialog(context);
-                      await openInOffice(context);
+                      Navigator.of(context).pop();
+                      _popUpMenuhasAttachments(context);
                     }),
-                // if (controller.notoragnalFileDoc)
-                //   CTSActionButton('assets/images/track.png', "original", () {
-                //     controller.backTooragnalFileDocpdf();
-                //   }),
+                if (controller.canOpenInOffice())
+                  CTSActionButton('assets/images/A.png', "marking".tr,
+                      () async {
+                    // loader
+                    showLoaderDialog(context);
+                    await openInOffice(context);
+                  }),
+                if (controller.notoragnalFileDoc)
+                  CTSActionButton('assets/images/track.png', "original", () {
+                    Navigator.of(context).pop();
+                    controller.backTooragnalFileDocpdf();
+                  }),
               ],
             ),
             SizedBox(
@@ -1432,7 +1434,7 @@ class DocumentPage extends GetWidget<DocumentController> {
                                       child: GestureDetector(
                                         onTap: () async {
                                           //  Navigator.of(context).pop();
-                                          //Navigator.of(context).pop();
+                                          Navigator.of(context).pop();
                                           showLoaderDialog(context);
                                           var folder =
                                               Get.find<DocumentController>()
@@ -1451,7 +1453,8 @@ class DocumentPage extends GetWidget<DocumentController> {
                                           if (attachmentItem != null)
                                             controller.openNewAttachment(
                                                 attachmentItem.attachment!);
-                                          Navigator.of(context).pop();
+                                          Get.back();
+                                          // Navigator.of(context).pop();
                                           //  _popShowAttachments(context);
                                         },
                                         child: Text(

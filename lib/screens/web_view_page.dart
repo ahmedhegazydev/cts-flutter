@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
@@ -28,6 +30,9 @@ class WebViewPage extends GetWidget<WebViewPageController> {
           allowsInlineMediaPlayback: true,
           gestureNavigationEnabled: true,
           zoomEnabled: true,
+          onWebResourceError: (error) {
+            log(error.description);
+          },
         ),
       ),
     );

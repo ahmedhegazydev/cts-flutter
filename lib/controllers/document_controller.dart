@@ -674,10 +674,8 @@ class DocumentController extends GetxController {
     pdfAndSing.clear();
     singpic.clear();
     pdfAndSing.clear();
-    // pdfAndSingData.clear();
-
-    // pdfAndSingData.add(attachment.uRL!);
     pdfAndSingURL.value = attachment.uRL!;
+    annotations.clear();
     Map<String, dynamic> dat = jsonDecode(attachment.annotations!);
 
     var loopableData = dat.values.toList();

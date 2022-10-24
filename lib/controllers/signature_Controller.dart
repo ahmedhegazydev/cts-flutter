@@ -23,7 +23,7 @@ class SignaturePageController extends GetxController {
   final SignatureController controller = SignatureController(
     penStrokeWidth: 5,
     penColor: Colors.black,
-    exportBackgroundColor: Colors.white,
+    exportBackgroundColor: Colors.transparent,
   );
 
   replaceSing(sin) {
@@ -53,13 +53,13 @@ class SignaturePageController extends GetxController {
     if (logindata != null) {
       LoginModel data = LoginModel.fromJson(logindata!);
       multiSignatures = data.multiSignatures ?? [];
+      //  multiSignatures.add(SecureStorage.to.readSecureData(AllStringConst.Signature))
       update();
     }
   }
 
   Future saveSign(context) async {
     saveSing = true;
-    print("9999999999999999999999999999999");
     if (controller.points.isEmpty) {
       controller.clear();
       return;
@@ -73,16 +73,11 @@ class SignaturePageController extends GetxController {
 
     await updateSignature(
         context: context, signatureInfoModel: _signatureInfoModel);
-    await CtsSettingsDatabase.instance
-        .saveString(AllStringConst.Signature, base64.encode(data));
-
-    // await SecureStorage.to.deleteSecureData(AllStringConst.Signature);
-
-    // SecureStorage.to
-    //     .writeSecureData(AllStringConst.Signature, base64.encode(data));
+    await SecureStorage.to
+        .writeSecureData(AllStringConst.Signature, base64.encode(data));
 
     saveSing = false;
-    update();
+    Get.offNamed("/Landing");
     return;
   }
 }

@@ -178,56 +178,54 @@ class SignaturePage extends GetView<SignaturePageController> {
   }
 
   Widget DefaultSignature(context) {
-    return FutureBuilder<String?>(
-        future:
-            CtsSettingsDatabase.instance.getString(AllStringConst.Signature),
-        builder: (context, AsyncSnapshot<String?> snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data != null && snapshot.data!.isNotEmpty) {
-              return Container(
-                height: 100,
-                padding: EdgeInsets.all(8),
-                color: Colors.grey.withOpacity(.5),
-                child: Image(
-                  fit: BoxFit.fill,
-                  image: MemoryImage(
-                    dataFromBase64String(snapshot.data!),
-                  ),
-                ),
-              );
-            } else {
-              return Container(
-                height: 100,
-              );
-            }
-          } else {
-            return CircularProgressIndicator();
-          }
-        });
+    var sign = SecureStorage.to.readSecureData(AllStringConst.Signature);
+
+    if (sign != null && sign.isNotEmpty) {
+      return Container(
+        height: 100,
+        padding: EdgeInsets.all(8),
+        color: Colors.grey.withOpacity(.5),
+        child: Image(
+          fit: BoxFit.fill,
+          image: MemoryImage(
+            dataFromBase64String(sign!),
+          ),
+        ),
+      );
+    } else {
+      return Container(
+        height: 100,
+      );
+    }
   }
 
-  // buildDefaultSignature() async {
-  //   var signature =
-  //       await CtsSettingsDatabase.instance.getString(AllStringConst.Signature);
-  //   // var signature = SecureStorage.to.readSecureData(AllStringConst.Signature);
-  //   if (signature != null && signature.isNotEmpty)
-  //     return GetBuilder<SignaturePageController>(builder: (logic) {
-  //       return Container(
-  //         height: 100,
-  //         padding: EdgeInsets.all(8),
-  //         color: Colors.grey.withOpacity(.5),
-  //         child: CachedMemoryImage(
-  //           uniqueKey: "defaultsignature",
-  //           errorWidget: const Text('Error'),
-  //           bytes: dataFromBase64String(signature),
-  //           placeholder: const CircularProgressIndicator(),
-  //         ),
-  //       );
-  //     });
-
-  //   return Container(
-  //     height: 100,
-  //   );
+  // Widget DefaultSignature(context) {
+  //   return FutureBuilder<String?>(
+  //       future:
+  //           CtsSettingsDatabase.instance.getString(AllStringConst.Signature),
+  //       builder: (context, AsyncSnapshot<String?> snapshot) {
+  //         if (snapshot.hasData) {
+  //           if (snapshot.data != null && snapshot.data!.isNotEmpty) {
+  //             return Container(
+  //               height: 100,
+  //               padding: EdgeInsets.all(8),
+  //               color: Colors.grey.withOpacity(.5),
+  //               child: Image(
+  //                 fit: BoxFit.fill,
+  //                 image: MemoryImage(
+  //                   dataFromBase64String(snapshot.data!),
+  //                 ),
+  //               ),
+  //             );
+  //           } else {
+  //             return Container(
+  //               height: 100,
+  //             );
+  //           }
+  //         } else {
+  //           return CircularProgressIndicator();
+  //         }
+  //       });
   // }
 
   GetBuilder<SignaturePageController> buildList() {
@@ -261,146 +259,3 @@ class SignaturePage extends GetView<SignaturePageController> {
     });
   }
 }
-
-//
-// Column(
-// crossAxisAlignment: CrossAxisAlignment.start,
-// children: [
-// Flexible(
-// flex: 1,
-// child: Container(
-// // color: Colors.red,
-// child: Container(
-// // height: 300,
-// width: double.infinity,
-// height: double.infinity,
-// child: Signature(
-// controller: controller.controller,
-// )),
-// )),
-// Flexible(
-// // color: Colors.yellow,
-// child: Row(
-// children: [
-// Flexible(
-// child: Expanded(
-// // color: Colors.red,
-// child: Column(
-// children: [
-// Padding(
-// padding: EdgeInsets.all(10),
-// child: Text("defaultsignature".tr,
-// style: TextStyle(
-// // fontFamily: 'Roboto',
-// fontSize: 20,
-// // letterSpacing: 0.15,
-// // fontWeight: FontWeight.w500,
-// // color: _themeData!.colorScheme.onSurface
-// //     .withOpacity(0.87),
-// )),
-// ),
-// GetBuilder<SignaturePageController>(builder: (logic) {
-// return Padding(
-// padding: const EdgeInsets.all(20.0),
-// // child: Image.memory(
-// //   dataFromBase64String(controller.secureStorage
-// //       .readSecureData(AllStringConst.Signature)),
-// //   height: 100,
-// // ),
-// child: CachedMemoryImage(
-// uniqueKey: "defaultsignature",
-// errorWidget: const Text('Error'),
-// bytes: dataFromBase64String(controller.secureStorage
-//     .readSecureData(AllStringConst.Signature)),
-// placeholder: const CircularProgressIndicator(),
-// ));
-// }),
-// ],
-// ),
-// )),
-// Flexible(
-// child: Expanded(
-// // color: Colors.yellow,
-// child: Column(
-// children: [
-// Padding(
-// padding: EdgeInsets.all(10),
-// child: Text(
-// "multisignature".tr,
-// style: TextStyle(
-// // fontFamily: 'Roboto',
-// fontSize: 20,
-// // letterSpacing: 0.15,
-// // fontWeight: FontWeight.w500,
-// // color: _themeData!.colorScheme.onSurface
-// //     .withOpacity(0.87),
-// ),
-// ),
-// ),
-// Expanded(
-// child: GetBuilder<SignaturePageController>(
-// assignId: true,
-// builder: (logic) {
-// return GridView.builder(
-// physics: ScrollPhysics(),
-// itemCount: controller.multiSignatures.length,
-// gridDelegate:
-// SliverGridDelegateWithFixedCrossAxisCount(
-// crossAxisCount: 3,
-// // crossAxisSpacing: 4.0,
-// // mainAxisSpacing: 4.0
-// ),
-// itemBuilder: (BuildContext context, int index) {
-// return Container(
-// // child: Image.memory(
-// //     dataFromBase64String(
-// //     controller
-// //         .multiSignatures[index].signature),
-// // ),
-// // child: CachedNetworkImage(
-// //   imageUrl: controller.multiSignatures[index].signature ?? "",
-// //   progressIndicatorBuilder: (context, url, downloadProgress) =>
-// //       CircularProgressIndicator(value: downloadProgress.progress),
-// //   errorWidget: (context, url, error) => Icon(Icons.error),
-// // ),
-// child: CachedMemoryImage(
-// uniqueKey: index.toString(),
-// errorWidget: const Text('Error'),
-// bytes: dataFromBase64String(controller
-//     .multiSignatures[index].signature),
-// placeholder:
-// const CircularProgressIndicator(),
-// ),
-// );
-// },
-// );
-// })
-// //    new ListView.builder(
-// //        itemCount: controller.multiSignatures.length,
-// //        itemBuilder: (context, pos) {
-// //          return Padding(
-// //            padding: const EdgeInsets.all(8.0),
-// //            child: Image.memory(dataFromBase64String(controller
-// //                .multiSignatures[pos].signature)),
-// //          );
-// //        }
-// //        )
-//
-// )
-// ],
-// ),
-// ))
-// ],
-// )),
-
-// // SizedBox(
-// //   width: MediaQuery.of(context).size.width,
-// //   height: 50,
-// //   child: CustomButton(
-// //       onPressed: () {
-// //         Get.back();
-// //       },
-// //       name: "bageback".tr),
-// // ),
-// ],
-// ),

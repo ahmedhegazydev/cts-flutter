@@ -252,8 +252,7 @@ class LandingPageController extends GetxController {
         firstDate: DateTime(2000),
         lastDate: DateTime(2050));
     if (pickedDateselectFromDocDate != null) {
-      if (DateTime.now().day.compareTo(pickedDateselectFromDocDate!.day) == 0 ||
-          DateTime.now().day.compareTo(pickedDateselectFromDocDate!.day) > 0) {
+      if (DateTime.now().day.compareTo(pickedDateselectFromDocDate!.day) > 0) {
         print("object");
         Get.snackbar("", "تاريخ البداء لا يمكن ان يكون اقل من اليوم");
       } else {

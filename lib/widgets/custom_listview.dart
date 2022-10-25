@@ -10,22 +10,18 @@ import '../controllers/my_cart/create_basket_controller.dart';
 import '../models/CorrespondencesModel.dart';
 import '../services/apis/reply_with_voice_note_api.dart';
 import '../services/json_model/basket/fetch_basket_list_model.dart';
-import '../services/json_model/favorites/list_all/ListFavoriteRecipients_response.dart';
-import '../services/json_model/find_recipient_model.dart';
 import '../services/json_model/login_model.dart';
 import '../services/json_model/reply_with_voicenote_model.dart';
 import '../services/json_model/send_json_model/reply_with_voice_note_request.dart';
 import '../utility/all_const.dart';
 import '../utility/utilitie.dart';
 import 'custom_button.dart';
-import 'custom_button_with_icon.dart';
 import 'package:cts/utility/Extenstions.dart';
-
 import 'hourizontal_list_view_colors.dart';
 
 class CustomListView extends GetView<InboxController> {
   CustomListView(
-      {this.function,
+      {required this.function,
       //  required this.allCorrespondences,
       required this.correspondences,
       required this.scrollController,
@@ -46,7 +42,7 @@ class CustomListView extends GetView<InboxController> {
 
   // VoidCallback openMenu;
 
-  Future<void>? function;
+  Future<void> function;
 
   VoidCallback onClickItem;
   List<Correspondence> correspondences;
@@ -64,7 +60,7 @@ class CustomListView extends GetView<InboxController> {
     return Container(
       height: height - 100,
       child: RefreshIndicator(
-        onRefresh: () => function!,
+        onRefresh: () => function,
         child: DefaultTabController(
           length: 2,
           child: Column(

@@ -16,7 +16,6 @@ import '../widgets/custom_button.dart';
 import '../widgets/custom_listview.dart';
 import '../utility/utilitie.dart' as u;
 import 'package:cts/utility/Extenstions.dart';
-
 import '../widgets/hourizontal_list_view_colors.dart';
 
 class InboxPage extends GetWidget<InboxController> {
@@ -462,7 +461,7 @@ class InboxPage extends GetWidget<InboxController> {
                                 child: _filterMail(context)),
                             controller.allCorrespondences.isNotEmpty
                                 ? CustomListView(
-                                    // function: controller.onRefresh(),
+                                    function: controller.onRefresh(),
                                     correspondences:
                                         controller.allCorrespondences,
                                     scrollController:
@@ -499,7 +498,7 @@ class InboxPage extends GetWidget<InboxController> {
                                 child: _filterMail(context)),
                             controller.allCorrespondences.isNotEmpty
                                 ? CustomListView(
-                                    // function: controller.onRefresh(),
+                                    function: controller.onRefresh(),
                                     correspondences:
                                         controller.allCorrespondences,
                                     scrollController:
@@ -540,7 +539,7 @@ class InboxPage extends GetWidget<InboxController> {
                                 child: _filterMail(context)),
                             controller.allCorrespondences.isNotEmpty
                                 ? CustomListView(
-                                    // function: controller.onRefresh(),
+                                    function: controller.onRefresh(),
                                     correspondences:
                                         controller.allCorrespondences,
                                     scrollController:

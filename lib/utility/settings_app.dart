@@ -5,7 +5,7 @@ class SettingsApp {
 
   // static const String baseUrl = 'http://139.99.149.12:9091/EverSuite.CTS.Mobile/CMS.svc';
   static const String baseUrl =
-      'http://192.168.20.237:89/Eversuite.CTS.Mobile/CMS.svc';
+      'http://ecm-mob.mofa.gov.qa:9091/Eversuite.CTS.Mobile2/CMS.svc';
 
   // SettingsApp() {}
 
@@ -22,9 +22,9 @@ class SettingsApp {
   static const String SaveDocumentAnnotationsUrl =
       baseUrl + "/SaveDocumentAnnotations?"; //
   static const String GetLookupsUrl = baseUrl +
-      "/GetLookups?"; //http://192.168.20.237:89/Eversuite.CTS.Mobile/CMS.svc/GetLookups?Token=vDVPA43sENTpfmLujnJO&language=ar
+      "/GetLookups?"; //http://ecm-mob.mofa.gov.qa:9091/Eversuite.CTS.Mobile2/CMS.svc/GetLookups?Token=vDVPA43sENTpfmLujnJO&language=ar
   static const String SearchCorrespondencesUrl = baseUrl +
-      "/SearchCorrespondences"; //http://192.168.20.237:89/Eversuite.CTS.Mobile/CMS.svc/SearchCorrespondences
+      "/SearchCorrespondences"; //http://ecm-mob.mofa.gov.qa:9091/Eversuite.CTS.Mobile2/CMS.svc/SearchCorrespondences
   static const String GetCorrespondencesAllUrl = baseUrl +
       "/GetCorrespondencesAll?"; // /GetCorrespondencesAll?Token=vDVPA43sENTpfmLujnJO&inboxId=5&pageNumber=0&pageSize=100&language=ar&showThumbnails=false
   static const String GetSummariesUrl = baseUrl + "/GetSummaries"; //
@@ -85,6 +85,8 @@ class SettingsApp {
 
   static const String PostUpdateSignatureUrl = baseUrl + "/UpdateSignature";
   static const String PostUploadAttachmentUrl = baseUrl + "/UploadAttachment";
+
+  static const String CheckAttendanceUrl = baseUrl + "/CheckAttendance";
 
   //mofa-favorite-recipients-api
   static const String ListFavoriteRecipientsUrl =

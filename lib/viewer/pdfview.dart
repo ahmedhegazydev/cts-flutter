@@ -86,7 +86,9 @@ class _PDFViewState extends State<PDFView> {
       ViewerController.to.pagewidth = dpageWidth;
       var aspect = dpageWidth / widget.size.width;
       final pageImage = await page.render(
-          width: widget.size.width, height: dpageHeigt / aspect);
+          backgroundColor: '#FFFFFF',
+          width: widget.size.width,
+          height: dpageHeigt / aspect);
       pages.add(pageImage!);
       ViewerController.to
           .setScreenWidthAndHeight(widget.size.width, dpageHeigt / aspect);
@@ -125,9 +127,15 @@ class _PDFViewState extends State<PDFView> {
               physics: s.selectedActionIndex.value != 0
                   ? const NeverScrollableScrollPhysics()
                   : const ScrollPhysics(),
-              child: PDFColumn(
-                pages: pages,
-                size: widget.size,
+              child: Container(
+                color: Colors.grey,
+                child: Padding(
+                  padding: const EdgeInsets.all(1.0),
+                  child: PDFColumn(
+                    pages: pages,
+                    size: widget.size,
+                  ),
+                ),
               ),
             ),
           ),

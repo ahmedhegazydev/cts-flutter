@@ -118,21 +118,25 @@ class CustomListView extends GetView<InboxController> {
                                                               shape: BoxShape
                                                                   .circle)),
                                                     ),
-                                                    Text(
-                                                      correspondences[pos]
-                                                              .gridInfo?[0]
-                                                              .value ??
-                                                          "",
-                                                      // softWrap: true,
-                                                      // maxLines: 2,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style: TextStyle(
-                                                          color: Colors.black
-                                                              .withOpacity(.7),
-                                                          fontSize: 16,
-                                                          fontWeight:
-                                                              FontWeight.bold),
+                                                    Flexible(
+                                                      child: Text(
+                                                        correspondences[pos]
+                                                                .gridInfo?[0]
+                                                                .value ??
+                                                            "",
+                                                        // softWrap: true,
+                                                        // maxLines: 2,
+                                                        // overflow:
+                                                        //     TextOverflow.ellipsis,
+                                                        style: TextStyle(
+                                                            color: Colors.black
+                                                                .withOpacity(
+                                                                    .7),
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
                                                     ),
                                                   ],
                                                 ),

@@ -963,6 +963,9 @@ class DocumentController extends GetxController {
             destinationId: user.id.toString(),
             voiceNotePrivate: false);
     multiTransferNode[user.id!] = transferNode;
+
+    transfarForManyPurposes[user.id.toString()] =
+        purposes!.where((x) => x.id == purp).first;
     update(); // update(["user"]);
   }
 
@@ -1749,6 +1752,7 @@ class DocumentController extends GetxController {
       {int? defaultPurpose}) async {
     showLoaderDialog(context);
     getFindRecipientData(context: context);
+    await preparePageData();
     await listFavoriteRecipients(context: context);
     Navigator.pop(context);
 
@@ -1765,18 +1769,20 @@ class DocumentController extends GetxController {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("referTo".tr,
-                        style: Theme.of(context).textTheme.headline3!.copyWith(
-                            color: Colors.black.withOpacity(.5),
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold)),
+                    Text(
+                      "referTo".tr,
+                      style: Theme.of(context).textTheme.headline3!.copyWith(
+                          color: Colors.black.withOpacity(.5),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
+                    ),
                     buildFavoitesBar(context, transferID, correspondenceID),
                     const Divider(
                       color: Colors.grey,
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * .8,
-                      height: 300, // MediaQuery.of(context).size.height * .5,
+                      height: 300,
                       child: GetBuilder<DocumentController>(
                         builder: (logic) {
                           return ListView.builder(
@@ -1784,213 +1790,213 @@ class DocumentController extends GetxController {
                               itemCount: usersWillSendTo.length,
                               itemBuilder: (context, pos) {
                                 return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    color: Colors.grey[200],
-                                    child: Column(children: [
-                                      Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              "name".tr,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline3!
-                                                  .copyWith(
-                                                    color: createMaterialColor(
-                                                      const Color.fromRGBO(
-                                                        77,
-                                                        77,
-                                                        77,
-                                                        1,
-                                                      ),
-                                                    ),
-                                                    fontSize: 15,
-                                                  ),
-                                              textAlign: TextAlign.center,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Text(logic
-                                                      .usersWillSendTo[pos]
-                                                      .value ??
-                                                  ""),
-                                            ),
-                                            SizedBox(
-                                              width: 8,
-                                            ),
-                                            Spacer(),
-                                            GestureDetector(
-                                              onTap: () {
-                                                transfarForMany.remove(logic
-                                                    .usersWillSendTo[pos].id);
-                                                logic.delTousersWillSendTo(
-                                                    user: logic
-                                                        .usersWillSendTo[pos]);
-                                              },
-                                              child: Image.asset(
-                                                'assets/images/close_button.png',
-                                                width: 20,
-                                                height: 20,
-                                              ),
-                                            ),
-                                          ]),
-                                      SizedBox(
-                                        height: 4,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            child: Text("action".tr),
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Expanded(
-                                            child: Text("audioNotes".tr),
-                                          )
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            child: Container(
-                                              height: 40,
-                                              color: Colors.grey[300],
-                                              child: DropdownButton<Purposes>(
-                                                alignment: Alignment.topRight,
-                                                value: logic.getPurposes(logic
-                                                    .usersWillSendTo[pos].id),
-                                                // icon: const Icon(
-                                                //     Icons.arrow_downward),
-                                                elevation: 16,
-
-                                                underline: SizedBox(),
-                                                hint: Text("اختار"),
-                                                onChanged:
-                                                    (Purposes? newValue) {
-                                                  setPurposes(
-                                                    logic
-                                                        .usersWillSendTo[pos].id
-                                                        .toString(),
-                                                    newValue!,
-                                                  );
-                                                  //  dropdownValue = newValue!;
-                                                },
-                                                items: purposes?.map<
-                                                        DropdownMenuItem<
-                                                            Purposes>>(
-                                                    (Purposes value) {
-                                                  return DropdownMenuItem<
-                                                      Purposes>(
-                                                    value: value,
-                                                    child: Text(value.value!),
-                                                  );
-                                                }).toList(),
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Expanded(
-                                            child: Container(
-                                                height: 40,
-                                                color: Colors.grey[300],
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    GestureDetector(
-                                                      onTap: () async {
-                                                        record.isRecording
-                                                            ? stopMathod()
-                                                            : recordMathod(
-                                                                id: logic
-                                                                    .usersWillSendTo[
-                                                                        pos]
-                                                                    .id,
-                                                              );
-                                                      },
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: GetBuilder<
-                                                                DocumentController>(
-                                                            id: "record", //autoRemove: false,
-                                                            builder: (logic) {
-                                                              return Icon(record
-                                                                      .isRecording
-                                                                  ? Icons.stop
-                                                                  : Icons.mic);
-                                                            }),
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: Obx(
-                                                        () => InkWell(
-                                                          onTap: () {
-                                                            if (!isPlayingAudio
-                                                                .value) {
-                                                              playMathod(
-                                                                  id: logic
-                                                                      .usersWillSendTo[
-                                                                          pos]
-                                                                      .id);
-                                                            } else {
-                                                              isPlayingAudio
-                                                                      .value =
-                                                                  false;
-                                                              audioPlayer!
-                                                                  .stopPlayer();
-                                                            }
-                                                          },
-                                                          child: Icon(
-                                                            isPlayingAudio.value
-                                                                ? Icons.stop
-                                                                : Icons
-                                                                    .play_arrow,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    )
-                                                  ],
-                                                )),
-                                          )
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 8,
-                                      ),
-                                      Container(
-                                        child: TextFormField(
-                                          onChanged: (v) {
-                                            multiTransferNode[logic
-                                                    .usersWillSendTo[pos].id]
-                                                ?.note = v;
-                                            setNots(
-                                                id: logic
-                                                    .usersWillSendTo[pos].id!,
-                                                not: v);
-                                          },
-                                          maxLines: 4,
-                                        ),
-                                        color: Colors.grey[300],
-                                      ),
-                                      SizedBox(
-                                        height: 8,
-                                      ),
-                                    ]),
-                                  ),
-                                );
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: userTransferListItem(context, pos)
+                                    // Container(
+                                    //   color: Colors.grey[200],
+                                    //   child: Column(children: [
+                                    //     Row(
+                                    //         crossAxisAlignment:
+                                    //             CrossAxisAlignment.center,
+                                    //         children: [
+                                    //           Text(
+                                    //             "name".tr,
+                                    //             style: Theme.of(context)
+                                    //                 .textTheme
+                                    //                 .headline3!
+                                    //                 .copyWith(
+                                    //                   color: createMaterialColor(
+                                    //                     const Color.fromRGBO(
+                                    //                       77,
+                                    //                       77,
+                                    //                       77,
+                                    //                       1,
+                                    //                     ),
+                                    //                   ),
+                                    //                   fontSize: 15,
+                                    //                 ),
+                                    //             textAlign: TextAlign.center,
+                                    //             overflow: TextOverflow.ellipsis,
+                                    //           ),
+                                    //           Padding(
+                                    //             padding:
+                                    //                 const EdgeInsets.all(8.0),
+                                    //             child: Text(logic
+                                    //                     .usersWillSendTo[pos]
+                                    //                     .value ??
+                                    //                 ""),
+                                    //           ),
+                                    //           SizedBox(
+                                    //             width: 8,
+                                    //           ),
+                                    //           Spacer(),
+                                    //           GestureDetector(
+                                    //             onTap: () {
+                                    //               transfarForMany.remove(logic
+                                    //                   .usersWillSendTo[pos].id);
+                                    //               logic.delTousersWillSendTo(
+                                    //                   user: logic
+                                    //                       .usersWillSendTo[pos]);
+                                    //             },
+                                    //             child: Image.asset(
+                                    //               'assets/images/close_button.png',
+                                    //               width: 20,
+                                    //               height: 20,
+                                    //             ),
+                                    //           ),
+                                    //         ]),
+                                    //     SizedBox(
+                                    //       height: 4,
+                                    //     ),
+                                    //     Row(
+                                    //       children: [
+                                    //         Expanded(
+                                    //           child: Text("action".tr),
+                                    //         ),
+                                    //         SizedBox(
+                                    //           width: 10,
+                                    //         ),
+                                    //         Expanded(
+                                    //           child: Text("audioNotes".tr),
+                                    //         )
+                                    //       ],
+                                    //     ),
+                                    //     Row(
+                                    //       children: [
+                                    //         Expanded(
+                                    //           child: Container(
+                                    //             height: 40,
+                                    //             color: Colors.grey[300],
+                                    //             child: DropdownButton<Purposes>(
+                                    //               alignment: Alignment.topRight,
+                                    //               value: logic.getPurposes(logic
+                                    //                   .usersWillSendTo[pos].id),
+                                    //               // icon: const Icon(
+                                    //               //     Icons.arrow_downward),
+                                    //               elevation: 16,
+                                    //               underline: SizedBox(),
+                                    //               hint: Text("اختار"),
+                                    //               onChanged:
+                                    //                   (Purposes? newValue) {
+                                    //                 setPurposes(
+                                    //                   logic
+                                    //                       .usersWillSendTo[pos].id
+                                    //                       .toString(),
+                                    //                   newValue!,
+                                    //                 );
+                                    //                 //  dropdownValue = newValue!;
+                                    //               },
+                                    //               items: purposes?.map<
+                                    //                       DropdownMenuItem<
+                                    //                           Purposes>>(
+                                    //                   (Purposes value) {
+                                    //                 return DropdownMenuItem<
+                                    //                     Purposes>(
+                                    //                   value: value,
+                                    //                   child: Text(value.value!),
+                                    //                 );
+                                    //               }).toList(),
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //         const SizedBox(
+                                    //           width: 10,
+                                    //         ),
+                                    //         Expanded(
+                                    //           child: Container(
+                                    //               height: 40,
+                                    //               color: Colors.grey[300],
+                                    //               child: Row(
+                                    //                 mainAxisAlignment:
+                                    //                     MainAxisAlignment
+                                    //                         .spaceBetween,
+                                    //                 children: [
+                                    //                   GestureDetector(
+                                    //                     onTap: () async {
+                                    //                       record.isRecording
+                                    //                           ? stopMathod()
+                                    //                           : recordMathod(
+                                    //                               id: logic
+                                    //                                   .usersWillSendTo[
+                                    //                                       pos]
+                                    //                                   .id,
+                                    //                             );
+                                    //                     },
+                                    //                     child: Padding(
+                                    //                       padding:
+                                    //                           const EdgeInsets
+                                    //                               .all(8.0),
+                                    //                       child: GetBuilder<
+                                    //                               DocumentController>(
+                                    //                           id: "record", //autoRemove: false,
+                                    //                           builder: (logic) {
+                                    //                             return Icon(record
+                                    //                                     .isRecording
+                                    //                                 ? Icons.stop
+                                    //                                 : Icons.mic);
+                                    //                           }),
+                                    //                     ),
+                                    //                   ),
+                                    //                   Padding(
+                                    //                     padding:
+                                    //                         const EdgeInsets.all(
+                                    //                             8.0),
+                                    //                     child: Obx(
+                                    //                       () => InkWell(
+                                    //                         onTap: () {
+                                    //                           if (!isPlayingAudio
+                                    //                               .value) {
+                                    //                             playMathod(
+                                    //                                 id: logic
+                                    //                                     .usersWillSendTo[
+                                    //                                         pos]
+                                    //                                     .id);
+                                    //                           } else {
+                                    //                             isPlayingAudio
+                                    //                                     .value =
+                                    //                                 false;
+                                    //                             audioPlayer!
+                                    //                                 .stopPlayer();
+                                    //                           }
+                                    //                         },
+                                    //                         child: Icon(
+                                    //                           isPlayingAudio.value
+                                    //                               ? Icons.stop
+                                    //                               : Icons
+                                    //                                   .play_arrow,
+                                    //                         ),
+                                    //                       ),
+                                    //                     ),
+                                    //                   )
+                                    //                 ],
+                                    //               )),
+                                    //         )
+                                    //       ],
+                                    //     ),
+                                    //     SizedBox(
+                                    //       height: 8,
+                                    //     ),
+                                    //     Container(
+                                    //       child: TextFormField(
+                                    //         onChanged: (v) {
+                                    //           multiTransferNode[logic
+                                    //                   .usersWillSendTo[pos].id]
+                                    //               ?.note = v;
+                                    //           setNots(
+                                    //               id: logic
+                                    //                   .usersWillSendTo[pos].id!,
+                                    //               not: v);
+                                    //         },
+                                    //         maxLines: 4,
+                                    //       ),
+                                    //       color: Colors.grey[300],
+                                    //     ),
+                                    //     SizedBox(
+                                    //       height: 8,
+                                    //     ),
+                                    //   ]),
+                                    // ),
+                                    );
                               });
                         },
                       ),
@@ -2001,6 +2007,184 @@ class DocumentController extends GetxController {
                 transferPopupActions(context, transferID, correspondenceID),
           );
         });
+  }
+
+  Container userTransferListItem(context, pos) {
+    return Container(
+      color: Colors.grey[200],
+      child: Column(children: [
+        Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+          Text(
+            "name".tr,
+            style: Theme.of(context).textTheme.headline3!.copyWith(
+                  color: createMaterialColor(
+                    const Color.fromRGBO(
+                      77,
+                      77,
+                      77,
+                      1,
+                    ),
+                  ),
+                  fontSize: 15,
+                ),
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(usersWillSendTo[pos].value ?? ""),
+          ),
+          SizedBox(
+            width: 8,
+          ),
+          Spacer(),
+          GestureDetector(
+            onTap: () {
+              if (usersWillSendTo.length < pos) {
+                transfarForMany.remove(usersWillSendTo[pos].id);
+                delTousersWillSendTo(user: usersWillSendTo[pos]);
+              }
+            },
+            child: Image.asset(
+              'assets/images/close_button.png',
+              width: 20,
+              height: 20,
+            ),
+          ),
+        ]),
+        SizedBox(
+          height: 4,
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: Text("action".tr),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Expanded(
+              child: Text("audioNotes".tr),
+            )
+          ],
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: Container(
+                height: 40,
+                color: Colors.grey[300],
+                child: DropdownButtonFormField<Purposes>(
+                  decoration: InputDecoration.collapsed(hintText: ''),
+                  alignment: Alignment.centerRight,
+                  value: transfarForManyPurposes[usersWillSendTo[pos].id] ??
+                      purposes![0],
+                  //   elevation: 16,
+                  // underline: SizedBox(),
+                  hint: Text("اختار"),
+                  onTap: () {
+                    print("object");
+                  },
+                  onChanged: (Purposes? newValue) {
+                    // setPurposes(
+                    //   usersWillSendTo[pos].id.toString(),
+                    //   newValue!,
+                    // );
+                    var user = usersWillSendTo[pos!].id.toString();
+                    transfarForManyPurposes[user] = newValue!;
+                    update();
+                  },
+                  onSaved: (Purposes? newValue) {
+                    // setPurposes(
+                    //   usersWillSendTo[pos].id.toString(),
+                    //   newValue!,
+                    // );
+                    var user = usersWillSendTo![pos!].id.toString();
+                    transfarForManyPurposes[user] = newValue!;
+                    update();
+                  },
+                  items: purposes
+                      ?.map<DropdownMenuItem<Purposes>>((Purposes value) {
+                    return DropdownMenuItem<Purposes>(
+                      value: value,
+                      child: Text(value.value!),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Expanded(
+              child: Container(
+                  height: 40,
+                  color: Colors.grey[300],
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () async {
+                          record.isRecording
+                              ? stopMathod()
+                              : recordMathod(
+                                  id: usersWillSendTo[pos].id,
+                                );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GetBuilder<DocumentController>(
+                              id: "record", //autoRemove: false,
+                              builder: (logic) {
+                                return Icon(record.isRecording
+                                    ? Icons.stop
+                                    : Icons.mic);
+                              }),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Obx(
+                          () => InkWell(
+                            onTap: () {
+                              if (!isPlayingAudio.value) {
+                                playMathod(id: usersWillSendTo[pos].id);
+                              } else {
+                                isPlayingAudio.value = false;
+                                audioPlayer!.stopPlayer();
+                              }
+                            },
+                            child: Icon(
+                              isPlayingAudio.value
+                                  ? Icons.stop
+                                  : Icons.play_arrow,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  )),
+            )
+          ],
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        Container(
+          child: TextFormField(
+            onChanged: (v) {
+              multiTransferNode[usersWillSendTo[pos].id]?.note = v;
+              setNots(id: usersWillSendTo[pos].id!, not: v);
+            },
+            maxLines: 4,
+          ),
+          color: Colors.grey[300],
+        ),
+        SizedBox(
+          height: 8,
+        ),
+      ]),
+    );
   }
 
   Row buildFavoitesBar(

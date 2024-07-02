@@ -324,10 +324,6 @@ class LoginPage extends GetWidget<LoginController> {
                                                   AllStringConst.BaseUrl,
                                                   controller.baseUrl.text);
 
-                                              // final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-                                              // final SharedPreferences prefs = await _prefs;
-                                              // prefs.setString(AllStringConst.BaseUrl, controller.baseUrl.text);
-
                                               final settings = SettingItem(
                                                   baseUrl:
                                                       controller.baseUrl.text,
